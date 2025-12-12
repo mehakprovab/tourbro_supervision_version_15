@@ -111,6 +111,7 @@ export class ActivityConfirmComponent implements OnInit {
   setConfirmDetails() {
     this.activityService.paxDetails.subscribe(res => {
       this.confirmDetails = res;
+      console.log(this.confirmDetails)
       this.bookingData = this.confirmDetails.BookingDetails.attributes;
       console.log("bookingData",this.bookingData)
 

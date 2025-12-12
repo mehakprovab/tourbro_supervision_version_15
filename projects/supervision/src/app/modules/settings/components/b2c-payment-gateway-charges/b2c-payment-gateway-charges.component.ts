@@ -70,7 +70,7 @@ private subSunk = new SubSink();
             {}).subscribe(resp => {
                 if ((resp.statusCode == 200 || resp.statusCode == 201) && resp.data && resp.data.length>0) {
                     this.noData = false;
-                    this.respData = resp.data || [];
+                    this.respData = resp.data.filter(d=> d.module !== 'Bundle' && d.module !== 'Flight') || [];
                     respDataCopy = [...this.respData];
                     this.collectionSize = respDataCopy.length;
                     this.updateForm(this.respData.length);

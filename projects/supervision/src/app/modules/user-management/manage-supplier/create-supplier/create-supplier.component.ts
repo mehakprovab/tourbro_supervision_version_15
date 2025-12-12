@@ -45,7 +45,7 @@ export class CreateSupplierComponent implements OnInit {
     email: ['', [Validators.required, Validators.email]],
     city: new FormControl('', [Validators.required]),
     state: new FormControl('', [Validators.required]),
-    country: new FormControl('', [Validators.required]),
+    country: new FormControl('151', [Validators.required]),
     alternate_email:['', [ Validators.email]],
     supplier_type:['', [ Validators.required]]
   })

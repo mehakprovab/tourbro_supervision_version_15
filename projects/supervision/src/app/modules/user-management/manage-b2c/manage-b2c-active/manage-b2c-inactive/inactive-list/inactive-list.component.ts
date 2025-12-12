@@ -59,7 +59,7 @@ export class InactiveListComponent implements OnInit,OnDestroy {
         { key: 'id', value: 'Sl No.' },
         { key: 'action', value: 'Action' },
         { key: 'status', value: 'Status' },
-        { key: 'uuid', value: 'Booking 247 ID' },
+        { key: 'uuid', value: 'Tourbro ID' },
         { key: 'first_name', value: 'Name' },
         { key: 'phone', value: 'Contact' },
         { key: 'email', value: 'Email' },

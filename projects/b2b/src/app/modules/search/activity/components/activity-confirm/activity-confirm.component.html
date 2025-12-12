@@ -43,27 +43,21 @@
                           {{bookingDetails?.ItenaryData?.attributes?.Duration}}</span>
                       </p>
                       <div class="clr"></div>
-                      <p class="m-0">
-                        <strong>Destination: </strong><span> {{bookingDetails?.ItenaryData?.attributes?.Destination}}</span>
-                        </p>
-                      <div class="clr"></div>
+                     <p class="m-0" *ngIf="confirmDetails?.BookingSource !== 'ZBAPINO00004'" >
+                        <strong>Destination: </strong>  <span> {{bookingDetails?.ItenaryData?.attributes?.Destination}}</span>
+                      </p>
+
+                      <p class="m-0" *ngIf="confirmDetails?.BookingSource === 'ZBAPINO00004'" >
+                        <strong>Destination: </strong>  <span> {{confirmDetails?.BookingDetails?.attributes?.Destination}}</span>
+                      </p>
+                        <div class="clr"></div>
                       <p class="m-0">
                         <strong>Travelers :</strong> {{bookingData.body.paxes[0].adultCount}} Adult <span *ngIf="bookingData.body.paxes[0].childCount"> + {{bookingData.body.paxes[0].childCount}} Child ({{bookingData.body.paxes[0].ChildAge}} Age)</span> 
                       </p>
-                      <p class="mb-1" >
-                        <strong>Travel Date :</strong> {{confirmDetails.BookingDetails?.ToDate | date:'dd-MM-yyyy'}}  
+                      <p class="m-0">
+                        <strong>Travel Date :</strong> {{confirmDetails?.ItenaryData?.travelDate | date:'dd-MM-yyyy'}}  
                       </p>
 
-                      <p class="mb-1" *ngIf="bookingData.body.booking_source !== 'ZBAPINO00003'">
-                        <strong>Preferred Language :</strong> {{confirmDetails.BookingDetails?.operated_language }}  
-                      </p>
-
-                      <p class="mb-1" *ngIf="bookingData.body.booking_source !== 'ZBAPINO00003'">
-                        <strong>Preferred Time :</strong> {{confirmDetails.BookingDetails?.activity_timing }}  
-                      </p>
-                      <p class="mb-1" *ngIf="bookingData.body.booking_source !== 'ZBAPINO00003'">
-                        <strong>Pickup Hotel Name :</strong> {{confirmDetails.BookingDetails?.pickupHotelName}}  
-                      </p>
                     </div>
                   </div>
                   <!-- <div class="wx100b">

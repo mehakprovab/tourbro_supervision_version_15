@@ -122,7 +122,7 @@ export class CreateB2cComponent implements OnInit, OnDestroy {
             // date_of_birth: new FormControl('', [Validators.required]),
             status: new FormControl('1', [Validators.required]),
             uuid: new FormControl(),
-            country: new FormControl(this.countryCode, [Validators.required]),
+            country: new FormControl(101, [Validators.required]),
             state: new FormControl('', [Validators.required]),
             city: new FormControl('', [Validators.required]),
             address: new FormControl('', [Validators.required]),

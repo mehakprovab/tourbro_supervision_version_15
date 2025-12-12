@@ -3,7 +3,7 @@
         <div class="card main-card mb-6">
             <div class="card-body">
                 <ngb-tabset class="tabs-animated tabs-animated-shadow" (tabChange)="beforeChange($event)" #tabs>
-                    <ngb-tab id="flight_api_list">
+                    <!-- <ngb-tab id="flight_api_list">
                         <ng-template ngbTabTitle>
                             <span class="">
                                 <i class="fa fa-plane" aria-hidden="true"></i>
@@ -14,7 +14,7 @@
                         <ng-template ngbTabContent>
                             <app-flight-api (toUpdate)="triggerTab($event)"></app-flight-api>
                         </ng-template>
-                    </ngb-tab>
+                    </ngb-tab> -->
                     <ngb-tab id="hotel_api_list">
                         <ng-template ngbTabTitle>
                             <span class="">
@@ -26,7 +26,7 @@
                             <app-hotel-api (someEvent)="triggerTab($event)"></app-hotel-api>
                         </ng-template>
                     </ngb-tab>
-                    <ngb-tab id="activity_api_list">
+                    <!-- <ngb-tab id="activity_api_list">
                         <ng-template ngbTabTitle>
                             <span class="">
                                 <i class="fa fa-binoculars" aria-hidden="true"></i>
@@ -36,7 +36,7 @@
                         <ng-template ngbTabContent>
                             <app-activity-api (someEvent)="triggerTab($event)"></app-activity-api>
                         </ng-template>
-                    </ngb-tab>
+                    </ngb-tab> -->
                     <ngb-tab id="transfer_api_list">
                         <ng-template ngbTabTitle>
                             <span class="">

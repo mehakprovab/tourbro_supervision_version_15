@@ -17,7 +17,7 @@ const baseUrl = environment.baseUrl
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-  public extraParameter: any;
+  public extraParameter: any = ['dashboardsMenus1'];
   manageDomainData: any;
   constructor(
     public globals: ThemeOptions,

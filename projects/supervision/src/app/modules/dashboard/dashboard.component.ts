@@ -108,7 +108,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                         }
 
                     })
-                    this.moduleBookingCount = resp['data']['BookingCount'];
+                    this.moduleBookingCount = resp['data']['BookingCount'].filter( i => i.module !== "Flight Booking");
                 } else {
                     this.moduleBookingCount = [];
                     this.loading = false;

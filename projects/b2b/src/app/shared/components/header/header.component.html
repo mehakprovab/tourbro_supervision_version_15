@@ -1,0 +1,161 @@
+<div [class]="'app-header header-shadow pr-2 ' + (config$ | async).headerTheme">
+  <div class="app-header__content">
+    <div class="app-header-left">
+      <div class="align-items-center d-flex icon-with-content">
+        <a routerLink="/dashboard" (click)="navigateToFlight()"> <img alt="home" class="seperator" style="width: 30px;height: auto;margin-right: 15px;"
+            src="assets/images/home_outer.png"></a>
+        &nbsp;&nbsp;
+        <div class="support-section d-flex align-items-center">
+          <div class="d-flex align-items-center">
+            <div class="content pl-3 pr-3">
+              <h4 class="mb-0">24 X 7</h4>
+              <p class="mb-0">Support</p>
+            </div>
+            <i style="color: #012756;" class="fas fa-phone-alt fa-lg ml-2"></i>
+            <div class="support-number" *ngIf="domainInformation && domainInformation['phone']">
+              <p class="mb-0 ml-1">{{domainInformation['phone']}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <app-mega-menu></app-mega-menu> -->
+    </div>
+    <div class="app-header-right">
+        <a class="mobile_click" (click)="onclick()"><img src="assets/images/coins.svg" alt="" /></a>
+
+        <div class="mobile_view" *ngIf="isMobile === true">
+      <div class="btn-group balance-dropdown" *ngIf="showButtons">
+        <div class="btn-group" ngbDropdown role="group" *ngIf="agentData">
+          <button class="btn" (click)="isMenuExists('Make Payment') && onBalanceClick()" ngbDropdownToggle><b>Balance:
+            {{currency}}
+            {{agentData.agent_balance ? agentData.agent_balance : 0}}</b></button>
+        </div>
+      </div>
+      <div class="btn-group balance-dropdown" *ngIf="showButtons">
+        <div class="btn-group" ngbDropdown role="group" *ngIf="agentData">
+          <button class="btn" (click)="isMenuExists('Update/Request Credit Limit') && onCreditLimitClick()"
+            ngbDropdownToggle> <b>Credit Limit:
+            {{currency}}
+            {{agentData?.credit_limit}} </b></button>
+        </div>
+      </div>
+      <div class="btn-group balance-dropdown" *ngIf="showButtons">
+        <div class="btn-group">
+          <button class="btn btn-md btn-primary" style="height: 34px;cursor: default;font-size: 13px;"><b> DUE:
+           {{currency}} {{agentData?.due_amount}} </b></button>
+        </div>
+      </div>
+      </div>
+      <!-- <div class="btn-group balance-dropdown">
+        <div class="btn-group">
+          <div class="hidden" id="google_translate_element"></div> 
+        </div>
+      </div> -->
+
+      <div class="nav-item nopadrt ml-1">
+        <button class="btn btn-primary cart-btn" (click)="redirrectToCart()">
+          <i class="fas fa-shopping-cart"></i>
+          <h5>{{ cartItemCount }}</h5>
+        </button>
+      </div> 
+
+      </div>
+
+      <app-dots></app-dots>
+      <!-- <app-user-box></app-user-box> -->
+      <!-- user profile dropdown start -->
+      <div class="user-profile-section">
+        <div class="d-flex">
+          <div class="header-btn-lg pr-0">
+            <div class="widget-content p-0">
+              <div class="widget-content-wrapper">
+                <div class="widget-content-left d-flex align-items-center">
+                  <div class="btn-group" ngbDropdown placement="bottom-right">
+                    <button type="button" class="btn btn-link p-0 fs-13" ngbDropdownToggle>
+                      {{ currentUser?.first_name }} {{
+                      currentUser?.last_name }}
+                    </button>
+                    <div class="dropdown-menu-lg" ngbDropdownMenu style="padding: 0px;">
+
+                      <div class="widget-content p-0">
+                        <div class="widget-content-wrapper" style="background: #012756;padding: 10px;"
+                          *ngIf="currentUser">
+                          <img *ngIf="!currentUser.image"
+                            style="padding: 10px;background-color: #ffffff;border-radius: 18px;" alt="person"
+                            src="assets/images/login-images/menu_assets/Icon-awesome-user-alt.png">
+                          <img *ngIf="currentUser.image" height="50" width="50" class="rounded"
+                            [src]="logoUri+currentUser.image" alt="logo">
+                          <div style="padding: 0px 10px;">
+                            <p style="margin-bottom: 0px;color: #ffffff;">
+                              Agent Name : {{currentUser?.first_name}} {{currentUser?.last_name}}</p>
+                              <p style="margin-bottom: 0px;color: #ffffff;">
+                                Agency Name : {{currentUser?.business_name}}</p>
+                                <p style="margin-bottom: 0px;color: #ffffff;">
+                                  Company ID : {{currentUser?.uuid}}</p>
+                            <p style="margin-bottom: 0px;color: #ffffff;">Active Since :
+                              {{currentUser?.created_at | date:'dd/MM/yyyy'}}</p>
+                          </div>
+
+                          <div class="widget-content-right">
+                            <button (click)="onLogout()" mat-raised-button style="background: #376fb6;color: #ffffff;">
+                              Sign Out</button>
+                          </div>
+                        </div>
+                        <div class="widget-content-wrapper" style="background: #ffffff;padding: 5px;">
+                          <img style="padding: 0px 10px;" alt="person"
+                            src="assets/images/login-images/menu_assets/mail.png">
+                          <div class="wrapper-dialogue">
+                            <p style="margin-bottom: 0px;">Mobile No: {{currentUser?.phone
+                              }}</p>
+
+                          </div>
+                        </div>
+                        <div class="widget-content-wrapper" style="background: #ffffff;padding: 5px;">
+                          <img style="padding: 0px 10px;" alt="person"
+                            src="assets/images/login-images/menu_assets/mail.png">
+                          <div class="wrapper-dialogue">
+                            <p style="margin-bottom: 0px;">{{ currentUser?.email }}</p>
+                          </div>
+                        </div>
+                        <mat-divider style="background: turquoise;"></mat-divider>
+                        <div class="d-flex justify-content-between modal-change-pwd">
+                          <button mat-raised-button [routerLink]="['/users/change-password']">Change
+                            Password</button>
+                          <button mat-raised-button [routerLink]="['/users/profile']">Update
+                            Profile
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- user profile end -->
+    <div class="app-header__mobile-menu">
+      <button type="button" class="hamburger close-sidebar-btn hamburger--elastic"
+        [ngClass]="{'is-active' : globals.toggleSidebarMobile}" (click)="toggleSidebarMobile()">
+        <span class="hamburger-box">
+          <span class="hamburger-inner"></span>
+        </span>
+      </button>
+      <div class="logo-src" *ngIf="currentUser">
+        <img class="rounded-circle" width="100" height="50" 
+         src="{{ currentUser.domain_logo ? currentUser.domain_logo : '' }}" alt="User Logo">
+      </div>
+    </div>
+    <div class="app-header__menu">
+      <span>
+        <button class="btn-icon btn-icon-only btn btn-primary" [ngClass]="{'is-active' : globals.toggleHeaderMobile}"
+          (click)="toggleHeaderMobile()">
+          <div class="btn-icon-wrapper">
+            <fa name="ellipsis-v"></fa>
+          </div>
+        </button>
+      </span>
+    </div>
+  </div>

@@ -1,0 +1,101 @@
+<div class="card mb-3">
+    <div class="card-header-tab card-header">
+        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+            <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+            {{ label }}
+        </div>
+    </div>
+    <form class="m-4">
+        <div class="form-group row">
+            <label for="promocode" class="col-sm-3  col-form-label col-form-label-sm"> Promo Code <sup
+                    class="text-danger">*</sup> </label>
+            <input type="text" class="col-sm-5 form-control form-control-sm" id="promocode" placeholder="Promo Code">
+        </div>
+        <div class="form-group row">
+            <label for="description" class="col-sm-3 col-form-label col-form-label-sm"> Description <sup
+                    class="text-danger">*</sup> </label>
+            <textarea class="col-sm-5 form-control form-control-sm" name="description" id="description"
+                rows="3"></textarea>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label col-form-label-sm" for="catagory"> Catagory <sup
+                    class="text-danger">*</sup> </label>
+            <select class="col-sm-5 form-control form-control-sm custom-select" id="inlineFormCustomSelect">
+                <option selected>Choose...</option>
+                <option value="1">Flight</option>
+                <option value="2">Bus</option>
+                <option value="3">Hotel</option>
+                <option value="3">Activities</option>
+                <option value="3">Transfer</option>
+            </select>
+        </div>
+        <fieldset class="form-group">
+            <div class="row">
+                <legend class="text-muted col-form-label col-form-label-sm col-sm-3 pt-0">Discount Type <sup
+                        class="text-danger">*</sup> </legend>
+                <div class="col-sm-5 p-0">
+                    <mat-radio-group aria-label="Select an option">
+                        <mat-radio-button value="1">Plus(+USD)</mat-radio-button>
+                        <mat-radio-button value="2">Percentage(%)</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-group row">
+            <label for="discountvalue" class="col-sm-3  col-form-label col-form-label-sm"> Discount Value <sup
+                    class="text-danger">*</sup> </label>
+            <input type="text" class="col-sm-5 form-control form-control-sm" id="discountvalue"
+                placeholder="Discount Value">
+        </div>
+        <div class="form-group row">
+            <label for="minimumamount" class="col-sm-3  col-form-label col-form-label-sm"> Minimum Amount <sup
+                    class="text-danger">*</sup> </label>
+            <input type="text" class="col-sm-5 form-control form-control-sm" id="minimumamount"
+                placeholder="Minimum Amount">
+        </div>
+        <div class="form-group row">
+            <label for="expirydate" class="col-sm-3  col-form-label col-form-label-sm"> Expiry Date </label>
+            <input type="text" class="col-sm-5 form-control form-control-sm" id="minimumamount"
+                placeholder="Expiry Date">
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-3"> PromoCode Image</div>
+            <div class="custom-file col-sm-5">
+                <input type="file" class="form-control form-control-sm custom-file-input" id="validatedCustomFile"
+                    required>
+                <label class="custom-file-label col-form-label col-form-label-sm" for="validatedCustomFile">Choose
+                    file...</label>
+            </div>
+        </div>
+        <fieldset class="form-group">
+            <div class="row">
+                <legend class="text-muted col-form-label col-form-label-sm col-sm-3 pt-0">Display on Home Page <sup
+                        class="text-danger">*</sup> </legend>
+                <div class="col-sm-5 p-0">
+                    <mat-radio-group aria-label="Select an option">
+                        <mat-radio-button value="1">Yes</mat-radio-button>
+                        <mat-radio-button value="2">No</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="form-group">
+            <div class="row">
+                <legend class="text-muted col-form-label col-form-label-sm col-sm-3 pt-0">Status <sup
+                        class="text-danger">*</sup></legend>
+                <div class="col-sm-5 p-0">
+                    <mat-radio-group aria-label="Select an option">
+                        <mat-radio-button value="1">Active</mat-radio-button>
+                        <mat-radio-button value="2">Inactive</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-group row">
+            <div class="offset-sm-3">
+                <button type="submit" class="btn btn-md btn-primary">Update</button> &nbsp;
+                <button type="submit" class="btn btn-md btn-warning">Reset</button>
+            </div>
+        </div>
+    </form>
+</div>

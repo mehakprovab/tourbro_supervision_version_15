@@ -1,0 +1,145 @@
+<hr>
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title">Add Airline</h5>
+    </div>
+    <form [formGroup]="airlineForm" (ngSubmit)="onFlightAdd(airlineForm.value)" class="form">
+        <div class="card-body">
+            <table>
+                <tr>
+                    <td>
+                        <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+                            <label for="airlines" class="mr-sm-2">Airlines</label>
+                            <select formControlName="airlines" class="form-control">
+                                <option *ngFor="let airline of airlines" [value]="airline.id">
+                                    {{airline.name}}</option>
+                            </select>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+                            <label for="airlines" class="mr-sm-2">Markup Type</label>
+                            <div class="position-relative form-check">
+                                <label class="form-check-label">
+                                    <input value="plus" name="markupType" formControlName="markupType" type="radio"
+                                        class="form-check-input" />
+                                    Plus(+ USD)
+                                </label>
+                            </div>
+                            <div class="position-relative form-check">
+                                <label class="form-check-label">
+                                    <input value="percentage" formControlName="markupType" type="radio"
+                                        class="form-check-input" />
+                                    Percentage(%)
+                                </label>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+                            <label for="markupValue" class="mr-sm-2">Markup Value</label>
+                            <input formControlName="markupValue" placeholder="" type="text" class="form-control">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-success">Add</button>
+            &nbsp;&nbsp;
+            <button class="btn btn-secondary">Reset</button>
+        </div>
+    </form>
+</div>
+
+<hr>
+<div class="card">
+    <form [formGroup]="generalMarkupForm" (ngSubmit)="onAddGeneralMarkup(generalMarkupForm.value)" class="form">
+        <div class="card-header">
+            <h5 class="card-title">Flight - General Markup</h5>
+        </div>
+        <div class="card-body">
+            <table>
+                <tr>
+                    <td>
+                        <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+                            <label for="airlines" class="mr-sm-2">Markup Type</label>
+                            <div class="position-relative form-check">
+                                <label class="form-check-label">
+                                    <input value="plus" formControlName="markupType" type="radio"
+                                        class="form-check-input" />
+                                    Plus(+ USD)
+                                </label>
+                            </div>
+                            <div class="position-relative form-check">
+                                <label class="form-check-label">
+                                    <input value="percentage" formControlName="markupType" type="radio"
+                                        class="form-check-input" />
+                                    Percentage(%)
+                                </label>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+                            <label for="markupValue" class="mr-sm-2">Markup Value</label>
+                            <input formControlName="markupValue" placeholder="" type="text" class="form-control">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-success">Save</button>
+            &nbsp;&nbsp;
+            <button class="btn btn-secondary">Reset</button>
+        </div>
+    </form>
+</div>
+
+
+<hr>
+<div class="card">
+    <form [formGroup]="specificAirlineMarkupForm"
+        (ngSubmit)="onAddSpecificAirlineMarkup(specificAirlineMarkupForm.value)" class="form">
+        <div class="card-header">
+            <h5 class="card-title">Flight - Specific Airline Markup</h5>
+        </div>
+        <div class="card-body">
+            <table>
+                <tr *ngFor="let item of t.controls; let i = index">
+                    <td [formGroup]="item">
+                        <table>
+                            <tr>
+                                <td>{{i + 1}} {{airlines[i]?.logo}}</td>
+                                <td>{{airlines[i]?.name}}</td>
+                                <td>
+                                    <input type="radio" value="plus" formControlName="markupType" /> Plus(+
+                                    USD)
+                                    <input type="radio" value="percentage" formControlName="markupType" />
+                                    Percentage(%)
+
+                                </td>
+                                <td>
+                                    Value <input type="text" formControlName="markupValue" class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && item.controls.markupValue.errors }" />
+                                    <div *ngIf="submitted && item.controls.markupValue.errors" class="invalid-feedback">
+                                        <div *ngIf="item.controls.markupValue.errors.required">Value is required</div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-success">Save</button>
+            &nbsp;&nbsp;
+            <button class="btn btn-secondary">Reset</button>
+        </div>
+    </form>
+</div>

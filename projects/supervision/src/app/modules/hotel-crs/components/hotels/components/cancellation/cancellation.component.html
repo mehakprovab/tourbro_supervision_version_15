@@ -1,0 +1,162 @@
+<ng-container >
+    <div class="container" *ngIf="showCancelPolicyList">
+        <div class="form_legend bg-info">Room Cancellation Policy List</div>
+        <div class="text-right m-2">
+            <button class="btn btn-sm btn-primary mr-1" (click)="onClickAddCancelPolicy()">Add Cancellation Policy</button>
+            <button class="btn btn-sm btn-primary"(click)="goToRoomCancel()">Room List</button>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-left text-nowrap">Sl No.</th>
+                        <th class="text-left text-nowrap">Booking confirm day before (Days)</th>
+                        <th class="text-left text-nowrap">Penality Type</th>
+                        <th class="text-left text-nowrap">Penality</th>
+                        <th class="text-left text-nowrap">Status</th>
+                        <th class="text-left text-nowrap">Actions</th>
+                    </tr>
+                </thead>
+                <tr *ngIf="!cancelList?.length">
+                    <td colspan="12">
+                        <h4 class="text-muted text-center">
+                            No Data Found!
+                        </h4>
+                    </td>
+                </tr>
+                <tbody>
+                    <tr *ngFor="let cancel of cancelList; let i=index;">
+                        <td class="text-left text-muted">{{i+1}}</td>
+                        <td class="text-left">{{cancel.cancel_to}}</td>
+                        <td class="text-left">{{cancel.penalty}}</td>
+                        <td class="text-left">{{cancel.penalty_type}}</td>
+                        <!-- <td class="text-left">{{cancel.max_child_capacity}}</td> -->
+                        <td>
+                            <span title="Slide for Active/Deactive">
+                                <mat-slide-toggle readonly class="example-margin" [color]="''"
+                                    [checked]="cancel['status']" [(ngModel)]="cancel['status']" name="status{{i}}">
+                                </mat-slide-toggle>
+                            </span>
+                        </td>
+                        <td class="text-left">
+                            <button (click)="onEdit(cancel)">
+                                <a title="Edit" class="p-1">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                            </button>
+                            <!-- <a title="Seasons" class="p-1">
+                                <i class="fa fa-calendar"></i>
+                            </a> -->
+                            <!-- <a title="Price Info List" class="p-1">
+                                <i class="fa fa-cart-plus"></i>
+                            </a>
+                            <a title="Cancellation Policy List" class="p-1">
+                                <i class="fa fa-handshake"></i>
+                            </a> -->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container" *ngIf="showCancelPolicyForm">
+        <form [formGroup]="roomCancellationPolicyForm" (ngSubmit)="onSubmitCancelPolicy()">
+            <fieldset form="hotelImage">
+                <div class="form_legend">Add Cancellation Policy</div>
+                <!-- <input [value]="addedRoomDetail.id" formControlName="hotel_room_ids" type="text" hidden /> -->
+                <input formControlName="status" hidden>
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <label class=" control-label">
+                            Booking confirm day before (Days)
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" formControlName="cancel_to" class="form-control"
+                            [ngClass]="{ 'is-invalid': submittedRoomCancelPolicy && hotelRoomCancelPolicy.cancel_to.errors }" />
+                        <div *ngIf="submittedRoomCancelPolicy && hotelRoomCancelPolicy.cancel_to.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="hotelRoomCancelPolicy?.cancel_to.errors.required">Field is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <label class=" control-label">
+                            Penalty Type
+                            <span class="text-danger">*</span>
+                        </label>
+                        <select formControlName="penalty_type" class="form-control"
+                            [ngClass]="{ 'is-invalid': submittedRoomCancelPolicy && hotelRoomCancelPolicy.penalty_type.errors }">
+                            <option value="amount" selected>Amount</option>
+                            <option value="percentage">Percentage</option>
+                        </select>
+                        <div *ngIf="submittedRoomCancelPolicy && hotelRoomCancelPolicy.penalty_type.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="hotelRoomCancelPolicy.penalty_type.errors.required">Field is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <label class=" control-label">
+                            Penalty
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" formControlName="penalty" class="form-control"
+                            [ngClass]="{ 'is-invalid': submittedRoomCancelPolicy && hotelRoomCancelPolicy.penalty.errors }" />
+                        <div *ngIf="submittedRoomCancelPolicy && hotelRoomCancelPolicy.penalty.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="hotelRoomCancelPolicy.penalty.errors.required">Field is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <label class=" control-label">
+                            Cancellation Description
+                            <span class="text-danger">*</span>
+                        </label>
+                        <textarea type="text" formControlName="cancel_description" class="form-control"
+                            [ngClass]="{ 'is-invalid': submittedRoomCancelPolicy && hotelRoomCancelPolicy.cancel_description.errors }">
+                        </textarea>
+                        <div *ngIf="submittedRoomCancelPolicy && hotelRoomCancelPolicy.cancel_description.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="hotelRoomCancelPolicy.cancel_description.errors.required">Field is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <label class=" control-label">
+                            Refund Policy
+                            <span class="text-danger">*</span>
+                        </label>
+                        <textarea type="text" formControlName="refund_policy" class="form-control"
+                            [ngClass]="{ 'is-invalid': submittedRoomCancelPolicy && hotelRoomCancelPolicy.refund_policy.errors }">
+                        </textarea>
+                        <div *ngIf="submittedRoomCancelPolicy && hotelRoomCancelPolicy.refund_policy.errors"
+                            class="invalid-feedback">
+                            <div *ngIf="hotelRoomCancelPolicy.refund_policy.errors.required">Field is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="status">
+                        Status
+                        <span class="text-danger">*</span>
+                    </label>
+                    <span title="Slide for Active/In-Active">
+                        <mat-slide-toggle class="example-margin" formControlName="status" [color]="''">
+                        </mat-slide-toggle>
+                    </span>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-sm btn-primary mr-1">Save</button>
+                    <button class="btn btn-sm btn-secondary" type="reset">Back</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</ng-container>

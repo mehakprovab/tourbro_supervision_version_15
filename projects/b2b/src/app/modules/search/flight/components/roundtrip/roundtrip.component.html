@@ -1,0 +1,54 @@
+<!-- <p>roundtrip works!</p> -->
+<form [formGroup]="roundTripForm" class="needs-validation" novalidate (validSubmit)="onSubmit()">
+    <div class="form-row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <span class="sprt depart"></span>
+                <!-- <input type="text" formControlName="departureCity" class="form-control nrm_input"
+                    placeholder="Departing from?"> -->
+                <input type="text" formControlName="departureCity" id="departureCity"
+                    class="form-control form-control-sm nrm_input" placeholder="Departure City ?"
+                    (keyup)="getSearchedList($event)" autocomplete="off">
+                <span>
+                    <div class="flight_chnge text-muted" (click)="exchangeCity()">
+                        <i class="fa fa-exchange {{ cityExchanged ? 'rotate-360' : 'rotate-0' }}"></i>
+                    </div>
+                </span>
+                <div *ngIf="shouldiHide && depart && f.departureCity.valid">
+                    <app-flight-city-list (whichCity)="getCity($event)" [getAirports]="searchedList"
+                        [inputFor]="'depart'">
+                    </app-flight-city-list>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <span class="sprt return"></span>
+                <input type="text" formControlName="destinationCity" id="destinationCity" class="form-control nrm_input"
+                    placeholder="Going to?" (keyup)="getSearchedList($event)" autocomplete="off">
+
+                <div *ngIf="shouldiHide && !depart && f.destinationCity.valid">
+                    <app-flight-city-list (whichCity)="getCity($event)" [getAirports]="searchedList"
+                        [inputFor]="'dest'">
+                    </app-flight-city-list>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <span class="sprt date"></span>
+                <input type="text" formControlName="departureDate" class="form-control nrm_input" style="z-index: 2000;"
+                    placeholder="Departing - Returining" bsDaterangepicker [bsConfig]="bsDateConf"/>
+                <!-- <input type="text" id="departureDate" formControlName="departureDate"
+                    class="form-control form-control-sm  nrm_input" placeholder="Departing Date" bsDaterangepicker
+                    [bsConfig]="bsDateConf" [isOpen]="isOpen" [minDate]="minDate" [maxDate]="maxDate"> -->
+            </div>
+        </div>
+    </div>
+    <app-form-extension 
+    [regConfig]="roundTripForm" 
+    [travellerForm]="travellerForm"
+    [travellersFadeinn]="travellersFadeinn"
+    [fadeinn]="fadeinn"
+    ></app-form-extension>
+</form>

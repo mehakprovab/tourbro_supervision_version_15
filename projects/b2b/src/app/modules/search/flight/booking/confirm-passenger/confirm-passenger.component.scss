@@ -1,0 +1,58 @@
+::ng-deep {
+    .mat-dialog-actions{
+        display: flex !important;
+        flex-flow: row-reverse !important;
+    }
+}
+
+::ng-deep .form-group label {
+    font-size: 13px;
+    line-height: 0px;
+    font-weight: 600;
+    padding-left: 6px;}
+
+ 
+    ::ng-deep btn-success.disabled, .btn-success:disabled {
+        color: #fff;
+        background: #012756 linear-gradient(180deg, #012756, #012756) repeat-x !important;
+    border-color: #012756 !important;
+    }
+
+    .modal {
+        transform: translate(0,-50%);
+        top: 60%;
+        margin: 0 auto;
+    }
+    
+.nagad {
+    background-image: url('../../../../../../assets/images/nagad-logo.png');
+    width           : 130px;
+}
+
+.bKash {
+    background-image: url('../../../../../../assets/images/bKash-logo.png');
+    width           : 130px;
+}
+
+.wallet {
+    background-image: url('../../../../../../assets/images/wallet.png');
+    width           : 130px;
+}
+
+.sslCommerz {
+    background-image: url('../../../../../../assets/images/ssl-commerz-logo.jpg');
+    width           : 130px;
+}
+.drinkcard-cc {
+    cursor: pointer;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 100px;
+    height: 70px;
+    transition: all .1s ease-in;
+}
+
+.cc-selector-2 .payment_label {
+    display: table;
+    margin: 0 auto;
+}

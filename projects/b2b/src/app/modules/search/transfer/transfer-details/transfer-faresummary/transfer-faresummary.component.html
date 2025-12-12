@@ -1,0 +1,63 @@
+<div class="fsBorder card" style="box-shadow: 0px 1px 16px #ddd;">
+  <h4 class="text-muted"> Fare Summary </h4>
+  <div class="bg-gradient-light p-0 pb-3">
+    <div>
+      <div class="row m-0 text-muted">
+        <div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+          <div class="float-left customColor">
+            No of Pax
+          </div>
+          <div class="float-right customColor">{{noOfTravellers?.paxes[0]?.adultCount}} Adult<span *ngIf="noOfTravellers?.paxes[0]?.childCount"> +  {{noOfTravellers.paxes[0].childCount}} Child</span> <br><span *ngIf="noOfTravellers.paxes[0].infantCount"> + {{noOfTravellers.paxes[0].infantCount}} Infant</span>
+          </div>
+        </div>
+        <!-- <div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+          <div class="float-left customColor"> Cancellation Policy </div>
+          <div class="float-right customColor"> Refundable </div>
+          <br />
+          <a class="float-left customColor"> View Cancellation Policy</a>
+        </div> -->
+        <div class="col-md-12 col-lg-12 f-14 bbottom pb-2 mb-3 mobile_nopad">
+          <div class="float-left customColor"> Total Price </div>
+          <div class="float-right customColor"> {{blockedTransfer?.Price?.Currency}}
+            {{blockedTransfer?.Price?.TotalDisplayFare| number:'1.1-2'}} </div>
+        </div>
+        <div class="col-md-12 col-lg-12 f-14 mb-3" *ngIf="convienienceFee">
+          <div class="float-left" style="color: #082B3A !important;">
+            Convenience Fees
+          </div>
+          <div class="float-right customColor">
+            {{ blockedTransfer?.Price?.Currency}} {{ convienienceFee | number:'1.1-2'}}
+          </div>
+      </div>
+      <div class="col-md-12 col-lg-12 f-14 mb-3" *ngIf="extrasValue>0">
+        <div class="float-left" style="color: #082B3A !important;">
+            Extras
+        </div>
+        <div class="float-right customColor">
+            {{ blockedTransfer?.Price?.Currency}}  {{extrasValue | number:'1.1-2' }}
+        </div>
+    </div>
+      <div class="col-md-12 col-lg-12 f-14 mb-3" *ngIf="promocode">
+        <div class="float-left" style="color: #082B3A !important;">
+            Discount
+        </div>
+        <div class="float-right customColor">
+            {{ blockedTransfer?.Price?.Currency}}  {{discount_value | number:'1.1-2' }}
+        </div>
+    </div>
+        <div class="col-md-12 col-lg-12 f-18 mb-0 mobile_nopad"  *ngIf="!confirmDetails">
+          <div class="float-left  grand_tot"> Grand Total </div>
+          <div class="float-right text-warning" style="color: #092e53 !important; font-size: 16px; font-weight: 700;">
+            {{ blockedTransfer?.Price?.Currency }} {{ (grandTotal ) | number:'1.1-2'}}
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-12 f-18 mb-0 mobile_nopad" *ngIf="confirmDetails">
+          <div class="float-left  grand_tot"> Grand Total </div>
+          <div class="float-right text-warning" style="color: #092e53 !important; font-size: 16px; font-weight: 700;">
+            {{ blockedTransfer?.Price?.Currency }} {{ (confirmDetails?.BookingItineraryDetails?.total_fare) | number:'1.1-2'}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

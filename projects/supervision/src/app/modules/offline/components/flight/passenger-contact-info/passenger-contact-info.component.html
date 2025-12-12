@@ -1,0 +1,71 @@
+<!-- <p>passenger-contact-info works!</p> -->
+
+<!-- <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">
+            <h3>
+                Passenger Contact Info
+            </h3>
+        </li>
+    </ol>
+</nav> -->
+<div class="card-header-tab card-header">
+    <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+        <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+        {{ 'Passenger Contact Info' }}
+    </div>
+</div>
+<form class="p-4 bbottom">
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="inputDomainUser">User</label>
+            <input type="text" class="form-control form-control-sm" id="inputDomainUser" placeholder="Domain User">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputBookingSource4">Booking Source</label>
+            <select id="inputBookingSource4" class="form-control form-control-sm">
+                <option selected>Choose...</option>
+                <option>PTBSID000000002</option>
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputOfflineSupplierName">Offline Supplier Name</label>
+            <input type="text" class="form-control form-control-sm" id="inputOfflineSupplierName"
+                placeholder="Offline Supplier Name">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="inputTitle4">Title</label>
+            <select id="inputTitle4" class="form-control form-control-sm">
+                <option selected>Choose...</option>
+                <option>Mr</option>
+                <option>Ms</option>
+                <option>Miss</option>
+                <option>Master</option>
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputFirstName">First Name</label>
+            <input type="text" class="form-control form-control-sm" id="inputFirstName" placeholder="First Name">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputLastName">LastName</label>
+            <input type="text" class="form-control form-control-sm" id="inputLastName" placeholder="Last Name">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="inputEmail">Email</label>
+            <input type="email" class="form-control form-control-sm" id="inputEmail" placeholder="Email">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputMobile">Mobile</label>
+            <input type="number" class="form-control form-control-sm" id="inputMobile" placeholder="Mobile">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputAddress">Address</label>
+            <input type="address" class="form-control form-control-sm" id="inputAddress" placeholder="Address">
+        </div>
+    </div>
+</form>

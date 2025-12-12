@@ -1,0 +1,36 @@
+<div class="card mb-3">
+    <div class="card-header-tab card-header">
+        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+            <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+            {{'Travel Insurance'}}
+        </div>
+    </div>
+    <form class="p-5">
+        <fieldset class="form-group">
+            <div class="row">
+                <legend class="text-muted col-form-label col-form-label-sm col-sm-3 pt-0">Status</legend>
+                <div class="col-sm-5 p-0">
+                    <mat-radio-group aria-label="Select an option">
+                        <mat-radio-button value="1" >Active</mat-radio-button>
+                        <mat-radio-button value="2" >Inactive</mat-radio-button>
+                      </mat-radio-group>
+                </div>
+            </div>
+        </fieldset>
+            <div class="form-group row">
+                <label for="inputInsuranceAmount3" class="col-sm-3 col-form-label col-form-label-sm text-muted font-weight-bold">
+                    Insurance Amount <sup class="text-danger">*</sup>
+                </label>
+                <div class="col-sm-5 p-0">
+                    <input type="InsuranceAmount" class="form-control form-control-sm" id="inputInsuranceAmount3"
+                        placeholder="Insurance Amount">
+                </div>
+            </div>
+
+        <div class="form-group row">
+            <div class="offset-md-3">
+                <button type="submit" class="btn btn-sm btn-primary">Save</button>
+            </div>
+        </div>
+    </form>
+</div>

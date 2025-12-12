@@ -1,0 +1,108 @@
+<div class="row card">
+  <div class=" p-0 col-md-12 col-lg-12">
+    <div class="card-header-tab card-header bg-dark text-white">
+      <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+        <i class="header-icon fa fa-edit"></i>
+        <span class="text-uppercase"> {{'Account Details'}} </span>
+      </div>
+    </div>
+  </div>
+  <div class="my-5 offset-lg-2 offset-md-2 col-md-8 col-lg-8">
+    <form class="" [formGroup]="regConfig">
+      <div class="form-group row">
+        <label for="account_name" class="col-sm-3 col-form-label font-weight-bold"> Account Name <sup
+            class="text-danger f-16"> * </sup> </label>
+        <div class="col-sm-9">
+          <input formControlName="account_name" type="text" class="form-control text-capitalize" id="account_name"
+            (keypress)="omitSpecialCharacters($event)" placeholder="Account Name" maxlength="150">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="account_number" class="col-sm-3 col-form-label font-weight-bold"> Account Number<sup
+            class="text-danger f-16"> * </sup> </label>
+        <div class="col-sm-9">
+          <input formControlName="account_number" type="text" maxlength="150" class="form-control text-capitalize" id="account_number"
+            placeholder="Account Number" (keypress)="numberOnly($event)">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="swift_code" class="col-sm-3 col-form-label font-weight-bold"> SWIFT Code <sup
+            class="text-danger f-16"> * </sup></label>
+        <div class="col-sm-9">
+          <input formControlName="swift_code" type="text" class="form-control text-capitalize" id="swift_code" placeholder="SWIFT Code"
+            maxlength="150">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="iabn" class="col-sm-3 col-form-label font-weight-bold"> IBAN</label>
+        <div class="col-sm-9">
+          <input formControlName="iban" type="text" class="form-control text-capitalize" id="iban" placeholder="IBAN"
+            maxlength="150">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="bank_name" class="col-sm-3 col-form-label font-weight-bold"> Bank Name <sup
+            class="text-danger f-16"> * </sup></label>
+        <div class="col-sm-9">
+          <input formControlName="bank_name" type="text" class="form-control text-capitalize" id="bank_name" placeholder="Bank Name"
+            maxlength="150">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="branch_name" class="col-sm-3 col-form-label font-weight-bold"> Branch Name <sup
+            class="text-danger f-16"> * </sup></label>
+        <div class="col-sm-9">
+          <input formControlName="branch_name" type="text" class="form-control text-capitalize" id="branch_name"
+            placeholder="Branch Name" (keypress)="omitSpecialCharacters($event)">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="bank_routing_number" class="col-sm-3 col-form-label font-weight-bold">Bank Routing Number<sup
+            class="text-danger f-16">*</sup> </label>
+        <div class="col-sm-9">
+          <input formControlName="bank_routing_number" type="text" maxlength="150" class="form-control text-capitalize"
+            id="bank_routing_number" placeholder="Bank Routing Number">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="logo" class="col-sm-3 col-form-label font-weight-bold"> Bank Logo <sup class="text-danger f-14"> *
+          </sup> <br>
+        </label>
+
+        <div class="col-sm-5 custom-file pl-0" style="display: flex;">
+          <img *ngIf="bankLogo" height="50" width="100" class="rounded" [src]="logoBankUri+bankLogo" alt="logo">
+          <img *ngIf="imageSrc" height="50" width="100" class="rounded" [src]="imageSrc" alt="logo">
+          &nbsp;&nbsp;
+
+          <input type="file" class="form-control-file p-2" id="logo" (change)="onFileSelected($event)" #theFile
+             accept=".png, .jpg, .jpeg" formControlName="bank_logo">
+        </div>
+        <span class="col-sm-4 text-danger" style="margin-top: 10px;">(Maximum upload file size: 1 MB)</span>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-3 col-lg-3">
+          <span for="customcheckboxInline1" class="font-weight-bold"> Status </span> <sup class="text-danger f-16"> *
+          </sup>
+        </div>
+        <div class="col-lg-9 col-md-9">
+          <div class="custom-control custom-radio custom-control-inline">
+            <input formControlName="status" value="1" type="radio" id="customcheckboxInline1"
+              class="custom-control-input">
+            <label class="custom-control-label" for="customcheckboxInline1"> Active </label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input formControlName="status" value="0" type="radio" id="customcheckboxInline2"
+              class="custom-control-input">
+            <label class="custom-control-label" for="customcheckboxInline2"> In-Active </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row mb-n2">
+        <div class="col-sm-12 customCenter">
+          <button type="submit" class="btn btn-sm btn-primary mr-1" (click)="onSubmit()">Add/Update</button>
+          <button type="reset" class="btn btn-sm btn-primary" (click)="onReset()">Reset</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

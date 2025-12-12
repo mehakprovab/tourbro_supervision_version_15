@@ -1,0 +1,74 @@
+<div class="fsBorder card" style="box-shadow: 0px 1px 16px #ddd;">
+  <h4 class="text-muted"> Fare Summary </h4>
+  <div class="bg-gradient-light px-0 pb-0">
+    <div>
+      <div class="row m-0 text-muted">
+        <!-- <div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+          <div class="float-left customColor">
+            No of Pax
+          </div>
+          <div class="float-right customColor">{{noOfTravellers}}</div>
+        </div> -->
+        <!-- <div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+          <div class="float-left customColor"> Cancellation Policy </div>
+          <div class="float-right customColor"> Refundable </div>
+          <br />
+          <a class="float-left customColor"> View Cancellation Policy</a>
+        </div> -->
+        <div class="col-md-12 col-lg-12 f-14 bbottom pb-2 mb-2 mobile_nopad" *ngIf="blockedActivity?.BookingSource !== 'ZBAPINO00004'">
+          <div class="float-left customColor"> Base Price </div>
+          <div *ngIf="!blockedActivity?.ItenaryData"class="float-right customColor"> {{blockedActivity?.Price?.Currency}}
+            {{blockedActivity?.Price?.TotalDisplayFare }} </div>
+            <div *ngIf="blockedActivity?.ItenaryData"class="float-right customColor"> {{blockedActivity?.ItenaryData?.attributes?.Price?.Currency}}
+              {{blockedActivity?.ItenaryData?.totalAmount }} </div>
+        </div>
+
+
+        <div class="col-md-12 col-lg-12 f-14 bbottom pb-2 mb-2 mobile_nopad" *ngIf="blockedActivity?.BookingSource === 'ZBAPINO00004'">
+          <div class="float-left customColor"> Adult Price ({{blockedActivity?.body?.paxes[0]?.adultCount}} X {{blockedActivity?.Price?.Currency}} {{blockedActivity?.singleAdultPrice}})  </div>
+          <div class="float-right customColor"> {{blockedActivity?.Price?.Currency}} 
+            {{blockedActivity?.Price?.PriceBreakup?.AdultPrice }} </div>
+            <br/>
+            <div *ngIf="blockedActivity?.Price?.PriceBreakup?.SupplierChildPrice" class="float-left customColor"> Child Price  ({{blockedActivity?.body?.paxes[0]?.childCount}} X  {{blockedActivity?.Price?.Currency}} {{blockedActivity?.singleChildPrice}}) </div>
+              <div  *ngIf="blockedActivity?.Price?.PriceBreakup?.SupplierChildPrice" class="float-right customColor"> {{blockedActivity?.Price?.Currency}}
+                {{blockedActivity?.Price?.PriceBreakup?.ChildPrice }} </div>
+            
+        </div>
+
+
+
+        <div *ngIf="convienienceFee"class="col-md-12 col-lg-12 f-14 bbottom mb-3 mobile_nopad">
+          <div class="float-left customColor"> Convinience Fee </div>
+
+            <div *ngIf="convienienceFee"class="float-right customColor">{{blockedActivity?.Price?.Currency}}
+              {{convienienceFee }} </div>
+        </div>
+        <div class="col-md-12 col-lg-12 f-14 mb-3" *ngIf="promocode">
+          <div class="float-left" style="color: #082B3A !important;">
+              Discount
+          </div>
+          <div *ngIf="!blockedActivity?.ItenaryData"class="float-right customColor">
+              {{ blockedActivity?.Price?.Currency}}  {{discount_value }}
+          </div>
+          <div *ngIf="blockedActivity?.ItenaryData"class="float-right customColor">
+            {{ blockedActivity?.ItenaryData?.attributes?.Price?.Currency}}  {{blockedActivity?.discount }}
+        </div>
+      </div>
+        
+        <div class="col-md-12 col-lg-12 f-18 mb-3 mobile_nopad">
+          <div class="float-left grand_tot"> {{showLable ? 'Grand': 'Sub'}} Total </div>
+          <div *ngIf="!blockedActivity?.ItenaryData"class="float-right text-warning" style="font-size: 16px !important;     color: #082b3a !important;
+  font-weight: 700 !important;">
+            {{blockedActivity?.Price?.Currency}} {{(grandTotal - discount_value) | number: '1.2-2'}} 
+          </div>
+            <div *ngIf="blockedActivity?.ItenaryData"class="float-right text-warning" style="font-size: 16px !important;     color: #082b3a !important;
+  font-weight: 700 !important;">
+              {{blockedActivity?.ItenaryData?.attributes?.Price?.Currency}} {{(grandTotal) | number: '1.2-2' }}</div>
+        
+            </div>
+       
+
+      </div>
+    </div>
+  </div>
+</div>

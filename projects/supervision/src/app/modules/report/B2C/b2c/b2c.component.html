@@ -1,0 +1,34 @@
+<button routerLink="/report/b2c-flight"class="css">Flight</button>
+<button routerLink="/report/b2c-hotel"class="css ml-3">Hotel</button>
+<button routerLink="/report/b2c-car"class="css ml-3">Car</button>
+
+<div class="">
+    <div class="">
+        <ngb-tabset class="tabs-animated tabs-animated-shadow">
+            <ngb-tab>
+                <ng-template ngbTabTitle>
+                    <span><i class="fa fa-plane"></i> &nbsp; Flight Bookings</span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <app-b2c-flight></app-b2c-flight>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab>
+                <ng-template ngbTabTitle>
+                    <span><i class="fa fa-hotel"></i> &nbsp; Hotel Bookings</span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <app-b2c-hotel></app-b2c-hotel>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab>
+                <ng-template ngbTabTitle>
+                    <span><i class="fa fa-car"></i> &nbsp; Car Bookings</span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <app-b2c-car></app-b2c-car>
+                </ng-template>
+            </ngb-tab>
+        </ngb-tabset>
+    </div>
+</div>

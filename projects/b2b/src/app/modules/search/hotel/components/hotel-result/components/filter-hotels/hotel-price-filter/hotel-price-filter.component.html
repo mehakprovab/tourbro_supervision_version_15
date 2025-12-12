@@ -1,0 +1,14 @@
+<div class="rangebox">
+    <button data-target="#collapse501" data-toggle="collapse" class="collapsebtn"
+        type="button">Price ( {{ currency }} )</button>
+        <a *ngIf="hotelsCopy.length" style="cursor: pointer;font-size: 12px;" class="float-right" (click)="clearPriceFilter()">Clear</a>
+    <div *ngIf="hotelsCopy.length" id="collapse501" class="collapse show" style="clear: both;">
+        <div class="price_slider1">
+            <span *ngIf="hotelsCopy.length" class="lable-slider">
+                <ngx-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"
+                (valueChange)="valueChange($event)"
+                (highValueChange)="highValueChange($event)"></ngx-slider>
+            </span>
+        </div>
+    </div>
+</div>

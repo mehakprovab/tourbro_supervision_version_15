@@ -1,0 +1,345 @@
+<div class="tab" [ngClass]="{'custom-result': isResultScreen}">
+    <label *ngIf="isResultScreen"><h4>Amend search </h4></label>
+    <div class="custom-navtabs">
+        <div class="custom-small-navtabs">
+            <form [formGroup]="regConfig">
+                <div class="form_bg">
+                    <div class="form-row">
+                        <div class="col-md-8">
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <div class="form-row">
+                                        <div class="col-md-7">
+                                            <div class="form-row">
+                                                <div class="col-12 col-md-6">
+                                                    <label for="departureCity">Pick Up</label>
+                                                    <div class="form-group">
+                                                        <span class="icon location"></span>
+                                                        <input type="text" name="departureCity" id="departureCity"
+                                                            formControlName="departureCity"
+                                                            (keyup)="getAutoCompleteLocations($event,'departureCity')"
+                                                            class="form-control text-capitalize form-control-sm nrm_input"
+                                                            [ngStyle]="{'background': isDepartureCityLoading ? 'url(./assets/images/loader-inp.gif) no-repeat scroll 98% center #fff' : '' }"
+                                                            placeholder="Pick Up Location ?" autocomplete="off"
+                                                            #departureCity (focusout)="clearLocationIfNotSelected()">
+                                                        <ul class="droplocations" id="dynmicLocations"*ngIf="departureLocations && departureLocations.length>0">
+                                                            <li style="background-color: #e7e7e7;" *ngIf="groupedLocations.airports.length > 0" class="text-uupercase">
+                                                                <h6  style="font-weight: 600; ">Airports</h6>
+                                                            </li>
+                                                            <li *ngFor="let location of groupedLocations.airports" (click)="selectedLocation('departureCity', location)">
+                                                                <i class="fa fa-plane"></i> {{location.location_name}}
+                                                            </li>
+                                                            <li style="background-color: #e7e7e7;" *ngIf="groupedLocations.recentSearches.length > 0" class="text-uupercase">
+                                                                <h6 style="font-weight: 600; background-color: #e7e7e7;">Most Popular</h6>
+                                                              </li>
+                                                              <li *ngFor="let location of groupedLocations.recentSearches"
+                                                              (click)="selectedLocation('departureCity', location)">
+                                                            <span *ngIf="location.location_type === 'PT'">
+                                                              <i class="fa fa-ship"></i>
+                                                            </span>
+                                                            <span *ngIf="location.location_type === 'RT'">
+                                                              <i class="fa fa-map-marker"></i>
+                                                            </span>
+                                                            <span *ngIf="location.location_type === 'TN'">
+                                                              <i class="fa fa-map-marker"></i>
+                                                            </span>
+                                                            {{location.location_name}}
+                                                          </li>
+                                                              <li style="background-color: #e7e7e7;" *ngIf="groupedLocations.googleMaps.length > 0" class="text-uupercase">
+                                                                <h6 style="font-weight: 600; background-color: #e7e7e7;">Search All</h6>
+                                                              </li>
+                                                              <li *ngFor="let location of groupedLocations.googleMaps"
+                                                                  (click)="selectedLocation('departureCity', location)">
+                                                                <i class="fa fa-map-marker"></i> {{location.location_name}}
+                                                              </li> 
+                                                        </ul>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-md-6 nopad">
+                                                    <label for="destinationCity">Drop Off</label>
+                                                    <div class="form-group return_flight-group">
+                                                        <span class="icon location"></span>
+                                                        <input autocomplete="off"
+                                                            type="text" name="destinationCity"
+                                                            formControlName="destinationCity" id="destinationCity"
+                                                            (keyup)="getAutoCompleteLocations($event,'destinationCity')"
+                                                            [ngStyle]="{'background': isDesitnationCityLoading ? 'url(./assets/images/loader-inp.gif) no-repeat scroll 98% center #fff' : '' }"
+                                                            class="form-control text-capitalize form-control-sm nrm_input"
+                                                            placeholder="Drop Off Location ?" #destinationCity>
+                                                        <ul class="droplocations" id="dynmicLocations"*ngIf="desitnationLocations && desitnationLocations.length>0">
+                                                            <li style="background-color: #e7e7e7;" *ngIf="groupedDestinationLocations.airports.length > 0" class="text-uupercase">
+                                                                <h6 style="font-weight: 600; background-color: #e7e7e7;">Airports</h6>
+                                                            </li>
+                                                            <li *ngFor="let location of groupedDestinationLocations.airports"
+                                                                (click)="selectedLocation('destinationCity', location)">
+                                                                <i class="fa fa-plane"></i> {{location.location_name}}
+                                                            </li>
+                                                            <li style="background-color: #e7e7e7;" *ngIf="groupedDestinationLocations.recentSearches.length > 0" class="text-uupercase">
+                                                                <h6 style="font-weight: 600; background-color: #e7e7e7;">Most Popular</h6>
+                                                            </li>
+                                                            <li *ngFor="let location of groupedDestinationLocations.recentSearches"
+                                                                (click)="selectedLocation('destinationCity', location)">
+                                                                <!-- <span *ngIf="location.location_type === 'PT'">
+                                                                    <i class="fa fa-ship"></i>
+                                                                </span>
+                                                                <span *ngIf="location.location_type === 'RT'">
+                                                                    <i class="fa fa-map-marker"></i>
+                                                                </span>
+                                                                <span *ngIf="location.location_type === 'TN'">
+                                                                    <i class="fa fa-map-marker"></i>
+                                                                </span> -->
+                                                                {{location.location_name}}
+                                                            </li>
+                                                            <li style="background-color: #e7e7e7;" *ngIf="groupedDestinationLocations.googleMaps.length > 0" class="text-uupercase">
+                                                                <h6 style="font-weight: 600; background-color: #e7e7e7;">Search All</h6>
+                                                              </li>
+                                                              <li *ngFor="let location of groupedDestinationLocations.googleMaps"
+                                                                  (click)="selectedLocation('destinationCity', location)">
+                                                                <i class="fa fa-map-marker"></i> {{location.location_name}}
+                                                              </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-row">
+                                                <div class="col-12 col-md-12">
+                                                    <div class="form-row">
+                                                        <div class="col-12 col-md-6">
+                                                            <label for="">PickUp Date & Time</label>
+                                                            <div class="form-group">
+                                                                <!-- <span class="icon depart_date"></span> -->
+                                                                <input [ngModelOptions]="{standalone: true}"
+                                                                    [(ngModel)]="arrivalDateTime" type="text" 
+                                                                    class="form-control datebs form-control-sm nrm_input"
+                                                                    [popover]="popTemplate" placement="auto" placeholder="PickUp Date"
+                                                                    #popoverRef="bs-popover" (focus)="setValue()"/>
+                                                                    <!-- <div *ngIf="submitted && errorMessage.includes('Pickup date')" class="text-danger">
+                                                                        {{ errorMessage }}
+                                                                    </div> -->
+
+                                                                <ng-template #popTemplate>
+                                                                    <datepicker class="custom_dt_picker" [(ngModel)]="date" [showWeeks]="false"
+                                                                        [ngModelOptions]="{standalone: true}" [minDate]="minDate"
+                                                                        (ngModelChange)="updateDate()"> </datepicker>
+                                
+                                                                    <timepicker [(ngModel)]="time"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        (ngModelChange)="updateTime()"
+                                                                        [showMeridian]="true">
+                                                                    </timepicker>
+                                                                    <div style="padding:5px">
+                                                                        <span class="btn-group pull-right">
+                                                                            <button type="button"
+                                                                                class="btn btn-sm btn-success"
+                                                                                (click)="close()">
+                                                                                Close
+                                                                            </button>
+                                                                        </span>
+                                                                        <span class="clearfix"></span>
+                                                                    </div>
+                                                                </ng-template>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-12 col-md-6 nopad">
+                                                            <div *ngIf="hideLabel" (click)="showReturn()">
+                                                                <label class="d-block">&nbsp;</label>
+                                                                <span class="addretn">Add Return</span>
+                                                            </div>
+                                                            <ng-container *ngIf="ReturnDate">
+                                                                <label for="">Return Date & Time</label>
+                                                                <div class="form-group">
+                                                                    <!-- <span class="icon depart_date"></span> -->
+                                                                    <input [ngModelOptions]="{standalone: true}"
+                                                                        [(ngModel)]="departureDateTime" type="text"
+                                                                        class="form-control datebs form-control-sm nrm_input"
+                                                                        [popover]="popTemplate1" placement="auto" placeholder="Return Date"
+                                                                        #popoverRefReturn="bs-popover" (focus)="setData()"/>
+                                                                        <button class="closereturn" (click)="removeDate()"><i
+                                                                            class="fa fa-close"></i></button>
+                                                                    <ng-template #popTemplate1>
+                                                                        <datepicker class="custom_dt_picker" [(ngModel)]="deptDate" [minDate]="date" [ngModelOptions]="{standalone: true}" [showWeeks]="false"
+                                                                            (ngModelChange)="updateDeptDate()">
+                                                                        </datepicker>
+                                                                        <timepicker [(ngModel)]="departureTime"
+                                                                            [ngModelOptions]="{standalone: true}"
+                                                                            (ngModelChange)="updateDepartureTime()"
+                                                                            [showMeridian]="true">
+                                                                        </timepicker>
+                                                                        <div style="padding:5px">
+                                                                            <span class="btn-group pull-right">
+                                                                                <button type="button"
+                                                                                    class="btn btn-sm btn-success"
+                                                                                    (click)="closeRef()">
+                                                                                    Close
+                                                                                </button>
+                                                                            </span>
+                                                                            <span class="clearfix"></span>
+                                                                        </div>
+                                                                    </ng-template>
+                                                                </div>
+
+                                                            </ng-container>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row errorMessage" *ngIf="errorMessage!=''">{{errorMessage}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- start traveller -->
+                        <div class="col-md-2 col-12 padrt10" id="">
+                            <label class="bold fs-18">Travelers</label>
+                            <div class="form-group">
+                                <div class="dropdown" novalidate (validSubmit)="onSubmitTraveller()">
+                                    <div class="traveller-input tp2 valign-wrapper fs-18">
+                                        <span class="remngwd" (click)="travellersFadeinn=!travellersFadeinn">
+                                            <span class="total_pax_count">
+                                                <span id="travel_text"> {{noOfAdults}} Adult</span>
+                                                <span id="travel_text" *ngIf="noOfChild > 0">, {{noOfChild}}
+                                                    Child</span>
+                                                <span id="travel_text" *ngIf="noOfInfants > 0">, {{noOfInfants}}
+                                                    Infant</span>
+                                            </span>
+                                        </span>
+                                        <div class="roomcount pax_count_div {{travellersFadeinn ? 'fadeinn' : ''}}"
+                                            *ngIf="travellersFadeinn">
+                                            <div class="inallsn">
+                                                <ng-container formArrayName="traveller">
+                                                    <ng-container
+                                                        *ngFor="let item of regConfig.get('traveller')['controls']; index as i"
+                                                        [formGroupName]="i">
+                                                        <div class="oneroom fltravlr pb-0">
+                                                            <div class="roomrow">
+                                                                <div class="celroe col-md-7">
+                                                                    <i class="fa fa-male"></i> Adults
+                                                                    <span class="agemns">(+13 yrs)</span>
+                                                                </div>
+                                                                <div class="celroe col-md-5">
+                                                                    <div
+                                                                        class="input-group countmore pax-count-wrapper adult_count_div">
+                                                                        <span class="input-group-btn">
+                                                                            <button
+                                                                                (click)="onUpdateTraveller(i, 'adults', 'minus')"
+                                                                                type="button"
+                                                                                class="btn btn-default btn-number"
+                                                                                data-type="minus" data-field="adult">
+                                                                                <span class="fa fa-minus"></span>
+                                                                            </button>
+                                                                        </span>
+                                                                        <input formControlName="adults" type="text"
+                                                                            id="OWT_adult" name="adult"
+                                                                            class="form-control input-number centertext valid_class pax_count_value"
+                                                                            value="1" min="1" max="9" readonly="">
+                                                                        <span class="input-group-btn">
+                                                                            <button
+                                                                                (click)="onUpdateTraveller(i, 'adults', 'plus')"
+                                                                                type="button"
+                                                                                class="btn btn-default btn-number"
+                                                                                data-type="plus" data-field="adult">
+                                                                                <span class="fa fa-plus"></span>
+                                                                            </button>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="roomrow last">
+                                                                <div class="celroe col-md-7">
+                                                                    <i class="fa fa-child"></i> Children
+                                                                    <span class="agemns">(2 - 13 yrs)</span>
+                                                                </div>
+                                                                <div class="celroe col-md-5">
+                                                                    <div
+                                                                        class="input-group countmore pax-count-wrapper child_count_div">
+                                                                        <span class="input-group-btn">
+                                                                            <button
+                                                                                (click)="onUpdateTraveller(i, 'childrens', 'minus')"
+                                                                                type="button"
+                                                                                class="btn btn-default btn-number"
+                                                                                data-type="minus" data-field="child">
+                                                                                <span class="fa fa-minus"></span>
+                                                                            </button>
+                                                                        </span>
+                                                                        <input formControlName="childrens" type="text"
+                                                                            id="OWT_child" name="child"
+                                                                            class="form-control input-number centertext pax_count_value"
+                                                                            value="2" min="0" max="9" readonly="">
+                                                                        <span class="input-group-btn">
+                                                                            <button
+                                                                                (click)="onUpdateTraveller(i, 'childrens', 'plus')"
+                                                                                type="button"
+                                                                                class="btn btn-default btn-number"
+                                                                                data-type="plus" data-field="child">
+                                                                                <span class="fa fa-plus"></span>
+                                                                            </button>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="roomrow">
+                                                                <div class="celroe col-md-7">
+                                                                    <i class="fa fa-male"></i> Infant
+                                                                    <span class="agemns">(Below 2 yrs)</span>
+                                                                </div>
+                                                                <div class="celroe col-md-5">
+                                                                    <div
+                                                                        class="input-group countmore pax-count-wrapper adult_count_div">
+                                                                        <span class="input-group-btn">
+                                                                            <button
+                                                                                (click)="onUpdateTraveller(i, 'infant', 'minus')"
+                                                                                type="button"
+                                                                                class="btn btn-default btn-number"
+                                                                                data-type="minus" data-field="adult">
+                                                                                <span class="fa fa-minus"></span>
+                                                                            </button>
+                                                                        </span>
+                                                                        <input formControlName="infant" type="text"
+                                                                            id="OWT_adult" name="infant"
+                                                                            class="form-control input-number centertext valid_class pax_count_value"
+                                                                            value="1" min="1" max="9" readonly="">
+                                                                        <span class="input-group-btn">
+                                                                            <button
+                                                                                (click)="onUpdateTraveller(i, 'infant', 'plus')"
+                                                                                type="button"
+                                                                                class="btn btn-default btn-number"
+                                                                                data-type="plus" data-field="infant">
+                                                                                <span class="fa fa-plus"></span>
+                                                                            </button>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                            <button style="float:right; margin-bottom:10px;"
+                                                                (click)="closeTravellers()"
+                                                                class="btn btn-success">OK</button>
+                                                        </div>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-2 ml-auto">
+                            <div class="">
+                                <label>&nbsp;</label>
+                                <button type="submit" (click)="onSubmit()" class="btn w-100 srch_btn">
+                                    {{searchTitle}}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

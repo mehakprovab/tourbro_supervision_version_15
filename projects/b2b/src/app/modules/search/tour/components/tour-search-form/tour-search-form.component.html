@@ -1,0 +1,39 @@
+<form [formGroup]="regConfig" class="">
+    <div class="form-row">
+        <div class="col-12 col-md-10 pr-0">
+            <div class="form-group">
+                <span class="icon location"></span>
+                <label class="bold fs-18 destination-label">
+                    Destination 
+                </label>
+                <input placeholder="Where do you want to go?" type="text"
+                    class="validate text-capitalize searchinput form-control form-control-sm nrm_input"
+                    (keyup)="getAutoCompleteLocations($event,'departureCity')" for="dynmicLocations"
+                    formControlName="departureCity" #departureCity>
+                <ul class="arpt_list" id="departureLocations">
+                    <div class="p-0">
+                        <li *ngFor="let location of departureLocations" class="p-2"
+                            (click)="selectedLocation('departureCity',location)">
+                             <span class="row col-12 ">
+                                <span class="col-6">
+                                    {{location.CityName}}<span *ngIf="location.name">, {{location.name}}</span> 
+                                    
+                                </span>
+                                <span class="d-flex justify-content-end col-6">{{location.type}}</span>
+                            </span>
+                        </li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+      
+        <div class="col-md-2 col-12 pr-0">
+            <div class="form-group">
+                <label class="opacity-0">button</label>
+                <button class="btn w-100 srch_btn" (click)="onSubmit()">
+                    {{searchTitle}}
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

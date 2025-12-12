@@ -1,0 +1,448 @@
+<div class="mb-3 btop">
+    <div class="card-header-tab card-header col-12 row">
+        <div class="card-header-title col-6 font-size-lg text-capitalize font-weight-normal">
+            <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i> {{'Routes List'}}
+        </div>
+        <div class="form-group mb-0 col-sm-6 col-6 p-0 float-right has-search d-flex justify-content-end">
+            <div class="col-6">
+                <span class="fa fa-search form-control-feedback"></span>
+                <input class="form-control" type="text" name="Search" [(ngModel)]="searchText"
+                    autocomplete="off" placeholder="Search">
+            </div>
+            
+        </div>
+    </div>
+
+    <form  [formGroup]="vehiclePriceForm" (ngSubmit)="onSubmit()" *ngIf="onEditPrice && !fromStatusUpdate" class="border-form">
+        <div formArrayName="vehicle_pricing_details" class=" col-12 pr-0 mt-4">
+            <div class="col-12">
+                <label class="cancellation-lable ">Pricing Detials</label>
+            </div>
+            <div *ngFor="let policy of cancellationPolicies.controls; let i = index" [formGroupName]="i" class=" p-3 row col-12 mb-3 mt-2 ">
+                <div class="policy-block">
+                    <div class=" col-12 row p-2 ml-2">
+                        <div class="col-3">
+                            <label class="px-3 control-label">
+                                Start Date
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group col-sm-12">
+                                <input type="text" id="date_from" placeholder="DD-MM-YYYY" formControlName="date_from" autocomplete="off"
+                                    (ngModelChange)="ondateChange($event)" (bsValueChange)="onStartDateChange($event, i)" [minDate]="seasonMinDates[i]" class="form-control" bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen">
+                                <div class="input-group-append">
+                                </div>
+                            </div>
+
+                            <div class="col-12 mt-2">
+                                <label class="px-3 control-label return-lable" for="return">
+                                    Return
+                                </label><input type="checkbox" class="return-checkbox refundable-radio"
+                                    formControlName="is_return" 
+                                    (change)="onCheckboxChange($event,i)" />
+                                
+                            </div>
+                            <div class="col-12 mt-2" *ngIf="policy?.get('is_return')?.value">
+                                <label class="px-3 control-label" for="return">
+                                    Same Day return ({{loggedUserCurrency ? loggedUserCurrency : 'GBP'}})
+                                </label>
+                                <div class="col-sm-12">
+                                    <input value="" formControlName="same_day_return" min="1" type="number" placeholder="Same Day return Price"
+                                        class="form-control"
+                                        />
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="col-3">
+                            <label class="px-3 control-label">
+                                End Date
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group col-sm-12">
+                                <input type="text" id="date_to"  placeholder="DD-MM-YYYY" formControlName="date_to" autocomplete="off"
+                                    (ngModelChange)="ondateChange($event)" (bsValueChange)="onEndDateChange($event, i)" [minDate]="endMinDates[i]" class="form-control" bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen" >
+                                <div class="input-group-append">
+                                </div>
+                            </div>
+                            <div class="col-12 mt-5"  *ngIf="policy?.get('is_return')?.value">
+                                <label class="px-3 control-label" for="return">
+                                    Diff day return ({{loggedUserCurrency ? loggedUserCurrency : 'GBP'}})
+                                </label>
+                                <div class="col-sm-12">
+                                    <input value="" formControlName="diff_day_return" min="1" type="number" placeholder="Diff day return Price"
+                                        class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-3 row">
+                            <div class="col-12">
+                                <label class="px-3 control-label" for="base_price">
+                                    Base Price ({{loggedUserCurrency ? loggedUserCurrency : 'GBP'}})
+                                <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-sm-12">
+                                    <input value="" formControlName="base_price" type="number" min="1" placeholder="Base Price"
+                                        class="form-control" 
+                                        />
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label class="mr-3">RF <br/>
+                                    <input type="radio" [value]="true" required formControlName="is_refundable" class="refundable-radio"
+                                        >
+                                </label>
+
+                                <label>NRF<br/>
+                                    <input type="radio" [value]="false" required formControlName="is_refundable" class="refundable-radio"
+                                    >
+                                </label>
+                            </div>
+                            
+                            
+                        </div>
+
+                        <div class="col-3 " *ngIf="policy?.get('is_refundable')?.value === true">
+                            <label class="px-3 control-label cancellation-refund-lable f-700">
+                                Cancellation & Refund Policy
+                            </label>
+                            <div class="col-12 p-0">
+                                <label class="px-3 control-label">
+                                Refundable Before Days
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-sm-12">
+                                        <input value="" formControlName="refundable_before_days" type="number" placeholder="Refundable Before Days"
+                                            class="form-control" 
+                                            required />
+                                    
+                                </div>
+                            </div>
+                            <div class="col-12 row mt-2 p-0">
+                                
+                                <!-- <div class="col-12 pr-0">
+                                    <label class="px-3 control-label">
+                                        Charge Type
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-sm-12">
+                                            <label class="mr-3">Amount (+) <br/>
+                                                <input type="radio" value="Plus" required formControlName="charge_type">
+                                            </label>
+
+                                            <label>Percent <br/>
+                                                <input type="radio" value="Percentage" required formControlName="charge_type">
+                                            </label>
+                                    </div>
+                                </div> -->
+
+                                <div class="col-12 pr-0 mt-2 px-3">
+                                    <label class="px-3 control-label">
+                                        Cancellation Charge(%)
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-sm-12">
+                                        <input value="" formControlName="cancellation_charge" type="number" placeholder="Amount"
+                                            class="form-control" 
+                                            required />
+                                    </div>
+                                </div>
+
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="col-12 row d-flex justify-content-end m-2">
+                        <!-- <div class="col-10">
+                            <label class="px-3 control-label" for="vehicle_name">
+                            Additional Info
+                            </label>
+                            <div class="col-sm-12 col-12">
+                                <textarea formControlName="additional_info" class="additional-info-textarea" cols="24" style="width: 100%;"> 
+
+                                </textarea>
+                            </div>
+                        </div> -->
+                        
+                        
+                        <div class="col-2 d-flex justify-content-center align-items-center" *ngIf="i===0">
+                            <button type="button" class="btnStyle" (click)="addPolicy()">Add</button>
+                        </div>
+
+                        <div class="col-2 d-flex justify-content-end align-items-center" *ngIf="i>0">
+                            <button type="button" class="btnStyle remove-reset-btn" (click)="removePolicy(i)">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="col-12 d-flex justify-content-center align-items-center my-3">
+            <button type="submit" class="btnStyle mt-3 mr-3">{{saveBtnText}}</button>
+            <button type="button" class="btnStyle mt-3 remove-reset-btn" (click)="onCancel()">Cancel</button>
+        </div>
+    </form>
+
+
+    <form class="border-form" [formGroup]="vehicleListForm" (ngSubmit)="onSubmitVehicleUpdate()" *ngIf="onEditTransferVehicle">
+        <div class="row">
+            <div class="col-12">
+                <label class="cancellation-lable px-3">Vehicle Detials</label>
+            </div>
+            <div class="col-4">
+                <label class="px-3 control-label" for="vehicle_type">
+                    Vehicle Type
+                    <span class="text-danger">*</span>
+                </label>
+                <div class="col-sm-12">
+                    <select formControlName="vehicle_type" class="form-control non-editable" placeholder="Select Vehicle Type"
+                        [ngClass]="{ 'is-invalid': submittedVehicle && f.vehicle_type.errors }">
+                        <option value="" disabled selected>Select Vehicle Type</option>
+                        <option *ngFor="let vehicle of vehiclesType" [value]="vehicle.id">
+                            {{vehicle.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="col-4">
+                <label class="px-3 control-label" for="vehicle_name">
+                    Vehicle Name
+                    <span class="text-danger">*</span>
+                </label>
+                <div class="col-sm-12">
+                    <input value="" formControlName="vehicle_name" type="text" placeholder="Vehicle Name" class="non-editable form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.vehicle_name.errors }" />
+                </div>
+            </div>
+            <div class="col-12 row px-4 mt-4">
+
+                <div class="col-12">
+                <label class="px-3 control-label">
+                    Country
+                    <span class="text-danger">*</span>
+                </label>
+                <div class="col-sm-6">
+                    <select formControlName="country_id" class="form-control"
+                        [ngClass]="{ 'is-invalid': submittedVehicle && f.country_id.errors }">
+                        <option value="" disabled selected>Select Country</option>
+                        <option *ngFor="let coreCountry of countryList" [value]="coreCountry.id">
+                            {{coreCountry.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+                <div class="col-12">
+                    <label class="cancellation-lable px-3"> Routes</label>
+                </div>
+                <div class="col-6 col-md-6 px-4">
+                    <label class="cancellation-lable" for="starting_point">Starting Point
+            
+                        <span class="text-danger">*</span>
+                    </label>
+                    <div class="form-group">
+            
+                        <input type="text" name="starting_point" id="starting_point" formControlName="starting_point"
+                            (keyup)="getAutoCompleteLocations($event,'startPoint','')"
+                            class="form-control text-capitalize form-control-sm nrm_input" placeholder="Starting point"
+                            autocomplete="off" #departureCity>
+                        <ul class="droplocations" id="dynmicLocations">
+                            <li *ngFor="let location of startingPointLocations"
+                                (click)="selectedLocation(location,'starting_point','')">
+                                {{location.location_name}}
+                            </li>
+                        </ul>
+            
+                    </div>
+                </div>
+            
+                <div class="col-12">
+                    <label class="cancellation-lable px-3">Add Routes</label>
+                </div>
+                <div formArrayName="routes" *ngIf="multipleRoutes" class=" col-12 pr-0 mt-0">
+                    <div *ngFor="let policy of multipleRoutes.controls; let i = index" [formGroupName]="i"
+                        class=" px-0 row col-12 m-0 py-0 ">
+                        <div class=" col-8 row px-2 px-0 ml-2">
+                            <div class="col-8 px-0">
+                                <div class="input-group col-sm-12 px-0">
+                                    <div class="input-group col-sm-12 pr-0 px-0 mt-2">
+                                        <input type="text" name="route_name" id="route_name" formControlName="route_name"
+                                            (keyup)="getAutoCompleteLocations($event,'route_name',i)"
+                                            [ngStyle]="{'background': isAddRouteCityLoading[i] ? 'url(./assets/images/loader-inp.gif) no-repeat scroll 98% center #fff' : '' }"
+                                            class="form-control text-capitalize form-control-sm nrm_input" placeholder="Add Route"
+                                            autocomplete="off" #departureCity>
+            
+                                        <ul class="droplocations" id="dynmicLocations"
+                                            *ngIf="routesNamesLocation  && routesNamesLocation[i]?.length">
+                                            <li *ngFor="let location of routesNamesLocation[i]"
+                                                (click)="selectedLocation(location,'route_name',i)"
+                                                >
+                                                {{location.location_name}}
+                                            </li>
+                                        </ul>
+                                        <button type="button" class="btnStyle ml-2 add-routes" (click)="addRoutes()"
+                                            *ngIf="i===0">Add</button>
+                                        <button type="button" class="btnStyle ml-2 remove-reset-btn add-routes"
+                                            (click)="removeRoutes(i)" *ngIf="i>0">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="col-6 col-md-6 px-4 mt-2">
+                    <label class="cancellation-lable" for="end_point">Ending Point
+            
+                        <span class="text-danger">*</span>
+                    </label>
+                    <div class="form-group">
+            
+                        <input type="text" name="end_point" id="end_point" formControlName="end_point"
+                            (keyup)="getAutoCompleteLocations($event,'endPoint','')"
+                            class="form-control text-capitalize form-control-sm nrm_input" placeholder="Ending point"
+                            autocomplete="off" #departureCity>
+                        <ul class="droplocations" id="dynmicLocations">
+                            <li *ngFor="let location of endPointLocations" (click)="selectedLocation(location,'end_point','')">
+                                {{location.location_name}}
+                            </li>
+                        </ul>
+            
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-12 d-flex justify-content-center align-items-center my-3">
+            <button type="submit" class="btnStyle mt-3 mr-3">Update</button>
+            <button type="button" class="btnStyle mt-3 remove-reset-btn" (click)="onCancel()">Cancel</button>
+        </div>
+    </form>
+
+
+
+
+
+    <form>
+        <div class="table-responsive">
+            <table class="table table-borderless table-striped table-hover" matSort >
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-left text-nowrap" *ngFor="let header of displayColumn;"
+                            mat-sort-header="{{header.key}}">
+                            {{header.value }} </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="noData">
+                        <td colspan="11">
+                            <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                        </td>
+                    </tr>
+                    <tr *ngIf="!searchSpin && !respData.length">
+                            <td colspan="11">
+                                <h4 class="text-muted text-center">
+                                    No Data Found!
+                                </h4>
+                            </td>
+                        </tr>
+                    <tr
+                        *ngFor="let data of respData | filter:searchText  | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
+                        <td class="text-left text-muted">{{i+1}}.</td>
+                        <td class="text-left text-muted">
+                            <span title="Slide for Active/Deactive">
+                                <mat-slide-toggle [ngModelOptions]="{standalone: true}" class="example-margin" [(ngModel)]="data.status" (change)="onStatusChange($event,data)"
+                                >
+                                </mat-slide-toggle>
+                            </span>
+                        </td>
+                        <td class="text-left"> {{data['vehicle_name']}} </td>
+                        <td class="text-left"> {{data['vehicle_type_name']}} </td>
+                        <td class="text-left"> {{data['start_point_name']}} </td>
+                        <td *ngFor="let i of [].constructor(maxRoutesCount); let idx = index" class="text-left">
+                            {{ data.route_name_list[idx] || 'N/A' }}
+                        </td>
+                        <td class="text-left"> {{data['end_point_name']}} </td>
+                        <td class="text-left">
+                            <div ngbDropdown container="body"><button
+                                    class="btnStyle" ngbDropdownToggle>
+                                    {{'Action'}}
+                                </button>
+                                <div ngbDropdownMenu>
+                                    <!-- <button ngbDropdownItem
+                                        (click)="updateVehiclePrice(data.id,'add')">Add Vehicle Price</button> -->
+                                    <button ngbDropdownItem *ngIf="data.canEditRouteList"
+                                        (click)="updateVehiclePrice(data.id,'update', 'update')">Update Route Price</button>
+                                    <button ngbDropdownItem *ngIf="data.onlyViewRouteList"
+                                        (click)="updateVehiclePrice(data.id,'update','view')">View Route Price</button>
+                                    <button ngbDropdownItem *ngIf="data.canEditRouteList"
+                                    (click)="updateVehicleList(data)">Update Route</button>
+                                    <button ngbDropdownItem
+                                        (click)="cancelDeletePopup(data.id)">Delete</button>
+                                </div>
+                            </div>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer pb-0">
+            <div class="d-flex w-100 justify-content-between">
+                <ngb-pagination [collectionSize]="collectionSize" [maxSize]="12" [rotate]="true" [boundaryLinks]="true" [(page)]="page"
+                    [pageSize]="pageSize">
+                </ngb-pagination>
+                <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                    <option [ngValue]="10">10 items per page</option>
+                    <option [ngValue]="20">20 items per page</option>
+                    <option [ngValue]="50">50 items per page</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+  <ngx-loading [show]="loading"
+  [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+  [template]="loadingTemplate"></ngx-loading>
+
+  
+<div class="modal" id="cancelPolicy" [style.display]="viewPriceDetails ? 'block' : 'none'">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Price Details</h4>
+                <button type="button" class="close" data-dismiss="modal" (click)="hide()">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="col-12 " *ngFor="let item of priceDetails; let i = index" >
+                    <div class="col-12 d-flex justify-content-center align-items-center">
+                        <strong>Season {{i+1}}</strong>
+                    </div>
+                     
+                    <span><strong>Date From:</strong> {{item?.date_from | date:'dd-MM-yyyy'}}</span> <br/>
+                    <span> <strong> Date To: </strong>{{item?.date_to | date:'dd-MM-yyyy'}}</span><br/>
+                    <span><strong> Base Price: </strong>{{item?.base_price }} {{item?.currency}}</span><br/>
+                    <span><strong>Same Day return Price: </strong> {{item?.same_day_return }} {{item?.currency}}</span><br/>
+                    <span><strong>Different Day return Price: </strong> {{item?.diff_day_return }} {{item?.currency}}</span><br/>
+                    <span *ngIf="item?.is_refundable">
+                        <span>If Cancelled before {{item?.refundable_before_days}} {{item?.cancellation_charge}} % will be chargable.</span><br/>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btnStyle" data-dismiss="modal" (click)="hide()">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>

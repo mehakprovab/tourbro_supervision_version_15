@@ -1,0 +1,101 @@
+<div class="card-header text-uppercase bg-dark text-white">
+    <h5 style="border-bottom: 0;">User Details</h5>
+</div>
+<div class="card">
+    <table class="card-table table">
+        <thead>
+          <tr>
+            <th scope="col">Booking 247 ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{selectedUser.uuid}}</td>
+            <td class="text-capitalize">{{selectedUser.first_name}}&nbsp;{{selectedUser.middle_name}}&nbsp;{{selectedUser.last_name}}</td>
+            <td>{{selectedUser.email}}</td>
+            <td>{{selectedUser.phone}}</td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+<div class="clearfix"></div>
+<div class="card p-4 mt-4">
+    <h5>Search Privilege</h5>
+    <form [formGroup]="searchForm">
+        <div class="form-row">
+            <div class="col-6 pr-0">
+                <div class="form-group">
+                    <label for="bookingType"></label>
+                    <input type="text" name="searchText" class="form-control text-capitalize" formControlName="searchText" 
+                    placeholder="Privilege">
+                    <div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="customCenter">
+            <button type="submit" class="btn btn-sm btn-primary" (click)="onSearchSubmit()">Search</button> &nbsp;
+            <button type="button" class="btn btn-sm btn-secondary" (click)="onReset()">Reset</button>
+        </div>
+    </form>
+</div>
+
+<div class="card mt-5">
+    <div class="mb-3">
+        <form [formGroup]="regConfig">
+           <div class="table-responsive">
+              <table class="table table-borderless table-striped table-hover" id="payment">
+                 <thead>
+                    <tr>
+                       <th scope="col" class="text-left text-nowrap" *ngFor="let header of displayColumn;"
+                          >
+                          <span *ngIf="header.value=='Select';else other">{{header.value}}
+                              <p (click)="selectAll();" style="cursor: pointer;" class="badge badge-info">
+                                {{isSelect?'All':'Reset'}}</p></span>
+                          <ng-template #other><span><p>{{header.value}}</p></span></ng-template>
+                       </th>
+                    </tr>
+                 </thead>
+                <tbody>
+                    <tr *ngIf="noData">
+                        <td colspan="12">
+                            <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                        </td>
+                    </tr>
+                    <tr *ngIf="!noData && !respData.length">
+                        <td colspan="12">
+                            <h4 class="text-muted text-center">
+                                No Data Found!
+                            </h4>
+                        </td>
+                    </tr>
+                    <ng-container *ngFor="let data of t.controls; let i = index">
+                    <tr [formGroup]="data" *ngIf="data.get('p_no').value">
+                        <td class="text-left text-muted">{{i+1}}.</td>
+                        <td class="text-left"
+                            [ngClass]="{'font-weight-bold':data.get('parent_key').value==null || data.get('parent_key').value==''}">
+                            {{data.get('description').value}}</td>
+                        <td class="text-left">
+                            <div class="col-sm-4 d-flex align-items-center">
+                                <div class="col-auto">
+                                    <input type="checkbox" id="id_{{i}}" formControlName="isChecked" (change)="changedPrivilage(data)">
+                                    <label for="id_{{i}}"></label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-container>
+                 </tbody>
+              </table>
+           </div>
+           <div class="card-footer pb-0">
+            <button class="btn btn-sm btn-primary" (click)="updatePaymentCharges()">Update</button>
+            &nbsp; &nbsp;
+            <button class="btn btn-sm btn-secondary" type="reset" (click)="onReset()">Reset</button>
+           </div>
+        </form>
+     </div>
+</div>

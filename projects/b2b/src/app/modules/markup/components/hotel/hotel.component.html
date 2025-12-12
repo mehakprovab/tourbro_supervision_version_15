@@ -1,0 +1,70 @@
+<div class="row">
+    <!-- <div class="py-3 col-md-12 col-lg-12">
+        <div class="clearfix">
+            <span class="float-left" style="color: #012756;"> <strong>Note:</strong> Application Default Currency <b>
+                    GBP </b> </span>
+        </div>
+    </div> -->
+
+    <div class="custom-navtabs" *ngIf="flightIcon">
+        <ul ngbNav #nav="ngbNav" class="nav-pills m-0" orientation="horizontal" [(activeId)]="activeIdString">
+            <li ngbNavItem="left" (click)="onSearchTypeChange('flight')">
+                <a ngbNavLink><img class="mr-1" src="assets/images/plane.svg" alt="flight" /> flight</a>
+            </li>
+            <li ngbNavItem="middle" (click)="onSearchTypeChange('hotel')">
+                <a ngbNavLink><img class="mr-2" src="assets/images/hotel.svg" alt="hotels" />hotels</a>
+            </li>
+            <li ngbNavItem="activity" (click)="onSearchTypeChange('activity')">
+                <a ngbNavLink><img class="mr-2" src="assets/images/activity.svg" alt="activity" />activity</a>
+            </li>
+            <li ngbNavItem="transfer" (click)="onSearchTypeChange('transfer')">
+                <a ngbNavLink><img class="mr-2" src="assets/images/transfer.svg" alt="transfer" />transfer</a>
+            </li>
+            <li ngbNavItem="tour" (click)="onSearchTypeChange('tour')">
+                <a ngbNavLink><img class="mr-2" src="assets/images/holiday.svg" alt="tour" />tour</a>
+            </li>
+        </ul>
+    </div>
+    <div class="cards">
+    
+        <div class="p-0 bg-light col-md-12 col-lg-12">
+            <div class="card-header-tab card-header">
+                <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                    <span style="font-weight: 600;"> Hotel - Markups </span>
+                </div>
+            </div>
+        </div>
+        <form [formGroup]="generalMarkupForm" class="form">
+            <div style="display: flex;" class="bbottom">
+
+                <div style="width:40%" class="addlineSpacing">
+                    <label class="customLabel font-weight-bold" for="markupType1">Mark Up Type <sup
+                            class="text-danger">*</sup>
+                    </label><br>
+                    <div style="width: 100%;">
+                        <!-- <input style="padding: 0px 2px;" type="radio" value="plus" formControlName="mark_up_type">
+                        <label class="radioLabel" for="markupType1">Flat(+/- {{currency}})</label>&nbsp;&nbsp;&nbsp;&nbsp; -->
+                        <input type="radio" value="percentage" formControlName="mark_up_type">
+                        <label class="radioLabel" for="customRadioInline2">Percentage(%)</label>
+                    </div>
+                    <small class="text-danger" *ngIf="hasgeneralMarkupError('mark_up_type','required')">*mark up type is
+                        required</small>
+                </div>
+                <div style="width: 60%;" class="addlineSpacing">
+                    <div>
+                        <label class="customLabel font-weight-bold" for="markupValue">Mark Up Value</label>
+                        <input style="width: 30%;" type="text"  onkeypress='return ( event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45 && this.value.indexOf("-") === -1 && this.selectionStart == 0)'  class="customInputStyle"
+                            formControlName="mark_up_value" id="markupValue" placeholder="Add Amount/Percentage">
+                    </div>
+                    <small class="text-danger" *ngIf="hasgeneralMarkupError('mark_up_value','required')">*mark up value
+                        is
+                        required</small>
+                </div>
+            </div>
+            <div class="btncontainer">
+                <button type="button" class="btnStyle" (click)="clearGeneralMarkup()">CLEAR</button> &nbsp;
+                <button type="button" class="btnStyle" (click)="onAddGeneralMarkup(generalMarkupForm.value)">SAVE</button>
+            </div>
+        </form>
+    </div>
+</div>

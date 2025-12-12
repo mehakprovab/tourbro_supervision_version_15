@@ -1,0 +1,61 @@
+<div class="col-md-12 col-lg-12">
+    <ngb-tabset class="tabs-animated tabs-animated-shadow">
+        <ngb-tab *ngFor="let link of navLinks; let i=index;">
+            <ng-template ngbTabTitle>
+                <span> <i class="{{link.icon}}"></i> &nbsp; {{link.label}} </span>
+            </ng-template>
+            <ng-template ngbTabContent>
+                <div class="row py-4 px-3 border rounded bg-gradient-light" [ngSwitch]="link.component">
+                    <div *ngSwitchCase="'addBaggage'" class="col-md-12 col-lg-12">
+                        <h6> Choose Extra Baggage </h6>
+                        <table [formGroup]="baggageForm">
+                            <ng-container formGroupName="baggages">
+                                <tr *ngFor="let t of passengers.controls; let i = index" [formArrayName]="i">
+                                    <th>{{ t.get('FirstName').value }} {{ t.get('MiddleName').value }}
+                                        {{ t.get('LastName').value }}</th>
+                                    <td *ngFor="let baggage of baggages; let j = index" formGroupName="bag">
+                                        <label> {{ baggage[0].Origin }}
+                                            <i class="fa fa-long-arrow-right"></i> {{ baggage[0].Destination }}
+                                        </label>
+                                        <select [formControlName]="j"
+                                            (change)='onOptionsSelected("baggage", i, j)'
+                                            class="form-control form-control-sm">
+                                            <option value="">Baggage</option>
+                                            <option *ngFor="let b of baggage" [value]="b.BaggageId"> {{ b.Price }}
+                                            </option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </table>
+                    </div>
+                    <div *ngSwitchCase="'addMeal'" class="col-md-12 col-lg-12">
+                        <h6> Choose Your Meal </h6>
+                        <table [formGroup]="mealForm">
+                            <ng-container formGroupName="meals">
+                                <tr *ngFor="let t of passengers.controls; let i = index" [formArrayName]="i">
+                                    <th>{{ t.get('FirstName').value }} {{ t.get('MiddleName').value }} {{ t.get('LastName').value }}</th>
+                                    <td *ngFor="let meal of meals; let j = index" formGroupName="ml">
+                                        <label> {{ meal[0].Origin }}
+                                            <i class="fa fa-long-arrow-right"></i> {{ meal[0].Destination }}
+                                        </label>
+                                        <select [formControlName]="j"
+                                            (change)='onOptionsSelected("meal", i, $event.target.value)'
+                                            class="form-control form-control-sm">
+                                            <option value="">Meal</option>
+                                            <option *ngFor="let m of meal" [value]="m.MealId"> {{ m.Description }}
+                                            </option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </table>
+                    </div>
+                    <div *ngSwitchCase="'seatSelection'" class="col-md-12 col-lg-12">
+                        seatSelection
+                    </div>
+                </div>
+            </ng-template>
+        </ngb-tab>
+    </ngb-tabset>
+</div>

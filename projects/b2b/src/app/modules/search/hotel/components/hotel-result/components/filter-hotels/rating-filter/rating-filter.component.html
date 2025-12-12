@@ -1,0 +1,67 @@
+<!-- <p>rating-filter works!</p> -->
+<div class="rangebox">
+    <button data-target="#collapse503" data-toggle="collapse" class="collapsebtn" type="button">Star Rating</button>
+    <!-- <a  style="cursor: pointer;font-size: 12px;" class="float-right" (click)="clearRatingFilter()">Clear</a> -->
+    <form [formGroup]="ratingForm" style="clear: both;">
+        <div id="collapse503" class="collapse show">
+            <div class="boxins marret" id="departureTimeWrapper">
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <a class="timone toglefil time-wrapper enabled">
+                            <div class="starin cusromGrey">
+                              
+                                <mat-checkbox formControlName="rating0" class="time-category hidecheck"
+                                (change)="filterByStar('rating0',$event.checked)"></mat-checkbox>  &nbsp; <img src="assets/images/star_rating_black_0.png" tooltip="Unrated" placement="bottom" /><br>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a class="timone toglefil time-wrapper enabled">
+                            <div class="starin cusromGrey">
+                              
+                                <mat-checkbox formControlName="rating1" class="time-category hidecheck"
+                                (change)="filterByStar('rating1',$event.checked)"></mat-checkbox>  &nbsp; <img src="assets/images/star_rating_black_1.png" tooltip="Unrated" placement="bottom" /><br>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a class="timone toglefil time-wrapper enabled">
+                            <div class="starin cusromGrey">
+                                
+                                <mat-checkbox formControlName="rating2"
+                                (change)="filterByStar('rating2',$event.checked)"></mat-checkbox>  &nbsp; <img src="assets/images/star_rating_black_2.png" tooltip="Unrated" placement="bottom" />
+                            </div>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a class="timone toglefil time-wrapper enabled">
+                            <div class="starin cusromGrey">
+                                <mat-checkbox formControlName="rating3"
+                                (change)="filterByStar('rating3',$event.checked)"></mat-checkbox> &nbsp; <img src="assets/images/star_rating_black_3.png" tooltip="Unrated" placement="bottom" />
+                               
+                            </div>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a class="timone toglefil time-wrapper enabled">
+                            <div class="starin cusromGrey">
+                               
+                                <mat-checkbox formControlName="rating4"
+                                (change)="filterByStar('rating4',$event.checked)"></mat-checkbox>  &nbsp; <img src="assets/images/star_rating_black_4.png" tooltip="Unrated" placement="bottom" />
+                            </div>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a class="timone toglefil time-wrapper enabled">
+                            <div class="starin cusromGrey">
+                                
+                                <mat-checkbox formControlName="rating5"
+                                (change)="filterByStar('rating5',$event.checked)"></mat-checkbox> &nbsp; <img src="assets/images/star_rating_black_5.png" tooltip="Unrated" placement="bottom" />
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

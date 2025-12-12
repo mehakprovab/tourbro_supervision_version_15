@@ -1,0 +1,99 @@
+<div class="form-group mb-0 col-sm-3 p-0 float-right has-search">
+    <span class="fa fa-search form-control-feedback"></span>
+    <input class="form-control text-capitalize" type="text" name="Search" [(ngModel)]="searchText" autocomplete="off" placeholder="Search">
+  </div>
+  <br>
+  <div class="clearfix"></div>
+  <br>
+<div class="row card m-0">
+  <div class="col-md-12 col-lg-12">
+    <form class="clearfix">
+      <div class="row col-md-12 col-lg-12 p-0">
+        <table style="table-layout: fixed; width: 100%;">
+          <tr>
+            <td>
+              <div class="table-responsive">
+                <table class="align-middle mb-0 table table-borderless table-striped table-hover" matSort
+                  (matSortChange)="sortData($event)">
+                  <thead>
+                    <tr class="p-2">
+                      <th scope="col" class="text-nowrap" *ngFor="let header of displayColumn;"
+                        mat-sort-header="{{header.key}}">
+                        {{header.value }}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngIf="noData">
+                      <td colspan="12">
+                        <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                      </td>
+                    </tr>
+                    <tr *ngIf="!noData && (!respData.length || (respData | filter:searchText).length === 0)">
+                        <td colspan="12">
+                            <h4 class="text-muted text-center">
+                                No Data Found!
+                            </h4>
+                        </td>
+                    </tr>
+                    <tr class="p-2"
+                      *ngFor="let data of respData | filter:searchText | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
+                      <td class="text-left text-muted">{{i+1}}.</td>
+                      <td class="text-left"> {{data?.CreatedDatetime | date: 'dd/MM/yyyy'}} </td>
+                      <td class="text-left text-uppercase">
+                        {{data['FlightBookingTransactions'][0]['flightBookingTransactionPassengers'][0]['title']}}.
+                        {{data['FlightBookingTransactions'][0]['flightBookingTransactionPassengers'][0]['first_name']}}
+                        {{data['FlightBookingTransactions'][0]['flightBookingTransactionPassengers'][0]['last_name']}}
+                      </td>
+                      <td class="text-left"> {{data?.FlightBookingTransactions[0]['gds_pnr']}} </td>
+                      <td class="text-left"> {{data['AppReference']}} </td>
+                      <td class="text-left">
+                        {{defaultCurrency}} {{data['FlightBookingTransactions'][0]['total_fare']}} </td>
+                      <td class="text-left">
+                        <span *ngIf="data['BookingStatus'] == 'BOOKING_INPROGRESS'" class="badge badge-warning">
+                          {{data['BookingStatus'] | uppercase}}
+                        </span>
+                        <span *ngIf="data['BookingStatus'] == 'BOOKING_CONFIRMED'" class="badge badge-success">
+                          {{data['BookingStatus'] | uppercase}}
+                        </span>
+                        <span *ngIf="data['BookingStatus'] == 'BOOKING_HOLD'" class="badge badge-warning">
+                          {{data['BookingStatus'] | uppercase}}
+                        </span>
+                        <span *ngIf="data['BookingStatus'] == 'BOOKING_CANCELLED'" class="badge badge-danger">
+                            {{data['BookingStatus'] | uppercase}}
+                        </span>
+                        <span *ngIf="data['BookingStatus'] == 'BOOKING_VOIDED'" class="badge badge-primary">
+                            {{data['BookingStatus'] | uppercase}}
+                        </span>
+                      </td>
+                      <td class="text-left text-nowrap">
+                        <a [routerLink]="['/payment/invoice-management/invoice']"
+                          [queryParams]="{appReference: data['AppReference']}">
+                          <button class="btn btn-primary"> View Invoice</button> </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="card-footer pb-0">
+        <div class="d-flex w-100 justify-content-between">
+          <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+          </ngb-pagination>
+          <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+            <option [ngValue]="50">50 items per page</option>
+            <option [ngValue]="100">100 items per page</option>
+            <option [ngValue]="150">150 items per page</option>
+            <option [ngValue]="200">200 items per page</option>
+            <option [ngValue]="500">500 items per page</option>
+            <option [ngValue]="700">700 items per page</option>
+            <option [ngValue]="1000">1000 items per page</option>
+          </select>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

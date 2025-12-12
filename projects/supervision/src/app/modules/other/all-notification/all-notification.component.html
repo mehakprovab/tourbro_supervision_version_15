@@ -1,0 +1,47 @@
+<div class="card mb-3">
+    <div class="card-header-tab card-header">
+        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+            <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+            {{'Event Notifications List'}}
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+            <thead>
+                <tr class="p-2">
+                    <th scope="col" class="text-left" *ngFor="let header of displayColumn;">
+                        {{header.value }} </th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-template #notShow>
+                    <tr class="p-2" *ngFor="let data of respData; let i=index;">
+                        <td class="text-left text-muted">{{i+1}}.</td>
+                        <td class="text-left">
+                            <div class="row">
+                                <div class="col-1 customCenter">
+                                    <span class="bg-info p-1 text-white"> <i class="{{data['event_icon']}} p-1"></i> </span>
+                                </div>
+                                <div class="col-11 pl-0">
+                                    <div class="" [innerHTML]="data['event_title']"></div>
+                                    
+                                    <div [innerHTML]="data['event_description']"></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-left">
+                            <button mat-raised-button color="primary"
+                                style="height: 28px; line-height: unset; padding: 0 10px;">{{'View Details'}}</button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <tr *ngIf="noData; else notShow">
+                    <td colspan="7" class="text-center">
+                        <mat-spinner [diameter]="30" mode="indeterminate" style="margin: 0 auto;"></mat-spinner>
+                        No Data Found
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

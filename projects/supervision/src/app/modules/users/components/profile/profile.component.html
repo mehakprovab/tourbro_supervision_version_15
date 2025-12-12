@@ -1,0 +1,81 @@
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <h5 class="card-title">Grid</h5>
+        <form [formGroup]="profileForm"autocomplete="off" class="needs-validation" novalidate (validSubmit)="onSubmit()">
+            <div class="position-relative row form-group">
+                <label for="first_name" class="col-sm-2 col-form-label">First Name</label>
+                <div class="col-sm-10">
+                    <input formControlName="first_name" placeholder="First Name" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label for="last_name" class="col-sm-2 col-form-label">Last Name</label>
+                <div class="col-sm-10">
+                    <input formControlName="last_name" placeholder="Last Name" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label for="address" class="col-sm-2 col-form-label">Address</label>
+                <div class="col-sm-10">
+                    <textarea formControlName="address" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label for="date_of_birth" class="col-sm-2 col-form-label">Date Of Birth</label>
+                <div class="col-sm-10">
+                    <input formControlName="date_of_birth" placeholder="Date Of Birth" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label for="country_code" class="col-sm-2 col-form-label">Select Country</label>
+                <div class="col-sm-10">
+                    <select formControlName="country_code" class="form-control">
+                        <option value="">Select Country</option>
+                        <option *ngFor="let country of countries" [value]="country.iso_country_code">{{country.country_name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label for="phone" class="col-sm-2 col-form-label">Phone</label>
+                <div class="col-sm-10">
+                    <input formControlName="phone" placeholder="phone" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label for="business_phone" class="col-sm-2 col-form-label">Business Phone</label>
+                <div class="col-sm-10">
+                    <input formControlName="business_phone" placeholder="Business Phone" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label for="business_name" class="col-sm-2 col-form-label">Business Name</label>
+                <div class="col-sm-10">
+                    <input formControlName="business_name" placeholder="Business Name" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label for="business_number" class="col-sm-2 col-form-label">Business Number</label>
+                <div class="col-sm-10">
+                    <input formControlName="business_number" placeholder="Business Number" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label for="image" class="col-sm-2 col-form-label">Profile Image</label>
+                <div class="col-sm-10">
+                    <input formControlName="image" placeholder="Profile Image" type="file" class="form-control">
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label for="status" class="col-sm-2 col-form-label">Status</label>
+                <div class="col-sm-10">
+                    <input formControlName="status" placeholder="" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="position-relative row form-check">
+                <div class="col-sm-10 offset-sm-2">
+                    <button class="btn btn-secondary">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

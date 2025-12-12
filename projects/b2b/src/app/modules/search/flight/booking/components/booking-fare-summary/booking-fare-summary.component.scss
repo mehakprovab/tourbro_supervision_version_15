@@ -1,0 +1,76 @@
+a {
+    color: #16aaff !important;
+    text-decoration: none !important ;
+    cursor: pointer !important;
+}
+
+a:hover {
+    color: #337ab7 !important;
+}
+.fa-plus--lineHeight{
+    line-height: 30px;
+}
+.bg-gradient-light{
+    color: #ffffff;
+   
+}
+.bbottom {
+    border-bottom: 1px solid rgba(26, 54, 126, 0.125);
+}
+h4.text-muted {
+    color: #000 !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    padding: 14px 10px 11px 17px;
+    border-bottom: 1px solid #00000029; line-height: 31px;
+}
+
+.impoinfo{ margin-top: 20px;}
+.impoinfo h4 { font-size: 18px; color: #000;}
+.impoinfo p { font-size: 12px; color: #000;}
+
+
+b {
+    font-size: 16px !important;
+    color: #F9B501 !important;
+    font-weight: 500 !important;
+}
+.float-right.text-warning {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+}
+.customColor{
+    color: #001D46;
+}
+.fsBorder {
+    border: 1px solid #00000029;
+    border-radius: 4px;
+    // margin-right: -15px;
+    // margin-left: 15px;
+}
+
+.grand_tot {color: #262161;}
+
+.card { border-radius: 8px !important;}
+
+::ng-deep .theme-dark .theme_bg .customColor{
+    color: #fff !important;
+}
+::ng-deep .theme-dark .theme_bg .grand_tot {color: #fff !important;}
+
+::ng-deep .theme-dark .theme_bg .impoinfo p { font-size: 12px; color: #fff !important;}
+@media only screen and (max-width: 767px) {
+ 
+    .padlt { padding-left: 0px !important; padding-right: 0px !important;}
+    .mobile_left { text-align: left !important;}
+    .mobile_right { text-align: right !important;}
+    .mobile_row { margin: 0px;}
+    .mobile_nopad { padding: 0px !important;}
+    .mobile_top { margin-top: 12px;}
+    .mob_show { display: inline;}
+    .mob_hide { display: none;}
+    .review_txt{ text-align: center;}
+    .mobile_botpad { padding-bottom: 12px !important;}
+   .mobile_details_bagg { width: 100% !important; display: block !important; border:none !important;}
+  }
+  .txtc{color: #001d46;}

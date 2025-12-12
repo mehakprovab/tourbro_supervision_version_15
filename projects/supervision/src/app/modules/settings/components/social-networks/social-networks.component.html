@@ -1,0 +1,68 @@
+<div class="card mb-3">
+    <div class="card-header-tab card-header bg-dark text-white">
+        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+            <i class="header-icon fa fa-edit"> </i>
+           <span class="text-uppercase"> {{ 'Manage Social Networks' }} </span>
+        </div>
+    </div>
+    <form [formGroup]="regConfig" class="m-4">
+        <div class="table-responsive pb-3" formArrayName="items">
+            <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                <thead>
+                    <tr class="p-2">
+                        <th class="text-left text-nowrap" *ngFor="let header of displayColumn;">
+                            {{header}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="noData">
+                        <td colspan="11">
+                            <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                        </td>
+                    </tr>
+                    <tr *ngIf="!noData && !socialNetworkData.length">
+                        <td colspan="11">
+                            <h4 class="text-muted text-center">
+                                No Data Found!
+                            </h4>
+                        </td>
+                    </tr>
+                    <ng-container *ngIf="socialNetworkData.length">
+                        <tr class=" p-2" *ngFor="let data of regConfig?.get('items')['controls']; let i=index;" [formGroupName]="i">
+                            <td class="text-left text-muted">{{i+1}}.</td>
+                            <td class="text-left text-capitalize"> {{data?.get('social_media_name')?.value}} </td>
+                            <td class="text-left">
+                                <div class="input-group input-group-sm w-75">
+                                    <input type="text" class="form-control form-control-sm w-50" aria-label="Social Network Url"
+                                        aria-describedby="basic-addon2" formControlName="url">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text btn btn-primary btn-sm" id="basic-addon2" (click)="update(data)">
+                                            {{'Update'}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td scope="row" class="text-left">
+                                <div class="form-group row">
+                                    <span title="Slide for Active/Deactive">
+                                        <input type="radio" [value]="'1'" class="col-1" id="plus{{i}}" formControlName="status"
+                                            style="top: 5px;" />
+                                        <label class="col-5 form-radio-label text-nowrap" for="plus{{i}}">
+                                            Active
+                                        </label>
+                                        <input type="radio" [value]="'0'" id="percentage{{i}}" class="col-1" formControlName="status"
+                                            style="top: 5px;" />
+                                        <label class="col-5 form-radio-label text-nowrap" for="percentage{{i}}">
+                                            Deactive
+                                        </label>
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>

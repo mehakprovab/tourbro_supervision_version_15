@@ -1,0 +1,26 @@
+<div class="row mx-0 pt-2">
+    <div class="col-md-12">
+        <div class="card main-card mb-6">
+            <div class="card-body">
+                <ngb-tabset class="tabs-animated tabs-animated-shadow" (tabChange)="beforeChange($event)" #tabs>
+                    <ngb-tab id="list_hotel_types">
+                        <ng-template ngbTabTitle>
+                            <span class="">{{'List Hotel Types'}}</span>
+                        </ng-template>
+                        <ng-template ngbTabContent>
+                            <app-hotel-type-list (toUpdate)="triggerTab($event)"></app-hotel-type-list>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab id="add_hotel_type">
+                        <ng-template ngbTabTitle>
+                            <span class="">{{'Add/Edit Hotel Type'}}</span>
+                        </ng-template>
+                        <ng-template ngbTabContent>
+                            <app-add-update-hotel-type (someEvent)="triggerTab($event)" [hotelTypeOne]="hotelTypeData"></app-add-update-hotel-type>
+                        </ng-template>
+                    </ngb-tab>
+                </ngb-tabset>
+            </div>
+        </div>
+    </div>
+</div>

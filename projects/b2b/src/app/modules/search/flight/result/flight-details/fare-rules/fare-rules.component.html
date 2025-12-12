@@ -1,0 +1,53 @@
+<div mat-dialog-content>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card pb-0 mb-2">
+                <div class="card-body pb-0">
+                    <table class="mb-0 table table-hover">
+                        
+                        <tbody>
+                           
+                            <tr>
+                                <td colspan="4">
+                                    <a href="javascript:void(0);" class=""
+                                        [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic"> Fare Rules
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr *ngIf="!isCollapsed">
+                                <td colspan="4">
+                                    <div class="" [collapse]="isCollapsed" [isAnimated]="true" class="">
+                                        <p *ngIf="fareRuleData.length">
+                                            <!-- {{ fareRuleData }} -->
+                                        </p>
+                                        <div class="rules_dropdown">
+                                            <table *ngIf="fareRuleData.length" style="width: 100%;">
+                                                <!-- <tr>
+                                                <th>Origin</th>
+                                                <th>Destination</th>
+                                                <th>Airline</th>
+                                                <th colspan="4">Fare Rules</th>
+                                            </tr> -->
+                                                <tr *ngFor="let f of fareRuleData">
+                                                    <div [innerHTML]="f.Description" style="border-bottom: 1px solid;float: left;width: 100%;">
+                                                    </div>
+
+                                                    <!-- <td>{{ f.Description }}</td> -->
+                                                    <!-- <td>{{ f.Destination }}</td>
+                                                <td>{{ f.Airline }}</td>
+                                                <td colspan="4">{{ f.FareRules }}</td> -->
+                                                </tr>
+                                            </table>
+                                            <p *ngIf="noData">NO Data Found.</p>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

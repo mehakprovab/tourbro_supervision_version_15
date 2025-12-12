@@ -1,0 +1,32 @@
+<div class="row mx-0 pt-2">
+    <div class="col-md-12">
+        <h5><b>Hotel Name:</b> {{hotelOne.hotel_name}}</h5>
+        <div class="card main-card mb-6">
+            <div class="card-body">
+                <ngb-tabset class="tabs-animated tabs-animated-shadow" (tabChange)="beforeChange($event)" #tabs>
+                    <ngb-tab id="list_hotel_types">
+                        <ng-template ngbTabTitle>
+                            <span class="">{{'List Children policy'}}</span>
+                        </ng-template>
+                        <ng-template ngbTabContent>
+                            <app-children-pollicy-list (toUpdate)="triggerTab($event)"[hotelOneData]="hotelOne"></app-children-pollicy-list>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab id="add_hotel_type">
+                        <ng-template ngbTabTitle>
+                            <span class="">{{'Add/Edit Children Policy'}}</span>
+                        </ng-template>
+                        <ng-template ngbTabContent>
+                            <app-add-update-children-pollicy (someEvent)="triggerTab($event)"[hotelOneData]="hotelOne" [hotelTypeOne]="hotelTypeData"></app-add-update-children-pollicy>
+                        </ng-template>
+                    </ngb-tab>
+                </ngb-tabset>
+                <button type="reset" class=" btn btn-sm btn-primary btnStyle" (click)="goToHotelList()">
+                    Hotel List
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

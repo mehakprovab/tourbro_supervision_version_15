@@ -1,0 +1,47 @@
+.grid-section-wrapper {
+    background: none;
+    // float     : left;
+    width     : 100%;
+    position  : relative;
+    margin-top: 0px; background: #092e53; padding: 17px 0px;
+}
+
+
+.searchtabs {
+    float        : left;
+    width        : 100%;
+}
+.card {
+    border-radius: 8px;
+}
+
+.hotel_list1 { padding: 15px;  background: none; 
+    border-radius: 5px; position: relative;}
+
+::ng-deep .theme-dark .theme_bg {
+    background: #042634 !important;
+    float: left;
+    width: 100%;
+}
+
+::ng-deep .theme-dark .tabbable-line .nav-tabs { border:none !important}
+
+::ng-deep .theme-dark .tabs_hotel {background-color: #042634;
+    border: 1px solid #364750 !important;
+    box-shadow: -1px 2px 5px 0px #001c28 !important; }
+::ng-deep .theme-dark .lettrfty p { color: #fff !important;}    
+::ng-deep .theme-dark .map_Sec {
+    border-top: 1px solid #0b394c;
+}
+::ng-deep .theme-dark .whats_near ul li { color: #fff;}
+
+
+::ng-deep .theme-dark .room_loop{ background: #042634 !important;
+    border: 1px solid #38515c !important;}
+::ng-deep .theme-dark .room_opt h3, ::ng-deep .theme-dark .sleeps, ::ng-deep .theme-dark .room_faci span { color: #fff !important;}   
+::ng-deep .theme-dark .mat-dialog-container {    background: #193342 !important;
+    color: #fff !important;}
+::ng-deep .theme-dark .rating-block h2 small {color: #fff !important;} 
+::ng-deep .theme-dark .review-block-rate h4 {color: #fff !important;} 
+::ng-deep .theme-dark .review-block-name, ::ng-deep .theme-dark .review-block-description {color: #fff !important;} 
+::ng-deep .theme-dark .tabs_hotel ul li {color: #fff !important;}

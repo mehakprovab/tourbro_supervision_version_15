@@ -1,0 +1,53 @@
+<div class="card">
+	<h5>B2C Users Reward Rate</h5>
+    <form [formGroup]="regConfig">
+       <div class="form-row">
+          <div class="col-4 pr-0">
+             <div class="form-group">
+                <label for="phone">Reward Point*</label>
+                <input formControlName="reward_points" type="text" class="form-control form-control-sm nrm_input" placeholder="Reward Point" id="phone" [ngClass]="{ 'is-invalid': submitted && regConfig.controls.reward_points.errors }">
+	                <div *ngIf="submitted && regConfig.controls.reward_points.errors" class="invalid-feedback">
+	                <div *ngIf="regConfig.controls.reward_points.errors.required">Reward Point required</div>
+	                <div *ngIf="regConfig.controls.reward_points.errors.pattern">Accept only Numbers</div>
+            	</div>
+             </div>
+          </div>
+          <div class="col-4 pr-0">
+             <div class="form-group">
+                <label for="price">Price(USD)*</label>
+                <input formControlName="price" type="text" class="form-control form-control-sm nrm_input" placeholder="Price" id="price" [ngClass]="{ 'is-invalid': submitted && regConfig.controls.price.errors }">
+                   <div *ngIf="submitted && regConfig.controls.price.errors" class="invalid-feedback">
+	                <div *ngIf="regConfig.controls.price.errors.required">Price required</div>
+	                <div *ngIf="regConfig.controls.price.errors.pattern">Accept only Numbers</div>
+             	</div>
+          </div>
+      </div>
+          <div class="col-4 pr-0">
+             <div class="form-group">
+                <label for="min_limit">Min Limit*</label>
+                <input formControlName="min_limit" type="text" class="form-control form-control-sm nrm_input" placeholder="Min Limit" id="min_limit"
+                [ngClass]="{ 'is-invalid': submitted && regConfig.controls.min_limit.errors }">
+                   <div *ngIf="submitted && regConfig.controls.min_limit.errors" class="invalid-feedback">
+	                <div *ngIf="regConfig.controls.min_limit.errors.required">Min Limit required</div>
+	                <div *ngIf="regConfig.controls.min_limit.errors.pattern">Accept only Numbers</div>
+             </div>
+          </div>
+      </div>
+          <div class="col-4 pr-0">
+             <div class="form-group">
+                <label for="max_limit">Max Limit*</label>
+                <input formControlName="max_limit" type="text" class="form-control form-control-sm nrm_input" placeholder="Max Limit" id="max_limit"
+                [ngClass]="{ 'is-invalid': submitted && regConfig.controls.max_limit.errors }">
+                   <div *ngIf="submitted && regConfig.controls.max_limit.errors" class="invalid-feedback">
+	                <div *ngIf="regConfig.controls.max_limit.errors.required">Max Limit required</div>
+	                <div *ngIf="regConfig.controls.max_limit.errors.pattern">Accept only Numbers</div>
+             </div>
+          </div>
+       </div>
+   </div>
+       <div class="btncontainer">
+          <button type="submit" class="btnStyle" (click)="onSubmit();">Submit</button> &nbsp;
+          <button type="button" class="btnStyle" (click)="onReset()">Reset</button>
+       </div>
+    </form>
+ </div>

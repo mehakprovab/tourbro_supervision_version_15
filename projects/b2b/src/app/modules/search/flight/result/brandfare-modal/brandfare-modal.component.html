@@ -1,0 +1,93 @@
+<!-- <div class="modal fade">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content advertise-sec p-0" style=" min-width: 120% !important; height: 95vh;">
+      <div class="modal-header d-flex justify-content-end align-items-center" style="border-bottom: none; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    height: 50px;">
+		<button type="button" style="right: 25px;" class="close position-absolute p-0" data-bs-dismiss="modal" aria-label="Close" (click)="closeModal()" ><span aria-hidden="true" style="font-size: 30px; font-weight: 400;">×</span></button>
+      </div>
+      <div class="modal-body" style="color: #ffffff;" >
+        <div class="brand-fare-list grid grid-cols-2 gap-4">
+            <div *ngFor="let brandList of brandListData" class="brand-card">
+                <div class="row" style="border-bottom: 1px solid #0000002e;">
+                    
+                    <div class="price-header d-flex justify-content-start col-6 align-items-start">
+                        <h2>{{ brandList.FarePrice }}</h2>
+                        <span>{{ brandList.Name }}</span>
+                    </div>
+                    <div class="section d-flex justify-content-end col-6" *ngIf="brandList.Images.length">
+                        <ul>
+                            <li> <img style="height: 50px;" src="{{brandList.Images[0]?.$t}}" alt="aitLineImage" /> </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section" *ngIf="brandList.Titles.length">
+                    <ul *ngFor="let text of brandList.Titles">
+                        <li><strong>{{text?.Type}}:</strong> {{text?.$t}}</li>
+                    </ul>
+                </div>
+
+                <div class="section" *ngIf="brandList.Texts.length" style="min-height: 40vh;">
+                    <ul *ngFor="let text of brandList.Texts">
+                        <li><strong>{{text?.Type}}:</strong> {{text?.$t}}</li>
+                        
+                    </ul>
+                </div>
+                <div class="button-group" style="border-top: 1px solid #0000002e;">
+                    <button class="btn srch_btn" type="button" (click)="onBookNowPrice(brandList?.Id)">BOOK NOW</button>
+                </div>
+
+            </div>
+        </div>
+		
+      </div>
+
+    </div>
+  </div>
+</div> -->
+
+
+<div class="col-12">
+    <h2 mat-dialog-title>Branded Fare     
+        <button type="button" style="right: 25px;" class="close position-absolute p-0" (click)="closeModal()" ><span style="font-size: 30px; font-weight: 400;">×</span></button>
+    </h2>
+    <mat-dialog-content  class="brand-fare-modal">
+       <div class="brand-fare-list d-flex overflow-x-auto gap-2 p-2">
+  <div *ngFor="let brandList of brandListData" 
+       class="brand-card min-w-[320px] border rounded-lg shadow-md bg-white p-4">
+       
+    <div class="row border-b border-gray-300 pb-2 mb-2">
+      <div class="price-header justify-content-start col-6 align-items-start">
+        <h2>{{ brandList.FarePrice }}</h2>
+        <span>{{ brandList.Name }}</span>
+      </div>
+      <div class="section d-flex justify-content-end col-6" *ngIf="brandList.Images.length">
+        <ul>
+          <li><img class="h-[50px]" style="height: 70px;" src="{{brandList.Images[0]?.$t}}" alt="AirlineImage" /></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section" *ngIf="brandList.Titles.length">
+      <ul *ngFor="let text of brandList.Titles">
+        <li><strong>{{ text?.Type }}:</strong> {{ text?.$t }}</li>
+      </ul>
+    </div>
+
+    <div class="section min-h-[40vh]" *ngIf="brandList.Texts.length">
+      <ul *ngFor="let text of brandList.Texts">
+        <li><strong>{{ text?.Type }}:</strong> {{ text?.$t }}</li>
+      </ul>
+    </div>
+
+    <div class="button-group border-t border-gray-300 pt-2 mt-2">
+      <button class="btn srch_btn w-full" type="button" (click)="onBookNowPrice(brandList?.Id)">
+        BOOK NOW
+      </button>
+    </div>
+
+  </div>
+</div>
+
+    </mat-dialog-content>
+</div>

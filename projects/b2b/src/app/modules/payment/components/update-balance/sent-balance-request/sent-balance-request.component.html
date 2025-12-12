@@ -1,0 +1,76 @@
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <div class="card-header-tab card-header">
+            <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+                <span> Current Balance: {{ !noData && currentBalance['agent_currency'] + ' ' + currentBalance['balance']}} </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-12">
+        <form class="clearfix">
+            <div class="p-2 customBorder">
+                <div class="form-group form-inline mb-0">
+                    Full text search:
+                    <input class="form-control ml-2" type="text" name="searchTerm"
+                        (keyup)="applyFilter($event.target.value)" />
+                </div>
+            </div>
+
+            <div class="row col-md-12 col-lg-12">
+                <table style="table-layout: fixed; width: 100%;">
+                    <tr>
+                        <td>
+                            <div class="table-responsive">
+                                <table class="table table-borderless table-striped table-hover" matSort (matSortChange)="sortData($event)">
+                                    <thead>
+                                        <tr class="p-2">
+                                            <th scope="col" class="text-nowrap" *ngFor="let header of displayColumn;"
+                                                mat-sort-header="{{header.key}}">
+                                                {{header.value }} </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="noData">
+                                            <td colspan="11">
+                                                <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                                            </td>
+                                        </tr>
+                                        <tr class="p-2" *ngFor="let balance of respData | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
+                                            <td class="text-left text-muted"># {{ i+1}}</td>
+                                            <td class="text-left"> {{balance['system_transaction_id']}} </td>
+                                            <td class="text-left"> {{balance['amount']}} </td>
+                                            <td class="text-left"> {{balance['bank']}} </td>
+                                            <td class="text-left"> {{balance['branch']}} </td>
+                                            <td class="text-left"> 
+                                                <span *ngIf="balance['status'] == 'pending'" class="badge badge-warning"> {{balance['status'] | uppercase}} </span>    
+                                                <span *ngIf="balance['status'] == 'accepted'" class="badge badge-success"> {{balance['status'] | uppercase}} </span>    
+                                                <span *ngIf="balance['status'] == 'rejected'" class="badge badge-danger"> {{balance['status'] | uppercase}} </span>    
+                                            </td>
+                                            <td class="text-left"> {{balance['transaction_type']}} </td>
+                                            <td class="text-left"> {{balance['requeston']*1000 | date: 'medium'}} </td>
+                                            <td class="text-left"> {{balance['update_remarks']}} </td>
+                                            <td class="text-left"> {{balance['updated_datetime']*1000 | date: 'medium'}} </td>
+                                            <td class="text-left text-nowrap"> {{balance['remarks']}} </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="card-footer pb-0">
+                <div class="d-flex w-100 justify-content-between">
+                    <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                    </ngb-pagination>
+                    <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                        <option [ngValue]="2">2 items per page</option>
+                        <option [ngValue]="4">4 items per page</option>
+                        <option [ngValue]="6">6 items per page</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

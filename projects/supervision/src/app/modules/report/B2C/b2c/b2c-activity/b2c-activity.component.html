@@ -1,0 +1,353 @@
+<div class="card-header text-uppercase bg-dark text-white">
+    <h5 style="border-bottom: 0;">B2C Activity report</h5>
+</div>
+<div class="card">
+    <form [formGroup]="regConfig">
+        <div>
+            <div class="form-row">
+                <div class="col-4 pr-0">
+                    <div class="form-group">
+                        <label for="appReference">Application Reference</label>
+                        <input formControlName="app_reference" type="text"
+                            class="form-control text-uppercase form-control-sm nrm_input"
+                            placeholder="Application Reference" id="appReference">
+                    </div>
+                </div>
+                <div class="col-4 pr-0">
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input formControlName="phone_number" type="text"
+                            class="form-control text-uppercase form-control-sm nrm_input" placeholder="Phone"
+                            (keypress)="numberOnly($event)" id="phone">
+                    </div>
+                </div>
+                <div class="col-4 pr-0">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input formControlName="email" type="email" class="form-control form-control-sm nrm_input"
+                            placeholder="Email" id="email">
+                    </div>
+                </div>
+                <div class="col-4 pr-0">
+                    <div class="form-group">
+                        <label for="bookedBy">Status</label>
+                        <select formControlName="status" name="cars" id="bookedBy"
+                            class="form-control form-control-sm nrm_input">
+                            <option value="ALL">ALL</option>
+                            <option value="BOOKING_CONFIRMED">CONFIRMED</option>
+                            <option value="ticked">TICKED</option>
+                            <option value="BOOKING_CANCELLED">CANCELLED</option>
+                            <option value="cancelInProgress">CANCELLATION IN PROGRESS</option>
+                            <option value="failed">FAILED</option>
+                            <option value="BOOKING_HOLD">HOLD</option>
+                            <option value="BOOKING_INPROGRESS">IN PROGRESS</option>
+                        </select>
+                        <div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 pr-0">
+                    <div class="form-group">
+                        <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
+                        <label for="fromDate">Booked From Date</label>
+                        <input formControlName="booked_from_date" type="text" id="fromDate" autocomplete="off"
+                            class="form-control form-control-sm nrm_input" placement="bottom left"
+                            placeholder="dd/mm/yyyy" bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen"
+                           >
+                    </div>
+                </div>
+                <div class="col-4 pr-0">
+                    <div class="form-group">
+                        <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
+                        <label for="toDate">Booked To Date</label>
+                        <input formControlName="booked_to_date" type="text" id="toDate" autocomplete="off"
+                            class="form-control form-control-sm nrm_input" placement="bottom left"
+                            placeholder="dd/mm/yyyy" bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen"
+                           >
+                    </div>
+                </div>
+            </div>
+            <div class="btncontainer">
+                <button type="submit" class="btnStyle" (click)="onSearchSubmit()">Search</button> &nbsp;
+                <button type="button" class="btnStyle" (click)="onReset()">Reset</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="card" style="margin-top: 30px;">
+    <div class="card-body">
+        <div style="padding-bottom: 15px;">
+            <p>Total {{respData?.length}} Bookings</p>
+            <button class="btnStyle" (click)="downloadPdf()">PDF</button>&nbsp;
+            <button class="btnStyle" (click)="download('xlsx', 'portrait')">Export to excel</button>
+            <div class="form-group mb-0 col-sm-3 p-0 float-right has-search">
+                <span class="fa fa-search form-control-feedback"></span>
+                <input class="form-control" type="text" name="Search" [(ngModel)]="searchText"
+                    autocomplete="off" placeholder="Search">
+            </div>
+        </div>
+        <div class="mb-3">
+            <form>
+                <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft"
+                    #scrollOne>
+                    <div class="div1"></div>
+                </div>
+
+                <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
+                    <div class="div2 invisible-scrollbar">
+                        <div class="table-respons">
+                            <table class="table table-borderless table-striped table-hover" matSort
+                                (matSortChange)="sortData($event)" id="b2c-activity-report">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-left text-nowrap"
+                                            *ngFor="let header of displayColumn;">
+                                            {{header.value }}
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngIf="noData">
+                                        <td colspan="11">
+                                            <mat-spinner [diameter]="30" style="margin:0 auto;"
+                                                mode="indeterminate"></mat-spinner>
+                                        </td>
+                                    </tr>
+                                    <tr
+                                        *ngIf="!noData && (!respData.length || (respData | filter:searchText).length === 0)">
+                                        <td colspan="11">
+                                            <h4 class="text-muted text-center">
+                                                No Data Found!
+                                            </h4>
+                                        </td>
+                                    </tr>
+                                    <tr
+                                        *ngFor="let data of respData | filter:searchText | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
+                                        <td class="text-left text-muted">{{i+1}}.</td>
+                                        <td class="text-left overflow-hidden">
+                                            <div ngbDropdown container="body"><button class="btnStyle"
+                                                    ngbDropdownToggle>
+                                                    {{'Action'}}
+                                                </button>
+                                                <div ngbDropdownMenu>
+                                                    <button ngbDropdownItem
+                                                        (click)="onActivityRedirect(data?.BookingDetails.AppReference,'voucher')">View
+                                                        Voucher</button>
+                                                    <button ngbDropdownItem
+                                                        (click)="onActivityRedirect(data?.BookingDetails.AppReference,'invoice')">View
+                                                        Invoice</button>
+                                                    <button ngbDropdownItem (click)="showPaxProfile(data)">Pax
+                                                        Profile</button>
+                                                    <button
+                                                        *ngIf="data?.BookingDetails.ConfirmationReference && (data['BookingDetails']['Status'] == 'BOOKING_CONFIRMED'|| data['BookingDetails']['Status'] == 'BOOKING_FAILED'|| data['BookingDetails']['Status'] == 'BOOKING_VOIDED' || data['BookingDetails']['Status'] =='BOOKING_HOLD')"
+                                                        ngbDropdownItem (click)="cancelTicketPopup(data)"> Cancel
+                                                    </button>
+
+                                                    <button
+                                                    *ngIf="data?.BookingDetails.ConfirmationReference && (data?.BookingDetails.Status == 'BOOKING_CONFIRMED')"
+                                                    ngbDropdownItem (click)="showUpdateGuideInfoModal(data)"> Update Guide Info
+                                                </button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-left">
+                                            <span *ngIf="data['BookingDetails']['Status'] == 'BOOKING_FAILED'" class="badge badge-danger">
+                                                Booking Failed
+                                            </span>
+                                            <span *ngIf="data['BookingDetails']['Status'] == 'BOOKING_CONFIRMED'"
+                                                class="badge badge-success">
+                                                Booking Confirmed
+                                            </span>
+                                            <span *ngIf="data['BookingDetails']['Status'] == 'BOOKING_CANCELLED'"
+                                                class="badge badge-danger">
+                                                Booking Cancelled
+                                            </span>
+                                            <span *ngIf="data['BookingDetails']['Status']== 'BOOKING_INPROGRESS'"
+                                                class="badge badge-info">
+                                                Booking Inprogress
+                                            </span>
+                                            <span *ngIf="data['BookingDetails']['Status'] == 'BOOKING_HOLD'"
+                                            class="badge badge-warning">
+                                            Booking Hold
+                                        </span>
+                                            {{data['BookingDetails']['Status'] ? '' : 'N/A'}}
+                                        </td>
+                                        <td class="text-left"> {{data?.BookingDetails.AppReference}} </td>
+                                        <td class="text-left">{{data?.BookingDetails.ConfirmationReference || 'N/A'}} </td>
+                                        <td class="text-left">{{data?.BookingDetails?.PaymentMode || 'N/A' }} </td>
+
+
+                                        <td class="text-left">{{data?.BookingDetails.supplierName || 'N/A'}} </td>
+                                        <td class="text-left">{{data.BookingPaxDetails[0]?.Title}} {{data.BookingPaxDetails[0]?.FirstName}}
+                                            {{data.BookingPaxDetails[0]?.LastName}} </td>
+                                        <td class="text-left">{{data.BookingDetails?.Email || 'N/A'}} </td>
+                                        <td class="text-left">{{data.BookingDetails?.PhoneNumber || 'N/A'}} </td>
+                                        <td class="text-left">{{getPaxData(data.BookingDetails?.searchData?.paxes[0]) || 'N/A'}} </td>
+                                        <td class="text-left" *ngIf="loggerUserAuthId !== 7">{{data.BookingDetails?.ModalityName || 'N/A'}} </td>
+                                        <td class="text-left">{{data.BookingDetails?.ProductName || 'N/A'}} </td>
+                                        <td class="text-left">{{data.BookingItenaryDetails?.attributes?.Duration }} </td>
+                                        <td class="text-left">{{data.BookingItenaryDetails?.city }} </td>
+                                        <td class="text-left"> {{data.BookingItenaryDetails?.attributes?.AddressDetails?.Country  }} </td>
+                                        <td class="text-left"> {{data?.BookingDetails.travelDate | date: 'dd/MM/yyyy'  }} </td>
+                                        <td class="text-left"> {{data?.BookingDetails.toDate | date: 'dd/MM/yyyy'}} </td>
+                                        <td class="text-left"> {{data?.BookingDetails.supplier_total_price || 0 }} {{data?.BookingDetails.supplier_currency}} </td>
+                                        <td class="text-left"  *ngIf="loggerUserAuthId !== 7"> {{data?.BookingDetails.AdminMarkup || 0}} </td>
+                                        <td class="text-left" *ngIf="loggerUserAuthId !== 7"> {{data?.BookingDetails.ConvienceFees || 0 }} </td>
+                                        <td class="text-left" *ngIf="loggerUserAuthId !== 7"> {{data.BookingDetails?.Discount || 0 }} </td>
+                                        <td class="text-left" *ngIf="loggerUserAuthId !== 7"> {{data.BookingDetails?.TotalNet || '' }} </td>
+                                        <td class="text-left" *ngIf="loggerUserAuthId !== 7"> {{data?.BookingDetails?.Currency}} </td>
+                                        <td class="text-left"> {{ data?.BookingDetails.CreatedDatetime  | date: 'dd/MM/yyyy' }} </td>
+                                        <td class="text-left"> {{data?.BookingDetails?.GuideName ?  data?.BookingDetails?.GuideName : ''}} {{data?.BookingDetails?.GuideContact ? '('+ data?.BookingDetails?.GuideContact + ')' : ''}}</td>
+                                        
+                                        <td class="text-left">{{data?.BookingDetails?.PaidOn }} </td>
+                                        <td class="text-left"> 
+                                            <ng-container *ngIf="data?.BookingDetails.API_cancellation_deadline;else cancelTemplate">
+                                                {{ data?.BookingDetails.cancellation_deadline ? data?.BookingDetails.cancellation_deadline : 'NA'}}
+                                            </ng-container>
+                                            <ng-template #cancelTemplate>NA</ng-template>
+                                             </td>
+                                    <td class="text-left">
+                                        <ng-container *ngIf="data?.BookingDetails.Status === 'BOOKING_CANCELLED'; else naTemplate">
+                                          {{ data?.BookingDetails.cancelled_datetime | date: 'dd/MM/yyyy' }}
+                                        </ng-container>
+                                        <ng-template #naTemplate>NA</ng-template>
+                                      </td> 
+                                      <td class="text-left"> {{data?.BookingDetails?.CancelAmount || ''}} </td> 
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="loadWrapper1" *ngIf="load">
+                    <div class="loader1"></div>
+                </div>
+                <div class="card-footer pb-0">
+                    <div class="d-flex w-100 justify-content-between">
+                        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                        </ngb-pagination>
+                        <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                            <option [ngValue]="50">50 items per page</option>
+                            <option [ngValue]="100">100 items per page</option>
+                            <option [ngValue]="150">150 items per page</option>
+                            <option [ngValue]="200">200 items per page</option>
+                            <option [ngValue]="500">500 items per page</option>
+                            <option [ngValue]="700">700 items per page</option>
+                            <option [ngValue]="1000">1000 items per page</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="paxProfile" [style.display]="showModal ? 'block' : 'none'">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">User Details:</h4>
+                <button type="button" class="close" data-dismiss="modal" (click)="hide()">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <h5>Lead Traveler Information</h5>
+                <p>Title : {{paxDetails?.Title}}</p>
+                <p>Firstname : {{paxDetails?.FirstName}}</p>
+                <p>Lastname : {{paxDetails?.LastName}}</p>
+                <!-- <p>Email : {{paxDetails?.Email}}</p> -->
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btnStyle" data-dismiss="modal" (click)="hide()">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="cancelPolicy" [style.display]="showCancelModal ? 'block' : 'none'">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Cancellation Policy</h4>
+                <button type="button" class="close" data-dismiss="modal" (click)="hide()">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                {{"From 06 Jan 2021,USD 25 will be charged as cancellation penalty."}}
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btnStyle" data-dismiss="modal" (click)="hide()">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true"
+    [style.display]="showConfirm ? 'block' : 'none'">
+    <div class="modal-dialog  modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentModalLabel">Confirm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Do you really want to {{subjectName}} the booking?</p>
+            </div>
+            <div class="modal-footer" style="justify-content: space-between;">
+                <button type="button" class="btn btn-success" *ngIf="subjectName=='Cancel'"
+                    (click)="cancelTicket()">Yes</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="hide()">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true"
+    [style.display]="showUpdateGuideInfo ? 'block' : 'none'">
+    <div class="modal-dialog  modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentModalLabel">Guide Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="col-12">
+                    <label>Guide Name</label>
+                    <input class="form-control" type="text" name="Search" [(ngModel)]="driverName"
+                        autocomplete="off" placeholder="Enter Guide Name"/>
+                </div>
+
+                <div class="col-12">
+                    <label>Guide Contact Number</label>
+                    <input class="form-control" type="text" name="Search" [(ngModel)]="driverMobile"
+                        autocomplete="off" placeholder="Enter Guide contact Number"/>
+                </div>
+                
+            </div>
+            <div class="modal-footer" style="justify-content: space-between;">
+                <button type="button" class="btn btn-success" 
+                    (click)="subminGuideInfo()">Update</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="hide()">No</button>
+            </div>
+        </div>
+    </div>
+</div>

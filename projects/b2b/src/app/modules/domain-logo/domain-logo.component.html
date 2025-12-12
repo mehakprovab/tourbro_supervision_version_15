@@ -1,0 +1,34 @@
+<div>
+  <div class="row card ">
+    <div>
+      <div class="card-header-tab card-header">
+        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+          <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+          <span>Domain Logo</span>
+        </div>
+      </div>
+    </div>
+    <form class="" [formGroup]="logoConfig">
+      <div class="form-group row my-5 offset-lg-2 offset-md-2 col-md-8 col-lg-8 ">
+        <label for="domain_logo" class="col-sm-3 col-form-label font-weight-bold"> Domain Logo <sup
+            class="text-danger f-14">*</sup> <br>
+          <p *ngIf="!imageSrc && submitted" class="text-danger" style="font-weight: 400;font-size: 80%;">Image
+            is required</p>
+        </label>
+        <div class="col-sm-9 custom-file" style="display: flex;">
+          <img *ngIf="!imageSrc"class="align-baseline rounded" width="100" height="50" src="{{image}}">
+          <img *ngIf="imageSrc" height="50" width="100" class="rounded" [src]="imageSrc" alt="logo">
+          &nbsp;&nbsp;
+          <input type="file" class="form-control-file" id="logo" (change)="onFileSelected($event)" #theFile
+            style="margin-top: 15px" accept=".png, .jpg, .jpeg" />
+        </div>
+      </div>
+      <span class="text-danger col-sm-12 customCenter">(Image file should be in PNG, JPG or JPEG format and no bigger than 100KB.) (200px * 200px)</span>
+      <hr>
+        <div class="col-sm-12 customCenter" style="padding-bottom:20px;">
+          <button type="submit" class="btn btn-lg btn-primary" [disabled]="!logoConfig.valid"
+            (click)="onSubmit()">Submit</button>
+        </div>
+    </form>
+  </div>
+</div>

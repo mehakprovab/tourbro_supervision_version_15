@@ -1,0 +1,246 @@
+<div class="row mx-0 pt-2">
+    <div class="col-md-12">
+        <div class="card main-card mb-6">
+            <div class="card-body" *ngIf="!noData">
+                <div class="mb-3 btop">
+                    <div class="card-header-tab card-header">
+                        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                            <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i> {{'Hotel Details'}}
+                        </div>
+                        <button type="button" class="btn btn-sm btn-info ml-auto" (click)="backToList()">Back</button>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <div class="row">
+                        <div class="col">
+                            <h4>
+                                <b>Hotel Name</b> :
+                                {{hotelDetail['hotel_name']}}
+                            </h4>
+                            <h4>
+                                <b>Type</b> :
+                                {{hotelDetail['hotelHotelType']['hotel_type_name']}}
+                            </h4>
+                            <h4>
+                                <b>Address</b> :
+                                {{hotelDetail['address']}}
+                            </h4>
+                            <h4>
+                                <b>Place</b> :
+                                {{hotelDetail['coreCity']['name']}}, {{hotelDetail['coreCountry']['name']}}
+                            </h4>
+                            <h4>
+                                <b>Star Rating</b> :
+                                {{hotelDetail['star_rating']}} Star
+                            </h4>
+                            <h4>
+                                <b>Contract Expiry</b> :
+                                {{hotelDetail['contract_expiry_date'] | date}}
+                            </h4>
+                            <h4>
+                                <b>Phone</b> :
+                                {{hotelDetail['phone_number']}}
+                            </h4>
+                            <h4>
+                                <b>Email</b> :
+                                {{hotelDetail['email']}}
+                            </h4>
+                            <h4>
+                                <b>FAX</b> :
+                                {{hotelDetail['fax_number']}}
+                            </h4>
+                            <h4>
+                                <b>Amenities</b> :
+                                <ng-container
+                                    *ngFor="let amenity of hotelDetail['hotelHotelAmenities']; let isLast=last">
+                                    {{amenity['hotel_amenity_name']}}{{isLast ? '' : ', '}}
+                                </ng-container>
+                            </h4>
+                        </div>
+                        <div class="col">
+                            <div *ngIf="hotelDetail['image']; else other;">
+                                <img [src]="hotelDetail['image']" width="100">
+                            </div>
+                            <ng-template #other>
+                                <img src="../../../../../../../assets/images/default_image.png" width="100">
+                            </ng-template>
+                            <h4>
+                                <b>Description</b> :
+                                {{hotelDetail['hotel_description']}}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <ng-container *ngIf="hotelDetail['hotelRooms'].length == 0">
+                    <p>No room info find for this hotel</p>
+                </ng-container>
+                <ng-container *ngFor="let room of hotelDetail['hotelRooms']; let i=index;">
+                    <div class="mb-3 btop">
+                        <div class="card-header-tab card-header">
+                            <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                                {{'Room'}} {{i+1}} {{room['hotelRoomType']['room_type_name']}}
+                            </div>
+                        </div>
+                        &nbsp;&nbsp;&nbsp;
+                        <div class="row">
+                            <div class="col">
+                                <h4>
+                                    <b>Name</b> :
+                                    {{room['room_name']}}
+                                </h4>
+                                <h4>
+                                    <b>Minimum Stay</b> :
+                                    {{room['min_stay']}}
+                                </h4>
+                                <h4>
+                                    <b>Max Adult Capacity</b> :
+                                    {{room['max_adult_capacity']}}
+                                </h4>
+                                <h4>
+                                    <b>Max Child Capacity</b> :
+                                    {{room['max_child_capacity']}}
+                                </h4>
+                            </div>
+                            <div class="col">
+                                <h4>
+                                    <b>Extra Bed Availability</b> :
+                                    {{room['extra_bed_availability'] ? 'Available' : 'Not Available'}}
+                                </h4>
+                                <h4>
+                                    <b>Room Policy</b> :
+                                    {{room['room_policy']}}
+                                </h4>
+                                <h4>
+                                    <b>Room Description</b> :
+                                    {{room['room_description']}}
+                                </h4>
+                                <h4>
+                                    <b>Room Amenities</b> :
+                                    <ng-container *ngFor="let amenity of room['hotelRoomAmenities']; let isLast=last">
+                                        {{amenity['room_amenity_name']}}{{isLast ? '' : ', '}}
+                                    </ng-container>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="room['hotelRoomSeasons'].length == 0">
+                        <p>No season info find for this Room</p>
+                    </ng-container>
+                    <ng-container *ngFor="let roomSeason of room['hotelRoomSeasons']; let i=index;">
+                        <div class="mb-3 btop">
+                            <div class="card-header-tab card-header">
+                                <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                                    {{'Season'}} {{i+1}}
+                                </div>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="row">
+                                <div class="col">
+                                    <h4>
+                                        <b>Season Name</b> :
+                                        {{roomSeason['season_name']}}
+                                    </h4>
+                                    <h4>
+                                        <b>Season From (Date)</b> :
+                                        {{roomSeason['from_date'] | date}}
+                                    </h4>
+                                    <h4>
+                                        <b>Season To (Date)</b> :
+                                        {{roomSeason['To_date'] | date}}
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="room['hotelRoomPrices'].length == 0">
+                        <p>No price info find for this Room</p>
+                    </ng-container>
+                    <ng-container *ngFor="let roomPrice of room['hotelRoomPrices']; let i=index;">
+                        <div class="mb-3 btop">
+                            <div class="card-header-tab card-header">
+                                <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                                    {{'Price Info'}} {{i+1}} ({{roomPrice['hotelRoomSeason']['season_name']}})
+                                </div>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="table-responsive">
+                                <table class="table table-sm table-bordered">
+                                    <thead class=" table-active">
+                                        <tr>
+                                            <th scope="col" class="text-left">1 Adult Price (AED) </th>
+                                            <th scope="col" class="text-left">2 Adult Price (AED)</th>
+                                            <th scope="col" class="text-left">3 Adult Price (AED) </th>
+                                            <th scope="col" class="text-left ">Child Age </th>
+                                            <th scope="col" class="text-left ">Child Price (AED) </th>
+                                            <th scope="col" class="text-left ">1 Adult Breakfast charge</th>
+                                            <th scope="col" class="text-left ">2 Adult Breakfast charge</th>
+                                            <th scope="col" class="text-left ">3 Adult Breakfast charge</th>
+                                            <th scope="col" class="text-left ">Minimum Stay</th>
+                                            <th scope="col" class="text-left ">Extra bed Count</th>
+                                            <th scope="col" class="text-left ">Extra bed price</th>
+                                            <th scope="col" class="text-left ">Child break fast Charge</th>
+                                            <th scope="col" class="text-left ">VAT</th>
+                                            <th scope="col" class="text-left ">Searvice Charge</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-left"> {{roomPrice['one_adult_price']}} </td>
+                                            <td class="text-left"> {{roomPrice['two_adult_price']}} </td>
+                                            <td class="text-left"> {{roomPrice['three_adult_price']}} </td>
+                                            <td class="text-left"> {{roomPrice['child_from_age']}} -
+                                                {{roomPrice['child_to_age']}} </td>
+                                            <td class="text-left"> {{roomPrice['child_price']}} </td>
+                                            <td class="text-left"> {{roomPrice['one_adult_breakfast_price']}} </td>
+                                            <td class="text-left"> {{roomPrice['two_adult_breakfast_price']}} </td>
+                                            <td class="text-left"> {{roomPrice['three_adult_breakfast_price']}} </td>
+                                            <td class="text-left"> {{roomPrice['minimum_stay']}} </td>
+                                            <td class="text-left"> {{roomPrice['extra_bed_count']}} </td>
+                                            <td class="text-left"> {{roomPrice['extra_bed_price']}} </td>
+                                            <td class="text-left"> {{roomPrice['child_breakfast_price']}} </td>
+                                            <td class="text-left"> {{roomPrice['vat']}} </td>
+                                            <td class="text-left"> {{roomPrice['service_charge']}} </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="room['hotelRoomCancellationPolicies'].length == 0">
+                        <p>No cancellation policy found for this season</p>
+                    </ng-container>
+                    <ng-container
+                        *ngFor="let roomCancellationPolicy of room['hotelRoomCancellationPolicies']; let i=index;">
+                        <div class="mb-3 btop">
+                            <div class="card-header-tab card-header">
+                                <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                                    {{'Room'}} {{i+1}} {{'cancellation Policy'}}
+                                </div>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="table-responsive">
+                                <table class="table table-sm table-bordered">
+                                    <thead class=" table-active">
+                                        <tr>
+                                            <th scope="col" class="text-left">Booking confirm day before (Days)</th>
+                                            <th scope="col" class="text-left">Penalty Type</th>
+                                            <th scope="col" class="text-left">Penalty </th>
+                                            <th scope="col" class="text-left ">Cancellation description</th>
+                                            <th scope="col" class="text-left ">Refund Policy</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-left"> {{roomCancellationPolicy['cancel_to']}} </td>
+                                            <td class="text-left"> {{roomCancellationPolicy['penalty_type']}} </td>
+                                            <td class="text-left"> {{roomCancellationPolicy['penalty']}} </td>
+                                            <td class="text-left"> {{roomCancellationPolicy['cancel_description']}}
+                                            </td>
+                                            <td class="text-left"> {{roomCancellationPolicy['refund_policy']}} </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

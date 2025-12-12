@@ -1,0 +1,159 @@
+<div style="background:#ccc; width:100%; position:relative;">
+
+    <div style="background:#ccc; max-width: 850px; margin: 0px auto; padding:20px; width:100%; position:relative;">
+        <div class="printformClass" style=" -webkit-print-color-adjust: exact;" #print_voucher id="print_voucher" >
+            <table cellpadding="0" border-collapse="" cellspacing="0" width="100%"
+                style="font-size:12px; font-family: 'Open Sans', sans-serif; border-radius: 5px; margin:10px auto;background-color:#fff; padding:20px;border-collapse:separate; color: #000;">
+                <tbody style="-webkit-print-color-adjust: exact">
+                    <tr>
+                        <td style="padding-bottom:10px; vertical-align: top;">
+                            <img style="width:160px; height: 58px;" src="./assets/images/login-images/l-logo.png">
+                        </td>
+                    </tr>
+                    <tr class="darkBoarder"></tr>
+                    <tr>
+                        <td style="line-height:15px;padding:0;">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <table
+                                style="width: 100%; border-top: 3px solid #999896;border-bottom: 3px solid #999896; margin: 0px 0px; display: table; background-color: #fff; padding: 5px 10px;">
+                                <tr>
+                                    <td style="padding:5px 0; font-size: 14px;">
+                                    </td>   
+                                </tr>
+                                <tr>
+                                    <td >
+                                        <tr>
+                                           <td style="font-size: 14px; font-weight: bold;">{{tourName}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{tourDuration}}</td>
+                                         </tr>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a  class="bannerImage" href="{{getImage()}}" target="_blank"><img class="bannerImage" width="250"
+                                            [src]="getImage()" alt=""></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td >
+                                        <tr>
+                                           <td style="font-size: 14px; font-weight: bold;">Visited City</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{visitedCity}}</td>
+                                         </tr>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td *ngFor="let item of programDetials; let i=index" class="displayBlock">
+                                        <tr>
+                                           <td style="font-size: 14px; font-weight: bold;">Day {{i+1}} - &nbsp;
+                                            <span>{{item.program_title}}</span>
+                                        </td>
+                                        </tr>
+                                        <tr>
+                                            <td >{{item.program_des}}</td>
+                                         </tr>
+                                         <!-- <tr style="font-size: 14px; font-weight: bold;" class="mealPlan">
+                                            <td>Meal Plan: &nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                        </tr> -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td >
+                                        <tr>
+                                           <td style="font-size: 16px; font-weight: bold;">Holiday Cost</td>
+                                        </tr>
+                                        <table  class="table table-bordered">
+                                            <thead class="priceDetails">
+                                                <tr>
+                                                    <th>From Date</th>
+                                                    <th>To Date</th>
+                                                    <th>Adult Price</th>
+                                                    <th>Child Price</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="priceDetails">
+                                                <tr *ngFor="let data of priceDetails">
+                                                    <td>{{data.from_date | date: 'dd/MM/yyyy'}}</td>
+                                                    <td>{{data.to_date | date: 'dd/MM/yyyy'}}</td>
+                                                    <td>{{data.adult_airliner_price |number :'1.2' }} {{data.currency}}</td>
+                                                    <td >
+                                                        <span *ngFor="let i of getChildPrice(data.child_airliner_price)">
+                                                            ({{i.from_age + '-' + i.to_age}} Age Range) {{ i.price | number :'1.2' }} {{data.currency}}<br>
+                                                        </span>
+                                                    </td>
+                                                 </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <tr>
+                                            <td style="font-size: 14px; font-weight: bold;">{{'Holiday Inclusions'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td [innerHTML]="holidayInclusionHtml"></td>
+                                        </tr>
+                                    <!-- </td>
+                                    <td> -->
+                                        <tr>
+                                            <td style="font-size: 14px; font-weight: bold;">{{'Holiday Exclusions'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td [innerHTML]="holidayExclusionHtml"></td>
+                                        </tr>
+                                    <!-- </td>
+                                    <td> -->
+                                        <tr>
+                                            <td style="font-size: 14px; font-weight: bold;">{{'Terms & Conditions'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td [innerHTML]="termsConditionsHtml"></td>
+                                        </tr>
+                                    <!-- </td>
+                                    <td> -->
+                                        <tr>
+                                            <td style="font-size: 14px; font-weight: bold;">{{'Cancellation Policy'}}</td>
+                                        </tr>
+                                        <tr *ngIf="cancellationPolicyHtml">
+                                            <p *ngFor="let policy of cancellationPolicyHtml; let i=index">{{i+1}}. Before {{policy.date_from}} Days {{policy?.charge}} {{policy?.charge_type === "Plus" ? "GBP" : '%'}} will be Chargable. <br></p>
+                                        </tr>
+
+                                        <tr *ngIf="!cancellationPolicyHtml">
+                                            <p>No Cancellation Policies</p>
+                                        </tr>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr  style="width: 100%; border-bottom: 3px solid #999896; margin:25px 0px 0px; display: table; background-color: #fff; padding: 5px 10px;"></tr>
+                    <tr>
+                        <td colspan="4" align="left" style="padding-top:10px; font-size: 14px;">
+                            Copyright © {{CurrentYear}} booking247. All Rights Reserved.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="form-group row mb-n2">
+            <div class="col-sm-12 d-flex justify-content-center">
+                <button type="reset" class="btn btn-sm btn-primary orangeButton mr-2" routerLink="/tour-crs/tour-list">Go Back to Tour list</button>
+                <button type="button" (click)="downloadA4('pdf', 'potrait')" id="download" style="background:  #07324B ;color: #fff; float:right;"
+                    class="btn table-btn lg btn_hover btnStyle">
+                    Download
+                </button>
+            </div>
+             
+        </div>
+    </div>
+</div>

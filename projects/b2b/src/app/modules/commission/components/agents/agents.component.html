@@ -1,0 +1,74 @@
+<div class="card">
+    <div class="card-body">
+        <ngb-tabset class="tabs-animated tabs-animated-shadow">
+            <ngb-tab *ngFor="let tab of tabLinks; let i=index;">
+                <ng-template ngbTabTitle>
+                    <span (click)="onSelect(tab, i)"> <i class="{{tab.icon}}"></i> &nbsp; {{tab.label}} </span>
+                </ng-template>
+                <ng-template ngbTabContent>
+
+                    <hr>
+                    <div class="card mb-3">
+                        <div class="card-header-tab card-header">
+                            <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                                <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+                                {{tab.label}}
+                            </div>
+                            <div class="btn-actions-pane-right">
+                                <div role="group" class="btn-group-sm btn-group">
+                                    <button class="btn-shadow btn btn-dark">Refresh</button>
+                                    <button type="button" class="btn-shadow btn btn-dark">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                        <form>
+                            <div class="p-2 bbottom">
+                                <div class="form-group form-inline mb-0">
+                                    Full text search:
+                                    <input class="form-control ml-2" type="text" name="searchTerm" />
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="text-center" *ngFor="let header of displayColumn">
+                                                {{header}} </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-muted">
+                                        <tr *ngFor="let agent of agentsData">
+                                            <td scope="row" class="text-center" *ngFor="let key of displayColumn">
+                                                <span *ngIf="key === 'Action'; else notShow;" title="Slide for Active/Deactive">
+                                                    <button class="btn btn-sm btn-primary">
+                                                        {{'Update'}}
+                                                    </button>
+                                                </span>
+                                                <ng-template #notShow>
+                                                    <ngb-highlight [result]="agent[key]"></ngb-highlight>
+                                                </ng-template>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="card-footer pb-0">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <ngb-pagination [collectionSize]="collectionSize" [(page)]="page"
+                                        [pageSize]="pageSize">
+                                    </ngb-pagination>
+                                    <select class="custom-select" style="width: auto" name="pageSize"
+                                        [(ngModel)]="pageSize">
+                                        <option [ngValue]="2">2 items per page</option>
+                                        <option [ngValue]="4">4 items per page</option>
+                                        <option [ngValue]="6">6 items per page</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </ng-template>
+            </ngb-tab>
+        </ngb-tabset>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="filterforall row ml-0" id="top-sort-list-wrapper">
+    <div class="topmisty" id="top-sort-list-1">
+        <div class="col-xs-12 nopad">
+            <div class="divinsidefltr">
+                <div class="insidemyt col-xs-12">
+                    <ul class="sortul">
+                        <li class="sortli hide_lines">
+                            <a (click)="sortByName()" class="sorta name-l-2-h loader c-pointer"
+                                [ngClass]="byName && active == 'byName' ? 'des active' :(active == 'byName' ? 'asc active' : 'asc')">
+                                <strong>Name</strong>
+                            </a>
+                        </li>
+                        <li class="sortli">
+                            <a (click)="sortByStars()" class="sorta name-l-2-h loader c-pointer"
+                                [ngClass]="byStars && active == 'byStars' ? 'des active' :(active == 'byStars' ? 'asc active' : 'asc')">
+                                <strong>Rating</strong>
+                            </a>
+                        </li>
+
+                        <li class="sortli">
+                            <a (click)="sortByPrice()" class="sorta name-l-2-h loader c-pointer"
+                                [ngClass]="byPrice && active == 'byPrice' ? 'des active' :(active == 'byPrice' ? 'asc active' : 'asc')">
+                                <strong>Price</strong>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

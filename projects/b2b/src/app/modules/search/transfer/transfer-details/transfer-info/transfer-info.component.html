@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <h5 class="cusromGrey hotel_name">
+            {{transfers.ProductName}}
+        </h5>
+        <ng-template *ngIf="transfers.StarRating === '' then noStar; else stars">
+        </ng-template>
+        <ng-template #noStar>
+            <span class="star_rtng">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            </span>
+        </ng-template>
+        <ng-template #stars>
+            <span class="star_rtng">
+                <i class="fas fa-star star_rtng_clr" *ngFor="let s of transfers.StarRating | map: getStarArray"></i>
+                <i class="fas fa-star" *ngFor="let s of transfers.StarRating | map: getStarArrayRemaining"></i>
+            </span>
+        </ng-template>
+        <p class="cusromGrey hotel_location">
+            Estimated journey time
+            <br/>
+            <i class="fal fa-clock"></i> {{transfers.Duration}}
+        </p>
+        <p class="cusromGrey hotel_location">
+            Number of passengers
+            <br/>
+            <i class="fal fa-clock"></i> {{transfers.OccupancyFrom}}- {{transfers.OccupancyTo}}
+        </p>
+        <p class="cusromGrey hotel_location">
+            Luggage allowance
+            <br/>
+            <span class="am_ttl3" *ngIf="transfers.Suitcase">{{transfers.Suitcase}} Suitcases (per vehicle)</span> - Free
+            <br/>
+            <span class="am_ttl3" *ngIf="transfers.SmallBaggage">{{transfers.SmallBaggage}} Small bag (per vehicle)</span> - Free
+        </p>
+    </div>
+</div>

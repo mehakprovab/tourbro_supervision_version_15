@@ -1,0 +1,81 @@
+<div class="row">
+    <div class="offset-md-1 col-md-10">
+        <form class="p-3 clearfix" [formGroup]="regConfig">
+            <div class="form-group row">
+                <label for="agentName" class="col-sm-2 col-form-label text-right"> Agent Name </label>
+                <div class="col-sm-10">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <input formControlName="agentName" type="text" class="form-control"
+                                        placeholder="" id="agentName" readonly="true">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="form-group row">
+                                <label for="agentId" class="col-sm-6 col-form-label text-right">Agent Id </label>
+                                <div class="col-sm-6">
+                                    <input formControlName="agentId" value="{{currentUser.uuid}} / {{currentUser.email}}" type="text" class="form-control"
+                                        placeholder="" id="agentId" readonly="true">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="requestType" class="col-sm-2 col-form-label text-right">Request Type <sup
+                        class="f-16 text-danger">*</sup> </label>
+                <div class="col-sm-10">
+                    <select formControlName="requestType" class="form-control text-capitalize" id="requestType"
+                        (change)="onSelect($event.target.value)">
+                        <option selected disabled>Choose one</option>
+                        <option [value]="reqType.name" *ngFor="let reqType of requestTypes">{{reqType.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row" *ngIf="regConfig.value.requestType == 'Cash' ? true : false">
+                <label for="paymentType" class="col-sm-2 text-right col-form-label ">Payment Type <sup
+                        class="f-16 text-danger">*</sup> </label>
+                <div class="col-sm-10">
+                    <select formControlName="paymentType" class="form-control " id="paymentType"
+                        (change)="onSelect($event.target.value)">
+                        <option selected disabled>Choose one</option>
+                        <option [value]="paymentType.name" *ngFor="let paymentType of paymentTypes;">
+                            {{paymentType.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col customBackground col f-18 fw-5 p-2 mb-4 mx-3 rounded">
+                    Deposite Request Details
+                </div>
+            </div>
+
+            <ng-container [ngSwitch]="regConfig.value.requestType">
+                <div class="" *ngSwitchCase="'E-Transfer'">
+                    <app-bkash [requestType]="'E-Transfer'" (activateSubChildTab)="activateSubChildTab($event)"></app-bkash>
+                </div>
+                <div class="" *ngSwitchCase="'Cash'">
+                    <app-nagad [requestType]="'Cash'" [paymentType]="regConfig.value.paymentType" (activateSubChildTab)="activateSubChildTab($event)"></app-nagad>
+                </div>
+                <div class="" *ngSwitchCase="'Cheque/DD'">
+                    <app-payment-cheque-dd [requestType]="'Cheque/DD'" (activateSubChildTab)="activateSubChildTab($event)"></app-payment-cheque-dd>
+                </div>
+
+                <div class="" *ngSwitchCase="'bKash'">
+                    <app-bkash-deposit></app-bkash-deposit>
+                </div>
+
+                <div class="" *ngSwitchCase="'Nagad'">
+                    <app-nagad-deposit></app-nagad-deposit>
+                </div>
+                
+            </ng-container>
+        </form>
+    </div>
+</div>

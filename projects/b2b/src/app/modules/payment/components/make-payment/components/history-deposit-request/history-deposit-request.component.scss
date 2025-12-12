@@ -1,0 +1,54 @@
+th {
+    color: #012756;
+    font-size: 14px;
+}
+td {
+    color: #082b3a;
+    font-size: 12px;
+}
+
+.hide {
+    // display: none;
+    color: red;
+  }
+  
+  .myImage:hover + .hide {
+    display: block;
+    color: red;
+  }
+
+.downloadImage {
+    background-color: #082E53;
+    border: none;
+    color: white;
+    padding: 12px 9px;
+    cursor: pointer;
+  }
+  
+  /* Darker background on mouse-over */
+  .downloadImage:hover {
+    background-color: RoyalBlue;
+  }
+
+  .wrapper1,
+.wrapper2 {
+  width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+.wrapper1 {
+  height: 20px;
+}
+
+.div1 {
+  width: 2200px;
+  height: 20px;
+}
+.div2 {
+  width: 2200px;
+  overflow: hidden;
+}
+.div2 .table-responsive {overflow: inherit;}
+.invisible-scrollbar::-webkit-scrollbar {
+    display: none;
+  }

@@ -1,0 +1,185 @@
+<div class="card-header text-uppercase bg-dark text-white">
+    <h5 style="border-bottom: 0;">
+        <i class="fa fa-edit"></i>
+        Credit Limit Request
+    </h5>
+</div>
+<div class="card">
+    <form [formGroup]="searchForm">
+        <div class="form-row">
+            <div class="col-4 pr-0">
+                <div class="form-group">
+                    <label for="bookingStatus">Status</label>
+                    <select formControlName="bookingStatus" name="cars" id="bookingStatus"
+                        class="form-control form-control-sm nrm_input">
+                        <option value="">All</option>
+                        <option value="pending">Pending</option>
+                        <option value="accepted">Accepted</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                    <div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 pr-0">
+                <div class="form-group">
+                    <label for="bookedBy">Booked By</label>
+                    <select formControlName="bookedBy" name="cars" id="bookedBy"
+                        class="form-control form-control-sm nrm_input">
+                        <option value="">All</option>
+                        <option *ngFor="let user of agentList" value="{{user.id}}">
+                            {{user.business_name+" ("+user.uuid+')'}}
+                        </option>
+                    </select>
+                    <div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 pr-0">
+                <div class="form-group">
+                    <label for="transactionId">System Transaction</label>
+                    <input formControlName="transactionId" type="text" class="form-control form-control-sm text-capitalize nrm_input"
+                        placeholder="System Transaction" id="transactionId">
+                </div>
+            </div>
+            <div class="col-4 pr-0">
+                <div class="form-group">
+                    <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
+                    <label for="fromDate">From</label>
+                    <input formControlName="fromDate" type="text" id="fromDate"
+                        class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy"
+                        bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen" onkeydown="return false">
+                </div>
+            </div>
+            <div class="col-4 pr-0">
+                <div class="form-group">
+                    <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
+                    <label for="toDate">To</label>
+                    <input formControlName="toDate" type="text" id="toDate"
+                        class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy"
+                        bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen" onkeydown="return false" >
+                </div>
+            </div>
+        </div>
+        <div class="btncontainer">
+            <button type="submit" class="btnStyle" (click)="onSearchSubmit()">Search</button> &nbsp;
+            <button type="button" class="btnStyle" (click)="onReset()">Reset</button>
+        </div>
+    </form>
+</div>
+
+<div class="card" style="margin-top: 30px;">
+    <div class="table-btn-group mb-3 row">
+        <div class="col-12 p-0">
+            <button class="btnStyle" (click)="exportExcel()">Export to Excel</button>
+            <div class="form-group mb-0 col-sm-3 p-0 float-right has-search">
+                <span class="fa fa-search form-control-feedback"></span>
+                <input class="form-control" type="text" name="Search" [(ngModel)]="searchText"
+                    autocomplete="off" placeholder="Search">
+            </div>
+        </div>
+    </div>
+    <div class="card-body m-0 p-0">
+        <div class="mb-3">
+            <form>
+                <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft"
+                    #scrollOne>
+                    <div class="div1"></div>
+                </div>
+                <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
+                    <div class="div2 invisible-scrollbar">
+                        <div class="table-respons">
+                            <table class="table table-borderless table-striped table-hover" matSort
+                                (matSortChange)="sortData($event)" id="credit-request">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-left text-nowrap"
+                                            *ngFor="let header of displayColumn;" mat-sort-header="{{header.key}}">
+                                            {{header.value }}
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngIf="!noData && (!respData.length || (respData | filter:searchText).length === 0)">
+                                        <td colspan="8">
+                                            <h4 class="text-muted text-center">
+                                                No Data Found!
+                                            </h4>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="noData">
+                                        <td colspan="8">
+                                            <mat-spinner [diameter]="30" style="margin:0 auto;"
+                                                mode="indeterminate"></mat-spinner>
+                                        </td>
+                                    </tr>
+                                    <tr
+                                        *ngFor="let data of respData | filter:searchText | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
+                                        <td class="text-left text-muted">{{i+1}}.</td>
+                                        <td class="text-left"
+                                            *ngIf="data['transaction_status'] == 'pending'; else noShow">
+                                            <button class="btn btn-primary" (click)="openDialog(1, data)"> {{'Process'}}
+                                            </button>
+                                        </td>
+                                        <td class="text-left">
+                                            <span *ngIf="data['transaction_status'] !== 'pending'">
+                                              {{ data['updated_by']['first_name'] }} {{ data['updated_by']['last_name'] }} <br> {{ data['updated_by']['email'] }}
+                                            </span>
+                                          </td>
+                                        <td class="text-left">
+                                            <span *ngIf="data['transaction_status'] == 'pending'"
+                                                class="badge badge-warning">
+                                                {{data['transaction_status'] | uppercase}} </span>
+                                            <span *ngIf="data['transaction_status'] == 'accepted'"
+                                                class="badge badge-success">
+                                                {{data['transaction_status'] | uppercase}} </span>
+                                            <span *ngIf="data['transaction_status'] == 'rejected'"
+                                                class="badge badge-danger">
+                                                {{data['transaction_status']| uppercase}} </span>
+                                        </td>
+                                        <td class="text-left"> {{data['system_transaction_id']}} </td>
+                                        <td class="text-left"> {{data['authUser']['uuid']}} </td>
+                                        <td class="text-left"> {{data['authUser']['business_name']}} </td>
+                                        <td class="text-left capitalize"> {{data['authUser']['first_name'] +"
+                                            "+data['authUser']['last_name']}} </td>
+                                        <td class="text-left"> {{data['amount']}} {{data['currency']}} </td>
+                                        <td class="text-left"> {{data['last_deposit_date']  | date: 'dd/MM/yyyy' || 'N/A'}} </td>
+                                        <td class="text-left"> {{data['last_deposit_amount'] || 'N/A' }} </td>
+                                        <td class="text-left"> {{data['credit_already_due'] || 'N/A'}} </td>
+                                        <td class="text-left"> {{data['date_of_transaction']  | date: 'dd/MM/yyyy'}}
+                                        </td>
+                                        <td class="text-left"> {{(data['updated_datetime']) || "N/A"}}
+                                        </td>
+                                        <td class="text-left text-capitalize"> {{data['remarks'] || 'N/A' }} </td>
+                                        <td class="text-left text-capitalize"> {{data['update_remarks'] || 'N/A'}} </td>
+                                        <ng-template #noShow>
+                                            <td class="text-left"> {{''}} </td>
+                                        </ng-template>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer pb-0">
+                    <div class="d-flex w-100 justify-content-between">
+                        <ngb-pagination [collectionSize]="collectionSize" [maxSize]="12" [rotate]="true"
+                            [boundaryLinks]="true" [(page)]="page" [pageSize]="pageSize">
+                        </ngb-pagination>
+                        <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                            <option [ngValue]="10">10 items per page</option>
+                            <option [ngValue]="20">20 items per page</option>
+                            <option [ngValue]="50">50 items per page</option>
+                            <option [ngValue]="100">100 items per page</option>
+                            <option [ngValue]="250">250 items per page</option>
+                            <option [ngValue]="500">500 items per page</option>
+                            <option [ngValue]="1000">1000 items per page</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

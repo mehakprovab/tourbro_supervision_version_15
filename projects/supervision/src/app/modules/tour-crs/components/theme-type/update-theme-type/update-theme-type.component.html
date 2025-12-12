@@ -1,0 +1,30 @@
+<div class="entireScreen  p-0 col-md-12 col-lg-12">
+    <div class="heading">
+        <p>Edit Package Theme</p>
+    </div>
+    <div >
+        <form [formGroup]="themeTypeForm" (ngSubmit)="onThemeTypeSave()">
+            <div class="themeTypeInput">
+                <label for="themeType" class="font-weight-bold" > Package Theme</label>
+                <input type="text" placeholder="Enter Package Theme"  formControlName="themeTypeName" maxlength="150"
+                (input)="validateInput()">
+            </div>
+            <div *ngIf="themeTypeForm.controls.themeTypeName.errors && themeTypeForm.controls.themeTypeName.touched">
+                <div *ngIf="themeTypeForm.controls.themeTypeName.errors.required" class="errorMessage">
+                  *Please enter upatded package theme type name.
+                </div>
+                <div *ngIf="themeTypeForm.controls.themeTypeName.errors.invalidString" class="errorMessage">
+                    *Number(s) are not allowed.
+                </div>
+                <div *ngIf="themeTypeForm.controls.themeTypeName.errors.startOrEndSpace"  class="errorMessage">
+                    *Empty space(s) in start and end are not allowed.
+                </div>
+            </div>
+            <div class="saveButton">
+                <button  class="btn btn-sm btn-primary mr-1 orangeButton">{{'Save'}}
+                </button>
+                <button class="btn btn-sm btn-primary mr-1 orangeButton packageBtn" routerLink="/tour-crs/theme-type"> {{'Package Theme'}}  </button>
+            </div>
+        </form>
+    </div>
+</div>

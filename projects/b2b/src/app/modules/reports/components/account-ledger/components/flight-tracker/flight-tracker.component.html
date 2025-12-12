@@ -1,0 +1,204 @@
+<button type="button" class="btn btn-primary" (click)="openTrackerModule()">Flight Tracker</button>
+<div class="modal" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true"
+    [style.display]="showTrackerForm ? 'block' : 'none'">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentModalLabel">Flight Tracker</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="regConfig">
+                    <div class="form-group">
+                        <label for="flightNumber">Flight Number</label>
+                        <input type="text" formControlName="flightNumber" class="form-control" id="flightNumber"
+                            placeholder="Flight Number">
+                        <small class="error text-danger col-xs-12 col-12" style="margin-bottom:10px; display:block;"
+                            *ngIf="hasError('flightNumber', 'required');">
+                            Flight Number is required* <br>
+                        </small>
+                    </div>
+                </form>
+                <!-- <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true" (click)="whichForm='flightNumberForm'">Flight Number</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false" (click)="whichForm='airportForm'">Airport</a>
+                </li>
+              </ul>
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                    <form [formGroup]="flightNumberForm"> 
+                        <div class="form-group">
+                          <label for="airLine">Airline</label>
+                          <input type="text" class="form-control" id="airLine" aria-describedby="emailHelp" 
+                          placeholder="Airline" formControlName="airLine"
+                          (keyup)="getPrefferedAirlineList($event)">
+
+                          <div *ngIf="shouldPreferedAirLineHide ">
+                            <ul class="arpt_list">
+                                <div class="p-0" *ngFor="let item of searchedAirLineList">
+                                    <li class="p-2" (click)="onAirlineSelect(item,'fightForm')">
+                                        <h5 class="include">{{item.name}}</h5>
+                                    </li>
+                                </div>
+                            </ul>
+                        </div>
+
+                          <small class="error text-danger col-xs-12 col-12"
+                            style="margin-bottom:10px; display:block;"
+                            *ngIf="hasError('airLine', 'required');">
+                            Airline is required* <br>
+                        </small>
+                        </div>
+                        <div class="form-group">
+                          <label for="flightNumber">Flight Number</label>
+                          <input type="text" formControlName="flightNumber" class="form-control" id="flightNumber" placeholder="Flight Number">
+                          <small class="error text-danger col-xs-12 col-12"
+                          style="margin-bottom:10px; display:block;"
+                          *ngIf="hasError('flightNumber', 'required');">
+                          Flight Number is required* <br>
+                      </small>
+                        </div>
+                        <div class="form-group">
+                          <label for="date">Date</label>
+                          <input type="text" formControlName="date" class="form-control" id="date" 
+                          placeholder="Date" bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen"
+                          [minDate]="minDate">
+                          <small class="error text-danger col-xs-12 col-12"
+                          style="margin-bottom:10px; display:block;"
+                          *ngIf="hasError('date', 'required');">
+                         Date is required* <br>
+                      </small>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary" (click)="submitTracker()">Confirm</button>
+                        </div>
+                      </form>
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <form [formGroup]="airportForm"> 
+                        <div class="form-group">
+                            <label for="airport">Airport</label>
+                            <input type="text" class="form-control" id="airport" aria-describedby="emailHelp" 
+                            placeholder="Airport" formControlName="airportName"
+                            (keyup)="getSearchedList($event)">
+  
+                            <div *ngIf="shouldiHide">
+                              <ul class="arpt_list">
+                                  <div class="p-0" *ngFor="let item of searchedList">
+                                      <li class="p-2" (click)="onAirportSelect(item)">
+                                          <h5 class="include">{{item.AirportCity}}, {{item.CountryName}}, {{ item.AirportName }} ({{ item.AirportCode }})</h5>
+                                      </li>
+                                  </div>
+                              </ul>
+                          </div>
+                            <small class="error text-danger col-xs-12 col-12"
+                                  style="margin-bottom:10px; display:block;"
+                                  *ngIf="hasAirportError('airportName', 'required');">
+                                  Airport Name is required* <br>
+                              </small>
+                          </div>
+                        <div class="form-group">
+                          <label for="airLine">Airline</label>
+                          <input type="text" class="form-control" id="airLine" aria-describedby="emailHelp" 
+                          placeholder="Airline" formControlName="airLine"
+                          (keyup)="getPrefferedAirlineList($event)">
+
+                          <div *ngIf="shouldPreferedAirLineHide ">
+                            <ul class="arpt_list">
+                                <div class="p-0" *ngFor="let item of searchedAirLineList">
+                                    <li class="p-2" (click)="onAirlineSelect(item,'airportForm')">
+                                        <h5 class="include">{{item.name}}</h5>
+                                    </li>
+                                </div>
+                            </ul>
+                        </div>
+                          <small class="error text-danger col-xs-12 col-12"
+                                style="margin-bottom:10px; display:block;"
+                                *ngIf="hasAirportError('airLine', 'required');">
+                                Airline is required* <br>
+                            </small>
+                        </div>
+                        <div class="form-group row justify-content-between">
+                            <div class="col">
+                                <label for="date">Date</label>
+                                    <input type="text" formControlName="date" class="form-control"
+                                     id="date" placeholder="Date" bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen"
+                                     [minDate]="minDate">
+                                    <small class="error text-danger col-xs-12 col-12"
+                                        style="margin-bottom:10px; display:block;"
+                                        *ngIf="hasAirportError('date', 'required');">
+                                        Date is required* <br>
+                                    </small>
+                            </div>
+                            <div class="col">
+                                <label for="date">Date</label>
+                                    <select type="text" formControlName="time" class="form-control" id="date" placeholder="=">
+                                        <option >Morning 6:00am - 12:00pm </option>
+                                        <option >Afternoon 12:00pm - 6:00pm </option>
+                                        <option >Evening 6:00pm - 12:00am </option>
+                                        <option >Night 12:00am - 6:00am </option>
+                                    </select>
+                                    <small class="error text-danger col-xs-12 col-12"
+                                        style="margin-bottom:10px; display:block;"
+                                        *ngIf="hasAirportError('time', 'required');">
+                                        Time is required* <br>
+                                    </small>
+                            </div>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary" (click)="submitTracker()">Confirm</button>
+                        </div>
+                      </form>
+                </div>
+               
+              </div> -->
+
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                <button type="submit" class="btn btn-primary" (click)="submitTracker()">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="flightDetails">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <h4 style="color: #012756;">Flight Details</h4>
+            </div>
+        </div>
+        <!-- row requires "row-divided" class -->
+        <div class="row ">
+            <div class="col-md-6">
+                <h2>Departure Details</h2>
+                <p>Depart : {{flightDetails['originName']}} ({{flightDetails['origin']}})</p>
+                <p>Departure City: {{flightDetails['originCity']}}</p>
+                <p>Departure Date: {{(getDate(liveFlightInfo.departureTime)) | date }}</p>
+                <p>Scheduled Departure : {{getTime(flightDetails.departureTime)}}</p>
+                <p>Estimated Departure : {{getTime(flightDetails.filed_departuretime)}}</p>
+                <p>Terminal: </p>
+            </div>
+            <!-- <div class="vertical-divider">or</div> -->
+            <div class="vertical"></div>
+            <div class="col-md-6">
+                <h2>Arrival Details</h2>
+                <p>Arrive : {{flightDetails['destinationName']}} ({{flightDetails['destination']}})</p>
+                <p>Arrival City: {{flightDetails['destinationCity']}}</p>
+                <p>Arrival Date: {{(getDate(liveFlightInfo.departureTime)) | date}}</p>
+                <p>Scheduled Arrival : {{getTime(flightDetails.arrivalTime)}}</p>
+                <p>Estimated Arrival : {{getTime(flightDetails.estimatedarrivaltime)}} </p>
+                <p>Terminal: </p>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+<div id="map"></div>

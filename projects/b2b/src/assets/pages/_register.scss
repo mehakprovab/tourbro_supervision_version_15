@@ -1,0 +1,198 @@
+.forgot-password {
+    color: #0D7EBF;
+    font-size: 14px;
+    line-height: 16px;
+  }
+.register-banner-content{ height: 730px; position: relative; width: 100%;}
+.register-section{
+    .register-banner{
+        .register-banner-bg{
+        background-repeat: no-repeat;
+        background-position: right;
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+        border-radius: 0px 20px 20px 0px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+            .register-banner-content{
+                .entry-title{
+                    margin: 0 auto;
+                    width: 86%;
+                    position: absolute;
+                    top: 200px;
+                    left: 0px;
+                    right: 0px;
+                    h1{
+                        letter-spacing: 0px;
+                        color: #FFFFFF;
+                        text-shadow: 0px 6px 10px #00000029;
+                        opacity: 1;
+                        font-size: 44px;
+                        line-height: 50px;
+                        font-weight: bold;
+                    }
+                }
+                .entry-content{                    
+                    margin: 0 auto;
+                    width: 75%;
+                    p{
+                        letter-spacing: 0px;
+                        color: #FFFFFF;
+                        opacity: 1;
+                        font-size: 14px;
+                        line-height: 21px;
+                        font-weight: normal;
+                    }
+                }
+            }
+        }
+    }
+
+    .register-form-section{
+        .register-form-title{
+            margin-bottom: 15px;
+            h3{
+                letter-spacing: 0px;
+                color: #012756;
+                font-size: 34px;
+                line-height: 26px;
+                font-weight: bold;
+                span{
+                    letter-spacing: 0px;
+                    color: #707070;
+                    font-size: 14px;
+                    line-height: 26px;
+                }
+            }
+        }
+        .register-form-fields{
+            .form-group {
+                margin-bottom: 16px;
+                width: 100%;
+                position: relative;
+                label{
+                    letter-spacing: 0px;
+                    color: #012756;
+                    font-size: 13px;
+                    line-height: 16px;
+                    font-weight: normal;
+                    margin-bottom: 2px;
+                    &.required{
+                        &::after{
+                            content:"*";
+                             color:red;
+                        }
+                    }
+                }
+                .invalid-feedback{
+                    position: absolute;
+                    font-size: 10px;
+                    margin-top: 0;
+                }
+                .form-control{
+                    opacity: 1;
+                    height: 45px;
+                    letter-spacing: 0px;
+                    color: #707070;
+                    font-size: 14px;
+                    line-height: 26px;
+                    border: 1px solid #e2e2e2;
+                    background: #f7f8fa;
+                    border-radius: 5px;
+                    padding-left: 0;
+                    letter-spacing: 0px;
+                    color: #000000;
+                    font-size: 14px;
+                    line-height: 30px;
+                    outline: none;
+                    box-shadow: none;
+                    padding: 10px; padding-right: 15px !important;
+                }
+            }
+.search-container{ margin: 0px;}
+            .intl-tel-input{ width: 100%;}
+            .intl-tel-input input{opacity: 1;
+                height: 45px;
+                letter-spacing: 0px;
+                color: #707070;
+                font-size: 14px; width: 100%;
+                line-height: 26px;
+                border: 1px solid #e2e2e2;
+                background: #f7f8fa;
+                border-radius: 5px;
+                padding-left: 0;
+                letter-spacing: 0px;
+                color: #000000;
+                font-size: 14px;
+                line-height: 30px;
+                outline: none;
+                box-shadow: none;
+                padding: 10px; padding-left: 45px !important;}
+            .custom-checkbox{
+                padding-left: 2rem;
+                margin-bottom: 0px;
+                .custom-control-input{
+                    &:checked ~ .custom-control-label{
+                        &::before{
+                            border-color:#012756 !important;
+                            background: transparent linear-gradient(90deg, #12B3DE 0%, #0D7EBF 100%) 0% 0% no-repeat padding-box; 
+                        }
+                    }
+                }
+                .custom-control-label{
+                    letter-spacing: 0px;
+                    color: #373434;
+                    opacity: 1;
+                    font-size: 14px; padding-left: 0px;
+                    &::after, &::before{
+                        height: 21px;
+                        width: 21px;
+                        top: -3px;
+                        left: -2rem; background-image: none !important;
+                    }
+                }
+            }
+        }
+                .sign-in{
+                    h5{
+                        letter-spacing: 0px;
+                        color: #707070;
+                        font-size: 14px;
+                        line-height: 16px;
+                        a{
+                            letter-spacing: 0px;    
+                            color: #012756;
+                            //  font-weight: bold;
+                        }
+                    }
+                }
+        .center-section{
+            display: flex;
+            justify-content: center;
+            button{
+                background: transparent linear-gradient(90deg, #fbc10a 0%, #d39f07 100%) 0% 0% no-repeat padding-box;
+                border-radius: 5px;
+                height: 54px;
+                letter-spacing: 0px;
+                color: #FFFFFF;
+                font-weight: 600;
+                font-size: 20px;
+                line-height: 23px;
+                text-align: center;
+                border: 0;
+                cursor: pointer;
+                width: 290px;
+            }
+        }
+    }
+}
+
+.form-control:focus {
+    border: 1px solid #7c7878 !important;
+}
+.mr-10{
+    margin-right: 10px;
+}

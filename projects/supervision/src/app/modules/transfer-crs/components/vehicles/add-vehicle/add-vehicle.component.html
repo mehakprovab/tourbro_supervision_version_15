@@ -1,0 +1,808 @@
+<div class="p-0">
+    <form [formGroup]="addUpdateVehcleForm" (ngSubmit)="onSubmit()" class="needs-validation btop pt-0" novalidate>
+        <div class="card border-light p-0">
+            <div class="card-body pl-0">
+                <fieldset form="user">
+                    <div class="form-group row">
+                        <div class="col-12 row">
+                            <div class="col-6">
+                                <div class="col-12 add-new-route ml-2 mb-4">
+                                    <span>Add New Route</span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label class="px-3 control-label" for="vehicle_name">
+                                            Vehicle Type
+                                        <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-sm-12">
+                                            <select formControlName="vehicle_type" class="form-control"
+                                            placeholder="Select Vehicle Type" (change)="onVehicleSelect($event)"
+                                                [ngClass]="{ 'is-invalid': submittedVehicle && f.vehicle_type.errors }">
+                                                <option value="" disabled selected>Select Vehicle Type</option>
+                                                <option *ngFor="let vehicle of vehiclesType" [value]="vehicle.id">
+                                                    {{vehicle.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-6">
+                                        <label class="px-3 control-label" for="vehicle_name">
+                                            Vehicle Name
+                                        <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-sm-12">
+                                            <select formControlName="vehicle_name" class="form-control"
+                                            placeholder="Select Vehicle Name" (change)="onVehicleNameSelect($event)"
+                                                [ngClass]="{ 'is-invalid': submittedVehicle && f.vehicle_type.errors }">
+                                                <option value="" disabled selected>Select Vehicle Name</option>
+                                                <option *ngFor="let vehicle of vehicleNamesList" [value]="vehicle">
+                                                    {{vehicle}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+
+                                    <div class="col-12 px-0">
+                                        <label class="px-0 control-label">
+                                        Country
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-sm-12 px-0">
+                                            <select formControlName="country_id" class="form-control"
+                                                (change)="getCityListAuto($event)"
+                                                [ngClass]="{ 'is-invalid': submittedVehicle && f.country_id.errors }">
+                                                <option value="" disabled selected>Select Country</option>
+                                                <option *ngFor="let coreCountry of countryList" [value]="coreCountry.id">
+                                                    {{coreCountry.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-12 col-md-12 px-0">
+                                        <label for="starting_point" class="cancellation-lable px-0">Starting Point
+                                            
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="form-group">
+                                            
+                                            <input type="text" name="starting_point" id="starting_point"
+                                                    formControlName="starting_point"
+                                                    (keyup)="getAutoCompleteLocations($event,'startPoint','')"
+                                                    class="form-control text-capitalize form-control-sm nrm_input"
+                                                    placeholder="Starting point" autocomplete="off"
+                                                    
+                                                    [ngStyle]="{'background': isDepartureCityLoading ? 'url(./assets/images/loader-inp.gif) no-repeat scroll 98% center #fff' : '' }"
+                                                    #departureCity>
+                                            <ul class="droplocations" id="dynmicLocations">
+                                                <li *ngFor="let location of startingPointLocations" (click)="selectedLocation(location,'starting_point','')">
+                                                    {{location.location_name}} 
+                                                </li>
+                                            </ul>
+                                                    
+                                        </div>
+                                    </div>
+                                    <div class="col-12 row px-0">
+                                        <label for="end_point" class="cancellation-lable px-3">Add Routes
+                                        </label>
+                                    </div>
+                                    <div formArrayName="routes" *ngIf="multipleRoutes" class=" col-12 pr-4 pl-0 mt-0">
+                                        <div *ngFor="let policy of multipleRoutes.controls; let i = index" [formGroupName]="i" class=" px-0 row col-12 m-0 py-0 ">
+                                            <div class=" col-12 row px-0 px-0 m-0">
+                                                <div class="col-12 ml-0 px-0">
+                                                    <div class="input-group col-sm-12 px-0">
+                                                        <div class="input-group col-sm-12 pr-0 px-0 mt-2">
+                                                        <input type="text" name="route_name" id="route_name"
+                                                            formControlName="route_name"
+                                                            (keyup)="getAutoCompleteLocations($event,'route_name',i)"
+                                                            class="form-control text-capitalize form-control-sm nrm_input"
+                                                            placeholder="Add Route" autocomplete="off"
+                                                            [ngStyle]="{'background': isAddRouteCityLoading[i] ? 'url(./assets/images/loader-inp.gif) no-repeat scroll 98% center #fff' : '' }"
+                                                            #departureCity >
+                                                        
+                                                        <ul class="droplocations" id="dynmicLocations" *ngIf="routesNamesLocation  && routesNamesLocation[i]?.length">
+                                                            <li *ngFor="let location of routesNamesLocation[i]" (click)="selectedLocation(location,'route_name',i)">
+                                                                {{location.location_name}} 
+                                                            </li>
+                                                        </ul>
+                                                        <button type="button" class="btnStyle ml-2 add-routes" (click)="addRoutes()" *ngIf="i===0">Add</button>
+                                                        <button type="button" class="btnStyle ml-2 remove-reset-btn add-routes" (click)="removeRoutes(i)" *ngIf="i>0">Remove</button>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-12 px-0 mt-2">
+                                        <label for="end_point" class="cancellation-lable px-0">Ending Point
+                                                
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="form-group">
+                                            
+                                            <input type="text" name="end_point" id="end_point"
+                                                    formControlName="end_point"
+                                                    (keyup)="getAutoCompleteLocations($event,'endPoint','')"
+                                                    class="form-control text-capitalize form-control-sm nrm_input"
+                                                    [ngStyle]="{'background': isDesitnationCityLoading ? 'url(./assets/images/loader-inp.gif) no-repeat scroll 98% center #fff' : '' }"
+                                                    placeholder="Ending point" autocomplete="off"
+                                                    #departureCity >
+                                            <ul class="droplocations" id="dynmicLocations">
+                                                <li *ngFor="let location of endPointLocations" (click)="selectedLocation(location,'end_point','')">
+                                                    {{location.location_name}} 
+                                                </li>
+                                            </ul>
+                                                    
+                                        </div>
+                                    </div>
+
+                                    
+                                    <div class="col-12 row px-0">
+                                        <div class="col-12 px-0">   
+                                            <label class="cancellation-lable px-3"> Duration</label>
+                                        </div>
+                                        
+                                        <div class="col-6 px-0">
+                                            <label class="px-3 control-label">
+                                            Hours
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="form-group px-3">
+                                                <input type="number" min="1" name="duration_hours" id="duration_hours"
+                                                        formControlName="duration_hours"
+                                                        class="form-control text-capitalize form-control-sm nrm_input"
+                                                        
+                                                        placeholder="Duration Hours" autocomplete="off"
+                                                    />
+                                            </div>
+                                        </div>
+                                        <div class="col-6 px-0">
+                                            <label class="px-3 control-label">
+                                            Minutes
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="form-group px-3">
+                                                <input type="number" min="1" name="duration_minutes" id="duration_minutes"
+                                                        formControlName="duration_minutes"
+                                                        class="form-control text-capitalize form-control-sm nrm_input"
+                                                        
+                                                        placeholder="Duration Minutes" autocomplete="off"
+                                                    />
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-6">
+                               
+
+                                <div class="row" formArrayName="vehicle_pricing_details">
+                                     
+                                    <div *ngFor="let policy of cancellationPolicies.controls; let i = index" [formGroupName]="i" class=" px-3 pt-0 row col-12 mb-3 mt-0 ">
+                                        
+                                        <div class="col-12 add-new-route ml-2">
+                                            <span>Add Route Price</span>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="px-3 control-label">
+                                                Start Date
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="input-group col-sm-12">
+                                                <input type="text" id="date_from" placeholder="DD-MM-YYYY" formControlName="date_from" autocomplete="off"
+                                                    [minDate]="seasonMinDates[i]" (bsValueChange)="onStartDateChange($event, i)" class="form-control" bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen"
+                                                    (ngModelChange)="ondateChange($event)">
+                                                <div class="input-group-append">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="px-3 control-label">
+                                                End Date
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="input-group col-sm-12">
+                                                <input type="text" id="date_to"  placeholder="DD-MM-YYYY" formControlName="date_to" autocomplete="off"
+                                                    [minDate]="endMinDates[i]" (bsValueChange)="onEndDateChange($event, i)" class="form-control" bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen" >
+                                                <div class="input-group-append">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 row px-4 mt-3">
+                                            <div class="col-6">
+                                                <label class="px-4 control-label" for="vehicle_name">
+                                                    Base Price ({{loggedUserCurrency ? loggedUserCurrency : 'GBP'}} )
+                                                <span class="text-danger">*</span>
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="col-sm-6">
+                                                <input value="" formControlName="base_price" type="number"  min="1" placeholder="Base Price"
+                                                    class="form-control" 
+                                                    />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 row px-4 mt-3">
+                                           <div class="col-12 mt-2">
+                                                <label class="px-3 control-label return-lable" for="vehicle_name">
+                                                    Return
+                                                </label><input type="checkbox" class="return-checkbox"
+                                                    formControlName="is_return" 
+                                                    (change)="onCheckboxChange($event,i)" />
+                                                
+                                            </div>
+                                            <div class="col-6"  *ngIf="policy?.get('is_return')?.value">
+                                                <label class="px-4 control-label" for="vehicle_name">
+                                                    
+                                                    Same Day return( {{loggedUserCurrency ? loggedUserCurrency : 'GBP'}}) 
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-6"  *ngIf="policy?.get('is_return')?.value">
+                                                <input value="" formControlName="same_day_return" type="number" min="1" placeholder="Same Day return Price"
+                                                    class="form-control"
+                                                    />
+                                            </div>
+                                        </div>
+                                        <div class="col-12 row px-4 mt-3" *ngIf="policy?.get('is_return')?.value">
+                                            <div class="col-6">
+                                                <label class="px-4 control-label" for="vehicle_name">
+                                                    
+                                                    Different day return ({{loggedUserCurrency ? loggedUserCurrency : 'GBP'}}) 
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input value="" formControlName="diff_day_return" type="number" min="1" placeholder="Diff day return Price"
+                                                    class="form-control"/>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-12 mt-4 pr-0">
+                                            <div class="co-12 add-new-route mb-3">
+                                                <span class="col-12">Cancellation Policy</span>
+                                            </div>
+                                            
+                                            <div class="col-12 row">
+                                                <div class="col-12">
+                                                    <label class="mr-3">Refundable <br/>
+                                                        <input type="radio" value="true" class="refundable-radio"  formControlName="is_refundable"
+                                                        (change)="onRefundableChange($event,i)"
+                                                        >
+                                                    </label>
+
+                                                    <label>Non Refundable<br/>
+                                                        <input type="radio" value="false"  class="refundable-radio" formControlName="is_refundable"
+                                                        (change)="onRefundableChange($event,i)"
+                                                        >
+                                                    </label>
+                                                </div>
+                                                <div class="col-12 row"*ngIf="policy?.get('is_refundable')?.value === 'true' || policy.get('is_refundable')?.value === true">
+                                                    <div class="col-6 px-0">
+                                                
+                                                        <div class="col-12 p-0">
+                                                            <label class="px-3 control-label">
+                                                            Refundable Before Days
+                                                                <span class="text-danger">*</span>
+                                                            </label>
+                                                            <div class="col-sm-12">
+                                                                    <input value="" formControlName="refundable_before_days" type="number"  min="1" placeholder="Refundable Before Days"
+                                                                        class="form-control"
+                                                                            />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- <div class="col-4 px-0">
+                                                        <label class="px-3 control-label">
+                                                            Charge Type
+                                                            <span class="text-danger">*</span>
+                                                        </label>
+                                                        <div class="col-sm-12">
+
+                                                            <label>Percentage <br/>
+                                                                <input type="radio" value="Percentage" formControlName="charge_type">
+                                                            </label>
+                                                        </div>
+                                                    </div> -->
+                                                    
+                                                    <div class="col-6 px-0">
+                                                        <label class="px-3 control-label">
+                                                            Cancellation Charge (%)
+                                                            <span class="text-danger">*</span>
+                                                        </label>
+                                                        <div class="col-sm-12">
+                                                            <input value="" formControlName="cancellation_charge" type="number"  min="1" placeholder="Amount"
+                                                                class="form-control" 
+                                                                    />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 row d-flex justify-content-end mt-4">
+                                            <div class="col-2 d-flex justify-content-center align-items-center" *ngIf="i===0">
+                                                <button type="button" class="btnStyle" (click)="addPolicy()">Add Season</button>
+                                            </div>
+
+                                            <div class="col-2 d-flex justify-content-end align-items-center" *ngIf="i>0">
+                                                <button type="button" class="btnStyle remove-reset-btn" (click)="removePolicy(i)">Remove</button>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                        <!-- <div class="col-12">
+                            <button class="">Save Route</button>
+                            <button class="btnStyle">Reset</button>
+                        </div> -->
+
+
+
+
+
+
+                        <!-- <div class="col-12">
+                            <label class="cancellation-lable px-3">Vehicle Detials</label>
+                        </div>
+                        <div class="col-4">
+                            <label class="px-3 control-label" for="vehicle_name">
+                                Vehicle Type
+                            <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-sm-12">
+                                <select formControlName="vehicle_type" class="form-control"
+                                placeholder="Select Vehicle Type" (change)="onVehicleSelect($event)"
+                                    [ngClass]="{ 'is-invalid': submittedVehicle && f.vehicle_type.errors }">
+                                    <option value="" disabled selected>Select Vehicle Type</option>
+                                    <option *ngFor="let vehicle of vehiclesType" [value]="vehicle.id">
+                                        {{vehicle.name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <label class="px-3 control-label" for="vehicle_name">
+                                Vehicle Name
+                            <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-sm-12">
+                                <select formControlName="vehicle_name" class="form-control"
+                                placeholder="Select Vehicle Name" (change)="onVehicleNameSelect($event)"
+                                    [ngClass]="{ 'is-invalid': submittedVehicle && f.vehicle_type.errors }">
+                                    <option value="" disabled selected>Select Vehicle Name</option>
+                                    <option *ngFor="let vehicle of vehicleNamesList" [value]="vehicle">
+                                        {{vehicle}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label class="px-3 control-label" for="max_capacity">
+                                Capacity
+                            <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-sm-12">
+                             
+
+                                <input type="text" name="max_capacity" id="max_capacity"
+                                            formControlName="max_capacity"
+                                            class="form-control text-capitalize form-control-sm nrm_input non-editable"
+                                            placeholder="Max Capacity" autocomplete="off"/>
+                            </div>
+                        </div>
+
+                         <div class="col-4">
+                            <label class="px-3 control-label" for="ac_vehicle">
+                                Ac
+                            <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-sm-12">
+                             
+                                <input type="text" name="ac_vehicle" id="ac_vehicle"
+                                            formControlName="ac_vehicle"
+                                            class="form-control text-capitalize form-control-sm nrm_input non-editable"
+                                            placeholder="Vehicle Capacity" autocomplete="off"/>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label class="px-3 control-label" for="vehicle_name">
+                                Category
+                            <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-sm-12">
+
+                                <input type="text" name="ratings" id="ratings"
+                                            formControlName="ratings"
+                                            class="form-control text-capitalize form-control-sm nrm_input non-editable"
+                                            placeholder="Category" autocomplete="off"/>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <label class="px-3 control-label">
+                            Ride Type
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-sm-12">
+                              
+                                <input type="text" name="ride_type" id="ride_type"
+                                            formControlName="ride_type"
+                                            class="form-control text-capitalize form-control-sm nrm_input non-editable"
+                                            placeholder="Ride type" autocomplete="off"/>
+                            </div>
+                            
+                        </div>
+
+                        
+
+                         <div class="col-8">
+                            <label class="px-3 control-label">
+                                Luggage Allowances
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-sm-12">
+                                <textarea value="" cols="24" formControlName="luggage_allowances" type="text" placeholder="Luggage Allowances"
+                                    class="form-control non-editable" [ngClass]="{ 'is-invalid': submitted && f.luggage_allowances.errors }"
+                                     > </textarea>
+                            </div>
+                        </div>
+
+                        
+
+                       <div class="col-12 mt-4">
+                            <label class="cancellation-lable px-3"> Routes</label>
+                        </div>
+                        <div class="col-12 row px-4">
+                            <div class="col-6">
+                                <label class="px-3 control-label">
+                                Country
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="col-sm-12">
+                                    <select formControlName="country_id" class="form-control"
+                                        (change)="getCityListAuto($event)"
+                                        [ngClass]="{ 'is-invalid': submittedVehicle && f.country_id.errors }">
+                                        <option value="" disabled selected>Select Country</option>
+                                        <option *ngFor="let coreCountry of countryList" [value]="coreCountry.id">
+                                            {{coreCountry.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 row px-4">
+                            
+                            <div class="col-6 col-md-6 px-4">
+                                <label for="starting_point" class="cancellation-lable px-0">Starting Point
+                                    
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="form-group">
+                                    
+                                    <input type="text" name="starting_point" id="starting_point"
+                                            formControlName="starting_point"
+                                            (keyup)="getAutoCompleteLocations($event,'startPoint','')"
+                                            class="form-control text-capitalize form-control-sm nrm_input"
+                                            placeholder="Starting point" autocomplete="off"
+                                            
+                                            [ngStyle]="{'background': isDepartureCityLoading ? 'url(./assets/images/loader-inp.gif) no-repeat scroll 98% center #fff' : '' }"
+                                            #departureCity>
+                                    <ul class="droplocations" id="dynmicLocations">
+                                        <li *ngFor="let location of startingPointLocations" (click)="selectedLocation(location,'starting_point','')">
+                                            {{location.location_name}} 
+                                        </li>
+                                    </ul>
+                                            
+                                </div>
+                            </div>
+                            <div class="col-12 row px-4">
+                                <label for="end_point" class="cancellation-lable px-3">Add Routes
+                                </label>
+                            </div>
+                            <div formArrayName="routes" *ngIf="multipleRoutes" class=" col-12 pr-0 mt-0">
+                                <div *ngFor="let policy of multipleRoutes.controls; let i = index" [formGroupName]="i" class=" px-0 row col-12 m-0 py-0 ">
+                                    <div class=" col-8 row px-2 px-0 ml-2">
+                                        <div class="col-8 px-0">
+                                            <div class="input-group col-sm-12 px-0">
+                                                <div class="input-group col-sm-12 pr-0 px-0 mt-2">
+                                                <input type="text" name="route_name" id="route_name"
+                                                    formControlName="route_name"
+                                                    (keyup)="getAutoCompleteLocations($event,'route_name',i)"
+                                                    class="form-control text-capitalize form-control-sm nrm_input"
+                                                    placeholder="Add Route" autocomplete="off"
+                                                    [ngStyle]="{'background': isAddRouteCityLoading ? 'url(./assets/images/loader-inp.gif) no-repeat scroll 98% center #fff' : '' }"
+                                                    #departureCity >
+                                                
+                                                <ul class="droplocations" id="dynmicLocations" *ngIf="routesNamesLocation  && routesNamesLocation[i]?.length">
+                                                    <li *ngFor="let location of routesNamesLocation[i]" (click)="selectedLocation(location,'route_name',i)">
+                                                        {{location.location_name}} 
+                                                    </li>
+                                                </ul>
+                                                <button type="button" class="btnStyle ml-2 add-routes" (click)="addRoutes()" *ngIf="i===0">Add</button>
+                                                <button type="button" class="btnStyle ml-2 remove-reset-btn add-routes" (click)="removeRoutes(i)" *ngIf="i>0">Remove</button>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6 col-md-6 px-4 mt-2">
+                                <label for="end_point" class="cancellation-lable px-0">Ending Point
+                                        
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="form-group">
+                                    
+                                    <input type="text" name="end_point" id="end_point"
+                                            formControlName="end_point"
+                                            (keyup)="getAutoCompleteLocations($event,'endPoint','')"
+                                            class="form-control text-capitalize form-control-sm nrm_input"
+                                            [ngStyle]="{'background': isDesitnationCityLoading ? 'url(./assets/images/loader-inp.gif) no-repeat scroll 98% center #fff' : '' }"
+                                            placeholder="Ending point" autocomplete="off"
+                                            #departureCity >
+                                    <ul class="droplocations" id="dynmicLocations">
+                                        <li *ngFor="let location of endPointLocations" (click)="selectedLocation(location,'end_point','')">
+                                            {{location.location_name}} 
+                                        </li>
+                                    </ul>
+                                            
+                                </div>
+                            </div>
+
+                        </div>
+
+                        
+
+                        <div class="col-12 mt-4">
+                            <label class="cancellation-lable px-3"> Duration</label>
+                        </div>
+                        <div class="col-12 row px-4">
+                            <div class="col-3">
+                                <label class="px-3 control-label">
+                                Hours
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="form-group px-3">
+                                    <input type="number" min="1" name="duration_hours" id="duration_hours"
+                                            formControlName="duration_hours"
+                                            class="form-control text-capitalize form-control-sm nrm_input"
+                                            
+                                            placeholder="Duration Hours" autocomplete="off"
+                                           />
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <label class="px-3 control-label">
+                                Minutes
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="form-group px-3">
+                                    <input type="number" min="1" name="duration_minutes" id="duration_minutes"
+                                            formControlName="duration_minutes"
+                                            class="form-control text-capitalize form-control-sm nrm_input"
+                                            
+                                            placeholder="Duration Minutes" autocomplete="off"
+                                           />
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+
+
+                        <div formArrayName="vehicle_pricing_details" class=" col-12 pr-0 mt-4">
+                            <div class="col-12">
+                                <label class="cancellation-lable ">Pricing Detials</label>
+                            </div>
+                            <div *ngFor="let policy of cancellationPolicies.controls; let i = index" [formGroupName]="i" class=" p-3 row col-12 mb-3 mt-2 ">
+                                <div class="policy-block m-3">
+                                    <div class=" col-12 row p-2 ml-2">
+                                        <div class="col-3">
+                                            <label class="px-3 control-label">
+                                                Start Date
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="input-group col-sm-12">
+                                                <input type="text" id="date_from" placeholder="DD-MM-YYYY" formControlName="date_from" autocomplete="off"
+                                                    [minDate]="seasonMinDates[i]" (bsValueChange)="onStartDateChange($event, i)" class="form-control" bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen"
+                                                    (ngModelChange)="ondateChange($event)">
+                                                <div class="input-group-append">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 mt-2">
+                                                <label class="px-3 control-label return-lable" for="vehicle_name">
+                                                    Return
+                                                </label><input type="checkbox" class="return-checkbox"
+                                                    formControlName="return" 
+                                                    (change)="onCheckboxChange($event,i)" />
+                                                
+                                            </div>
+                                            <div class="col-12 mt-2" *ngIf="policy.get('return')?.value">
+                                                <label class="px-3 control-label" for="vehicle_name">
+                                                    Same Day return
+                                                </label>
+                                                <div class="col-sm-12">
+                                                    <input value="" formControlName="same_day_return" type="number" min="1" placeholder="Same Day return Price"
+                                                        class="form-control"
+                                                        />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="col-3">
+                                            <label class="px-3 control-label">
+                                                End Date
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="input-group col-sm-12">
+                                                <input type="text" id="date_to"  placeholder="DD-MM-YYYY" formControlName="date_to" autocomplete="off"
+                                                    [minDate]="endMinDates[i]" (bsValueChange)="onEndDateChange($event, i)" class="form-control" bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen" >
+                                                <div class="input-group-append">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 mt-5" *ngIf="policy.get('return')?.value">
+                                                <label class="px-3 control-label" for="vehicle_name">
+                                                    Diff day return
+                                                </label>
+                                                <div class="col-sm-12">
+                                                    <input value="" formControlName="diff_day_return" type="number" min="1" placeholder="Diff day return Price"
+                                                        class="form-control"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-3 row">
+                                            <div class="col-12">
+                                                <label class="px-3 control-label" for="vehicle_name">
+                                                Base Price
+                                                <span class="text-danger">*</span>
+                                                </label>
+                                                <div class="col-sm-12">
+                                                    <input value="" formControlName="base_price" type="number"  min="1" placeholder="Base Price"
+                                                        class="form-control" 
+                                                        />
+                                                </div>
+                                            </div>
+                                            <div class="col-12 px-4 mt-3 ml-2">
+                                                <label class="mr-3">RF <br/>
+                                                    <input type="radio" value="true" class="refundable-radio"  formControlName="is_refundable"
+                                                    (change)="onRefundableChange($event,i)"
+                                                    >
+                                                </label>
+
+                                                <label>NRF<br/>
+                                                    <input type="radio" value="false"  class="refundable-radio" formControlName="is_refundable"
+                                                    (change)="onRefundableChange($event,i)"
+                                                    >
+                                                </label>
+                                            </div>
+                                            
+                                            
+                                        </div>
+
+                                        <div class="col-3 " *ngIf="policy.get('is_refundable')?.value === 'true' || policy.get('is_refundable')?.value === true">
+                                            <label class="px-3 control-label cancellation-refund-lable f-700">
+                                                Cancellation & Refund Policy
+                                            </label>
+                                            <div class="col-12 p-0">
+                                                <label class="px-3 control-label">
+                                                Refundable Before Days
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <div class="col-sm-12">
+                                                        <input value="" formControlName="refundable_before_days" type="number"  min="1" placeholder="Refundable Before Days"
+                                                            class="form-control"
+                                                             />
+                                                </div>
+                                            </div>
+                                            <div class="col-12 row mt-2 p-0">
+                                                
+                                                <div class="col-12 pr-0">
+                                                    <label class="px-3 control-label">
+                                                        Charge Type
+                                                        <span class="text-danger">*</span>
+                                                    </label>
+                                                    <div class="col-sm-12">
+                                                            <label class="mr-3">Amount (+) <br/>
+                                                                <input type="radio" value="Plus" formControlName="charge_type">
+                                                            </label>
+
+                                                            <label>Percentage (%)<br/>
+                                                                <input type="radio" value="Percentage" formControlName="charge_type">
+                                                            </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 pr-0 mt-2 px-3">
+                                                    <label class="px-3 control-label">
+                                                        Cancellation Charge
+                                                        <span class="text-danger">*</span>
+                                                    </label>
+                                                    <div class="col-sm-12">
+                                                        <input value="" formControlName="cancellation_charge" type="number"  min="1" placeholder="Amount"
+                                                            class="form-control" 
+                                                             />
+                                                    </div>
+                                                </div>
+
+                                                
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-12 row">
+                                        <div class="col-10">
+                                            <label class="px-3 control-label" for="vehicle_name">
+                                            Additional Info
+                                            </label>
+                                            <div class="col-sm-12 col-12">
+                                                <textarea formControlName="additional_info" class="additional-info-textarea" cols="24" style="width: 100%;"> 
+
+                                                </textarea>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        <div class="col-2 d-flex justify-content-center align-items-center" *ngIf="i===0">
+                                            <button type="button" class="btnStyle" (click)="addPolicy()">Add</button>
+                                        </div>
+
+                                        <div class="col-2 d-flex justify-content-end align-items-center" *ngIf="i>0">
+                                            <button type="button" class="btnStyle remove-reset-btn" (click)="removePolicy(i)">Remove</button>
+                                        </div>
+                                    </div>
+                                </div>   
+                            </div>
+                        </div> -->
+                    </div>
+
+                    
+                    <!-- <div class="form-group">
+                        <label class="col-sm-3 control-label" for="status">
+                            Status
+                        </label>
+                        <span title="Slide for Active/Deactive">
+                            <mat-slide-toggle class="example-margin" formControlName="status"
+                                [color]="''">
+                            </mat-slide-toggle>
+                        </span>
+                    </div> -->
+                </fieldset>
+            </div>
+        </div>
+        <div class="col-12 d-flex justify-content-center align-items-center">
+            <button type="submit" class="btnStyle mt-3 mr-3 save-btn">Save Route</button>
+            <button type="button" class="btnStyle mt-3 remove-reset-btn" (click)="resetForm()">Reset</button>
+        </div>
+        
+    </form>
+</div>
+
+
+  <ngx-loading [show]="loading"
+  [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+  [template]="loadingTemplate"></ngx-loading>

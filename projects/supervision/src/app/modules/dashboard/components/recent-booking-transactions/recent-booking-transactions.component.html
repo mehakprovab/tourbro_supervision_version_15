@@ -1,0 +1,47 @@
+<div class="card mb-3">
+    <div class="card-header-tab card-header">
+        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+            <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+            {{'Recent Booking Transactions'}}
+        </div>
+    </div>
+    <div class="card-body">
+        <ul class="list-group">
+            <li class="list-group-item" *ngIf="noDataFound; else notShow;">
+                <!-- <mat-spinner [diameter]="30" mode="indeterminate" style="margin: 0 auto;"></mat-spinner> -->
+                <div class="text-center">
+                    No data found
+                </div>
+            </li>
+            <ng-template #notShow>
+                <li class="list-group-item" *ngFor="let item of recentBookingTransactions | slice: 0:8">
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <i class="fa fa-exchange"></i>
+                        </div>
+                        <div class="col-sm-9">
+                            <span class="f-12 w-50">
+                                <div class="">
+                                    <a >
+                                        {{item['system_transaction_id']}}-{{item['date_of_transaction'] | date: 'medium'}}
+                                    </a>
+                                </div>
+                                <div [ngStyle]="{'color' : item['transaction_type'] == 'Cash' ? 'orange' : item['transaction_type'] == 'CreditLimit' ? 'purple' : item['transaction_type'] == 'Flight' ? 'blue' : item['transaction_type'] == 'Car' ? 'yellow' : item['transaction_type'] == 'hotel' ? 'green' : '' }" [innerHTML]="item['remarks']"></div>
+                            </span>
+                        </div>
+                        <div class="col-sm-2">
+                            <span class="badge badge-primary">
+                                {{item['amount']}}
+                            </span>
+                        </div>
+                    </div>
+                </li>
+                <li class="text-center p-2" id="list-style">
+                    <a [routerLink]="['/transaction-logs']">
+                        View More
+                    </a>
+                </li>
+            </ng-template>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="bg-white row">
+    <div class=" p-0 col-md-12 col-lg-12">
+        <div class="card-header-tab card-header">
+            <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+                <span> {{'Set Balance Alert'}} </span>
+            </div>
+        </div>
+    </div>
+    <div class="offset-md-2 offset-lg-2 my-5 col-md-8 col-lg-8">
+        <form class="bg-gradient-light border p-5 rounded" [formGroup]="regConfig">
+            <div class="form-group row">
+                <label for="amount" class="col-sm-3 col-form-label col-form-label-sm"> Amount <sup
+                        class="text-danger f-16"> * </sup> </label>
+                <div class="col-sm-9">
+                    <input formControlName="threshold_amount" type="number" class="form-control form-control-sm" id="amount" placeholder="Amount">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="phone" class="col-sm-3 col-form-label col-form-label-sm">Mobile Number</label>
+                <div class="col-sm-9">
+                    <input formControlName="mobile_number" type="number" class="form-control form-control-sm" id="phone" placeholder="Mobile Number">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="email" class="col-sm-3 col-form-label col-form-label-sm">Email</label>
+                <div class="col-sm-9">
+                    <input formControlName="email_id" type="email" class="form-control form-control-sm" id="email" placeholder="Email">
+                </div>
+            </div>
+            <div class="form-group row offset-md-3 offset-lg-3 col-lg-9 col-md-9 p-1" >
+                <div class="custom-control custom-checkbox custom-control-inline">
+                    <input formControlName="enable_sms_notification" type="checkbox" id="customcheckboxInline1" class="custom-control-input">
+                    <label class="custom-control-label" for="customcheckboxInline1"> Send SMS </label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline">
+                    <input formControlName="enable_email_notification" type="checkbox" id="customcheckboxInline2" class="custom-control-input">
+                    <label class="custom-control-label" for="customcheckboxInline2"> Notify to E-mail </label>
+                </div>
+            </div>
+            <div class="form-group row mb-n2">
+                <div class="col-sm-12">
+                  <button type="submit" class="btn btn-sm btn-primary mr-1" (click)="onSubmit()">Update</button>
+                  <button type="submit" class="btn btn-sm btn-danger" (click)="onReset()">Reset</button>
+                </div>
+              </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,139 @@
+<div class="sub-agent-container custom-table-layout card row" style="padding: 20px;">
+    <div class="add-traveller">
+        <div class="title">
+            <h3>Add City Package Master</h3>
+        </div>
+        <div class="custom-inline-form">
+            <form [formGroup]="regConfig" (ngSubmit)="onSubmit()" autocomplete="off" novalidate>
+                <div class="form-row">
+                    <!-- City Field -->
+                    <div class="col-6 pr-0">
+                        <div class="form-group">
+                            <label for="cityName">City</label>
+                            <input
+                                formControlName="cityName"
+                                type="text"
+                                class="form-control text-capitalize form-control-sm nrm_input"
+                                placeholder="Enter city"
+                                id="cityName"
+                                (keyup)="getAutoCompleteLocations($event)"
+                                list="dynamicLocationsOrigin"
+                            />
+                            <datalist id="dynamicLocationsOrigin">
+                                <option *ngFor="let location of locations" [value]="location.CityName"></option>
+                            </datalist>
+                            <ul class="droplocations" id="dynmicLocations">
+                                <li *ngFor="let location of locations" (click)="selectedLocation(location)">
+                                    {{ location.CityName }}
+                                </li>
+                            </ul>
+                            <small class="text-danger" *ngIf="fromErrorMsg">{{ fromErrorMsg }}</small>
+                        </div>
+                    </div>
+
+                    <!-- Banner Image Upload -->
+                    <div class="col-6 pr-0">
+                        <div class="form-group">
+                            <label for="bannerImage">Banner Image</label>
+                            <input
+                                type="file"
+                                class="form-control form-control-sm nrm_input"
+                                accept=".png, .jpg, .jpeg"
+                                id="bannerImage"
+                                (change)="onFileSelected($event)"
+                            />
+                            <label for="bannerImage">Upload Image</label>
+                            <span class="text-danger">(Maximum upload file size: 1 MB)</span>
+                            <div *ngIf="iconImage">
+                                <img [src]="getImage(iconImage)" width="100" height="50" />
+                            </div>
+                            <img
+                                *ngIf="imageSrc"
+                                height="50"
+                                width="100"
+                                class="rounded"
+                                [src]="imageSrc"
+                                alt="Uploaded Banner"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <!-- Package Description -->
+                    <div class="col-6 pr-0">
+                        <div class="form-group">
+                            <label for="description">Package Description</label>
+                            <input
+                                formControlName="description"
+                                type="text"
+                                id="description"
+                                autocomplete="off"
+                                class="form-control form-control-sm nrm_input"
+                                placeholder="Enter package description"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Package Includes -->
+                    <div class="col-6 pr-0">
+                        <div class="form-group">
+                            <label for="packageIncludes">Package Includes</label>
+                            <ng-multiselect-dropdown
+                                #multiSelect
+                                formControlName="package_includes"
+                                [placeholder]="'Select Package Includes'"
+                                [data]="packageList"
+                                [settings]="dropdownSettingsForPackage"
+                            ></ng-multiselect-dropdown>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <!-- Gallery Images -->
+                    <div class="col-6 pr-0">
+                        <div class="form-group">
+                            <label for="uploadGallery">Gallery Image</label>
+                            <div class="form-control text-capitalize form-control-sm nrm_input">
+                                <input
+                                    class="col-sm-4"
+                                    type="file"
+                                    id="uploadGallery"
+                                    multiple
+                                    (change)="onGallerySelect($event)"
+                                />
+                                <ul class="imageList">
+                                    <li *ngFor="let imageName of galleryImageList">
+                                        <a [href]="getGalleryImage(imageName)" target="_blank">
+                                            <img
+                                                class="galleryImageItem"
+                                                width="250"
+                                                [src]="getGalleryImage(imageName)"
+                                                alt="Gallery Image"
+                                            />
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit and Reset Buttons -->
+                <div class="form-group row mb-n2">
+                    <div class="col-sm-12 customCenter">
+                        <button
+                            type="submit"
+                            class="btn btn-sm btn-primary mr-1"
+                            [disabled]="!regConfig.valid || !galleryUploadComplete"
+                        >
+                            Submit
+                        </button>
+                        <button type="reset" class="btn btn-sm btn-primary" (click)="onReset()">Reset</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

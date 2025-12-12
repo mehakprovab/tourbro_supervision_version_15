@@ -1,0 +1,30 @@
+<div class="rangebox">
+    <button data-target="#collapse505" data-toggle="collapse" class="collapsebtn" type="button">Airlines</button>
+    <a *ngIf="airlines?.length" class="float-right" style="font-size: 12px;" (click)="clearAirlinesFilter()">Clear</a>
+    <form *ngIf="flightsCopy.length" [formGroup]="airlinesForm" style="clear:both;">
+        <div id="collapse505" class="collapse show">
+            <div class="boxins" id="allairlines">
+                <ul formArrayName="items" class="locationul">
+                    <li *ngFor="let airline of airlines; let i = index">
+                        <div class="squaredThree">
+                            <input 
+                                [formControlName]="i"
+                                [value]="airline.name"
+                                (change)="filterByAirlines($event.target.checked)"
+                                type="checkbox"
+                                name="check" 
+                                class="airlinecheckbox"
+                                id="squaredThree{{i + 1}}">
+                            <label for="squaredThree{{i + 1}}"></label>
+                        </div>
+                        <label for="squaredThree{{i + 1}}" class="row">
+                            <span class="col-sm-8 m-0 p-0 word-wrap" style="word-break: break-word;">
+                                {{ airline.name }} ({{ airline.code }})
+                            </span>
+                         <!-- <span style="text-align: right;" class="col-sm-4 m-0 p-0">{{ currency }}{{ airline.price  }}</span>--></label> 
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </form>
+</div>

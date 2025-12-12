@@ -1,0 +1,32 @@
+<div class="bg-white row">
+    <div class=" p-0 col-md-12 col-lg-12">
+        <div class="card-header-tab card-header">
+            <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                <i class="header-icon lnr-picture mr-3 text-muted opacity-6"> </i>
+                <span> {{'Add Logo'}} </span>
+            </div>
+        </div>
+    </div>
+    <div class="offset-md-2 offset-lg-2 my-5 col-md-8 col-lg-8">
+        <form [formGroup]="regConfig" class="bg-gradient-light border px-5 pt-5 pb-3 rounded">
+            <div class="form-group row mb-0">
+                <label for="logo" class="col-sm-3 f-16 col-form-label col-form-label-"> Change Logo <sup
+                        class="text-danger f-14"> * </sup> </label>
+                <div class="col-sm-9 custom-file">
+                    <input type="file" class="form-control-file" id="logo" (change)="onFileSelected($event)" #theFile>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="pl-0 f-12 offset-md-3 offset-lg-3 col-md-9 col-lg-9 text-danger">
+                    N.B- File size should be {{'180 * 40'}}
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-10 col-lg-10">
+                    <button class="btn btn-lg btn-primary mr-1" (click)="onSubmit()"> Submit </button>
+                    <button class="btn btn-lg btn-danger" (click)="onReset()"> Reset </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

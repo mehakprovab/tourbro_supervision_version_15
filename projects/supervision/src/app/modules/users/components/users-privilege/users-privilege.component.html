@@ -1,0 +1,50 @@
+<div class="card main-card mb-3">
+    <div class="card-header">
+        User Details
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th scope="row">User ID</th>
+                    <td scope="row">{{ 'TM1561640281' }}</td>
+                    <th scope="row">Name</th>
+                    <td scope="row">puja shruthi</td>
+                </tr>
+                <tr>
+                    <th scope="row">Email</th>
+                    <td scope="row">testingdhjb@gmail.com</td>
+                    <th scope="row">Phone</th>
+                    <td scope="row">8987654321</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="card main-card mb-3">
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <th scope="col">SLNo</th>
+                <th scope="col">Privilege Description</th>
+                <th scope="col">
+                    Select
+                    <button *ngIf="!allSelected" (click)="selectAll(1)" class="btn btn-primary btn-sm">All</button>
+                    <button *ngIf="allSelected" (click)="selectAll(0)" class="btn btn-secondary btn-sm">Reset</button>
+                </th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let p of privileges; let i = index;">
+                        <td scope="row">{{ i + 1 }}</td>
+                        <td>{{ p.description }}<input type="hidden"></td>
+                        <td><input type="checkbox" [checked]="p.enabled" [(ngModel)]="p.enabled"/></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer">
+        <button (click)="updatePrivileges()" class="btn btn-primary">Save </button>
+        &nbsp; &nbsp;
+        <button (click)="selectAll(0)" class="btn btn-secondary">Reset </button>
+    </div>
+</div>

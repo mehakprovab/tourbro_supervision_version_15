@@ -1,0 +1,160 @@
+.radioSelection{
+    display: flex;
+    font-size: unset;
+}
+input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+  }
+
+// .activityInput{
+//     maxlength:150px
+// }
+  
+.boxInputList{
+    overflow: auto;
+    height: 150px;
+    padding: 10px 15px;
+    border: 2px solid whitesmoke;
+    margin-left: 1rem;
+}
+
+ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+li:hover{
+    cursor: default;
+}
+.directionSymbol{
+    margin: 10px;
+}
+button.orangeButton{
+    background-color: #189ad3 !important;
+    color: white !important;
+    border: none !important;
+    padding: 0.4rem !important;
+    font-weight: 500 !important;
+    border-radius: 0.3rem 0.3rem !important;
+    height: 2.3rem !important;
+    margin: 0.2rem !important;
+    width: 14%;
+}
+
+.heading{
+    background-color: #189ad3 !important;
+    color: white !important;
+    width: 40rem !important;
+    height: 3rem !important; 
+    padding-top: 0.8rem !important;
+    text-align: center !important;
+    font-weight: 500 !important;
+    border-radius: 0.3rem !important;
+    margin: 1rem 0rem !important;
+    margin-left: inherit;
+    @media(max-width:767px){
+        width: 28.5rem !important;
+    }
+}
+button.orangeButton{
+    background-color: #189ad3 !important;
+    color: white !important;
+    border: none !important;
+    padding: 0.4rem !important;
+    font-weight: 500 !important;
+    border-radius: 0.3rem 0.3rem !important;
+    margin-top: 1.3rem !important;
+    height: 2.3rem !important;
+    // width: 4rem !important
+    @media(max-width:767px){
+        width: 8rem;
+    }
+}
+.heading{
+    display: flex !important ;
+}
+
+.entireScreen{
+    background-color: #fff !important;
+}
+.continentInput{
+    width: 100%;
+    margin-left: 16rem;
+}
+.saveButton{
+    margin-left: 16.5rem !important;
+    margin-bottom: 1rem;
+    @media  (max-width: 767px) {
+        margin-left: 0.5rem !important;
+    }
+}
+input{
+    height: calc(2.25rem + 2px) ;
+    padding: 0.375rem 0.75rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    margin-left: 10px;
+}
+table {
+    border: 1px solid lightgray;
+    border-collapse: collapse;
+}
+  
+td, th {
+    border: 1px solid lightgray;
+    padding: 8px;
+}
+.packageBtn{
+    width: none !important;
+}
+[type="checkbox"]
+{   
+    margin: 2px;
+    vertical-align:middle;
+}
+label{
+    margin: 0.5rem !important;
+    @media(max-width:767px){
+        margin:unset !important;
+    }
+}
+
+.col-sm-10 {
+    flex: 0 0 83.3333333333%;
+    max-width: 81.333333%;
+    @media(max-width:767px){
+        flex: 100%;
+        max-width: 100%;
+    }
+}
+
+.bottomBorderIndividual{
+    border-bottom: 2px solid whitesmoke;
+    margin-bottom: 1.2rem; 
+}
+input,.programTitle{
+    margin-left: 0rem !important;
+}
+
+.inclusionsCheckBox{
+    width: auto;
+    display: flex;
+}
+
+.checkboxList{
+    width: 313px;
+    margin-left: 10rem;
+    @media  (max-width: 767px) {
+        margin-left: 0rem !important;
+    }
+}
+::ng-deep .cke_notification_warning {
+    display: none;
+}

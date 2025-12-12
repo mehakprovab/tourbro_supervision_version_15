@@ -1,0 +1,286 @@
+<div class="entireScreen  p-0 col-md-12 col-lg-12">
+    <div class="heading">
+        <p>Tour Manager</p>
+        <button *ngIf="!editForm" class="orangeButton" type="submit">Add</button>
+    </div>
+    <div style="padding: 20px;">
+
+        <div class="add-traveller">
+            <div class="custom-inline-form">
+                <form class="" [formGroup]="tourForm" autocomplete="off">
+                    <div class="form-group required row">
+                        <label for="tourName " class="required" class="col-sm-2 col-form-label font-weight-bold">Tour Name <sup
+                            class="text-danger f-16"> * </sup> </label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="tourName" maxlength="100"
+                                formControlName="tourName" placeholder="Enter Tour Name">
+
+                        </div>
+                    </div>
+                    <div class="form-group required row">
+                        <label for="tourDescription " class="required" class="col-sm-2 col-form-label font-weight-bold">Tour Description <sup
+                            class="text-danger f-16"> * </sup></label>
+                        <div class="col-sm-4">
+                            <textarea type="text" class="form-control" id="tourDescription"
+                                formControlName="tourDescription" placeholder="Enter Tour Description" maxlength="1000"></textarea>
+                            <small class="text-warning" >Note: Allowed only 1000 characters</small>
+                        </div>
+                    </div>
+                    <!-- <div class="form-group required row">
+                        <label for="tourType" class="required" class="col-sm-2 col-form-label font-weight-bold">Tour Type <sup
+                            class="text-danger f-16"> * </sup> </label>
+                        <div class="col-sm-4 radioSelection">
+                            <ng-container *ngFor="let option of tourTypeOptions; let i = index">
+                                <input [checked]="i === 0" type="radio" class="form-control" [id]="option.id" formControlName="tourType" 
+                                       name="tourType" value="option.label">
+                                <label [for]="option.id">{{ option.label }}</label>&nbsp;&nbsp;&nbsp;
+                            </ng-container>
+                          </div>                          
+                    </div> -->
+                    <div class="form-group required row">
+                        <label for="startDate" class="col-sm-2 col-form-label font-weight-bold">Start Date 
+                            <sup class="text-danger f-16"> * </sup>
+                        </label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="startDate"
+                                [minDate]="minDate"
+                                formControlName="startDate"
+                                bsDatepicker 
+                                [bsConfig]="bsDateConf"
+                                placeholder="dd/mm/yyyy">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group required row">
+                        <label for="expirayDate" class="col-sm-2 col-form-label font-weight-bold">Expiry Date 
+                            <sup class="text-danger f-16"> * </sup>
+                        </label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="expirayDate"
+                                [minDate]="minExpiryDate"
+                                formControlName="expirayDate"
+                                bsDatepicker 
+                                [bsConfig]="bsDateConf"
+                                placeholder="dd/mm/yyyy">
+                        </div>
+                    </div>                    
+                    <!-- <div class="form-group required row">
+                        <label for="supplierName " class="required" class="col-sm-2 col-form-label font-weight-bold">Supplier Name<sup
+                            class="text-danger f-16"> * </sup> </label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="supplierName" maxlength="100"
+                            formControlName="supplierName" placeholder="Enter Supplier Name">
+
+                        </div>
+                    </div> -->
+                    <div class="form-group required row">
+                        <label for="chooseActivity  " class="required" class="col-sm-2 col-form-label font-weight-bold">Choose Activity </label>
+                        <div class="col-sm-4 boxInputList">
+                            <ul>
+                                <li *ngFor="let activity of activitiesList"  (click)="selectActivity(activity)">
+                                    {{activity.tour_activity}}
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="directionSymbol">
+                            <div>{{'>>'}}</div>
+                            <div>{{'<<'}}</div>
+                        </div>
+                        <div class="col-sm-4 boxInputList">
+                            <ul>
+                                <li *ngFor="let activity of selectedtActivity" (click)="deSelectActivity(activity)">
+                                    {{activity.tour_activity}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group required row">
+                        <label for="chooseTheme  " class="required" class="col-sm-2 col-form-label font-weight-bold">Choose Theme </label>
+                        <div class="col-sm-4 boxInputList">
+                            <ul>
+                                <li *ngFor="let theme of themeList"  (click)="selectTheme(theme)">
+                                    {{theme.tour_subtheme}}
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="directionSymbol">
+                            <div>{{'>>'}}</div>
+                            <div>{{'<<'}}</div>
+                        </div>
+                        <div class="col-sm-4 boxInputList">
+                            <ul>
+                                <li *ngFor="let theme of selectedTheme" (click)="deSelectTheme(theme)">
+                                    {{theme.tour_subtheme}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group required row">
+                        <label for="chooseTheme  " class="required" class="col-sm-2 col-form-label font-weight-bold">Choose Region <sup
+                            class="text-danger f-16"> * </sup> </label>
+                        <div class="col-sm-4">
+                            <select (change)="onRegionChange($event.target.value)"
+                                class="form-control" id="chooseRegion">
+                                <option [value]="''" selected>Choose Region</option>
+                                <option *ngFor="let region of regionData"  [value]="region.id">
+                                    {{region.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- <div class="form-group required row">
+                        <label for="chooseCountry" class="required" class="col-sm-2 col-form-label font-weight-bold">Choose Country <sup
+                            class="text-danger f-16"> * </sup> </label> -->
+                        <!-- <div class="col-sm-4 boxInputList">
+                            <ul>
+                                <li *ngFor="let country of countryList"  (click)="selectCountry(country)">
+                                    {{country.name}}
+                                </li>
+                            </ul>
+                        </div> -->
+                        <!-- <div class="col-sm-4">
+                            <ng-multiselect-dropdown
+                                [placeholder]="'Select Countries'"
+                                [settings]="dropdownSettings"
+                                [data]="countryList"
+                                [(ngModel)]="selectedCountries"
+                                (onSelect)="onItemSelect($event)"
+                                (onDeSelect)="onItemDeSelect($event)">
+                            </ng-multiselect-dropdown>
+                        </div> -->
+                          
+                        <!-- <div class="directionSymbol">
+                            <div>{{'>>'}}</div>
+                            <div>{{'<<'}}</div>
+                        </div>
+                        <div class="col-sm-4 boxInputList">
+                            <ul>
+                                <li *ngFor="let country of selectedCountries" (click)="deSelectCountry(country)">
+                                    {{country.name}}
+                                </li>
+                            </ul>
+                        </div> -->
+                    <!-- </div> -->
+                    <div class="form-group required row">
+                        <label for="chooseCountry" class="col-sm-2 col-form-label font-weight-bold">
+                            Select Country <sup class="text-danger f-16"> * </sup>
+                        </label>
+                        <div class="col-sm-4">
+                            <select (change)="onCountryChange($event)" class="form-control" id="chooseCountry">
+                                <option [ngValue]="null" selected>Choose Country</option>
+                                <option *ngFor="let country of countryList" [value]="country.id">
+                                    {{country.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>                                      
+                    <div class="form-group required row">
+                        <label for="chooseCity" class="required" class="col-sm-2 col-form-label font-weight-bold">Choose City <sup
+                            class="text-danger f-16"> * </sup> </label>
+                        <div class="col-sm-4">
+                            <ng-multiselect-dropdown
+                            [placeholder]="'Select Cities'"
+                            [settings]="cityDropdownSettings"
+                            [data]="cityList"
+                            [(ngModel)]="selectedCity"
+                            (onSelect)="onCitySelect($event)"
+                            (onDeSelect)="onCityDeSelect($event)"
+                            [ngModelOptions]="{standalone: true}">
+                        </ng-multiselect-dropdown>
+                        </div>
+                        <div class="directionSymbol">
+                            <div>{{'>>'}}</div>
+                            <div>{{'<<'}}</div>
+                        </div>
+                        <div class="col-sm-4 boxInputList">
+                            <ul>
+                                <li *ngFor="let city of selectedCity">
+                                    {{city.CityName}}
+                                     <!-- - <b>({{city.country_name}})</b> -->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group required row">
+                        <label for="chooseTheme  " class="required" class="col-sm-2 col-form-label font-weight-bold">Choose Duration <sup
+                            class="text-danger f-16"> * </sup> </label>
+                        <div class="col-sm-4">
+                            <select formControlName="chooseDuration"
+                                class="form-control" id="chooseRegion">
+                                <option [value]="''" selected>Choose Duration</option>
+                                <option *ngFor="let duration of durationData"  [value]="duration.name">
+                                    {{duration.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- <div class="form-group required row">
+                        <label for="chooseTheme"  class="col-sm-2 col-form-label font-weight-bold">Refundable</label>
+                        <div class="col-sm-4">
+                            <input formControlName="isRefundable" id="terms_cond1" type="checkbox" [checked]="terms" name="tc" (click)="onTerms($event.target.checked)"/>
+                        </div>
+                    </div>
+                    <div class="form-group required row" *ngIf="tourForm.get('isRefundable').value">
+                        <label class="col-sm-2 col-form-label font-weight-bold">Cancellation & Refund Policies</label>
+                        <div formArrayName="CancPolicy" class=" col-12 pr-0 mt-0">
+                            <div *ngFor="let policy of cancellationPolicies.controls; let i = index" [formGroupName]="i" class="policy-block p-3 row col-12 mb-3 mt-2 ">
+                                <div class=" col-12 row price-details-div m-auto p-2 ml-2">
+                                    <div class="col-2 p-0">
+                                        <label class="px-3 control-label">
+                                        RF Before Days
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-sm-12">
+                                                <input value="" formControlName="date_from" type="number" placeholder="Refundable Before Days"
+                                                    class="form-control"
+                                                    required />
+                                        </div>
+                                    </div>
+                                    <div class="col-1 p-0">
+                                        <label class="p-0 control-label">
+                                        Charge fee
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="col-sm-12 p-0">
+                                                <input value="" formControlName="charge" type="number" placeholder="charge"
+                                                    class="form-control"
+                                                    required />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-2 d-flex justify-content-center align-items-end">
+
+                                            <label class="d-grid">
+                                                <span class="text" style="margin-left: 4px;">Percent (%)</span> <br/>
+                                                <input class="ml-4" type="radio" value="Percentage" required formControlName="charge_type">
+                                            </label>
+                                    </div>
+                                    <div class="col-2 d-flex justify-content-center align-items-center p-0">
+                                        <button type="button" class="btnStyle mr-2" (click)="addCancellationPolicies()">Add</button>
+                                        <button type="button" class="btnStyle" (click)="removeCancellationPolicies(i)" *ngIf="i>0">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- <div class="form-group required row">
+                        <label for="price" class="required" class="col-sm-2 col-form-label font-weight-bold">Price </label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="price" maxlength="100"
+                            formControlName="price" placeholder="Enter Price">
+
+                        </div>
+                    </div> -->
+                    <div class="form-group row mb-n2">
+                        <div class="col-sm-12 buttonAllign">
+                            <button type="submit" class="btn btn-sm btn-primary mr-1 orangeButton" (click)="onCreateTour()">Create Tour</button>
+                            <button type="reset" class="btn btn-sm btn-primary orangeButton" routerLink="/tour-crs/tour-list">Go Back to Tour list</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

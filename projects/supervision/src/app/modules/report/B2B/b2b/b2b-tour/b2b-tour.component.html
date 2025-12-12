@@ -1,0 +1,356 @@
+<div class="card-header text-uppercase bg-dark text-white">
+    <h5 style="border-bottom: 0;">B2B Tour report</h5>
+</div>
+<div class="card">
+    <form [formGroup]="regConfig">
+        <div>
+            <div class="form-row">
+                <div class="col-4 pr-0">
+                    <div class="form-group">
+                        <label for="appReference">Application Reference</label>
+                        <input formControlName="app_reference" type="text"
+                            class="form-control text-uppercase form-control-sm nrm_input"
+                            placeholder="Application Reference" id="appReference">
+                    </div>
+                </div>
+                <div class="col-4 pr-0">
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input formControlName="phone_number" type="text"
+                            class="form-control text-uppercase form-control-sm nrm_input" placeholder="Phone"
+                            (keypress)="numberOnly($event)" id="phone">
+                    </div>
+                </div>
+                <div class="col-4 pr-0">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input formControlName="email" type="email" class="form-control form-control-sm nrm_input"
+                            placeholder="Email" id="email">
+                    </div>
+                </div>
+                <div class="col-4 pr-0">
+                    <div class="form-group">
+                        <label for="bookedBy">Status</label>
+                        <select formControlName="status" name="cars" id="bookedBy"
+                            class="form-control form-control-sm nrm_input">
+                            <option value="ALL">ALL</option>
+                            <option value="BOOKING_CONFIRMED">CONFIRMED</option>
+                            <option value="ticked">TICKED</option>
+                            <option value="BOOKING_HOLD">BOOKING HOLD</option>
+                            <option value="BOOKING_CANCELLED">CANCELLED</option>
+                            <option value="cancelInProgress">CANCELLATION IN PROGRESS</option>
+                            <option value="failed">FAILED</option>
+                            <option value="BOOKING_INPROGRESS">IN PROGRESS</option>
+                        </select>
+                        <div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 pr-0">
+                    <div class="form-group">
+                        <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
+                        <label for="fromDate">Booked From Date</label>
+                        <input formControlName="booked_from_date" type="text" id="fromDate" autocomplete="off"
+                            class="form-control form-control-sm nrm_input" placement="bottom left"
+                            placeholder="dd/mm/yyyy" bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen"
+                            [maxDate]="maxDate">
+                    </div>
+                </div>
+                <div class="col-4 pr-0">
+                    <div class="form-group">
+                        <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
+                        <label for="toDate">Booked To Date</label>
+                        <input formControlName="booked_to_date" type="text" id="toDate" autocomplete="off"
+                            class="form-control form-control-sm nrm_input" placement="bottom left"
+                            placeholder="dd/mm/yyyy" bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen"
+                            [maxDate]="maxDate">
+                    </div>
+                </div>
+            </div>
+            <div class="btncontainer">
+                <button type="submit" class="btnStyle" (click)="onSearchSubmit()">Search</button> &nbsp;
+                <button type="button" class="btnStyle" (click)="onReset()">Reset</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="card" style="margin-top: 30px;">
+    <div class="card-body p-0">
+        <div style="padding-bottom: 15px;">
+            <p>Total {{respData?.length}} Bookings</p>
+            <button class="btnStyle" (click)="downloadPdf()">PDF</button>&nbsp;
+            <button class="btnStyle" (click)="download('xlsx', 'portrait')">Export to Excel</button>
+            <div class="form-group mb-0 col-sm-3 p-0 float-right has-search">
+                <span class="fa fa-search form-control-feedback"></span>
+                <input class="form-control" type="text" name="Search" [(ngModel)]="searchText"
+                    autocomplete="off" placeholder="Search">
+            </div>
+        </div>
+        <div class="mb-3">
+            <form>
+                <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft" #scrollOne >
+                    <div class="div1"></div>
+                </div>
+                <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
+                    <div class="div2 invisible-scrollbar">
+                        <div class="table-respons" id="b2b-tour-report">
+                            <table #tableToExport class="table table-borderless table-striped table-hover" matSort
+                                (matSortChange)="sortData($event)" >
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-left text-nowrap"
+                                            *ngFor="let header of displayColumn;">
+                                            {{header.value }}
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngIf="noData">
+                                        <td colspan="11">
+                                            <mat-spinner [diameter]="30" style="margin:0 auto;"
+                                                mode="indeterminate"></mat-spinner>
+                                        </td>
+                                    </tr>
+                                    <tr
+                                        *ngIf="!noData && (!respData.length || (respData | filter:searchText).length === 0)">
+                                        <td colspan="11">
+                                            <h4 class="text-muted text-center">
+                                                No Data Found!
+                                            </h4>
+                                        </td>
+                                    </tr>
+                                    <tr
+                                        *ngFor="let data of respData | filter:searchText | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
+                                        <td class="text-left text-muted">{{i+1}}.</td>
+                                        <td class="text-left overflow-hidden">
+                                            <div ngbDropdown container="body"><button class="btnStyle"
+                                                    ngbDropdownToggle>
+                                                    {{'Action'}}
+                                                </button>
+                                                <div ngbDropdownMenu style="z-index: 9 !important;">
+                                                    <button ngbDropdownItem
+                                                        (click)="onTourRedirect(data.bookingDetails[0]?.App_Reference,'voucher')">View
+                                                        Voucher</button>
+                                                    <button ngbDropdownItem
+                                                        (click)="onTourRedirect(data.bookingDetails[0]?.App_Reference,'invoice')">View
+                                                        Invoice</button>
+                                                    <button ngbDropdownItem (click)="showPaxProfile(data)">Pax
+                                                        Profile</button>
+                                                    <button *ngIf="(data.bookingDetails[0]?.Status == 'BOOKING_CONFIRMED' || data.bookingDetails[0]?.Status == 'BOOKING_PENDING') && loggedInUser?.auth_role_id !==7 &&
+                                                    data.bookingDetails[0]?.BookingSource !== 'BGTAPINO00001'" ngbDropdownItem (click)="showConversationPage(data)">Booking Conversation page</button>
+                                                        <!-- <button *ngIf="data.bookingDetails[0]?.Status == 'BOOKING_CONFIRMED'" ngbDropdownItem (click)="cancelTicket(data.bookingDetails[0]?.App_Reference)">
+                                                            Cancel Booking</button> -->
+                                                    <button
+                                                        *ngIf="(data.bookingDetails[0]?.Status == 'BOOKING_CONFIRMED'|| data.bookingDetails[0]?.Status =='BOOKING_HOLD') && loggedInUser?.auth_role_id !==7"
+                                                        ngbDropdownItem (click)="cancelTicketPopup(data)"> Cancel
+                                                    </button>
+                                                    <button *ngIf="data.bookingDetails[0]?.Status === 'BOOKING_CONFIRMED' && loggedInUser?.auth_role_id !==7 " ngbDropdownItem (click)="openEmailModal(data.bookingDetails[0]?.App_Reference)">
+                                                            Trigger Email</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-left">
+                                            <span *ngIf="data.bookingDetails[0]?.Status == 'BOOKING_FAILED'" class="badge badge-danger">
+                                                Booking Failed
+                                            </span>
+                                            <span *ngIf="data.bookingDetails[0]?.Status == 'BOOKING_CONFIRMED'"
+                                                class="badge badge-success">
+                                                Booking Confirmed
+                                            </span>
+                                            <span *ngIf="data.bookingDetails[0]?.Status == 'CANCELLED' || data.bookingDetails[0]?.Status == 'BOOKING_CANCELLED'"
+                                                class="badge badge-danger">
+                                                Booking Cancelled
+                                            </span>
+                                            <span *ngIf="data.bookingDetails[0]?.Status == 'BOOKING_PENDING'"
+                                                class="badge badge-info" style="background-color: #ff8116;">
+                                                Booking Pending
+                                            </span>
+                                            <span *ngIf="data.bookingDetails[0]?.Status == 'BOOKING_INPROGRESS' || data.bookingDetails[0]?.Status == 'PROCESSING'"
+                                                class="badge badge-info">
+                                                Booking Inprogress
+                                            </span>
+                                            <span *ngIf="data.bookingDetails[0]?.Status == 'BOOKING_HOLD'" class="badge badge-info"
+                                            style="background-color: #ff8116;">
+                                                Booking Hold
+                                            </span>
+                                        </td>
+                                        <td class="text-left"> {{data.bookingDetails[0]?.App_Reference}} </td>
+                                        <td class="text-left">{{data.bookingDetails[0]?.BookingReference || 'N/A'}} </td>
+                                        <td class="text-left" *ngIf="loggedInUser?.auth_role_id !==7">{{data.bookingDetails[0]?.supplier_business_name || 'N/A'}} </td>
+                                        <td class="text-left" *ngIf="loggedInUser?.auth_role_id !==7">{{data.bookingDetails[0]?.agent_business_name || 'N/A'}} </td>
+                                        <td class="text-left">{{data.paxDetails[0]?.Title}} {{data.paxDetails[0]?.FirstName}}
+                                            {{data.paxDetails[0]?.LastName}} </td>
+                                        <td class="text-left">{{data.paxDetails[0]?.Email || 'N/A'}} </td>
+                                        <td class="text-left"> +{{data.paxDetails[0]?.PhoneCode}}-{{data.paxDetails[0]?.Contact || 'N/A'}} </td>
+                                        <td class="text-left">{{data.bookingDetails[0]?.PackageName}} </td>
+                                        <td class="text-left">{{data.bookingDetails[0]?.StartCity}} </td>
+                                        <td class="text-left">{{data.bookingDetails[0]?.tour_country}} </td>
+                                        <td class="text-left">{{data.bookingDetails[0]?.DepartureDate | date: 'dd/MM/yyyy' }} </td>
+                                        <td class="text-left">{{data.bookingDetails[0]?.AdultCount}} </td>
+                                        <!-- <td class="text-left">{{getPaxTypeCounts(data)['Senior'] || 0}} </td> -->
+                                        <!-- <td class="text-left">{{getPaxTypeCounts(data)['Youth'] || 0}} </td> -->
+                                        <td class="text-left">{{data.bookingDetails[0]?.ChildCount}} {{data.bookingDetails[0]?.ChildAge ? "( "+ (data.bookingDetails[0]?.ChildAge) + 'Yrs )' : ''}}</td>
+                                        <!-- <td class="text-left">{{getPaxTypeCounts(data)['Infant'] || 0}} </td> -->
+                                        <!-- <td class="text-left">{{data.itinerary[0]?.agent_commission}} </td>
+                                        <td class="text-left">{{data.itinerary[0]?.agent_tds}} </td> -->
+                                        <td class="text-left">
+                                            <span *ngFor="let data of getOptionalTours(data.bookingDetails[0]?.OptionalTours ); let i=index">
+                                                <span>{{i+1}}. {{data.name}} - ({{data.price | number:'1.0-2'}})</span><br/>
+                                            </span>  
+                                        </td>
+                                        <td class="text-left">{{data.bookingDetails[0]?.SupplierOptionalToursPrice }} {{data.bookingDetails[0]?.ApiCurrency }}  </td>
+                                        <td class="text-left" >{{data.bookingDetails[0]?.SupplierTotalFare }} {{data.bookingDetails[0]?.ApiCurrency }}  </td>
+                                        <td class="text-left" *ngIf="loggedInUser?.auth_role_id !==7">{{data.bookingDetails[0]?.TotalFare | number:'1.0-2' }} </td>
+                                        
+                                        <!-- <td class="text-left" *ngIf="loggedInUser?.auth_role_id === 7">{{data.bookingDetails[0]?.SuppierAdultPrice }} {{data.bookingDetails[0]?.ApiCurrency }}  </td>
+                                        <td class="text-left" *ngIf="loggedInUser?.auth_role_id === 7">{{data.bookingDetails[0]?.SupplierChildPrice }} {{data.bookingDetails[0]?.ApiCurrency }}  </td> -->
+                                        <td class="text-left" *ngIf="loggedInUser?.auth_role_id !==7"> {{data.bookingDetails[0]?.Markup ? (data.bookingDetails[0]?.Markup | number:'1.0-2') : 0 }} </td>
+                                        <td class="text-left" *ngIf="loggedInUser?.auth_role_id !==7"> {{data.bookingDetails[0]?.AgentMarkup ? (data.bookingDetails[0]?.AgentMarkup | number:'1.0-2') : 0 }} </td>
+                                        <td class="text-left" *ngIf="loggedInUser?.auth_role_id !==7"> {{data.bookingDetails[0]?.AgentNetFare ? (data.bookingDetails[0]?.AgentNetFare | number:'1.0-2') : 0 }} </td>
+                                        <!-- <td class="text-left"> {{data?.itinerary[0]?.agent_markup || 0 }} </td> -->
+                                        <!-- <td class="text-left"> {{data.bookingDetails[0]?.Tax || 0 }}</td> -->
+                                        <!-- <td class="text-left"> {{data.bookingDetails[0]?.Gst_value || 'N/A'}} </td> -->
+                                        <!-- <td class="text-left">{{data.bookingDetails[0]?.PromoCode !== 'undefined' ?
+                                            data.bookingDetails[0]?.PromoCode : 'N/A'}}</td>
+                                        <td class="text-left"> {{data.bookingDetails[0]?.Discount }} </td> -->
+                                        <td class="text-left"  *ngIf="loggedInUser?.auth_role_id !==7"> {{data.bookingDetails[0]?.Currency_Code}} </td>
+                                        <td class="text-left"  *ngIf="loggedInUser?.auth_role_id !==7">{{data.bookingDetails[0]?.TotalFare | number:'1.0-2' }} </td>
+                                        <td class="text-left"> {{data.bookingDetails[0]?.Paymnet_Status}} </td>
+                                        <td class="text-left"> {{ data.bookingDetails[0]?.created_at  | date: 'dd/MM/yyyy' }} </td>
+                                        <td class="text-left"> {{ getCancellationDeadLine(data.bookingDetails[0]?.canc_attributes, data.bookingDetails[0]?.cancel_deadline ) }} </td>
+                                        <td class="text-left"> {{ data.bookingDetails[0]?.cancelled_on  | date: 'dd/MM/yyyy' }} </td>
+                                        <td class="text-left"> {{ (data.bookingDetails[0]?.Status == 'CANCELLED' || data.bookingDetails[0]?.Status == 'BOOKING_CANCELLED') ?( getCancellationFee(data.bookingDetails[0]?.canc_attributes, data.bookingDetails[0]?.cancel_deadline ) | number:'1.0-2' ) : ''}} </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="loadWrapper1" *ngIf="load">
+                    <div class="loader1"></div>
+                </div>
+                <div class="card-footer pb-0">
+                    <div class="d-flex w-100 justify-content-between">
+                        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                        </ngb-pagination>
+                        <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                            <option [ngValue]="50">50 items per page</option>
+                            <option [ngValue]="100">100 items per page</option>
+                            <option [ngValue]="150">150 items per page</option>
+                            <option [ngValue]="200">200 items per page</option>
+                            <option [ngValue]="500">500 items per page</option>
+                            <option [ngValue]="700">700 items per page</option>
+                            <option [ngValue]="1000">1000 items per page</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="paxProfile" [style.display]="showModal ? 'block' : 'none'">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">User Details:</h4>
+                <button type="button" class="close" data-dismiss="modal" (click)="hide()">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <h5>Lead Traveler Information</h5>
+                <p>Title : {{paxDetails.Title}}</p>
+                <p>Firstname : {{paxDetails.FirstName}}</p>
+                <p>Lastname : {{paxDetails.LastName}}</p>
+                <p>Email : {{paxDetails.Email}}</p>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btnStyle" data-dismiss="modal" (click)="hide()">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="cancelPolicy" [style.display]="showCancelModal ? 'block' : 'none'">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Cancellation Policy</h4>
+                <button type="button" class="close" data-dismiss="modal" (click)="hide()">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                {{"From 06 Jan 2021,USD 25 will be charged as cancellation penalty."}}
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btnStyle" data-dismiss="modal" (click)="hide()">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true"
+    [style.display]="showConfirm ? 'block' : 'none'">
+    <div class="modal-dialog  modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentModalLabel">Confirm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Do you really want to {{subjectName}} the booking?</p>
+                <span *ngIf="cancelData"><strong>Cancellation Deadline:</strong>{{cancelData.bookingDetails[0]?.cancel_deadline | date: 'dd/MM/yyyy' }}</span> <br/>
+                <span *ngIf="cancelData"><strong>Cancellation Fee:</strong>{{cancelData.bookingDetails[0]?.Currency_Code}} {{getCancellationFee(cancelData.bookingDetails[0]?.canc_attributes,cancelData.bookingDetails[0]?.cancel_deadline)}}</span>
+            </div>
+            <div class="modal-footer" style="justify-content: space-between;">
+                <button type="button" class="btn btn-success" *ngIf="subjectName=='Cancel'"
+                    (click)="cancelTicket()">Yes</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="hide()">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="cancelPolicy" [style.display]="showMailModal ? 'block' : 'none'">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Send Email</h4>
+                <button type="button" class="close" data-dismiss="modal" (click)="hide()">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <input class="form-control" type="text" name="Search" [(ngModel)]="enteredEmail"
+                    autocomplete="off" placeholder="Enter Email"/>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btnStyle" data-dismiss="modal" (click)="triggerTourEmail()">Send</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<ngx-loading [show]="loading"
+[config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+[template]="loadingTemplate"></ngx-loading>

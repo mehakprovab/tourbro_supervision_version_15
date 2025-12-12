@@ -1,0 +1,50 @@
+<form class="my-3" [formGroup]="regConfig">
+    <div class="card-header-tab card-header">
+        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+            <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+            <span class="my-color"> {{'Credit Limit Request Details'}} </span>
+        </div>
+    </div>
+    <div class="offset-md-1 col-md-10 offset-lg-1 col-lg-10" style="margin-top: 15px;">
+        <div class="form-group row">
+            <label for="agentName" class="col-sm-3 text-right col-form-label "> Agent Name <sup
+                    class="f-16 text-danger">*</sup> </label>
+            <div class="col-sm-9 p-0">
+                <div class="row">
+                    <div class="col-5">
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <input formControlName="agentName" type="text" class="form-control"
+                                    placeholder="" id="agentName" readonly="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-7">
+                        <div class="form-group row">
+                            <label for="agentId" class="col-sm-3 text-right col-form-label text-center">Agent Id <sup
+                                    class="f-16 text-danger">*</sup> </label>
+                            <div class="col-sm-9">
+                                <input formControlName="agentId" type="text" class="form-control" placeholder="" id="agentId" readonly="true"> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="amount" class="col-sm-3 text-right"> Amount({{currency}})<sup class="f-16 text-danger">*</sup> </label>
+            <input formControlName="amount" type="text" class="col-sm-9 form-control form-group" placeholder="Amount" id="amount"
+            (keypress)="numberOnly($event)">
+        </div>
+        <div class="form-group row">
+            <label for="remarks" class="col-sm-3 text-right"> Remarks </label>
+            <textarea formControlName="remarks" rows="3" class="col-sm-9 form-control text-capitalize" placeholder="Remarks" id="remarks"> </textarea>
+        </div>
+        <div class="form-group row pull-right">
+            <div class="customCenter">
+                <button type="submit" class="btn btn-lg btn-primary mr-1" (click)="onSubmit()"> Save </button>
+                <button type="button" class="btn btn-lg btn-primary"(click)="onReset()"> Reset </button>
+            </div>
+        </div>
+    </div>
+</form>

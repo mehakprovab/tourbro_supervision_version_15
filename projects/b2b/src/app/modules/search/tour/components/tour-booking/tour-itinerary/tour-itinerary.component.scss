@@ -1,0 +1,251 @@
+.tourTabContainer {
+  display: flex;
+  justify-content: cenflex-startter;
+  list-style-type: none;
+  padding: 0; margin-bottom: 15px;
+
+  @media(max-width:767px){
+    padding: 0px 15px 0px 15px;
+    overflow: auto;
+  }
+}
+
+
+.tabs_parent{background-color: #fff;border-radius: 10px; padding: 20px; margin-bottom: 20px;}
+.tourTabItem {
+  margin-right: 10px;
+}
+
+.tourTabItem:last-child {
+  margin-right: 0;
+}
+
+button {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 15px;
+  height: 47px;
+  padding: 10px 18px;
+  text-align: center;
+  background: #092e53 !important;
+  font-weight: 610;
+  margin-right: 0px;
+  overflow: hidden;
+  @media (max-width:767px){
+    padding: 0px 3px !important;
+    overflow: hidden !important;
+  }
+}
+
+
+
+.activeButton {
+  background-color: #189AD3;
+  color: white;
+}
+
+.card {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-top: 15px;
+}
+
+.borderLine{
+width: 100%; 
+border-bottom: 1px solid #dfdcd5;
+margin: 2px 0px 10px;; display: 
+table; background-color: #fff; 
+padding: 5px 10px;
+}
+
+.activeVisitDayButton {
+// background-color: #189AD3;
+color: white;
+}
+
+.tourDay{
+margin: 5px 0px;
+}
+
+.tourItinerary {
+display: flex;
+}
+
+.first-part {
+flex-basis: 10%;
+width: 300;
+height: 300;
+/* Additional styles for the first part */
+}
+
+.second-part {
+flex-basis: 90%;
+// box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.2);
+width: 85%;
+}
+
+.card{
+ @media (max-width:767px){
+  width: 94% !important;
+  margin-left: 3% !important;
+ }
+}
+.accordion-shadow ::ng-deep .card-header { background:none !important; padding: 0px !important;border-bottom: none!important;}
+.accordion-shadow ::ng-deep .card{border: none;margin: 0px 0px;}
+.accordion-shadow ::ng-deep button{width: 100%;text-align: left;padding: 10px 0px;}
+.accordion-shadow ::ng-deep button .iterheader::after{content: '\f068';color: #fff;font-family: "Font Awesome 5 Pro";float:right;background: #9da7b5;border-radius:50%;width: 30px;height: 30px;padding: 3px 9px;}
+.accordion-shadow ::ng-deep .collapsed .iterheader::after{content: '\f067 ';color: #fff;font-family: "Font Awesome 5 Pro";float:right;background: #9da7b5;border-radius:50%;width: 30px;height: 30px;padding: 3px 9px;}
+.accordion-shadow ::ng-deep span{    background: #fbc10a;
+padding: 4px 15px;
+border-radius: 22px;
+color: #fff;
+font-size: 16px;
+text-align: center;
+min-width: 70px;
+margin-right: 25px;}
+.accordion-shadow ::ng-deep .btn-link:hover{text-decoration: none;}
+.accordion-shadow ::ng-deep .card {border-bottom: none; margin-bottom: 13px; padding: 0px 10px;}
+.accordion-shadow ::ng-deep .card:last-child{border-bottom: none;}
+.accordion-shadow ::ng-deep .card-body{padding: 0px 15px 15px}
+.accordion-shadow ::ng-deep .card-body .ite_con{padding-left: 80px;}
+.accordion-shadow ::ng-deep .card-body::before{content: "";
+width: 1px;
+position: absolute;
+top: 54px;
+height: 65%;
+left: 35px;
+z-index: 1;
+background: #C5C5C5;}
+.accordion-shadow ::ng-deep .card-body .ite_con::after{content: "";
+width: 15px;
+height: 15px;
+background: #c5c5c5;
+border: 0;
+border-radius: 50%;
+position: absolute;
+left: 28px;
+top: 70px;
+z-index: 2;}
+.accordion-shadow ::ng-deep h4{margin-bottom: 0px;
+    // padding-left: 25px;
+    font-size: 20px;
+    color: #000;}
+.accordion-shadow ::ng-deep .card-header .btn-link:focus{text-decoration: none!important;}
+.inclsn{
+width: 100%;
+float: left;
+margin: 15px 0 25px 0;
+display: flex;
+justify-content: flex-start;
+padding: 7px 0;
+}
+.hicn{
+float: left;
+margin-right: 50px;
+}
+.i-htl{
+width: 35px;
+height: 35px;
+background: url(../../../../../../../assets/images/hotel-1.svg) no-repeat 0 0;
+background-size: 35px 35px;
+display: table;
+margin: 0 auto;
+}
+.i-sig{
+width: 35px;
+height: 35px;
+background: url(../../../../../../../assets/images/sightseeing-1.svg) no-repeat 0 0;
+background-size: 35px 35px;
+display: table;
+margin: 0 auto;
+}
+.i-car{
+width: 35px;
+height: 35px;
+background: url(../../../../../../../assets/images/transfer-1.svg) no-repeat 0 0;
+background-size: 35px 35px;
+display: table;
+margin: 0 auto;
+}
+.i-mea{
+width: 35px;
+height: 35px;
+background: url(../../../../../../../assets/images/meal-1.svg) no-repeat 0 0;
+background-size: 35px 35px;
+display: table;
+margin: 0 auto;
+}
+.i-fli{
+width: 35px;
+height: 35px;
+background: url(../../../../../../../assets/images/flight-1.svg) no-repeat 0 0;
+background-size: 35px 35px;
+display: table;
+margin: 0 auto;
+}
+
+.overviw{border-bottom: 1px solid #ccc;}
+.overviw h3{ color: #000;font-weight: 600;font-size: 20px;margin-top: 0px;margin-bottom: 20px;}
+.overviw h4{font-size: 16px;font-weight: 600;}
+
+.iternry h3{ color: #000;font-weight: 600;font-size: 20px;margin-top: 0px;margin-bottom: 20px;}
+.iternry{border-bottom: 1px solid #ccc;}
+.iternry h4{font-size: 16px;font-weight: 600;}
+
+.incluandexclu h3{color: #000;font-weight: 600;font-size: 20px;margin-top: 0px;margin-bottom: 20px;}
+.incluandexclu{border-bottom: 1px solid #ccc;}
+.incluandexclu h4{font-size: 16px;font-weight: 600;}
+
+.termrandcndn h3{ color: #000;font-weight: 600;font-size: 20px;margin-top: 0px;margin-bottom: 20px;}
+.termrandcndn{border-bottom: 1px solid #ccc;}
+.termrandcndn h4{font-size: 16px;font-weight: 600;}
+
+.ite_con p{ font-size: 15px;}
+.safety_div ul{ padding-left: 14px;}
+.safety_div ul li { list-style-type: disc; line-height: 30px; font-size: 1rem;}
+.nav-tabs .nav-link.active,.nav-tabs .nav-link:hover,.nav-tabs .nav-link:focus {
+color: #fbc10a !important;
+  background-color: #092e53 !important;
+  border-bottom:2px solid #fbc10a!important;}
+.tourTabContainer{position: sticky;
+  top: 0px;
+  background: #fff;
+  z-index: 999;}
+  .tourDuration{font-size: 12px;
+    font-weight: 400;
+    padding: 2px 10px;
+    background: #fad77f;
+    border-radius: 20px;
+    width: 150px;
+    text-align: center;
+    letter-spacing: 0.5px;}
+
+    .view-more {
+      color: #007bff !important;
+      cursor: pointer;
+      display: inline-block;
+      margin-top: 10px;
+      text-decoration: underline;
+    }
+
+::ng-deep .safety_div ul{ padding-left: 14px!important;}
+
+
+      .tourTabContainer {
+  width: 100% !important;
+}
+
+.tourTabContainer ul {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: space-between !important; /* spread tabs across full width */
+}
+
+.tourTabContainer ul li {
+  flex: 1 !important; /* make each tab equally sized */
+}
+
+.tourTabContainer ul li button {
+  width: 100% !important;         /* button fills li */
+  text-align: center !important;  /* center text */
+}

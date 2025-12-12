@@ -1,0 +1,45 @@
+.form-group .btn-primary:first-child {
+    padding: 6px 15px !important;
+    background: #fbc108 !important;font-size: 16px!important;
+    border: 1px solid #fbc108 !important;
+}
+.div1 {
+    width: 5200px;
+    height: 20px;
+}
+.div2 {
+    width: 5200px;
+    overflow: hidden;
+}
+
+.payment_label{ display: block; margin-top: 10px;}
+
+@media (min-width: 576px)
+{
+.modal-dialog {
+    max-width: 500px;
+   
+ margin: 8.75rem auto;
+}
+
+}
+.card {
+    border-radius: unset;
+    float: left;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.btnStyle{
+    border: none;
+    background: #012756;
+    color: #fff;
+    padding: 4px 7px;
+    border-radius: 5px;
+}
+.customer-email {
+    background: #efefef;
+    height: 30px;
+    width: 70%;
+    border-radius: 4px;
+}

@@ -1,0 +1,46 @@
+@media print {
+    .blackbg{
+        background-color:#000;
+       -webkit-print-color-adjust:exact; 
+    }
+    }
+
+    .trapezoid {
+        border-bottom: 60px solid #082E53;
+        border-left: 45px solid transparent;
+        border-right: 0px solid transparent;
+        height: 0;
+        width: 100%;
+        color: #fff;
+        text-align: center;
+        line-height: 60px;
+        font-size: 19px;
+        letter-spacing: 8px;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+      .btnStyle{
+        background: #082e53;
+        color: #fff;
+        border: 1px solid #082e53;
+        border-radius: 3px;
+        padding: 5px 20px;
+        margin: 0px auto;
+        display: block;
+      }
+
+      .nationality-icon {
+        width: 16px;
+        height: 16px;
+      }
+      .policy-text {
+        font-size: 14px;
+        line-height: 1.6;
+        color: #333;
+      }
+      .policy-text ul {
+        margin: 0 0 1em 1.5em;
+      }
+      .policy-text li {
+        margin-bottom: 0.5em;
+      }

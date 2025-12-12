@@ -1,0 +1,90 @@
+
+button.orangeButton{
+    background-color: #189ad3 !important;
+    color: white !important;
+    border: none !important;
+    padding: 0.4rem !important;
+    font-weight: 500 !important;
+    border-radius: 0.3rem 0.3rem !important;
+    height: 2.3rem !important;
+    margin: 0.2rem !important;
+}
+
+.saveButton{
+    //margin: -2rem 0rem 1rem 32.5rem;
+    text-align: center;
+    padding-bottom: 14px;
+    @media  (max-width: 767px) {
+        margin: -1rem 0rem 1rem 0.5rem;
+    }
+}
+
+button.orangeButton{
+    background-color: #189ad3 !important;
+    color: white !important;
+    border: none !important;
+    padding: 0.4rem !important;
+    font-weight: 500 !important;
+    border-radius: 0.3rem 0.3rem !important;
+    margin-top: 1.3rem !important;
+    height: 2.3rem !important;
+    // width: 4rem !important
+}
+
+
+.entireScreen{
+    background-color: #fff !important;
+}
+
+input{
+    height: calc(2.25rem + 2px) ;
+    padding: 0.375rem 0.75rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    margin-left: 10px;
+}
+table {
+    border: 1px solid lightgray;
+    border-collapse: collapse;
+}
+  
+td, th {
+    border: 1px solid lightgray;
+    padding: 8px;
+}
+label{
+    margin: 0.5rem !important;
+}
+
+.col-sm-10 {
+    flex: 0 0 83.3333333333%;
+    max-width: 81.333333%;
+}
+
+.priceManagement{
+    border-radius: 1rem;
+    box-shadow: 0px 0px 3px #cacaca;
+    @media  (max-width: 767px) {
+        margin: 0rem !important;
+    }
+}
+
+.col-sm-4 {
+    flex: 0 0 79.333333%;
+    max-width: 74.333333%;
+}
+
+.remove-btn {
+    background: #f84141 !important;
+    border: #f84141 !important;
+}
+::ng-deep.invalid-feedback{
+    display: none !important;
+}
+
+  

@@ -1,0 +1,23 @@
+.card-body {
+  padding-bottom: 0px !important;
+
+  ul {
+    list-style: none;
+
+    li {
+      display: inline-block;
+
+      .fa {
+        color: #ab8b71;
+      }
+
+      img {
+        transition: padding 0.3s;
+      }
+
+      img:hover {
+        padding: 1rem !important;
+      }
+    }
+  }
+}

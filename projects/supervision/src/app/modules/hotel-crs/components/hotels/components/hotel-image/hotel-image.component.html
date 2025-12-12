@@ -1,0 +1,109 @@
+<ng-container >
+    <h5><b>Hotel Name:</b> {{hotelOne.hotel_name}}</h5>
+    <div class="">
+        <div class="table-responsive">
+            <table class="table table-borderless table-striped table-hover" matSort>
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-left text-nowrap" *ngFor="let header of displayColumn;"
+                            mat-sort-header="{{header.key}}">
+                            {{header.value }} </th>
+                    </tr>
+                </thead>
+                <tr *ngIf="!hotelImage?.length">
+                    <td colspan="12">
+                        <h4 class="text-muted text-center">
+                            No Data Found!
+                        </h4>
+                    </td>
+                </tr>
+                <tbody>
+                    <!-- <tr *ngIf="noData">
+                        <td colspan="11">
+                            <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                        </td>
+                    </tr> -->
+                    <tr
+                        *ngFor="let imageUrl of hotelImage;let i=index;">
+                        <td class="text-left text-muted">{{i+1}}.</td>
+                        <td class="text-left"><img [src]="imageUrl" width="100" height="50"
+                            (click)="openImage(imageUrl)"></td>
+                            <td *ngIf="i == 0"class="text-left text-muted">Primary Image</td>
+                            <td class="text-left"*ngIf="i != 0 ">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="checkbox-input"  (change)="onPublish($event.target.checked,i,imageUrl)">
+                                    <span class="checkbox-text">Set as Primary</span>
+                                </label> 
+                              </td>
+                        <td class="text-left">
+                            <button (click)="delete(imageUrl)" title="Edit Hotel" class="p-1 btnStyles"> Delete</button>
+        
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="modal" tabindex="-1" [class.show]="selectedImage" [style.display]="selectedImage ? 'block' : 'none'">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Image Preview</h5>
+                      <button type="button" class="close" (click)="closeModal()">
+                        <span>&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body text-center">
+                      <img [src]="selectedImage" class="img-fluid" />
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+        <form [formGroup]="hotelImageForm" (ngSubmit)="onSubmitHotelImage()" class="needs-validation btop pt-4"
+            novalidate>
+            <fieldset for="hotelImage">
+                <div class="form_legend">Add Hotel Images</div>
+                <!-- <img [src]="getImage(hotelOne.image)" height="100" width="100" class="m-3"> -->
+                &nbsp; &nbsp;
+                <!-- <div *ngIf="hotelImages" class="image-list">
+                    <div  *ngFor="let imageUrl of images">
+                        <img [src]="imageUrl" width="100" height="50">
+                    </div>
+                </div> -->
+                <div class="avatar-preview" *ngIf="imageUrl">
+                    <div id="imagePreview" [style.backgroundImage]="'url('+ imageUrl +')'">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="file-input">
+                   
+                    <input #file type="file" accept='image/*'
+                        (change)="previewHotelImage($event)" class="btn btn-sm" multiple>
+                    <div *ngIf="submittedHotelImage === true && hotelImageForm.invalid && selactedFlies.length === 0" class="invalid-feedback">
+                        <div >Images are required</div>
+
+                    </div>
+                    </div>
+                </div>
+
+                <span><b>Note:</b> Only JPG, JPEG, PNG, SVG, and WEBP formats are allowed. You can upload a maximum of 30 images.</span><br>
+                <div class="form-group">
+                    <div class="col-sm-12 btncontainer p-0">
+                        <button type=" submit" class=" btn btn-sm btn-success btnStyle">Upload Hotel
+                            Images
+                        </button>
+                        &nbsp; &nbsp;
+                        <button type="reset" class=" btn btn-sm btn-primary btnStyle" (click)="goToHotelList()">
+                            Hotel List
+                        </button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</ng-container>
+<ngx-loading [show]="loading"
+[config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+[template]="loadingTemplate"></ngx-loading>

@@ -1,0 +1,149 @@
+<div class="sub-agent-container custom-table-layout card" style="padding: 20px;">
+    <div class="add-traveller">
+        <div class="title">
+            <h3>User Profile</h3>
+        </div>
+        <div class="custom-inline-form">
+            <form class="" [formGroup]="regConfig" autocomplete="off">
+                <div class="form-group required row">
+                    <label for="title" class="col-sm-2 col-form-label">Title</label>
+                    <div class="col-sm-4">
+                        <select id="inputState" class="form-control capitalize" formControlName="title">
+                            <option selected value="" disabled>Choose...</option>
+                            <option *ngFor="let t of userTitleList" value="{{t.id}}">{{t.title}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="firstName" class="required" class="col-sm-2 col-form-label">First Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control text-capitalize" id="firstName" maxlength="250"
+                            (keypress)="omitSpecialCharacters($event)" formControlName="first_name">
+                    </div>
+                </div>
+                <div class="form-group  row" style="display: none;">
+                    <label for="middleName" class="col-sm-2 col-form-label">Middle Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="middleName" maxlength="250"
+                            (keypress)="omitSpecialCharacters($event)" formControlName="middle_name">
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control text-capitalize" id="lastName" maxlength="250"
+                            (keypress)="omitSpecialCharacters($event)" formControlName="last_name">
+                    </div>
+                </div>
+                <!-- <div class="form-group required row">
+                    <label for="dateOfBirth" class="col-sm-2 col-form-label">Date Of Birth</label>
+                    <div class="col-sm-4">
+                        <span class="icon return_date" (click)="isOpen= !isOpen"></span>
+                        <input type="text" id="dateOfBirth" formControlName="date_of_birth"
+                            class="form-control form-control-sm nrm_input" placement="bottom left"
+                            placeholder="dd-mm-yyyy" bsDatepicker [bsConfig]="bsDateConf" [readonly]="true"
+                            [maxDate]="maxDate" [isOpen]="isOpen">
+                    </div>
+                </div> -->
+                <div class="form-group required row">
+                    <label for="country" class="col-sm-2 col-form-label">City</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="middleName" maxlength="250"
+                            formControlName="city">
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="country" class="col-sm-2 col-form-label">State</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="middleName" maxlength="250"
+                         formControlName="state">
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="country" class="col-sm-2 col-form-label">Country</label>
+                    <div class="col-sm-4">
+                        <select id="country" class="form-control text-capitalize" formControlName="country">
+                            <option selected disabled>Select Country</option>
+                            <option *ngFor="let c of countriesList" value="{{c.id}}">{{c.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="phone" class="col-sm-2 col-form-label">Phone Code</label>
+                    <div class="col-sm-4 m-0">
+                        <select id="phoneCode" class="form-control text-capitalize" formControlName="phone_code">
+                            <option value="{{code.id}}" *ngFor="let code of phoneCodeList">
+                                {{code.name}} ({{code.phone_code}}) </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="phone" class="col-sm-2 col-form-label">Phone Number</label>
+                    <div class="col-sm-4 m-0">
+                        <input type="text" formControlName="phone" class="form-control" id="phone" minlength="8"
+                            maxlength="15" (keypress)="numberOnly($event)">
+                    </div>
+                </div>
+                <div class="form-group row cust-radio-group">
+                    <label class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-4 d-flex align-items-center">
+                        <div class="col-auto">
+                            <label>
+                                <input type="radio" value="1" formControlName="status">
+                                <span class="design"></span>
+                                <span class="text">Active</span>
+                            </label>
+                        </div>
+                        <div class="col-auto">
+                            <label>
+                                <input type="radio" value="0" formControlName="status">
+                                <span class="design"></span>
+                                <span class="text">Inactive</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="title pl-30">
+                    <h3>Login Details</h3>
+                </div>
+                <div class="form-group required row">
+                    <label for="firstName" class="required" class="col-sm-2 col-form-label">Email ID</label>
+                    <div class="col-sm-4">
+                        <input formControlName="email" type="text" class="form-control" id="email"
+                            [readonly]="addOrUpdate=='update' ? true : false" maxlength="250">
+                    </div>
+                </div>
+                <div *ngIf="addOrUpdate=='add'">
+                <div class="form-group required row">
+                    <label for="password" class="col-sm-2 col-form-label">Password</label>
+                    <div class="col-sm-4">
+                        <input formControlName="password" type="password" class="form-control" id="password"
+                            maxlength="250">
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="confirm_password" class="col-sm-2 col-form-label">Confirm Password</label>
+                    <div class="col-sm-4">
+                        <input type="password" formControlName="confirm_password" class="form-control"
+                            id="confirm_password" maxlength="250">
+                    </div>
+                    <p *ngIf="regConfig.controls['confirm_password'].errors?.matchPassword"
+                        style="color: #C71C22;font-size: 80%;">
+                        Password and Confirm Password did not match.
+                    </p>
+                </div>
+                </div>
+                <div class="btn-group">
+                    <div class="form-group required row">
+                        <div class="col-12 d-flex">
+                            <button type="submit" class="btn btn-sm btn-primary lg mr-4"
+                                (click)="onSubmit()">Save</button>
+                            <button type="reset" class="btn btn-sm btn-danger lg" (click)="onReset()">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

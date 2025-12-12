@@ -1,0 +1,264 @@
+<div class="create-sub-agent-container">
+    <div class="custom-table-layout mt-3">
+        <div class="table-btn-group mb-3 d-flex">
+            <div class="col-12 p-0">
+                <button class="btnStyle" (click)="download('pdf', 'landscape')">Export to PDF</button>&nbsp;
+                <button class="btnStyle" (click)="exportExcel()">Export to Excel</button>
+                <div class="form-group mb-0 col-sm-3 p-0 float-right has-search">
+                    <span class="fa fa-search form-control-feedback"></span>
+                    <input class="form-control" type="text" name="Search" [(ngModel)]="searchText"
+                        autocomplete="off" placeholder="Search">
+                </div>
+            </div>
+        </div>
+        <!--  -->
+        <div class="row card">
+            <div class="col-md-12 col-lg-12">
+                <form class="clearfix">
+                    <div class="row col-md-12 col-lg-12 m-0 p-0">
+                        <table style="table-layout: fixed; width: 100%;" id="active-users-report">
+                            <tr>
+                                <td>
+                                    <div class="wrapper1" id="notifications-list"
+                                        (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft" #scrollOne>
+                                        <div class="div1"></div>
+                                    </div>
+
+                                    <div class="wrapper2" #scrollTwo
+                                        (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
+                                        <div class="div2 invisible-scrollbar">
+                                            <div class="table-respons">
+                                                <table
+                                                    class="align-middle mb-0 table table-borderless table-striped table-hover"
+                                                    matSort (matSortChange)="sortData($event)">
+                                                    <thead>
+                                                        <tr class="p-2">
+                                                            <th scope="col" class="text-nowrap"
+                                                                *ngFor="let header of displayColumn;"
+                                                                mat-sort-header="{{header.key}}">
+                                                                {{header.value }}
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngIf="noData">
+                                                            <td colspan="12">
+                                                                <mat-spinner [diameter]="30" style="margin:0 auto;"
+                                                                    mode="indeterminate"></mat-spinner>
+                                                            </td>
+                                                        </tr>
+                                                        <tr
+                                                            *ngIf="!noData && (!respData.length || (respData | filter:searchText).length === 0)">
+                                                            <td colspan="12">
+                                                                <h4 class="text-muted text-center">
+                                                                    No Data Found!
+                                                                </h4>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="p-2"
+                                                            *ngFor="let user of respData | filter:searchText | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
+                                                            <td class="text-left text-muted">{{i+1}}.</td>
+                                                            <!-- <td (mouseenter)="onHover(user)"
+                                                        ngbTooltip="Last Login: {{hoverData | date :'dd-MM-yyyy hh:mm:ss'}}" container="body"
+                                                        class="text-left"> 
+                                                        <i class="fa fa-circle text-danger"
+                                                            *ngIf="!findUserLogin(user['last_login'],user['logout_date_time'])"></i>
+                                                        <i class="fa fa-circle text-success"
+                                                            *ngIf="findUserLogin(user['last_login'],user['logout_date_time'])"></i>
+                                                    </td> -->
+                                                      
+                                                            <td class="text-left capitalize"> 
+                                                                {{user['first_name']}} {{user['last_name']}}
+                                                            </td>
+                                                            <td class="text-left"> {{user['phone_number']}} </td>
+                                                            <td class="text-left"> {{user['email']}} </td>
+                                                            <td class="text-left">
+                                                                <select class="m-auto cust-select" (change)="onStatusChange(user, $event)">
+                                                                    <option value="0" [selected]="user['status'] === false">Inactive</option>
+                                                                    <option value="1" [selected]="user['status'] === true">Active</option>
+                                                                    <option *ngIf="user['status'] === 2" value="2" [selected]="user['status'] === 2">
+                                                                        Under Verification
+                                                                    </option>
+                                                                </select>                                                                
+                                                            </td>
+                                                      
+                                                            <td class="text-left overflow-hidden">
+                                                                <div ngbDropdown container="body"><button class="btnStyle"
+                                                                        ngbDropdownToggle>
+                                                                        {{'Action'}}
+                                                                    </button>
+                                                                    <div ngbDropdownMenu>
+                        
+                                                                        <button ngbDropdownItem (click)="showPropertyProfile(user)">
+                                                                            View Detail</button>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="card-footer pb-0">
+                        <div class="d-flex w-100 justify-content-between" *ngIf="respData.length !== 0">
+                            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                            </ngb-pagination>
+                            <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                                <option [ngValue]="10">10 items per page</option>
+                                <option [ngValue]="50">50 items per page</option>
+                                <option [ngValue]="100">100 items per page</option>
+                                <option [ngValue]="150">150 items per page</option>
+                                <option [ngValue]="200">200 items per page</option>
+                                <option [ngValue]="500">500 items per page</option>
+                                <option [ngValue]="700">700 items per page</option>
+                                <option [ngValue]="1000">1000 items per page</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="paxProfile" [style.display]="showModal ? 'block' : 'none'">
+    <div class="modal-dialog">
+        <div class="modal-content" style="min-width: 910px;">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Property Information:</h4>
+                <button type="button" class="close" data-dismiss="modal" (click)="hide()">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <table class="table table-bordered table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Sl No.</th>
+                            <th>Property Name</th>
+                            <th>Property Type</th>
+                            <th>Property Rating</th>
+                            <th>Country</th>
+                            <th>City</th>
+                            <th>Property Address</th>
+                            <th>Latitude</th>
+                            <th>Longitude</th>
+                            <th>Meal Plans</th>
+                            <th>Weekend Days</th>
+                            <th>Room Views</th>
+                            <th>Property Local Timezone</th>
+                            <th>CheckIn Time</th>
+                            <th>CheckOut Time</th>
+                            <th>Children Free Before</th>
+                            <th>Paid Children From Age</th>
+                            <th>Paid Children To Age</th>
+                            <th>Currency</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let propertyData of respDataProperty; let i = index;">
+                            <td class="text-left"> {{i + 1}}.</td>
+                            <td class="text-left text-uppercase"> {{propertyData?.propertyName}}</td>
+                            <td class="text-left"> {{propertyData?.propertyType}} </td>
+                            <td class="text-left"> {{propertyData?.propertyRating}} </td>
+                            <td class="text-left"> {{propertyData?.country}} </td>
+                            <td class="text-left"> {{propertyData?.city}} </td>
+                            <td class="text-left"> {{propertyData?.propertyAddress}} </td>
+                            <td class="text-left"> {{propertyData?.latitude}} </td>
+                            <td class="text-left"> {{propertyData?.longitude}} </td>
+                            <td class="text-left"> 
+                                <span *ngFor="let mealPlan of propertyData?.mealPlans; let j = index;">
+                                    {{ mealPlan }}<span *ngIf="j < propertyData?.mealPlans.length - 1">, </span>
+                                </span>
+                            </td>
+                            <td class="text-left"> 
+                                <span *ngFor="let day of propertyData?.weekendDays; let k = index;">
+                                    {{ day }}<span *ngIf="k < propertyData?.weekendDays.length - 1">, </span>
+                                </span>
+                            </td>
+                            <td class="text-left"> 
+                                <span *ngFor="let view of propertyData?.roomViews; let l = index;">
+                                    {{ view }}<span *ngIf="l < propertyData?.roomViews.length - 1">, </span>
+                                </span>
+                            </td>
+                            <td class="text-left"> {{propertyData?.propertyLocalTimezone}} </td>
+                            <td class="text-left"> {{propertyData?.checkInTime}} </td>
+                            <td class="text-left"> {{propertyData?.checkOutTime}} </td>
+                            <td class="text-left"> {{propertyData?.childrenFreeBefore}} </td>
+                            <td class="text-left"> {{propertyData?.paidChildrenFromAge}} </td>
+                            <td class="text-left"> {{propertyData?.paidChildrenToAge}} </td>
+                            <td class="text-left"> {{propertyData?.currency}} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btnStyle" data-dismiss="modal" (click)="hide()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true"
+  [style.display]="showConfirm ? 'block' : 'none'">
+  <div class="modal-dialog  modal-sm" role="document">
+    <div class="modal-content"style="min-width: 500px;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="paymentModalLabel">Reject</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="hotelTypeForm"  class="needs-validation btop pt-0" novalidate>
+            <div class="card border-light p-0">
+          
+                <div class="card-body pl-0">
+                    <fieldset form="user">
+                 
+                
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">
+                         Reason
+        
+                    </label>
+                    <div class="col-sm-6">
+                    <textarea type="text" formControlName="description" style="height: 90px !important;" class="form-control"
+                        ></textarea>
+                        </div>
+                  
+                </div>
+    
+                        <!-- <div class="form-group">
+                            <label class="col-sm-3 control-label" for="tax_value">
+                                 Tax value
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-sm-6">
+                                <input value="" formControlName="tax_value" type="number" placeholder="Tax Value"
+                                    class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tax_value.errors }"
+                                    required />
+                            </div>
+                            <div *ngIf="submitted && f.tax_value.errors" class="invalid-feedback">
+                                <div *ngIf="f.tax_value.errors.required">Hotel Type Name is required</div>
+                            </div>
+                        </div> -->
+                    
+                    </fieldset>
+              
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer" style="justify-content: space-between;">
+        <!-- <button type="button" class="btn btn-success" 
+          (click)="onRejectStatusChange()">Yes</button> -->
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="hide()">No</button>
+      </div>
+    </div>
+  </div>
+</div>

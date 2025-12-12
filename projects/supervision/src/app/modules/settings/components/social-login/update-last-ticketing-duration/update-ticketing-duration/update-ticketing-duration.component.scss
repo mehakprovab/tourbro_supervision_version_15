@@ -1,0 +1,36 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.row card{
+    box-shadow: none !important;
+}
+
+.customCenter{
+    margin-top: 10px;
+}
+
+.droparilines {
+    background: #fbfbfb;
+    position  : absolute;
+    width     : 100%;
+    max-height: 180px;
+    overflow  : auto;
+    display   : block;
+    z-index: 9999;
+}
+
+.droparilines li {
+    display   : block;
+    padding   : 10px 15px;
+    color     : #000;
+    font-size : 14px;
+    box-shadow: 0px 0px 1px 0px #8c8c8c;
+}

@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col-md-12" style="margin-top: -15px;">
+        <form class="p-3">
+            <div class="row">
+                <ng-container *ngFor="let item of items">
+                    <div class="border p-3 rounded text-center mr-2 d-inline">
+                        <i class="rounded-circle p-1 {{item.icon}}" style="color: #012756; background-color: #F1F1F1;" aria-required="true"></i>
+                        <span class="f-16 fw-5"> &nbsp; {{item.moduleName}}: &nbsp;&nbsp; {{item.percentage}} </span>
+                    </div>
+                </ng-container>
+            </div>
+        </form>
+    </div>
+</div>

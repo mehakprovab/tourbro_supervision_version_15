@@ -1,0 +1,1016 @@
+<div class="container-fluid p-0">
+    <div class="tourdetls-header-sec mb-2 ">
+        <div class="tourdetls-header d-flex justify-content-between col p-0">
+            <div>
+                <h4 class="name_title">{{tourDetails?.package_name}}</h4>
+                <span class="smalltxt"> {{tourDetails?.duration}}</span>
+                <p class="mb-1"><img style="width: 15px; height: auto;" src="assets/images/Location.svg">
+                    {{tourDetails.placesCovered.join(', ')}}</p>
+                <!-- <span></span> -->
+
+            </div>
+            <!-- <div class="tourdetls-header-side">
+                <p>Starting From</p>
+                    <span class="price-dtls">{{ tourDetails?.tourPrice[0].ex_adult_airliner_price ? ( tourDetails?.tourPrice[0].Currency +' ' + (tourDetails.tourPrice[0].ex_adult_airliner_price | number: '1.0-0')) : '' }}</span>
+                <p class="mb-1">Per Person</p>
+            </div> -->
+
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid nopad">
+    <div class="row">
+    <div class="col-md-8 pl-0">
+
+        <app-tour-gallery [tourDetails]="tourDetails"></app-tour-gallery>
+
+        <div class="col-md-12 col-lg-12 p-0">
+            <div class="mb-2 dayiternarys">
+                <div class="d-flex">
+                    <!-- <div class="col-md-6 col-12">
+                        <div class="static_info">
+                            <div class="d-flex">
+                                <div><img src="assets/images/cancel.svg"></div>
+                                <div class="static_desc">
+                                    <h3>Free Cancellation</h3>
+                                    <p> Flexible cancellation options up to 24 hours for some tours</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="col-md-6 col-12">
+                        <div class="static_info">
+                            <div class="d-flex">
+                                <div><img src="assets/images/spray.svg"></div>
+                                <div class="static_desc">
+                                    <h3>Health Precautions</h3>
+                                    <p>Special health and safety measures apply. Learn more</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="static_info">
+                            <div class="d-flex">
+                                <div><img src="assets/images/lang.svg"></div>
+                                <div class="static_desc">
+                                    <h3>Live tour guide Language </h3>
+                                    <p>{{guidedLanguages}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="d-flex">
+                    <div class="col-md-6 col-12">
+                        <div class="static_info">
+                            <div class="d-flex">
+                                <div><img src="assets/images/mobile.svg"></div>
+                                <div class="static_desc">
+                                    <h3>Mobile Ticketing</h3>
+                                    <p>Use your phone or print your voucher</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-12">
+                        <div class="static_info">
+                            <div class="d-flex">
+                                <div><img src="assets/images/ant.svg"></div>
+                                <div class="static_desc">
+                                    <h3>Duration {{tourDetails?.duration}}</h3>
+                                    <p>Check availability to see starting times.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="d-flex">
+                    <div class="col-md-6 col-12" *ngIf="tourDetails?.is_instant_confirmable" >
+                        <div class="static_info">
+                            <div class="d-flex">
+                                <div><img src="assets/images/checkmark.svg"></div>
+                                <div class="static_desc">
+                                    <h3>Instant confirmation</h3>
+                                    <p>Don’t wait for the confirmation!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12" *ngIf="tourDetails?.max_group_size">
+                        <div class="static_info">
+                            <div class="d-flex">
+                                <div><img src="assets/images/Group-size.png"></div>
+                                <div class="static_desc">
+                                    <h3>Max Group Size is {{tourDetails?.max_group_size}} </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-12 col-lg-12 p-0" *ngIf="tourDetails?.BookingSource === 'BGTAPINO00001'">
+            <div class="mb-2 dayiternarys">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div class="static_info">
+                            <div class="d-flex">
+                                <div><img src="assets/images/cancel.svg" alt="canccel" loading="lazy" decoding="async" /></div>
+                                <div class="static_desc">
+                                    <h3>Cancellation & Refund Policies</h3>
+                                    <p *ngIf="!tourDetails?.tourPrice[0]?.canc_policy">Non Refundable</p>
+                                    
+                                    <p *ngFor="let policy of getCancPolicies(tourDetails?.tourPrice[0]?.canc_policy); let i=index">
+                                            {{i+1}}. {{i===0 ? 'Free cancellation untill' : 'Cancellation from'}} {{getCancellationDate(policy.date_from, policy.time)}} 
+                                            {{i===0 ? '': getCancellationPercent(policy?.charge) }}. <br>
+                                    </p>
+                                    <p *ngIf="tourDetails?.tourPrice[0]?.canc_policy">{{getCancPolicies(tourDetails?.tourPrice[0]?.canc_policy).length+1}}. No Show - Non Refundable</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-lg-12 p-0" *ngIf="tourDetails?.theme && tourDetails?.BookingSource === 'BGTAPINO00001'">
+            <div class="mb-2 dayiternarys">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div class="static_info">
+                            <div class="d-flex">
+                                <div class="static_desc">
+                                    <h3>Theme</h3>
+                                    <p class="theme-options mb-1" *ngFor="let policy of tourDetails?.theme; let i=index">{{i+1}}. {{policy}} <br></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-lg-12 p-0" *ngIf="tourDetails?.activity && tourDetails?.BookingSource === 'BGTAPINO00001'">
+            <div class="mb-2 dayiternarys">
+                <div class="row">
+                    <div class="col-md-12 col-12">
+                        <div class="static_info">
+                            <div class="d-flex">
+                                <div class="static_desc">
+                                    <h3>Activity</h3>
+                                    <p class="theme-options mb-1" *ngFor="let policy of getActivities(tourDetails?.activity); let i=index">{{i+1}}. {{policy}} <br></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-lg-12 nopad">
+            <div class="mb-2 dayiternary">
+                <div class="pb-0">
+                    <app-tour-itinerary></app-tour-itinerary>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-4 col-xs-12 ratng itn_rgt pr-0">
+        <div class="stickybar">
+            <h3>Booking</h3>
+            <div class="p-3">
+                <div class="tour-form-tourVisiterFrom">
+                    <form [formGroup]="tourVisiterFrom">
+                        <div class="form-group required row datepicker">
+                            <div class="col-md-12">
+                                <label for="departureDate" class="required" class="col-form-label">Date of Departure </label>
+                                <input type="text" class="form-control" id="departureDate" maxlength="50"
+                                    autocomplete="off" [minDate]="minDate" formControlName="departureDate" bsDatepicker
+                                    [bsConfig]="bsDateConf" (ngModelChange)="setBlockedTourData($event)"
+                                    placeholder="Date of Departure">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 inlineError">
+                                <small class="error text-danger" *ngIf="formInValid ">
+                                    Please enter departure date* <br>
+                                </small>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div *ngIf="showWarning" class="alert alert-warning">
+                                <strong>Warning:</strong> No tour available for the selected date.
+                            </div>
+                        </div>
+                        <div  *ngIf="tourDetails.BookingSource === 'BGTAPINO00001'" class="col-md-12 travelerscount nopad">
+                            <div class="col-md-6 pl-0">
+                            <div class="celroe  smPax">
+                                <label class="col-form-label">Adults</label>
+                                <div class="input-group countmore pax-count-wrapper adult_count_div visiterCounter">
+                                    <span class="input-group-btn">
+                                        <button (click)="onUpdateTourTraveller('adult', 'minus')" type="button"
+                                            class="btn btn-default btn-number" data-type="minus" data-field="adult">
+                                            <span class="fa fa-minus"></span>
+                                        </button>
+                                    </span>
+                                    <input formControlName="adult" type="text" id="OWT_adult" name="adult"
+                                        style="text-align: center;"
+                                        class="form-control input-number centertext valid_class pax_count_value"
+                                        value="1" min="1" max="9" readonly="">
+                                    <span class="input-group-btn">
+                                        <button (click)="onUpdateTourTraveller('adult', 'plus')" type="button"
+                                            class="btn btn-default btn-number" data-type="plus" data-field="adult">
+                                            <span class="fa fa-plus"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                            <div class=" col-md-6 pr-0">
+                                <div class="celroe smPax">
+                                    <label class="col-form-label">Children<small class="error text-danger">( {{minChilAge}} - {{maxChilAge}} Yrs) <br>
+                                </small> </label>
+                                    <div class="input-group countmore pax-count-wrapper child_count_div visiterCounter">
+                                        <span class="input-group-btn">
+                                            <button (click)="onUpdateTourTraveller('child', 'minus')" type="button"
+                                                class="btn btn-default btn-number" data-type="minus" data-field="child">
+                                                <span class="fa fa-minus"></span>
+                                            </button>
+                                        </span>
+                                        <input formControlName="child" type="text" id="OWT_child" name="child"
+                                            style="text-align: center;"
+                                            class="form-control input-number centertext pax_count_value " value="0"
+                                            min="0" max="9" readonly="">
+                                        <span class="input-group-btn">
+                                            <button (click)="onUpdateTourTraveller('child', 'plus')" type="button"
+                                                class="btn btn-default btn-number" data-type="plus" data-field="child">
+                                                <span class="fa fa-plus"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <div class="child-ages" formArrayName="travellers">
+                                        <div *ngFor="let child of childAges.controls; let i = index" [formGroupName]="i" class="mb-2">
+                                            <label style="color: #666 !important;font-size: 13px;">Child Age</label>
+                                           <!-- <input type="text"
+                                                class="form-control form-control-sm noPadding"
+                                                formControlName="childAge"
+                                                placeholder="D.O.B"
+                                                readonly
+                                                bsDatepicker
+                                                [bsConfig]="bsDateConf1"
+                                                [minDate]="minDateChild"
+                                                [maxDate]="maxDateChild"
+                                                (bsValueChange)="setSelectedDate($event,i)"> -->
+                                                <select formControlName="childAge" class="form-control pr-2"
+                                                (change)="setSelectedDate($event,i)"
+                                                    >
+                                                    <option value="" disabled selected>Select Child Age</option>
+                                                    <option *ngFor="let age of fromAgeRange" 
+                                                    [disabled]=" age > maxChilAge" [value]="age"
+                                                   >
+                                                        {{age}}
+                                                    </option>
+                                                </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="tourDetails.BookingSource === 'BGTAPINO00002'" class="col-md-12 travelerscount nopad">
+                            <div class=" pr-0">
+                                <div class="celroe smPax">
+                                    <div *ngFor="let category of tourDetails?.paxPriceDetails">
+                                        <label>{{ tourDetails?.paxPriceDetails?.length > 0 ? ((category?.title === 'Adult') ? 'Adult' : category?.title) : ((category?.title === 'Adult') ? 'Traveler' : category?.title) }} <span class="age-range-lable" *ngIf="(category.age_min || category.age_max)">( Age range should be <strong>{{category.age_min ? category.age_min : 0}}</strong> - <strong>{{category.age_max ? category.age_max : 0}} )</strong> </span>
+                                        </label>
+                                        <div class="input-group countmore pax-count-wrapper child_count_div visiterCounter">
+                                            <span class="input-group-btn">
+                                                <button (click)="onUpdateTourTraveller(category.title, 'minus')" type="button"
+                                                    class="btn btn-default btn-number" data-type="minus" data-field="child">
+                                                    <span class="fa fa-minus"></span>
+                                                </button>
+                                            </span>
+                                            <input type="text" id="OWT_adult" name="adult"
+                                            style="text-align: center;"
+                                            class="form-control input-number centertext valid_class pax_count_value"
+                                            value="1" min="1" max="9" readonly  [formControlName]="getTitle(category.title)"/>
+                                            <span class="input-group-btn">
+                                                <button (click)="onUpdateTourTraveller(category.title, 'plus')" type="button"
+                                                    class="btn btn-default btn-number" data-type="plus" data-field="child">
+                                                    <span class="fa fa-plus"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+                <div class="col-xs-12 prc_detl text-center">
+                    <h4>Price Starts From </h4>
+                    <h3
+                    *ngIf="tourDetails?.BookingSource !== 'BGTAPINO00001'"> 
+                        <strong>{{ tourDetails?.tourPrice[0].adult_airliner_price ? (this.getUserData['currency']
+                            + ' ' + (  tourDetails.tourPrice[0].adult_airliner_price | number: '1.0-2' )) : '' }} (Per Pax)</strong>
+                    </h3>
+
+                    <h3
+                    *ngIf="tourDetails?.BookingSource === 'BGTAPINO00001'"> 
+                        <strong>{{ tourDetails?.tourPrice[0].Amount ? (this.getUserData['currency']
+                            + ' ' + (  tourDetails.tourPrice[0].ex_adult_airliner_price | number: '1.0-2' )) : '' }} (Per Pax)</strong>
+                    </h3>
+
+                    <button *ngIf="tourDetails?.BookNow==1" class="tourDetailsBookNowBtn" (click)='this.tourDetails.BookingSource === "BGTAPINO00001" ? onBookNow() : checkAccommadation()'
+                        aria-controls="collapseBasic" [disabled]="showWarning">{{this.tourDetails.BookingSource === "BGTAPINO00001" ? 'Book Now' : 'Check Availability'}}</button>
+
+                    <!-- <button *ngIf="tourDetails?.EnquiryForm==1" class="tourDetailsshare" (click)="enableSendEnquiryForm()" aria-controls="collapseBasic">Send an
+                        Enquiry</button> -->
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div *ngIf="tourDetails.BookingSource === 'BGTAPINO00002' && cruisData?.ships && cruisData?.ships.length > 0" class="col-8 mb-4 row add-extra-section col-md-8 p-2">
+
+    <h3 class="add-extra-name p-2" [innerHTML]="cruisData?.description"></h3>
+
+    <div class="col-12 row" *ngFor="let data of cruisData?.ships">
+        <h3 class="add-extra-name p-2">{{data.name}}</h3>
+
+        <span class="p-2" [innerHTML]="data.description"></span>
+    </div>
+</div>
+<div class="row nopad container-fluid " *ngIf="showAccommadation" id="accommadationDetails">
+    <div class="col-8 col-md-8 stickybar my-trip-dev pl-3 pr-0 accommadation-section">
+        <div class="col-12 row">
+            <div class="col-12 d-flex justify-content-start">
+                <h3 class="accommadation-section pl-0">My Trip</h3>
+            </div>
+
+            <div class="d-flex f-18 justify-content-start pl-3 clo-12">
+                <span><strong>Last chance! Only {{accommadationDetails?.availability}} spaces left</strong> and yours is reserved for the next 10 minutes</span>
+            </div>
+
+            <div class="col-12 my-2 row">
+                <div class="col-12">
+                    <strong><strong>Package Name: </strong>{{tourDetails?.package_name}}</strong>
+                </div>
+                
+            </div>
+            <div class="col-12 my-2 row" style="line-height: 0px;">
+                <div class="col-4">
+                    <p><strong>Duration: </strong>{{tourDetails?.duration}}</p>
+                </div>
+            </div>
+            <div class="col-12 my-2 row" style="line-height: 0px;">
+                <div class="col-8">
+                    <strong>Starts in {{tourDetails?.startCity}}</strong>
+                </div>
+                <div class="col-4">
+                    <p>{{accommadationDetails?.date}}</p>
+                </div>
+            </div>
+            <div class="col-12 my-2 row" style="line-height: 0px;">
+                <div class="col-8">
+                    <strong>Ends in {{tourDetails?.endCity}}</strong>
+                </div>
+                <div class="col-4">
+                    <p>{{getTourDates()}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-4 col-xs-12 pl-4 " *ngIf="showPriceBreakDown">
+        <div class="price-breakdown">
+            <h3 class="accommadation-section">Price Breakdown</h3>
+            <div *ngIf="totalPaxCount === totlSelectedCount && showBookNow && allotedChildWithAdult && !showSelectionError">
+                <!-- <span class="col-12 row" *ngFor="let data of selectedRooms">
+                    <div class="col-6 row m-auto d-flex justify-content-start">
+                        <label class="m-0" style="font-weight: 700;">{{data?.name}} Room 
+                        </label><br>
+                        <label>({{data?.travelers}} Traveler x {{data?.value}})</label>
+                    </div>
+                    
+                    <label style="font-weight: 600;" class="col-6 d-flex justify-content-end">{{this.getUserData['currency']}} {{getPrice(data)}}</label>
+                </span> -->
+                <span class="col-12 row" *ngFor="let data of selectedRooms">
+                    <!-- <p>{{selectedRooms| json}}</p> -->
+                    <div class="col-6 row m-auto d-flex justify-content-start pl-0" >
+                      <label class="m-0" *ngIf="getAdultCount(data) > 0 || getChildPrice(data) > 0 || getInfantPrice(data) > 0 ||
+                        getStudentPrice(data) > 0 || getSeniorPrice(data) > 0" 
+                      style="font-weight: 700;">{{data?.name}}</label><br>
+                      
+                      <!-- Show Adult count & price -->
+                      <ng-container *ngIf="getAdultCount(data) > 0">
+                        <label>
+                          ({{getAdultCount(data)}} Adult x {{getUserData['currency']}} {{getAdultPrice(data) | number: '1.0-2'}})
+                        </label>
+                      </ng-container>
+                  
+                      <!-- Show Child count & price if exists -->
+                      <ng-container *ngIf="getChildPrice(data) > 0">
+                        <label class="text-muted">
+                          ({{data.childCount}} Child x {{getUserData['currency']}} {{getChildUnitPrice(data) | number: '1.0-2'}})
+                        </label>
+                      </ng-container>
+
+                      <ng-container *ngIf="getInfantPrice(data) > 0">
+                        <label class="text-muted">
+                          ({{data.infantCount}} Infant x {{getUserData['currency']}} {{getInfantUnitPrice(data) | number: '1.0-2'}})
+                        </label>
+                      </ng-container>
+
+                      <ng-container *ngIf="getStudentPrice(data) > 0">
+                        <label class="text-muted">
+                          ({{data.studentCount}} Student x {{getUserData['currency']}} {{getStudentUnitPrice(data) | number: '1.0-2'}})
+                        </label>
+                      </ng-container>
+
+                      <ng-container *ngIf="getSeniorPrice(data) > 0">
+                        <label class="text-muted">
+                          ({{data.seniorCount}} Senior x {{getUserData['currency']}} {{getSeniorUnitPrice(data) | number: '1.0-2'}})
+                        </label>
+                      </ng-container>
+
+                      <ng-container *ngIf="getMilitaryPrice(data) > 0">
+                        <label class="text-muted">
+                          ({{data.militaryCount}} Military x {{getUserData['currency']}} {{getMilitaryUnitPrice(data) | number: '1.0-2'}})
+                        </label>
+                      </ng-container>
+
+                      <ng-container *ngIf="getOtherPrice(data) > 0">
+                        <label class="text-muted">
+                          ({{data.otherCount}} Others x {{getUserData['currency']}} {{getOtherUnitPrice(data) | number: '1.0-2'}})
+                        </label>
+                      </ng-container>
+                    </div>
+                  
+                    <div class="col-6 row d-flex flex-column align-items-end pr-0" style="top: 20px;">
+                      <!-- Total Price -->
+                      <label *ngIf="getPrice(data) !== 0" style="font-weight: 600;">
+                        {{getUserData['currency']}} {{getPrice(data) | number: '1.0-2' }}
+                      </label>
+                  
+                      <!-- Child-only Price  -->
+                      <ng-container *ngIf="getChildPrice(data) > 0">
+                        <label style="font-weight: 600;">
+                          {{getUserData['currency']}} {{getChildPrice(data) | number: '1.0-2' }}
+                        </label>
+                      </ng-container>
+
+                      <ng-container *ngIf="getInfantPrice(data) > 0">
+                        <label style="font-weight: 600;">
+                          {{getUserData['currency']}} {{getInfantPrice(data) | number: '1.0-2' }}
+                        </label>
+                      </ng-container>
+
+                      <ng-container *ngIf="getStudentPrice(data) > 0">
+                        <label style="font-weight: 600;">
+                          {{getUserData['currency']}} {{getStudentPrice(data) | number: '1.0-2' }}
+                        </label>
+                      </ng-container>
+
+                      <ng-container *ngIf="getSeniorPrice(data) > 0">
+                        <label style="font-weight: 600;">
+                          {{getUserData['currency']}} {{getSeniorPrice(data) | number: '1.0-2' }}
+                        </label>
+                      </ng-container>
+
+                      <ng-container *ngIf="getMilitaryPrice(data) > 0">
+                        <label style="font-weight: 600;">
+                          {{getUserData['currency']}} {{getMilitaryPrice(data) | number: '1.0-2' }}
+                        </label>
+                      </ng-container>
+
+                      <ng-container *ngIf="getOtherPrice(data) > 0">
+                        <label style="font-weight: 600;">
+                          {{getUserData['currency']}} {{getOtherPrice(data) | number: '1.0-2'}}
+                        </label>
+                      </ng-container>
+                    </div>
+                  </span>
+
+                  
+                  <div *ngIf="optionalData.length > 0">
+                    <span class="col-12 row m-auto " *ngFor="let data of optionalData">
+                        <div class="col-6  row m-auto d-flex justify-content-start " >
+                            <label class="m-0" style="font-weight: 700;">{{data?.name}}</label><br>
+                            <ng-container >
+                                <label class="text-muted">
+                                 ({{data?.travellercount}} Traveler  optional x {{getUserData['currency']}} {{data?.price | number: '1.0-2'}})
+                                </label>
+                              </ng-container>
+                        </div>
+    
+                        <div class="col-6  row m-auto d-flex justify-content-end ">
+                            <ng-container >
+                                <strong class="">
+                                    {{getUserData['currency']}} {{data?.travellercount * data?.price}}
+                                </strong>
+                              </ng-container>
+                        </div>
+                    </span>
+                  </div>
+                  <div *ngIf="mandatoryAddon  && localPaymentType !== 'local'">
+                    <span class="col-12 row m-auto " *ngFor="let data of mandatoryAddon">
+                        <div class="col-6  row m-auto d-flex justify-content-start ">
+                            <label class="m-0" style="font-weight: 700;">{{data?.name}}</label><br>
+                            <ng-container >
+                                <label class="text-muted">
+                                 ({{mandatoryAddonPax}} Traveler local x {{data.price_tiers[0]?.price| number: '1.0-2'}})
+                                </label>
+                              </ng-container>
+                        </div>
+    
+                        <div class="col-6 d-flex pr-2 justify-content-end ">
+                            <ng-container >
+                                <p hidden>{{paymentType(data.payment_type)}}</p>
+                                <strong class="text-muted">
+                                    {{getUserData['currency']}} {{mandatoryAddonPax * data.price_tiers[0]?.price}}
+                                </strong>
+                              </ng-container>
+                        </div>
+                      </span>
+                  </div>
+              
+                <!-- <span class="col-12 row" *ngFor="let data of selectedRooms">
+                    <div class="col-6 row m-auto d-flex justify-content-start">
+                      <label class="m-0" style="font-weight: 700;">{{data?.name}} Room</label><br>
+                      <label>({{data?.travelers}} Traveler x {{data?.value}})</label>
+                      <ng-container *ngIf="getChildPrice(data) > 0">
+                        <label class="text-muted" >
+                           ({{data.childCount}} Child x {{getUserData['currency']}} {{data?.value }})
+                        </label>
+                      </ng-container>
+                    </div>
+                  
+                    <div class="col-6 d-flex flex-column align-items-end">
+                      <label style="font-weight: 600;">
+                        {{getUserData['currency']}} {{getPrice(data)}}
+                      </label>
+                      <ng-container *ngIf="getChildPrice(data) > 0">
+                        <label style="font-weight: 600;">
+                           {{getUserData['currency']}} {{getChildPrice(data) }}
+                        </label>
+                      </ng-container>
+                    </div>
+                  </span> -->
+                <div class="total-price-breakdown">
+                    <span class="col-12 row m-auto pl-0">
+                        <div class="col-6 row m-auto p-0 d-flex justify-content-start">
+                            <h3>Total Price</h3>
+                        </div>
+                        
+                        <label style="font-weight: 600;" class="col-6 d-flex justify-content-end mt-2 py-3 pr-0">{{this.getUserData['currency']}} {{ localPaymentType === 'local' ? ((totalPrice + optionalAddonPrice) | number: '1.2-2')  :((totalPrice + mandatoryAddingPrice + optionalAddonPrice) | number: '1.2-2')}}</label>
+                    </span>
+                </div>
+
+                <div *ngIf="mandatoryAddon  && localPaymentType === 'local'">
+                     <strong class="pl-2">Local Payment</strong>
+                    <span class="col-12 row m-auto " *ngFor="let data of mandatoryAddon">
+                        <div class="col-6  row m-auto d-flex justify-content-start pl-0 ">
+                            <label class="m-0" style="font-weight: 700;">{{data?.name}}</label><br>
+                            <ng-container >
+                                <label class="text-muted">
+                                 ({{mandatoryAddonPax}} Traveler x {{data.price_tiers[0]?.value}})
+                                </label>
+                              </ng-container>
+                        </div>
+    
+                        <div class="col-6 d-flex pr-2 justify-content-end ">
+                            <ng-container >
+                                <p hidden>{{paymentType(data.payment_type)}}</p>
+                                <strong class="text-muted">
+                                    {{getUserData['currency']}} {{mandatoryAddonPax * data.price_tiers[0]?.value}}
+                                </strong>
+                              </ng-container>
+                        </div>
+                      </span>
+                  </div>
+            </div>
+
+            <div class="col-12 row d-flex justify-content-between align-items-center m-auto" *ngIf="totalPaxCount !== totlSelectedCount">
+                <span style="font-size: 15px;">
+                    <img class="warning-svg-img" src="assets/images/warning-svg.svg" >
+                    Select the number of travelers and assign accommodation to display the price.
+                </span>
+                <p>
+                    
+                </p>
+            </div>
+            <!-- <div *ngIf="!showRoomSelection">
+                <span class="col-12 row">
+                    <div class="col-6 row m-auto d-flex justify-content-start">
+                        <label class="m-0" style="font-weight: 700;">{{priceBreakDown?.name}} Room 
+                        </label><br>
+                        <label>({{paxCount}} Traveler x {{priceBreakDown?.value}})</label>
+                    </div>
+                    
+                    <label style="font-weight: 600;" class="col-6 d-flex justify-content-end">{{this.getUserData['currency']}} {{getPriceBreak() }}</label>
+                </span>
+                <div class="total-price-breakdown">
+                    <span class="col-12 row m-auto pl-0">
+                        <div class="col-6 row m-auto p-0 d-flex justify-content-start">
+                            <h3>Total Price</h3>
+                        </div>
+                        
+                        <label style="font-weight: 600;" class="col-6 d-flex justify-content-end mt-2 p-3">{{this.getUserData['currency']}} {{getPriceBreak() }}</label>
+                    </span>
+                </div>
+            </div> -->
+
+            <div class="col-6 m-auto justify-content-between d-flex">
+                <button class="tourDetailsBookNowBtn" *ngIf="showBookNow && allotedChildWithAdult && !showSelectionError" (click)="onBookNow()"
+                aria-controls="collapseBasic">Book Now</button>
+            </div>
+     
+        </div>
+    </div>
+    <div class="col-8 col-md-8 stickybar pl-3 pr-0 accommadation-section">
+        <div class="col-12 row">
+            <div class="col-6 d-flex justify-content-start">
+                <h3 class="accommadation-section pl-0">Select Accommadation</h3>
+            </div>
+            <div class="col-12 row">
+                <div class="col-10 d-flex justify-content-start">
+                    <p *ngIf="tourDetails.BookingSource === 'BGTAPINO00002'"> 
+                        Please note children <span *ngIf="noOfInfant > 0"> and Infant </span> always have to be assigned with an adult in a room.</p>
+                    <p *ngIf="tourDetails.BookingSource === 'BGTAPINO00001'">Please select <strong>{{numberOfTravelers}} Traveler</strong> to a room. 
+                        </p>
+                </div>
+            
+                <div class="col-2 d-flex justify-content-end row ">
+                    <a class="clear-accmation" (click)="clearSelectedBeds()">Clear</a>
+                </div>
+            </div>
+           
+        </div>
+        
+          <div class="beds-selection m-3 d-flex justify-content-between p-4 row" *ngFor="let option of roomDetailsOptions">
+
+            <div *ngIf="accommadationDetails?.prices?.promotion !== null" class="col-12 d-flex justify-content-end discount-div">
+                <strong class="discount-section d-flex justify-content-center " *ngIf="accommadationDetails?.prices?.promotion?.value_type === 'discount' && accommadationDetails?.prices?.promotion?.percentage">
+                    {{(accommadationDetails?.prices?.promotion?.value_type === 'discount' && accommadationDetails?.prices?.promotion?.percentage ) ?  accommadationDetails?.prices?.promotion?.percentage : ''}}
+                </strong>
+            </div>
+
+            <div class="col-12 row" >
+                <div class="col-6 pl-0">
+                    <label style="font-size: 20px; font-weight: 700;">{{ option?.name }}</label> 
+                    <label class="shared-label ml-3" [ngClass]="{
+                        'private-label': option?.is_shared
+                    }">{{option?.is_shared ? 'Shared': 'Private'}}</label><br>
+                    <label [innerHtml]="option?.description">
+
+                    </label>
+
+                </div>
+                <div class="col-2">
+                    <label *ngIf="getPromotionId(option?.price_tiers, 'adult')" [ngClass]="{'show-discount-price':getValuePromotion(option?.price_tiers, 'adult')}" style="font-weight: 600;">{{this.getUserData['currency']}} {{getPriceValue(option?.price_tiers, 'adult')}} </label><br>
+                    <label *ngIf="getValuePromotion(option?.price_tiers, 'adult')" style="font-weight: 600;">{{this.getUserData['currency']}} {{getPromotionPrice(option?.price_tiers, 'adult')}}</label><br>
+                    <label>Per Adult</label>
+                </div>
+                <div class="col-4 d-flex justify-content-end">
+                    <div class="col-8">
+                        <select [ngClass]="{'disable-adult-selection':disableAdultSelectionMap[option.id]}" [disabled]="disableAdultSelectionMap[option.id]"
+                            class="accommadation-selection p-2" id="beds" (ngModel)="selectedBeds[option.id]" (change)="onBedsSelected(option.id, $event, option, 'adult', mandatoryAddon)">
+                            <!-- <option value="" selected disabled>Select </option> -->
+                            <option *ngFor="let bedNumber of generateNumberArray2(option);  let i = index" [value]="bedNumber" >{{ bedNumber }} Adult</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-12 d-flex justify-content-end" *ngIf="childCount.length > 0 && findChildPrice(option?.price_tiers)">
+                    <div class="col-2">
+                        <label *ngIf="getPromotionId(option?.price_tiers, 'child')" [ngClass]="{'show-discount-price': getValuePromotion(option?.price_tiers, 'child')}" style="font-weight: 600;">{{this.getUserData['currency']}} {{getPriceValue(option?.price_tiers, 'child')}}</label><br>
+                        <label *ngIf="getValuePromotion(option?.price_tiers, 'child')"  style="font-weight: 600;">{{this.getUserData['currency']}} {{getPromotionPrice(option?.price_tiers, 'child')}}</label><br>
+                        <label>Per Child</label>
+                    </div>
+                    <div class="col-4 d-flex justify-content-end">
+                        <div class="pr-0 pl-4 col-8">
+                            <select 
+                                class="accommadation-selection p-2" id="beds" placeholder="Select Traveler" (ngModel)="selectedBeds[option.id]" (change)="onBedsSelected(option.id, $event, option, 'child', mandatoryAddon)">
+                                <!-- <option value="" selected disabled>Select </option> -->
+                                <option *ngFor="let bedNumber of generateChildNumberArray(option);" [value]="bedNumber" >{{ bedNumber }} Child</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 d-flex justify-content-end" *ngIf="infantCount.length > 0 && findInfantPirce(option?.price_tiers)">
+                    <div class="col-2">
+                        <label *ngIf="getPromotionId(option?.price_tiers, 'infant')" [ngClass]="{'show-discount-price':getValuePromotion(option?.price_tiers, 'infant')}" style="font-weight: 600;">{{this.getUserData['currency']}} {{getPriceValue(option?.price_tiers, 'infant')}}</label><br>
+                        <label *ngIf="getValuePromotion(option?.price_tiers, 'infant')"  style="font-weight: 600;">{{this.getUserData['currency']}} {{getPromotionPrice(option?.price_tiers, 'infant')}}</label><br>
+                        <label>Per Infant</label>
+                    </div>
+                    <div class="col-4 d-flex justify-content-end">
+                        <div class="pr-0 pl-4 col-8">
+                            <select 
+                                class="accommadation-selection p-2" id="beds" placeholder="Select Traveler" (ngModel)="selectedBeds[option.id]" (change)="onBedsSelected(option.id, $event, option, 'infant', mandatoryAddon)">
+                                <!-- <option value="" selected disabled>Select </option> -->
+                                <option *ngFor="let bedNumber of generateInfantNumberArray(option);" [value]="bedNumber" >{{ bedNumber }} Infant</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-12 d-flex justify-content-end" *ngIf="studentCount.length > 0 && findStudentPirce(option?.price_tiers)">
+                    <div class="col-2">
+                        <label *ngIf="getPromotionId(option?.price_tiers, 'student')" [ngClass]="{'show-discount-price':getValuePromotion(option?.price_tiers, 'student')}" style="font-weight: 600;">{{this.getUserData['currency']}} {{getPriceValue(option?.price_tiers, 'student')}}</label><br>
+                        <label *ngIf="getValuePromotion(option?.price_tiers, 'student')"  style="font-weight: 600;">{{this.getUserData['currency']}} {{getPromotionPrice(option?.price_tiers, 'student')}}</label><br>
+                        <label>Per Student</label>
+                    </div>
+                    <div class="col-4 d-flex justify-content-end">
+                        <div class="pr-0 pl-4 col-8">
+                            <select 
+                                class="accommadation-selection p-2" id="beds" placeholder="Select Traveler" (ngModel)="selectedBeds[option.id]" (change)="onBedsSelected(option.id, $event, option, 'student', mandatoryAddon)">
+                                <!-- <option value="" selected disabled>Select </option> -->
+                                <option *ngFor="let bedNumber of generateStudentNumberArray(option);" [value]="bedNumber" >{{ bedNumber }} Student</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-12 d-flex justify-content-end" *ngIf="seniorCount.length > 0 && findSeniorPirce(option?.price_tiers)">
+                    <div class="col-2">
+                        <label *ngIf="getPromotionId(option?.price_tiers, 'senior')" [ngClass]="{'show-discount-price': getValuePromotion(option?.price_tiers, 'senior')}" style="font-weight: 600;">{{this.getUserData['currency']}} {{getPriceValue(option?.price_tiers, 'senior')}}</label><br>
+                        <label *ngIf="getValuePromotion(option?.price_tiers, 'senior')"  style="font-weight: 600;">{{this.getUserData['currency']}} {{getPromotionPrice(option?.price_tiers, 'senior')}}</label><br>
+                        <label>Per Senior</label>
+                    </div>
+                    <div class="col-4 d-flex justify-content-end">
+                        <div class="pr-0 pl-4 col-8">
+                            <select 
+                                class="accommadation-selection p-2" id="beds" placeholder="Select Traveler" (ngModel)="selectedBeds[option.id]" (change)="onBedsSelected(option.id, $event, option, 'senior', mandatoryAddon)">
+                                <!-- <option value="" selected disabled>Select </option> -->
+                                <option *ngFor="let bedNumber of generateSeniorNumberArray(option);" [value]="bedNumber" >{{ bedNumber }} Senior</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-12 d-flex justify-content-end" *ngIf="militaryCount.length > 0 && findMilitaryPirce(option?.price_tiers)">
+                    <div class="col-2">
+                        <label *ngIf="getPromotionId(option?.price_tiers, 'military')" [ngClass]="{'show-discount-price':getValuePromotion(option?.price_tiers, 'military')}" style="font-weight: 600;">{{this.getUserData['currency']}} {{getPriceValue(option?.price_tiers, 'military')}}</label><br>
+                        <label *ngIf="getValuePromotion(option?.price_tiers, 'military')"  style="font-weight: 600;">{{this.getUserData['currency']}} {{getPromotionPrice(option?.price_tiers, 'military')}}</label><br>
+                        <label>Per Military Person</label>
+                    </div>
+                    <div class="col-4 d-flex justify-content-end">
+                        <div class="pr-0 pl-4 col-8">
+                            <select 
+                                class="accommadation-selection p-2" id="beds" placeholder="Select Traveler" (ngModel)="selectedBeds[option.id]" (change)="onBedsSelected(option.id, $event, option, 'military', mandatoryAddon)">
+                                <!-- <option value="" selected disabled>Select </option> -->
+                                <option *ngFor="let bedNumber of generateMilitaryNumberArray(option);" [value]="bedNumber" >{{ bedNumber }} Person</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 d-flex justify-content-end" *ngIf="otherCount.length > 0 && findOthersPrice(option?.price_tiers)">
+                    <div class="col-2">
+                        <label *ngIf="getPromotionId(option?.price_tiers, 'other')" [ngClass]="{'show-discount-price': getValuePromotion(option?.price_tiers, 'other')}" style="font-weight: 600;">{{this.getUserData['currency']}} {{getPriceValue(option?.price_tiers, 'other')}}</label><br>
+                        <label *ngIf="getValuePromotion(option?.price_tiers, 'other')"  style="font-weight: 600;">{{this.getUserData['currency']}} {{getPromotionPrice(option?.price_tiers, 'other')}}</label><br>
+                        <label>Per Other Person</label>
+                    </div>
+                    <div class="col-4 d-flex justify-content-end">
+                        <div class="pr-0 pl-4 col-8">
+                            <select 
+                                class="accommadation-selection p-2" id="beds" placeholder="Select Traveler" (ngModel)="selectedBeds[option.id]" (change)="onBedsSelected(option.id, $event, option, 'other', mandatoryAddon)">
+                                <!-- <option value="" selected disabled>Select </option> -->
+                                <option *ngFor="let bedNumber of generateOtherNumberArray(option);" [value]="bedNumber" >{{ bedNumber }} Others</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row col-12 error-message-room"  *ngIf="roomValidationErrors[option.id]">
+                    <p class="text-danger">
+                        <span class="error-meesage-span">
+                            <img class="warining-img" src="assets/images/warning-svg.svg" >
+                            {{ roomValidationErrors[option.id] }}
+                        </span>
+                        
+                      </p>
+                </div>
+                
+                <!-- <p *ngIf="selectedId === option?.id && showSelectionError" class="text-danger">{{displayValidationMessage}}</p> -->
+                <!-- <p *ngIf="roomValidationErrors[selectedId]" class="text-danger">
+                    {{ roomValidationErrors[selectedId] }}
+                  </p> -->
+            </div>
+            </div>
+    </div>
+
+
+ 
+</div>
+<div *ngIf="optionalExtras && optionalExtras.length > 0" class="col-8 mb-4 add-extra-section col-md-8 p-2">
+    <div class="col-12 row">
+        <div class="d-flex justify-content-start">
+            <h3 class="add-extra-name">Add Extras</h3>
+        </div>
+    </div>
+    <div class="col-12">
+        <div *ngFor="let optional of optionalExtras">
+            <div class="row col-12">
+                <div class="col-7">
+                    <strong>
+                        {{optional?.name}}
+                    </strong>
+                    <p>
+                        {{optional?.description}}
+                    </p>
+                </div>
+                <div class="col-2">
+                    <strong>
+                        {{this.getUserData['currency']}} {{optional?.price_tiers[0].value}}
+                    </strong><br>
+                    <strong>
+                        Per Traveler
+                    </strong>
+                </div>
+                <div class="col-3">
+                    <select
+                        class="accommadation-selection p-2" id="beds" placeholder="Select Traveler"
+                        (ngModel)="selectedOptions[optional?.id]" (change)="onOptionalExtraSelection(optional.id, $event.target.value, optional)">
+                        <option value="" selected disabled>Select </option>
+                        <option *ngFor="let bedNumber of generateNumberArray(optionalExtraPaxCount);" [value]="bedNumber" >{{ bedNumber }} Traveler</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="relatedTours pt-3 pb-3 mt-1" *ngIf="tourSearchData?.length > 0">
+    <div class="container-fluid p-0">
+        <div class="col-12 p-0">
+            <h3>Related Tours in {{CityName}}</h3>
+            <div class="clear-fix"></div>
+            <div class="col-12 p-0">
+                <owl-carousel-o [options]="relatedToursOption">
+                    <ng-container *ngFor="let tour of tourSearchData">
+                        <ng-template carouselSlide>
+                            <div class="tours_list" (click)="onRedirect(tour)">
+                                <div class="tours_img">
+                                    <img [src]="tour?.BookingSource === 'BGTAPINO00002' ? tour?.banner_image : getTourImage(tour.banner_image)"
+                                        alt="" />
+                                </div>
+                                <div class="tour_desc">
+                                    <h5>{{ tour.package_name }}</h5>
+                                    <div class="tour_offers">
+                                        <h5><img src="assets/images/clock.svg"> Duration: {{ tour.duration }}</h5>
+                                    </div>
+                                    <div class="tour_offers">
+                                        <h5><img src="assets/images/transport.svg"> Transport Facility</h5>
+                                    </div>
+                                    <div class="tour_offers">
+                                        <h5><img src="assets/images/family.svg"> Family Friendly</h5>
+                                    </div>
+                                </div>
+                                <div class="tour_price">
+                                    {{ tour.tourPrice[0]?.ex_adult_airliner_price | currency: tour.tourPrice[0]?.Currency }} <span>Per
+                                        Person</span>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                </owl-carousel-o>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="isEnquiry">
+    <div class="modal">
+        <div class="modal-content">
+            <div class="custom-inline-form">
+                <form class="" [formGroup]="enquiryForm" autocomplete="off">
+                    <div class="enqryhead">
+                        <h5>Want to Go For A Memorable Holiday?</h5>
+                        <span>Provide Your Details to Know Best Holiday Deals</span>
+                        <h6 class="enquiryHeader"> Send Enquiry For <p> {{tourDetails?.package_name}}</p>
+                        </h6>
+                    </div>
+
+
+                    <div class="enqrybody">
+                        <div class="clear-fix"></div>
+                        <h5 class="cntactdtls">Contact Details</h5>
+                        <div class="cntctfields">
+                            <div class="col-md-6 col-12 p-0">
+                                <div class="form-group required pd-rt">
+                                    <div class="col-md-12 nopad">
+                                        <input type="text" class="form-control" id="name" maxlength="50"
+                                            formControlName="name" placeholder="Your Name">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <small class="error text-danger" *ngIf="hasErrorEnquiry('name', 'required');">
+                                                Please enter your name* <br>
+                                            </small>
+                                            <small class="error text-danger" *ngIf="hasErrorEnquiry('name', 'maxlength');">
+                                                Maximum Characters Exceeded* <br>
+                                            </small>
+                                            <small class="error text-danger" *ngIf="hasErrorEnquiry('name', 'minlength');">
+                                                At Least 1 Character Required* <br>
+                                            </small>
+                                            <small class="error text-danger" *ngIf="hasErrorEnquiry('name', 'pattern');">
+                                                Enter a valid name* <br>
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-12 p-0">
+                                <div class="form-group required pd-lft">
+                                    <div class="col-md-12 nopad">
+                                        <input type="email" class="form-control" id="email" maxlength="50"
+                                            formControlName="email" placeholder="Your E-mail Address">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <small class="error text-danger" *ngIf="hasErrorEnquiry('email','required');">
+                                                Please enter your email*
+                                            </small>
+                                            <small class="error text-danger" *ngIf="hasErrorEnquiry('email','pattern');">
+                                                *Please enter a valid email*
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group required row">
+                            <div class="col-md-12">
+                                <input type="text" class="form-control" id="contactNumber" maxlength="50"
+                                    formControlName="contactNumber" placeholder="Mobile Number">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 inlineError">
+                                <small class="error text-danger" *ngIf="hasErrorEnquiry('contactNumber','required');">
+                                    Please enter your contact number*
+                                </small>
+                                <small class="error text-danger" *ngIf="hasErrorEnquiry('contactNumber','pattern');">
+                                    Please enter valid number*
+                                </small>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group required row datepicker">
+                            <div class="col-md-12">
+                                <input type="text" class="form-control" id="departureDate" maxlength="50" [minDate]="minDate"
+                                    formControlName="departureDate" bsDatepicker [bsConfig]="bsDateConf" placeholder="Date of Departure"> 
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 inlineError">
+                                <small class="error text-danger" *ngIf="hasErrorEnquiry('departureDate','required');">
+                                    Please enter your departure date*
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-center">
+                            <div class="smButton">
+                                <button type="submit" class="btn btn-sm btn-primary saveButton"
+                                    (click)="onSubmitEnquiryForm()">Submit</button>
+                                <button type="submit" class="btn btn-sm btn-primary mr-1 cancelButton"
+                                    (click)="cancelEnquiry()">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-loading [show]="loading"
+[config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+[template]="loadingTemplate"></ngx-loading>

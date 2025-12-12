@@ -1,0 +1,22 @@
+<div class="">
+    <div class="">
+        <ngb-tabset class="tabs-animated tabs-animated-shadow" (tabChange)="beforeChange($event)" #tabs [activeId]="activeIdString">
+            <ngb-tab id="add_update_bankaccount">
+                <ng-template ngbTabTitle>
+                    <span><i class="fa fa-edit"></i> &nbsp; Add/Update Bank Account Details </span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <app-add-update-bankaccount (activateTab)="activateTab($event)"></app-add-update-bankaccount>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab id="bankaccount_list">
+                <ng-template ngbTabTitle>
+                    <span><i class="fa fa-bank"></i> &nbsp; Bank Account Details</span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <app-account-details (toUpdate)="triggerTab($event)"></app-account-details>
+                </ng-template>
+            </ngb-tab>
+        </ngb-tabset>
+    </div>
+</div>

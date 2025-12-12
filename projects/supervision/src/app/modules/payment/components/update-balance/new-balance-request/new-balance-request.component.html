@@ -1,0 +1,31 @@
+<form [formGroup]="regConfig" (ngSubmit)="onSubmit()" class="my-3">
+    <div class="card-header-tab card-header">
+        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+            <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+            <span> {{'Deposite Request Details'}} </span>
+        </div>
+    </div>
+    <div class="form-group row offset-md-2 col-md-8 offset-lg-2 col-lg-8 border border-bottom-0 rounded-top mt-4 p-3">
+        <label for="requestTypes" class="f-16 col-sm-3 col-form-label">Request Type <sup
+                class="f-16 text-danger"> * </sup> </label>
+        <div class="col-sm-9">
+            <select class="custom-select form-control" id="requestTypes"
+                formControlName="requestType">
+                <option selected> Choose... </option>
+                <option *ngFor="let type of requestTypes; let i = index;"> {{type}} </option>
+            </select>
+        </div>
+    </div>
+
+    <div class="" [ngSwitch]="regConfig.value.requestType">
+        <div class="" *ngSwitchCase="'CHECK___DD'">
+            <app-cheque-dd [requestType] = "'CHECK___DD'"></app-cheque-dd>
+        </div>
+        <div class="" *ngSwitchCase="'ETRANSFER'">
+            <app-e-transfer [requestType] = "'ETRANSFER'"></app-e-transfer>
+        </div>
+        <div class="" *ngSwitchCase="'CASH'">
+            <app-cash [requestType] = "'CASH'"></app-cash>
+        </div>
+    </div>
+</form>

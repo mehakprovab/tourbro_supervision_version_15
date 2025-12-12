@@ -1,0 +1,11 @@
+<div class="rangebox">
+    <button data-target="#collapse522" data-toggle="collapse" class="collapsebtn" type="button">Search Tour</button>
+    <div class="vsm-item">
+        <div class="search-container" id="collapse522">
+            <!-- <a style="cursor: pointer;font-size: 12px;" class="float-right" (click)="clearTourName()">Clear</a> -->
+            <input type="text" #searchInputRef class="search-input text-capitalize"
+            placeholder="Search by Tour Name" (input)="searchTour($event.target.value)"
+            [ngStyle]="{'background-image': 'url(' + searchIcon + ')'}">
+        </div>
+    </div>
+</div>

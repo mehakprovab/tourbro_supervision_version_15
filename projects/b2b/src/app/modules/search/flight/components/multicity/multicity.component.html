@@ -1,0 +1,100 @@
+<form [formGroup]="multiCityForm" class="needs-validation" novalidate (validSubmit)="onSubmit()">
+    <ng-container formArrayName="cities">
+        <div class="form-row">
+            <div class="col col-md-8">
+                <div class="form-row">
+                    <div class="col col-md-8">
+                        <div class="form-row">
+                            <div class="col col-md-6 pr-0">
+                                <label for="departureCity">From</label>
+                                <!-- <input type="text" formControlName="departureCity" class="form-control" placeholder="Departure City">
+                            <span>
+                                <div class="flight_chnge" style="top: 35px;" (click)="exchangeCity = !exchangeCity">
+                                    <i class="fa fa-exchange {{ exchangeCity ? 'rotate-360' : 'rotate-0' }}"></i>
+                                </div>
+                            </span> -->
+                            </div>
+                            <div class="col col-md-6 pr-0">
+                                <label for="destinationCity">To</label>
+                                <!-- <input type="text" formControlName="destinationCity" class="form-control" placeholder="Destination City"> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-md-4">
+                        <div class="form-row">
+                            <div class="col col-md-12 pr-0">
+                                <label for="departureDate">Departure</label>
+                                <!-- <input type="text" formControlName="destinationCity" class="form-control cursorPointer" bsDatepicker [bsConfig]="bsDateConf" placeholder="Select a date" readonly> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="offset-md-1 col-md-3">
+                <!-- <label for="departureDate">Travellers</label> -->
+            </div>
+        </div>
+        <div class="form-row" *ngFor="let city of multiCityForm.get('cities')['controls']; let i = index">
+            <div class="col col-md-8" [formGroupName]="i">
+                <div class="form-row">
+                    <div class="col col-md-8">
+                        <div class="form-row">
+                            <div class="col col-md-6 pr-0">
+                                <label class="sr-only" for="departureCity{{i}}">From</label>
+                                <input type="text" formControlName="departureCity" id="departureCity{{i}}" class="form-control form-control-sm nrm_input" placeholder="Departure City ?" (keyup)="getSearchedList($event)" (focus)="setCurrentInput('departureCity'+i)" autocomplete="off">
+                                <div *ngIf="city.controls.departureCity.valid && isCurrentInput('departureCity'+i)">
+                                    <app-flight-city-list (whichCity)="getCity($event)" [getAirports]="searchedList" [inputFor]="'departureCity_'+i">
+                                    </app-flight-city-list>
+                                </div>
+
+                            </div>
+                            <div class="col col-md-6 pr-0">
+                                <label class="sr-only" for="destinationCity{{i}}">To</label>
+                                <input type="text" formControlName="destinationCity" id="destinationCity{{i}}" class="form-control form-control-sm nrm_input" placeholder="Destination City ?" (keyup)="getSearchedList($event)" (focus)="setCurrentInput('destinationCity'+i)" autocomplete="off">
+                                <div *ngIf="city.controls.destinationCity.valid && isCurrentInput('destinationCity'+i)">
+                                    <app-flight-city-list (whichCity)="getCity($event)" [getAirports]="searchedList" [inputFor]="'destinationCity_'+i">
+                                    </app-flight-city-list>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-md-4">
+                        <div class="form-row">
+                            <div class="col col-md-12 pr-0">
+                                <label class="sr-only" for="departureDate">Departure</label>
+                                <input type="text" formControlName="departureDate" class="form-control cursorPointer" bsDatepicker [bsConfig]="bsDateConf" placeholder="Select a date" readonly>
+                                <div *ngIf="city.controls.departureCity.valid && isCurrentInput(city.controls.departureCity)">
+                                    <app-flight-city-list (whichCity)="getCity($event)" [getAirports]="searchedList" [inputFor]="'depart'">
+                                    </app-flight-city-list>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-row">
+                    <!-- add button -->
+                    <div class="col" *ngIf="!shouldiHide(i)">
+                        <div class="customCircle cursorPointer" (click)="addCity()">
+                            <i class="fa fa-plus text-info"></i>
+                        </div>
+                    </div>
+                    <div class="col" *ngIf="shouldiHide(i)">
+                        <div class="customCircle cursorPointer" (click)="removeCity(i)">
+                            <i class="fa fa-close text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+
+            </div>
+        </div>
+    </ng-container>
+
+    <div class="col col-md-8 p-0">
+        <app-form-extension [regConfig]="multiCityForm" [travellerForm]="travellerForm" [travellersFadeinn]="travellersFadeinn" [fadeinn]="fadeinn"></app-form-extension>
+    </div>
+</form>

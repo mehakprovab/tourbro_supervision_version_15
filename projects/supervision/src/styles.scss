@@ -1,0 +1,209 @@
+@import "assets/base";
+@import '~@fullcalendar/core/main.css';
+@import '~@fullcalendar/daygrid/main.css';
+@import '~font-awesome/css/font-awesome.min.css';
+
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    #print_voucher,
+    #print_voucher * {
+        visibility: visible;
+    }
+
+    #print_voucher {
+        //   position: absolute;
+        left  : 0;
+        top   : 0;
+        margin: 0 auto;
+    }
+
+    // #print_voucher tr {
+    //     td.blackbg {
+    //         background-color          : #000000 !important;
+    //         -webkit-print-color-adjust: exact;
+    //     }
+    // }
+}
+
+
+.bbottom {
+    border-bottom: 1px solid rgba(26, 54, 126, 0.125);
+}
+.btop {
+    border-top: 1px solid rgba(26, 54, 126, 0.125);
+}
+.f-12 {
+    font-size: 12px;
+}
+.f-14 {
+    font-size: 14px;
+}
+.f-16 {
+    font-size: 16px;
+}
+.f-18 {
+    font-size: 18px;
+}
+.f-20 {
+    font-size: 20px;
+}
+a {
+    text-decoration: none !important;
+}
+.c-pointer{
+    cursor: pointer;
+}
+.customCenter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.date.btn-success {    bottom: 2px;
+    right: 17px;}
+
+.btnStyle {
+    padding: 6px 12px;
+    background: #000000;
+    border-radius: 5px;
+    color: #ffffff;
+    border: none;
+}
+.was-validated .form-control:valid, .form-control.is-valid {
+    border-color: #3ac47d;
+    padding-right: 2.25rem;
+    background-repeat: no-repeat;
+    background-position: center right calc(2.25rem / 4);
+    background-size: calc(2.25rem / 2) calc(2.25rem / 2);
+    background-image: unset;
+}
+.form-control.is-valid, .was-validated .form-control:valid {
+    border-color: #28a745;
+    padding-right: calc(1.5em + .75rem);
+    background-image: unset;
+    background-repeat: no-repeat;
+    background-position: right calc(.375em + .1875rem) center;
+    background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+}
+
+perfect-scrollbar { max-height: 650px !important;}
+.bs-datepicker-container {
+    padding: 0px !important;
+}
+.card { padding: 15px;}
+.card-header h5 { padding-bottom: 0px !important; margin-bottom: 0px !important;}
+.bg-dark {
+    background-color: #012756 !important;
+}
+
+.btnStyle, .btn-primary {
+    background: #022756 !important;     padding: 6px 12px !important; border:1px solid #022756!important;
+}
+.btncontainer .btnStyle:first-child{ background: #FBC108 !important;
+    padding: 6px 12px !important;
+    border: 1px solid #FBC108 !important; }
+.customCenter .p-1:first-child .btn-primary{ background: #FBC108 !important;
+    padding: 6px 12px !important;
+    border: 1px solid #FBC108 !important; }   
+
+.customCenter .p-1:nth-child(2) .btn-primary{ background: #022756 !important;
+        padding: 6px 12px !important;
+        border: 1px solid #022756 !important; }   
+        .form-control {
+            transition: all 0.2s;
+            height: 45px;
+            margin-top: 0px;
+        }
+.btn-primary:first-child{ background: #FBC108 !important;
+        padding: 6px 12px !important;
+        border: 1px solid #FBC108 !important; }
+
+.btn-primary:nth-child(2){ background: #022756 !important;
+            padding: 6px 12px !important;
+            border: 1px solid #022756 !important; }       
+
+.bg-primary, .badge-primary{ background: #012756 !important; }
+.fc-button-primary { background: #012756 !important;   border:1px solid #012756 !important; }
+.btn-primary:hover {background: #012756;   border:1px solid #012756 !important;}
+.tabs-animated > .nav-tabs .nav-link::before { background: #012756; }
+.form-group .nrm_input {
+    line-height: normal !important;
+    height: 45px !important;
+    margin: 0px;
+}
+.v-sidebar-menu .vsm-dropdown::before { left:10px !important;}
+.nrm_input { padding: 0.5rem 0.75rem 0.5rem 0.5rem !important;}
+.table-striped tbody tr { white-space: nowrap;}
+.capitalize{
+    text-transform: uppercase;
+}
+
+::ng-deep .page-item.active .page-link, ::ng-deep .pagination .active.page-number .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #012756 !important;
+    border-color: #012756 !important;
+}
+
+.app-login-box .btn {background-color: #FBC108 !important; color: #fff !important; margin-left: 15px; }
+
+.wrapper1 { position: sticky !important; top:56px !important; z-index: 999 !important;}
+
+::-webkit-scrollbar{position:fixed;width:5px}::-webkit-scrollbar-track{background:rgba(222,222,222,.75);width:5px}::-webkit-scrollbar-thumb{width:5px;background:rgba(0,0,0,.5);}
+.myclass1
+{
+    margin-top: 18px;
+    margin-left: 10px;
+    background-color: #b94a48;
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    color: white;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    border-radius: 10px;
+}
+.fc-header-toolbar{
+    display:none;
+}
+.fc-toolbar {
+    margin-bottom: 1.5em;
+}
+
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+.dropdown-menu-header .btn-focus{
+    background: #FBC108 linear-gradient(180deg, #FBC108, #FBC108) repeat-x!important;
+    border-color: #FBC108!important;}
+.dropdown-menu-header .bg-info{background-color: #012756!important;}
+.btn-outline-warning:hover{color: #ffffff;
+    background-color: #012756;}
+.btn-outline-danger:hover{color: #ffffff;
+    background-color: #FBC108;}
+.swal2-popup .swal2-styled.swal2-confirm{background-color: #012756!important;}
+.multiselect-dropdown .dropdown-btn .dropdown-multiselect__caret{height: 45px;}
+span.dropdown-multiselect__caret {height: 45px !important;}
+.cke_notification_warning {
+    display: none;
+}

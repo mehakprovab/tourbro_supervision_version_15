@@ -1,0 +1,102 @@
+<div class="">
+    <div class="">
+        <ngb-tabset class="tabs-animated tabs-animated-shadow">
+            <ngb-tab *ngFor="let tab of tabLinks; let i=index;">
+                <ng-template ngbTabTitle>
+                    <span (click)="onSelect()"> <i class="{{tab.icon}}"></i> &nbsp; {{tab.label}} </span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <hr>
+                    <div class="card mb-3">
+                        <div class="p-2">
+                            <div class="form-group form-inline mb-0 font-weight-bold">
+                                N.B: Commission amount is calculated from the commission which you get from API
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <form [formGroup]="regConfig">
+                                <table class="table">
+                                    <tr>
+                                        <td class="text-left">
+                                            <div class="card-header-tab card-header">
+                                                <div
+                                                    class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                                                    <i class="header-icon fa fa-plane mr-3 opacity-6"> </i>
+                                                    {{'Flight Commission'}}
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-row pt-3 ml-5 form-group row">
+                                                <div>
+                                                    <label for="inputStatus4" class="lh-30">Agents Get &nbsp;</label>
+                                                    <div>
+                                                        <input type="text" (keypress)="numberOnly($event)"  maxlength="3" id="flightCom" class="form-control" 
+                                                        formControlName="flightCom">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div id="allbtn" class="customCenter">
+                                                <span class="p-1">
+                                                    <button class="btn btn-primary p-1"
+                                                        (click)="onSubmit()">Update</button>
+                                                </span>
+                                                <span class="p-1">
+                                                    <button type="reset" class="btn btn-primary p-1"
+                                                        (click)="onReset()">Reset</button>
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </form>
+                            <!-- Hotel commission commented as requested by Badrinath -->
+                            <!-- <form [formGroup]="regConfigCom">
+                                <table class="table">
+                                    <tr>
+                                        <td class="text-left">
+                                            <div class="card-header-tab card-header">
+                                                <div
+                                                    class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                                                    <i class="header-icon fa fa-bed mr-3 opacity-6"> </i>
+                                                    {{'Hotel Commission'}}
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-row pt-3 ml-5 form-group row">
+                                                <div>
+                                                    <label for="inputStatus4" class="lh-30">Agents Get &nbsp;</label>
+                                                </div>
+                                                <select id="inputStatus4" formControlName="activityCom"
+                                                    class="form-control col-2">
+                                                    <option selected>Choose...</option>
+                                                    <option *ngFor="let val of commissions" [value]="val"> {{val}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div id="allbtn" class="customCenter">
+                                                <span class="p-1">
+                                                    <button class="btn btn-primary p-1"
+                                                        (click)="onSubmitCom()">Update</button>
+                                                </span>
+                                                <span class="p-1">
+                                                    <button type="reset" class="btn btn-primary p-1"
+                                                        (click)="onResetCom()">Reset</button>
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </form> -->
+                        </div>
+                    </div>
+                </ng-template>
+            </ngb-tab>
+        </ngb-tabset>
+    </div>
+</div>

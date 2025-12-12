@@ -1,0 +1,10 @@
+<div class="modal-header row col-12 m-auto">
+    <h2>{{ title }}</h2>
+    <button class="mr-2" mat-icon-button (click)="onClose()">
+      <mat-icon>X</mat-icon>
+    </button>
+  </div>
+  <div class="modal-content">
+    <ng-container *ngComponentOutlet="component"></ng-container>
+  </div>
+  

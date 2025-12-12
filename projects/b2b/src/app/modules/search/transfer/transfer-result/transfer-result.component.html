@@ -1,0 +1,247 @@
+<section class="theme_bg modify-search mx-0 pr-0 pl-0" for="ModifySearch">
+
+  <div class="bbottom">
+      <div class="col-md-12 col-lg-12 p-0">
+          <div id="collapseBasic" style="z-index: 9999; margin-top: 0px;">
+              <div class="">
+                  <div class="col-md-12">
+                      <app-transfer-search (callResult)="searchResult($event)"></app-transfer-search>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+<section for="FlightFoundAndListSearchedResult" class="loading-container theme_bg">
+  <div class="d-flex mobile_row">
+      <div class="col-md-3 col-lg-3 nopad mobile_nopad">
+          <div class="flteboxwrp">
+              <div class="fltrboxin rounded-bottom">
+                  <div class="celsrch">
+                      <div style="padding: 10px 3px 10px 0px;">
+                        <!-- <span class="filterSpan"><b>{{transferList.length}}</b> Transfers Found</span> -->
+                          <a class="pull-left" style="cursor: pointer;" id="reset_filters" (click)="resetAll()">Reset
+                              All</a>
+                      </div>
+                      <app-transfer-filters></app-transfer-filters>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-md-9 col-lg-9 pl60">
+        <app-transfer-sorting></app-transfer-sorting>
+        <div *ngIf="transferList.length > 0" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollUpDistance]="2"
+          [infiniteScrollThrottle]="throttle" (scrolled)="onScrollDown()" (scrolledUp)="onScrollUp()" class="row">
+          <div class="col-md-12 mt-2 col-lg-12 pr-0"
+            *ngFor="let transfer of transferList| slice: 0: endSlice; index as i">
+            <div class="card mb-2 rounded result_hotel nopad">
+              <div class="card-body nopad">
+                <div class="row text-center">
+                  <div class="col-md-3">
+                    <img *ngIf="transfer?.BookingSource !== 'ZBAPINO00022'" class="rounded imgStyle" src="{{transfer.ImageUrl}}" alt="">
+                    <img *ngIf="transfer?.BookingSource === 'ZBAPINO00022'" class="rounded imgStyle" [src]="getImage(transfer.ImageUrl)" alt="">
+
+                  
+                    <div class="transport-provider">Transfer provided by:<br>
+                      <div class="transport-provider-company">
+                        <img class="transport-provider-company-logo" src="{{transfer.ImageHisUrl}}" alt="">{{transfer.SupplierName}}</div>
+                      </div>
+                  </div>
+                  <div class="col-md-9 mb-2 pb-0 row mobile_row" style="padding: 0px;">
+                    <div class="col-md-9" style="text-align: left;">
+                      <h5 class="cusromGrey">
+                        {{transfer.NumUnits}} X {{transfer.ProductName}}
+                      </h5>
+                      <ng-template *ngIf="transfer.StarRating === '' then noStar; else stars">
+                      </ng-template>
+                      <ng-template #noStar>
+                        <span class="star_rtng">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                        </span>
+                      </ng-template>
+                      <ng-template #stars>
+                        <span class="star_rtng">
+                          <i class="fas fa-star star_rtng_clr"
+                            *ngFor="let s of transfer.StarRating | map: getStarArray"></i>
+                          <i class="fas fa-star" *ngFor="let s of transfer.StarRating | map: getStarArrayRemaining"></i>
+                        </span>
+                      </ng-template>
+                      <p class="f12b" *ngIf="transfer.ReviewCount>0 && transfer.StarRating>0 ">Based on {{transfer.ReviewCount}} review<span *ngIf="transfer.ReviewCount>1">s</span></p>
+                      <div class="clearfix"></div>
+                      <div class="amenties">
+                       <i class="fal fa-clock"></i> 
+                        <p class="f12b">Estimated journey time</p>
+                        <ul>
+                          <li >
+                            <span class="am_ttl2"> {{transfer.Duration}}</span>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <div class="clearfix"></div>
+                      <div class="amenties">
+                        <i class="fal fa-user"></i> 
+                        <p class="f12b">Number of passengers</p>
+                        <ul>
+                          <li >
+                            <span class="am_ttl2">{{transfer?.OccupancyFrom}}-{{transfer?.OccupancyTo}}</span>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <div class="clearfix"></div>
+                      <div class="amenties" style="border: none;">
+                        <i class="fal fa-suitcase"></i> 
+                        <p class="f12b">Luggage allowance</p>
+                        <ul>
+                          <li >
+                            <span class="am_ttl2" *ngIf="transfer.Suitcase">{{transfer.Suitcase}} suitcases </span> &
+                            <span class="am_ttl2" *ngIf="transfer.SmallBaggage">{{transfer.SmallBaggage}} Small bag per vehicle </span>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <div class="nwbtmsec">
+                        <div class="mfbtn" (click)="showViewMore(i)">{{isCollapsedArr[i]=== true ? 'View More' : 'View Less'}}
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="col-md-3 col-12 border_left_price" style="text-align: center;">
+                      <h6 class="mob_hide"><strong>Starting at</strong>
+                      </h6>
+                      <h4 cusromGrey style="font-weight:700;">{{transfer.Price.Currency}}
+                        {{transfer.Price.TotalDisplayFare | number:'1.1-2' }}</h4>
+                      <!-- <p class="cusromGrey">Per Person
+                      </p> -->
+                      <div class="clearfix"></div>
+                      <a class="hotelDetailsBtn" (click)="onBookNow(transfer)" aria-controls="collapseBasic"
+                        style="color: #ffffff;cursor: pointer;">
+                        Book Now
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+             
+              <div id="view_more" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsedArr[i]" style="clear: both;">
+                <div class="higt_sec">
+                  <div class="car-item">
+                    <div class="clr"></div>
+                    <div class="cancl-sec">
+                      <p class="higt-sc3">Highlights</p>
+                      <div class="basic_info">
+                        <div class="row col-12">
+                          <div class="column">
+                            <div class="feature">
+                              <i class="icons">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 32 32">
+                                  <g fill="none" fill-rule="evenodd">
+                                    <path d="M0 0H32V32H0z"></path>
+                                    <path fill="#539a5b" d="M15.999 22c-.625 0-1.265-.042-1.959-.127a.48.48 0 00-.483.26c-2.278 2.279-6.609 3.582-7.464 3.823-.033.009-.059.028-.09.045a.527.527 0 00.058-.076c.4-.531 2.865-3.864 2.931-5.349a.5.5 0 00-.242-.452c-2.384-1.432-3.751-3.482-3.751-5.624 0-4.136 4.935-7.5 11-7.5s11 3.364 11 7.5-4.935 7.5-11 7.5M16 6C9.383 6 4 9.813 4 14.5c0 2.411 1.435 4.693 3.949 6.303-.281 1.073-1.759 3.294-2.713 4.555l-.01.014A.993.993 0 005 26c0 .551.449 1 1 1a.975.975 0 00.409-.094c1.302-.37 5.422-1.679 7.797-4.007.626.068 1.215.101 1.794.101 6.617 0 12-3.813 12-8.5C28 9.813 22.617 6 16 6"></path>
+                                  </g>
+                                </svg>
+                              </i>
+
+                              <div class="description">
+                                  <div class="description-title">Booking confirmation</div>
+                                  <div class="description-label">FREE SMS with pick up time</div>
+                                </div>
+                              </div>
+                              
+                              <div class="feature">
+                                <i class="icons">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 32 32">
+                                    <g fill="none" fill-rule="evenodd">
+                                      <path d="M0 0H32V32H0z"></path>
+                                      <path fill="#539a5b" d="M10.618 6c.929 0 1.685.756 1.685 1.685 0 1.315.207 2.606.612 3.835a1.7 1.7 0 01-.417 1.719l-1.78 2.366c1.465 2.761 3.244 4.54 6.024 6.023l2.423-1.831c.392-.398 1.071-.558 1.666-.352 1.223.403 2.512.609 3.829.609.929 0 1.685.756 1.685 1.685v3.922a1.686 1.686 0 01-1.684 1.685C13.821 27.346 5 18.526 5 7.685 5 6.756 5.756 6 6.685 6zm0 1.123H6.685a.562.562 0 00-.561.562c0 10.222 8.316 18.538 18.537 18.538a.563.563 0 00.562-.562V21.74a.563.563 0 00-.562-.562 13.32 13.32 0 01-4.188-.668.561.561 0 00-.572.133l-2.766 2.097a.561.561 0 01-.594.052c-3.297-1.689-5.32-3.714-6.986-6.986a.56.56 0 01.051-.593l2.045-2.708c.206-.214.259-.43.193-.64a13.352 13.352 0 01-.665-4.18.562.562 0 00-.561-.562zM17.92 6c4.647 0 8.426 3.78 8.426 8.426a.562.562 0 01-1.123 0c0-4.027-3.276-7.303-7.303-7.303a.562.562 0 010-1.123zm0 4.494a3.936 3.936 0 013.932 3.932.561.561 0 11-1.123 0 2.813 2.813 0 00-2.809-2.809.562.562 0 010-1.123z"></path>
+                                    </g>
+                                  </svg>
+                                </i>
+                                
+                                <div class="description">
+                                  <div class="description-title">Need help?</div>
+                                  <div class="description-label">24/7 customer helpline</div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="column">
+                              <div class="feature">
+                                <i class="icons"
+                                ><svg xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 32 32">
+                                  <g fill="none" fill-rule="evenodd">
+                                    <path d="M0 0H32V32H0z"></path>
+                                    <g fill="#539a5b">
+                                      <path d="M9.913 5.218a.522.522 0 00-.521.521v1.242L8.06 6.315a.523.523 0 00-.467.935l1.799.899v3.33H7.106l-.9-1.798a.521.521 0 10-.934.466l.666 1.332H4.696a.522.522 0 000 1.043h1.242l-.665 1.331a.523.523 0 00.934.468l.899-1.799h2.286v3.33l-1.8.9a.521.521 0 10.467.933l1.333-.666v1.242a.522.522 0 101.043 0V5.739a.522.522 0 00-.522-.521" transform="translate(4 4)"></path>
+                                      <path d="M12 22.957C5.958 22.957 1.043 18.042 1.043 12 1.043 5.958 5.958 1.044 12 1.044c6.041 0 10.957 4.914 10.957 10.956S18.04 22.957 12 22.957M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0" transform="translate(4 4)"></path>
+                                      <path d="M18.26 14.61c-.414 0-.629-.145-.954-.363-.455-.303-1.02-.68-2.175-.68-.731 0-1.159.284-1.535.536-.39.26-.757.506-1.596.506a.522.522 0 000 1.043c1.155 0 1.72-.377 2.175-.681.326-.218.541-.362.956-.362.839 0 1.206.246 1.595.506.376.252.805.537 1.535.537a.522.522 0 000-1.043m0-3.13c-.415 0-.63-.144-.955-.362-.455-.304-1.02-.681-2.175-.681-.731 0-1.159.285-1.535.537-.39.26-.757.506-1.596.506a.522.522 0 000 1.043c1.155 0 1.72-.378 2.175-.681.326-.218.541-.362.956-.362.839 0 1.206.245 1.595.506.376.252.805.537 1.535.537a.522.522 0 000-1.043m0-3.13c-.415 0-.63-.145-.955-.363-.455-.303-1.02-.68-2.175-.68-.731 0-1.159.284-1.535.536-.39.26-.757.506-1.596.506a.522.522 0 000 1.043c1.155 0 1.72-.377 2.175-.68.326-.219.541-.363.956-.363.839 0 1.206.246 1.595.506.376.252.805.537 1.535.537a.522.522 0 000-1.043" transform="translate(4 4)"></path>
+                                    </g>
+                                  </g>
+                                </svg>
+                              </i>
+                              
+                              <div class="description">
+                                <div class="description-title">Comfort features</div>
+                                <div class="sc-GMQeP description-label iNYorV">Air conditioning</div>
+                              </div>
+                              </div>
+                              
+                              <div class="feature">
+                                <i class="icons">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="28px" height="28px" viewBox="0 0 32 32">
+                                    <g fill="none" fill-rule="evenodd"><path d="M0 0H32V32H0z"></path><g fill="#539a5b"><path d="M21.084 13.291a.459.459 0 01-.459.459H1.375a.458.458 0 01-.458-.459V9.625A2.295 2.295 0 013.21 7.333h15.583a2.295 2.295 0 012.292 2.292v3.666zm-1.834 3.667a.458.458 0 01-.458.458H16.96a.459.459 0 01-.459-.458v-2.292h2.75v2.292zm-13.75 0a.458.458 0 01-.458.458H3.21a.459.459 0 01-.459-.458v-2.292H5.5v2.292zM5.225 1.194a.459.459 0 01.421-.278h10.708c.184 0 .35.11.421.277l2.24 5.246c-.075-.006-.147-.023-.223-.023H3.21c-.077 0-.148.017-.224.023l2.24-5.245zm14.906 5.524L17.618.833A1.372 1.372 0 0016.354 0H5.646c-.55 0-1.045.327-1.264.833L1.87 6.72A3.206 3.206 0 000 9.625v3.666c0 .759.617 1.375 1.375 1.375h.459v2.292c0 .758.616 1.375 1.375 1.375h1.833c.758 0 1.375-.617 1.375-1.375v-2.292h9.167v2.292c0 .758.616 1.375 1.375 1.375h1.833c.758 0 1.375-.617 1.375-1.375v-2.292h.458c.758 0 1.375-.616 1.375-1.375V9.625c0-1.29-.77-2.397-1.87-2.907z" transform="translate(5 7)"></path><path d="M3.915 9.593c-.558 0-1.012.455-1.012 1.013a1.013 1.013 0 101.013-1.013m14.131 0a1.013 1.013 0 000 2.025 1.013 1.013 0 000-2.025m-3.243-.541H7.198c-.3 0-.542.205-.542.458s.243.458.542.458h7.606c.3 0 .543-.205.543-.458s-.244-.458-.543-.458m0 2.1H7.198c-.3 0-.542.206-.542.46 0 .252.243.457.542.457h7.606c.3 0 .543-.205.543-.458s-.244-.459-.543-.459" transform="translate(5 7)"></path></g></g></svg>
+                                  </i>
+                                    <div class="description">
+                                      <div class="description-title">Quality guarantee</div>
+                                      <div class="description-label">All vehicles less than 5 years old</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                      </div>
+                    </div>
+                    <div class="cancl-sec" *ngIf="transfer.Cancellation_available">
+                      <p class="higt-sc3">Cancellation policy</p>
+                      <ul>
+                  <li>{{transfer.Cancellation_available}}</li>
+                      </ul>
+                    </div>
+                    <div class="cancl-sec">
+                      <p class="higt-sc3">Important travel information</p>
+                      <ul>
+                        <li>Cab will be provided on the basis of availability.</li>
+                        <li>We do not commit on particular fuel type vehicle. It will be as per mentioned in name by cab
+                          provider.</li>
+                        <li>If a CNG refill has to be done, the turnaround time may be over 30 minutes due to less
+                          availability of stations and long queues.</li>
+                      
+              
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+          <div *ngIf="!transferList.length && !loading" class="row">
+              <div class="col-md-12 col-lg-12 pr-0 no_bus">
+                  <div class="card-body px-0">
+                      <img class="no_bus_found" src="../../../../../assets/images/no_flight_found.jpg" alt="" />
+                      <p class="no_result_found_text d-flex justify-content-center">No result found for your search criteria.</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <ngx-loading [show]="loading"
+  [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+  [template]="loadingTemplate"></ngx-loading>
+</section> 
+

@@ -1,0 +1,182 @@
+<!-- <ng-container *ngIf="isRoomDetail == true">
+    <div class="container">
+        <form [formGroup]="roomDetailForm" (ngSubmit)="onSubmitRoomDetail()" class="needs-validation btop pt-4"
+            novalidate>
+            <fieldset form="hotelImage">
+                <div class="form_legend">Add Hotel Room Details</div>
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <label class=" control-label">
+                            Hotel Room Type
+                            <span class="text-danger">*</span>
+                        </label>
+                        <select formControlName="room_type_id" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.room_type_id.errors }">
+                            <option value="" disabled selected>Select Hotel Type</option>
+                            <option *ngFor="let roomType of roomTypeList" [value]="roomType.id">
+                                {{roomType.room_type_name}}
+                            </option>
+                        </select>
+                        <div *ngIf="submitted && f.room_type_id.errors" class="invalid-feedback">
+                            <div *ngIf="f.room_type_id.errors.required">Room Type is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <label class=" control-label">
+                            Maximum Passengers Capacity
+                            <span class="text-danger">*</span>
+                        </label>
+                        <select formControlName="max_passanger_capacity" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.max_passanger_capacity.errors }">
+                            <option value="" disabled selected>Select</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <div *ngIf="submitted && f.max_passanger_capacity.errors" class="invalid-feedback">
+                            <div *ngIf="f.max_passanger_capacity.errors.required">Please Select maximum passengers
+                                capacity</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <label class=" control-label">
+                            Maximum Adult Capacity
+                            <span class="text-danger">*</span>
+                        </label>
+                        <select formControlName="max_adult_capacity" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.max_adult_capacity.errors }">
+                            <option value="" disabled selected>Select</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <div *ngIf="submitted && f.max_adult_capacity.errors" class="invalid-feedback">
+                            <div *ngIf="f.max_adult_capacity.errors.required">Please Select maximum adult capacity</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <label class=" control-label">
+                            Maximum Child Capacity
+                            <span class="text-danger">*</span>
+                        </label>
+                        <select formControlName="max_child_capacity" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.max_child_capacity.errors }">
+                            <option value="" disabled selected>Select</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <div *ngIf="submitted && f.max_child_capacity.errors" class="invalid-feedback">
+                            <div *ngIf="f.max_child_capacity.errors.required">Please Select maximum child capacity</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <label class=" control-label">
+                            Maximum Child Capacity
+                            <span class="text-danger">*</span>
+                        </label>
+                        <select formControlName="max_child_capacity" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.max_child_capacity.errors }">
+                            <option value="" disabled selected>Select</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <div *ngIf="submitted && f.max_child_capacity.errors" class="invalid-feedback">
+                            <div *ngIf="f.max_child_capacity.errors.required">Please Select maximum child capacity</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <label class=" control-label">
+                            Extra Bed Availability
+                            <span class="text-danger">*</span>
+                        </label>
+                        <select formControlName="extra_bed_availability" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.extra_bed_availability.errors }">
+                            <option [value]="true" selected>Available</option>
+                            <option [value]="false">Not Available</option>
+                        </select>
+                        <div *ngIf="submitted && f.extra_bed_availability.errors" class="invalid-feedback">
+                            <div *ngIf="f.extra_bed_availability.errors.required">Please Select maximum child capacity
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <label class=" control-label">
+                            Room Description
+                            <span class="text-danger">*</span>
+                        </label>
+                        <textarea type="text" formControlName="room_description" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.room_description.errors }"></textarea>
+                        <div *ngIf="submitted && f.room_description.errors" class="invalid-feedback">
+                            <div *ngIf="f.room_description.errors.required">Please enter room description</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <label class=" control-label">
+                            Room Policy
+                            <span class="text-danger">*</span>
+                        </label>
+                        <textarea type="text" formControlName="room_policy" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.room_policy.errors }"></textarea>
+                        <div *ngIf="submitted && f.room_policy.errors" class="invalid-feedback">
+                            <div *ngIf="f.room_policy.errors.required">Please enter room policy</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <label class=" control-label">
+                            Room Amenities
+                            <span class="text-danger">*</span>
+                        </label>
+                        <ng-multiselect-dropdown #multiSelect formControlName="room_amenity_ids"
+                            [placeholder]="'Select Amenities'" [data]="roomAmenityList"
+                            [settings]="dropdownSettingsForRoom">
+                        </ng-multiselect-dropdown>
+                        <div *ngIf="submitted && f.room_amenity_ids.errors" class="invalid-feedback">
+                            <div *ngIf="f.room_amenity_ids.errors.required">Room Amenities are required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="status">
+                        Status
+                        <span class="text-danger">*</span>
+                    </label>
+                    <span title="Slide for Active/Deactive">
+                        <mat-slide-toggle class="example-margin" formControlName="status" (click)="status =!status"
+                            [color]="''">
+                        </mat-slide-toggle>
+                    </span>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-primary mr-1">Save</button>
+                    <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</ng-container> -->

@@ -1,0 +1,76 @@
+<div class="row card">
+    <div class=" p-0 col-md-12 col-lg-12">
+        <div class="card-header-tab card-header bg-dark text-white">
+            <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                <i class="header-icon fa fa-edit"> </i>
+                <span class="text-uppercase"> {{'Add/Update Slider Image'}} </span>
+            </div>
+        </div>
+    </div>
+    <div class="my-5 offset-lg-2 offset-md-2 col-md-8 col-lg-8">
+        <form class="" [formGroup]="regConfig">
+
+            <div class="form-group row">
+                <label for="logo" class="col-sm-3 col-form-label"> Slider Image <sup
+                        class="text-danger f-14"> * </sup> <br>
+                    <p *ngIf="!imageSrc && submitted" class="text-danger" style="font-weight: 400;font-size: 80%;">Image
+                        is required</p>
+                </label>
+
+                <div class="col-sm-9 custom-file" style="display: flex;">
+                    <img *ngIf="bankLogo" height="50" width="100" class="rounded" [src]="logoBankUri+bankLogo"
+                        alt="logo">
+                    <img *ngIf="imageSrc" height="50" width="100" class="rounded" [src]="imageSrc" alt="logo">
+                    &nbsp;&nbsp;&nbsp;
+                    <input type="file" class="form-control-file" id="logo" (change)="onFileSelected($event)" #theFile
+                        style="margin-top: 15px;margin-bottom: -4px;" accept=".png, .jpg, .jpeg">
+                        <span>
+                            <p *ngIf="error" class="text-danger" style="font-weight: 400;font-size: 80%;">{{error}}</p>
+                        </span>
+                        <span class="text-danger">(Maximum upload file size: 1 MB)</span> 
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="title" class="col-sm-2 col-form-label">Title
+                    <sup class="text-danger f-14"> * </sup></label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control text-capitalize" id="title" maxlength="200"
+                        (keypress)="omitSpecialCharacters($event)" formControlName="title">
+                </div>
+            </div>
+            <div class="form-group required row">
+                <label for="description" class="col-sm-2 col-form-label">Description 
+                    <sup class="text-danger f-14"> * </sup></label>
+                <div class="col-sm-10">
+                    <textarea class="form-control text-capitalize" id="description" maxlength="500"
+                        formControlName="description"></textarea>
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <div class="col-md-3 col-lg-3">
+                        <span for="customcheckboxInline1"> Status </span> <sup
+                        class="text-danger f-16"> * </sup>
+                </div>
+                <div class="col-lg-9 col-md-9">
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input formControlName="status" value="1" type="radio" id="customcheckboxInline1"
+                            class="custom-control-input">
+                            <label class="custom-control-label" for="customcheckboxInline1"> Active </label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input formControlName="status" value="0" type="radio" id="customcheckboxInline2"
+                            class="custom-control-input">
+                            <label class="custom-control-label" for="customcheckboxInline2"> In-Active </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row mb-n2">
+                <div class="col-sm-12 customCenter">
+                    <button type="submit" class="btn btn-sm btn-primary mr-1" (click)="onSubmit()">Add/Update</button>
+                    <button type="reset" class="btn btn-sm btn-primary" (click)="onReset()">Reset</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,107 @@
+<!-- <app-hotel-booking-steps [rooms]="true"></app-hotel-booking-steps>
+<div class="card my-2">
+    <div class="card-body pb-3">
+        <div class="row">
+            <div class="col-md-8 col-lg-8">
+                <app-hotel-detail-images [hotel]="hotel" [traveller]="traveller"></app-hotel-detail-images>
+            </div>
+            <div class="col-md-4 col-lg-4 mt-3">
+                <app-hotel-detail [hotel]="hotel" [traveller]="traveller"></app-hotel-detail>
+            </div>
+        </div>
+    </div>
+    <ngx-loading [show]="loading"
+        [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+        [template]="loadingTemplate"></ngx-loading>
+</div>
+<div class="row">
+    <div class="col-md-8 col-lg-8">
+        <div class="card mb-2 mt-2">
+            <div class="card-body pb-3">
+                <app-hotel-room-detail [hotel]="hotel" [traveller]="traveller" id="roomDetail"></app-hotel-room-detail>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-lg-4 pl-0">
+        <div class="card mb-2 mt-2">
+            <div class="card-body pb-3">
+                <app-similar-hotels></app-similar-hotels>
+            </div>
+        </div>
+    </div>
+</div> -->
+<section for="ModifySearch" class="mx-0">
+    <!-- <div class="row bg-white py-2 rounded">
+        <div class="col-md-10">
+            <div class="row font-weight-bold">
+                <div class="col-md-4"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp;Location / City
+                </div>
+                <div class="col-md-2 text-center"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;&nbsp;Check-In
+                </div>
+                <div class="col-md-2 text-center"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;&nbsp;Check-Out
+                </div>
+                <div class="col-md-2 text-center"><i class="fas fa-user"></i>&nbsp;&nbsp;Guests</div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">{{destination}}</div>
+                <div class="col-md-2 text-center">{{searchPayload?.CheckIn | date:'dMMM y'}}</div>
+                <div class="col-md-2 text-center">{{searchPayload?.CheckOut | date:'dMMM y'}}</div>
+                <div class="col-md-2 text-center">{{travellerAdult == 1 ? travellerAdult + ' Adult': travellerAdult +
+                    ' Adults'}}
+                    <span *ngIf="travellerChild > 0">{{travellerChild == 1 ? travellerChild + ' Child':
+                        travellerChild + ' Children'}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-success btn-lg pull-right" (click)="isCollapsed = !isCollapsed"
+                [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
+                Modify Search
+            </button>
+        </div>
+    </div> -->
+    <div class="bbottom grid-section-wrapper" style="float: left;">
+        <div class="col-md-12 col-lg-12 p-0">
+            <div id="collapseBasic" style="z-index: 9999; display: block; float: left;width: 100%;">
+                <div class="w-100">
+                    <div class="col-md-12">
+                        <app-hotel (callResult)="searchResult($event)"></app-hotel>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="theme_bg" style="float: left; width: 100%;">
+    <div class="my-2">
+        <div class="card-body pb-3">
+            <div class="col-12">
+            <div class="row hotel_list1">
+                <div class="col-md-12 col-lg-12 nopad mt-0">
+                    <app-hotel-detail [hotel]="hotel" [traveller]="traveller"></app-hotel-detail>
+                </div>
+                <div class="col-md-12 col-lg-12 mt-3 nopad" *ngIf="hotel">
+                    <app-hotel-detail-images [hotel]="hotel" [traveller]="traveller"></app-hotel-detail-images>
+                </div>
+               
+            </div>
+            </div>
+        </div>
+        <ngx-loading [show]="loading"
+        [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+        [template]="loadingTemplate"></ngx-loading>
+    </div>
+    <div class="col-12">
+    <div class="row">
+        <div class="col-md-12 col-lg-12 nopad">
+            <div class="mb-2 mt-2">
+                <div class="pb-3">
+                    <app-hotel-room-detail [hotel]="hotel" [traveller]="traveller" id="roomDetail"></app-hotel-room-detail>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+    

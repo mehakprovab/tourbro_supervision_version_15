@@ -1,0 +1,92 @@
+.tabbable-line>.nav-tabs {
+    border: none;
+    margin: 0px;
+}
+
+.tabbable-line>.nav-tabs>li {
+    margin-right: 2px;
+}
+
+.tabbable-line>.nav-tabs>li>a {
+    border      : 0;
+    margin-right: 0;
+    color       : #737373;
+}
+
+.tabbable-line>.nav-tabs>li>a>i {
+    color: #a6a6a6;
+}
+
+.tabbable-line>.nav-tabs>li.open>a,
+.tabbable-line>.nav-tabs>li:hover>a {
+    border    : 0;
+    background: none !important;
+    color     : #333333;
+}
+
+.tabbable-line>.nav-tabs>li.open>a>i,
+.tabbable-line>.nav-tabs>li:hover>a>i {
+    color: #333333;
+}
+
+.tabbable-line>.nav-tabs>li.open .dropdown-menu,
+.tabbable-line>.nav-tabs>li:hover .dropdown-menu {
+    margin-top: 0px;
+}
+
+.tabbable-line>.nav-tabs>li>a.active {
+    border-bottom: 4px solid #32465B;
+    color        : #32465B;
+    position     : relative;
+}
+
+.tabbable-line>.nav-tabs>li.active>a {
+    border: 0;
+    color : #333333;
+}
+
+.tabbable-line>.nav-tabs>li.active>a>i {
+    color: #404040;
+}
+
+.tabbable-line>.tab-content {
+    margin-top      : -3px;
+    background-color: #fff;
+    border          : 0;
+    border-top      : 4px solid #eee;
+    padding         : 15px 0;
+}
+
+.portlet .tabbable-line>.tab-content {
+    padding-bottom: 0;
+}
+
+.columns {
+    -moz-column-width   : 11.5em;
+    /* Firefox */
+    -webkit-column-width: 11.5em;
+    /* webkit, Safari, Chrome */
+    column-width        : 16.5em;
+}
+
+/*remove standard list and bullet formatting from ul*/
+.columns ul {
+    margin : 0;
+    padding: 0;
+}
+
+/* correct webkit/chrome uneven margin on the first column*/
+.columns ul li:first-child {
+    margin-top: 0px;
+}
+
+/* Solid border */
+hr.solid {
+    border-top: 1px solid #bbb;
+    width     : 100%;
+    margin    : 5px;
+}
+
+p {
+    margin: 0px;
+}

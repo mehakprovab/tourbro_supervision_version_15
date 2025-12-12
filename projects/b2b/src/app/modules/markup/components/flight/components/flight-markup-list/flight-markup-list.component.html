@@ -1,0 +1,62 @@
+<div class="p-0 bg-light col-md-12 col-lg-12">
+    <div class="card-header-tab card-header">
+        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+            <span style="font-weight: 600;">Flight - Specific Airline Markup </span>
+        </div>
+    </div>
+</div>
+<form [formGroup]="specificAirlineMarkupForm" class="form">
+    <table mat-table [dataSource]="dataSource | paginate: { itemsPerPage: 6, currentPage: p }" class="mat-elevation-z8">
+        <ng-container matColumnDef="Flights">
+            <th mat-header-cell *matHeaderCellDef> Flights </th>
+            <td mat-cell *matCellDef="let element">
+                <img width="40" class="rounded" [src]="[airline_logo + element.flightAirline.code + '.gif']" alt="">
+                {{element.flightAirline.name}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Mark Up Value">
+            <th mat-header-cell *matHeaderCellDef> Mark Up Value </th>
+            <td mat-cell *matCellDef="let element"> {{element.mark_up_value}} GBP</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Mark Up Type">
+            <th mat-header-cell *matHeaderCellDef> Mark Up Type </th>
+            <td mat-cell *matCellDef="let element">
+
+                <mat-radio-group aria-label="Select an option" formControlName="value_type">
+                    <mat-radio-button value="plus" [checked]="element.value_type=='plus'">Flat(+/- GBP)
+                    </mat-radio-button>
+                    &nbsp;&nbsp;
+                    <mat-radio-button value="percentage" [checked]="element.value_type=='percentage'">Percentage
+                    </mat-radio-button>
+                </mat-radio-group>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Edit">
+            <th mat-header-cell *matHeaderCellDef> Edit </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-form-field appearance="outline">
+                    <input matInput type="number" placeholder="Add Amount/Percentage" formControlName="value"
+                        value={{element.value}}>
+                </mat-form-field>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="Action">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let element">
+
+                <button class="btnStyle" type="submit"
+                    (click)="UpdateMarkup(element,specificAirlineMarkupForm.value)">Save</button>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+</form>
+
+<div class="card" style="margin-bottom: 30px;padding-top: 15px;">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>

@@ -1,0 +1,83 @@
+<div class="topSectionContainer">
+    <button class="btnStyle pull-left">Recharge</button>
+</div>
+<div class="clearfix"></div>
+<br />
+<div class="row card m-0" style="background: #022756;padding: 30px;">
+    <form [formGroup]="rechargeForm">
+        <div class="form-row">
+            <div class="col-3 pr-0">
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input formControlName="amount" type="text" class="form-control form-control-sm nrm_input"
+                        placeholder="Enter Amount" id="amount" pattern="[0-9]+" (keypress)="numberOnly($event)">
+                    <div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 pr-0">
+                <div class="form-group">
+                    <label for="">&nbsp;</label>
+                    <button type="submit" (click)="proceedToConfirm()" class="btn w-100 srch_btn">
+                        Pay Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- Payment modal -->
+<div class="modal" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true"
+    [style.display]="enablePaymentGateway ? 'block' : 'none'">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentModalLabel">Payment Methods</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    (click)="closePaymentModel()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="paymentForm">
+                    <div class="cc-selector-2">
+                        <div class="row">
+                            <div class="col-md-3" *ngFor="let paymentMethod of paymentGateways">
+                                <span *ngIf="(paymentMethod?.remarks | lowercase)==='nagad'">
+                                    <label class="drinkcard-cc nagad" for="nagad"></label>
+                                    <span class="payment_label">
+                                        <input id="nagad" type="radio" name="paymentMethod" value="nagad"
+                                            formControlName="paymentMethod" /> Nagad
+                                    </span>
+                                </span>
+                                <span *ngIf="(paymentMethod?.remarks | lowercase)==='bkash'">
+                                    <label class="drinkcard-cc bKash" for="bKash"></label>
+                                    <span class="payment_label">
+                                        <input id="bKash" type="radio" name="paymentMethod" value="bKash"
+                                            formControlName="paymentMethod" /> bKash
+                                    </span>
+                                </span>
+                                <span *ngIf="(paymentMethod?.remarks | lowercase)==='sslcommerz'">
+                                    <label style="width: 100%;background-position: center;" class="drinkcard-cc sslCommerz"
+                                        for="sslCommerz"></label>
+                                    <span class="payment_label">
+                                        <input id="sslCommerz" type="radio" name="paymentMethod" value="sslCommerz"
+                                            formControlName="paymentMethod" />
+                                        sslCommerz
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="error text-danger col-xs-12 col-12" style="margin-bottom:10px; display:block;"
+                        *ngIf="hasError('paymentMethod', 'required');">
+                        Please select the payment type* <br>
+                    </small>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="paymentConfirm()">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>

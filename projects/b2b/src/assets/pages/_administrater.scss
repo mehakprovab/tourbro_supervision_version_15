@@ -1,0 +1,186 @@
+.icon-btn{
+    background: #012756 0% 0% no-repeat padding-box;
+    border-radius: 5px;
+    opacity: 1;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: normal;
+    margin-top: 2px;
+    &.lg{
+        width: 130px;
+        height: 40px;
+        font-size: 14px;
+        line-height: 16px;
+        img{
+            width: 14px;
+        }
+    }
+        img{
+            margin-right: 8px;
+        }
+    
+}
+.admin-traveller-info{
+    .mat-dialog-container{
+        padding: 0;
+}
+}
+.form-group{
+    .invalid-feedback{
+        // position: absolute;
+        // margin-top: 0;
+    }
+    &.required .col-form-label:after {
+        content:"*";
+        color:red;
+      }
+}
+.bg-btn-clr{
+    background: #082B3A !important;
+}
+.custom-form-group-layout{
+    margin-top: 0 !important;
+    background: #022756;
+    box-shadow: 0px 5px 10px #00000052;
+    border-radius: 5px 5px 5px 5px;
+    opacity: 1;
+    color: #fff;
+    padding: 15px 25px 30px;
+    .col-4{
+        padding: 0;
+    }
+    label{
+        font: normal normal 600 15px/17px Asap;
+        letter-spacing: 0px;
+        color: #FFFFFF;
+        opacity: 1;
+    }
+    input{
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        border-radius: 6px;
+        opacity: 1;
+        height: 48px;
+        font: normal normal normal 14px/16px Asap;
+        letter-spacing: 0px;
+        color: #363636;
+        opacity: 1;
+    }
+    .btn-info{
+        background: #012756 0% 0% no-repeat padding-box;
+        border-radius: 6px;
+        opacity: 1;
+        height: 48px;
+        width: 153px;
+        text-align: center;
+        font: normal normal normal 18px/21px Asap;
+        letter-spacing: 0px;
+        color: #FFFFFF;
+        opacity: 1;
+    }
+    .input-group{
+        .input-group-text{
+            background-color: #fff;
+            &:focus{
+                border-color: #067def;
+            }
+            img{
+                width: 14px;
+            }
+        }
+        input{
+            border-left: 0;
+            padding-left: 0;
+            box-shadow: none;
+            &:focus{
+            }
+        }
+    }
+}
+.custom-table-layout{
+    .table-btn-group{
+        display: flex;
+        align-items: center;
+        padding-bottom: 11px;
+    }
+    .table-btn{
+        background: #012756 0% 0% no-repeat padding-box;
+        border-radius: 5px;
+        opacity: 1;
+        letter-spacing: 0px;
+        color: #FFFFFF;
+        opacity: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: normal;
+        margin-top: 2px;
+        &.sm{
+            font-size: 14px;
+            line-height: 28px;
+            height: 30px;
+            width: 80px;
+        }
+        &.lg{
+            width: 130px;
+            height: 40px;
+            font-size: 14px;
+            line-height: 16px;
+            img{
+                width: 14px;
+            }
+        }
+         img{
+             margin-right: 8px;
+         }
+    }
+    table{
+        background-color: #fff;
+        border: 0;
+        border-collapse: collapse;
+        &.table-striped tbody tr:nth-of-type(odd) {
+            background: #F5F5F5 0% 0% no-repeat;
+        }
+        tr,th,td{
+            border: 0;
+        }
+        thead{
+            tr{
+                height: 45px;
+                th{
+                    font: normal normal normal 14px/27px Asap;
+                    letter-spacing: 0px;
+                    color: #707070;
+                    opacity: 1;
+                    background-color: #fff;
+                    &.title{
+                        p{
+                            margin: 0;
+                            background: #F5F5F5 0% 0% no-repeat padding-box;
+                            border-radius: 5px 5px 0px 0px;
+                            opacity: 1;
+                            padding: 7px;
+                            height: 41px;
+                            line-height: 28px;
+                        }
+                    }
+                }
+            }
+        }
+        tbody{
+            tr{
+                height: 35px;
+                line-height: 35px;
+                td{
+                    font: normal normal normal 14px/35px Asap;
+                    letter-spacing: 0px;
+                    color: #707070;
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}

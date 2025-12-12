@@ -1,0 +1,77 @@
+<div class="row mx-0 pt-2">
+    <div class="col-md-12">
+        <div class="card main-card mb-6">
+            <div class="card-body">
+                <ngb-tabset class="tabs-animated tabs-animated-shadow" (tabChange)="beforeChange($event)" #tabs>
+                    <ngb-tab id="flight_api_list">
+                        <ng-template ngbTabTitle>
+                            <span class="">
+                                <i class="fa fa-plane" aria-hidden="true"></i>
+                                &nbsp;{{'Flight'}}
+                            </span>
+                         
+                        </ng-template>
+                        <ng-template ngbTabContent>
+                            <app-flight-api (toUpdate)="triggerTab($event)"></app-flight-api>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab id="hotel_api_list">
+                        <ng-template ngbTabTitle>
+                            <span class="">
+                                <i class="fa fa-bed" aria-hidden="true"></i>
+                                &nbsp;{{'Hotel'}}
+                            </span>
+                        </ng-template>
+                        <ng-template ngbTabContent>
+                            <app-hotel-api (someEvent)="triggerTab($event)"></app-hotel-api>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab id="activity_api_list">
+                        <ng-template ngbTabTitle>
+                            <span class="">
+                                <i class="fa fa-binoculars" aria-hidden="true"></i>
+                                &nbsp;{{'Activity'}}
+                            </span>
+                        </ng-template>
+                        <ng-template ngbTabContent>
+                            <app-activity-api (someEvent)="triggerTab($event)"></app-activity-api>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab id="transfer_api_list">
+                        <ng-template ngbTabTitle>
+                            <span class="">
+                                <i class="fa fa-taxi" aria-hidden="true"></i>
+                                &nbsp;{{'Transfer'}}
+                            </span>
+                        </ng-template>
+                        <ng-template ngbTabContent>
+                            <app-transfer-api (someEvent)="triggerTab($event)"></app-transfer-api>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab id="tour_api_list">
+                        <ng-template ngbTabTitle>
+                            <span class="">
+                                <i class="fa fa-tree" aria-hidden="true"></i>
+                                &nbsp;{{'Tour'}}
+                            </span>
+                        </ng-template>
+                        <ng-template ngbTabContent>
+                            <app-tour-api (someEvent)="triggerTab($event)"></app-tour-api>
+                        </ng-template>
+                    </ngb-tab>
+                   <!--  <ngb-tab id="car_api_list">
+                        <ng-template ngbTabTitle>
+                            <span class="">
+                                <i class="fa fa-car" aria-hidden="true"></i>
+                                &nbsp;{{'Car'}}
+                            </span>
+                        </ng-template>
+                        <ng-template ngbTabContent>
+                            <app-car-api (someEvent)="triggerTab($event)"></app-car-api>
+                        </ng-template>
+                    </ngb-tab> -->
+                </ngb-tabset>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+::ng-deep .cdk-overlay-container .copy-items-modal-brandFare {    width: 800px !important; height: 600px !important;}
+::ng-deep .cdk-overlay-container .copy-items-modal-brandFare .mat-dialog-container {padding: 20px 10px !important;}
+.brand-fare-modal {
+    
+}
+
+.brand-fare-list {
+  scroll-snap-type: x mandatory;
+  gap:10px;
+}
+
+.brand-card {
+  scroll-snap-align: start;
+  min-width: 370px;
+}
+
+.brand-fare-modal {
+    max-height: 67vh !important;
+}

@@ -1,0 +1,205 @@
+<div class="card-header text-uppercase bg-dark text-white">
+    <h5 style="border-bottom: 0;">B2B Car report</h5>
+</div>
+<div class="card">
+    <form [formGroup]="regConfig">
+        <div class="form-row">
+            <div class="col-4 pr-0">
+                <div class="form-group">
+                    <label for="appReference">Reservation Code</label>
+                    <input formControlName="app_reference" type="text" class="form-control form-control-sm nrm_input"
+                        placeholder="Application Reference" id="appReference">
+                </div>
+            </div>
+            <div class="col-4 pr-0">
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input formControlName="phone_number" type="text" class="form-control form-control-sm nrm_input"
+                        placeholder="PNR" id="phone">
+                </div>
+            </div>
+            <div class="col-4 pr-0">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input formControlName="email" type="email" class="form-control form-control-sm nrm_input"
+                        placeholder="Email" id="email">
+                </div>
+            </div>
+            <div class="col-4 pr-0">
+                <div class="form-group">
+                    <label for="bookedBy">Status</label>
+                    <select formControlName="status" name="cars" id="bookedBy"
+                        class="form-control form-control-sm nrm_input">
+                        <option value="ALL" selected>ALL</option>
+                        <option value="BOOKING_CONFIRMED">CONFIRMED</option>
+                        <option value="ticked">TICKED</option>
+                        <option value="BOOKING_CANCELLED">CANCELLED</option>
+                        <option value="cancelInProgress">CANCELLATION IN PROGRESS</option>
+                        <option value="failed">FAILED</option>
+                        <option value="BOOKING_INPROGRESS">IN PROGRESS</option>
+                    </select>
+                    <div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 pr-0">
+                <div class="form-group">
+                    <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
+                    <label for="fromDate">Booked From Date</label>
+                    <input formControlName="booked_from_date" type="text" id="fromDate" autocomplete="off"
+                        class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd-mm-yyyy"
+                        bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen">
+                </div>
+            </div>
+            <div class="col-4 pr-0">
+                <div class="form-group">
+                    <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
+                    <label for="toDate">Booked To Date</label>
+                    <input formControlName="booked_to_date" type="text" id="toDate" autocomplete="off"
+                        class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd-mm-yyyy"
+                        bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen">
+                </div>
+            </div>
+        </div>
+        <div class="btncontainer">
+            <button type="submit" class="btnStyle" (click)="onSearchSubmit()">Search</button> &nbsp;
+            <button type="button" class="btnStyle" (click)="onReset()">Reset</button>
+        </div>
+    </form>
+</div>
+<div class="card" style="margin-top: 30px;">
+    <div class="card-body">
+        <p>Total {{respData?.length}} Bookings</p>
+        <!-- <button class="btnStyle" (click)="download('pdf', 'portrait')">PDF</button>&nbsp;
+        <button class="btnStyle" (click)="download('xlsx', 'portrait')">Export to Excel</button> -->
+        <div class="mb-3">
+            <form>
+                <div class="table-responsive">
+                    <table class="table table-borderless table-striped table-hover" matSort
+                        (matSortChange)="sortData($event)" id="b2c-car-report">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-left text-nowrap" *ngFor="let header of displayColumn;">
+                                    {{header.value }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="noData || !respData.length">
+                                <td colspan="11">
+                                    <h4 class="text-muted text-center">
+                                        No Data Found!
+                                    </h4>
+                                </td>
+                            </tr>
+                            <tr
+                                *ngFor="let data of respData | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
+                                <td class="text-left text-muted">{{i+1}}.</td>
+                                <td class="text-left overflow-hidden">
+                                    <div ngbDropdown container="body"><button class="btnStyle" ngbDropdownToggle>
+                                            {{'Action'}}
+                                        </button>
+                                        <div ngbDropdownMenu>
+                                            <a [routerLink]="['/report/b2b/voucher/car']"
+                                                [queryParams]="{appReference: data['AppReference']}"><button
+                                                    ngbDropdownItem>View Voucher</button></a>
+                                            <a [routerLink]="['/report/b2c-car/invoice']"
+                                                [queryParams]="{appReference: data['AppReference']}"><button
+                                                    ngbDropdownItem>View Invoice</button></a>
+                                            <button ngbDropdownItem (click)="showCancelPolicy(data)">Cancellation
+                                                policy</button>
+                                            <button ngbDropdownItem [routerLink]="['/report/b2c-car/cancel']"
+                                                [queryParams]="{appReference: data['AppReference']}">Cancel</button>
+                                            <button ngbDropdownItem (click)="showPaxProfile(data);">Pax Profile</button>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-left"> {{data['AppReference']}} </td>
+                                <td class="text-left"> {{data['Status']}} </td>
+                                <td class="text-left"> {{data['CarName']}} </td>
+                                <td class="text-left"> {{data['CarSupplierName']}} </td>
+                                <td class="text-left"> {{data['BookingReference']}} </td>
+                                <td class="text-left"> {{data['driverName']}} </td>
+                                <td class="text-left"> {{data['PhoneNumber']}} </td>
+                                <td class="text-left"> {{data['CarPickupLocation']}} </td>
+                                <td class="text-left"> {{data['CarFromDate'] | date }} {{data['PickUpTime']}}</td>
+                                <td class="text-left"> {{data['CarDropLocation']}} </td>
+                                <td class="text-left"> {{data['CarToDate'] | date}} {{data['DropTime']}} </td>
+                                <td class="text-left"> {{data['TotalFare']}} </td>
+                                <td class="text-left"> {{data['LevelOneMarkup']}} </td>
+                                <td class="text-left"> {{data['ConvenienceFee']}} </td>
+                                <td class="text-left"> {{data['PromoCode']}} </td>
+                                <td class="text-left"> {{data['PromocodeAmount']}} </td>
+                                <td class="text-left"> {{data['RewardDiscount']}} </td>
+                                <td class="text-left"> {{data['TotalFare']}} </td>
+                                <td class="text-left"> {{data['Currency']}} </td>
+                                <td class="text-left"> {{data['PaymentMode']}} </td>
+                                <td class="text-left"> {{data['BookedOn']}} </td>
+                                <td class="text-left"> {{data['BillingType']}} </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer pb-0">
+                    <div class="d-flex w-100 justify-content-between">
+                        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                        </ngb-pagination>
+                        <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                            <option [ngValue]="50">50 items per page</option>
+                            <option [ngValue]="100">100 items per page</option>
+                            <option [ngValue]="150">150 items per page</option>
+                            <option [ngValue]="200">200 items per page</option>
+                            <option [ngValue]="500">500 items per page</option>
+                            <option [ngValue]="700">700 items per page</option>
+                            <option [ngValue]="1000">1000 items per page</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="paxProfile" [style.display]="showModal ? 'block' : 'none'">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">User Details:</h4>
+                <button type="button" class="close" data-dismiss="modal" (click)="hide()">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <h5>Lead Traveller Information</h5>
+                <p class="text-uppercase">Title : {{paxDetails.Title | uppercase}}</p>
+                <p class="text-uppercase">First Name : {{paxDetails.FirstName | uppercase}}</p>
+                <p class="text-uppercase">Last Name : {{paxDetails.LastName | uppercase}}</p>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btnStyle" data-dismiss="modal" (click)="hide()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="cancelPolicy" [style.display]="showCancelModal ? 'block' : 'none'">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Cancellation Policy</h4>
+                <button type="button" class="close" data-dismiss="modal" (click)="hide()">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                {{"From 06 Jan 2021,USD 25 will be charged as cancellation penalty."}}
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btnStyle" data-dismiss="modal" (click)="hide()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

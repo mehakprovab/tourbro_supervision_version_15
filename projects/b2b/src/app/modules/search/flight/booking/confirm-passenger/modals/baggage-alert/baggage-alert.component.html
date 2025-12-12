@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>{{'Baggage Protection Alert'}}</h2>
+<form>
+    <mat-dialog-content>
+        <div class="row m-0">
+            <div class="col-12 my-3">
+                <div class="form-gorup row mb-2">
+                    Your Baggages are not protected! Do you want to protect ?
+                    <br>
+                    Please proceed
+                </div>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-primary mr-2" (click)="close()">No</button>
+            <button class="btn btn-primary" (click)="save()">Yes</button>
+        </div>
+    </mat-dialog-actions>
+</form>

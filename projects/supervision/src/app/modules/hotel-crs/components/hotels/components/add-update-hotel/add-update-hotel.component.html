@@ -1,0 +1,11 @@
+
+<app-hotel-crs-detail (isHotelDetails)="hotelDetail($event)" *ngIf="isHotelDetail == true" [hotelOne]="hotelOne"></app-hotel-crs-detail>
+<app-hotel-image *ngIf="isHotelImage == true" (callResult)="hotelImage($event)" [hotelOne]="hotelOne" ></app-hotel-image>
+<app-room-detail *ngIf="isRoomDetail == true" [hotelOne]="hotelOne" (showRoomImage)="showRoomImage($event)" ></app-room-detail>
+<app-room-image *ngIf="isRoomImage == true"(isSeason)="showSeason($event)"[roomImage]="roomsData"></app-room-image>
+<app-price-management *ngIf="isPriceManagement == true" [priceDataList]="priceDataList"[hotelOne]="hotelOne" (showRoomDetail)="showRoomDetailPrice($event)"[priceData]="roomsData" ></app-price-management>
+<app-price  *ngIf="isPrice == true "(showRoomDetail)="showRoomDetail($event)"[priceData]="roomsData"[roomsEditData]="roomsEditData" [addnewRate]="addNewRate"[hotelOne]="hotelOne"></app-price>
+<app-tax  *ngIf="isHotelTax == true" [hotelOne]="hotelOne"(callResult)="hotelTax($event)"></app-tax>
+<app-children-pollicy *ngIf="isChildrenPollicy == true"[hotelOne]="hotelOne" (callResult)="childrenPollicy($event)"></app-children-pollicy>
+<app-cancellation *ngIf="isCancellation == true"(goToRoomdetail)="goToRoomdetail($event)"[cancelData]="roomsData"></app-cancellation>
+<!-- (priceListData)="showPriceData($event)" -->

@@ -1,0 +1,88 @@
+<!-- <div class="d-flex">
+    <div class="header-btn-lg pr-0">
+        <div class="widget-content p-0">
+            <div class="widget-content-wrapper">
+                <div class="widget-content-left">
+                    <div class="btn-group" ngbDropdown placement="bottom-right">
+                        <button type="button" class="btn btn-link p-0 mr-2" ngbDropdownToggle>
+                            <span>
+                                <div class="icon-wrapper icon-wrapper-alt rounded-circle">
+                                    {{selectedCurrency}}
+                                </div>
+                            </span>
+                        </button>
+                        <div class="dropdown-menu-lg" ngbDropdownMenu>
+                            <div class="scroll-area-md">
+                                <perfect-scrollbar [autoPropagation]="true">
+                                    <ul class="nav flex-column">
+                                        <li *ngFor="let currency of currencies.top_currencies"
+                                            class="nav-item-btn text-center nav-item">
+                                            <button (click)="changeCurrency(currency.currency)"
+                                                class="btn btn-primary btn-block">
+                                                <img width="42" class="rounded-circle" [src]="currency.currency_flag" />
+                                                {{currency.currency}} - {{currency.currency_symbol}}
+                                            </button>
+                                        </li>
+
+                                        <li class="text-center">
+                                            Other Currencies
+                                        </li>
+
+                                        <li *ngFor="let currency of currencies.other_currencies"
+                                            class="nav-item-btn text-center nav-item">
+                                            <button (click)="changeCurrency(currency.currency)"
+                                                class="btn btn-primary btn-block">
+                                                <img width="42" class="rounded-circle" [src]="currency.currency_flag" />
+                                                {{currency.currency}} - {{currency.currency_symbol}}
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </perfect-scrollbar>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="header-dots">
+    <div class="btn-group" ngbDropdown placement="bottom">
+        <button type="button" class="btn btn-link p-0 mr-2" ngbDropdownToggle>
+            <span>
+                <div class="icon-wrapper icon-wrapper-alt rounded-circle">
+                    <div class="icon-wrapper-bg bg-focus"></div>
+                    <img class="language-icon flag flag-icon-background" [src]="selectedCurrencyFlag" />
+                </div>
+            </span>
+        </button>
+        <div ngbDropdownMenu>
+            <div class="dropdown-menu-header">
+                <div class="dropdown-menu-header-inner pt-4 pb-4 bg-focus">
+                    <div class="menu-header-image opacity-05 dd-header-bg-4"></div>
+                    <div class="menu-header-content text-center text-white">
+                        <h6 class="menu-header-subtitle mt-0">Choose Currency</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-area-md">
+                <perfect-scrollbar [autoPropagation]="true">
+                    <h6 class="dropdown-header">Popular Currencies</h6>
+                    <button *ngFor="let currency of currencies.top_currencies" type="button" class="dropdown-item"
+                        (click)="changeCurrency(currency.currency, currency.currency_flag)">
+                        <img class="language-icon flag flag-icon-background" [src]="currency.currency_flag" />
+                        <span>{{ currency.currency_name }}</span>
+                    </button>
+                    <div class="dropdown-divider"></div>
+                    <h6 class="dropdown-header">Other Currencies</h6>
+                    <button *ngFor="let currency of currencies.other_currencies" type="button" class="dropdown-item"
+                        (click)="changeCurrency(currency.currency, currency.currency_flag)">
+                        <img class="language-icon flag flag-icon-background" [src]="currency.currency_flag" />
+                        <span>{{ currency.currency_name }}</span>
+                    </button>
+                </perfect-scrollbar>
+            </div>
+        </div>
+    </div>
+</div>

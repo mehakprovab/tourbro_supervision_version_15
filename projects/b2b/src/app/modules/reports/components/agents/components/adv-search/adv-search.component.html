@@ -1,0 +1,38 @@
+<form>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="inputBookedFromDate">Booked From Date</label>
+            <input type="date" class="form-control form-control-sm" id="inputBookedFromDate"
+                placeholder="Booked From Date">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputBookedToDate">Booked To Date</label>
+            <input type="date" class="form-control form-control-sm" id="inputBookedToDate" placeholder="Booked To Date">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputStatus4">Status</label>
+            <select id="inputStatus4" class="form-control form-control-sm">
+                <option selected>All</option>
+                <option>Confirmed</option>
+                <option>Pending</option>
+                <option>Cancelled</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-4">
+            <label for="allbtn" class="invisible"> all buttons </label>
+            <div id="allbtn" class="">
+                <span class="p-1">
+                    <button type="submit" class="btn btn-sm btn-outline-primary p-1">Search</button>
+                </span>
+                <span class="p-1">
+                    <button type="submit" class="btn btn-sm btn-outline-primary p-1">Reset</button>
+                </span>
+                <span class="p-1">
+                    <button type="submit" class="btn btn-sm btn-primary p-1">Clear Filter</button>
+                </span>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,223 @@
+<div class="card" style="width: auto; height: auto; overflow-y: scroll; padding: 0px;" *ngIf="invoiceData">
+    <div class="text-center" style="margin-top: 20px; padding: 0px 20px;">
+        <a [routerLink]="['/report/b2c-flight']"><button class="btnStyle">Back</button></a>
+        <a id="download" (click)="downloadA4('pdf', 'potrait')" style="margin-left:15px;"><button
+            class="btnStyle">Download PDF</button></a>
+    </div>
+    <div style=" -webkit-print-color-adjust: exact; width: 100%; padding:0px 20px; display: table; margin: auto; height: auto; overflow-y: scroll;" id="print_voucher" #print_voucher>   
+        <table class="table" cellpadding="0" cellspacing="0" width="100%"
+        style="font-size:13px; width:1006px; margin:0px auto;background-color:#f8f8f8; padding:50px 45px;margin-top: 20px;">
+        <tbody>
+            <tr>
+                <td style="padding: 5px 14px; color: #000; line-height: 31px;" class="logocvr">
+
+                    <table width="100%" style="border-collapse: collapse;" cellpadding="0" cellspacing="0">
+                        <tbody>
+            <tr>
+                <td style="padding:5px 0px;"><img
+                        style="max-width: 190px;  margin-top: 5px;"
+                        src="assets/images/login-images/l-logo.svg" alt=""></td>
+
+                        <td style="padding: 0px; width: 25%; border-top: 1px solid transparent; border-bottom: 1px solid #082E53;">
+                            <div class="trapezoid">Invoice</div>
+                        </td>
+               </tr>
+
+
+               <tr>
+
+                
+                <td colspan="4" style="width: 60%; padding: 14px;">
+                    <table style="width: 100%;">
+                        <tr><td style="height: 5px; border: none; padding: 0px;"></td></tr>
+                        
+
+                        <tr><td style="height: 5px; border: none; padding: 0px;"></td></tr>
+
+                            <tr>
+                            <td style="border:none; padding:0px 0px 15px; line-height: 25px; font-size: 15px; width: 50%;">
+                            <strong class="label"
+                            style=" font-size:17px;">
+
+                            <ng-container>
+                            <span class="text-uppercase">
+                                {{(invoiceData['Passengers'][0]['title'] | uppercase) || ''}}. {{(invoiceData['Passengers'][0]['first_name'] | uppercase)
+                                || ''}}
+                                {{
+                                (invoiceData['Passengers'][0]['last_name'] | uppercase) || ''}} <br>
+                            </span>
+                        </ng-container>
+                            </strong>
+                            <span><i class="fa fa-phone-alt"></i> {{invoiceData['Email']}}</span>
+                            <br>
+                            <span><i class="fa fa-envelope"></i> {{invoiceData['Email']}}</span>
+                            </td>
+
+                            <td style="border:none; padding:0px 0px 15px; line-height: 25px; font-size: 15px; width: 50%; text-align: right;">
+                                
+                                <span>
+                                    Reservation Code: <strong>{{invoiceData['AppReference']}}</strong><br>
+                                </span>
+
+                                <span>
+                                    Invoice No: <strong>{{invoiceData['InvoiceNumber']}}</strong><br>
+                                </span>
+
+                                <span>Date of Issue: <strong>{{invoiceData['created_at']  | date: 'dd/MM/yyyy'}}</strong></span>
+                                
+                   
+                                </td>
+                            </tr>
+                            <tr><td style="height: 5px; border: none; padding: 0px;"></td></tr>
+                  </table>
+                </td>
+                
+            </tr>
+
+
+
+            <tr>
+                <td colspan="8">
+
+                    <table width="100%" cellpadding="5" cellspacing="0"
+                    style="font-size: 13px; border-collapse: separate;  box-shadow: 0 0 2px 0 rgba(0,0,0,.08), 0 2px 8px 0 rgba(0,0,0,.16); background: #fff;">
+                    <tbody>
+                        
+
+                        <tr style="background: #e7f2fd; height: 170px;">
+                            <td colspan="6" style="padding: 0px; border: none;">
+                            <table style="width: 100%;">
+
+                                <tr style="white-space:nowrap; background: #092e53; color: #fff; font-weight: 500;">
+                            
+                                    <th>#</th>
+                                     <th>Sector <span *ngIf="invoiceData?.TripType" class="text-capitalize">({{invoiceData?.TripType}})</span></th>
+                                    <th>GDS PNR</th>
+                                    <th>Pax Name</th>
+                                    <th>Pax Type</th>
+                                    <th>Tickets No</th>
+                                    <th style="border-left: 1px solid #fff;">Air Fare</th>
+                                    
+                                </tr>
+
+                                <tr *ngFor="let passenger of invoiceData.Passengers; let i = index">
+                                 
+                            <td>{{i+1}}</td>
+                            <td style="width: 27%;">
+                                {{invoiceData?.JourneyFrom}} {{'-'}}
+                                {{invoiceData?.JourneyTo}}
+                            </td>
+
+                            <td><span style="display: block; font-size: 14px; color: #333; margin-top: 1px;">
+                                {{invoiceData?.GDS_PNR}}
+                            </span></td>
+
+                            <td><span
+                                style="display: block; font-size: 14px; color: #333; margin-top: 1px;">
+                                {{passenger['title']}}.  {{passenger['first_name']}}     {{passenger['last_name']}}
+                            </span></td>
+
+                            <td><span
+                                style="display: block; font-size: 14px; color: #333; margin-top: 1px;">
+                                {{passenger['passenger_type']}}
+                            </span></td>
+
+                            <td><span
+                                style="display: block; font-size: 14px; color: #333; margin-top: 1px;">
+                                {{passenger['ticket_no']}}
+                            </span></td>
+
+                            
+
+                            <td style="border-left: 1px solid #fff;height: 170px; "><span
+                                style="display: block; font-size: 14px; color: #333; margin-top: 1px;">
+                                {{passenger?.fareBDT }}
+                            </span></td>
+                            </tr>
+                            </table>
+                            </td>
+                        </tr>
+
+                        <tr style="position: relative;"><td style="position: absolute;
+                            top: -125px;
+                            border: none;
+                            left: 0px;
+                            right: 0px;
+                            margin: auto;
+                            display: table;"><img style="width: 500px; opacity: 0.1;" src="assets/images/login-images/l-logo.svg"></td></tr>
+
+<tr style="white-space:nowrap; background: #fff; color: #000; font-weight: 500;">
+                            
+    <th>&nbsp;</th>
+     <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th style="text-align: right;">Taxes</th>
+    <th style="border-left: 1px solid #ddd; width: 15%; text-align: left;">{{invoiceData['TotalFarePriceBreakUp']['Currency']}} {{invoiceData['TotalFarePriceBreakUp']['PriceBreakup']['Tax'] }}</th>
+    
+</tr>
+
+<tr style="white-space:nowrap; background: #fff; color: #000; font-weight: 500;">
+                            
+    <th>&nbsp;</th>
+     <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th style="text-align: right;">AIT</th>
+    <th style="border-left: 1px solid #ddd; width: 15%; text-align: left;">{{invoiceData['TotalFarePriceBreakUp']['Currency']}} {{invoiceData['TotalFarePriceBreakUp']['PriceBreakup']['AdvanceTax'] }}</th>
+    
+</tr>
+
+<tr style="white-space:nowrap; background: #fff; color: #000; font-weight: 500;">
+                            
+    <th>&nbsp;</th>
+     <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th style="text-align: right;">Total Amount</th>
+    <th style="border-left: 1px solid #ddd; width: 15%; text-align: left;">{{invoiceData['TotalFarePriceBreakUp']['Currency']}}
+        {{invoiceData['TotalFarePriceBreakUp']['TotalDisplayFare'] }}
+        ({{ invoiceData['TotalFarePriceBreakUp']['TotalDisplayFare'] | numberToWords:invoiceData['TotalFarePriceBreakUp']['Currency'] }})
+    </th>
+    
+</tr>
+                        
+                    </tbody>
+                </table>
+
+             </td>
+            </tr>
+            <tr><td></td></tr>
+
+
+            <tr>
+                <td colspan="8" style="padding: 0px; border: none;">
+                    <table style="width: 100%;">
+                    <tr>
+                     <td style="width: 55%;
+                     background: #092e53;
+                     border: none;
+                     color: #fff;
+                     padding: 14px 30px;
+                     line-height: 22px;
+                     font-size: 14px;">
+                     <span><i class="fa fa-phone-alt"></i> +44 1254 66 22 22</span><br>
+                     <span><i class="fa fa-envelope"></i> info@booking247.com</span><br>
+                     <span><i class="fa fa-globe"></i> www.booking247.com</span><br>
+                        <span>41, Victoria Street 
+Blackburn, Lancashire, United Kingdom - BB1 6DN2</span>
+                     </td>
+                     <td style="width: 45%; border: none; padding: 0px;"><img style="width: 75%; margin: 18px auto; display: block" src="assets/images/invoice_foot.png"></td>
+                     </tr>
+                     </table>
+                     </td>
+                </tr>
+
+        </tbody>
+    </table>
+    </td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+</div>

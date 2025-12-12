@@ -1,0 +1,83 @@
+.nrm_input,
+.src_btn {
+    padding: 0.5rem 0.75rem 0.5rem 0.5rem;
+    line-height: 1.7;
+    height: calc(2.5em + 0.75rem + 2px);
+}
+
+.card {
+    padding: 30px;
+    font-family: 'Asap';
+}
+
+h5 {
+    width: 100%;
+    border-bottom: 1px solid lightgrey;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
+.btncontainer {
+    width: 100%;
+    text-align: center;
+    padding: 12px 0px;
+}
+
+label {
+    color: #000000;
+    font-weight: 600;
+}
+
+.src_btn {
+    padding: 0.5rem 0.75rem 0.5rem 0.5rem !important;
+    line-height: 1.7;
+    height: calc(2.5em + 0.75rem + 2px);
+}
+
+.wrapper1,
+.wrapper2 {
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+.wrapper1 {
+    height: 20px;
+}
+
+.div1 {
+    width: 2000px;
+    height: 20px;
+}
+
+.div2 {
+    width: 2000px;
+    overflow: hidden;
+}
+
+.div2 .table-responsive {
+    overflow: inherit;
+}
+
+.invisible-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.table th,
+.table td {
+    white-space: normal;
+}
+
+
+::ng-deep .page-item.active .page-link,
+::ng-deep .pagination .active.page-number .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #0683c2 !important;
+    border-color: #0683c2 !important;
+}
+.viewMore{
+    color: red!important;
+    cursor: pointer;
+    padding-left: 18px;
+}

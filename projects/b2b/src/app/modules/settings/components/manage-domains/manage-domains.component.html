@@ -1,0 +1,74 @@
+<div class="card mb-3">
+    <div class="card-header-tab card-header">
+        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+            <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+            {{ 'Manage Domain' }}
+        </div>
+    </div>
+    <form class="m-4">
+        <div class="form-group row">
+            <label for="domainname" class="col-sm-3  col-form-label col-form-label-sm"> Domain Name <sup
+                    class="text-danger">*</sup> </label>
+            <input type="text" class="col-sm-5 form-control form-control-sm" id="domainname" placeholder="Domain Name">
+        </div>
+        <div class="form-group row">
+            <label for="domainwebsite" class="col-sm-3  col-form-label col-form-label-sm"> Domain Website <sup
+                    class="text-danger">*</sup> </label>
+            <input type="text" class="col-sm-5 form-control form-control-sm" id="domainwebsite"
+                placeholder="Dmain Website">
+        </div>
+        <div class="form-group row">
+            <label for="email" class="col-sm-3  col-form-label col-form-label-sm"> Email Id </label>
+            <input type="text" class="col-sm-5 form-control form-control-sm" id="email" placeholder="Email ID">
+        </div>
+        <div class="form-group row">
+            <label for="phone" class="col-sm-3  col-form-label col-form-label-sm"> Phone Number </label>
+            <input type="text" class="col-sm-5 form-control form-control-sm" id="phone" placeholder="Phone Number">
+        </div>
+        <div class="form-group row">
+            <label for="address" class="col-sm-3  col-form-label col-form-label-sm"> Address <sup
+                    class="text-danger">*</sup> </label>
+            <input type="text" class="col-sm-5 form-control form-control-sm" id="address" placeholder="Address">
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label col-form-label-sm" for="country"> Country <sup
+                    class="text-danger">*</sup> </label>
+            <select class="col-sm-5 form-control form-control-sm custom-select" id="country">
+                <option selected>Choose...</option>
+                <option value="1">India</option>
+                <option value="2">Dubai</option>
+                <option value="3">USA</option>
+                <option value="4">Dublin</option>
+                <option value="5">Swiden</option>
+            </select>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label col-form-label-sm" for="city"> City <sup class="text-danger">*</sup>
+            </label>
+            <select class="col-sm-5 form-control form-control-sm custom-select" id="city">
+                <option selected>Choose...</option>
+                <option value="1">Guwahati</option>
+                <option value="2">Delhi</option>
+                <option value="3">Mumbai</option>
+                <option value="4">Kolkata</option>
+                <option value="5">Bengaluru</option>
+            </select>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-3"> Change Logo</div>
+            <div class="custom-file col-sm-5">
+                <input type="file" class="form-control form-control-sm custom-file-input" id="validatedCustomFile"
+                    required>
+                <label class="custom-file-label col-form-label col-form-label-sm" for="validatedCustomFile">Choose
+                    file...</label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="offset-sm-3">
+                <button type="submit" class="btn btn-md btn-primary"> Save </button> &nbsp;
+                <button type="submit" class="btn btn-md btn-warning">Reset</button>
+            </div>
+        </div>
+    </form>
+</div>

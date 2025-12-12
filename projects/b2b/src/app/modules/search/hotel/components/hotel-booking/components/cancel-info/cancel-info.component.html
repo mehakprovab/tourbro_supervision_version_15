@@ -1,0 +1,36 @@
+<div *ngIf="data">
+    <h4 class="text-center" style="border-bottom: 1px solid lightgrey;">Cancellation Policy</h4>
+    <div class="my-2">
+        <div>
+            <ul class="list-unstyled" *ngIf="!data.NonRefundable; else other">
+                <ng-container
+                    *ngIf="(data.CancelPenalty | typeof) == 'object'; else otherPanalty">
+                    <li class="listcancel" *ngFor="let policy of data.CancelPenalty">
+                        Cancellation made
+                        <strong>{{policy.HoursBefore}}</strong> hours before checkin
+                        <strong>{{policy.Penalty.Currency}} {{policy.Penalty.Value | number:'1.2-2'}}</strong> will be
+                        charged as
+                        cancellation penalty.
+                    </li>
+                </ng-container>
+                <ng-template #otherPanalty>
+                    <li class="listcancel">
+                        You may cancel your booking for <strong>no charge</strong> on or before
+                        <strong>{{data.CancelPenalty | date: 'dd-MM-yyyy'}} </strong>
+
+                    </li>
+                </ng-template>
+            </ul>
+            <ng-template #other>
+                <ul class="list-unstyled">
+                    <li class="listcancel">
+                        Non Refundable.
+                    </li>
+                </ul>
+            </ng-template>
+        </div>
+    </div>
+    <div class="float-right">
+        <button class="btn btn-primary" (click)="onClose()">Close</button>
+    </div>
+</div>

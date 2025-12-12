@@ -1,0 +1,108 @@
+<div class="row m-0">
+    <!-- <div class="py-3 col-md-12 col-lg-12 pl-0">
+        <div class="clearfix">
+            <span class="float-left" style="color: #012756;"> <strong>Note:</strong> Application Default Currency <b>
+                    GBP </b> </span>
+        </div>
+    </div> -->
+
+    <div style="display: flex;width: 100%;">
+        <div class="custom-navtabs" *ngIf="flightIcon">
+            <ul ngbNav #nav="ngbNav" class="nav-pills m-0" orientation="horizontal" [(activeId)]="activeIdString">
+                <li ngbNavItem="left" (click)="onSearchTypeChange('flight')">
+                    <a ngbNavLink><img class="mr-1" src="assets/images/plane.svg" alt="flight" /> flight</a>
+                </li>
+                <li ngbNavItem="middle" (click)="onSearchTypeChange('hotel')">
+                    <a ngbNavLink><img class="mr-2" src="assets/images/hotel.svg" alt="hotels" />hotels</a>
+                </li>
+                <li ngbNavItem="activity" (click)="onSearchTypeChange('activity')">
+                    <a ngbNavLink><img class="mr-2" src="assets/images/activity.svg" alt="activity" />activity</a>
+                </li>
+                <li ngbNavItem="transfer" (click)="onSearchTypeChange('transfer')">
+                    <a ngbNavLink><img class="mr-2" src="assets/images/transfer.svg" alt="transfer" />transfer</a>
+                </li>
+                <li ngbNavItem="tour" (click)="onSearchTypeChange('tour')">
+                    <a ngbNavLink><img class="mr-2" src="assets/images/holiday.svg" alt="tour" />tour</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--  -->
+    <div class="card" *ngIf='!ShowaddAirline'>
+        <div for="AddAirline">
+            <div class="p-0 bg-light col-md-12 col-lg-12">
+                <div class="card-header-tab card-header">
+                    <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                        <span style="font-weight: 600;"> Flight - Add Airline</span>
+                    </div>
+                </div>
+            </div>
+            <form [formGroup]="airlineForm" (ngSubmit)="onFlightAdd(airlineForm.value,'specific')">
+
+                <div style="display: flex;" class="bbottom">
+                    <div style="width: 30%;" class="addlineSpacing">
+                        <label class="customLabel font-weight-bold" for="airLines">Airlines <sup
+                                class="text-danger">*</sup>
+                        </label>
+                        <select class="customInputStyle" id="airLines" formControlName="airlines">
+                            <option selected>Choose...</option>
+                            <option *ngFor="let a of airlines" [value]="a.id">{{a.name}}</option>
+                        </select>
+                        <small class="text-danger" *ngIf="hasAddAirlineError('airlines','required')">*airlines is
+                            required</small>
+                    </div>
+                    <div style="width:40%" class="addlineSpacing">
+                        <label class="customLabel font-weight-bold" for="">Mark Up Type <sup class="text-danger">*</sup>
+                        </label><br>
+                        <input type="radio" class="" value="plus" formControlName="mark_up_type">
+                        <label class="radioLabel">Flat(+/- GBP)</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" class="" value="percentage" formControlName="mark_up_type">
+                        <label class="radioLabel">Percentage(%)</label>
+                        <br><small class="text-danger" *ngIf="hasAddAirlineError('mark_up_type','required')">*mark up
+                            type
+                            is
+                            required</small>
+                    </div>
+                    <div style="width: 30%;" class="addlineSpacing">
+                        <div>
+                            <label class="customLabel font-weight-bold" for="markupValue">Mark Up Value</label>
+                            <input formControlName="mark_up_value" type="number" class="customInputStyle"
+                                id="markupValue" placeholder="Add Amount/Percentage">
+                            <small class="text-danger" *ngIf="hasAddAirlineError('mark_up_value','required')">*mark up
+                                value is
+                                required</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="btncontainer">
+                    <button type="button" class="btnStyle" (click)="clearAddAirline()">CLEAR</button> &nbsp;
+                    <button type="submit" class="btnStyle">ADD</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="">
+    <div class="">
+        <ngb-tabset class="tabs-animated tabs-animated-shadow" #tabs>
+            <ngb-tab id="markup_detail">
+                <ng-template ngbTabTitle>
+                    <span><i class="fa fa-plus"></i> &nbsp; MARKUP DETAILS</span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <app-agent-markup-b2b-details (toUpdate)="triggerTab($event)"></app-agent-markup-b2b-details>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab id="default_markup">
+                <ng-template ngbTabTitle>
+                    <span><i class="fa fa-edit"></i> &nbsp; ADD/UPDATE MARKUP </span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <app-agent-markup-b2b-add-update (toList)="triggerTab($event)" [getDataToUpdate]="userData">
+                    </app-agent-markup-b2b-add-update>
+                </ng-template>
+            </ngb-tab>
+        </ngb-tabset>
+    </div>
+</div>

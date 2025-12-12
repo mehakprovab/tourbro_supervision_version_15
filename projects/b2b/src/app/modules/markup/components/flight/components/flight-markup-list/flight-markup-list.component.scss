@@ -1,0 +1,48 @@
+table {
+    width: 100%;
+}
+th {
+    color: #012756;
+    font-size: 14px;
+}
+td{
+    color: #707070;
+    font-size: 12px;
+}
+.btnStyle {
+    padding: 8px 30px;
+    background: #012756;
+    border-radius: 5px;
+    color: #ffffff;
+    border: none;
+}
+.card-header {
+    color: #012756;
+}
+:host ::ng-deep .mat-radio-container {
+    height: 15px;
+    width: 15px;
+}
+:host ::ng-deep .mat-radio-outer-circle {
+    height: 15px;
+    width: 15px;
+}
+:host ::ng-deep .mat-radio-inner-circle {
+    height: 15px;
+    width: 15px;
+}
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #012756 !important;
+}
+::ng-deep .mat-form-field {
+    font-size: 12px; // example
+}
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+    height: 40px !important;
+}
+::ng-deep .mat-form-field-wrapper {
+    padding: 10px 0px;
+}
+::ng-deep table.mat-table{
+    font-family: 'Asap'
+}

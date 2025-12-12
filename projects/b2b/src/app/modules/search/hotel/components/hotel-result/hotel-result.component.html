@@ -1,0 +1,236 @@
+<section for="ModifySearch" class="mx-0">
+    <!-- <div class="row bg-white py-2 rounded">
+        <div class="col-md-10">
+            <div class="row font-weight-bold">
+                <div class="col-md-4"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp;Location / City
+                </div>
+                <div class="col-md-2 text-center"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;&nbsp;Check-In
+                </div>
+                <div class="col-md-2 text-center"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;&nbsp;Check-Out
+                </div>
+                <div class="col-md-2 text-center"><i class="fas fa-user"></i>&nbsp;&nbsp;Guests</div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">{{destination}}</div>
+                <div class="col-md-2 text-center">{{searchPayload?.CheckIn | date:'dMMM y'}}</div>
+                <div class="col-md-2 text-center">{{searchPayload?.CheckOut | date:'dMMM y'}}</div>
+                <div class="col-md-2 text-center">{{travellerAdult == 1 ? travellerAdult + ' Adult': travellerAdult +
+                    ' Adults'}}
+                    <span *ngIf="travellerChild > 0">{{travellerChild == 1 ? travellerChild + ' Child':
+                        travellerChild + ' Children'}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-success btn-lg pull-right" (click)="isCollapsed = !isCollapsed"
+                [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
+                Modify Search
+            </button>
+        </div>
+    </div> -->
+    <div class="bbottom grid-section-wrapper">
+        <div class="col-md-12 col-lg-12 p-0">
+            <div id="collapseBasic" style="z-index: 9999; display: block; float: left;width: 100%;">
+                <div class="w-100">
+                    <div class="col-md-12">
+                        <app-hotel (callResult)="searchResult($event)"></app-hotel>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section for="HotelFoundAndListSearchedResult" class="loading-container">
+    <div class="row rounded">
+        
+        <div class="col-md-3 col-lg-3 pr-0">
+            <div class="flteboxwrp">
+                <div class="fltrboxin rounded-bottom" style="background: none;">
+
+                    <!-- <div class="map_view mt-0"> <span>View Map</span></div> -->
+
+                    <div class="celsrch">
+                        <div style="padding:0px">
+                            <!-- <span class="filterSpan"><b>{{ hotels.length }}</b> Hotels Found</span> -->
+                            <a (click)="resetFilter()" class="pull-left" style="cursor: pointer;"
+                                id="reset_filters">Reset
+                                All</a>
+                        </div>
+                        <app-filter-hotels></app-filter-hotels>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 col-lg-9">
+            <div *ngIf="hotels.length > 0" class="col-md-12 col-lg-12 mt-3 p-0 mob_hide">
+            <div class="d-flex">
+                <div class="col-md-6 nopad p-0 wht_clr"><span class="filterSpan"><strong>{{hotels.length}}</strong> Hotels Found</span></div>
+
+                <div class="col-md-6 nopad p-0 text-right wht_clr">All taxes and fees included, except local tax if
+                    applicable.</div>
+            </div>
+        </div>
+            <div class="">
+                <div class="col-md-12 col-lg-12 p-0">
+                    <div class="divinsidefltr d-flex">
+                        <div class="col-md-12 nopad p-0">
+                        <app-sorting-hotels></app-sorting-hotels>
+                        </div>
+
+                        <!-- <div class="col-md-1 nopad">
+                            <div class="hotel_view">
+                                <a id="refresh" class="header-links" (click)="list($event)">
+                                    <i class="fal fa-list"></i> </a>
+                                  
+                                  <a id="refresh" class="header-links" (click)="grid($event)">
+                                    <i class="fal fa-th-large"></i>
+                                  </a>
+                                  
+                                
+                            </div>
+                        </div> -->
+
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <div *ngIf="hotels.length > 0" class="row">
+                        <div class="col-md-12 col-lg-12">
+                            <div *ngFor="let hotel of hotels | slice: 0: endSlice; let i = index;" infiniteScroll
+                                [infiniteScrollDistance]="1" [infiniteScrollUpDistance]="2"
+                                [infiniteScrollThrottle]="throttle" (scrolled)="onScrollDown(i+1)"
+                                class="card mb-4 rounded result_hotel nopad p-0">
+                                <div class="card-body nopad p-0">
+                                    <div class="row text-center">
+
+                                        <div class="col-md-3" *ngIf="hotel?.HotelPicture; else noPhoto">
+                                            <div class="hotel_image">
+                                            <img (click)="onBookNow(hotel)" class="rounded imgStyle" [src]="hotel?.HotelPicture" alt="">
+                                            </div>
+                                        </div>
+                                        <ng-template #noPhoto>
+                                            <div class="col-md-3">
+                                                <div class="hotel_image1">
+                                                <img (click)="onBookNow(hotel)" class="rounded imgStyle" src="assets/images/originals/no-image-found.jpg" alt="">
+                                                </div>
+                                            </div>
+                                        </ng-template>
+
+                                       
+                                        <div class="col-md-9 mb-2 pb-0 row mobile_row" style="padding: 8px;">
+                                            <div class="col-md-9" style="text-align: left;">
+                                                
+                                                <h5 class="cusromGrey hotelstyle"><strong>{{hotel.HotelName}}</strong> </h5>
+
+                                                <ng-template *ngIf="hotel?.StarRating === 0 then noStar; else stars">
+                                                </ng-template>
+                                                <ng-template #noStar>
+                                                    <span class="star_rtng">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                    </span>
+                                                </ng-template>
+                                                <ng-template #stars>
+                                                    <span class="star_rtng">
+                                                        <i class="fas fa-star star_rtng_clr"
+                                                            *ngFor="let s of hotel?.StarRating | map: getStarArray"></i>
+                                                        <i class="fas fa-star"
+                                                            *ngFor="let s of hotel?.StarRating | map: getStarArrayRemaining"></i>
+                                                    </span>
+                                                </ng-template>
+                                               
+                                                <br>
+
+                                                <p class="address_loc">
+                                                    {{hotel.HotelAddress}}
+                                                </p>
+
+                                               <div class="clearfix"></div>
+
+                                               <div class="mob_hide">
+                                                <div class="col-md-12 col-12 p-0 text-left amelist" *ngIf="hotel?.HotelAmenities?.length > 0; else noAmenity">
+                                                  
+                                                  <ng-container *ngFor="let amenity of hotel?.HotelAmenities | slice:0:5; let i = index">
+                                                    <!-- <a *ngIf="hasAmenityIcon(amenity)" placement="top" [tooltip]="getAmenityTooltip(amenity)"> -->
+                                                        <span class="amenity-span">
+                                                            {{ amenity }}<span *ngIf="i < 4"> </span>
+                                                        </span>
+                                                    <!-- </a> -->
+                                                  </ng-container>
+                                                  <span class="mx-2 amenities-length">{{hotel?.HotelAmenities.length}}+</span>
+                                              
+                                                </div>
+                                              </div>
+                                              
+                                              <ng-template #noAmenity>
+                                                <div class="col-md-8 text-left wht_clr">
+                                                  No Amenities Found
+                                                </div>
+                                              </ng-template>                                                                                                                                                        
+
+                                            </div>
+                                          
+
+
+                                            <div class="col-md-3 col-12 border_left_price mob_hide"
+                                            style="text-align: center;">
+                                            <!-- <h6 class="mob_hide"><strong>Lowest Price</strong>
+                                                We found for this Hotel</h6> -->
+                                                <div *ngIf="hotel.Refundable == true && hotel.booking_source !== 'TLAPINO00006'" >
+                                                    <a class="cancel_msg">Refundable</a>
+                                                </div>
+                                                <div *ngIf="hotel.Refundable == false && hotel.booking_source !== 'TLAPINO00006'">
+                                                    <a class="non_cancel_msg">Non-Refundable</a>
+                                                </div>
+                                            <h4 cusromGrey><strong>{{hotel?.Price.Currency}} {{hotel?.Price.Amount | number:'1.2-2'}}</strong></h4>
+                                            <!-- <p class="cusromGrey">price per night</p> -->
+
+                                            <!-- <div *ngIf="hotel.Refundable == true">
+                                                <a class="cancel_msg">Free Cancellation</a>
+                                            </div> -->
+                                          
+                                            <div class="clearfix"></div>
+                                            <a class="hotelDetailsBtn" (click)="onBookNow(hotel)"
+                                            aria-controls="collapseBasic"
+                                            style="color: #ffffff;cursor: pointer;">
+                                                Book Now
+                                            </a>
+
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Mappp -->
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <div class="cityframe" style="width: 100%;  height: 100%;">
+                        <div #mapContainer id="toggleMap" style="position: static;"></div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="!hotels.length" class="row">
+                <div class="col-md-12 col-lg-12 pr-0">
+                    <div class="card-body pb-0 no-hotels">
+                        <img class="no_hotel_found" src="../../../../../assets/images/no_flight_found.jpg" alt="" />
+                        <h5 class="no_hotel_found">Sorry,no availability found for your selected dates. Please try different dates. !!!</h5>
+                        <!-- Sorry,no availability found for your selected dates. Please try different dates -->
+                        <p *ngIf="serverError">There is a technical issue. Please try after sometime</p>
+                        <!-- <p *ngIf="!serverError && searchingHotel">Searching best hotels...</p> -->
+                    </div>
+                </div>
+            </div>
+            <ngx-loading [show]="loading"
+                [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+                [template]="loadingTemplate"></ngx-loading>
+        </div>
+        <!-- Map View -->
+    </div>
+</section>

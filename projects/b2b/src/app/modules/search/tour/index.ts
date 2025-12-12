@@ -1,0 +1,1 @@
+export * from './components/tour-booking/tour-details/b2b-tour-details.component'

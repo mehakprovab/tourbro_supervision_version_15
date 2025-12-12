@@ -1,0 +1,29 @@
+<div class="sub-agent-container custom-table-layout">
+    <div class="add-traveller">
+        <div class="title">
+            <h3>User Profile</h3>
+        </div>
+        <div class="bg-white custom-inline-form mb-4 px-3 py-4 rounded">
+            <form class="" [formGroup]="regConfig" autocomplete="off">
+            
+                <div class="form-group required row">
+                    <label for="name"class="required" class="col-sm-2 col-form-label">Agent Group</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control text-capitalize" id="name" maxlength="250" 
+                     (keypress)="omitSpecialCharacters($event)"
+                        formControlName="name">
+    
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <div class="form-group required row">
+                        <div class="col-12 d-flex">
+                            <button class="btnStyle" type="submit" class="btn btn-primary icon-btn lg mr-4" (click)="onSubmit()">Save</button>
+                            <!-- <button class="btnStyle" type="reset" class="btn btn-danger icon-btn lg" (click)="onReset()">Reset</button> -->
+                        </div>
+                    </div>
+                </div>
+                </form>
+                </div>
+                </div>
+                </div>

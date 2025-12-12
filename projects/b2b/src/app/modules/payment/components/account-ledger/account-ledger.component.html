@@ -1,0 +1,191 @@
+<div class="topSectionContainer">
+    <button class="btnStyle pull-left">Account Ledger</button>
+</div>
+<div class="clearfix"></div>
+<br />
+<div class="card" style="background: #022756;padding: 30px;">
+  <form [formGroup]="searchForm">
+    <div class="form-row">
+      <div class="col-3 pr-0">
+        <div class="form-group">
+          <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
+          <label for="fromDate">From</label>
+          <input formControlName="from_date" type="text" id="fromDate" class="form-control form-control-sm nrm_input"
+            placement="bottom left" placeholder="dd/mm/yyyy" bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen"
+            readonly="true">
+        </div>
+      </div>
+      <div class="col-3 pr-0">
+        <div class="form-group">
+          <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
+          <label for="toDate">To</label>
+          <input formControlName="to_date" type="text" id="toDate" class="form-control form-control-sm nrm_input"
+            placement="bottom left" placeholder="dd/mm/yyyy" bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen"
+            readonly="true">
+        </div>
+      </div>
+      <div class="col-3 pr-0">
+        <div class="form-group">
+          <label for="transactionId">Transaction ID</label>
+          <input formControlName="transaction_id" type="text" class="form-control text-capitalize form-control-sm nrm_input"
+            placeholder="Enter Id No." id="transactionId">
+          <div>
+          </div>
+        </div>
+      </div>
+      <div class="col-3 pr-0">
+        <div class="form-group">
+          <label for="bookedBy">Booked By</label>
+          <select formControlName="bookedBy" name="cars" id="bookedBy" class="form-control form-control-sm nrm_input">
+            <option value=''>ALL</option>
+          </select>
+          <div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-3 pr-0">
+        <div class="form-group">
+          <label for="Type">Type</label>
+          <select formControlName="module_type" name="cars" id="Type" class="form-control form-control-sm nrm_input">
+            <option value="">All</option>
+            <option value="flight">Flight Bookings</option>
+            <option value="hotel">Hotel Bookings</option>
+            <option value="debit">Debit</option>
+            <option value="credit">Credit</option>
+            <option value="transaction">Transaction</option>
+            <!-- <option value="recharge">Instant Recharge</option> -->
+          </select>
+          <div>
+          </div>
+        </div>
+      </div>
+      <div class="col-3 pr-0" style="margin-top:  27px;">
+        <div class="form-group">
+          <button type="submit" class="btn w-100 srch_btn" data-toggle="collapse" data-target="#demo">
+            Timeline<i style="float: right;" class="fa fa-angle-down"></i>
+          </button>
+        </div>
+      </div>
+      <div class="col-3 pr-0" style="margin-top:  27px;">
+        <div class="form-group">
+          <button type="submit" (click)="onSearchSubmit()" class="btn w-100 srch_btn">
+            Search
+          </button>
+        </div>
+      </div>
+      <div class="col-3 pr-0" style="margin-top:  27px;">
+        <div class="form-group">
+          <button type="submit" (click)="onReset()" class="btn w-100 srch_btn">
+            Reset
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="demo" class="collapse">
+      <button class="btn btn-lg btn-light mr-1" (click)="searchByTimeLine('today')">Today Search</button>
+      <button class="btn btn-lg btn-light mr-1" (click)="searchByTimeLine('lastDay')">Last Day Search</button>
+      <button class="btn btn-lg btn-light mr-1" (click)="searchByTimeLine('oneWeek')">One Week Search</button>
+      <button class="btn btn-lg btn-light mr-1" (click)="searchByTimeLine('oneMonth')">One Month Search</button>
+      <button class="btn btn-lg btn-primary mr-1" (click)="onReset()">Clear Filter</button>
+    </div>
+  </form>
+</div>
+<div class="exportWrapper">
+  <p *ngIf="respData.length">Total {{respData.length}} Transaction Found</p>
+</div>
+
+<div class="table-btn-group mb-3 exportWrapper">
+    <div class="col-12 p-0">
+        <button type="button" (click)="download('pdf', 'landscape')">PDF</button>
+    <button type="button" (click)="exportExcel()">Export to Excel</button>
+    <!-- <button type="button"><i class="fas fa-envelope"></i>&nbsp; Email</button> -->
+      <div class="form-group mb-0 col-sm-3 p-0 float-right has-search">
+        <span class="fa fa-search form-control-feedback"></span>
+        <input class="form-control text-capitalize" type="text" name="Search" [(ngModel)]="searchText" autocomplete="off" placeholder="Search">
+      </div>
+      </div>
+</div>
+<div class="card">
+  <div class="card-body">
+    <div class="mb-3">
+      <form>
+        <div class="table-responsive">
+          <table class="table table-borderless table-striped table-hover" matSort (matSortChange)="sortData($event)"
+            id="account-ladger">
+            <thead>
+              <tr>
+                <th scope="col" class="text-left text-nowrap" *ngFor="let header of displayColumn;"
+                  mat-sort-header="{{header.key}}">
+                  {{ header.value }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="!noData && (!respData.length || (respData | filter:searchText).length === 0)">
+                <td colspan="11">
+                  <h4 class="text-muted text-center">No Data Found!</h4>
+                </td>
+              </tr>
+              <tr *ngIf="noData">
+                <td colspan="11">
+                    <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                </td>
+            </tr>
+              <tr
+                *ngFor="let data of respData | filter:searchText | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
+                <td class="text-left text-muted">{{i+1}}.</td>
+                <td class="text-left text-nowrap"> {{data['transaction_date'] | date: 'dd/MM/yyyy'}} </td>
+                <td class="text-left"> {{data['transaction_id'] || 'N/A'}} </td>
+                <td class="text-left text-capitalize"> {{data['reference_number'] || 'N/A'}} </td>
+                <td class="text-left"><ng-container *ngIf="((data['transaction_details'] | splitPipe:'***')[1])!='null'">{{(data['transaction_details'] | splitPipe:'***')[1]}} </ng-container></td>
+                <td class="text-left"><ng-container *ngIf="((data['transaction_details'] | splitPipe:'***')[2])!='null'">{{(data['transaction_details'] | splitPipe:'***')[2]}} </ng-container></td>
+                <td class="text-left" style="white-space: inherit;">
+                    <ng-container *ngIf="((data['transaction_details'] | splitPipe:'***')[3])!='null' || data['transaction_details'].includes('null')">
+                      <span *ngIf="((data['transaction_details'] | splitPipe:'***')[3]) && ((data['transaction_details'] | splitPipe:'***')[3]).length > 5">
+                        <li style="color:#212529"  *ngIf="!showFullContent[i]">
+                            {{ ((data['transaction_details'] | splitPipe:'***')[3]).includes(',') ? ((data['transaction_details'] | splitPipe:'***')[3]).split(',')[0] : ((data['transaction_details'] | splitPipe:'***')[3]) }}
+                          <br/>
+                          <a class="viewMore" *ngIf="((data['transaction_details'] | splitPipe:'***')[3]).includes(',')"
+                            (click)="toggleFullContent(i)">View More</a>
+                        </li>
+                        <span *ngIf="showFullContent[i]">
+                          <ng-container *ngFor="let item of ((data['transaction_details'] | splitPipe:'***')[3]).split(',')">
+                            <li style="color:#212529">{{ item }}</li>
+                          </ng-container>
+                          <a class="viewMore" *ngIf="((data['transaction_details'] | splitPipe:'***')[3]).includes(',')"
+                            (click)="toggleFullContent(i)">View Less</a>
+                        </span>
+                      </span>
+                      <span *ngIf="!((data['transaction_details'] | splitPipe:'***')[3]) || ((data['transaction_details'] | splitPipe:'***')[3]).length <= 5">
+                        {{ ((data['transaction_details'] | splitPipe:'***')[3]) }}
+                      </span>
+                    </ng-container>
+                  </td>
+                <td class="text-left text-capitalize"> {{data['transaction_type'] || 'N/A'}} </td>
+                <td class="text-left"> {{data['debit_amount'] || 'N/A'}} ({{data['currency']}}) </td>
+                <td class="text-left"> {{data['credit_amount'] || 'N/A'}} ({{data['currency']}}) </td>
+                <td class="text-left">{{data['opening_balance'] || 'N/A'}} ({{data['currency']}}) </td>
+                <td class="text-left"> {{data['closing_balance'] || 'N/A'}} ({{data['currency']}})</td>
+                <td class="text-left text-capitalize"> <span [innerHTML]="data['description']"></span> </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer pb-0">
+          <div class="d-flex w-100 justify-content-between">
+            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+            </ngb-pagination>
+            <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+              <option [ngValue]="50"> 50 items per page</option>
+              <option [ngValue]="100"> 100 items per page</option>
+              <option [ngValue]="150"> 150 items per page</option>
+              <option [ngValue]="200"> 200 items per page</option>
+            </select>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

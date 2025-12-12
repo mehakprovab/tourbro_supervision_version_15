@@ -1,0 +1,145 @@
+<div class="card-header text-uppercase bg-dark text-white"><h5 style="border-bottom: 0;"><i class="fa fa-tag fa-lg"></i>&nbsp;Helpdesk Inquiry</h5></div>
+<div class="card">
+    <form class="clearfix" [formGroup]="regConfig" autocomplete="off">
+        <div class="form-row">
+            <div class="col-4 pr-0">
+                <div class="form-group">
+                    <label for="destinationCity">Agency Name</label>
+                    <select name="cars" id="cars" formControlName="agency_name" class="form-control form-control-sm nrm_input">
+                        <option value="">All</option>
+                        <option value="{{agent.id}}" *ngFor="let agent of agentsList">{{agent.first_name+" "+agent.last_name}}</option>
+                    </select>
+                    <div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 pr-0">
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="text" formControlName="phone_number" class="form-control form-control-sm nrm_input"
+                        placeholder="Enter Phone" (keypress)="numberOnly($event)">
+                    <div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 pr-0">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="text" formControlName="email_id" class="form-control form-control-sm nrm_input"
+                        placeholder="Enter Email.">
+
+                </div>
+            </div>
+
+            <div class="col-4 pr-0">
+                <div class="form-group">
+                    <label>Ticket Number</label>
+                    <input type="text" formControlName="ticket_number" class="form-control text-capitalize form-control-sm nrm_input"
+                        placeholder="Ticket Number">
+                    <div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-4 pr-0">
+                <div class="form-group">
+                    <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
+                    <label for="departureDate">From</label>
+                    <input type="text" formControlName="requested_date_from" id="fromDate"
+                        class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy"
+                        bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen" [maxDate]="maxDate" [readonly]="true">
+                </div>
+            </div>
+
+            <div class="col-4 pr-0">
+                <div class="form-group">
+                    <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
+                    <label for="departureDate">To</label>
+                    <input type="text" formControlName="requested_date_to" id="toDate"
+                        class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy"
+                        bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen" [maxDate]="maxDate"
+                        [minDate]="regConfig.controls.requested_date_from.value" [readonly]="true"
+                        [isDisabled]="regConfig.controls.requested_date_from.value ? false : true">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="btncontainer">
+            <button type="submit" class="btnStyle" (click)="getSentCallback()">Search</button> &nbsp;
+            <button type="button" class="btnStyle" (click)="onReset();">Reset</button>
+        </div>
+    </form>
+</div>
+
+<div class="card" style="margin-top: 30px;">
+    <div class="card-body">
+
+        <!-- <app-dynamic-table [data]=" tabsData "></app-dynamic-table> -->
+        <div class="mb-3">
+
+            <form>
+                <!-- <div class="p-2">
+                    <div class="form-group form-inline mb-0">
+                        Full text search:
+                        <input class="form-control ml-2" type="text" name="searchTerm"
+                            (keyup)="applyFilter($event.target.value)" />
+                    </div>
+                </div> -->
+                <div class="table-responsive">
+                    <table class="table table-borderless table-striped table-hover" matSort
+                        (matSortChange)="sortData($event)">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-left text-nowrap" *ngFor="let header of displayColumn;"
+                                    mat-sort-header="{{header.key}}">
+                                    {{header.value }} </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="!noData && !respData.length">
+                                <td colspan="11">
+                                    <h4 class="text-muted text-center">
+                                        No Data Found!
+                                    </h4>
+                                </td>
+                            </tr>
+                            <tr *ngIf="noData">
+                                <td colspan="11">
+                                    <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                                </td>
+                            </tr>
+                            <tr
+                                *ngFor="let data of respData | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
+                                <td class="text-left text-muted">{{i+1}}.</td>
+                                <td class="text-left"> {{data['ticket_number']}} </td>
+                                <td class="text-left text-capitalize"> {{data['agency_name']}} </td>
+                                <td class="text-left"> {{data['phone_number']}} </td>
+                                <td class="text-left"> {{data['email_id']}} </td>
+                                <td class="text-left text-uppercase">{{data['reference_id']}} </td>
+                                <td class="text-left text-capitalize"> {{data['remarks']}} </td>
+                                <td class="text-left"> {{data['requested_date'] | date: 'dd/MM/yyyy'}} </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer pb-0">
+                    <div class="d-flex w-100 justify-content-between">
+                        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                        </ngb-pagination>
+                        <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                            <option [ngValue]="10">10 items per page</option>
+                            <option [ngValue]="20">20 items per page</option>
+                            <option [ngValue]="50">50 items per page</option>
+                            <option [ngValue]="100">100 items per page</option>  
+                            <option [ngValue]="500">500 items per page</option>
+                            <option [ngValue]="700">700 items per page</option>
+                            <option [ngValue]="1000">1000 items per page</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

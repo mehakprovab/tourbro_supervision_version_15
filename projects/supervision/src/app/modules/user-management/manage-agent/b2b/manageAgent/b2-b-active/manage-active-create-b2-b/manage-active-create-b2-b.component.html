@@ -1,0 +1,1109 @@
+<div class="sub-agent-container custom-table-layout card" style="padding: 20px;">
+    <div class="add-traveller">
+        <div class="custom-inline-form">
+
+            <!-- <div class="register-form-fields"> -->
+                <form autocomplete="off" class="needs-validation" [formGroup]="registerForm" novalidate>
+
+
+                    <section class="section1">
+                        <header>
+                            <div class="bead"><span>1</span></div> <span *ngIf="supplier_type == 7"> DMC </span> <span *ngIf="supplier_type !=7"> AGENCY </span>&nbsp;  MANAGER DETAILS(PRIME ADMIN DETAILS)
+                        </header>
+                        <div class="content form-row">
+                            <div class="col-md-2">
+                                <fieldset class="form-group">
+                                    <label for="firstName" class="required">Title</label>
+                                    <div tabindex="-1" role="group">
+                                        <select id="inputState" class="form-control capitalize"
+                                            formControlName="title">
+                                            <option selected value="" disabled>Select</option>
+                                            <option *ngFor="let t of userTitleList" value="{{t.id}}">
+                                                {{t.title}}</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-4">
+                                <fieldset class="form-group">
+                                    <label for="firstName" class="required">First Name</label>
+                                    <div tabindex="-1" role="group">
+                                        <input formControlName="first_name" id="firstName" type="text"
+                                            (keypress)="omitSpecialCharacters($event)" placeholder="First Name"
+                                            class="form-control">
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label for="lastName" class="required">Last Name</label>
+                                    <div tabindex="-1" role="group">
+                                        <input formControlName="last_name" type="text" placeholder="Last Name"
+                                            (keypress)="omitSpecialCharacters($event)" class="form-control"
+                                            formControlName="last_name">
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-2">
+                                <fieldset class="form-group">
+                                    <label for="lastName" class="required">Phone Code</label>
+                                    <div tabindex="-1" role="group">
+                                        <select formControlName="PhoneCode" class="form-control">
+                                            <option value='' disabled>Phone Code</option>
+                                            <option [ngValue]="p.phone_code" *ngFor="let p of phoneCodeList">
+                                                {{p.name}} ({{ p.phone_code }})
+                                            </option>
+                                        </select>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-md-4">
+                                <fieldset class="form-group">
+                                    <label for="phone" class="required">Phone Number</label>
+                                    <div tabindex="-1" role="group">
+                                        <input formControlName="phone" type="text" placeholder="Phone"
+                                            class="form-control" (keypress)="numberOnly($event)">
+
+                                                <!-- <ngx-intl-tel-input 
+                                                [cssClass]="'custom'" 
+                                                [preferredCountries]="preferredCountries"
+                                                [enableAutoCountrySelect]="false" 
+                                                [enablePlaceholder]="true" 
+                                                [searchCountryFlag]="true"
+                                                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                                [selectFirstCountry]="false" 
+                                                [selectedCountryISO]="CountryISO.Qatar"
+                                                [maxLength]="15" 
+                                                [tooltipField]="TooltipLabel.Name" 
+                                                [phoneValidation]="true" 
+                                                [separateDialCode]="false"
+                                                name="phone" formControlName="phone">
+                                                </ngx-intl-tel-input> -->
+
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label for="email" class="required">Email</label>
+                                    <div tabindex="-1" role="group">
+                                        <input formControlName="email" type="email" placeholder="Email Id"
+                                            class="form-control">
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <!-- <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label for="business_phone" class="required">Business Phone</label>
+                                    <div tabindex="-1" role="group">
+                                        <input formControlName="business_phone" type="text" placeholder="Email Id"
+                                            class="form-control" (keypress)="numberOnly($event)">
+                                    </div>
+                                </fieldset>
+                            </div> -->
+                        </div>
+                    </section>
+
+                    <section class="section2">
+                        <header>
+                            <div class="bead"><span>2</span></div><span *ngIf="supplier_type == 7"> DMC </span> <span *ngIf="supplier_type !=7"> AGENCY </span>&nbsp; DETAILS
+                        </header>
+                        <div class="content form-row">
+
+
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label for="businessName" class="required"> Registered Legal Name</label>
+                                    <div tabindex="-1" role="group">
+                                        <input formControlName="business_name" type="text"
+                                            placeholder="Registered Legal Name" class="form-control">
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label for="businessName" class="required"> Company Trade Name</label>
+                                    <div tabindex="-1" role="group">
+                                        <input formControlName="business_trade_name" type="text"
+                                            placeholder="Company Trade Name" class="form-control">
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-md-6">  
+                                <fieldset class="form-group">
+                                    <label for="businessName"> Chain Name - if operationg under chain</label>
+                                    <div tabindex="-1" role="group">
+                                        <input formControlName="business_chain_name" type="text"
+                                            placeholder="Chain Name -if operating under chain"
+                                            class="form-control">
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label for="businessName"> Company Website</label>
+                                    <div tabindex="-1" role="group">
+                                        <input formControlName="business_website" type="text"
+                                            placeholder="Company Website" class="form-control">
+                                    </div>
+                                </fieldset>
+                            </div>
+
+
+
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label for="businessName" class="required"> Registration Number</label>
+                                    <div tabindex="-1" role="group">
+                                        <input formControlName="registration_number" type="text"
+                                            placeholder="Registration Number" class="form-control">
+                                    </div>
+                                </fieldset>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label for="businessNumber" class="required">Country Of Registration</label>
+                                    <div tabindex="-1" role="group">
+                                        <select formControlName="country_of_registartion" class="form-control">
+                                            <option value='' disabled>Country Of Registration</option>
+                                            <option *ngFor="let c of registerCountries" [ngValue]="c.name">
+                                                {{c.name}}</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label for="businessName" class="required"> Tax Registration Number</label>
+                                    <div tabindex="-1" role="group">
+                                        <input formControlName="tax_reg_no" type="text"
+                                            placeholder="Tax Registration Number" class="form-control">
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label for="businessNumber">License (IATA/ABTA/ATOL, ..etc)</label>
+                                    <div tabindex="-1" role="group">
+                                        <select formControlName="affiliations"
+                                            class="form-control text-capitalize" id="affiliations"
+                                            (change)="onSelect($event.target.value)">
+                                            <option value="">Select License</option>
+                                            <option [value]="reqType.name" *ngFor="let reqType of requestTypes">
+                                                {{ reqType.name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-md-6" *ngIf="showAffiliationNumber">
+                                <fieldset class="form-group">
+                                    <label for="affiliation_number" class="required">Affiliation Number</label>
+                                    <div tabindex="-1" role="group">
+                                        <input formControlName="affiliation_number" type="text"
+                                            class="form-control text-capitalize" id="amount"
+                                            placeholder="Affiliation Number" maxlength="12"
+                                            (keypress)="numbersOnly($event)" />
+                                    </div>
+                                </fieldset>
+                            </div>
+
+
+                            <div class="col-md-6" *ngIf="supplier_type != 7">
+                                <fieldset class="form-group">
+                                    <label for="businessNumber" class="required">Form Of Payment
+                                        Prefernce</label>
+                                    <div tabindex="-1" role="group">
+                                        <select formControlName="payment_pref" class="form-control">
+                                            <option value='' disabled>Select Payment Prefernce</option>
+                                            <option value='Prepaid Balance'>Prepaid Balance</option>
+                                            <option value='Credit Card'>Credit Card</option>
+                                            <option value='Prepaid Balance / Credit Card'> (Prepaid Balance /
+                                                Credit Card) Both</option>
+
+                                        </select>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label for="businessNumber" class="required">Currency</label>
+                                    <div tabindex="-1" role="group">
+                                        <select formControlName="currency" class="form-control">
+                                            <option value='' disabled>Select Currency</option>
+                                            <option *ngFor="let c of currencyList" [value]="c.currency">
+                                                {{c.currency}}</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-md-2">
+                                <fieldset class="form-group">
+                                    <label for="lastName" class="required">Phone Code</label>
+                                    <div tabindex="-1" role="group">
+                                        <select formControlName="alterPhoneCode" class="form-control">
+                                            <option value='' disabled>Phone Code</option>
+                                            <option [ngValue]="p.phone_code" *ngFor="let p of phoneCodeList">
+                                                {{p.name}} ({{ p.phone_code }})
+                                            </option>
+                                        </select>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-md-4">
+                                <fieldset class="form-group">
+                                    <label for="phone" class="required">Office Phone Number</label>
+                                    <div tabindex="-1" role="group">
+                                        <input formControlName="office_number" type="text"
+                                            placeholder="Office Number" class="form-control" (keypress)="numberOnly($event)"> 
+
+                                            <!-- <ngx-intl-tel-input 
+                                                [cssClass]="'custom'" 
+                                                [preferredCountries]="preferredCountries"
+                                                [enableAutoCountrySelect]="false" 
+                                                [enablePlaceholder]="true" 
+                                                [searchCountryFlag]="true"
+                                                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                                [selectFirstCountry]="false" 
+                                                [selectedCountryISO]="CountryISO.Qatar"
+                                                [maxLength]="15" 
+                                                [tooltipField]="TooltipLabel.Name" 
+                                                [phoneValidation]="true" 
+                                                [separateDialCode]="false"
+                                                name="office_number" formControlName="office_number">
+                                                </ngx-intl-tel-input> -->
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <!-- <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label for="email" class="required">Alternative company Email ID</label>
+                                    <div tabindex="-1" role="group">
+                                        <input formControlName="office_number" type="email"
+                                            placeholder="Office Number" class="form-control"
+                                            (keypress)="numberOnly($event)">
+                                    </div>
+                                </fieldset>
+                            </div> -->
+
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label for="email" class="required">Alternative Company Email Id</label>
+                                    <div tabindex="-1" role="group">
+                                        <input formControlName="alter_email" type="email"
+                                            placeholder="Alternative Company Email Id" class="form-control">
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                        </div>
+                    </section>
+
+                    <section>
+                        <header>
+                            <div class="bead"><span>3</span></div><span *ngIf="supplier_type == 7"> DMC </span> <span *ngIf="supplier_type !=7"> AGENCY </span>&nbsp; ADDRESS (MAILING ADDRESS)
+                        </header>
+
+                        <div class="content row">
+
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="firstName" class="required">Address Line1 (Building number, Street)</label>
+
+                                    <input type="text" formControlName="address1"
+                                        placeholder="Address Line 1 (Building number, Street, Area, ...etc)"
+                                        class="form-control text-capitalize" id="firstName" maxlength="250">
+
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="firstName">Address line 2</label>
+
+                                    <input type="text" formControlName="address2"
+                                        class="form-control text-capitalize" id="firstName" maxlength="250">
+
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label for="selectCountry" class="required">Select Country</label>
+                                    <div tabindex="-1" role="group">
+                                        <select formControlName="country" class="form-control"
+                                            (change)="onCountryChange($event)">
+                                            <option value="">Select Country</option>
+                                            <option *ngFor="let country of registerCountries"
+                                                [value]="country.sortname">{{ country.name }}</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label for="selectState" class="required">Select State</label>
+                                    <div tabindex="-1" role="group">
+                                        <select formControlName="state" class="form-control"
+                                            (change)="onStateChange($event)">
+                                            <option value="">Select State</option>
+                                            <option *ngFor="let state of registerStates" [value]="state.id">{{
+                                                state.name }}</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="cityInput" class="required">City</label>
+                                    <input type="text" formControlName="city" placeholder="City"
+                                        class="form-control text-capitalize" id="cityInput"
+                                        (input)="filterCities($event.target.value)" [attr.list]="'city-list'"
+                                        maxlength="250" />
+                                    <datalist id="city-list">
+                                        <option *ngFor="let city of filteredCities" [value]="city.name">
+                                        </option>
+                                    </datalist>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="firstName" class="required">Zip/Postal Code</label>
+
+                                    <input type="text" formControlName="zip_code"
+                                        placeholder="Zip / Postal Code" class="form-control text-capitalize"
+                                        id="firstName">
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+
+
+                    <section>
+                        <header>
+                            <div class="bead"><span>4</span></div><span *ngIf="supplier_type == 7"> DMC </span> <span *ngIf="supplier_type !=7"> AGENCY </span>&nbsp; ACCOUNTING DETAILS
+                        </header>
+
+                        <div class="content form-row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="firstName" class="required">Accounting Email ID</label>
+
+                                    <input type="text" formControlName="acc_email"
+                                        class="form-control text-capitalize" id="firstName"
+                                        placeholder="Accounting Email Id" type="text">
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label for="email" class="required">Accounting Tel. Number</label>
+                                    <div tabindex="-1" role="group">
+                                        <input formControlName="acc_tel_no" type="email"
+                                            placeholder="Accounting Tel. Number" class="form-control"
+                                            (keypress)="numberOnly($event)">
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="firstName">Bank Name</label>
+
+                                    <input type="text" formControlName="bank_name"
+                                        class="form-control text-capitalize" id="firstName"
+                                        placeholder="Bank Name">
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="firstName">Bank Branch Address</label>
+
+                                    <input type="text" formControlName="branch_addrs"
+                                        class="form-control text-capitalize" id="firstName"
+                                        placeholder="Bank Branch Address">
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="firstName">Bank Account Holder Name </label>
+
+                                    <input type="text" formControlName="acc_holder_name"
+                                        class="form-control text-capitalize" id="firstName"
+                                        placeholder="Bank Account Holder Name">
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="firstName">Account Number </label>
+
+                                    <input type="text" formControlName="acc_number"
+                                        class="form-control text-capitalize" id="firstName"
+                                        placeholder="Account Number" (keypress)="numberOnly($event)">
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="firstName">IBAN </label>
+
+                                    <input type="text" formControlName="iban"
+                                        class="form-control text-capitalize" id="firstName" placeholder="IBAN">
+
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="firstName">Swift Code </label>
+
+                                    <input type="text" formControlName="swift_code"
+                                        class="form-control text-capitalize" id="firstName"
+                                        placeholder="Swift Code">
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+
+                    <section  *ngIf="supplier_type === 7">
+                        <header>
+                            <div class="bead"><span>5</span></div><span> DMC </span> &nbsp; Services
+                        </header>
+
+                        <div class="content form-row">
+                            <div class="col-sm-2 col-lg-3 supplier-buttons">
+                                <label class="form-check-label" >
+                                    <a class="c-pointer">
+                                        <button type="button" class="btn supplier" (click)="onSupplierSelect('HS')"
+                                            > Hotel Supplier</button>
+                                    </a>
+                                </label>
+                                <input [ngModelOptions]="{standalone: true}" class="supplier-select-check" [(ngModel)]="hsSelect"  (change)="onSupplierCheckboxChange('HS', $event)" type="checkbox" />
+                            </div>
+
+                            <div class="col-sm-2 col-lg-3 supplier-buttons">
+                                <label class="form-check-label" >
+                                    <a class="c-pointer">
+                                        <button type="button" class="btn supplier" (click)="onSupplierSelect('AS')"
+                                            > Activity Supplier</button>
+                                    </a>
+                                </label>
+                                <input [ngModelOptions]="{standalone: true}" class="supplier-select-check" [(ngModel)]="asSelect"  (change)="onSupplierCheckboxChange('AS', $event)" type="checkbox" />
+                            </div>
+                            <div class="col-sm-2 col-lg-3 supplier-buttons">
+                                <label class="form-check-label" >
+                                    <a class="c-pointer">
+                                        <button type="button" class="btn supplier" (click)="onSupplierSelect('TS')"
+                                            > Transfer Supplier</button>
+                                    </a>
+                                </label>
+                                <input [ngModelOptions]="{standalone: true}" class="supplier-select-check" [(ngModel)]="tsSelect"  (change)="onSupplierCheckboxChange('TS', $event)" type="checkbox" />
+                            </div>
+                            <div class="col-sm-3 col-lg-3 supplier-buttons">
+                                <label class="form-check-label" >
+                                    <a class="c-pointer">
+                                        <button type="button" class="btn supplier" (click)="onSupplierSelect('HPS')"
+                                            >Holiday Package Supplier</button>
+                                    </a>
+                                </label>
+                                <input [ngModelOptions]="{standalone: true}" class="supplier-select-check" [(ngModel)]="hpsSelect"  (change)="onSupplierCheckboxChange('HPS', $event)" type="checkbox" />
+                            </div>
+                        </div>
+                    </section>
+
+                    <section  *ngIf="supplier_type === 7">
+                        <header>
+                            <div class="bead"><span>6</span></div><span> Distribution </span> &nbsp; Channel
+                        </header>
+                         <div class="content form-row">
+                            <div class="col-sm-4 d-flex align-items-center">
+                                <div class="col-auto">
+                                    <label>
+                                        <input type="radio" value="B2C" formControlName="supplier_type">
+                                        <span class="design"></span>
+                                        <span class="text" style="margin-left: 4px;">B2C</span>
+                                    </label>
+                                </div>
+                                <div class="col-auto">
+                                    <label>
+                                        <input type="radio" value="B2B" formControlName="supplier_type">
+                                        <span class="design"></span>
+                                        <span class="text" style="margin-left: 4px;">B2B</span>
+                                    </label>
+                                </div>
+                                <div class="col-auto">
+                                    <label>
+                                        <input type="radio" value="B2C,B2B" formControlName="supplier_type">
+                                        <span class="design"></span>
+                                        <span class="text" style="margin-left: 4px;">Both</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- <section *ngIf="supplier_type === 7">
+                        <header>
+                            <div class="bead"><span>7</span></div><span > Select </span> &nbsp; Currency
+                        </header>
+                        <div class="content form-row">
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label for="selectCurrency" class="required">Select Currency</label>
+                                    <div tabindex="-1" role="group">
+                                        <select formControlName="supplierCurrency" class="form-control"
+                                            (change)="onStateChange($event)">
+                                            <option value="">Select Currency</option>
+                                            <option *ngFor="let state of currencyList" [value]="state.currency">{{
+                                                state.currency }}</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </section> -->
+                    <!-- <section>
+                        <header>
+                            <div class="bead"><span>5</span></div>DIRECTOR FORM DETAILS
+                        </header>
+                        <h5>DIRECTOR INFORMATION</h5>
+                        <div class="content form-row">
+                            <div class="col-md-2">
+                                <fieldset class="form-group">
+                                    <label for="firstName" class="required">Title</label>
+                                    <div tabindex="-1" role="group">
+                                        <select id="inputState" class="form-control capitalize"
+                                            formControlName="dir_title">
+                                            <option selected value="" disabled>Select</option>
+                                            <option *ngFor="let t of userTitleList" value="{{t.id}}">
+                                                {{t.title}}</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-md-10">
+                                <fieldset class="form-group">
+                                    <label for="firstName" class="required">Full Name</label>
+                                    <div tabindex="-1" role="group">
+                                        <input formControlName="dir_name" id="firstName" type="text"
+                                            (keypress)="omitSpecialCharacters($event)" placeholder="Full Name"
+                                            class="form-control">
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-2">
+                                <fieldset class="form-group">
+                                    <label for="lastName" class="required">Phone Code</label>
+                                    <div tabindex="-1" role="group">
+                                        <select formControlName="dir_phone_code" class="form-control">
+                                            <option value='' disabled>Phone Code</option>
+                                            <option [ngValue]="p.phone_code" *ngFor="let p of phoneCodeList">
+                                                {{p.name}} ({{ p.phone_code }})
+                                            </option>
+                                        </select>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-4">
+                                <fieldset class="form-group">
+                                    <label for="phone" class="required">Phone Number</label>
+                                    <div tabindex="-1" role="group">
+                                        <input formControlName="dir_contact" type="text" placeholder="Phone"
+                                            class="form-control" (keypress)="numberOnly($event)">
+
+                                                 <ngx-intl-tel-input 
+                                                [cssClass]="'custom'" 
+                                                [preferredCountries]="preferredCountries"
+                                                [enableAutoCountrySelect]="false" 
+                                                [enablePlaceholder]="true" 
+                                                [searchCountryFlag]="true"
+                                                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                                [selectFirstCountry]="false" 
+                                                [selectedCountryISO]="CountryISO.Qatar"
+                                                [maxLength]="15" 
+                                                [tooltipField]="TooltipLabel.Name" 
+                                                [phoneValidation]="true" 
+                                                [separateDialCode]="false"
+                                                name="phone" formControlName="dir_contact">
+                                                </ngx-intl-tel-input> 
+
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label for="email" class="required">Email</label>
+                                    <div tabindex="-1" role="group">
+                                        <input formControlName="dir_email" type="email" placeholder="Email Id"
+                                            class="form-control">
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <h5>ACCOUNT INFORMATION</h5>
+                        <div class="content form-row">
+                            <div class="col-md-2">
+                                <fieldset class="form-group">
+                                    <label for="firstName" class="required">Title</label>
+                                    <div tabindex="-1" role="group">
+                                        <select id="inputState" class="form-control capitalize"
+                                            formControlName="acc_title">
+                                            <option selected value="" disabled>Select</option>
+                                            <option *ngFor="let t of userTitleList" value="{{t.id}}">
+                                                {{t.title}}</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-10">
+                                <fieldset class="form-group">
+                                    <label for="firstName" class="required">Full Name</label>
+                                    <div tabindex="-1" role="group">
+                                        <input formControlName="acc_name" id="firstName" type="text"
+                                            (keypress)="omitSpecialCharacters($event)" placeholder="Full Name"
+                                            class="form-control">
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </section> -->
+
+
+                    <section *ngIf="supplier_type == 2">
+                        <header>
+                            <div class="bead"><span>5</span></div>SUPPLIER ACCESS DETAILS
+                        </header>
+
+                        <div class="content form-row">
+
+                            <div class="col-md-8">
+                                <div class="form-group row cust-radio-group">
+                                    <label class="col-sm-2 col-form-label">Agent Group</label>
+                                    <div class="col-sm-6 d-flex align-items-center">
+                                        <div class="col-auto">
+                                            <label>
+                                                <select id="country" class="form-control text-capitalize" formControlName="agent_group_id">
+                                                    <option  value="" disabled>Select Agent Group</option>
+                                                    <option *ngFor="let c of agentList" [ngValue]="c.id">{{c.name}}</option>
+                                                </select>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group row cust-radio-group">
+                                    <label class="col-sm-2 col-form-label">Select All Services</label>
+                                    <div class="col-sm-4 d-flex align-items-center">
+                                        <div class="col-auto">
+                                            <label class="col-12 pr-0">
+                                                <input type="checkbox" [checked]="selectAllCheck" (change)="onHotelCheckBoxChangeSelectAll($event.target.checked)">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group row cust-radio-group">
+                                    <label class="col-sm-2 col-form-label">Flight API</label>
+                                    <div class="col-sm-4 d-flex align-items-center">
+                                        <div class="col-auto" *ngFor="let api of flightApiList">
+                                            <label>
+                                                <input type="checkbox"  [checked]="api.isChecked" value="{{api.source_key}}"  (change)="onApiCheckBoxChange($event.target.checked,api.source_key)">
+                                                <span class="design"></span>
+                                                <span class="text" style="margin-left: 4px;">{{api.name}}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                     <div class="form-group row cust-radio-group">
+                                    <label class="col-sm-2 col-form-label">Hotel API</label>
+                                    <div class="col-sm-4 d-flex align-items-center">
+                                        
+                                        <div class="col-auto" *ngFor="let api of hotelapiList">
+                                            
+                                            <label>
+                                                <input type="checkbox"  [checked]="api.isChecked" value="{{api.source_key}}" (change)="onHotelCheckBoxChange($event.target.checked,api.source_key)">
+                                                <span class="design"></span>
+                                                <span class="text" style="margin-left: 4px;">{{api.name}}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row cust-radio-group">
+                                    <label class="col-sm-2 col-form-label">Activity API</label>
+                                    <div class="col-sm-4 d-flex align-items-center">
+                                        <div class="col-auto" *ngFor="let api of activityapiList">
+                                            <label>
+                                                <input type="checkbox"  [checked]="api.isChecked" value="{{api.source_key}}" (change)="onActivityCheckBoxChange($event.target.checked,api.source_key)">
+                                                <span class="design"></span>
+                                                <span class="text" style="margin-left: 4px;">{{api.name}}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row cust-radio-group">
+                                    <label class="col-sm-2 col-form-label">Transfer API</label>
+                                    <div class="col-sm-4 d-flex align-items-center">
+                                        <div class="col-auto" *ngFor="let api of transferapiList">
+                                            <label>
+                                                <input type="checkbox"  [checked]="api.isChecked" value="{{api.source_key}}" (change)="onTransferCheckBoxChange($event.target.checked,api.source_key)">
+                                                <span class="design"></span>
+                                                <span class="text" style="margin-left: 4px;">{{api.name}}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row cust-radio-group">
+                                    <label class="col-sm-2 col-form-label">Tour API</label>
+                                    <div class="col-sm-4 d-flex align-items-center">
+                                        <div class="col-auto" *ngFor="let api of tourapiList">
+                                            <label>
+                                                <input type="checkbox"  [checked]="api.isChecked" value="{{api.source_key}}" (change)="onTourCheckBoxChange($event.target.checked,api.source_key)">
+                                                <span class="design"></span>
+                                                <span class="text" style="margin-left: 4px;">{{api.name}}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                              
+                
+                                <!-- <div class="title pl-30">
+                                    <h3>Login Details</h3>
+                                </div>
+                
+                                <div class="form-group required row">
+                                    <label for="firstName" class="required" class="col-sm-2 col-form-label">Email ID</label>
+                                    <div class="col-sm-4">
+                                        <input formControlName="email" type="text" class="form-control" id="firstName" maxlength="250"
+                                            [readonly]="addOrUpdate=='update' ? true : false">
+                                    </div>
+                                </div> -->
+                            </div>
+
+                        </div>
+                    </section>
+
+                    <div class="form-group row cust-radio-group">
+                        <label class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-4 d-flex align-items-center">
+                            <div class="col-auto">
+                                <label>
+                                    <input type="radio" value="1" formControlName="status">
+                                    <span class="design"></span>
+                                    <span class="text" style="margin-left: 4px;">Active</span>
+                                </label>
+                            </div>
+                            <div class="col-auto">
+                                <label>
+                                    <input type="radio" value="0" formControlName="status">
+                                    <span class="design"></span>
+                                    <span class="text" style="margin-left: 4px;">Inactive</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <div class="form-group required row">
+                            <div class="col-12 d-flex">
+                                <button type="submit" class="btn btn-sm btn-primary lg mr-4"
+                                    (click)="onSubmit()">Save</button>
+                                <button type="reset" class="btn btn-sm btn-danger lg" (click)="onReset()">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            <!-- </div> -->
+
+            <!-- <form class="" [formGroup]="regConfig" autocomplete="off">
+                <div class="title pl-30">
+                    <h3>Agency Details</h3>
+                </div>
+
+                <div class="form-group row">
+                    <label for="firstName" class="required" class="col-sm-2 col-form-label">Agency Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" formControlName="business_name" class="form-control text-capitalize" id="firstName"
+                            maxlength="250">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="firstName" class="required" class="col-sm-2 col-form-label">IATA</label>
+                    <div class="col-sm-4">
+                        <input type="text" (keypress)="numberOnly($event)" formControlName="iata" class="form-control"
+                            id="firstName" maxlength="250">
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="firstName" class="required" class="col-sm-2 col-form-label">Office Phone</label>
+                    <div class="col-sm-4">
+                        <input type="text" formControlName="business_phone" (keypress)="numberOnly($event)"
+                            class="form-control" id="firstName" maxlength="25">
+                    </div>
+                </div>
+                <div class="title">
+                    <h3>User Profile</h3>
+                </div>
+                <div class="form-group required row">
+                    <label for="title" class="col-sm-2 col-form-label">Title</label>
+                    <div class="col-sm-4">
+                        <select id="inputState" class="form-control capitalize" formControlName="title">
+                            <option selected value="" disabled>Choose...</option>
+                            <option *ngFor="let t of userTitleList" value="{{t.id}}">{{t.title}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="firstName" class="required" class="col-sm-2 col-form-label">First Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control text-capitalize" id="firstName" maxlength="250"
+                            (keypress)="omitSpecialCharacters($event)" formControlName="first_name">
+
+                    </div>
+                </div>
+                <div class="form-group  row" style="display: none;">
+                    <label for="middleName" class="col-sm-2 col-form-label">Middle Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="middleName" maxlength="250"
+                            (keypress)="omitSpecialCharacters($event)" formControlName="middle_name">
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control text-capitalize" id="lastName" maxlength="250"
+                            (keypress)="omitSpecialCharacters($event)" formControlName="last_name">
+                    </div>
+                </div>
+                 <div class="form-group required row">
+                    <label for="dateOfBirth" class="col-sm-2 col-form-label">Date Of Birth</label>
+                    <div class="col-sm-4">
+                        <span class="icon return_date" (click)="isOpen= !isOpen"></span>
+                        <input type="text" id="dateOfBirth" formControlName="date_of_birth"
+                            class="form-control form-control-sm nrm_input" placement="bottom left"
+                            placeholder="dd-mm-yyyy" bsDatepicker [bsConfig]="bsDateConf" [readonly]="true"
+                            [maxDate]="maxDate" [isOpen]="isOpen">
+                    </div>
+                </div> 
+                <div class="form-group required row">
+                    <label for="country" class="col-sm-2 col-form-label">Country</label>
+                    <div class="col-sm-4">
+                        <select id="country" class="form-control text-capitalize" formControlName="country">
+                            <option selected disabled>Select Country</option>
+                            <option *ngFor="let c of countriesList" value="{{c.id}}">{{c.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="country" class="col-sm-2 col-form-label">Agent Group</label>
+                    <div class="col-sm-4">
+                        <select id="country" class="form-control text-capitalize" formControlName="agent_group_id">
+                            <option selected disabled>Select Agent</option>
+                            <option *ngFor="let c of agentList" [ngValue]="c.id">{{c.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="phone" class="col-sm-2 col-form-label">Phone Code</label>
+                    <div class="col-sm-4 m-0">
+                        <select id="phoneCode" class="form-control text-capitalize" formControlName="phone_code">
+                            <option value="{{code.id}}" *ngFor="let code of phoneCodeList">
+                                {{code.name}} ({{code.phone_code}}) </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="phone" class="col-sm-2 col-form-label">Phone Number</label>
+                    <div class="col-sm-4 m-0">
+                        <input type="text" formControlName="phone" class="form-control" id="phone" minlength="10"
+                            maxlength="15" (keypress)="numberOnly($event)">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="firstName" class="required" class="col-sm-2 col-form-label">Address</label>
+                    <div class="col-sm-4">
+                        <input type="text" formControlName="address" class="form-control text-capitalize" id="firstName" maxlength="250">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="firstName" class="required" class="col-sm-2 col-form-label">City</label>
+                    <div class="col-sm-4">
+                        <input type="text" formControlName="city" class="form-control text-capitalize" id="firstName" maxlength="250">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="firstName" class="required" class="col-sm-2 col-form-label">State/Province</label>
+                    <div class="col-sm-4">
+                        <input type="text" formControlName="state" class="form-control text-capitalize" id="firstName" maxlength="250">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="firstName" class="required" class="col-sm-2 col-form-label">Postal Code</label>
+                    <div class="col-sm-4">
+                        <input type="text" formControlName="zip_code" class="form-control text-capitalize" id="firstName" (keypress)="numberOnly($event)">
+                    </div>
+                </div>
+                <div class="form-group row cust-radio-group">
+                    <label class="col-sm-2 col-form-label">Flight API</label>
+                    <div class="col-sm-4 d-flex align-items-center">
+                        <div class="col-auto" *ngFor="let api of flightApiList">
+                            <label>
+                                <input type="checkbox"  [checked]="api.isChecked" value="{{api.source_key}}"  (change)="onApiCheckBoxChange($event.target.checked,api.source_key)">
+                                <span class="design"></span>
+                                <span class="text" style="margin-left: 4px;">{{api.name}}</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                     <div class="form-group row cust-radio-group">
+                    <label class="col-sm-2 col-form-label">Hotel API</label>
+                    <div class="col-sm-4 d-flex align-items-center">
+                        <div class="col-auto" *ngFor="let api of hotelapiList">
+                            <label>
+                                <input type="checkbox"  [checked]="api.isChecked" value="{{api.source_key}}" (change)="onHotelCheckBoxChange($event.target.checked,api.source_key)">
+                                <span class="design"></span>
+                                <span class="text" style="margin-left: 4px;">{{api.name}}</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row cust-radio-group">
+                    <label class="col-sm-2 col-form-label">Activity API</label>
+                    <div class="col-sm-4 d-flex align-items-center">
+                        <div class="col-auto" *ngFor="let api of activityapiList">
+                            <label>
+                                <input type="checkbox"  [checked]="api.isChecked" value="{{api.source_key}}" (change)="onActivityCheckBoxChange($event.target.checked,api.source_key)">
+                                <span class="design"></span>
+                                <span class="text" style="margin-left: 4px;">{{api.name}}</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row cust-radio-group">
+                    <label class="col-sm-2 col-form-label">Transfer API</label>
+                    <div class="col-sm-4 d-flex align-items-center">
+                        <div class="col-auto" *ngFor="let api of transferapiList">
+                            <label>
+                                <input type="checkbox"  [checked]="api.isChecked" value="{{api.source_key}}" (change)="onTransferCheckBoxChange($event.target.checked,api.source_key)">
+                                <span class="design"></span>
+                                <span class="text" style="margin-left: 4px;">{{api.name}}</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row cust-radio-group">
+                    <label class="col-sm-2 col-form-label">Tour API</label>
+                    <div class="col-sm-4 d-flex align-items-center">
+                        <div class="col-auto" *ngFor="let api of tourapiList">
+                            <label>
+                                <input type="checkbox"  [checked]="api.isChecked" value="{{api.source_key}}" (change)="onTourCheckBoxChange($event.target.checked,api.source_key)">
+                                <span class="design"></span>
+                                <span class="text" style="margin-left: 4px;">{{api.name}}</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row cust-radio-group">
+                    <label class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-4 d-flex align-items-center">
+                        <div class="col-auto">
+                            <label>
+                                <input type="radio" value="1" formControlName="status">
+                                <span class="design"></span>
+                                <span class="text" style="margin-left: 4px;">Active</span>
+                            </label>
+                        </div>
+                        <div class="col-auto">
+                            <label>
+                                <input type="radio" value="0" formControlName="status">
+                                <span class="design"></span>
+                                <span class="text" style="margin-left: 4px;">Inactive</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="title pl-30">
+                    <h3>Login Details</h3>
+                </div>
+
+                <div class="form-group required row">
+                    <label for="firstName" class="required" class="col-sm-2 col-form-label">Email ID</label>
+                    <div class="col-sm-4">
+                        <input formControlName="email" type="text" class="form-control" id="firstName" maxlength="250"
+                            [readonly]="addOrUpdate=='update' ? true : false">
+                    </div>
+                </div>
+                 <div *ngIf="addOrUpdate=='add'">
+                <div class="form-group required row">
+                    <label for="password" class="col-sm-2 col-form-label">Password</label>
+                    <div class="col-sm-4">
+                        <input formControlName="password" type="password" class="form-control" id="password"
+                            maxlength="250">
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="confirm_password" class="col-sm-2 col-form-label">Confirm Password</label>
+                    <div class="col-sm-4">
+                        <input type="password" formControlName="confirm_password" class="form-control"
+                            id="confirm_password" maxlength="250">
+                    </div>
+                    <p *ngIf="regConfig.controls['confirm_password'].errors?.matchPassword"
+                        style="color: #C71C22;font-size: 80%;">
+                        Password and Confirm Password did not match.
+                    </p>
+                </div>
+                </div> 
+                <div class="btn-group">
+                    <div class="form-group required row">
+                        <div class="col-12 d-flex">
+                            <button type="submit" class="btn btn-sm btn-primary lg mr-4"
+                                (click)="onSubmit()">Save</button>
+                            <button type="reset" class="btn btn-sm btn-danger lg" (click)="onReset()">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </form> -->
+        </div>
+    </div>
+</div>
+
+<ngx-loading [show]="loading"
+[config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+[template]="loadingTemplate"></ngx-loading>

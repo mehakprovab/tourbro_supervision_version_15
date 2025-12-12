@@ -1,0 +1,48 @@
+<form [formGroup]="regConfig">
+    <!-- <div class="form-group row">
+        <label for="bank" class="col-sm-4 col-form-label "> Bank <sup class="f-16 text-danger">*</sup> </label>
+        <div class="col-sm-8">
+            <input formControlName="bankname" type="text" class="form-control " id="bank">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="branch" class="col-sm-4 col-form-label ">Branch <sup class="f-16 text-danger">*</sup>
+        </label>
+        <div class="col-sm-8">
+            <input formControlName="branchname" type="text" class="form-control " id="branch" readonly>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="onlineTransferID" class="col-sm-4 col-form-label "> Online Transfer Id <sup
+                class="f-16 text-danger">*</sup> </label>
+        <div class="col-sm-8">
+            <input formControlName="onlinetransferid" type="text" class="form-control " id="onlineTransferID">
+        </div>
+    </div> -->
+    <div class="form-group row">
+        <label for="amount" class="col-sm-4 col-form-label ">Amount (GBP) <sup class="f-16 text-danger">*</sup>
+        </label>
+        <div class="col-sm-8">
+            <input formControlName="amount" type="number" class="form-control " id="amount" placeholder="Amount">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="phone" class="col-sm-4 col-form-label "> Date <sup class="f-16 text-danger">*</sup>
+        </label>
+        <div class="col-sm-8">
+            <input formControlName="phone" type="date" class="form-control " id="phone"
+                placeholder="Please enter phone no.">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="remarks" class="col-sm-4 col-form-label ">Remarks</label>
+        <div class="col-sm-8">
+            <textarea formControlName="remarks" rows="3" class="form-control " id="remarks" placeholder="Remarks">
+        </textarea>
+        </div>
+    </div>
+    <div class="form-group row pull-right mr-0">
+        <button class="btn btn-lg btn-primary mr-1" (click)="onSubmit()">Save</button>
+        <button class="btn btn-lg btn-danger" (click)="onReset()">Reset</button>
+    </div>
+</form>

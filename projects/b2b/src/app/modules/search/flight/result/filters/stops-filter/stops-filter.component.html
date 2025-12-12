@@ -1,0 +1,41 @@
+<div class="rangebox">
+    <button data-target="#collapseStop" data-toggle="collapse" class="collapsebtn" type="button">No. of Stops</button>
+    <a *ngIf="flightsCopy.length" style="cursor: pointer;font-size: 12px;" class="float-right"
+    (click)="clearStopsFilter()">Clear</a>
+    <form *ngIf="flightsCopy.length" [formGroup]="stopsFrom" style="clear: both;">
+        <div id="collapseStop" class="collapse show">
+            <div class="boxins marret" id="preferencesWrapper">
+                <a class="timone toglefil time-wrapper"
+                    [ngClass]="{'active': zeroStopActive, 'disabled': !zeroStopPrice}">
+                    <div class="starin">
+                        <div class="tmxdv">
+                            <input formControlName="zeroStop" type="checkbox" class="hidecheck time-category"
+                                (click)="filterByStops('zeroStop',$event.target.checked)">
+                            <label class="ckboxdv">0 stop</label>
+                        </div>
+                    </div>
+                </a>
+                <a class="timone toglefil time-wrapper"
+                    [ngClass]="{'active': oneStopActive, 'disabled': !oneStopPrice}">
+                    <div class="starin">
+                        <div class="tmxdv">
+                            <input formControlName="oneStop" (click)="filterByStops('oneStop',$event.target.checked)"
+                                type="checkbox" class="hidecheck time-category">
+                            <label class="ckboxdv">1 stop</label>
+                        </div>
+                    </div>
+                </a>
+                <a class="timone toglefil time-wrapper" [ngClass]="multipleStopsPrice ? 'enabled' : 'disabled'">
+                    <div class="starin">
+                        <div class="tmxdv">
+                            <input formControlName="multipleStops"
+                                (click)="filterByStops('multipleStops',$event.target.checked)" type="checkbox"
+                                class="time-category hidecheck">
+                            <label class="ckboxdv">2+ stops</label>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </form>
+</div>

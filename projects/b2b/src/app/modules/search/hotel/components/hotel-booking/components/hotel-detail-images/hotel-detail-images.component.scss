@@ -1,0 +1,316 @@
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+body {
+    font-family: Roboto, Arial, sans-serif;
+    margin: 0;
+}
+
+.wid30 {
+    position: relative;
+    height: 100%;
+    padding: 15px;
+    background: #f9fcff;
+    border-radius: 5px;
+    border: 1px solid #d5e6f6;
+}
+
+.wid56n2 {
+    width: 56%;
+}
+
+.toptl {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 0px;
+    color: #f9b500;
+}
+
+.sbtoptl {
+    font-size: 14px;
+    font-weight: 500;
+    color: #092e53;
+    margin: 0 0 6px 0;
+}
+
+.cantxt {
+    font-size: 14px;
+    color: #32a01b;
+    align-items: end;
+}
+
+.wid44n2 {
+    width: 44%;
+}
+
+.t_right {
+    text-align: right;
+}
+
+.act_price {
+    width: 100%;
+    float: right;
+    font-size: 18px;
+    position: relative;
+    text-align: right;
+    font-weight: 600;
+    color: #092e53;
+}
+
+.prntax {
+    text-align: right;
+    font-size: 13px;
+    color: #000;
+    width: 100%;
+    display: block;
+    margin-bottom: 3px;
+    font-weight: 500;
+}
+
+.prn {
+    text-align: right;
+    font-size: 12px;
+    color: #092e53;
+    width: 100%;
+    float: right;
+    display: block;
+    margin-top: 2px;
+
+}
+
+.js-sb {
+    justify-content: space-between;
+}
+
+.checkincol {
+    width: 100%;
+    padding: 1px 0;
+    border-top: 1px solid #E4E2E2;
+    border-bottom: 1px solid #E4E2E2;
+    margin-top: 10px;
+}
+
+.chktimes {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 6px 0px;
+    color: #092e53;
+}
+
+.chktime {
+    font-size: 14px;
+    margin-left: 4px;
+    font-weight: 500;
+    padding: 6px 0px;
+    color: #092e53;
+}
+
+.blk {
+    color: #092e53;
+    float: right;
+}
+
+
+.fixbtn {
+    width: 100%;
+    bottom: 15px;
+    position: absolute;
+}
+
+.ouline-btn {
+    border-radius: 5px;
+    padding: 9px 0px;
+    text-align: center;
+    font-size: 14px;
+    color: #fff;
+    border: 1px solid #fbc10a;
+    background-color: #fbc10a;
+    text-decoration: none;
+    width: 150px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.ouline-btn:hover {
+    color: #fff;
+    border: 1px solid #fbc10a;
+    background: #fbc10a;
+}
+
+.tickmrk {
+    margin: 1px 4px 0 0;
+}
+
+::ng-deep #sync1 .owl-stage .owl-item img {
+    height: 400px !important;
+    width: 100%;
+    object-fit: cover;
+}
+
+::ng-deep #sync1 .owl-stage .owl-item {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+::ng-deep #sync2 {
+    padding-left: 0px;
+}
+
+::ng-deep #sync2 .owl-stage .owl-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+::ng-deep #sync2 .owl-stage .owl-item img {
+    height: 90px !important;
+    overflow: hidden;
+    width: 100%;
+    object-fit: cover;
+}
+
+::ng-deep #sync1 .owl-stage-outer,
+::ng-deep #sync2 .owl-stage-outer {
+    padding-top: 0px !important;
+    padding-bottom: 10px;
+}
+
+::ng-deep #sync1 .owl-theme .owl-nav {
+    position: absolute;
+    bottom: 185px;
+}
+
+::ng-deep #sync1 .owl-theme .owl-nav .owl-prev {
+    position: relative;
+    background: #022756;
+    left: -19px;
+}
+
+::ng-deep #sync1 .owl-theme .owl-nav .owl-next {
+    position: absolute;
+    background: #022756;
+    left: 755px;
+}
+
+::ng-deep .nav-owl-expand .owl-theme .owl-nav .owl-next {
+    left: 890px !important;
+}
+
+gallery {
+    font-size: 16px;
+}
+
+button {
+    margin-right: 1em;
+}
+
+
+@media only screen and (max-width: 767px) {
+    .ai-fs {
+        margin: 0px !important;
+    }
+
+    .padlt {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    .mobile_left {
+        text-align: left !important;
+    }
+
+    .mobile_right {
+        text-align: right !important;
+    }
+
+    .mobile_row {
+        margin: 0px;
+    }
+
+    .mobile_pad7 {
+        padding: 0px 7px !important;
+    }
+
+    .mobile_pad {
+        padding: 0px 15px !important;
+    }
+
+    .mobile_nopad {
+        padding: 0px 0px !important;
+    }
+
+    .mobile_top {
+        margin-top: 12px;
+    }
+
+    .mobile_bot {
+        margin-bottom: 12px;
+    }
+
+    .mob_show {
+        display: inline;
+    }
+
+    .mob_hide {
+        display: none;
+    }
+
+    .review_txt {
+        text-align: center;
+    }
+
+    .star_rtng {
+        padding-left: 0px !important;
+    }
+
+    .address_loc {
+        font-size: 13px;
+    }
+
+    .form-group label {
+        font-size: 12px;
+    }
+
+    .cusromGrey {
+        padding-top: 0px;
+        font-size: 16px;
+    }
+
+    .mobile_botpad {
+        padding-bottom: 12px !important;
+    }
+
+    .hotelDetailsBtn {
+        margin-top: 0px !important;
+    }
+
+    #sync2 {
+        display: none;
+    }
+
+    ::ng-deep #sync1 .owl-stage .owl-item img {
+        height: 350px !important;
+    }
+
+    ::ng-deep #sync1 .owl-stage-outer,
+    ::ng-deep #sync2 .owl-stage-outer {
+        padding-bottom: 0px;
+    }
+
+    .mobpr-15 {
+        padding-right: 15px !important;
+    }
+
+    .fixbtn {
+        bottom: -5px !important;
+    }
+
+    .BoardType_c {
+        font-size: 12px;
+    }
+
+    .mobile_details_bagg {
+        width: 100% !important;
+        display: block !important;
+        border: none !important;
+    }
+}

@@ -1,0 +1,23 @@
+<div class="">
+    <div class="">
+        <ngb-tabset class="tabs-animated tabs-animated-shadow" (tabChange)="beforeChange(false)" #tabs
+            [activeId]="activeIdString">
+            <ngb-tab id="add_update_b2bUser">
+                <ng-template ngbTabTitle>
+                    <span><i class="fa fa-edit"></i> &nbsp; Create Supplier</span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <app-create-supplier (b2cUserUpdate)="triggerTab($event)" [propertyId]="propertyId"></app-create-supplier>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab id="supplier_list">
+                <ng-template ngbTabTitle>
+                    <span><i class="fa fa-users"></i> &nbsp; Supplier List</span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <app-supplier-list (b2cUserUpdate)="triggerTab($event)"></app-supplier-list>
+                    </ng-template>
+            </ngb-tab>
+ </ngb-tabset>
+    </div>
+</div>

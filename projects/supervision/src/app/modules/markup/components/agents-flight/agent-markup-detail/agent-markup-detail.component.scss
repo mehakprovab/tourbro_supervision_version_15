@@ -1,0 +1,16 @@
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+
+  ::ng-deep .mat-option-text{
+    white-space: normal!important;
+    line-height: normal!important;
+    font-size: 12px;
+    text-transform: uppercase;
+}

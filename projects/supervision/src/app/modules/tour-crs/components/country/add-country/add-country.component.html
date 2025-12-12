@@ -1,0 +1,37 @@
+<div>
+    <form [formGroup]="countryForm" (ngSubmit)="oncountrySave()">
+       <div class="continentInput">
+            <label for="continet" class="font-weight-bold" > Choose Continent</label>
+            <select formControlName="continentName" (change)="selectedContinent($event.target.value)">
+                <option value="" disabled selected>Choose Continent</option>
+                <option *ngFor="let option of continentDataList" [value]="option.id">
+                  {{ option.name }}
+                </option>
+              </select>
+        </div>
+        <div *ngIf="countryForm?.get('continentName').errors && countryForm?.get('continentName').touched">
+          <div *ngIf="countryForm?.get('continentName').errors.required" class="errorMessage">
+            *Please Choose tour continent name.
+            </div>
+       </div>
+        <div class="countryInput">
+            <label for="country" class="font-weight-bold" > Tour Country Name</label>
+            <input type="text" placeholder="Enter Package Country"  formControlName="countryName" maxlength="150"
+            (input)="validateInput()">
+        </div>
+        <div *ngIf="countryForm.controls.countryName.errors && countryForm.controls.countryName.touched">
+            <div *ngIf="countryForm.controls.countryName.errors.required" class="errorMessage">
+              *Please enter package country name.
+            </div>
+            <div *ngIf="countryForm.controls.countryName.errors.invalidString" class="errorMessage">
+              *Number(s) are not allowed.
+            </div>
+            <div *ngIf="countryForm.controls.countryName.errors.startOrEndSpace"  class="errorMessage">
+                *Empty space(s) in start and end are not allowed.
+            </div>
+         </div>
+        <div class="saveButton">
+            <button type="submit" class="orangeButton"> Save</button>
+        </div>
+    </form>
+</div>

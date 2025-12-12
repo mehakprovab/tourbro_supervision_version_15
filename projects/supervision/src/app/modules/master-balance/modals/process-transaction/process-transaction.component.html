@@ -1,0 +1,37 @@
+<!-- <p>process-transaction works!</p> -->
+<h2 mat-dialog-title>{{' Please Verify Before You Process This Transaction Request'}}</h2>
+<form [formGroup]="regConf">
+    <mat-dialog-content>
+        <div class="row m-0 alert alert-info">
+            <div class="col-12 p-0">
+                <span>Domain:&nbsp; {{ data['requested_from'] ? data['requested_from'] : 'Travel'}}</span> <br>
+                <span>Amount:&nbsp; {{data['amount']}} </span> <br>
+                <span>Processed By:&nbsp; {{ data['processedby']}} </span> <br>
+            </div>
+        </div>
+        <div class="row m-0">
+            <div class="col-12 my-3">
+                <div class="form-gorup row mb-2">
+                    <label for="status" class="col-2 col-form-label">Status</label>
+                    <select formControlName="status" name="status" id="status" class="col-10 form-control">
+                        <option value="pending" selected>Pending</option>
+                        <option value="accepted">Accepted</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+                <div class="form-gorup row">
+                    <label for="remarks" class="col-2 col-form-label">Remarks</label>
+                    <textarea formControlName="remarks" class="col-10 form-control" name="remarks" id="remarks" rows="2"></textarea>
+                </div>
+            </div>
+        </div>
+
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-primary mr-2" (click)="close()">Close</button>
+            <button class="btn btn-primary" (click)="save()">Save Changes</button>
+        </div>
+    </mat-dialog-actions>
+</form>

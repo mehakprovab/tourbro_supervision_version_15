@@ -1,0 +1,44 @@
+<div class="card" style="margin-top: 30px;">
+  <div class="card-header bg-dark text-white">
+    <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+      <i class="header-icon fa fa-credit-card"> </i>MANAGE PAYMENT GATEWAY
+    </div>
+  </div>
+  <form class="m-4">
+    <div class="table-responsive">
+      <table class="table table-borderless table-striped table-hover" matSort>
+        <thead>
+          <tr class="p-2">
+            <th scope="col" class="text-left text-nowrap" *ngFor="let header of displayColumn">
+              {{ header.value }}
+            </th>
+          </tr>
+        </thead>
+        <tr>
+        <tr *ngIf="noData">
+            <td colspan="12">
+                <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+            </td>
+        </tr>
+        <tr *ngIf="!noData && !gateWayName.length">
+            <td colspan="12">
+                <h4 class="text-muted text-center">
+                    No Data Found!
+                </h4>
+            </td>
+        </tr>
+        <tr *ngFor="let data of gateWayName;let index=index">
+          <td class="text-left">{{index+1}}.</td>
+          <td class="text-left text-capitalize">{{data['remarks'] | lowercase}}</td>
+          <td class="text-left"> {{data["status"] == true ? "Active" : "In-Active"}} </td>
+          <td class="text-left">
+            <button class="btn btn-sm btn-primary" (click)="onClickActionUpdate(data)">{{data["status"] == true?
+              "Activate": "Deactivate"}}
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </form>
+</div>
+

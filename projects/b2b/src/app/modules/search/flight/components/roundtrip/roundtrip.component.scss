@@ -1,0 +1,326 @@
+.form-control[readonly] {
+  background-color: #ffffff;
+  opacity: 1;
+}
+
+/* By rajesh */
+.flight_chnge {
+  position: absolute;
+  right: -14px;
+  top: 8px;
+  line-height: normal;
+  background: #fff;
+  cursor: pointer;
+  z-index: 999;
+  font-size: 15px;
+  padding: 2px 3px;
+  border-radius: 50%;
+  border: 2px solid #888;
+  width: 26px;
+  height: 26px;
+}
+
+.rotate-360 {
+  -webkit-transform: rotate(360deg);
+  -moz-transform: rotate(360deg);
+  -ms-transform: rotate(360deg);
+  -o-transform: rotate(360deg);
+  transform: rotate(360deg);
+  -webkit-transition: 300ms ease all;
+  -moz-transition: 300ms ease all;
+  -o-transition: 300ms ease all;
+  transition: 300ms ease all;
+}
+
+.rotate-0 {
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: 300ms ease all;
+  -moz-transition: 300ms ease all;
+  -o-transition: 300ms ease all;
+  transition: 300ms ease all;
+}
+
+.btn--primary {
+  color: #fff;
+  background-color: #ff9800;
+  border-color: #ff9800;
+}
+
+.btn--primary:hover {
+  color: #fff;
+  background-color: #f18600;
+  border-color: #f18600;
+}
+
+
+/* By Mani */
+
+.nrm_input, .src_btn {
+  padding: 0.5rem .75rem 0.5rem 2.7rem;
+  line-height: 1.7;
+  height: calc(2em + .75rem + 2px);
+}
+.src_btn {
+  padding: 0.5rem .75rem;
+}
+
+.sprt {
+  width: 40px;
+  height: 45px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: url('~/assets/images/sprite.png') no-repeat 0 0;
+}
+.flt_in .form-group { position: relative; }
+.depart {background-position: -19px -252px;background-size: 650px;}
+.return {
+  background-position: -80px -252px;
+  background-size: 650px;
+}
+.date {
+  background-position: -151px -253px;
+  background-size: 650px;
+}
+.traveller {
+  background-position: -223px -252px;
+  background-size: 650px; z-index: 999;
+}
+.cabin {
+  background-position: -289px -252px;
+  background-size: 650px;
+}
+
+.totlall {
+  background: none repeat scroll 0 0 #fff;
+  border: 1px solid #ced4da;
+  cursor: pointer;
+  float: left;
+  font-size: 14px;
+  height: 42px;
+  line-height: 42px;
+  padding: 0 10px 0px 35px;
+  position: relative;
+  width: 100%;
+  border-radius: 3px;
+}
+
+.totlall::after {
+  content: "\f078";
+  background: none repeat scroll 0 0 #fff;
+  bottom: 0;
+  color: #999;
+  font-family: "FontAwesome";
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 42px;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 30px;
+}
+
+.remngwd {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.roomcount {
+  display: none;
+  background: none repeat scroll 0 0 #fff;
+  border-radius: 3px;
+  box-shadow: 0 0 10px -5px #000;
+  line-height: normal;
+  position: absolute;
+  right: 0;
+  top: 55px;
+  width: auto;
+  transition: all 400ms ease-in-out;
+  z-index: 10000;
+}
+
+.roomcount {
+  max-width: 250px;
+}
+.roomcount.fadeinn {
+  display: block;
+}
+
+.roomcount::before {
+  content: "\f0de";
+  color: #fff;
+  font-family: "FontAwesome";
+  font-size: 45px;
+  position: absolute;
+  right: 50px;
+  top: -17px;
+  font-weight: bold;
+}
+
+.advance_opt {
+  width: 100%;
+  float: left;
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+}
+
+.inallsn {
+  display: table;
+  width: 100%;
+}
+
+.oneroom {
+  display: table-cell;
+  min-width: 250px;
+  padding: 14px;
+  vertical-align: top;
+}
+
+
+.lablform2 {
+  margin-top: 6px;
+  color: #333;
+  padding: 0px 10px !important;
+  margin-bottom: 10px;
+}
+
+.roomrow {
+  display: inline-block;
+  width: 100%;
+  border-bottom: 1px solid #ddd;
+}
+
+.celroe {
+  padding: 4px 0px;
+  float: left; font-size: 16px;
+  line-height: 31px;
+}
+
+.agemns {
+  color: #666;
+  padding-left: 5px;
+  font-size: 11px;
+  overflow: hidden;
+}
+
+.countmore {
+  float: right;
+}
+
+.roomrow .input-group-btn {
+  width: auto;
+}
+
+.roomrow .input-group-btn .btn {
+  padding: 5px;
+  width: auto;
+  border: 1px solid #00a9d6;
+  font-size: 14px;
+  border-radius: 2px;
+  background: #00a9d6;
+  color: #fff;
+}
+
+.roomrow .form-control {
+  border: none !important;
+  width: 32px !important;
+  box-shadow: none !important;
+  padding: 0px !important;
+  display: table-cell;
+}
+.form-control[readonly] {
+  background: #fff !important;
+}
+
+.centertext {
+  text-align: center;
+}
+
+.done1.comnbtn_room1 {
+  background: #359ff4;
+  border: medium none;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 13px;
+  margin: 0;
+  padding:6px 10px;
+  text-align: center;
+ margin-top: 10px;;
+}
+
+.alladvnce {
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+  border: 1px solid #ced4da;
+  color: #222426;
+  cursor: pointer;
+  font-size: 13px;
+  height: 42px;
+  line-height: 42px;
+  padding: 0 10px 0px 40px;
+  position: relative;
+  width: 100%;
+}
+
+.advncedown {
+  display: none;
+  background: none repeat scroll 0 0 #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 0px;
+  line-height: normal;
+  position: absolute;
+  right: 0;
+  top: 106%;
+  width: auto;
+  transition: all 400ms ease-in-out;
+  z-index: 10000;
+}
+
+.advncedown.fadeinn {
+  display: block;
+}
+
+.advncedown.spladvnce {
+  left: 0;
+}
+
+.alladvnce::after {
+  content: "\f078";
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+  bottom: 0;
+  color: #222426;
+  font-family: "FontAwesome";
+  font-size: 12px;
+  line-height: 36px;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 30px;
+}
+
+.scroladvc {
+  display: block;
+  overflow: hidden;
+  padding: 10px;
+}
+
+.adscrla {
+  color: #444;
+  display: block;
+  overflow: hidden;
+  padding: 10px 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}

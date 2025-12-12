@@ -1,0 +1,181 @@
+<div class="grid-section-wrapper">
+    <div class="container nopad mobile_pad">
+        <div class="col-12 nopad">
+            
+            <!-- <div class="tab-content searchtabs" id="myTabContent">
+               
+                <div class="tab-pane fade show active" id="holidays" role="tabpanel" aria-labelledby="holidays-tab">
+                    <app-tour></app-tour>
+                </div>
+                
+            </div> -->
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+
+
+<section for="TourFoundAndListSearchedResult" class="loading-container theme_bg" style="background-color: #F3F8FF;">
+
+    
+
+    <div class="container-fluid pt-4">
+        <div class="row mobile_row">
+            <div class="col shw_rslt">
+                <h3>Things To Do in {{CityName}}</h3>
+                <h4>Showing {{tourList.length}} Results</h4>
+              </div>
+        </div>
+
+        <div class="row mobile_row rounded">
+            <div class="col-md-3 col-lg-3">
+                <div class="flteboxwrp">
+                    <div class="fltrboxin rounded-bottom">
+                        <div class="celsrch">
+                            <div>
+                                <a (click)="resetAll()" class="pull-right" style="cursor: pointer;"
+                                    id="reset_filters">Reset
+                                    All</a>
+                            </div>
+                            <app-tour-filters></app-tour-filters>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9 col-lg-9">
+                <app-tour-sorting></app-tour-sorting>
+                <!-- <div class="row" style="margin-top: 20px;">
+                    <div class="col-md-12 col-lg-12 pr-0">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 pr-0">
+                    </div>
+                </div> -->
+           
+                <div *ngIf="tourList.length > 0" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollUpDistance]="2"
+                    [infiniteScrollThrottle]="throttle" (scrolled)="onScrollDown()" (scrolledUp)="onScrollUp()"
+                    class="row">
+                    <div class="col-md-12 col-lg-12">
+                        <div *ngFor="let tour of tourList | slice: 0: endSlice; let i = index;"
+                            class="mb-4 strip_all_tour_list packageFilter">
+                            <div class="norow">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-xs-4 nopadR wdt1"
+                                        *ngIf="tour?.banner_image; else noPhoto">
+                                        <div class="img_list">
+                                            <div class="img_list">
+                                                <a href="{{ tour?.BookingSource === 'BGTAPINO00002' ? tour?.banner_image : bannerImageUrl + tour?.banner_image }}" target="_blank">
+                                                    <img class="rounded imgStyle"
+                                                         [src]="tour?.BookingSource === 'BGTAPINO00002' ? tour?.banner_image : bannerImageUrl + tour?.banner_image" 
+                                                         alt="">
+                                                </a>
+                                            </div>                                            
+                                        </div>
+                                    </div>
+                                    <ng-template #noPhoto>
+                                        <div class="col-md-4">
+                                            <img class="rounded imgStyle" src="assets/images/originals/buildings.jpg"
+                                                alt="">
+                                        </div>
+                                    </ng-template>
+                                    <div class="col-md-6 mb-2 pb-0 " style="padding:12px 0px;">
+                                        <div class="col-md-12 p-0" style="text-align: left;">
+                                            
+                                            <div class="tour_list_desc">
+                                                <h3>{{tour?.package_name}}</h3>
+                                                
+                                                <div class="pk_duration_details" style="display: flex; color: #495560; align-items: center;"><img src="assets/images/Location.svg"> {{tour?.placesCovered.join(', ')}}
+                                                  
+                                                </div>
+                                                <p class="ellipsis" title=""><img src="assets/images/date.svg">{{tour?.duration}}</p>
+
+                                            </div>
+                                            <div class="price_list d-flex justify-content-between align-items-center">
+
+                                                <ng-container *ngFor="let item of tour?.inclusionsChecks; let i=index">
+                                                    <div *ngIf="item==='Hotel'" class="hicn">
+                                                        <i class="i-htl"></i>
+                                                        <span>Hotel</span>
+                                                    </div>
+                                                    <div *ngIf="item==='Meals'" class="hicn">
+                                                        <i class="i-mea"></i>
+                                                        <span>Meals</span>
+                                                    </div>
+                                                    <div *ngIf="item==='Flight'" class="hicn">
+                                                        <i class="i-fli"></i>
+                                                        <span>Flight</span>
+                                                    </div>
+                                                    <div *ngIf="item==='Sightseeing'" class="hicn">
+                                                        <i class="i-sig"></i>
+                                                        <span>Sightseeing</span>
+                                                    </div>
+                                                    <div *ngIf="item==='Transfer'" class="hicn">
+                                                        <i class="i-car"></i>
+                                                        <span>Transfer</span>
+                                                    </div>
+                                                </ng-container>
+                                                
+                                            </div>
+
+                                            <div>
+
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                
+                                    </div>
+
+                                    <div class="col-md-2 mb-2 pb-0" style="padding:12px;">
+
+                                        <div class="pk_prce text-center">
+
+                                            <h4 cusromGrey style="font-weight:600; color: #092e53; margin-left: auto; margin-bottom: 0px; font-size: 1.35rem;"> {{
+                                                tour?.tourPrice[0]?.ex_adult_airliner_price ? (tour?.tourPrice[0].Currency+' '+
+                                                (tour.tourPrice[0]?.ex_adult_airliner_price | number: '1.0-2'))
+                                                : '' }}</h4>
+                                                <small>per person</small>
+                                                <br><br>
+
+                                            <button class="btn_1 details_btn"
+                                                (click)="onBookNow(tour)"><span>View Details</span></button>
+                                            <!-- <a href="#" class="quot btn_1">Get A Quote</a> -->
+                                        </div>
+
+                                    </div>
+
+                                    
+                                </div>
+                            </div>
+                            <!-- <div class="card-footer nopad tourCityDetails">
+                                <div class="startCity">
+                                    <p><strong>Start City:</strong>{{tour.startCity}}</p>
+                                </div>
+                                <div class="endCity">
+                                    <p><strong>End City:</strong>{{tour.startCity}}</p>
+                                </div>
+                                <div class="cityCovered">
+                                    <p><strong>City Covered:</strong>{{tour.placesCovered}}</p>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="!tourList.length" class="row">
+                    <div class="col-md-12 col-lg-12 pr-0">
+                        <div class="card-body pb-0">
+                            <img class="no_hotel_found" src="assets/images/no-hotel-found.png" alt="" />
+                            <br />
+                            <h3 class="text-center">No Tour Found!!!</h3>
+                        </div>
+                    </div>
+                </div>
+                <ngx-loading [show]="loading"
+                    [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+                    [template]="loadingTemplate"></ngx-loading>
+            </div>
+        </div>
+    </div>
+</section>

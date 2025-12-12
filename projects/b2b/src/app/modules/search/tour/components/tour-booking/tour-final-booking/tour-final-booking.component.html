@@ -1,0 +1,1085 @@
+<div style="background: #F3F8FF !important;">
+    <div class="container">
+        <div class="first-part ">
+            <h3 class="review_txt">Review Your Booking</h3>
+            <div class="sectionbuk sectionbuk-t section aside">
+                <div class="imgInfo d-flex justify-content-center align-items-center">
+                    <img  [src]="tourData?.BookingSource === 'BGTAPINO00002' ? tourData?.banner_image : bannerImageUrl + tourData?.banner_image"  alt="">
+                </div>
+                <div class="bookingDateData">
+                    <div class="tourInfo">
+                        <div>
+                            <h4>{{tourData?.package_name}}</h4>
+                        </div>
+                        <div>
+                            <p>Total Occupancy: Adult {{noOfAdult}} <span *ngIf="noOfChild > 0">Child {{noOfChild}}  <span *ngIf="tourData?.BookingSource !== 'BGTAPINO00002'">({{getChildAges()}} Yrs)</span> </span> </p>
+                        </div>
+                        <div>
+                            <p>Travel Date: {{tarvelDate | date: 'dd-MM-yyyy'}} </p>
+                        </div>
+                        <div>
+                            <p>Duration: {{tourData?.duration}}</p>
+                        </div>
+
+                        <!-- <div class="star_rtng">
+                            <i class="fas fa-star star_rtng_clr"></i>
+                            <i class="fas fa-star star_rtng_clr"></i>
+                            <i class="fas fa-star star_rtng_clr"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div> -->
+
+
+                        <div>
+                            <p class="travelInfo"><span>Start City</span>: {{tourData?.startCity}}</p>
+                            <p class="travelInfo"><span>End City</span>: {{tourData?.endCity}}</p>
+                            <form class="" [formGroup]="bookingContactForm" autocomplete="off">
+
+                            </form>
+                            <!-- <p class="travelInfo">Tour Start Date: {{tourData?.tourPrice[0]?.from_date | date: 'yyyy-MM-dd'}}</p> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="review_txtt">Contact Details</h3>
+
+            <div class="text-container sectionbuk section">
+
+                <h6>Contact Details (For voucher)</h6>
+                <div class="custom-inline-form sectionbukk">
+                    <div class="contactInfomation makeShadow">
+                        <form class="" [formGroup]="bookingContactForm" autocomplete="off">
+                            <div class="form-group required form-row">
+                                <div class="col-sm-6 p-0 mb-3">
+                                <div class="col-sm-12">
+                                    <label>Departure Date <span style="color: red;">*</span></label>
+                                </div>
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control outdatadiv" bsDatepicker
+                                        formControlName="selectedDate" [bsConfig]="bsDateConf" [minDate]="minDate" placeholder="Select Date"
+                                        #tourdate readonly id="tourdate" (ngModelChange)="setBlockedTourData($event)" disabled>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div *ngIf="showWarning" class="alert alert-warning">
+                                        <strong>Warning:</strong> No tour available for the selected date.
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="col-sm-6 p-0 mb-3">
+                                    <div class="col-sm-12">
+                                    <label>Agent Email Address <span style="color: red;">*</span></label>
+                                    <input type="email" class="form-control mangeWidth" id="email" maxlength="50"
+                                        (input)="validateEmailInput()" formControlName="emailAddress" disabled>
+                                        <div *ngIf="submitted && bookingContactForm.controls.emailAddress.invalid" class="text-danger">
+                                            Email Address is required.
+                                          </div>
+                                        </div>
+                                </div>
+
+
+                                <div class="col-sm-4 p-0" *ngIf="tourData?.BookingSource === 'BGTAPINO00001'">
+                                    <div class="col-sm-12">
+                                    <label>Country Code <span style="color: red;">*</span></label>
+                                    <select #selectedCountry class="form-control newslterinput nputbrd _numeric_only"
+                                        id="before_country_code" formControlName="PhoneCode">
+                                        <option [value]="p.phone_code" *ngFor="let p of phoneCodes">
+                                            {{p.name}} ({{ p.phone_code }})
+                                        </option>
+                                    </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4 p-0" *ngIf="tourData?.BookingSource === 'BGTAPINO00001'">
+                                    <div class="col-sm-12">
+                                    <label>Phone Number<span style="color: red;">*</span></label>
+                                    <input type="text" formControlName="contactNumber" class="form-control"
+                                        id="contactNumber" minlength="10" maxlength="15" autocomplete="off"
+                                        (keypress)="numberOnly($event)">
+                                        <div *ngIf="submitted && bookingContactForm.controls.contactNumber.invalid" class="text-danger">
+                                            Invalid Phone Number.
+                                          </div>
+                                        </div>
+                                </div>
+                                <div class="col-sm-4 p-0 mb-3" *ngIf="tourData?.BookingSource === 'BGTAPINO00001'">
+                                    <div class="col-sm-12">
+                                    <label>Customer Email Address <span style="color: red;">*</span></label>
+                                    <input type="email" class="form-control mangeWidth" id="email" maxlength="50"
+                                        (input)="validateEmailInput()" formControlName="CustomerEmail" autocomplete="off">
+                                        <div *ngIf="submitted && bookingContactForm.controls.CustomerEmail.invalid" class="text-danger">
+                                            Email Address is required.
+                                          </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </form>
+                        
+                    </div>
+                </div>
+
+
+            </div>
+
+
+            <h3 class="review_txtt">Your Information</h3>
+            <div class="text-container sectionbuk mb-20 section">
+                <h6>Guest Information</h6>
+
+                <div class="sectionbukk"
+                style="max-height:  500px; overflow: hidden scroll;">
+                    <form class="" [formGroup]="bookingContactForm" autocomplete="off" *ngIf="tourData?.BookingSource === 'BGTAPINO00001'">
+                        <ng-container formArrayName="adultPaxDetails"> 
+                            
+                             <!-- <a class="addPax" (click)="addAdultFormToFormArray()" *ngIf="!hideOther">Add Adult</a> -->
+                            <div *ngFor="let field of adultformArray.controls; let i = index"
+                                class="border-bottom div_bg" [formGroupName]="i">
+                                <span style="font-weight: 800; font-size: 1.1rem;">{{ i === 0 ? 'Lead Passenger' : 'Traveller ' + (i + 1) }}</span>
+                                <div class="form-row m-0 mb-3 mt-3">
+                                    <div class="col-md-3">
+                                        <label>Title <span style="color: red;">*</span></label>
+                                        <select class="form-control newslterinput nputbrd _numeric_only salutation"
+                                            formControlName="Title" (change)="onTitleSelect($event.target.value, 'adultPaxDetails', i)">
+                                            <option value="">-Select-</option>
+                                            <ng-container *ngFor="let t of titleList">
+                                                <option *ngIf="t.pax_type == 'ADULT'" value="{{t.title}}">
+                                                    {{t.title}}
+                                                </option>
+                                            </ng-container>
+
+                                        </select>
+                                        <div class="col-md-12">
+                                            <small class="error text-danger" *ngIf="submitted && field.get('Title')?.invalid">
+                                                Please Select Title* <br>
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>First Name <span style="color: red;">*</span></label>
+                                        <input type="firstName" class="form-control" id="FirstName" maxlength="50"
+                                            placeholder="First Name" formControlName="FirstName">
+                                        <div *ngIf="submitted && field.get('FirstName')?.invalid" class="text-danger">
+                                            First Name is required.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Last Name <span style="color: red;">*</span></label>
+                                        <input type="lastName" class="form-control" id="LastName" maxlength="50"
+                                            placeholder="Last Name" formControlName="LastName">
+                                        <div *ngIf="submitted && field.get('LastName')?.invalid" class="text-danger">
+                                            Last Name is required.
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-3">
+                                        <label>Date of Birth<span style="color: red;">*</span></label>
+                                        <input name="adult_dob290[0]" id="adult_dob2900" type="text"
+                                            class="form-control" value="" placeholder="dd/mm/yyyy" readonly=""
+                                            data-id="0" aria-required="true" formControlName="Dob" bsDatepicker
+                                            [bsConfig]="bsConfig" [minDate]="minDateAdult" [maxDate]="maxDateAdult" required />
+                                        <div *ngIf="submitted && field.get('Dob')?.invalid" class="text-danger">
+                                                Date of Birth is required.
+                                        </div>
+                                    </div> -->
+                                    <!-- <div class="col-md-3">
+                                        <label>Gender<span style="color: red;">*</span></label>
+                                        <select class="form-control"
+                                            formControlName="Gender">
+                                            <option value="" selected disabled>Select</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>    
+                                        </select>
+                                        <div *ngIf="submitted && field.get('Gender')?.invalid" class="text-danger">
+                                                Gender is required.
+                                        </div>
+                                    </div> -->
+                                </div>
+                                <!-- <div class="form-row mt-3">
+                                    <div class="col-md-2 col-12 p-0" *ngIf="!hideOther">
+                                        <a class="removePax" *ngIf="i > 0"
+                                            (click)="removeAdultFormFromFormArray(i)">Remove Adult</a>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </ng-container>
+                        <br />
+                        
+                    </form>
+
+                    <div *ngIf="childformArray.length > 0 && tourData?.BookingSource === 'BGTAPINO00001'" >
+                        <form class="" [formGroup]="bookingContactForm" autocomplete="off">
+                            <ng-container formArrayName="childPaxDetails">  
+                                <!-- <a class="addPax" (click)="addChildFormToFormArray()" *ngIf="!hideOther">Add Child</a> -->
+                                <div *ngFor="let formGroup of childformArray.controls; let i = index"
+                                    class="border-bottom div_bg" [formGroupName]="i">
+                                    <span style="font-weight: 800; font-size: 1.1rem;">Child {{i+1}}</span>
+                                    <div class="form-row mb-2 mt-3">
+                                        <div class="col-md-2">
+                                            <label>Title<span style="color: red;">*</span> </label>
+                                            <select class="form-control newslterinput nputbrd _numeric_only salutation"
+                                                formControlName="Title" 
+                                                (change)="onTitleSelect($event.target.value, 'childPaxDetails', i)">
+                                                <option value="">-Select-</option>
+                                                <ng-container *ngFor="let t of titleList">
+                                                    <option *ngIf="t.pax_type == 'CHILD'" value="{{t.title}}">
+                                                        {{t.title}}
+                                                    </option>
+                                                </ng-container>
+
+                                            </select>
+                                            <div class="col-md-12">
+                                            <small class="error text-danger" *ngIf="submitted && formGroup.get('Title')?.invalid">
+                                                Please Select Title* <br>
+                                            </small>
+                                        </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>First Name <span style="color: red;">*</span></label>
+                                            <input type="firstName" class="form-control" id="FirstName" maxlength="50"
+                                                placeholder="First Name" formControlName="FirstName">
+                                            <div *ngIf="submitted && formGroup.get('FirstName')?.invalid" class="text-danger">
+                                                First Name is required.
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Last Name <span style="color: red;">*</span></label>
+                                            <input type="lastName" class="form-control" id="LastName" maxlength="50"
+                                                placeholder="Last Name" formControlName="LastName">
+                                            <div *ngIf="submitted && formGroup.get('LastName')?.invalid" class="text-danger">
+                                                Last Name is required.
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label>Date of Birth<span style="color: red;">*</span></label>
+                                            <input name="adult_dob290[0]" id="adult_dob2900" type="text"
+                                                class="form-control child-dob-field" value="" placeholder="dd-mm-yyyy"
+                                                formControlName="Dob" 
+                                                bsDatepicker
+                                                [bsConfig]="bsDateConf1"
+                                                [minDate]="formGroup.get('minAge').value"
+                                                [maxDate]="formGroup.get('maxAge').value"/>
+                                        </div>
+                                        <!-- <div class="col-md-3">
+                                            <label>Gender<span style="color: red;">*</span></label>
+                                            <select class="form-control"
+                                                formControlName="Gender">
+                                                <option value="" selected disabled>Select</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>    
+                                            </select>
+                                            <div *ngIf="submitted && formGroup.get('Gender')?.invalid" class="text-danger">
+                                                Gender is required.
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                    <!-- <div class="form-row">
+                                        <div class="col-md-2 col-12 p-0" *ngIf="!hideOther">
+                                            <a class="removePax" *ngIf="i >= 0"
+                                                (click)="removeChildFormFromFormArray(i)">Remove Child</a>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </ng-container>
+                            <br />
+                            
+                        </form>
+                    </div>
+
+
+
+
+
+                    <form [formGroup]="bookingForm" *ngIf="tourData?.BookingSource === 'BGTAPINO00002'">
+                        <div formArrayName="adultForm">
+                          <div *ngFor="let adultGroup of adultForm.controls; let i = index" [formGroupName]="i" class="adult-group">
+                            <h6>{{ i === 0 ? 'Lead Passenger' : 'Traveller ' + (i + 1) }}</h6>
+                            <div class="row">
+                                <div *ngFor="let field of formValuesData" class="col-12 col-md-4">
+                                <div class="form-group">
+                                <label>{{ field.label }} <span style="color: red;">*</span></label>
+                                <select *ngIf="field.label === 'Title'" class="form-control newslterinput nputbrd _numeric_only salutation"
+                                    [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <ng-container *ngFor="let t of titleList">
+                                        <option *ngIf="t.pax_type == 'ADULT'" value="{{t.title}}">
+                                            {{t.title}}
+                                        </option>
+                                    </ng-container>
+                                </select>
+
+                                <select *ngIf="i===0 && field.label === 'Phone Code'" class="form-control newslterinput nputbrd _numeric_only"
+                                id="before_country_code" [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <option [value]="p.phone_code" *ngFor="let p of phoneCodes">
+                                    {{p.name}} ({{ p.phone_code }})
+                                    </option>
+                                </select>
+
+                                <input *ngIf="i === 0 && field.label === 'Phone Number'"
+                                    type="text"
+                                    class="form-control"
+                                    [formControlName]="field.name"
+                                />
+
+                                <input *ngIf="field.label === 'Date of Birth'" name="adult_dob290[0]" id="adult_dob2900" type="text"
+                                    class="form-control" value="" placeholder="dd/mm/yyyy" readonly=""
+                                    data-id="0" aria-required="true" [formControlName]="field.name"  bsDatepicker
+                                    [bsConfig]="bsConfig" [minDate]="minDateAdult" [maxDate]="maxDateAdult" required />
+                                
+                                <select *ngIf="field.label === 'Gender'" class="form-control newslterinput nputbrd _numeric_only"
+                                id="before_country_code" [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <option [value]="p.value" *ngFor="let p of genderList">
+                                    {{p.key}}
+                                    </option>
+                                </select>
+
+                                <select *ngIf="field.label === 'Bed Preference'" class="form-control newslterinput nputbrd _numeric_only salutation"
+                                [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <ng-container *ngFor="let t of bedPreference">
+                                        <option value="{{t.title}}">
+                                            {{t.title}}
+                                        </option>
+                                    </ng-container>
+                                </select>
+
+                                <select *ngIf="field.label === 'Nationality'" class="form-control newslterinput nputbrd _numeric_only"
+                                id="before_country_code" [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <option [value]="p.name" *ngFor="let p of countries">
+                                    {{p.name}} ({{ p.code }})
+                                    </option>
+                                </select>
+
+                                <input *ngIf="
+                                field.label !== 'Phone Code' &&
+              field.label !== 'Phone Number' &&
+              field.label !== 'Gender' &&
+              field.label !== 'Title' &&
+              field.label !== 'Bed Preference' &&
+              field.label !== 'Date of Birth' &&
+              field.label !== 'Nationality'"
+                                  [type]="getInputType(field.type)"
+                                  class="form-control"
+                                  [formControlName]="field.name"
+                                />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+
+                      <form [formGroup]="bookingForm" *ngIf="tourData?.BookingSource === 'BGTAPINO00002'">
+                        <div formArrayName="childForm">
+                          <div *ngFor="let adultGroup of childForm.controls; let i = index" [formGroupName]="i" class="adult-group">
+                            <h6>Child {{i+1}}</h6>
+                            <div class="row">
+                                
+                                
+                            <div *ngFor="let field of formValuesData"  class="col-12 col-md-4">
+                                <div class="form-group">
+                                <label>{{ field.label }} <span style="color: red;">*</span></label>
+
+                                <select *ngIf="field.label === 'Title'" class="form-control newslterinput nputbrd _numeric_only salutation"
+                                    [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <ng-container *ngFor="let t of childTitles">
+                                        <option value="{{t.title}}">
+                                            {{t.title}}
+                                        </option>
+                                    </ng-container>
+                                </select>
+
+                                <!-- <select *ngIf="field.label === 'Phone Code'" class="form-control newslterinput nputbrd _numeric_only"
+                                id="before_country_code" [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <option [value]="p.phone_code" *ngFor="let p of phoneCodes">
+                                    {{p.name}} ({{ p.phone_code }})
+                                    </option>
+                                </select> -->
+
+                                <select *ngIf="field.label === 'Nationality'" class="form-control newslterinput nputbrd _numeric_only"
+                                id="before_country_code" [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <option [value]="p.name" *ngFor="let p of countries">
+                                    {{p.name}} ({{ p.code }})
+                                    </option>
+                                </select>
+
+                                <select *ngIf="field.label === 'Gender'" class="form-control newslterinput nputbrd _numeric_only"
+                                id="before_country_code" [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <option [value]="p.value" *ngFor="let p of genderList">
+                                    {{p.key}}
+                                    </option>
+                                </select>
+
+                                <input *ngIf="field.label === 'Date of Birth'" name="adult_dob290[0]" id="adult_dob2900" type="text"
+                                class="form-control" value="" placeholder="dd-mm-yyyy" readonly=""
+                                data-id="0" aria-required="true" [formControlName]="field.name" bsDatepicker
+                                [bsConfig]="bsConfig" [minDate]="minDateChild" [maxDate]="maxDateChild" />
+
+                                <input *ngIf="field.label !== 'Phone Number' && field.label !== 'Date of Birth' && field.label !== 'Title' && field.label !== 'Phone Code' && field.label !== 'Nationality' && field.label !== 'Gender'&& field.name !== 'Phone Number'"
+                                  [type]="getInputType(field.type)"
+                                  class="form-control"
+                                  [formControlName]="field.name"
+                                />
+                                </div>
+                            </div>
+              
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+
+                      <form [formGroup]="bookingForm" *ngIf="tourData?.BookingSource === 'BGTAPINO00002'">
+                        <div formArrayName="infantForm">
+                          <div *ngFor="let adultGroup of infantForm.controls; let i = index" [formGroupName]="i" class="adult-group">
+                            <h6>Infant {{i+1}}</h6>
+                            <div class="row">
+                            <div *ngFor="let field of formValuesData"  class="col-12 col-md-4">
+                                <div class="form-group">
+                                <label>{{ field.label }} <span style="color: red;">*</span></label>
+
+                                <select *ngIf="field.label === 'Title'" class="form-control newslterinput nputbrd _numeric_only salutation"
+                                    [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <ng-container *ngFor="let t of childTitles">
+                                        <option value="{{t.title}}">
+                                            {{t.title}}
+                                        </option>
+                                    </ng-container>
+                                </select>
+
+                                <!-- <select *ngIf="field.label === 'Phone Code'" class="form-control newslterinput nputbrd _numeric_only"
+                                id="before_country_code" [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <option [value]="p.phone_code" *ngFor="let p of phoneCodes">
+                                    {{p.name}} ({{ p.phone_code }})
+                                    </option>
+                                </select> -->
+
+                                <select *ngIf="field.label === 'Nationality'" class="form-control newslterinput nputbrd _numeric_only"
+                                id="before_country_code" [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <option [value]="p.name" *ngFor="let p of countries">
+                                    {{p.name}} ({{ p.code }})
+                                    </option>
+                                </select>
+
+                                <select *ngIf="field.label === 'Gender'" class="form-control newslterinput nputbrd _numeric_only"
+                                id="before_country_code" [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <option [value]="p.value" *ngFor="let p of genderList">
+                                    {{p.key}}
+                                    </option>
+                                </select>
+
+                                <input *ngIf="field.label === 'Date of Birth'" name="adult_dob290[0]" id="adult_dob2900" type="text"
+                                class="form-control" value="" placeholder="dd-mm-yyyy" readonly=""
+                                data-id="0" aria-required="true" [formControlName]="field.name" bsDatepicker
+                                [bsConfig]="bsConfig" [minDate]="minDateChild" [maxDate]="maxDateChild" />
+
+                                <input *ngIf="field.label !== 'Phone Number'  && field.label !== 'Date of Birth' && field.label !== 'Title' && field.label !== 'Phone Code' && field.label !== 'Nationality' && field.label !== 'Gender' && field.name !== 'Phone Number'"
+                                  [type]="getInputType(field.type)"
+                                  class="form-control"
+                                  [formControlName]="field.name"
+                                />
+                                </div>
+                            </div>
+                            </div>
+                       
+                          </div>
+                        </div>
+                      </form>
+
+                      <form [formGroup]="bookingForm" *ngIf="tourData?.BookingSource === 'BGTAPINO00002'">
+                        <div formArrayName="studentForm">
+                          <div *ngFor="let adultGroup of studentForm.controls; let i = index" [formGroupName]="i" class="adult-group">
+                            <h6>Student {{i+1}}</h6>
+                            <div class="row">
+                            <div *ngFor="let field of formValuesData"  class="col-12 col-md-4">
+                                <div class="form-group">
+                                <label>{{ field.label }} <span style="color: red;">*</span></label>
+
+                                <select *ngIf="field.label === 'Title'" class="form-control newslterinput nputbrd _numeric_only salutation"
+                                    [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <ng-container *ngFor="let t of childTitles">
+                                        <option value="{{t.title}}">
+                                            {{t.title}}
+                                        </option>
+                                    </ng-container>
+                                </select>
+
+                                <!-- <select *ngIf="field.label === 'Phone Code'" class="form-control newslterinput nputbrd _numeric_only"
+                                id="before_country_code" [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <option [value]="p.phone_code" *ngFor="let p of phoneCodes">
+                                    {{p.name}} ({{ p.phone_code }})
+                                    </option>
+                                </select> -->
+
+                                <select *ngIf="field.label === 'Nationality'" class="form-control newslterinput nputbrd _numeric_only"
+                                id="before_country_code" [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <option [value]="p.name" *ngFor="let p of countries">
+                                    {{p.name}} ({{ p.code }})
+                                    </option>
+                                </select>
+
+                                <select *ngIf="field.label === 'Gender'" class="form-control newslterinput nputbrd _numeric_only"
+                                id="before_country_code" [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <option [value]="p.value" *ngFor="let p of genderList">
+                                    {{p.key}}
+                                    </option>
+                                </select>
+
+                                <input *ngIf="field.label === 'Date of Birth'" name="adult_dob290[0]" id="adult_dob2900" type="text"
+                                class="form-control" value="" placeholder="dd-mm-yyyy" readonly=""
+                                data-id="0" aria-required="true" [formControlName]="field.name" bsDatepicker
+                                [bsConfig]="bsConfig" [minDate]="minDateChild" [maxDate]="maxDateChild" />
+
+                                <input *ngIf="field.label !== 'Phone Number' && field.label !== 'Date of Birth' && field.label !== 'Title' && field.label !== 'Phone Code' && field.label !== 'Nationality' && field.label !== 'Gender'"
+                                  [type]="getInputType(field.type)"
+                                  class="form-control"
+                                  [formControlName]="field.name"
+                                />
+                                </div>
+                            </div>
+                            </div>
+                       
+                          </div>
+                        </div>
+                      </form>
+
+                      <form [formGroup]="bookingForm" *ngIf="tourData?.BookingSource === 'BGTAPINO00002'">
+                        <div formArrayName="seniorForm">
+                          <div *ngFor="let adultGroup of seniorForm.controls; let i = index" [formGroupName]="i" class="adult-group">
+                            <h6>Senior {{i+1}}</h6>
+                            <div class="row">
+                            <div *ngFor="let field of formValuesData"  class="col-12 col-md-4">
+                                <div class="form-group">
+                                <label>{{ field.label }} <span style="color: red;">*</span></label>
+
+                                <select *ngIf="field.label === 'Title'" class="form-control newslterinput nputbrd _numeric_only salutation"
+                                    [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <ng-container *ngFor="let t of childTitles">
+                                        <option value="{{t.title}}">
+                                            {{t.title}}
+                                        </option>
+                                    </ng-container>
+                                </select>
+
+                                <!-- <select *ngIf="field.label === 'Phone Code'" class="form-control newslterinput nputbrd _numeric_only"
+                                id="before_country_code" [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <option [value]="p.phone_code" *ngFor="let p of phoneCodes">
+                                    {{p.name}} ({{ p.phone_code }})
+                                    </option>
+                                </select> -->
+
+                                <select *ngIf="field.label === 'Nationality'" class="form-control newslterinput nputbrd _numeric_only"
+                                id="before_country_code" [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <option [value]="p.name" *ngFor="let p of countries">
+                                    {{p.name}} ({{ p.code }})
+                                    </option>
+                                </select>
+
+                                <select *ngIf="field.label === 'Gender'" class="form-control newslterinput nputbrd _numeric_only"
+                                id="before_country_code" [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <option [value]="p.value" *ngFor="let p of genderList">
+                                    {{p.key}}
+                                    </option>
+                                </select>
+
+                                <input *ngIf="field.label === 'Date of Birth'" name="adult_dob290[0]" id="adult_dob2900" type="text"
+                                class="form-control" value="" placeholder="dd-mm-yyyy" readonly=""
+                                data-id="0" aria-required="true" [formControlName]="field.name" bsDatepicker
+                                [bsConfig]="bsConfig" [minDate]="minDateChild" [maxDate]="maxDateChild" />
+
+                                <input *ngIf="field.label !== 'Phone Number'  && field.label !== 'Date of Birth' && field.label !== 'Title' && field.label !== 'Phone Code' && field.label !== 'Nationality' && field.label !== 'Gender'"
+                                  [type]="getInputType(field.type)"
+                                  class="form-control"
+                                  [formControlName]="field.name"
+                                />
+                                </div>
+                            </div>
+                            </div>
+                       
+                          </div>
+                        </div>
+                      </form>
+
+                      <form [formGroup]="bookingForm" *ngIf="tourData?.BookingSource === 'BGTAPINO00002'">
+                        <div formArrayName="militaryForm">
+                          <div *ngFor="let adultGroup of militaryForm.controls; let i = index" [formGroupName]="i" class="adult-group">
+                            <h6>Military Person {{i+1}}</h6>
+                            <div class="row">
+                            <div *ngFor="let field of formValuesData"  class="col-12 col-md-4">
+                                <div class="form-group">
+                                <label>{{ field.label }} <span style="color: red;">*</span></label>
+
+                                <select *ngIf="field.label === 'Title'" class="form-control newslterinput nputbrd _numeric_only salutation"
+                                    [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <ng-container *ngFor="let t of childTitles">
+                                        <option value="{{t.title}}">
+                                            {{t.title}}
+                                        </option>
+                                    </ng-container>
+                                </select>
+
+                                <!-- <select *ngIf="field.label === 'Phone Code'" class="form-control newslterinput nputbrd _numeric_only"
+                                id="before_country_code" [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <option [value]="p.phone_code" *ngFor="let p of phoneCodes">
+                                    {{p.name}} ({{ p.phone_code }})
+                                    </option>
+                                </select> -->
+
+                                <select *ngIf="field.label === 'Nationality'" class="form-control newslterinput nputbrd _numeric_only"
+                                id="before_country_code" [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <option [value]="p.name" *ngFor="let p of countries">
+                                    {{p.name}} ({{ p.code }})
+                                    </option>
+                                </select>
+
+                                <select *ngIf="field.label === 'Gender'" class="form-control newslterinput nputbrd _numeric_only"
+                                id="before_country_code" [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <option [value]="p.value" *ngFor="let p of genderList">
+                                    {{p.key}}
+                                    </option>
+                                </select>
+
+                                <input *ngIf="field.label === 'Date of Birth'" name="adult_dob290[0]" id="adult_dob2900" type="text"
+                                class="form-control" value="" placeholder="dd-mm-yyyy" readonly=""
+                                data-id="0" aria-required="true" [formControlName]="field.name" bsDatepicker
+                                [bsConfig]="bsConfig" [minDate]="minDateChild" [maxDate]="maxDateChild" />
+
+                                <input *ngIf="field.label !== 'Phone Number' && field.label !== 'Date of Birth' && field.label !== 'Title' && field.label !== 'Phone Code' && field.label !== 'Nationality' && field.label !== 'Gender'"
+                                  [type]="getInputType(field.type)"
+                                  class="form-control"
+                                  [formControlName]="field.name"
+                                />
+                                </div>
+                            </div>
+                            </div>
+                       
+                          </div>
+                        </div>
+                      </form>
+
+                      <form [formGroup]="bookingForm" *ngIf="tourData?.BookingSource === 'BGTAPINO00002'">
+                        <div formArrayName="otherForm">
+                          <div *ngFor="let adultGroup of otherForm.controls; let i = index" [formGroupName]="i" class="adult-group">
+                            <h6>Other Person {{i+1}}</h6>
+                            <div class="row">
+                            <div *ngFor="let field of formValuesData"  class="col-12 col-md-4">
+                                <div class="form-group">
+                                <label>{{ field.label }} <span style="color: red;">*</span></label>
+
+                                <select *ngIf="field.label === 'Title'" class="form-control newslterinput nputbrd _numeric_only salutation"
+                                    [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <ng-container *ngFor="let t of childTitles">
+                                        <option value="{{t.title}}">
+                                            {{t.title}}
+                                        </option>
+                                    </ng-container>
+                                </select>
+
+                                <!-- <select *ngIf="field.label === 'Phone Code'" class="form-control newslterinput nputbrd _numeric_only"
+                                id="before_country_code" [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <option [value]="p.phone_code" *ngFor="let p of phoneCodes">
+                                    {{p.name}} ({{ p.phone_code }})
+                                    </option>
+                                </select> -->
+
+                                <select *ngIf="field.label === 'Nationality'" class="form-control newslterinput nputbrd _numeric_only"
+                                id="before_country_code" [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <option [value]="p.name" *ngFor="let p of countries">
+                                    {{p.name}} ({{ p.code }})
+                                    </option>
+                                </select>
+
+                                <select *ngIf="field.label === 'Gender'" class="form-control newslterinput nputbrd _numeric_only"
+                                id="before_country_code" [formControlName]="field.name">
+                                    <option value="">-Select-</option>
+                                    <option [value]="p.value" *ngFor="let p of genderList">
+                                    {{p.key}}
+                                    </option>
+                                </select>
+
+                                <input *ngIf="field.label === 'Date of Birth'" name="adult_dob290[0]" id="adult_dob2900" type="text"
+                                class="form-control" value="" placeholder="dd-mm-yyyy" readonly=""
+                                data-id="0" aria-required="true" [formControlName]="field.name" bsDatepicker
+                                [bsConfig]="bsConfig" [minDate]="minDateChild" [maxDate]="maxDateChild" />
+
+                                <input *ngIf="field.label !== 'Phone Number'  && field.label !== 'Date of Birth' && field.label !== 'Title' && field.label !== 'Phone Code' && field.label !== 'Nationality' && field.label !== 'Gender'"
+                                  [type]="getInputType(field.type)"
+                                  class="form-control"
+                                  [formControlName]="field.name"
+                                />
+                                </div>
+                            </div>
+                            </div>
+                       
+                          </div>
+                        </div>
+                      </form>
+                </div>
+            </div>
+
+            <div class="text-container sectionbuk section" *ngIf="bookingFieldsArray.length > 0 ">
+                <h6>Booking Details</h6>
+                <div class="custom-inline-form sectionbukk" style="max-height:  500px; overflow: hidden scroll;">
+                  <div class="contactInfomation makeShadow">
+                    <form [formGroup]="bookingFieldForm" autocomplete="off">
+                      <!-- Check if bookingFieldsArray exists before rendering -->
+                      <div formArrayName="bookingFieldsArray" *ngIf="bookingFieldsArray">
+                        <!-- Iterate over the form groups in bookingFieldsArray -->
+                         <div class="row">
+                        <div *ngFor="let fieldGroup of bookingFieldsArray.controls; let i = index" [formGroupName]="i" class="col-12 col-md-4">
+                          <div class="form-group required form-row">
+                            <div class="col-sm-12 p-0 mb-3">
+
+                                <label style="line-break: anywhere;">{{ fieldGroup.get('name')?.value | titlecase }}</label>
+
+                                <input 
+                                class="form-control"
+                                [formControlName]="'value'"
+                                [attr.type]="getInputType(fieldGroup.get('name')?.value)"
+                                />
+                              <!-- Label with required indicator -->
+                              <!-- <label>{{ bookingFields[i].label }} 
+                                
+                              </label> -->
+              
+                              <!-- Handle input types dynamically based on the field type -->
+                              <!-- <ng-container [ngSwitch]="bookingFields[i].type">
+                                 <select *ngIf="bookingFields[i].label === 'Gender'" class="form-control newslterinput nputbrd _numeric_only"
+                                id="before_country_code" formControlName="value">
+                                    <option value="">-Select-</option>
+                                    <option [value]="p.value" *ngFor="let p of genderList">
+                                    {{p.key}}
+                                    </option>
+                                </select>
+                                <select *ngIf="bookingFields[i].label === 'Nationality'" class="form-control newslterinput nputbrd _numeric_only"
+                                id="before_country_code" formControlName="value">
+                                    <option value="">-Select-</option>
+                                    <option [value]="p.name" *ngFor="let p of countries">
+                                    {{p.name}} ({{ p.code }})
+                                    </option>
+                                </select>
+                                <ng-container *ngIf="bookingFields[i].label !== 'Nationality' && bookingFields[i].label !== 'Gender'">
+                                    <input  *ngSwitchCase="'string'"
+                                            type="text" class="form-control"
+                                            formControlName="value" placeholder="{{ bookingFields[i].label }}" />
+                                </ng-container>  -->
+                                <!-- <input *ngSwitchCase="'string'" type="text" class="form-control"
+                                       formControlName="value" placeholder="{{ bookingFields[i].label }}" /> -->
+                                <!-- <input *ngSwitchCase="'email'" type="email" class="form-control"
+                                       formControlName="value" placeholder="Enter Email" />
+                                <input *ngSwitchCase="'phone'" type="tel" class="form-control"
+                                       formControlName="value" placeholder="Enter Phone Number" />
+                                <input *ngSwitchCase="'date'" type="text" class="form-control"
+                                       bsDatepicker formControlName="value" placeholder="dd/mm/yyyy" />
+                                       <ng-container *ngIf="bookingFields[i].label !== 'Nationality' && bookingFields[i].label !== 'Gender'">
+                                    <input  *ngSwitchDefault type="text" class="form-control"
+                                       formControlName="value" placeholder="{{ bookingFields[i].label }}"/>
+                                </ng-container> -->
+                                <!-- <input *ngSwitchDefault type="text" class="form-control"
+                                       formControlName="value" placeholder="{{ bookingFields[i].label }}" /> -->
+                              <!-- </ng-container> -->
+              
+                             
+                            </div>
+                          </div>
+                        </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              
+                            
+
+            <!-- <div class="text-container sectionbuk section">
+                <h6>Address Details</h6>
+                <div class="custom-inline-form sectionbukk">
+                    <div class="contactInfomation makeShadow">
+
+                        <form class="" [formGroup]="bookingContactForm" autocomplete="off">
+                            <div class="form-group required row">
+                                <div class="col-md-4 mb-3">
+                                    <label>Address </label>
+                                    <input type="text" class="form-control" placeholder="Address"
+                                        formControlName="streetAddress">
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label>Address2 </label>
+                                    <input type="text" class="form-control" placeholder="Address2"
+                                        formControlName="streetNumber">
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label>City </label>
+                                    <input type="text" class="form-control" placeholder="City" formControlName="city">
+                                </div>
+                                <div class="col-md-4">
+                                    <label>State </label>
+                                    <input type="text" class="form-control" placeholder="State"
+                                        formControlName="province">
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Postal Code </label>
+                                    <input type="text" class="form-control" placeholder="Postal Code"
+                                        formControlName="postalCode">
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Country <span style="color: red;">*</span></label>
+                                    <select class="form-control" id="country" name="country" aria-required="true"
+                                        formControlName="country" required>
+                                        <option value="">-Select-</option>
+                                        <option *ngFor="let c of countries" value="{{c.code}}">
+                                            {{c.name}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="submitted && bookingContactForm.get('country').invalid">
+                                        <div class="text-danger">Country is required.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="text-container sectionbuk section remark-sec" *ngIf="tourData?.BookingSource === 'BGTAPINO00001' && tourData?.optional_tours?.length">
+                <form class="" autocomplete="off">
+                    <div class="col-12">
+                        <h6 class="col-12 row d-flex justify-content-start align-items-center">Optional Tour <label class="ml-2 optional-tour-text">(These tours are for extra charge - If selected - and will be added to final price)</label> </h6>
+                        
+                    </div>
+                    <div class="col-12 row ">
+                        <div *ngFor="let data of tourData?.optional_tours" class="col-12 row">
+                                <div class="col-1 pt-1">
+                                    <input style="position: inherit !important; left: 0px !important;"  
+                                    class="ml-4 mr-2 mt-0 optinal-check-box"  type="checkbox"
+                                        
+                                        (change)="onCheckboxChange($event, data)"/>
+                                </div>
+                                <div class="col-4">
+                                    <label>{{data?.name}} ({{data?.duration}}) {{data?.price}} Per Pax</label>
+                                </div>
+                                <div class="col-4">
+                                    <input
+                                            type="number"
+                                            [(ngModel)]="data.noOfPax"
+                                            class="form-control"
+                                            placeholder="No. Of Pax"
+                                            min="0"
+                                            [max]="maxPax"
+                                            (ngModelChange)="onPaxChange(data)"
+                                            [ngModelOptions]="{standalone: true}"
+                                            />
+                                    
+                                </div>
+                                <div class="col-3">
+                                    <button type="button" class="btnStyle" (click)="onConfirmOptionalTour(data.id, data)">Confirm</button>
+                                </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="text-container sectionbuk section remark-sec">
+                <form class="" [formGroup]="bookingContactForm" autocomplete="off">
+                    <h6>Remarks</h6>
+                    <div class="sectionbukk ">
+                        <p class="travelNotice">Special Request Cannot be guaranteed, but the supplier will do its best
+                            to
+                            meet your needs. You can always make a special request after your booking is complete.</p>
+                        <textarea formControlName="remarks" name="remark" rows="4"></textarea>
+                        <div *ngIf="submitted && bookingContactForm.controls.remarks.invalid" class="text-danger">
+                            Remarks is Required.
+                          </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-12 nopad mt-3">
+                <form class="" [formGroup]="bookingContactForm" autocomplete="off">
+                <div class="checkcontent" style="overflow: inherit;">
+                    <div >
+                        <input type="checkbox" value="0" name="confirm" class="filter_airline" id="squaredThree1"
+                            aria-required="true" formControlName="Aggreed" required />
+                            <label for="squaredThree1" class="lbllbl" style="display: inline; font-size: 14px;margin:22px; color:#333;">
+                                By booking this item , you agree to our
+                                <a data-toggle="modal" (click)="openStaticPage('Travel Agent T&Cs')" class="colorbl">Terms and
+                                  Conditions</a>,
+                                <a data-toggle="modal" (click)="openStaticPage('Privacy policy')" class="colorbl">Privacy Policy</a>
+                                , <a data-toggle="modal" (click)="openStaticPage('Cancellation & refund policy')" class="colorbl">Refund Policy</a> 
+                                and 
+                                <a class="colorbl" (click)="openTourTermsPopup()">Tour Terms & Conditions</a>. 
+                              </label>
+                    </div>
+                    <div class="checkcontent" style="overflow: inherit;">
+                        <small class="text-danger"
+                            *ngIf="submitted && bookingContactForm['controls']['Aggreed'].errors?.required">
+                            Please Check The Agreement*
+                        </small>
+                    </div>
+                </div>
+            </form>
+            </div>
+            <div class="spd-15">
+                <div class="col-12 nopad ">
+                    <button type="submit" (click)="onContinue()">Continue</button>
+                </div>
+            </div>
+        </div>
+        <div class="second-part" style="margin-top: 64px;">
+            <div class="fsBorder card" style="box-shadow: 0px 1px 16px #ddd; position: sticky;">
+              <h4 class="text-muted"> Booking Summary </h4>
+              <div class="px-0 pt-2 pb-3">
+                <div>
+                  <div class="row m-0 text-muted">
+                    <div class="col-md-12 col-lg-12 f-14 mb-2 pb-2 bbottom">
+                      <div class="float-left w-100"><strong>{{tourData?.package_name}}</strong></div>
+                      <div class="float-left w-100">{{tourData?.placesCovered.join(',')}}, {{tourData?.tours_country}}</div>
+                    </div>
+          
+                    <div class="col-md-12 col-lg-12 f-14 mb-2">
+                      <div class="float-left w-100"><b>Your Price Summary</b></div>
+                    </div>
+                    <div *ngIf="tourData.BookingSource !== 'BGTAPINO00002'"  class="col-md-12 col-lg-12 f-14 mb-2">
+                      <div class="float-left customColor">Adult ({{noOfAdult}} X Ad = {{singleAdultPrice | number:'1.0-2' }})</div>
+                      <div class="float-right customColor"> {{tourData?.tourPrice[0]?.Currency}} {{adultPrice | number:'1.0-2'}} </div>
+                      <!-- <div *ngIf="tourData.BookingSource === 'BGTAPINO00002'" class="float-right customColor"> {{tourData?.tourPrice[0]?.Currency}} {{tourData?.tourPrice[0]?.adult_airliner_price}} </div> -->
+                    </div>
+                    <div *ngIf="noOfChild > 0 && tourData.BookingSource !== 'BGTAPINO00002'" class="col-md-12 col-lg-12 f-14 mb-2">
+                      <div *ngFor="let i of getChildPriceArray(); let index = index">
+                            Child {{index + 1}} - {{(singleChildPrice[index]) | number:'1.0-2'}}
+                        </div>
+                      <div class="float-right customColor">{{tourData?.tourPrice[0]?.Currency}} {{childPrice | number:'1.0-2'}}</div>
+                    </div>
+                    <div *ngIf="selectedOptionalTours.length > 0 && addingOptionalTours && tourData.BookingSource !== 'BGTAPINO00002'" class="col-md-12 col-lg-12 f-14 mb-2">
+                      <div class="float-left customColor col-12 p-0">Optional Tour
+                      </div>
+                      <div class=" customColor col-md-12 col-lg-12 f-14 p-0 mb-2 ng-star-inserted" *ngFor="let data of selectedOptionalTours">
+                        <div class=" row">
+                            <div *ngIf="data.noOfPax" class="col-6 customColor">{{data.name}} <br/> ({{tourData?.tourPrice[0]?.Currency}} {{data.price}} x {{data.noOfPax}})
+                            </div>
+                            <div  *ngIf="data.noOfPax" class="col-6 customColor d-flex justify-content-end" >{{getToursPrices(data.price,data.noOfPax)}}</div>
+                        </div>
+                        
+                      </div>
+                    </div>
+                    <div class="col-12" *ngIf="tourData.BookingSource === 'BGTAPINO00002'">
+
+  <div class="col-12 p-0" *ngFor="let data of tourData?.accommodations">
+    <div class="bbottom row m-0 p-0">
+
+      <div class="col-12 p-0">
+        <strong class="d-block mb-1">{{ data.name }}</strong>
+
+        <!-- Prices -->
+        <div class="row" *ngFor="let pricess of data.prices">
+
+          <!-- LEFT -->
+          <div class="col-7" style="font-size: 12px;">
+            ({{ pricess.quantity }} {{ pricess.pax_type }} x {{ pricess.price | number: '1.0-2' }})
+          </div>
+
+          <!-- RIGHT -->
+          <div class="col-5 text-right" style="font-size: 13px;">
+            <strong>
+              {{ tourData?.tourPrice[0]?.Currency }}
+              {{ getPrices(pricess.quantity, pricess.price) | number: '1.0-2' }}
+            </strong>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+                    
+                    <!-- <div *ngIf="noOfChild > 0 && tourData.BookingSource === 'BGTAPINO00002'" class="col-md-12 col-lg-12 f-14 mb-2">
+                        <div class="float-left customColor">Child Price  &nbsp; 
+                          <div *ngIf="tourData && tourData?.paxPriceDetails">
+                          Age ({{tourData?.paxPriceDetails[1]?.age_min}} - {{tourData?.paxPriceDetails[1]?.age_max}})
+                      </div>
+                        </div>
+                        <div class="float-right customColor">{{tourData?.tourPrice[0]?.Currency}} {{tourData?.tourPrice[0]?.child_airliner_price}}</div>
+                      </div> -->
+
+
+                    <div class="col-md-12 col-lg-12 f-18 mb-3 bbtop">
+                      <div class="float-left text-uppercase grand_tot"> Grand Total </div>
+                      <div *ngIf="tourData.BookingSource !== 'BGTAPINO00002'" class="float-right text-warning" style="color: #092e53 !important;font-weight: bold;">
+                        {{tourData?.tourPrice[0]?.Currency}} {{getTotalAmount(tourData?.optional_tours_price)| number:'1.0-2'}}
+                      </div>
+                      <div *ngIf="tourData.BookingSource === 'BGTAPINO00002'" class="float-right text-warning" style="color: #092e53 !important;font-weight: bold;">
+                        {{tourData?.tourPrice[0]?.Currency}} {{tourData?.tourPrice[0]?.adult_airliner_price| number:'1.0-2' }}
+                      </div>
+                    </div>
+
+                    <div class="col-md-12 col-lg-12 f-14 mb-3" *ngIf="getMandatoryLocal(tourData?.mandatory_addons)">
+                        <div class="float-left customColor">
+                               <strong>Local payment</strong>
+                        </div>
+                        <div class="float-right customColor"  >
+                            <strong>{{ getMandatoryPrice(tourData?.mandatory_addons) | number:'1.0-2' }}</strong>
+                        </div><br/>
+                        <div *ngFor="let data of tourData?.mandatory_addons">
+                            <span>
+                                <div class="float-left customColor col-10 pl-0">
+                                    {{data.name}}
+                                </div>
+                                <div class="float-right customColor"  >
+                                    {{ data.prices[0].local_currency }}  {{data.prices[0].value | number:'1.0-2'}}
+                                </div>
+                            </span>
+                            
+                        </div>
+                    </div>
+                  </div>
+          
+                </div>
+              </div>
+            </div>
+          </div>       
+    </div>
+</div>
+<!-- </div>
+</div> -->
+
+<ngx-loading [show]="loading"
+[config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+[template]="loadingTemplate"></ngx-loading>
+
+
+<div class="popup-overlay" *ngIf="showTermsPopup">
+    <div class="popup-content">
+      <button class="close-btn p-1 m-0" (click)="closeTourTermsPopup()">&times;</button>
+  
+      <div class="popup-body">
+        <h2>Tour Terms & Conditions</h2>
+        <p [innerHTML]="tourData?.terms"></p>
+      </div>
+    </div>
+  </div>

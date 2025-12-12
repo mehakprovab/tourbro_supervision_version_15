@@ -1,0 +1,131 @@
+<div class="card">
+    <form [formGroup]="regConfig">
+       <div class="form-row">
+          <div class="col-4 pr-0">
+             <div class="form-group">
+                <label for="promo_code">Promo Code</label>
+                <input formControlName="promo_code" type="text" class="form-control text-capitalize form-control-sm nrm_input"
+                   placeholder="Promo code" id="promo_code">
+             </div>
+          </div>
+          <div class="col-4 pr-0">
+             <div class="form-group">
+                <label for="bookedBy">Module</label>
+                <select formControlName="category" name="cars" id="bookedBy"
+                   class="form-control form-control-sm nrm_input">
+                   <option selected value="" disabled>Choose...</option>
+                   <option value="flight">Flight</option>
+                   <option value="hotel" selected>Hotel</option>
+                   <!-- <option value="car">Car</option> -->
+                   <option value="activity">Activity</option>
+                   <option value="transfer">Transfer</option>
+                   <option value="holiday">Holiday</option>
+                   <option value="bundle">Bundle Booking</option>
+                </select>
+                <div>
+                </div>
+             </div>
+          </div>
+
+       </div>
+       <div class="btncontainer">
+          <button type="submit" class="btnStyle" (click)="onSearchSubmit()">Search</button> &nbsp;
+          <button type="button" class="btnStyle" (click)="onReset()">Reset</button>
+       </div>
+    </form>
+ </div>
+<div class="create-sub-agent-container">
+    <div class="custom-table-layout mt-3">
+        <div class="table-btn-group mb-3">
+            <button class="btnStyle" (click)="download('pdf', 'landscape')">PDF</button>&nbsp;
+          <button class="btnStyle" (click)="exportExcel()">Export to Excel</button>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <form class="clearfix">
+                    <div class="row col-md-12 col-lg-12 m-0 p-0">
+                        <table style="table-layout: fixed; width: 100%;" id="active-users-report">
+                            <tr>
+                                <td>
+                                    <div class="table-responsive">
+                                        <table
+                                            class="align-middle mb-0 table table-borderless table-striped table-hover"
+                                            matSort (matSortChange)="sortData($event)">
+                                            <thead>
+                                                <tr class="p-2">
+                                                    <th scope="col" class="text-nowrap"
+                                                        *ngFor="let header of displayColumn;"
+                                                        mat-sort-header="{{header.key}}">
+                                                        {{header.value }}
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngIf="noData">
+                                                    <td colspan="12">
+                                                        <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                                                    </td>
+                                                </tr>
+                                                <tr *ngIf="!noData && !respData.length">
+                                                    <td colspan="12">
+                                                        <h4 class="text-muted text-center">
+                                                            No Data Found!
+                                                        </h4>
+                                                    </td>
+                                                </tr>
+                                                <tr class="p-2"
+                                                    *ngFor="let user of respData | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
+                                                    <td class="text-left text-muted">{{i+1}}.</td>
+                                                    <td class="text-left">
+                                                      {{user['promo_code']}}
+                                                      </td>
+                                                    <td class="text-left"> <img width="42" [src]="displayImage(user['promo_image'])"  alt="" class="rounded-circle"> </td>
+                                                    <td class="text-left text-capitalize"> {{user['description']}} </td>
+                                                    <td class="text-left text-capitalize"> {{user['discount_value'] +' '+user['discount_type']}} </td>
+                                                    <td class="text-left"> {{user['expiry_date'] | date: 'dd/MM/yyyy'}} </td>
+                                                     <td class="text-left"> {{user['category']}} </td>
+                                                    <td class="text-left"> <p class="text-white bg-success" *ngIf="user['status']== 1">Active</p>
+                                                    <p class="text-white bg-danger" *ngIf="user['status']!= 1">In Active</p>  
+                                                    </td>  
+                                                    <td class="text-left"> {{user['start_date'] | date: 'dd/MM/yyyy'}}    
+                                                    </td>
+                                                    <td class="text-left">
+                                                        <span *ngIf="!findPromoExpired(user['expiry_date'])">{{'Validity Expired'}}</span>
+                                                        <span *ngIf="findPromoExpired(user['expiry_date'])">{{'Valid'}}</span>
+                                                    </td>
+                                                    <td class="text-left" style="display:flex; float:right;"> 
+                                                        <button class="btn btn-sm btn-primary"
+                                                            (click)="updatePromo(user)">
+                                                            <i class="fa fa-edit text-nowrap">&nbsp;
+                                                                {{'Update'}}
+                                                            </i>
+                                                        </button>
+                                                        
+                                                        &nbsp; &nbsp;
+                                                        <button class="btn btn-sm btn-primary pull-right" (click)="confirmDelete(user?.id)">
+                                                            <i class="fa fa-trash text-nowrap">&nbsp;
+                                                                {{'Delete'}}
+                                                            </i>
+                                                        </button>
+                                                    </td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="card-footer pb-0">
+                        <div class="d-flex w-100 justify-content-between">
+                            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                            </ngb-pagination>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

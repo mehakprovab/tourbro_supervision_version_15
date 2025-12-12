@@ -1,0 +1,19 @@
+.image-list {
+    display: flex;
+    flex-wrap: wrap;
+     gap:8px;
+  }
+  .img-fluid{
+    width:100%;
+  height:100%
+    }
+    .modal {
+      // position: fixed;
+      top: 38px;
+    }
+    .btnStyles{
+      background: #022756 !important;
+      padding: 6px 12px !important;
+      border: 1px solid #022756 !important;
+      color:white;
+    }

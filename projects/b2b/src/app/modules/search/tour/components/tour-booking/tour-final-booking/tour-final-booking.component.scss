@@ -1,0 +1,430 @@
+.container {
+    display: flex;
+    max-width: 1300px !important;
+  }
+  
+  .first-part {
+    flex-basis: 70%;
+    width: 300;
+    height: 300;
+    /* Additional styles for the first part */
+  }
+  
+  .second-part {
+    flex-basis: 30%;
+    height: 100%;
+    /* Additional styles for the second part */
+  }
+  
+  img {
+    vertical-align: middle;
+    border-style: none;
+    width: 100%;
+    height: 180px;
+    border-radius: 8px;
+}
+
+
+.text-container{
+    padding: 20px;
+}
+
+.section{
+    border-radius: 8px !important;
+    box-shadow: 0px 1px 16px #ddd;
+    background: #fff;
+    margin: 15px 23px 10px 4px;
+    padding: 20px;
+    width: 97%;
+   
+}
+
+.aside{
+    display: inline-flex;
+}
+
+.section:nth-child(1) {
+    border-radius: 20px;
+}
+
+.section:nth-child(3) {
+    padding: 0px !important;
+}
+
+
+.tourInfo{
+    margin-left: 5%;
+}
+.tourInfo h4{font-size: 22px;
+    color: #07324b;
+    margin-bottom: 15px;
+    font-weight: 600;}
+// .aside{
+//     display: inline-flex;
+// }
+.travelInfo{
+    font-size: 16px;
+    line-height: 30px;
+    color: #000;
+    margin: 0px;
+    font-weight: 600;
+}
+
+.travelInfo span { color: #de6f07;}
+
+// .bookingDateData{
+//     width: auto;
+// }
+
+.imgInfo{
+    flex-basis: 35%;
+}
+
+.bookingDateData{
+    flex-basis: 65%;
+}
+
+span{
+    font-size: 16px;
+}
+
+.durationInfo{
+    text-align: center;
+    color: #de6f07;
+    font-weight: 600;
+}
+table{
+    width: 100%;
+}
+.outerBorder{
+    border: 1px solid #e3dede;
+}
+
+.second-part{
+    box-shadow: rgba(133, 129, 129, 0.2) 0px 2px 8px 0px;
+    margin: 15px 23px 10px 4px;
+    width: 97%;
+}
+
+
+thead{
+    background-color:  #189AD3;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.contentHeight {
+    min-height: 624px !important;
+    padding: 0px;
+}
+
+// for country id selection
+
+
+.selectedwrap {
+    margin-bottom: 5px;
+    position     : relative;
+}
+
+.selectedwrap::after {
+    bottom        : 1px;
+    color         : rgb(102, 102, 102);
+    content       : "\f0d7";
+    cursor        : pointer;
+    font-family   : 'Font Awesome 5 Pro';
+    font-size     : 14px;
+    height        : 30px;
+    line-height   : 39px;
+    pointer-events: none;
+    position      : absolute;
+    right         : 7px;
+    text-align    : center;
+    top           : 1px;
+    font-weight   : 600;
+    width         : 19px !important;
+    background    : none 0px 0px repeat scroll rgb(255, 255, 255);
+}
+.flpayinput {
+    color             : #333333;
+    display           : block;
+    font-size         : 14px;
+    height            : 40px;
+    overflow          : hidden;
+    padding           : 6px 10px;
+    // width             : 13%;
+    margin-bottom     : 5px;
+    border            : 1px solid #C5C5C5;
+    border-radius     : 10px !important;
+
+}
+
+.mangeWidth{
+    // width: 147%;
+}
+
+.couponHeader {
+    background-color:  #189AD3;
+    color: white;
+    margin: 11px -2px 8px -2px;
+    padding: 10px 10px 10px 20px;
+}
+.impoertantNotice{
+    font-size: 14px;
+    margin-top: -11px;
+    font-weight: 300;
+    margin-left: 2px;
+}
+
+.errorMessage{
+    color: red;
+    margin-left: 3px;
+    margin-top: -17px;
+    @media(max-width: 767px){
+        margin-left: 6px;
+    }
+  }
+
+button {
+    color: #fff;
+    background: #FBC108;
+    padding: 12px 30px;
+    border: 1px solid #FBC108;
+    border-radius: 5px;    margin-bottom: 20px;float: right;
+}
+
+
+.iconAndCount{
+    margin-top: -3px;
+}
+
+.priceInfo{
+    color: #1B9AD4;
+    margin-top: -3px;
+}
+
+.highlight{
+    //[ngStyle]="{ 'color': item.value == 'GrandTotal' ? '#de6f07' : 'inherit' }"
+    color: #de6f07;
+    font-family: 700;
+    font-weight: 800;
+}
+
+.NameInfo{
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 20px;
+}
+
+.nameLabel{
+    padding-top: 8px;
+    margin-left: -59px;
+}
+
+.underline-input {
+    border: none;
+    border-bottom: 1px solid rgb(216, 210, 210);
+    outline: none;
+    width: 534%;
+    background-color: #f7f7f7;
+    margin-top: 13%;
+}
+
+.couponInput{
+    display: flex;
+}
+
+.salutation{
+    // font-size: 14px;
+    // height: 40px;
+    // overflow: hidden;
+    // padding: 6px 10px;
+    // margin-bottom: 5px;
+    // border: 1px solid #C5C5C5;
+    // border-radius: 8px !important;
+}
+
+.makeShadow{
+    // margin-top: 11px;
+    // box-shadow: rgb(82 74 74 / 33%) 0px 2px 8px -4px;
+    // background: #f7f7f7;
+}
+
+.col-md-6 {
+    flex: 0 0 50%;
+    max-width: 100%;
+}
+
+.termCheckBox{
+    margin: 5px 0px 0px 31px;
+}
+
+.travelNotice{
+    // margin: 5px 0px 0px 13px;
+    font-size: 15px;
+}
+
+.inlineError{
+    padding-left: 35px;
+}
+
+.customInfoHeader{
+    text-align: center;
+    margin-top: 1%;
+}
+.star_rtng{
+    font-size: 12px;
+    display: inline-block;
+    bottom: 10px;
+    position: relative;
+    letter-spacing: 4px;
+    color: #bfbfbf;
+}
+.star_rtng_clr{
+    color: #fe8d00;
+}
+.review_txt{font-size: 25px;
+    margin-top: 20px;
+    font-weight: 500;
+    color: #000;margin-bottom: 0px;}
+.sectionbuk h6{
+        padding: 15px 16px;
+        float: left;
+        width: 100%;
+        font-weight: 600;
+        margin-bottom: 20px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        font-size: 18px;
+        
+    }
+.sectionbuk-t{
+        padding: 10px!important;
+       }
+.sectionbuk{box-shadow: 0px 1px 16px #ddd;
+            border-radius: 8px !important;
+            padding: 0px;
+            background:#fff;}
+.mb-20{margin-bottom: 20px;}
+label{
+    color: #000 !important;
+    margin-bottom: 0px !important;
+    font-size: 13px;
+    // font-weight: 600;
+    padding-left: 0px}
+    a{
+        color: #0bb8e3 !important;
+    }
+
+    .addPax {color: #fff !important;
+    background: #092e53;
+    padding: 6px 10px;
+    display: inline-block;
+    border-radius: 5px; position: absolute; right: 15px;;
+    margin-bottom: 15px;
+    font-size: 13px;}
+  .removePax{color: #0bb8e3 !important;
+    padding-left: 12px;
+    padding-bottom: 10px;
+    display: block;
+    font-size: 14px;}  
+.remark-sec textarea{width: 100%;border: 1px solid #ced4da;}
+.checkcontent label{padding-left: 5px;}
+
+.sectionbukk{padding: 10px; position: relative;
+}
+h4.text-muted{
+    color: #000 !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    padding: 14px 10px 11px 17px; background:#e2e9f3;
+    border-bottom: 1px solid #00000029;
+}
+.text-muted b{
+    font-size: 16px !important;
+    color: #000 !important;
+    font-weight: 500 !important;
+}
+.review_txtt{color: #000;
+    font-size: 20px;
+    padding-top: 0px;
+    margin: 0px;
+margin-top: 15px;}
+.bbottom{
+    border-bottom: 1px solid rgba(26, 54, 126, 0.125);
+}
+.spd-15{margin: 15px 23px 10px 4px;}
+
+.form-control {
+    padding: 0.375rem 0.75rem !important;
+    height: 45px !important;
+    border: 1px solid #a8b2bc !important;
+    border-radius: 5px !important;
+    box-shadow: 0px 1px 5px 1px #ddd;
+}
+.payinputx {
+    padding: 0.375rem 0.75rem !important;
+    height: 45px !important;
+    border: 1px solid #a8b2bc !important;
+    position: relative;
+    width: 100%;
+    border-radius: 5px !important;
+    box-shadow: 0px 1px 5px 1px #ddd;
+}
+.customSquaredThree {
+    float: left;
+    margin-right: 8px;
+    position: relative;
+    /* width: 20px; */
+    // top: -12px;
+}
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .popup-content {
+    background: #fff;
+    width: 80%;
+    max-height: 80vh;
+    overflow-y: auto; /* makes popup scrollable */
+    border-radius: 8px;
+    padding: 20px;
+    position: relative;
+  }
+  
+  .popup-body {
+    margin-top: 1rem;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    color: #0000009e;
+  }
+  
+  .bbtop{
+    border-top: 1px solid rgba(26, 54, 126, 0.125);
+}
+// .child-dob-field {
+//     pointer-events: none;
+//     cursor: not-allowed;
+// }
+
+.optional-tour-price-tag {
+    font-weight: 600;
+}

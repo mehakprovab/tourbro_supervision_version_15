@@ -1,0 +1,58 @@
+.wrapper1,
+.wrapper2 {
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+.wrapper1 {
+    height: 20px;
+}
+
+.div1 {
+    width: 2600px;
+    height: 20px;
+}
+
+.div2 {
+    width: 2600px;
+    overflow: hidden;
+}
+
+.div2 .table-responsive {
+    overflow: inherit;
+}
+
+.invisible-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.bg-danger {
+    background-color: #eb093f ;
+    color: white; /* Ensures text is white */
+  }
+  .bg-Yellow{
+    background-color: yellow ;
+
+  }
+  ::ng-deep .multiselect-dropdown .dropdown-btn{ border: none !important; padding:0px !important;}
+  span.dropdown-multiselect__caret {
+      height: 45px !important;
+      right: -12px !important;
+      top: -7px !important;
+  }
+
+  .sale-stop-body {
+    max-height: 280px !important;
+    overflow: hidden scroll !important;
+  }
+
+  .remove-btn {
+    background: #eb4343;
+    border: solid;
+    border-radius: 7px;
+  }
+
+  .edit-cancellation-modal {
+        max-height: 460px !important;
+    overflow: hidden scroll !important;
+  }

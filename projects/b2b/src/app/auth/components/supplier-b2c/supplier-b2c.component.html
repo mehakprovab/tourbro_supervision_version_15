@@ -1,0 +1,619 @@
+<div class="h-100">
+    <div class="no-gutters ">
+        <app-home-page-header></app-home-page-header>
+<ng-container >
+    <div class="container p-0 mt-4 mb-2 " 
+    [ngClass]="{ 
+        'fitht': !validationOtp, 
+        'footer-height': validationOtp 
+      }">
+        <div class="htscreen">
+        <form class="" [formGroup]="regConfig" (ngSubmit)="onSubmitHotelDetail()"autocomplete="off">
+        
+            <div class="title pl-30 pt-3">
+                <h3 class="text-center pb-3 f-22">B2B Prime User Details</h3>
+            </div>
+            <fieldset form="hotelImage" class="supplier_form">
+
+            <div class="form-row">
+                <ng-container formGroupName="supplier">    
+            <div class="col-sm-4 mb-2">
+                <label for="title" class=" control-label">Title<span class="text-danger">*</span></label>
+            
+                    <select id="inputState" class="form-control" formControlName="title"[attr.disabled]="emailVerified || addOrUpdate === 'update' ? true : null"
+                    [ngClass]="{ 'is-invalid': submittedSupplier && supplier?.get('title').errors }">
+                        <option selected value="" disabled >Choose...</option>
+                        <option *ngFor="let t of userTitleList" [ngValue]="t.id">{{t.title}}</option>
+                    </select>
+                    <div *ngIf="submittedSupplier && regConfig.get('supplier').get('title').hasError('required')" class="invalid-feedback">
+                        <div *ngIf="regConfig.get('supplier').get('title').hasError('required')">Title is required</div>
+                    </div>
+            
+            </div>
+            <div class="col-sm-4 mb-2">
+                <label for="firstName"class="required" class=" control-label">First Name  <span class="text-danger">*</span></label>
+            
+                    <input type="text" class="form-control text-capitalize" id="firstName" maxlength="250" 
+                (keypress)="omitSpecialCharacters($event)"
+                    formControlName="first_name"[attr.disabled]="emailVerified || addOrUpdate === 'update' ? true : null"
+                    [ngClass]="{ 'is-invalid': submittedSupplier && supplier?.get('first_name').errors }">
+                    <div *ngIf="submittedSupplier && regConfig.get('supplier').get('first_name').hasError('required')" class="invalid-feedback">
+                        <div *ngIf="regConfig.get('supplier').get('first_name').hasError('required')">First Name is required</div>
+                    </div>
+    
+            </div>
+    
+            <div class="col-sm-4 mb-2">
+                <label for="lastName" class=" control-label">Last Name <span class="text-danger">*</span></label>
+        
+                    <input type="text" class="form-control text-capitalize" id="lastName" maxlength="250"
+                    (keypress)="omitSpecialCharacters($event)"[attr.disabled]="emailVerified || addOrUpdate === 'update' ? true : null"
+                formControlName="last_name" [ngClass]="{ 'is-invalid': submittedSupplier && supplier?.get('last_name').errors }">
+                <div *ngIf="submittedSupplier && regConfig.get('supplier').get('last_name').hasError('required')" class="invalid-feedback">
+                    <div *ngIf="regConfig.get('supplier').get('last_name').hasError('required')">Last Name is required</div>
+                </div>
+        
+            </div>
+            <div class="col-sm-4 mb-2">
+                <label for="lastName" class=" control-label"> Job Title  <span class="text-danger">*</span></label>
+            
+                    <input type="text" class="form-control text-capitalize" id="lastName" maxlength="250"
+                    (keypress)="omitSpecialCharacters($event)" [attr.disabled]="emailVerified || addOrUpdate === 'update' ? true : null"
+                formControlName="job_title"[ngClass]="{ 'is-invalid': submittedSupplier && supplier?.get('job_title').errors }">
+                <div *ngIf="submittedSupplier && regConfig.get('supplier').get('job_title').hasError('required')" class="invalid-feedback">
+                    <div *ngIf="regConfig.get('supplier').get('job_title').hasError('required')">Job Title is required</div>
+                </div>
+                </div>
+        
+                <div class="col-sm-4 mb-3">
+                    <label class=" control-label">
+                        Country
+                        <span class="text-danger">*</span>
+                    </label>
+                    <select formControlName="country" class="form-control" (change)="getUserCityListAuto($event)"
+                    [ngClass]="{ 'is-invalid': submittedSupplier && supplier?.get('country').errors }"
+                    >
+                        <option value="" disabled selected>Select Country</option>
+                        <option *ngFor="let coreCountry of coreCountryList" [value]="coreCountry.name">
+                            {{coreCountry.name}}
+                        </option>
+                    </select>
+                    <div *ngIf="submittedSupplier && regConfig.get('supplier').get('country').hasError('required')" class="invalid-feedback">
+                    Country is required
+                    </div>
+                </div>
+                
+                <div class="col-sm-4 mb-3">
+                    <label class=" control-label">
+                        State
+                        <span class="text-danger">*</span>
+                    </label>
+                    <select formControlName="state" class="form-control" (change)="onUserStateChange($event)"
+                    [ngClass]="{ 'is-invalid': submittedSupplier && supplier?.get('state').errors }"
+                    >
+                        <option value="" disabled selected>Select State</option>
+                        <option *ngFor="let state of registerStates" [value]="state.id">{{
+                            state.name }}</option>
+                    </select>
+                    <div *ngIf="submittedSupplier && regConfig.get('supplier').get('state').hasError('required')" class="invalid-feedback">
+                    State is required
+                    </div>
+                </div>
+
+                <div class="col-sm-4 mb-3">
+                    <label class="control-label">
+                        City
+                        <span class="text-danger">*</span>
+                    </label>
+                    <select formControlName="city" class="form-control"
+                        [ngClass]="{ 'is-invalid': submittedSupplier && supplier?.get('city').errors }">
+                        <option value="" disabled selected>Select City</option>
+                        <option  id="autocomplete" *ngFor="let coreCity of userFilteredCities" [value]="coreCity.name">
+                            {{coreCity.name}}
+                        </option>
+                    </select>
+                    <div *ngIf="submittedSupplier && regConfig.get('supplier').get('city').hasError('required')" class="invalid-feedback">
+                    City is required
+                    </div>
+                </div> 
+
+            <div class="col-sm-4 mb-2">
+                <label for="phone" class=" control-label">Phone Number <span class="text-danger">*</span></label>
+                
+                        <input type="text" formControlName="phone_number" class="form-control" id="phone" minlength="8" maxlength="15"[attr.disabled]="emailVerified || addOrUpdate === 'update' ? true : null" (keypress)="numberOnly($event)"
+                        [ngClass]="{ 'is-invalid': submittedSupplier && supplier?.get('phone_number').errors }">
+                        <div *ngIf="submittedSupplier && regConfig.get('supplier').get('phone_number').hasError('required')" class="invalid-feedback">
+                            <div *ngIf="regConfig.get('supplier').get('phone_number').hasError('required')">Phone Number is required</div>
+                        </div>
+            
+            </div>
+            <div class="col-sm-4 mb-2">
+                <label for="phone" class=" control-label">Alternate Phone Number </label>
+                
+                        <input type="text" formControlName="alternate_phone_number" class="form-control" id="phone" minlength="8" maxlength="15" [attr.disabled]="emailVerified || addOrUpdate === 'update' ? true : null"(keypress)="numberOnly($event)"
+                        [ngClass]="{ 'is-invalid': submittedSupplier && supplier?.get('alternate_phone_number').errors }">
+                        <div *ngIf="submittedSupplier && regConfig.get('supplier').get('alternate_phone_number').hasError('required')" class="invalid-feedback">
+                            <div *ngIf="regConfig.get('supplier').get('alternate_phone_number').hasError('required')">Alternate Phone Number is required</div>
+                        </div>
+            
+            </div>
+            <div class="col-sm-12 mb-2">
+                <div class="row">
+        <div class="col-sm-4">
+            <label for="email"class="required" class=" control-label">Email ID   <span class="text-danger">*</span></label>
+            <input formControlName="email" type="text" class="form-control" id="email" maxlength="250"  [attr.disabled]="emailVerified || addOrUpdate === 'update' ? true : null"
+            [ngClass]="{ 'is-invalid': submittedSupplier && supplier?.get('email').errors }">
+            <div *ngIf="submittedSupplier && regConfig.get('supplier').get('email').hasError('required')" class="invalid-feedback">
+                <div *ngIf="regConfig.get('supplier').get('email').hasError('required')">Email ID  is required</div>
+            </div>
+            </div>
+            <div class="col-sm-2 pl-1 mb-2" style="margin-top:20px"*ngIf="!showOtpInput && !propertyForm">
+                <button type="button" (click)="VerifyOtp(supplier.get('email').value)" class="btn btn-primary icon-btn lg mr-4 verify_btn" >Verify</button>
+            </div>
+            <div class="col-sm-4">
+                <label for="email"class="required" class="control-label">Alternate Email ID   </label>
+        <input formControlName="alternate_email" type="text" class="form-control" id="email" maxlength="250" [attr.disabled]="emailVerified || addOrUpdate === 'update' ? true : null"
+            [ngClass]="{ 'is-invalid': submittedSupplier && supplier?.get('alternate_email').errors }">
+            <div *ngIf="submittedSupplier && regConfig.get('supplier').get('alternate_email').hasError('required')" class="invalid-feedback">
+                <div *ngIf="regConfig.get('supplier').get('alternate_email').hasError('required')">Alternate Email is required</div>
+            </div>
+        
+    
+            </div>
+        </div>
+        <div class="f-12 font-weight-light mt-2 text-danger text-capitalize" *ngIf="errorMessage"> {{errorMessage}}</div>
+                
+            </div>
+        
+            </ng-container>
+        </div>
+                                            
+        
+            <div class="col-12 title pl-30" *ngIf="propertyForm && !showOtpInput">
+                <h3 class="text-center pb-3">Property Details</h3>
+            </div>
+            <div >
+
+        <div class="form-row" *ngIf="propertyForm && !showOtpInput">
+            <ng-container formArrayName="properties" >
+                <ng-container *ngFor="let property of regConfig.get('properties')['controls']; let i = index"[formGroupName]="i" >
+                
+            <div class="col-sm-4 mb-3">
+                <label for="propertyName{{i}}" class=" control-label"> Property Name
+                    <span class="text-danger">*</span>
+                </label>
+                
+                    <input type="text" class="form-control text-capitalize" id="lastName" maxlength="250"
+                    (keypress)="omitSpecialCharacters($event)"
+                formControlName="propertyName"[ngClass]="{ 'is-invalid': submittedHotel && property.get('propertyName').errors }">
+                <div *ngIf="submittedHotel && property.get('propertyName').hasError('required')" class="invalid-feedback">
+                    Property Name is required
+                </div>
+            </div>
+    
+            <div class="col-sm-4 mb-3">
+                <label class=" control-label">
+                    Property Type
+                    <span class="text-danger">*</span>
+                </label>
+                <select formControlName="propertyType" class="form-control"
+                [ngClass]="{ 'is-invalid': submittedHotel && property.get('propertyType').errors }"
+                >
+                    <option value="" disabled selected>Select Property Type</option>
+                    <option *ngFor="let hotelType of hotelTypeList" [ngValue]="hotelType.hotel_type_name">
+                        {{hotelType.hotel_type_name}}
+                    </option>
+                </select>
+                <div *ngIf="submittedHotel && property.get('propertyType').hasError('required')" class="invalid-feedback">
+                    Property Type is required
+                </div>
+            </div>
+            
+            <div class="col-sm-4 mb-3">
+                <label class=" control-label">
+                    Property Rating
+
+                    <span class="text-danger">*</span>
+                </label>
+                <select formControlName="propertyRating" class="form-control"
+                [ngClass]="{ 'is-invalid': submittedHotel && property.get('propertyRating').errors }"
+                >
+                    <option value="" disabled selected>Select Property Rating</option>
+                    <option [ngValue]="0">Unrated</option>
+                    <option [ngValue]="1">1</option>
+                    <option [ngValue]="2">2</option>
+                    <option [ngValue]="3">3</option>
+                    <option [ngValue]="4">4</option>
+                    <option [ngValue]="5">5</option>
+                </select>
+                <div *ngIf="submittedHotel && property.get('propertyRating').hasError('required')" class="invalid-feedback">
+                    Property Rating is required
+                </div>
+            </div>
+            <div class="col-sm-4 mb-3">
+                <label class=" control-label">
+                    Currency
+                    <span class="text-danger">*</span>
+                </label>
+                <select formControlName="currency" class="form-control" 
+                [ngClass]="{ 'is-invalid': submittedHotel && property.get('currency').errors }"
+                >
+                    <option value="" disabled selected>Select Currency</option>
+                    <option *ngFor="let coreCountry of currencyList" [value]="coreCountry.currency">
+                        {{coreCountry.currency}}
+                    </option>
+                </select>
+                <div *ngIf="submittedHotel && property.get('currency').hasError('required')" class="invalid-feedback">
+                    Currency is required
+                </div>
+            </div>
+            <div class="col-sm-4 mb-3">
+                <label class=" control-label">
+                    Country
+                    <span class="text-danger">*</span>
+                </label>
+                <select formControlName="country" class="form-control" (change)="getCityListAuto($event)"
+                [ngClass]="{ 'is-invalid': submittedHotel && property.get('country').errors }"
+                >
+                    <option value="" disabled selected>Select Country</option>
+                    <option *ngFor="let coreCountry of coreCountryList" [value]="coreCountry.name">
+                        {{coreCountry.name}}
+                    </option>
+                </select>
+                <div *ngIf="submittedHotel && property.get('country').hasError('required')" class="invalid-feedback">
+                Country is required
+                </div>
+            </div>
+            
+            <!-- <div class="col-sm-4 mb-3">
+                <label class="control-label">
+                    City
+                    <span class="text-danger">*</span>
+                </label>
+                <input placeholder="Type Location / City" type="text"
+                class="validate text-capitalize searchinput form-control form-control-sm nrm_input"
+                (keyup)="getAutoCompleteLocations($event,'city')" for="dynmicLocations"
+                formControlName="city" #departureCity [ngClass]="{ 'is-invalid': submittedHotel && property.get('city').errors }"
+                >
+            <ul class="droplocations" id="departureLocations">
+                <div class="p-0">
+                    <li *ngFor="let location of departureLocations" class="p-2"
+                        (click)="selectedLocation('city',location)">
+                        {{location.city_name}}
+                    </li>
+                </div>
+            </ul>
+            <div *ngIf="submittedHotel && property.get('city').hasError('required')" class="invalid-feedback">
+                City is required
+            </div>
+            </div> -->
+            <div class="col-sm-4 mb-3">
+                <label class="control-label">
+                    City
+                    <span class="text-danger">*</span>
+                </label>
+                <select formControlName="city" class="form-control"(ngModelChange)="onCityChange($event)"
+                    [ngClass]="{ 'is-invalid': submittedHotel && property.get('city').hasError('required') }">
+                    <option value="" disabled selected>Select City</option>
+                    <option  id="autocomplete" *ngFor="let coreCity of coreCityList" [value]="coreCity.cityName">
+                        {{coreCity.cityName}}
+                    </option>
+                </select>
+                <div *ngIf="submittedHotel && property.get('city').hasError('required')" class="invalid-feedback">
+                City is required
+                </div>
+            </div> 
+            <!-- <div class="col-sm-12 mb-3">
+                <label class="control-label">
+                    Find Hotel On Map
+                    <span class="text-danger">*</span>
+                </label>
+                <div #mapContainer id="map">
+                    
+                </div>
+            </div> -->
+            <div class="col-sm-12 mb-3">
+                <label class="control-label">
+                Hotel Map
+                <span class="text-danger">*</span>
+                </label>
+                <div>
+                <input
+                    #searchInput
+                    type="text"
+                    placeholder="Search location..."
+                    class="form-control mb-3"
+                />
+                </div>
+                <div #mapContainer id="map" style="height: 500px; width: 100%;"></div>
+            </div>
+            
+            
+            
+            <div class="col-sm-4 mb-3">
+                <label for="address" class=" control-label">Property Address<span class="text-danger">*</span>
+                </label>
+            
+                    <input type="text" class="form-control text-capitalize" id="address" maxlength="250"
+                [ngClass]="{ 'is-invalid': submittedHotel && property.get('propertyAddress').errors }"
+                formControlName="propertyAddress">
+                <div *ngIf="submittedHotel && property.get('propertyAddress').hasError('required')" class="invalid-feedback">
+                    Property Address is required
+                </div>
+            </div>
+            <div class="col-sm-4 mb-3">
+                <label class=" control-label">
+                    Latitude
+                    <span class="text-danger">*</span>
+                </label>
+                <input id="lat" type="number" formControlName="latitude" class="form-control"
+                [ngClass]="{ 'is-invalid': submittedHotel && property.get('latitude').errors }"
+            
+                    />
+                    <div *ngIf="submittedHotel && property.get('latitude').hasError('required')" class="invalid-feedback">
+                        Latitude is required
+                    </div>
+            </div>
+        
+            <div class="col-sm-4 mb-3">
+                <label class=" control-label">
+                    Longitude
+                    <span class="text-danger">*</span>
+                </label>
+                <input id="lng" type="number" formControlName="longitude" class="form-control"
+                [ngClass]="{ 'is-invalid': submittedHotel && property.get('longitude').errors }"
+            />
+                <div *ngIf="submittedHotel && property.get('longitude').hasError('required')" class="invalid-feedback">
+                    Longitude is required
+                </div>
+            </div>
+            <div class="col-sm-4 mb-3">
+                <label class=" control-label">
+                    Meal Plans
+                    <span class="text-danger">*</span>
+                </label>
+                <ng-multiselect-dropdown #multiSelect formControlName="mealPlans"
+                    [placeholder]="'Select Meal Plans'" [data]="mealList" (onDeSelect)="selectMealPlan($event)" (onSelect)="selectMealPlan($event)"
+                [ngClass]="{ 'is-invalid': submittedHotel && property.get('mealPlans').errors }"
+                [settings]="dropdownSettingsForHotel" >
+                </ng-multiselect-dropdown>
+                <div *ngIf="submittedHotel && property.get('mealPlans').hasError('required')" class="invalid-feedback">
+                    Meal Plans is required
+                </div>
+            </div>
+        
+            <div class="col-sm-4 mb-3">
+                <label class=" control-label">
+                Weekend Days
+                    <span class="text-danger">*</span>
+                </label>
+                <ng-multiselect-dropdown #multiSelect formControlName="weekendDays"
+                    [placeholder]="'Select Weekend Days'" [data]="weekendDaysList" (onDeSelect)="selectWeenDays($event)" (onSelect)="selectWeenDays($event)"
+                [ngClass]="{ 'is-invalid': submittedHotel && property.get('weekendDays').errors }"
+                [settings]="dropdownSettingsForWeek" >
+                </ng-multiselect-dropdown>
+                <div *ngIf="submittedHotel && property.get('weekendDays').hasError('required')" class="invalid-feedback">
+                    Weekend Days is required
+                </div>  
+            </div>
+
+                    <div class="col-sm-4 mb-3">
+                        <label class=" control-label">Room Views
+                            <span class="text-danger">*</span>
+                        </label>
+                        <ng-multiselect-dropdown #multiSelect formControlName="roomViews"
+                        [placeholder]="'Select View'" [data]="viewList" (onDeSelect)="selectRoomView($event)" (onSelect)="selectRoomView($event)"
+                [ngClass]="{ 'is-invalid': submittedHotel && property.get('roomViews').errors }"
+                [settings]="dropdownSettingsForview" >
+                    </ng-multiselect-dropdown>
+                    <div *ngIf="submittedHotel && property.get('roomViews').hasError('required')" class="invalid-feedback">
+                        Room Views is required
+                    </div>
+                        </div>
+                        <div class="col-4">
+                            <label for="checkin_time" class="control-label">checkInTime
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-sm-12 p-0">
+                                <select class="form-control form-control-sm nrm_input"
+                [ngClass]="{ 'is-invalid': submittedHotel && property.get('checkInTime').errors }"
+                formControlName="checkInTime">
+                                    <option value="" disabled selected>Please Select</option>
+                                    <option *ngFor="let time of times" [value]="time" class="ui-menu-item">
+                                        {{ time }}
+                                    </option>
+                                </select>
+                                <div *ngIf="submittedHotel && property.get('checkInTime').hasError('required')" class="invalid-feedback">
+                                checkInTime is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label for="checkin_time" class="control-label">checkOutTime
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-sm-12 p-0">
+                                <select class="form-control form-control-sm nrm_input"
+                [ngClass]="{ 'is-invalid': submittedHotel && property.get('checkOutTime').errors }"
+                formControlName="checkOutTime">
+                                    <option value="" disabled selected>Please Select</option>
+                                    <option *ngFor="let time of times" [value]="time" class="ui-menu-item">
+                                        {{ time }}
+                                    </option>
+                                </select>
+                                <div *ngIf="submittedHotel && property.get('checkOutTime').hasError('required')" class="invalid-feedback">
+                                    checkOutTime is required
+                                </div>
+                            </div>
+                        </div>
+                
+                        <div class="col-4">
+                            <label for="checkin_time" class="required control-label">Time zone
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-sm-12 p-0">
+                                <select class="form-control form-control-sm nrm_input"
+                [ngClass]="{ 'is-invalid': submittedHotel && property.get('propertyLocalTimezone').errors }"
+                formControlName="propertyLocalTimezone">
+                                    <option value="" disabled selected>Please Select</option>
+                                    <option *ngFor="let time of timezones" [value]="time" class="ui-menu-item">
+                                        {{ time }}
+                                    </option>
+                                </select>
+                                <div *ngIf="submittedHotel && property.get('propertyLocalTimezone').hasError('required')" class="invalid-feedback">
+                                    Time zone is required
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="col-sm-4 mb-3">
+                            <label class=" control-label">
+                                Channels
+                
+                                <span class="text-danger">*</span>
+                            </label>
+                            <select formControlName="channel" class="form-control"
+                [ngClass]="{ 'is-invalid': submittedHotel && property.get('channel').errors }"
+                >
+                                <option value="" disabled selected>Select Channels</option>
+                                <option Value="Extranet">Extranet</option>
+                                <!-- <option Value="Staah CM">Staah CM</option>
+                                <option Value="HotelRunner CM">HotelRunner CM</option>
+                                <option Value="Rategain CM">Rategain CM</option>
+                                <option Value="Ezee Centrix CM">Ezee Centrix CM</option>
+                                <option Value="AxisRooms CM">AxisRooms CM</option>
+                                <option Value="Yieldplanet CM">Yieldplanet CM</option> -->
+                            </select>
+                            <div *ngIf="submittedHotel && property.get('channel').hasError('required')" class="invalid-feedback">
+                                Channel is required
+                            </div>
+                            <div  class="invalid-feedback">
+                                <!-- <div *ngIf="hotelRoom.propertyRating.errors.required">Please Select maximum
+                                    passengers
+                                    capacity</div> -->
+                            </div>
+                        </div>
+                        <!-- <div class="col-sm-4 mb-3">
+                            <label class=" control-label">
+                                User Type
+                
+                                <span class="text-danger">*</span>
+                            </label>
+                            <select formControlName="user_type" class="form-control"
+                [ngClass]="{ 'is-invalid': submittedHotel && property.get('user_type').errors }"
+                >
+                                <option value="" disabled selected>Select User Type</option>
+                                <option Value="B2C">B2C</option>
+                                <option Value="B2B">B2B</option>
+                                <option Value="Both">Both</option>
+                            
+                            </select>
+                            <div *ngIf="submittedHotel && property.get('channel').hasError('required')" class="invalid-feedback">
+                                Channel is required
+                            </div>
+                            <div  class="invalid-feedback">
+                        
+                            </div>
+                        </div> -->
+                        <div class="col-md-12  mb-3 nopad">
+                            <div class="checkcontent" style="overflow: inherit;">
+                                <div class="customSquaredThree">
+                                    <input type="checkbox" value="0" name="confirm" class="filter_airline"
+                                        id="squaredThree1" aria-required="true" formControlName="Aggreed" [ngClass]="{ 'is-invalid': submittedHotel && property.get('Aggreed').errors }" required />
+                                
+                                    <label for="squaredThree1"></label>
+                                    <!-- <div style="display: inline;"
+                                *ngIf="submittedHotel && property.get('Aggreed').hasError('required')" class="invalid-feedback">
+                                Please Check The Agreement*
+                        
+                        </div> -->
+                                </div>
+                                <label for="squaredThree1" style="display: inline; font-size: 14px;color: #082B3A;">
+                                    Accept Booking247.com's Supplier
+                                    <a data-toggle="modal" (click)="openStaticPage('Supplier T&Cs')" class="colorbl">Terms and Conditions</a>,
+                                    <a data-toggle="modal" (click)="openStaticPage('Privacy policy')" class="colorbl">Privacy Policy</a>.
+                                </label>
+                        
+                            </div>
+                            <div class="checkcontent" style="overflow: inherit;">
+                                <small class="text-danger"
+                                *ngIf="submittedHotel && property.get('Aggreed').hasError('required')">
+                                    Please Check The Agreement*
+                                </small>
+                            </div>
+                        </div>
+            </ng-container>
+            </ng-container>
+            </div>
+            
+            </div>
+            <!-- *ngIf="propertyForm && !showOtpInput" -->
+            <div class="btn-group" *ngIf="propertyForm && !showOtpInput">
+                <div class="col-sm-4 mb-3 p-0">
+                    <div class="col-12 d-flex p-0">
+                        <button type="submit" class="btn btn-primary icon-btn lg mr-4 validateotp" >Save</button>
+                        <button type="reset" class="btn btn-danger icon-btn lg resendotp" (click)="onReset()">Reset</button>
+                    </div>
+                </div>
+            </div>
+        
+        </fieldset>
+        </form>
+
+        <div class="row" *ngIf="showOtpInput && !propertyForm">
+            <div class="col-md-12 mt-3">
+            <form (ngSubmit)="onValidateOtp()" [formGroup]="otpForm" >
+                <fieldset form="hotelImage" class="supplier_form">
+                    <span style="font-size: 14px; margin-bottom: 10px;">OTP has been sent to your registered Email.</span>
+                <div class="d-flex">    
+                <div class="rowput">
+                <input type="text" id="otp"
+                        class="otp form-control logpadding" placeholder="Enter OTP" maxlength="6"
+                        formControlName="otp" [attr.aria-required]="true" [attr.aria-invalid]="!otpForm.controls.otp.valid ? 'true' : 'false'">
+                </div>
+                <div class="clearfix"></div>
+                <button type="submit" class="btnStyle validateotp mr-2" [disabled]="loading || !otpForm.valid">
+                Validate OTP
+                </button>
+                <div class="clearfix"></div>
+                <div class="f-12 font-weight-light mt-2 text-danger text-capitalize" *ngIf="errorMessage"> {{errorMessage}}</div>
+                <button class="btnStyle" (click)="VerifyOtp(supplier.get('email').value)" [disabled]="loading || !otpResendEnabled" style="font-weight: bold;border: 1px solid #a8b2bc;
+                border-radius: 6px;
+                color: #000;">
+                Resend OTP
+                </button>
+                <span *ngIf="otpResendCounter !== null && showOtpInput" style="color: red;" class="justify-content-center d-flex">
+                Resend OTP in {{ otpResendCounter }}s
+                </span>
+                <!-- <div class="create-account">
+                    <a class="btnStyle" id="create-account" (click)="onBackToLogin()">Back</a>
+                </div> -->
+                <div class="clearfix"></div>
+                </div>
+                <!-- <div class="create-account">
+                    <button class="btnStyle btn back_btn" id="create-account" (click)="onBackToLogin()">Continue</button>
+                </div> -->
+            </fieldset>
+            </form>
+            </div>
+            
+        </div>
+     </div>
+   </div>
+<!-- <div class="container p-0 mt-0">
+
+
+   </div> -->
+</ng-container>
+<div id="login_auth_loading_image" *ngIf="loading">
+    <div class="text-center loader-image">
+      <img src="assets/images/loader.gif" alt="please wait">
+    </div>
+  </div>
+  <app-home-page-footer></app-home-page-footer>
+  </div>
+  </div>
+
+  <ngx-loading [show]="loadingSpinner"
+  [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+  [template]="loadingTemplate"></ngx-loading>

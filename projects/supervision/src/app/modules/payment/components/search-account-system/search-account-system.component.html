@@ -1,0 +1,87 @@
+<div class="card" style="background: #082B3A;padding: 30px;">
+    <div class="form-row">
+
+    <div class="cust-col-1 pr-0">
+        <div class="form-group">
+            <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
+            <label for="departureDate">From</label>
+            <input type="text" id="fromDate" class="form-control form-control-sm nrm_input"
+               placement="bottom left" placeholder="dd/mm/yyyy" bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen" >
+        </div>
+    </div>
+
+    <div class="cust-col-1 pr-0">
+        <div class="form-group">
+            <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
+            <label for="departureDate">To</label>
+            <input type="text" id="toDate" class="form-control form-control-sm nrm_input"
+            placement="bottom left" placeholder="dd/mm/yyyy" bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen" >
+        </div>
+    </div>
+    <div class="cust-col-1 pr-0">
+        <div class="form-group">
+            <label>Transaction ID</label>
+            <input type="text"
+                class="form-control form-control-sm nrm_input" placeholder="Enter Id No.">
+            <div>
+            </div>
+        </div>
+    </div>
+    <div class="cust-col-1 pr-0">
+        <div class="form-group">
+            <label>Booked By</label>
+            <select name="cars" id="cars" class="form-control form-control-sm nrm_input">
+                <option value="volvo">All</option>
+                <option value="saab">All</option>
+                <option value="mercedes">All</option>
+                <option value="audi">All</option>
+              </select>
+            <div>
+            </div>
+        </div>
+    </div>
+    <div class="cust-col-1 pr-0">
+        <div class="form-group">
+            <label for="destinationCity" >Type</label>
+            <select name="cars" id="cars" class="form-control form-control-sm nrm_input">
+                <option value="volvo">Flight Booking</option>
+                <option value="saab">Car Booking</option>
+                <option value="mercedes">Hotel Booking</option>
+              </select>
+            <div>
+            </div>
+        </div>
+    </div>
+    <div class="cust-col-1 pr-0" style="float: right;">
+        <div class="form-group">
+            <button type="submit" class="btn w-100 srch_btn">
+               Timeline Search<i style="float: right;" class="fa fa-angle-down"></i>
+            </button>
+        </div>
+    </div>
+    <div class="cust-col-1 pr-0" style="float: right;">
+        <div class="form-group">
+        </div>
+    </div>
+    <div class="cust-col-1 pr-0" style="float: right;">
+        <div class="form-group">
+        </div>
+    </div>
+    <div class="cust-col-1 pr-0" style="float: right;">
+        <div class="form-group">
+            <button type="submit" class="btn w-100 srch_btn">
+                Search
+            </button>
+        </div>
+    </div>
+    <div class="cust-col-1 pr-0" style="float: right;">
+        <div class="form-group">
+            <button type="submit" class="btn w-100 srch_btn">
+                Reset
+            </button>
+        </div>
+    </div>
+
+</div>
+
+</div>

@@ -1,0 +1,45 @@
+<div>
+    <div class=" p-0 col-md-12 col-lg-12">
+        <div class="pl-0 card-header-tab card-header">
+            <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+                <span> {{'Update Ticketing Duration'}} </span>
+            </div>
+        </div>
+    </div>
+    <div class="my-5 offset-lg-2 offset-md-2 col-md-8 col-lg-8">
+        <form [formGroup]="TicketingDurationForm" (ngSubmit)="UpdateTicketingDuration()">
+            <div class="form-group required row">
+                <label for="airlinename" class="col-sm-3 col-form-label">Airline <sup
+                        class="text-danger f-16"> * </sup> </label>
+                <div class="col-sm-8">
+                    <mat-form-field class="col-sm-12" appearance="fill" style="padding-left: 0;">
+                        <mat-label>Airline List</mat-label>
+                        <input class="text-capitalize" type="text" placeholder="Choose..." matInput formControlName="AirlineName"
+                            [matAutocomplete]="autoAirline">
+                        <mat-autocomplete #autoAirline="matAutocomplete" (optionSelected)="selectedAirline($event)">
+                            <mat-option *ngFor="let airline of filteredAirline  | async"
+                                [value]="airline.name+'( '+airline.code+' )'" [id]="airline.id">
+                                {{airline.name}} ({{airline.code}})
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="form-group required row">
+                <label for="duration" class="col-sm-3 col-form-label"> Duration <sup
+                        class="text-danger f-16"> * </sup> </label>
+                <div class="col-sm-8">
+                    <input type="text" placeholder="Enter Duration" (keypress)="numberOnly($event)" formControlName="Duration" maxlength="150"
+                        class="form-control" pattern="[0-9]*">
+                </div>
+            </div>
+            <div class="form-group row mb-n2">
+                <div class="col-sm-12 customCenter">
+                    <button type="submit" class="btn btn-sm btn-primary mr-1"> Submit</button>
+                    <button type="submit" class="btn btn-sm btn-primary" (click)="ResetValues()">Reset</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

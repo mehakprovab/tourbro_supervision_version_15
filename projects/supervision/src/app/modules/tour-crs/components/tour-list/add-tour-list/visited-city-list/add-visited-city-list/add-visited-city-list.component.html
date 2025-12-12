@@ -1,0 +1,47 @@
+<div style="padding: 20px;">
+    <div class="add-traveller">
+        <div class="custom-inline-form">
+            <form class="" [formGroup]="visitedCity" autocomplete="off" (ngSubmit)="updateVisitedCity ? updateTourVisitedCityFormSubmit() : vistedCityFormSubmit()">
+                <div class="form-group required row">
+                    <label for="tourName " class="required" class="col-sm-2 col-form-label">Tour Duration <sup
+                        class="text-danger f-16"> * </sup> </label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="tourDuration" maxlength="50"
+                            formControlName="tourDuration" disabled="true">
+
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="choosencity" class="required" class="col-sm-2 col-form-label">Choose City <sup
+                        class="text-danger f-16"> * </sup> </label>
+                    <div class="col-sm-4">
+                        <select formControlName="choosenCity"
+                            class="form-control" id="chooseCity">
+                            <option [value]="''" selected>Choose City</option>
+                            <option *ngFor="let city of cityList"  [value]="city">
+                                {{city}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="choosenDuration  " class="required" class="col-sm-2 col-form-label">Choose Duration <sup
+                        class="text-danger f-16"> * </sup> </label>
+                    <div class="col-sm-4">
+                        <select formControlName="choosenDuration" 
+                            class="form-control" id="chooseRegion">
+                            <option [value]="''" selected>Choose No of Nights</option>
+                            <option *ngFor="let night of noOfNights"  [value]="night.name">
+                                {{night.name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="saveButton">
+                    <button  type="submit" class="orangeButton"> Save</button>
+                    <button *ngIf="enableNext " type="button" class="orangeButton" routerLink="/tour-crs/tour-list/add-tour/tour-itinerary"> Next</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

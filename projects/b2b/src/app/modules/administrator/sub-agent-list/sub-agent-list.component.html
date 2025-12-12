@@ -1,0 +1,91 @@
+<div class="create-sub-agent-container">
+    <div class="custom-table-layout">
+        <div class="table-btn-group">
+            <button type="button" class="btn table-btn lg ml-auto mr-3 btn_hover"
+                (click)="exportExcel()">Export to Excel</button>
+            <button type="button" class="btn table-btn lg btn_hover" (click)="download('pdf', 'landscape')">Export to
+                PDF</button>
+        </div>
+        <div class="row col-md-12 col-lg-12 m-0 p-0">
+            <table style="table-layout: fixed; width: 100%;" id="sub-agent-list">
+                <tr>
+                    <td>
+                        <div class="table-responsive">
+                            <table class="align-middle mb-0 table table-borderless table-striped table-hover" matSort
+                                (matSortChange)="sortData($event)">
+                                <thead>
+                                    <tr class="p-2">
+                                        <th scope="col" class="text-nowrap" *ngFor="let header of displayColumn;"
+                                            mat-sort-header="{{header.key}}">
+                                            {{header.value }}
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngIf="noData">
+                                        <td colspan="12">
+                                            <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="!noData && !respData.length">
+                                        <td colspan="12">
+                                            <h4 class="text-muted text-center">
+                                                No Data Found!
+                                            </h4>
+                                        </td>
+                                    </tr>
+                                    <tr class="p-2"
+                                        *ngFor="let subagent of respData | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
+                                        <td class="text-left text-muted">{{i+1}}.</td>
+                                        <td class="text-left text-capitalize"> {{subagent['first_name']}} </td>
+                                        <td class="text-left"> {{subagent['uuid']}} </td>
+                                        <td class="text-left"> {{subagent['phone']}} </td>
+                                        <td class="text-left"> {{subagent['email']}} </td>
+                                        <td class="text-left"> {{subagent['created_at'] | date: 'dd/MM/yyyy'}} </td>
+                                        <td class="text-left">
+                                            <select class="w-100 m-auto cust-select"
+                                                (change)='onStatusChange(subagent)'>
+                                                <option [selected]="subagent['status'] == 0">Inactive</option>
+                                                <option [selected]="subagent['status'] == 1">Active</option>
+                                            </select>
+                                        </td>
+                                        <td class="text-left"> <button class="btn btn-sm btn-primary btn_hover"
+                                                (click)="updatePrivillage(subagent)">
+                                                <i class="fa fa-edit">
+
+                                                </i>&nbsp;{{'Update'}}
+                                            </button>
+                                        </td>
+                                        <td class="text-left"> <button class="btn btn-sm btn-primary btn_hover"
+                                                (click)="updateSubagent(subagent)">
+                                                <i class="fa fa-edit">
+
+                                                </i>&nbsp; {{'Update'}}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer pb-0" *ngIf="!noData">
+        <div class="d-flex w-100 justify-content-between">
+            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+            </ngb-pagination>
+            <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                <option [ngValue]="10">10 items per page</option>
+                <option [ngValue]="50">50 items per page</option>
+                <option [ngValue]="100">100 items per page</option>
+                <option [ngValue]="150">150 items per page</option>
+                <option [ngValue]="200">200 items per page</option>
+                <option [ngValue]="500">500 items per page</option>
+                <option [ngValue]="700">700 items per page</option>
+                <option [ngValue]="1000">1000 items per page</option>
+            </select>
+        </div>
+    </div>
+</div>

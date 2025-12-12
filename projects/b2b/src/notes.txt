@@ -1,0 +1,128 @@
+https://stackblitz.com/angular/dnbermjydavk?file=app%2Ftable-overview-example.html
+
+
+
+api list
+========
+
+
+1. register
+
+2. login
+
+3. forgot password
+
+4. profile
+
+5. dashboard
+
+GROUP REQUEST
+MANAGE CREDIT LIMIT
+AGEING ANALYSIS
+Commission
+    Default Commission
+    Agent's Commission
+Markup
+    Agents
+Master Balance Manager
+    Agents
+Email Subscriptions
+    View Emails
+Flight CRS
+    Add Flight
+    Flight List
+    Flight Fare Rules
+    Airline List
+    Tax List
+    Aircraft Management
+    Pilot Management
+    Component Management
+    Duty Type List
+    Leave Type List
+    Training Name List
+    Document Type List
+    Licence Type List
+Offline
+    Flight
+    Add Suppliers
+CMS
+    Main Banner Image
+    Static Page Content
+    Flight Top Destinations
+    Agents Banner Image
+BANK ACCOUNT DETAILS
+
+Settings
+
+
+
+
+
+
+
+
+
+ng g c modules/commission/components/agents --skip-import --project supervision --skip-tests && ^
+ng g c modules/markup/components/agents --skip-import --project supervision --skip-tests && ^
+ng g c modules/markup/components/agents/flight --skip-import --project supervision --skip-tests && ^
+ng g c modules/markup/components/agents/hotel --skip-import --project supervision --skip-tests && ^
+ng g c modules/markup/components/b2c --skip-import --project supervision --skip-tests && ^
+ng g c modules/markup/components/b2c/flight --skip-import --project supervision --skip-tests && ^
+ng g c modules/markup/components/b2c/hotel --skip-import --project supervision --skip-tests && ^
+ng g c modules/master-balance-manager/components/agents --skip-import --project supervision --skip-tests && ^
+ng g c modules/master-balance-manager/components/agents/balance-request --skip-import --project supervision --skip-tests && ^
+ng g c modules/master-balance-manager/components/agents/credit-limit-request --skip-import --project supervision --skip-tests && ^
+ng g c modules/email-subscriptions/components/view-emails --skip-import --project supervision --skip-tests && ^
+ng g c modules/flight-crs/components/add-flight --skip-import --project supervision --skip-tests && ^
+ng g c modules/flight-crs/components/flight-list --skip-import --project supervision --skip-tests && ^
+ng g c modules/flight-crs/components/flight-fare-rules --skip-import --project supervision --skip-tests && ^
+ng g c modules/flight-crs/components/airline-list --skip-import --project supervision --skip-tests && ^
+ng g c modules/flight-crs/components/tax-list --skip-import --project supervision --skip-tests && ^
+ng g c modules/flight-crs/components/aircraft-management --skip-import --project supervision --skip-tests && ^
+ng g c modules/flight-crs/components/pilot-management --skip-import --project supervision --skip-tests && ^
+ng g c modules/flight-crs/components/component-management --skip-import --project supervision --skip-tests && ^
+ng g c modules/flight-crs/components/duty-type-list --skip-import --project supervision --skip-tests && ^
+ng g c modules/flight-crs/components/leave-type-list --skip-import --project supervision --skip-tests && ^
+ng g c modules/commission/components/training-name-list --skip-import --project supervision --skip-tests && ^
+ng g c modules/commission/components/document-type-list --skip-import --project supervision --skip-tests && ^
+ng g c modules/commission/components/licence-type-list --skip-import --project supervision --skip-tests && ^
+ng g c modules/offline/components/flight --skip-import --project supervision --skip-tests && ^
+ng g c modules/offline/components/hotel --skip-import --project supervision --skip-tests && ^
+ng g c modules/offline/components/add-suppliers --skip-import --project supervision --skip-tests && ^
+ng g c modules/cms/components/main-banner-image --skip-import --project supervision --skip-tests && ^
+ng g c modules/cms/components/static-page-content --skip-import --project supervision --skip-tests && ^
+ng g c modules/cms/components/flight-top-destinations --skip-import --project supervision --skip-tests && ^
+ng g c modules/cms/components/agents-banner-image --skip-import --project supervision --skip-tests && ^
+ng g c modules/no-submenu/components/group-request --skip-import --project supervision --skip-tests && ^
+ng g c modules/no-submenu/components/manage-credit-limit --skip-import --project supervision --skip-tests && ^
+ng g c modules/no-submenu/components/ageing-analysis --skip-import --project supervision --skip-tests && ^
+ng g c modules/no-submenu/components/bank-account-details --skip-import --project supervision --skip-tests && ^
+ng g c modules/settings/components/convenience-fees --skip-import --project supervision --skip-tests && ^
+ng g c modules/settings/components/manage-api --skip-import --project supervision --skip-tests && ^
+ng g c modules/settings/components/manage-cms --skip-import --project supervision --skip-tests && ^
+ng g c modules/settings/components/currency-conversion --skip-import --project supervision --skip-tests && ^
+ng g c modules/settings/components/event-logs --skip-import --project supervision --skip-tests && ^
+ng g c modules/settings/components/appearance --skip-import --project supervision --skip-tests && ^
+ng g c modules/settings/components/social-networks --skip-import --project supervision --skip-tests && ^
+ng g c modules/settings/components/social-login --skip-import --project supervision --skip-tests && ^
+ng g c modules/settings/components/manage-domains --skip-import --project supervision --skip-tests && ^
+ng g c modules/settings/components/live-events --skip-import --project supervision --skip-tests && ^
+ng g c modules/settings/components/promocode --skip-import --project supervision --skip-tests
+
+
+
+ng g m modules/dashboard --routing --project supervision && ^
+ng g m modules/users --routing --project supervision && ^
+ng g m modules/reports --routing --project supervision && ^
+ng g m modules/accounts --routing --project supervision && ^
+ng g m modules/commission --routing --project supervision && ^
+ng g m modules/markup --routing --project supervision && ^
+ng g m modules/master-balance-manager --routing --project supervision && ^
+ng g m modules/email-subscriptions --routing --project supervision && ^
+ng g m modules/flight-crs --routing --project supervision && ^
+ng g m modules/offline --routing --project supervision && ^
+ng g m modules/no-submenu --routing --project supervision && ^
+ng g m modules/settings --routing --project supervision && ^
+ng g m modules/no-submenu --routing --project supervision && ^
+ng g m modules/queues --routing --project supervision && ^
+ng g c modules/queues/components/flight-cancellation --skip-import --project supervision --skip-tests

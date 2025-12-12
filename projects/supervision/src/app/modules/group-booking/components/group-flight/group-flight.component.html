@@ -1,0 +1,107 @@
+<div class="card" style="margin-top: 30px;">
+    <div class="card-header bg-dark text-white">
+        <h5>Group Booking Flight Reports</h5>
+    </div>
+    <div class="card-body">
+        <p>Total {{respData?.length}} Records</p>
+        <div class="mb-3">
+            <form>
+                <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft"
+                    #scrollOne>
+                    <div class="div1"></div>
+                </div>
+
+                <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
+                    <div class="div2 invisible-scrollbar">
+                        <div class="table-respons">
+                            <table class="table table-borderless table-striped table-hover" matSort
+                                (matSortChange)="sortData($event)" id="subscriptions">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-left text-nowrap"
+                                            *ngFor="let header of displayColumn;">
+                                            {{header.value }}
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngIf="noData">
+                                        <td colspan="11">
+                                            <mat-spinner [diameter]="30" style="margin:0 auto;"
+                                                mode="indeterminate"></mat-spinner>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="!noData && !respData.length">
+                                        <td colspan="11">
+                                            <h4 class="text-muted text-center">
+                                                No Data Found!
+                                            </h4>
+                                        </td>
+                                    </tr>
+                                    <tr
+                                        *ngFor="let data of respData | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
+                                        <td class="text-left text-muted">{{i+1}}.</td>
+                                        <td class="text-left">
+                                            <span class="text-nowrap c-pointer"
+                                                *ngIf="data['group_booking_status']=='Pending' ? true : false"
+                                                (click)="replyToCustomer(data['id'])"> <i
+                                                    class="fa fa-th-large text-success" aria-hidden="true"></i> &nbsp;
+                                                Reply to Customer </span>
+                                            <br>
+                                            <span class="text-nowrap c-pointer" (click)="deleteRecordById(data['id'])">
+                                                <i class="fa fa-trash text-danger" aria-hidden="true"></i> &nbsp; Delete
+                                            </span>
+                                        </td>
+                                        <td class="text-left">
+                                            <span class="text-danger"
+                                                *ngIf="data['group_booking_status']=='Pending';else Replied">
+                                                {{data['group_booking_status'] || 'N/A'}}
+                                            </span>
+                                            <ng-template #Replied>
+                                                <span class="text-success">
+                                                    {{data['group_booking_status'] || 'N/A'}}
+                                                </span>
+                                            </ng-template>
+                                        </td>
+                                        <td class="text-left">{{data['first_name'] || 'N/A'}}</td>
+                                        <td class="text-left">{{data['last_name'] || 'N/A'}}</td>
+                                        <td class="text-left">{{data['email'] || 'N/A'}}</td>
+                                        <td class="text-left">{{data['phone'] || 'N/A'}}</td>
+                                        <td class="text-left">{{data['trip_type'] || 'N/A'}}</td>
+                                        <td class="text-left">{{data['from'] || 'N/A'}}</td>
+                                        <td class="text-left">{{data['to'] }}</td>
+                                        <td class="text-left">{{data['departure_date'] | date}}</td>
+                                        <td class="text-left"> {{data['return_date'] | date}} </td>
+                                        <td class="text-left"> {{data['adult'] || 'N/A'}} </td>
+                                        <td class="text-left"> {{data['child'] || 'N/A'}} </td>
+                                        <td class="text-left"> {{data['infant'] || 'N/A'}} </td>
+                                        <td class="text-left"> {{data['total_pax'] || 'N/A'}} </td>
+                                        <td class="text-left"> {{data['class'] }} </td>
+                                        <td class="text-left"> {{data['carrier'] || 'N/A'}} </td>
+                                        <td class="text-left"> {{data['recieved_on'] | date}} </td>
+                                        <td class="text-left"> {{data['comments'] || 'N/A'}} </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer pb-0">
+                    <div class="d-flex w-100 justify-content-between">
+                        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                        </ngb-pagination>
+                        <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                            <option [ngValue]="50">50 items per page</option>
+                            <option [ngValue]="100">100 items per page</option>
+                            <option [ngValue]="150">150 items per page</option>
+                            <option [ngValue]="200">200 items per page</option>
+                            <option [ngValue]="500">500 items per page</option>
+                            <option [ngValue]="700">700 items per page</option>
+                            <option [ngValue]="1000">1000 items per page</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

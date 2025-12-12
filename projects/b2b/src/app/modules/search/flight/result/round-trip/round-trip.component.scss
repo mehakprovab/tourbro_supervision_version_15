@@ -1,0 +1,1342 @@
+.timesFont {
+    color      : #292662;
+    font-size  : 20px;
+    font-weight: 500;
+}
+
+::ng-deep body {
+    overflow-x: hidden !important;
+}
+
+.amnFont {
+    color        : #2d3e52;
+    font-size    : 15px;
+    font-weight  : 700;
+    display      : block;
+    margin-bottom: 5px;
+}
+.no_flight_section p { margin-top: 20px; font-size: 20px; color: #012756; font-weight: 600;}
+.no_flight_found { text-align: center; margin: auto; display: table;}
+
+::ng-deep .tooltip.show {
+    opacity: 1;
+}
+
+.deemFont {
+    color    : #848484;
+    font-size: 12px;
+}
+
+
+
+.refund_txt {
+    color       : #4caf50;
+    font-size   : 13px;
+    font-weight : 500;
+    padding-left: 10px;
+}
+
+.flight_det_button a {
+    font-size      : 13px;
+    color          : #333;
+    font-weight    : 600;
+    text-decoration: none;
+    padding-right  : 10px;
+}
+
+.card {
+    border-radius: unset;
+}
+
+.card,
+.card:hover {
+    background      : #fff;
+    // border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow      : 0 8px 8px 0px rgba(0, 0, 0, 0.2);
+    overflow        : inherit;
+    // border-radius: unset !important;
+}
+
+/* MAIN'S CSS*/
+.mat-form-field+.mat-form-field {
+    margin-left: 8px;
+}
+
+.mat-expansion-panel-header-description,
+.mat-expansion-panel-header-title {
+    display: block !important;
+}
+
+.arrow-right {
+    // background-color : #012756;
+    // height           : 90px;
+    // right            : -70px;
+    // position         : absolute;
+    // top              : -50px;
+    // width            : 100px;
+    // -webkit-transform: rotate(45deg);
+    right            : -20px;
+    position         : absolute;
+    top              : -5px;
+    -webkit-transform: rotate(45deg);
+    border-left      : solid 30px transparent;
+    border-right     : solid 30px transparent;
+    border-bottom    : solid 30px #012756;
+    height           : 0;
+    width            : 0;
+}
+
+.arrow-right span {
+    color      : #f5f5f5;
+    font-family: sans-serif;
+    font-size  : 1.005em;
+    right      : -8px;
+    top        : 14px;
+    position   : absolute;
+}
+
+.flteboxwrp {
+    float : left;
+    margin: 20px 0px;
+    width : 100%;
+}
+
+.filtersho {
+    background: none repeat scroll 0 0 #012756;
+    color     : #fff;
+    float     : left;
+    padding   : 10px;
+    position  : relative;
+    width     : 100%;
+}
+
+.avlhtls {
+    display   : block;
+    color     : #fff;
+    font-size : 16px;
+    margin    : 4px 0;
+    overflow  : hidden;
+    text-align: center;
+}
+
+.avlhtls strong {
+    color      : #fc901b;
+    font-size  : 18px;
+    font-weight: 500;
+    line-height: 19px;
+}
+
+.close_fil_box {
+    display: none;
+}
+
+.filtersho::after {
+    content    : "\f002";
+    top        : 25px;
+    color      : #fff;
+    font-family: "FontAwesome";
+    font-size  : 23px;
+    left       : 15px;
+    position   : absolute;
+    line-height: 0;
+    text-align : center;
+}
+
+.fltrboxin {
+    float     : left;
+    width     : 100%;
+    padding   : 10px 0px 0px 0px;
+    box-shadow: none;
+    border    : none;
+    background: #fff;
+}
+
+.celsrch {
+    display : block;
+    overflow: hidden;
+    padding : 0px;
+}
+
+#reset_filters {
+    // background: #dfdfdf;
+    padding     : 5px;
+    margin-right: 10px;
+    color       : #303030;
+}
+
+.nopad {
+    padding: 0px !important;
+}
+
+/* price filter START */
+.rangebox {
+    padding: 0px 15px;
+}
+
+.collapsebtn {
+    background : none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border     : 0 none;
+    color      : #222;
+    display    : block;
+    font-size  : 16px;
+    font-weight: 700;
+    overflow   : hidden;
+    padding    : 5px 0;
+    position   : relative;
+    text-align : left;
+    width      : 100%;
+}
+
+.collapsebtn::after {
+    content    : "\f0d7";
+    color      : #ccc;
+    font-family: "FontAwesome";
+    font-size  : 14px;
+    line-height: 34px;
+    position   : absolute;
+    right      : 2px;
+    top        : 0;
+    font-weight: 700;
+}
+
+.price_slider1 {
+    margin : 0 0 15px;
+    padding: 10px;
+}
+
+.level {
+    background   : none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border       : 0 none;
+    color        : #0545b2;
+    display      : block;
+    font-size    : 15px;
+    margin-bottom: 15px;
+    overflow     : hidden;
+    text-align   : center;
+    width        : 100%;
+    font-weight  : 500;
+}
+
+.price_slider1 .ui-widget-content {
+    background   : #ddd;
+    border       : medium none;
+    border-radius: 30px !important;
+    box-shadow   : none;
+    height       : 4px;
+}
+
+.price_slider1 .ui-widget-header {
+    background: none repeat scroll 0 0 #0545b2;
+    box-shadow: 0 0 10px -5px #7e7e7e inset;
+}
+
+.price_slider1 .ui-slider-horizontal .ui-slider-range {
+    height: 100%;
+    top   : 0px;
+}
+
+// .price_slider1 .ui-state-default, .price_slider1 .ui-widget-content .ui-state-default, .price_slider1 .ui-widget-header .ui-state-default {
+//     background : rgba(0, 0, 0, 0) url(~/assets/images/tips.png) no-repeat;
+//     border: none;
+//     cursor: pointer;
+//     height: 28px;
+//     margin-left: -14px;
+//     top: -11px;
+//     width: 28px;
+//   }
+
+/* price filter END */
+
+/* stops filter START */
+.boxins {
+    display : block;
+    overflow: hidden;
+    padding : 10px 0;
+}
+
+.marret {
+    margin: 0 -1px;
+}
+
+.stopone {
+    display: table;
+    height : 33.333%;
+    width  : 100%;
+}
+
+.stopone {
+    float           : left;
+    width           : 33.333%;
+    background-color: white;
+}
+
+.stopone {
+    position: relative;
+}
+
+.stop-wrapper.disabled::before {
+    content   : "";
+    position  : absolute;
+    width     : 100%;
+    height    : 100%;
+    background: rgba(255, 255, 255, 0.4);
+    cursor    : not-allowed;
+    z-index   : 100;
+}
+
+input.hidecheck[type="checkbox"] {
+    cursor : pointer;
+    height : 100%;
+    left   : 0;
+    margin : 0;
+    opacity: 0;
+    top    : 0;
+    width  : 100%;
+    z-index: 98;
+}
+
+.starin {
+    display       : table-cell;
+    border-bottom : 1px solid #7ca81e;
+    height        : 100%;
+    text-align    : center;
+    vertical-align: middle;
+}
+
+.starin {
+    background: none repeat scroll 0 0 #fff;
+    border    : 1px solid #e8e8e8;
+    display   : block;
+    font-size : 14px;
+    margin    : 1px;
+    overflow  : hidden;
+    padding   : 6px 0 0;
+    text-align: center;
+}
+
+.toglefil.active.disabled .starin,
+.toglefil.disabled .starin {
+    background: #fff none repeat scroll 0 0;
+    color     : #666;
+}
+
+#stopCountWrapper .starin {
+    padding: 0;
+}
+
+.toglefil.active.disabled .starin,
+.toglefil.disabled .starin {
+    background: #fff none repeat scroll 0 0;
+    color     : #666;
+}
+
+#stopCountWrapper .starin {
+    padding: 0;
+}
+
+.septor {
+    background   : #e2e2e2 none repeat scroll 0 0;
+    border-bottom: 1px solid #f7f7f7;
+    border-top   : 1px solid #f7f7f7;
+    display      : block;
+    height       : 2px;
+    margin       : 12px 0;
+    overflow     : hidden;
+}
+
+.tmxdv {
+    float: left;
+}
+
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+    position: absolute;
+    left    : -9999px;
+}
+
+input.hidecheck[type="checkbox"] {
+    cursor : pointer;
+    height : 100%;
+    left   : 0;
+    margin : 0;
+    opacity: 0;
+    top    : 0;
+    width  : 100%;
+    z-index: 98;
+}
+
+.tmxdv input[type="checkbox"] {
+    display: block;
+}
+
+#collapse503 input.hidecheck[type="checkbox"] {
+    opacity: 0;
+    width  : 100%;
+}
+
+.ckboxdv {
+    display     : inline-block;
+    cursor      : pointer;
+    position    : relative;
+    padding-left: 30px;
+    margin-right: 15px;
+    font-size   : 13px;
+    color       : #555;
+    font-weight : normal;
+    line-height : 26px;
+}
+
+[type="checkbox"]:not(:checked)+label,
+[type="checkbox"]:checked+label {
+    cursor    : pointer;
+    margin    : 0;
+    position  : relative;
+    background: rgb(247, 247, 247);
+    border    : 1px solid #b8b8b8;
+}
+
+[type="checkbox"]:disabled+label {
+    color: #aaa;
+}
+
+.tmxdv [type="checkbox"]:not(:checked)+label,
+.tmxdv [type="checkbox"]:checked+label {
+    background: none !important;
+}
+
+.time-wrapper [type="checkbox"]:not(:checked)+label,
+[type="checkbox"]:checked+label {
+    border: none !important;
+}
+
+.ckboxdv::before {
+    display         : inline-block;
+    width           : 16px;
+    height          : 16px;
+    margin-right    : 5px;
+    position        : absolute;
+    left            : 0;
+    bottom          : 1px;
+    background-color: #f7f7f7;
+    box-shadow      : 0 1px 1px rgba(0, 0, 0, 0.2) inset;
+    border-radius   : 1px !important;
+    border          : 1px solid #b8b8b8;
+}
+
+.tmxdv .ckboxdv:before {
+    border-radius: 3px;
+    top          : 5px !important;
+}
+
+[type="checkbox"]:not(:checked)+label:before,
+[type="checkbox"]:checked+label:before {
+    border-radius: 0;
+    box-shadow   : none;
+    content      : "";
+    height       : 16px;
+    left         : 0;
+    position     : absolute;
+    top          : 0px;
+    width        : 16px;
+}
+
+[type="checkbox"]:disabled:not(:checked)+label:before,
+[type="checkbox"]:disabled:checked+label:before {
+    box-shadow      : none;
+    border-color    : #bbb;
+    background-color: #ddd;
+}
+
+.ckboxdv::after {
+    top: 5px !important;
+}
+
+[type="checkbox"]:not(:checked)+label:after,
+[type="checkbox"]:checked+label:after {
+    content      : "\f00c";
+    font-family  : "FontAwesome";
+    position     : absolute;
+    top          : -1px;
+    left         : -1px;
+    font-size    : 12px;
+    color        : #fff;
+    transition   : all 0.2s;
+    background   : #c22057;
+    right        : 0px;
+    width        : 16px;
+    height       : 16px;
+    text-align   : center;
+    border-radius: 1px !important;
+    line-height  : 15px;
+    border       : 1px solid #c22057;
+}
+
+[type="checkbox"]:not(:checked)+label:after {
+    opacity  : 0;
+    transform: scale(0);
+}
+
+.htlcount {
+    background: none repeat scroll 0 0 #fafafa;
+    color     : #666;
+    display   : block;
+    margin    : 3px 0 0;
+    overflow  : hidden;
+    padding   : 2px 0;
+}
+
+.timone .htlcount {
+    font-size: 12px;
+}
+
+#collapse503 .htlcount {
+    float     : right;
+    padding   : 2px 10px;
+    background: none;
+}
+
+#collapse503 .starin {
+    border: none;
+}
+
+#collapse504 .htlcount {
+    float     : right;
+    padding   : 2px 10px;
+    background: none;
+}
+
+#collapse504 .starin {
+    border: none;
+}
+
+.timone.toglefil.time-wrapper.disabled {
+    opacity: 0.5;
+}
+
+.disabled {
+    cursor: not-allowed;
+}
+
+.timone .starin {
+    padding: 0px !important;
+    margin : 0;
+}
+
+.timone {
+    display: table;
+    height : auto;
+    width  : 100%;
+}
+
+.timone {
+    float   : left;
+    position: relative;
+    width   : 25%;
+}
+
+#collapse503 .timone {
+    width: 100%;
+}
+
+#collapse504 .timone {
+    width: 100%;
+}
+
+#collapse503 input.hidecheck[type="checkbox"] {
+    opacity: 0;
+    width  : 100%;
+}
+
+#collapse504 input.hidecheck[type="checkbox"] {
+    opacity: 0;
+    width  : 100%;
+}
+
+.boxins {
+    display : block;
+    overflow: hidden;
+    padding : 10px 0;
+}
+
+.locationul {
+    padding: 0;
+}
+
+.locationul li {
+    float  : left;
+    padding: 5px 0;
+    width  : 100%;
+}
+
+.squaredThree {
+    float       : left;
+    margin-right: 8px;
+    position    : relative;
+    width       : 20px;
+}
+
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+    position: absolute;
+    left    : -9999px;
+}
+
+.squaredThree input[type="checkbox"] {
+    visibility: hidden;
+    margin    : 0;
+}
+
+[type="checkbox"]:not(:checked)+label:before,
+[type="checkbox"]:checked+label:before {
+    border-radius: 0;
+    box-shadow   : none;
+    content      : "";
+    height       : 16px;
+    left         : 0;
+    position     : absolute;
+    top          : 0px;
+    width        : 16px;
+}
+
+.squaredThree [type="checkbox"]:not(:checked)+label:before,
+[type="checkbox"]:checked+label:before {
+    left: -1px;
+    top : -1px;
+}
+
+[type="checkbox"]:not(:checked)+label:after,
+[type="checkbox"]:checked+label:after {
+    content      : "\f00c";
+    font-family  : "FontAwesome";
+    position     : absolute;
+    top          : -1px;
+    left         : -1px;
+    font-size    : 12px;
+    color        : #fff;
+    transition   : all 0.2s;
+    background   : #c22057;
+    right        : 0px;
+    width        : 16px;
+    height       : 16px;
+    text-align   : center;
+    border-radius: 1px !important;
+    line-height  : 15px;
+    border       : 1px solid #c22057;
+}
+
+[type="checkbox"]:not(:checked)+label:after {
+    opacity  : 0;
+    transform: scale(0);
+}
+
+.lbllbl {
+    color      : #666;
+    display    : block;
+    font-size  : 13px;
+    font-weight: normal;
+    margin     : 0;
+    overflow   : hidden;
+}
+
+.locationul li .lbllbl {
+    color: #555;
+}
+
+.squaredThree label {
+    display         : inline-block;
+    width           : 16px;
+    height          : 16px;
+    margin-right    : 5px;
+    position        : absolute;
+    left            : 0;
+    top             : 2px;
+    background-color: rgb(252, 144, 27);
+    border-radius   : 1px !important;
+    border          : 1px solid rgb(252, 144, 27);
+}
+
+[type="checkbox"]:not(:checked)+label,
+[type="checkbox"]:checked+label {
+    cursor    : pointer;
+    margin    : 0;
+    position  : relative;
+    background: rgb(247, 247, 247);
+    border    : 1px solid #b8b8b8;
+}
+
+.insidebosc {
+    display: block;
+    float  : left;
+    padding: 0 0 0 15px;
+    margin : 20px 0px;
+    width  : 100%;
+}
+
+.airlinrmatrix {
+    float: left;
+    width: 100%;
+}
+
+.inside_shadow_airline {
+    background: #fff none repeat scroll 0 0;
+    border    : 1px solid #fff;
+    box-shadow: 0 1px 2px 0 #ccc;
+}
+
+.linefstr {
+    float: left;
+}
+
+.bg-gradient-light a {
+    padding-right: 10px;
+}
+
+.airlineall {
+    background : none repeat scroll 0 0 #0545b2;
+    color      : #fff;
+    display    : block;
+    font-size  : 14px;
+    line-height: 52px;
+    overflow   : hidden;
+    padding    : 0 20px;
+    text-align : center;
+}
+
+.linescndr {
+    display : block;
+    overflow: hidden;
+}
+
+.matrx {
+    float  : left;
+    padding: 0 30px;
+    width  : 100%;
+}
+
+.airlinesd {
+    background  : #fff none repeat scroll 0 0;
+    border-right: 1px solid #e6e6e6;
+    display     : block;
+    height      : 52px;
+    margin      : 0;
+    overflow    : hidden;
+    padding     : 5px;
+    position    : relative;
+}
+
+input.airline-slider[type="checkbox"] {
+    cursor  : pointer;
+    height  : 100%;
+    left    : 0;
+    margin  : 0;
+    opacity : 0;
+    position: absolute;
+    top     : 0;
+    width   : 100%;
+    z-index : 100;
+}
+
+.imgemtrx {
+    float       : left;
+    height      : 40px;
+    line-height : 40px;
+    overflow    : hidden;
+    text-align  : center;
+    margin-right: 5px;
+    width       : 50px;
+}
+
+.imgemtrx img {
+    max-width: 100%;
+}
+
+.alsmtrx strong {
+    color        : #000;
+    display      : block;
+    font-weight  : normal;
+    overflow     : hidden;
+    text-overflow: ellipsis;
+    white-space  : nowrap;
+    font-size    : 12px;
+}
+
+.mtrxprice {
+    color    : #555;
+    display  : block;
+    font-size: 12px;
+    overflow : hidden;
+}
+
+.owl-carousel.matrixcarsl .owl-controls {
+    margin: 0;
+}
+
+.owl-carousel.matrixcarsl .owl-buttons {
+    bottom  : 0;
+    left    : -30px;
+    position: absolute;
+    right   : -30px;
+    top     : 0;
+    z-index : 10;
+}
+
+.owl-carousel.matrixcarsl .owl-buttons {
+    top: -1px;
+}
+
+// .owl-carousel.matrixcarsl .owl-controls .owl-buttons .owl-prev {
+//   background: url(../images/prev3.png) no-repeat scroll center center #eee;
+//   left: 0;
+// }
+// .owl-carousel.matrixcarsl .owl-controls .owl-buttons .owl-next {
+//   background: url(../images/next3.png) no-repeat scroll center center #eee;
+//   right: 0;
+// }
+
+.topmisty {
+    float : left;
+    margin: 6px 0 4px;
+    width : 100%;
+}
+
+.divinsidefltr {
+    background: #fff none repeat scroll 0 0;
+    border    : 1px solid #fff;
+    box-shadow: 0 1px 2px 0 #ccc;
+    display   : block;
+    overflow  : hidden;
+}
+
+.sortul {
+    display   : block;
+    overflow  : hidden;
+    margin    : 0px;
+    padding   : 0px;
+    background: #dfe5ec;
+    background: -moz-linear-gradient(top, #f8f4fc 0%, #d9d9d9 100%);
+    filter    : progid:DXImageTransform.Microsoft.gradient(startColorstr='#f8f4fc', endColorstr='#d9d9d9', GradientType=0);
+}
+
+.divinsidefltr .sortul {
+    border: 0;
+}
+
+.sortli {
+    float: left;
+    width: 20%;
+}
+
+.sorta {
+    border-top  : 2px solid #bfc1c3;
+    color       : #444;
+    display     : block;
+    font-size   : 14px;
+    font-weight : 300;
+    line-height : 38px;
+    overflow    : hidden;
+    padding     : 0 0px;
+    position    : relative;
+    text-align  : left;
+    margin      : 0px 1px;
+    background  : #fff;
+    padding-left: 10px;
+}
+
+.sorta i {
+    margin-right: 2px;
+}
+
+.sorta .fal {
+    color       : #999;
+    margin-right: 5px;
+    font-size   : 12px;
+}
+
+.sorta strong {
+    font-weight: normal;
+    font-size  : 13px;
+}
+
+.sorta.asc::after {
+    content     : "\f0d7";
+    color       : #999;
+    font-family : "FontAwesome";
+    margin-right: 10px;
+    float       : right;
+    font-weight : 700;
+}
+
+.sprt1 {
+    width     : 40px;
+    height    : 45px;
+    position  : absolute;
+    left      : 30px;
+    top       : 5px;
+    background: url("~/assets/images/login-images/assets/flight_down.png") no-repeat 0 0;
+}
+
+.sprt2 {
+    width     : 40px;
+    height    : 45px;
+    position  : absolute;
+    top       : 5px;
+    right     : 30px;
+    background: url("~/assets/images/login-images/assets/flight_takeoff.png") no-repeat 0 0;
+}
+
+.flt_in .form-group {
+    position: relative;
+}
+
+.depart {
+    background-position: -19px -252px;
+    background-size    : 650px;
+}
+
+.return {
+    background-position: -80px -252px;
+    background-size    : 650px;
+}
+
+::ng-deep .tooltip-300~.tooltip .tooltip-inner {
+    max-width: 300px;
+    min-width: 300px;
+}
+
+.tooltip-inner {
+    min-width: 600px !important;
+}
+
+//-------------chakri changes --------------
+.card {
+    border-radius: 0.25rem !important;
+}
+
+.col-lg-3 {
+    flex     : 0 0 20% !important;
+    max-width: 20% !important;
+}
+
+.col-lg-9 {
+    flex     : 0 0 80% !important;
+    max-width: 80% !important;
+}
+
+.filterSpan {
+    padding      : 2px;
+    border-radius: 4px;
+    color        : #012756;
+    font-size    : small;
+}
+
+#reset_filters {
+    padding      : 2px;
+    margin-right : 10px;
+    color        : #012756;
+    border-radius: 4px;
+    font-size    : small;
+}
+
+.fltrboxin {
+    border-radius: 4px !important;
+}
+
+.text-alternate {
+    color: #505050 !important;
+}
+
+.timesFont {
+    color    : #082b3a;
+    font-size: 24px;
+}
+
+.deemFont {
+    color    : #082b3a;
+    font-size: 12px;
+}
+
+span.tooltip-300.amnFont.row {
+    color    : #082b3a;
+    font-size: 20px;
+}
+
+.font-weight-bold {
+    font-weight: bold !important;
+    color      : #082b3a;
+    font-size  : 16px;
+}
+
+.row.ng-star-inserted {
+    color    : #707070;
+    font-size: 14px;
+}
+
+span.ng-star-inserted {
+    font-size: 14px !important;
+}
+
+.flteboxwrp {
+    margin: 5px 0px;
+}
+
+.col-md-9.col-lg-9 {
+    padding-left: 8px;
+}
+
+.fa-calendar {
+    color: #012756;
+}
+
+// .removeBtm{
+//     border-bottom: 1px solid #E8E8E8;
+//     padding-bottom: 0px !important;
+// }
+// .addBtm{
+//     border-bottom: 1px solid #E8E8E8;
+// }
+// .addLeftBorder{
+//     border-left: 1px solid #E8E8E8;
+//     padding: 12px 0px;
+// }
+.tripDivider {
+    border-bottom: 1px solid #d2d2d2;
+    width        : 50%;
+    margin-left  : 25%;
+}
+
+// ****************************************************************************************************************
+
+.col-md-4 .container {
+    display    : flex;
+    align-items: center;
+    position   : relative;
+    width      : 250px;
+    height     : 10px;
+    top        : 50%;
+    padding    : 0px;
+} 
+::ng-deep .backdrop { background: rgb(9 44 59 / 50%) !important;}
+.layovertime2 { text-align: center;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    color: #012756;
+    font-weight: bold;}
+.col-md-4 {
+    padding-top: 0px;
+}
+
+.trip_li .flt { padding-right: 5px !important;  padding-left: 0px;}
+
+.route {
+    width        : 100%;
+    height       : 2px;
+    background   : #082b3a;
+    border-radius: 5px;
+}
+
+.stopsWrapper {
+    position       : absolute;
+    display        : flex;
+    justify-content: space-between;
+    width          : 100%; top:-5px;
+}
+
+.stop {
+    height       : 12px;
+    width        : 12px;
+    background   : #082b3a;
+    border-radius: 50%;
+    border       : 1px solid #082b3a;
+}
+
+button.btn.btn-sm.btn-success {
+    font-size    : large;
+    border-radius: 0.5rem;
+    line-height  : 1.25;
+    padding      : 0.5rem 1rem;
+}
+
+.addBtm {
+    border-bottom: 1px solid #d2d2d2;
+}
+
+.addBtm:last-child {
+    border-bottom: none;
+}
+
+button.btn.btn-sm.btn-success {
+    background: #012756 !important;
+}
+
+.loading-container {
+    float: left;
+    width: 100%;
+}
+
+.text-info {
+    color: #012756 !important;
+}
+
+@media only screen and (max-width: 767px) {
+    .col-lg-3 {
+        flex     : 0 0 100% !important;
+        max-width: 100% !important;
+    }
+
+    .route {
+        width: 100% !important;
+    }
+
+    .col-lg-9 {
+        flex     : 0 0 100% !important;
+        max-width: 100% !important;
+    }
+
+    .mobhide {
+        display: none;
+    }
+
+    .row {
+        font-size: 12px !important;
+    }
+
+    .deemFont {
+        font-size: 12px !important;
+    }
+
+    ::ng-deep .timesFont {
+        font-size: 14px !important;
+    }
+
+    .font-weight-bold {
+        font-size: 13px !important;
+    }
+
+    .stop {
+        display: none;
+    }
+
+    span.tooltip-300.amnFont.row {
+        font-size: 18px !important;
+    }
+
+    ::ng-deep .nav-item .nav-link {
+        padding: 7px !important;
+    }
+
+    .stopsWrapper {
+        position: relative;
+    }
+
+    .mpad10 {
+        padding: 12px !important;
+    }
+
+    ::ng-deep .sorta svg {
+        display: none;
+    }
+
+    .sortli:first-child {
+        display: none;
+    }
+
+    .removeBtm .col-md-4 .container {
+        width  : 100%;
+        display: block;
+        height : auto;
+    }
+
+    .removeBtm .text-info {
+        margin-bottom: 0px !important;
+    }
+
+    .flteboxwrp {
+        padding: 7px;
+    }
+}
+
+.srch_btn {
+    background: #FBC108;
+    border-radius: 6px;
+    width: 183px;
+    height: 30px !important;
+    color: #fff;
+    transition: 0.3s;
+    font-size: 15px;
+    line-height: 15px !important;
+    font-weight: 400;
+}
+
+.fixincrmnt {
+    background: none repeat scroll 0 0 #fff;
+    border: 1px solid #d8d5d5;
+    display: block;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0px;
+   // z-index: 99999;
+    right: 0px;
+    width: 100%;
+    max-width: 1140px;
+    margin: auto;
+    box-shadow: 0px 0px 18px 0px #b9b9b9;
+    right: 0px;
+}
+
+.selctarln {
+    display: block;
+    overflow: hidden;
+    padding: 10px 10px;
+    height: auto;
+}
+
+.fligthsmll {
+    display: block;
+    margin: 5px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.fligthsmll img {
+    max-width: 40px;
+}
+
+.airlinename {
+    color: #666;
+    display: block;
+    overflow: hidden;
+    text-align: center;
+}
+
+.airlinename {
+    padding: 0 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sidenamedesc {
+    display: block;
+    width: 100%;
+}
+
+.fixincrmnt .width80 {
+    width: 100%;
+}
+
+.celhtl {
+    float: left;
+}
+
+.waymensn {
+    display: block;
+    overflow: hidden;
+}
+
+.flitruo {
+    display: block;
+    overflow: hidden;
+}
+
+.topnavi {
+    float: left;
+    padding: 5px 0px;
+    width: 100%;
+}
+
+.fixincrmnt .padflt {
+    padding: 0 0px;
+}
+
+.flitrlbl {
+    color: #666;
+    display: block;
+    font-size: 14px;
+    font-weight: 300;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.elipsetool {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.text_algn_rit {
+    text-align: right;
+}
+
+.lyovrtime {
+    display: table;
+    width: 100%;
+}
+
+.colorretn .lyovrtime {
+    color: #2d3e52; font-size: 12px;
+}
+
+.flect {
+    color: #2d3e52;
+    display: table-cell;
+    padding: 2px 0px;
+    text-align: center;
+    width: 100%; display: block;
+}
+
+
+.timlbl {
+    color: #333;
+    display: block;
+    font-size: 14px;
+    overflow: hidden;
+}
+
+.bookbtn {
+    display: block;
+    margin: 0px 0 0;
+    overflow: hidden;
+}
+.booknow {
+    background: none repeat scroll 0 0 #FBC108;
+    border-radius: 3px;
+    color: #fff;
+    display: block;
+    overflow: hidden;
+    padding: 8px;
+    text-align: center;
+}
+
+
+.btn-flat.booknow {
+    border: 1px solid #FBC108;
+    width: 100%;
+    border-radius: 4px;
+    box-shadow: none;
+}
+.outbound-details, .outbound-timing-details { float: left; width: 100%;}
+.inbound-details, .inbound-timing-details { float: left; width: 100%;}
+
+.colorretn {
+    background: #f3f3f3;
+}
+
+.sidepricebig {
+    display: block;
+    font-size: 20px;
+    padding: 3px 5px;
+    text-align: center;
+    color: #082b3a;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.insidecurent { padding: 10px;}
+.sidepricewrp { padding: 0px 10px;}
+
+.round-flight-logo { max-width: 42px;}
+.card.active { border:1px solid #2fa4e7}
+.modifybtn{background-color: #FBC108!important;
+    color: #fff;}

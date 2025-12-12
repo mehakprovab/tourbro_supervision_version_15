@@ -1,0 +1,122 @@
+
+.qodef-page-contact { background: #fff; padding: 50px 0px 90px 0px; }
+.qodef-eh-contact-inner { background: #fff; position: relative;  }
+
+.qodef-eh-custom-contact { float: left; padding: 10px 2.7% 0 0; width: 100%; }
+.wp-form p { margin: 0px; }
+
+.wp-form-control-wrap {
+    position: relative;
+}
+
+.wp-form-control.wp-select, .wp-form-control.wp-text, .wp-form-control.wp-textarea {
+    position: relative;
+    width: 100%;
+    margin: 0 0 24px;
+    padding: 5px 0;
+    font-weight: inherit;
+    font-size: 17px;
+    line-height: 20px;
+    color: #000;
+    background-color: transparent;
+    border: 0;
+    border-bottom: 2px solid #000;
+    border-radius: 0;
+    outline: 0;
+    -webkit-appearance: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    -webkit-transition: border-color .2s ease-in-out;
+    -moz-transition: border-color .2s ease-in-out;
+    transition: border-color .2s ease-in-out;
+}
+
+.qodef-main-home-default-form .wp-form-control.wp-textarea {
+    height: 120px;
+}
+
+.wp-form-control.wp-textarea {
+    display: block;
+    padding: 18px 25px;
+    background-color: #f6f6f6;
+    border: 0;
+    font-size: 16px;
+}
+
+.qodef-cf7-btn-wrapper {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+    border: 2px solid #fff;
+    padding: 0!important;
+    background-color: transparent!important;
+    height: auto!important;
+}
+
+.qodef-cf7-btn-wrapper.qodef-fullwidth-btn {
+    width: 100%;
+    text-align: center;
+}
+
+.qodef-main-home-default-form .qodef-cf7-btn-wrapper {
+    border: 2px solid #000;
+}
+
+.qodef-cf7-btn-text-wrapper {
+    width: 100%;
+    position: relative;
+    display: inline-block;
+    z-index: 20;
+}
+
+.wp-submit {
+    width: 100%;
+    border: none!important;
+    background-color: #000;
+    -webkit-transition: color .1s 30ms!important;
+    -moz-transition: color .1s 30ms!important;
+    transition: color .1s 30ms!important;
+    padding: 10px 53px;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 700;
+    text-transform: uppercase;
+    box-sizing: border-box;
+    line-height: 2em;
+    position: relative;
+    vertical-align: middle;
+}
+
+.contact-inner{ float:left; width: 100%; position: relative; color: #000; }
+
+.contact-inner h2 {
+    margin: 14px 0 0; font-weight: 800; font-size: 35px;
+    display: block;
+}
+
+.contact-inner p { margin: 14px 0 0;
+    display: block; }
+
+.qodef-elements-contact  {
+    width: 100%;
+    display: table;
+    table-layout: fixed; margin-top: 20px;
+}   
+
+.qodef-elements-contact .qodef-eh-item1 {
+    display: table-cell;
+    vertical-align: middle;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+} 
+
+.qodef-eh-custom-9990 { padding-left: 40px !important; }
+.wpb_text_column { margin-bottom: 0px; }
+.wpb_text_column h3 { font-weight: 800;
+    text-transform: uppercase; }
+
+.qodef-elements-contact .contactlink { margin: 10px 0px; }
+.qodef-elements-contact .contactlink a { padding:5px 0px; margin: 0px; display: block; color: #000; }
+.qodef-elements-contact .contactlink a:hover { color: #000; }

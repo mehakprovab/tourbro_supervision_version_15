@@ -1,0 +1,54 @@
+<div class="rangebox">
+    <button data-target="#collapse504" data-toggle="collapse" class="collapsebtn filterBorderStyle" type="button">Arrival Time</button>
+    <!-- </div> -->
+    <a *ngIf="flightsCopy.length" style="cursor: pointer;font-size: 12px;" class="float-right" type="button" (click)="clearArrivalTimeFilter()">Clear</a>
+    <form *ngIf="flightsCopy.length" [formGroup]="arrTimForm" style="clear: both;">
+        <div id="collapse504" class="collapse show">
+            <div class="boxins marret" id="arrivalTimeWrapper">
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <a class="timone toglefil time-wrapper">
+                            <div class="starin">
+                                <div class="fas fa-cloud-sun fa-2x" style="padding-bottom: 15px;height: auto;font-size: 2em;"></div><br>
+                                <mat-checkbox formControlName="earlyMorning" class="time-category hidecheck"
+                                (change)="filterByArrivalTime('earlyMorning',$event.checked)"></mat-checkbox>
+                                <br><span class="htlcount">12-6AM</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a class="timone toglefil time-wrapper">
+                            <div class="starin">
+                                <div class="fa fa-sun fa-2x" style="padding-bottom: 15px;height: auto;font-size: 2em;"></div><br>
+                                <mat-checkbox formControlName="morning"
+                                (change)="filterByArrivalTime('morning',$event.checked)"></mat-checkbox>
+                                <br><span class="htlcount">6-12PM</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a class="timone toglefil time-wrapper enabled">
+                            <div class="starin">
+                                <div class="fas fa-sun fa-2x" style="padding-bottom: 15px;height: auto;font-size: 2em;"></div><br>
+                                <mat-checkbox formControlName="midDay"
+                                (change)="filterByArrivalTime('midDay',$event.checked)"></mat-checkbox>
+                                <br><span class="htlcount">12-6PM</span>
+                               
+                            </div>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a class="timone toglefil time-wrapper enabled">
+                            <div class="starin">
+                                <div class="fas fa-cloud-moon fa-2x" style="padding-bottom: 15px;height: auto;font-size: 2em;"></div><br>
+                                <mat-checkbox formControlName="evening"
+                                (change)="filterByArrivalTime('evening',$event.checked)"></mat-checkbox>
+                                <br> <span class="htlcount">6-12AM</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

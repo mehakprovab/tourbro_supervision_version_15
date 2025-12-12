@@ -1,0 +1,11 @@
+<div class="fixedTop" [ngStyle]="getStyle">
+    <div class="row">
+        <div class="offset-6 col-6 p-0">
+            <div class="bg-info text-white text-center f-14 font-weight-bold" style="border-radius: 0 0 0 6px;">
+                <span class="mx-1">Balance: {{' '+ !noData ? respData?.agentbalance : 0 }}</span>
+                <span class="mx-1">Credit Limit: {{' ' + !noData ? respData?.agentcurrency : '' }} {{ ' ' + !noData ? respData?.agentcredit_limit: 0}}</span>
+                <span class="mx-1">Due Amount: {{' ' + !noData ? respData?.agentcurrency : '' }} {{' ' + !noData ? respData?.agentdueamount: 0}}</span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="card">
+    <div class="card-body">
+        <ngb-tabset class="tabs-animated tabs-animated-shadow">
+            <ngb-tab *ngFor="let link of navLinks; let i=index;">
+                <ng-template ngbTabTitle>
+                    <span (click)="onSelect(link, i)"> <i class="{{link.icon}}"></i> &nbsp; {{link.label}} </span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <div *ngIf="link.component === 'update'; else notShow">
+                        <app-update-promocode [label]="link.label" ></app-update-promocode>
+                    </div>
+                    <ng-template #notShow>
+                        <app-list-promocode [label]="link.label"></app-list-promocode>
+                    </ng-template>
+                </ng-template>
+            </ngb-tab>
+        </ngb-tabset>
+    </div>
+</div>

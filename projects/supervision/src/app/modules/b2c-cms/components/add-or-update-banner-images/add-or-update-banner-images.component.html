@@ -1,0 +1,111 @@
+<div class="row card">
+    <div class=" p-0 col-md-12 col-lg-12">
+        <div class="card-header-tab card-header">
+            <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+                <span> {{'Banner Images'}} </span>
+            </div>
+        </div>
+    </div>
+    <form>
+        <div class="table-responsive" style="padding: 20px 40px;">
+            <table class="table table-borderless">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <!-- <th>Sequence</th> -->
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="noData || !respData.length">
+                        <td colspan="11">
+
+                            <h4 class="text-muted text-center">
+                                No Data Found!
+                            </h4>
+                        </td>
+                    </tr>
+                    <tr *ngFor="let data of respData ; let i=index;">
+                        <td class="text-left">
+                            <div class="widget-content p-0">
+                                <div class="widget-content-wrapper">
+                                    <div class="widget-content-left mr-3">
+                                        <div class="widget-content-left">
+                                            <img height="200" width="400" class="rounded"
+                                                [src]="logoBannerUri+data['image_url']" alt="logo">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-left">
+                            <p>{{data.title}}</p>
+                        </td>
+                        <td class="text-left">
+                            <p>{{data.description}}</p>
+                        </td>
+                        <!-- <td class="text-left">
+                            <select class="w-100 m-auto cust-select" (change)='onSequenceChange($event,data.id)'>
+                                <option *ngFor="let seq of sequenceList" [selected]="data['sequence'] == seq.name"
+                                    [value]="seq.name">{{seq.name}}</option>
+                            </select>
+                        </td> -->
+                        <td class="text-left"> <button class="btn btn-sm btn-primary"
+                                (click)="deleteBannerImage(data.id)">
+                                <i class="fa fa-trash text-nowrap">
+                                    {{'Delete'}}
+                                </i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+    <div class="my-5 offset-lg-2 offset-md-2 col-md-8 col-lg-8">
+        <form class="" [formGroup]="regConfig">
+            <div class="form-group row">
+                <div class="col-6 pr-0">
+                    <div class="form-group">
+                        <label for="bookedBy">Title</label>
+                        <input  formControlName="title" type="text" id="page_title" autocomplete="off"
+                        class="form-control form-control-sm nrm_input"
+                        placeholder="Add Title" >
+                        <div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 pr-0">
+                    <div class="form-group">
+                        <label for="bookedBy">Description</label>
+                        <input  formControlName="description" type="text" id="page_seo_description" autocomplete="off"
+                        class="form-control form-control-sm nrm_input"
+                        placeholder="Add Description" >
+                        <div>
+                        </div>
+                    </div>
+                </div>
+                <label for="logo" class="col-sm-3 col-form-label font-weight-bold"> Change Banner Image<sup
+                        class="text-danger f-14"> * </sup> <br>
+                    <p *ngIf="!imageSrc && submitted" class="text-danger" style="font-weight: 400;font-size: 80%;">Image
+                        is required</p>
+                </label>
+                <div class="col-sm-9 custom-file" style="display: flex;">
+                    <img *ngIf="imageSrc" height="50" width="50" class="rounded" [src]="imageSrc" alt="logo">
+                    <input type="file" class="form-control-file"  id="logo" (change)="onFileSelected($event)" #theFile
+                        style="margin-top: 11px;" accept=".png, .jpg, .jpeg">
+                        <span class="text-danger">(Maximum upload file size: 1 MB)</span>
+                    </div>
+            </div>
+            <div class="form-group row mb-n2">
+                <div class="col-sm-12 customCenter">
+                    <button type="submit" class="btn btn-sm btn-primary mr-1" (click)="onSubmit()">Submit</button>
+                    <button type="reset" class="btn btn-sm btn-primary" (click)="onReset()">Reset</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

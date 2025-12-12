@@ -1,0 +1,19 @@
+<div class="col-lg-12 col-md-12 pt-3 m-0 card">
+    <ngb-tabset class="tabs-animated tabs-animated-shadow">
+        <ngb-tab *ngFor="let link of navLinks; let i=index;">
+            <ng-template ngbTabTitle>
+                <span (click)="onSelect()"> <i class="{{link.icon}}"></i> &nbsp; {{link.label}} </span>
+            </ng-template>
+            <ng-template ngbTabContent>
+                <div class="row btop p-0" [ngSwitch]="link.component">
+                    <div *ngSwitchCase="'newBalanceRequest'" class="col-md-12 col-lg-12">
+                        <app-new-balance-request></app-new-balance-request>
+                    </div>
+                    <div *ngSwitchCase="'setBalanceRequest'" class="col-md-12 col-lg-12">
+                        <app-sent-balance-request></app-sent-balance-request>
+                    </div>
+                </div>
+            </ng-template>
+        </ngb-tab>
+    </ngb-tabset>
+</div>

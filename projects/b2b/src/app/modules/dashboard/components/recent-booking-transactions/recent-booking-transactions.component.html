@@ -1,0 +1,46 @@
+<div class="card mb-3">
+    <div class="card-header-tab card-header">
+        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+            <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+            {{'Recent Booking Transactions'}}
+        </div>
+    </div>
+    <div class="card-body">
+        <ul class="list-group">
+            <li class="list-group-item" *ngIf="noDataFound; else notShow;">
+                <div class="text-center">
+                    No Data Found
+                </div>
+            </li>
+            <ng-template #notShow>
+                <li class="list-group-item" *ngFor="let item of recentBookingTransactions">
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <i class="fa fa-plane"></i>
+                        </div>
+                        <div class="col-sm-9">
+                            <span class="f-12 w-50">
+                                <div class="">
+                                    <a href="javascript:void(0);">
+                                        {{item['app_refernce']}}-{{item['transactiondate']*1000 | date: 'medium'}}
+                                    </a>
+                                </div>
+                                <div class="" [innerHTML]="item['remarks']"></div>
+                            </span>
+                        </div>
+                        <div class="col-sm-2">
+                            <span class="badge badge-primary">
+                                {{item['fare']}}
+                            </span>
+                        </div>
+                    </div>
+                </li>
+                <li class="text-center p-2" id="list-style">
+                    <a [routerLink]="['/reports/transaction-logs']">
+                        View More
+                    </a>
+                </li>
+            </ng-template>
+        </ul>
+    </div>
+</div>

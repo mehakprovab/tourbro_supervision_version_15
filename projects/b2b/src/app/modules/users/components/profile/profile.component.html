@@ -1,0 +1,711 @@
+<div class="update-profile-section main-card mb-3 card">
+    <div class="card-body p-0">
+        <div class="card-title align-items-center d-flex px-3">
+            <div class="card-profile">
+                <img *ngIf="userImage" height="50" width="50" class="rounded" [src]="logoUri+userImage" alt="logo">
+                <img *ngIf="!userImage" height="50" width="50" class="rounded" [src]="profile_logo" alt="logo">
+            </div>
+            <div class="d-flex flex-column ml-3">
+                <h5 class="title">Agent Id : {{ currentUser.uuid }}</h5>
+                <span style="text-transform: none;">Agent Email : {{ currentUser.email }}</span>
+            </div>
+            <div class=" ml-auto">
+                <h5 class="title cust-fs">Update Profile</h5>
+            </div>
+        </div>
+        <!-- <form [formGroup]="profileForm" autocomplete="off" class="needs-validation px-4" novalidate
+            (ngSubmit)="onSubmit(profileForm,profileForm.value)">
+            <div class="position-relative form-group">
+                <label for="title" class="col-form-label">Title</label>
+                <select formControlName="title" class="form-control text-uppercase">
+                    <option *ngFor="let t of userTitleList" [value]=t.id>{{t.title}}</option>
+                </select>
+            </div>
+            <div class="position-relative form-group">
+
+                <label for="first_name" class="col-form-label">First Name</label>
+                <input formControlName="first_name" placeholder="First Name" type="text" class="form-control text-capitalize"
+                    (keypress)="omitSpecialCharacters($event)" maxlength="100">
+            </div>
+            <div class="position-relative form-group">
+                <label for="last_name" class="col-form-label">Last Name</label>
+                <input formControlName="last_name" placeholder="Last Name" type="text" class="form-control text-capitalize"
+                    (keypress)="omitSpecialCharacters($event)" maxlength="100">
+            </div>
+            <div class="position-relative form-group">
+                <label for="address" class="col-form-label">Address</label>
+                <textarea maxlength="250" formControlName="address" class="form-control text-capitalize"></textarea>
+            </div>
+            <div class="form-row">
+                <div class="position-relative form-group col-6">
+                    <label for="date_of_birth" class="col-form-label">Date Of Birth</label>
+                    <mat-form-field appearance="fill">
+                        <input matInput [matDatepicker]="picker" [max]="maxDate" formControlName="date_of_birth"
+                            placeholder="Date Of Birth" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="position-relative form-group col-6">
+                    <label for="country_code" class="col-form-label">Country</label>
+                    <select formControlName="country" class="form-control">
+                        <option value="" disabled>-Select-</option>
+                        <option *ngFor="let country of countries" [value]="country.id">
+                            {{country.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="position-relative form-group">
+                <label for="phone" class="col-form-label">Phone</label>
+                <input formControlName="phone" placeholder="phone" type="text" class="form-control" maxlength="100"
+                    (keypress)="numberOnly($event)">
+            </div>
+            <div class="position-relative form-group">
+                <label for="business_phone" class="col-form-label">Business Phone</label>
+                <input formControlName="business_phone" placeholder="Business Phone" type="text" class="form-control"
+                    maxlength="100" (keypress)="numberOnly($event)">
+            </div>
+            <div class="position-relative form-group">
+                <label for="business_name" class="col-form-label">Business Name</label>
+                <input formControlName="business_name" placeholder="Business Name" type="text" class="form-control text-capitalize"
+                    maxlength="100">
+            </div>
+            <div class="position-relative form-group">
+                <label for="business_number" class="col-form-label">Business Number</label>
+                <input formControlName="business_number" placeholder="Business Number" type="text" class="form-control"
+                    (keypress)="numberOnly($event)" maxlength="100">
+            </div>
+            <div class="position-relative form-group custom-file-section">
+                <label for="image" class="col-form-label">Upload Profile</label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" accept=".png, .jpg, .jpeg" formControlName="importFile"
+                        id="importFile" (change)="onFileChange($event.target.files)">
+                    <label class="custom-file-label" #labelImport for="importFile">Upload Your profile pic here</label>
+                </div>
+            </div>
+            <div class="position-relative form-group">
+                <div class="update-btn d-flex align-items-center">
+                    <button type="submit" class="btn btn-secondary">Confirm</button>
+                    <alert></alert>
+                </div>
+            </div>
+        </form> -->
+    
+        <form autocomplete="off" class="needs-validation p-20" [formGroup]="registerForm" novalidate>
+
+
+            <section class="section1">
+                <header>
+                    <div class="bead"><span>1</span></div>AGENCY MANAGER DETAILS(PRIME ADMIN DETAILS)
+                </header>
+                <div class="content form-row">
+                    <div class="col-md-2">
+                        <fieldset class="form-group">
+                            <label for="firstName" class="required">Title</label>
+                            <div tabindex="-1" role="group">
+                                <select id="inputState" class="form-control capitalize"
+                                    formControlName="title">
+                                    <option selected value="" disabled>Select</option>
+                                    <option *ngFor="let t of userTitleList" value="{{t.id}}">
+                                        {{t.title}}</option>
+                                </select>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label for="firstName" class="required">First Name</label>
+                            <div tabindex="-1" role="group">
+                                <input formControlName="first_name" id="firstName" type="text"
+                                    (keypress)="omitSpecialCharacters($event)" placeholder="First Name"
+                                    class="form-control">
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-6">
+                        <fieldset class="form-group">
+                            <label for="lastName" class="required">Last Name</label>
+                            <div tabindex="-1" role="group">
+                                <input formControlName="last_name" type="text" placeholder="Last Name"
+                                    (keypress)="omitSpecialCharacters($event)" class="form-control"
+                                    formControlName="last_name">
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-2">
+                        <fieldset class="form-group">
+                            <label for="lastName" class="required">Phone Code</label>
+                            <div tabindex="-1" role="group">
+                                <select formControlName="PhoneCode" class="form-control">
+                                    <option value='' disabled>Phone Code</option>
+                                    <option [ngValue]="p.phone_code" *ngFor="let p of phoneCodeList">
+                                        {{p.name}} ({{ p.phone_code }})
+                                    </option>
+                                </select>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label for="phone" class="required">Phone Number</label>
+                            <div tabindex="-1" role="group">
+                                <input formControlName="phone" type="text" placeholder="Phone"
+                                    class="form-control" (keypress)="numberOnly($event)">
+
+                                        <!-- <ngx-intl-tel-input 
+                                        [cssClass]="'custom'" 
+                                        [preferredCountries]="preferredCountries"
+                                        [enableAutoCountrySelect]="false" 
+                                        [enablePlaceholder]="true" 
+                                        [searchCountryFlag]="true"
+                                        [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                        [selectFirstCountry]="false" 
+                                        [selectedCountryISO]="CountryISO.Qatar"
+                                        [maxLength]="15" 
+                                        [tooltipField]="TooltipLabel.Name" 
+                                        [phoneValidation]="true" 
+                                        [separateDialCode]="false"
+                                        name="phone" formControlName="phone">
+                                        </ngx-intl-tel-input> -->
+
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-6">
+                        <fieldset class="form-group">
+                            <label for="email" class="required">Email</label>
+                            <div tabindex="-1" role="group">
+                                <input formControlName="email" type="email" placeholder="Email Id"
+                                    class="form-control" disabled>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <!-- <div class="col-md-6">
+                        <fieldset class="form-group">
+                            <label for="business_phone" class="required">Business Phone</label>
+                            <div tabindex="-1" role="group">
+                                <input formControlName="business_phone" type="text" placeholder="Email Id"
+                                    class="form-control" (keypress)="numberOnly($event)">
+                            </div>
+                        </fieldset>
+                    </div> -->
+                </div>
+            </section>
+
+            <section class="section2">
+                <header>
+                    <div class="bead"><span>2</span></div>AGENCY DETAILS
+                </header>
+                <div class="content form-row">
+
+
+                    <div class="col-md-6">
+                        <fieldset class="form-group">
+                            <label for="businessName" class="required"> Registered Legal Name</label>
+                            <div tabindex="-1" role="group">
+                                <input formControlName="business_name" type="text"
+                                    placeholder="Registered Legal Name" class="form-control">
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-md-6">
+                        <fieldset class="form-group">
+                            <label for="businessName" class="required"> Company Trade Name</label>
+                            <div tabindex="-1" role="group">
+                                <input formControlName="business_trade_name" type="text"
+                                    placeholder="Company Trade Name" class="form-control">
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-md-6">  
+                        <fieldset class="form-group">
+                            <label for="businessName"> Chain Name - if operationg under chain</label>
+                            <div tabindex="-1" role="group">
+                                <input formControlName="business_chain_name" type="text"
+                                    placeholder="Chain Name -if operating under chain"
+                                    class="form-control">
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-md-6">
+                        <fieldset class="form-group">
+                            <label for="businessName"> Company Website</label>
+                            <div tabindex="-1" role="group">
+                                <input formControlName="business_website" type="text"
+                                    placeholder="Company Website" class="form-control">
+                            </div>
+                        </fieldset>
+                    </div>
+
+
+
+                    <div class="col-md-6">
+                        <fieldset class="form-group">
+                            <label for="businessName" class="required"> Registration Number</label>
+                            <div tabindex="-1" role="group">
+                                <input formControlName="registration_number" type="text"
+                                    placeholder="Registration Number" class="form-control">
+                            </div>
+                        </fieldset>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <fieldset class="form-group">
+                            <label for="businessNumber" class="required">Country Of Registration</label>
+                            <div tabindex="-1" role="group">
+                                <select formControlName="country_name" class="form-control">
+                                    <option value='' disabled>Country Of Registration</option>
+                                    <option *ngFor="let c of registerCountries" [ngValue]="c.name">
+                                        {{c.name}}</option>
+                                </select>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-md-6">
+                        <fieldset class="form-group">
+                            <label for="businessName" class="required"> Tax Registration Number</label>
+                            <div tabindex="-1" role="group">
+                                <input formControlName="tax_reg_no" type="text"
+                                    placeholder="Tax Registration Number" class="form-control">
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-md-6">
+                        <fieldset class="form-group">
+                            <label for="businessNumber">License (IATA/ABTA/ATOL, ..etc)</label>
+                            <div tabindex="-1" role="group">
+                                <select formControlName="affiliations"
+                                    class="form-control text-capitalize" id="affiliations"
+                                    (change)="onSelect($event.target.value)">
+                                    <option value="">Select License</option>
+                                    <option [value]="reqType.name" *ngFor="let reqType of requestTypes">
+                                        {{ reqType.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-md-6" *ngIf="showAffiliationNumber">
+                        <fieldset class="form-group">
+                            <label for="affiliation_number" class="required">Affiliation Number</label>
+                            <div tabindex="-1" role="group">
+                                <input formControlName="affiliation_number" type="text"
+                                    class="form-control text-capitalize" id="amount"
+                                    placeholder="Affiliation Number" maxlength="12"
+                                    (keypress)="numbersOnly($event)" />
+                            </div>
+                        </fieldset>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <fieldset class="form-group">
+                            <label for="businessNumber" class="required">Form Of Payment
+                                Prefernce</label>
+                            <div tabindex="-1" role="group">
+                                <select formControlName="payment_pref" class="form-control" disabled>
+                                    <option value='' disabled>Select Payment Prefernce</option>
+                                    <option value='Prepaid Balance'>Prepaid Balance</option>
+                                    <option value='Credit Card'>Credit Card</option>
+                                    <option value='Prepaid Balance / Credit Card'> (Prepaid Balance /
+                                        Credit Card) Both</option>
+
+                                </select>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-md-6">
+                        <fieldset class="form-group">
+                            <label for="businessNumber" class="required">Currency</label>
+                            <div tabindex="-1" role="group">
+                                <select formControlName="currency" class="form-control" disabled>
+                                    <option value='' disabled>Select Currency</option>
+                                    <option *ngFor="let c of currencyList" [value]="c.currency">
+                                        {{c.currency}}</option>
+                                </select>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-md-2">
+                        <fieldset class="form-group">
+                            <label for="lastName" class="required">Phone Code</label>
+                            <div tabindex="-1" role="group">
+                                <select formControlName="alterPhoneCode" class="form-control">
+                                    <option value='' disabled>Phone Code</option>
+                                    <option [ngValue]="p.phone_code" *ngFor="let p of phoneCodeList">
+                                        {{p.name}} ({{ p.phone_code }})
+                                    </option>
+                                </select>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label for="phone" class="required">Office Phone Number</label>
+                            <div tabindex="-1" role="group">
+                                <input formControlName="office_number" type="text"
+                                    placeholder="Office Number" class="form-control" (keypress)="numberOnly($event)"> 
+
+                                    <!-- <ngx-intl-tel-input 
+                                        [cssClass]="'custom'" 
+                                        [preferredCountries]="preferredCountries"
+                                        [enableAutoCountrySelect]="false" 
+                                        [enablePlaceholder]="true" 
+                                        [searchCountryFlag]="true"
+                                        [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                        [selectFirstCountry]="false" 
+                                        [selectedCountryISO]="CountryISO.Qatar"
+                                        [maxLength]="15" 
+                                        [tooltipField]="TooltipLabel.Name" 
+                                        [phoneValidation]="true" 
+                                        [separateDialCode]="false"
+                                        name="office_number" formControlName="office_number">
+                                        </ngx-intl-tel-input> -->
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <!-- <div class="col-md-6">
+                        <fieldset class="form-group">
+                            <label for="email" class="required">Alternative company Email ID</label>
+                            <div tabindex="-1" role="group">
+                                <input formControlName="office_number" type="email"
+                                    placeholder="Office Number" class="form-control"
+                                    (keypress)="numberOnly($event)">
+                            </div>
+                        </fieldset>
+                    </div> -->
+
+                    <div class="col-md-6">
+                        <fieldset class="form-group">
+                            <label for="email" class="required">Alternative Company Email Id</label>
+                            <div tabindex="-1" role="group">
+                                <input formControlName="alter_email" type="email"
+                                    placeholder="Alternative Company Email Id" class="form-control" disabled>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                </div>
+            </section>
+
+            <section>
+                <header>
+                    <div class="bead"><span>3</span></div>AGENCY ADDRESS (MAILING ADDRESS)
+                </header>
+
+                <div class="content row">
+
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="firstName" class="required">Address Line1 (Building number, Street)</label>
+
+                            <input type="text" formControlName="address1"
+                                placeholder="Address Line 1 (Building number, Street, Area, ...etc)"
+                                class="form-control text-capitalize" id="firstName" maxlength="250">
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="firstName">Address line 2</label>
+
+                            <input type="text" formControlName="address2"
+                                class="form-control text-capitalize" id="firstName" maxlength="250">
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <fieldset class="form-group">
+                            <label for="selectCountry" class="required">Select Country</label>
+                            <div tabindex="-1" role="group">
+                                <select formControlName="country" class="form-control"
+                                    (change)="onCountryChange($event)">
+                                    <option value="">Select Country</option>
+                                    <option *ngFor="let country of registerCountries"
+                                        [value]="country.id">{{ country.name }}</option>
+                                </select>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-md-6">
+                        <fieldset class="form-group">
+                            <label for="selectState" class="required">Select State</label>
+                            <div tabindex="-1" role="group">
+                                <select formControlName="state" class="form-control"
+                                    (change)="onStateChange($event)">
+                                    <option value="">Select State</option>
+                                    <option *ngFor="let state of filteredStates" [value]="state.id">{{
+                                        state.name }}</option>
+                                </select>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="cityInput" class="required">City</label>
+                            <input type="text" formControlName="city" placeholder="City"
+                                class="form-control text-capitalize" id="cityInput"
+                                (input)="filterCities($event.target.value)" [attr.list]="'city-list'"
+                                maxlength="250" />
+                            <datalist id="city-list">
+                                <option *ngFor="let city of filteredCities" [value]="city.name">
+                                </option>
+                            </datalist>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="firstName" class="required">Zip/Postal Code</label>
+
+                            <input type="text" formControlName="zip_code"
+                                placeholder="Zip / Postal Code" class="form-control text-capitalize"
+                                id="firstName">
+
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+
+            <section>
+                <header>
+                    <div class="bead"><span>4</span></div>AGENCY ACCOUNTING DETAILS
+                </header>
+
+                <div class="content form-row">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="firstName" class="required">Accounting Email ID</label>
+
+                            <input type="text" formControlName="acc_email"
+                                class="form-control" id="firstName"
+                                placeholder="Accounting Email Id" disabled>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <fieldset class="form-group">
+                            <label for="email" class="required">Accounting Tel. Number</label>
+                            <div tabindex="-1" role="group">
+                                <input formControlName="acc_tel_no" type="email"
+                                    placeholder="Accounting Tel. Number" class="form-control"
+                                    (keypress)="numberOnly($event)">
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="firstName">Bank Name</label>
+
+                            <input type="text" formControlName="bank_name"
+                                class="form-control text-capitalize" id="firstName"
+                                placeholder="Bank Name">
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="firstName">Bank Branch Address</label>
+
+                            <input type="text" formControlName="branch_addrs"
+                                class="form-control text-capitalize" id="firstName"
+                                placeholder="Bank Branch Address">
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="firstName">Bank Account Holder Name </label>
+
+                            <input type="text" formControlName="acc_holder_name"
+                                class="form-control text-capitalize" id="firstName"
+                                placeholder="Bank Account Holder Name">
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="firstName">Account Number </label>
+
+                            <input type="text" formControlName="acc_number"
+                                class="form-control text-capitalize" id="firstName"
+                                placeholder="Account Number" (keypress)="numberOnly($event)">
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="firstName">IBAN </label>
+
+                            <input type="text" formControlName="iban"
+                                class="form-control text-capitalize" id="firstName" placeholder="IBAN">
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="firstName">Swift Code </label>
+
+                            <input type="text" formControlName="swift_code"
+                                class="form-control text-capitalize" id="firstName"
+                                placeholder="Swift Code">
+
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+
+
+            <!-- <section>
+                <header>
+                    <div class="bead"><span>5</span></div>DIRECTOR FORM DETAILS
+                </header>
+                <h5>DIRECTOR INFORMATION</h5>
+                <div class="content form-row">
+                    <div class="col-md-2">
+                        <fieldset class="form-group">
+                            <label for="firstName" class="required">Title</label>
+                            <div tabindex="-1" role="group">
+                                <select id="inputState" class="form-control capitalize"
+                                    formControlName="dir_title">
+                                    <option selected value="" disabled>Select</option>
+                                    <option *ngFor="let t of userTitleList" value="{{t.id}}">
+                                        {{t.title}}</option>
+                                </select>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-md-10">
+                        <fieldset class="form-group">
+                            <label for="firstName" class="required">Full Name</label>
+                            <div tabindex="-1" role="group">
+                                <input formControlName="dir_name" id="firstName" type="text"
+                                    (keypress)="omitSpecialCharacters($event)" placeholder="Full Name"
+                                    class="form-control">
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-2">
+                        <fieldset class="form-group">
+                            <label for="lastName" class="required">Phone Code</label>
+                            <div tabindex="-1" role="group">
+                                <select formControlName="dir_phone_code" class="form-control">
+                                    <option value='' disabled>Phone Code</option>
+                                    <option [ngValue]="p.phone_code" *ngFor="let p of phoneCodeList">
+                                        {{p.name}} ({{ p.phone_code }})
+                                    </option>
+                                </select>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        <fieldset class="form-group">
+                            <label for="phone" class="required">Phone Number</label>
+                            <div tabindex="-1" role="group">
+                                <input formControlName="dir_contact" type="text" placeholder="Phone"
+                                    class="form-control" (keypress)="numberOnly($event)">
+
+                                         <ngx-intl-tel-input 
+                                        [cssClass]="'custom'" 
+                                        [preferredCountries]="preferredCountries"
+                                        [enableAutoCountrySelect]="false" 
+                                        [enablePlaceholder]="true" 
+                                        [searchCountryFlag]="true"
+                                        [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                        [selectFirstCountry]="false" 
+                                        [selectedCountryISO]="CountryISO.Qatar"
+                                        [maxLength]="15" 
+                                        [tooltipField]="TooltipLabel.Name" 
+                                        [phoneValidation]="true" 
+                                        [separateDialCode]="false"
+                                        name="phone" formControlName="dir_contact">
+                                        </ngx-intl-tel-input> 
+
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-6">
+                        <fieldset class="form-group">
+                            <label for="email" class="required">Email</label>
+                            <div tabindex="-1" role="group">
+                                <input formControlName="dir_email" type="email" placeholder="Email Id"
+                                    class="form-control">
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <h5>ACCOUNT INFORMATION</h5>
+                <div class="content form-row">
+                    <div class="col-md-2">
+                        <fieldset class="form-group">
+                            <label for="firstName" class="required">Title</label>
+                            <div tabindex="-1" role="group">
+                                <select id="inputState" class="form-control capitalize"
+                                    formControlName="acc_title">
+                                    <option selected value="" disabled>Select</option>
+                                    <option *ngFor="let t of userTitleList" value="{{t.id}}">
+                                        {{t.title}}</option>
+                                </select>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col-md-10">
+                        <fieldset class="form-group">
+                            <label for="firstName" class="required">Full Name</label>
+                            <div tabindex="-1" role="group">
+                                <input formControlName="acc_name" id="firstName" type="text"
+                                    (keypress)="omitSpecialCharacters($event)" placeholder="Full Name"
+                                    class="form-control">
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </section> -->
+
+
+            <div class="btn-group">
+                <div class="form-group required row">
+                    <div class="col-12 d-flex">
+                        <button type="submit" class="btn btn-sm btn-primary lg mr-4"
+                            (click)="onSubmit()">Save</button>
+                            <button type="button" class="btn btn-sm btn-danger lg" [routerLink]="['/dashboard']">Back</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,102 @@
+<div class="card-header text-uppercase bg-dark text-white">
+    <h5 style="border-bottom: 0;"><i class="fa fa-edit"></i>&nbsp;Partner Airlines</h5>
+</div>
+<div class="card">
+    <form [formGroup]="regConfig" autocomplete="off">
+        <div>
+            <div class="form-row">
+                <input type="hidden" name="id" formControlName="id">
+                <div class="col-6 pr-0">
+                    <div class="form-group">
+                        <label for="email">Image</label>
+                        <input type="file" class="custom-file-input" accept=".png, .jpg, .jpeg" formControlName="image"
+                            id="image" (change)="onFileChange($event.target.files)">
+                        <label class="custom-file-label" #labelImport for="image">Upload Image</label>
+                        <span class="text-danger">(Maximum upload file size: 1 MB)</span>
+                        <div *ngIf="flightImage"><img [src]="getImage(flightImage)" width="100" height="50"></div>
+                        <img *ngIf="imageSrc" height="50" width="100" class="rounded" [src]="imageSrc" alt="logo">
+                    </div>
+                </div>
+            </div>
+            <div class="btncontainer">
+                <button type="submit" class="btnStyle" (click)="addOrUpdatePartnerAirlineImage()">{{this.btnName}}</button> &nbsp;
+                <button type="button" class="btnStyle" (click)="onReset()">Reset</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="card" style="margin-top: 30px;">
+    <div class="card-body">
+        <p>Total {{respData?.length}} Flight</p>
+        <div class="mb-3">
+            <form>
+                <div class="table-responsive">
+                    <table class="table table-borderless table-striped table-hover" matSort
+                        id="b2c-flight-widget">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-left text-nowrap" *ngFor="let header of displayColumn;">
+                                    {{header.value }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="noData">
+                                <td colspan="11">
+                                    <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                                </td>
+                            </tr>
+                            <tr *ngIf="!noData && !respData.length">
+                                <td colspan="11">
+                                    <h4 class="text-muted text-center">
+                                        No Data Found!
+                                    </h4>
+                                </td>
+                            </tr>
+                            <tr
+                                *ngFor="let data of respData | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
+                                <td class="text-left text-muted">{{i+1}}.</td>
+                                <td class="text-left">
+                                    <div>
+                                        <ul>
+                                            <li *ngIf="data['status']==1"><a href="javascript:void(0)"
+                                                    (click)="updateStatus(data.id,0)">In Activate</a></li>
+                                            <li *ngIf="data['status']==0"><a href="javascript:void(0)"
+                                                    (click)="updateStatus(data.id,1)">Activate</a></li>
+                                            <li><a href="javascript:void(0)" (click)="deleteList(data.id)">Delete</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td class="text-left">
+                                    <span *ngIf="data['status'] == 1" class="badge badge-success">
+                                        {{'Active'}} </span>
+                                    <span *ngIf="data['status'] == 0" class="badge badge-danger">
+                                        {{'In active'}} </span>
+                                </td>
+                                <td class="text-left">
+                                    <a href="{{getImage(data.image)}}" target="_blank"><img width="100" [src]="getImage(data.image)"  alt="" ></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer pb-0">
+                    <div class="d-flex w-100 justify-content-between">
+                        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                        </ngb-pagination>
+                        <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                            <option [ngValue]="50">50 items per page</option>
+                            <option [ngValue]="100">100 items per page</option>
+                            <option [ngValue]="150">150 items per page</option>
+                            <option [ngValue]="200">200 items per page</option>
+                            <option [ngValue]="500">500 items per page</option>
+                            <option [ngValue]="700">700 items per page</option>
+                            <option [ngValue]="1000">1000 items per page</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

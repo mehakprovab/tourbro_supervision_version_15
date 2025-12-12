@@ -1,0 +1,169 @@
+<div class="h-100">
+    <div class="no-gutters ">
+        <!-- login header start -->
+  <app-home-page-header></app-home-page-header>
+        <!-- login header end -->
+        <div class="login-max-screen-1260 row register-section" style="padding-left: 0 !important; background:#f2f2f2;">
+            <div class="col-5 p-0">
+                <div class="register-banner">
+                    <div class="register-banner-bg" [ngStyle]="{'background-image': 'url(' + registerImage + ')'}">
+                        <div class="register-banner-content">
+                            <div class="entry-title">
+                                <h1>Welcome to Booking 247 for Business</h1>
+                                <div class="entry-content">
+                                    <p>The LARGEST platform to book & manage all your Business Travels!</p>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="register-form-section col-7 p-5">
+                <div class="register-form-title">
+        <alert></alert>
+                    <h3>Welcome,</h3>
+                    <span>It only takes a few seconds to create your account</span>
+                </div>
+                <div class="register-form-fields">
+                    <form autocomplete="off" class="needs-validation" [formGroup]="registerForm" novalidate
+                    (ngSubmit)="onRegister(registerForm)">
+                    <h4>Director Info</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label for="firstName" class="required">Title</label>
+                                    <div tabindex="-1" role="group">
+                                        <select id="inputState" class="form-control capitalize" formControlName="dir_title">
+                                            <option selected value="" disabled>Choose...</option>
+                                            <option *ngFor="let t of userTitleList" value="{{t.titleId}}">{{t.titleName}}</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label for="dir_name" class="required">Name</label>
+                                    <div tabindex="-1" role="group">
+                                        <input formControlName="dir_name" id="dir_name" type="text" (keypress)="omitSpecialCharacters($event)"
+                                            placeholder="First Name" class="form-control" maxlength="20">
+                                    </div>
+                                </fieldset>
+                            </div>
+                    
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label for="dir_contact" class="required">Phone</label>
+                                    <div tabindex="-1" role="group">
+                                        <input formControlName="dir_contact" type="text" placeholder="Phone"
+                                            class="form-control"(keypress)="numberOnly($event)">
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label for="email" class="required">Email</label>
+                                    <div tabindex="-1" role="group">
+                                        <input formControlName="dir_email" type="email" placeholder="Email"
+                                            class="form-control" >
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-12"><h4>Account Info </h4></div>
+                            <div class="col-md-6">
+                        
+                                <fieldset class="form-group">
+                                    <label for="firstName" class="required">Title</label>
+                                    <div tabindex="-1" role="group">
+                                        <select id="inputState" class="form-control capitalize" formControlName="acc_title">
+                                            <option selected value="" disabled>Choose...</option>
+                                            <option *ngFor="let t of userTitleList" value="{{t.titleId}}">{{t.titleName}}</option>
+                                        </select>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label for="acc_name" class="required"> Name</label>
+                                    <div tabindex="-1" role="group">
+                                        <input formControlName="acc_name" type="text" placeholder="Account Name"
+                                            class="form-control"  maxlength="20">
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <!-- <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <label for="businessNumber" >Liscence No</label>
+                                    <div tabindex="-1" role="group">
+                                        <input formControlName="business_number" type="text"
+                                            placeholder="Liscence No" class="form-control" formControlName="business_number"maxlength="20"
+                                            (keypress)="numberOnly($event)"></div>
+                                </fieldset>
+                            </div> -->
+                       
+                         
+                            
+          
+                        
+                           
+                 
+                          
+                       
+                            <!-- <div class="col-md-12 mt-4">
+                                <fieldset class="form-group pb-1">
+                                    <div class="custom-control custom-checkbox">
+                                        <input id="confirmCheckbox" namae="confirmCheckbox" type="checkbox" name="check"
+                                            class="custom-control-input" value="true" formControlName="confirmCheckbox"  >
+                                        <label for="confirmCheckbox" class="custom-control-label">
+                                            Accept our 
+                                            <a  (click)="onTerms()" style="letter-spacing: 0px;
+    color: #012756;">Terms and Conditions.</a>
+                                        </label></div>
+                                </fieldset>
+                            </div> -->
+                            <div class="col-md-12 nopad">
+                                <div class="checkcontent" style="overflow: inherit;">
+                                    <div class="squaredThree">
+                                        <input type="checkbox" value="0" name="confirmCheckbox" class="filter_airline"
+                                            id="squaredThree1" aria-required="true" formControlName="confirmCheckbox" required />
+                                        <label for="squaredThree1"></label>
+                                    </div>
+                                    <label for="squaredThree1" style="display: inline; font-size: 14px;color: #082B3A;">
+                                        Accept our 
+                                        <a (click)="onTerms()" class="colorbl">Terms and Conditions</a>
+                                        <!-- <a data-toggle="modal" (click)="openStaticPage('privacy-policy')" class="colorbl">Privacy Policy</a>
+                                         and <a data-toggle="modal" (click)="openStaticPage('refund-pollicy')" class="colorbl">Refund Policy</a>. -->
+                                    </label>
+                                </div>
+                                <div class="checkcontent" style="overflow: inherit;">
+                                    <small class="text-danger"
+                                        *ngIf="submitted && registerForm['controls']['confirmCheckbox'].errors?.required">
+                                        Please Check The Agreement
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-1">
+                                <fieldset class="form-group">
+                                    <div class="sign-in">
+                                        <h5 class="mb-0">
+                                            Already have an account?
+                                            <a routerLink="/auth/login">Please Sign in</a></h5>
+                                    </div>
+                                    <hr>
+                                    <!-- <div class="forgot-password">
+                                        <a class="c-pointer" (click)="openDialog()">Forgot Password</a>
+                                    </div> -->
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="center-section col-md-10">
+                            <button type="submit" class="btn">REGISTER</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <app-home-page-footer></app-home-page-footer>
+    </div>
+</div>

@@ -1,0 +1,68 @@
+.fa{
+    font-size: 19px;
+}
+
+.card {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.cards { width: 100%;
+    margin-bottom: 10px; box-shadow: 0 0.46875rem 2.1875rem rgb(0 0 0 / 3%), 0 0.9375rem 1.40625rem rgb(0 0 0 / 3%), 0 0.25rem 0.53125rem rgb(0 0 0 / 5%), 0 0.125rem 0.1875rem rgb(0 0 0 / 3%);
+    border-width: 0;
+    transition: all 0.2s; position: relative;        min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(11, 70, 97, 0.125);} 
+.left {
+    float: left;
+}
+.form-group label {
+    color: black;
+}
+input[type=text]:focus {
+    border: #012756;
+  }
+.btnStyle {
+    padding: 8px 30px;
+    background: #012756;
+    border-radius: 5px;
+    color: #ffffff;
+    border: none;
+}
+.addBtnStyle{
+    height: 48px;
+    width: 130px;
+    background: #012756;
+    border-radius: 5px;
+    color: #ffffff;
+    border: none;
+}
+.btncontainer {
+    width: 100%;
+    text-align: center;
+    padding: 12px 0px;
+}
+.customInputStyle {
+    border: none;
+    border-bottom: 1px solid #d2d2d2;
+    width: 100%;
+}
+.inputPadding {
+    padding-top: 10px;
+    color: #707070;
+}
+.customLabel {
+    color: #082b3a;
+    width: 100%;
+}
+.card-header {
+    color: #012756;
+}
+.addlineSpacing {
+    padding: 20px;
+}
+.radioLabel {
+    padding: 0px 12px;
+}

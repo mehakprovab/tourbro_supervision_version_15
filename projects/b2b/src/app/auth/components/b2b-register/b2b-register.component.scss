@@ -1,0 +1,80 @@
+.login-banner-slider .banner-bg .login-form{width: 100%;max-width: 100%;position: relative;
+    padding: 50px;
+    z-index: 99;
+}
+.login-form{    position: absolute!important;
+    left: 0!important;
+    right: 0!important;}
+    .login-banner-slider .banner-bg .login-form .login-container{z-index: 99!important;}
+    .banner-section img{
+        width: 100%;
+        height: 360px;
+        -o-object-fit: cover;
+        object-fit: cover;
+    }
+    .supplier{
+        background: #FBC108;
+        border-radius: 5px;
+        padding:0px 15px;
+        width: 100%;
+        height: 60px;
+        color: #000000;
+     font-weight: 600;
+        transition: 0.3s;
+        font-size: 14px;
+        line-height: 26px;
+        font-weight: 600;
+        }
+   
+    .supplier-proceed-btn {
+         background: #001c4b;
+        border-radius: 5px;
+        padding:0px 15px;
+        width: 100%;
+        height: 45px;
+        color: #fff;
+     font-weight: 600;
+        transition: 0.3s;
+        font-size: 14px;
+        line-height: 26px;
+        font-weight: 400;
+    }
+
+    .supplier-select-check {
+        left: 10px;
+        bottom: 58px;
+    }
+     .supplier-select-check:checked {
+            accent-color: #001c4b;
+     }
+
+    .supplier-buttons-dhc {
+        background: #e5e4e4;
+        border-radius: 5px;
+    }
+    .f-18 {
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .f-16 {
+         font-size: 15px;
+    }
+
+    .contract-lable {
+        font-weight: 600;
+    }
+
+    .disabled-btn {
+        background: #fff3cb;
+        cursor: not-allowed !important;
+        pointer-events: none !important;
+    }
+    .disabled-btn-span {
+        background:#888888 !important;
+    }
+
+    .active-btn {
+        background: #001c4b !important;
+        color: #fff !important;
+    }

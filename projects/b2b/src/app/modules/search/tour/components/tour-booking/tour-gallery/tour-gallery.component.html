@@ -1,0 +1,68 @@
+
+<div class="QFocuss cQfocuss">
+    <div class="">
+        <div class="col-md-12 p-0">
+            <div class="sync-details">
+                <ul id="sync1" class="list-unstyled">
+                    <owl-carousel-o [options]="customOptions" #owlCar1>
+                        <ng-container *ngFor="let tour of tourImages; let i = index;">
+                            <ng-template carouselSlide [id]="i">
+                               
+                                        <!-- <img class="img-responsive" src="https://q-cf.bstatic.com/images/hotel/max1024x768/232/232825737.jpg" height="550"
+                                            onError="this.src='https://q-cf.bstatic.com/images/hotel/max1024x768/232/232825737.jpg'"
+                                            > -->
+  
+                                            <img class="img-responsive" width="100%" height="650" [src]="tour" alt="" /> 
+                                   
+                            </ng-template>
+                        </ng-container>
+  
+  
+                    </owl-carousel-o>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-12 nopad">
+            <ul id="sync2" class="list-unstyled">
+                <owl-carousel-o *ngIf="tourImages.length > 1" [options]="customOptions2">
+                    <ng-container *ngFor="let tour of tourImages; let i = index;">
+                        <ng-template carouselSlide [id]="i">
+                            
+                                    <!-- <div class="product" (mouseenter)="handleCarouselImage(i)"  [ngClass]="hotel.class"></div> -->
+                                    <img class="img-responsive" width="100" height="150" (mouseenter)="handleCarouselImage(i)"
+                                         [src]="tour"> 
+                                
+                            
+                        </ng-template>
+                    </ng-container>
+  
+  
+    
+  
+                </owl-carousel-o>
+            </ul>
+        </div>
+    </div>
+  </div>
+  
+  
+  <div class="modals-wrap modal fade container-fluid" id="seemore_photos" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="moddalss modal-dialog container-fluid px-0 py-0 my-0" role="document">
+    <div class="modal-content">
+        <div class="modal-body">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="gallery-container">
+                <div class="gallerize-example">
+                    <p class="container" style="cursor: pointer;">
+                        <img src="https://q-cf.bstatic.com/images/hotel/max1024x768/232/232825737.jpg" alt="photo">
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  </div>
+  

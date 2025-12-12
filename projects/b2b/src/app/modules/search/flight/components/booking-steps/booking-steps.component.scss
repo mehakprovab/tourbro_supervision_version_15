@@ -1,0 +1,60 @@
+.circle {
+    height: 50px;
+    width: 50px;
+    background-color: #ffffff;
+    border: solid 1px #cccccc;
+    color: #000000;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+a {
+    text-decoration: none; padding: 0px;
+}
+
+.getDone {
+    // background-color: #665993;
+    // color: #ffffff;
+}
+
+.getActive {
+    // background-color: #1ccf1c;
+    color: #092e53;
+}
+//chakri changes
+.fa, .fas{
+    color:#262161 ;
+}
+.container.mt-3.bg-white.py-2.border{
+max-width: 100% !important;
+border-radius: 4px !important;
+}
+.stepBorderActive{
+    width: 250px;
+  height: 5px;
+  background: #092e53;
+  border-radius: 5px;
+}
+.stepBorderInactive{
+    width: 250px;
+  height: 5px;
+  background: #D2D2D2;
+  border-radius: 5px;
+}
+
+.mob_show { display: none;}
+
+@media only screen and (max-width: 767px) {
+ 
+  .padlt { padding-left: 0px !important; padding-right: 0px !important;}
+  .mobile_left { text-align: left !important;}
+  .mobile_right { text-align: right !important;}
+  .mobile_row { margin: 0px;}
+  .mobile_nopad { padding: 0px !important;}
+  
+  .mob_show { display: inline;}
+  .mob_hide { display: none;}
+ 
+}
+
+::ng-deep .theme-dark .bg-white { background: #092c3b !important;}

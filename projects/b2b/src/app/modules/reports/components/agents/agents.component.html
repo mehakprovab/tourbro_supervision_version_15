@@ -1,0 +1,92 @@
+<div class="card">
+    <div class="card-body">
+        <ngb-tabset class="tabs-animated tabs-animated-shadow" (tabChange)="beforeChange($event)">
+            <ngb-tab *ngFor="let link of navLinks; let i=index;">
+                <ng-template ngbTabTitle>
+                    <span (click)="onSelect(link, i)"> <i class="{{link.icon}}"></i> &nbsp; {{link.label}} </span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <hr>
+                    <div class="row pb-3">
+                        <div class="col-md-12 pb-2">
+                            <span class="">
+                                Make your search easy
+                            </span>
+                        </div>
+                        <div class="col-md-12">
+                            <span class="p-1">
+                                <a class="btn btn-sm btn-outline-primary" href="javascript:void(0)">
+                                    Today Search
+                                </a>
+                            </span>
+                            <span class="pl-0 p-1">
+                                <a class="btn btn-sm btn-outline-primary" href="javascript:void(0)">
+                                    Last Day Search
+                                </a>
+                            </span>
+                            <span class="pl-0 p-1">
+                                <a class="btn btn-sm btn-outline-primary" href="javascript:void(0)">
+                                    One Week Search
+                                </a>
+                            </span>
+                            <span class="pl-0 p-1">
+                                <a class="btn btn-sm btn-outline-primary" href="javascript:void(0)">
+                                    One Month Search
+                                </a>
+                            </span>
+                            <span class="pl-0 p-1">
+                                <a class="btn btn-sm btn-primary" href="javascript:void(0)">
+                                    Clear Filter
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="pb-3">
+                        <span> Advanced Search Panel </span>
+                        <button type="button" class="btn btn-sm btn-primary" (click)="isCollapsed = !isCollapsed"
+                            [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
+                            {{ isCollapsed ? '-' : '+'}}
+                        </button>
+                        <hr>
+                        <div id="collapseBasic" [collapse]="isCollapsed" [isAnimated]="true">
+                            <div class="card">
+                                <div class="card-body">
+                                    <app-adv-search></app-adv-search>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div [ngSwitch]="link.report">
+                                <div *ngSwitchCase="'Bus'"> {{link.report}}
+                                    <app-dynamic-table [data]="tabsData.Bus"></app-dynamic-table>
+                                </div>
+                                <div *ngSwitchCase="'Flight'"> {{link.report}}
+                                    <app-dynamic-table [data]=" tabsData.Flight "></app-dynamic-table>
+                                </div>
+                                <div *ngSwitchCase="'Hotel'"> {{link.report}}
+                                    <app-dynamic-table [data]=" tabsData.Hotel "></app-dynamic-table>
+                                </div>
+                                <div *ngSwitchCase="'Transfers'"> {{link.report}}
+                                    <app-dynamic-table [data]=" tabsData.Transfers "></app-dynamic-table>
+                                </div>
+                                <div *ngSwitchCase="'Activities'"> {{link.report}}
+                                    <app-dynamic-table [data]=" tabsData.Activities "></app-dynamic-table>
+                                </div>
+                                <div *ngSwitchCase="'Packages'"> {{link.report}}
+                                    <h4>
+                                        No data found...
+                                    </h4>
+                                    <!-- <app-dynamic-table [data]=" tabsData.Packages" ></app-dynamic-table> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </ngb-tab>
+        </ngb-tabset>
+    </div>
+</div>

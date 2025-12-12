@@ -1,0 +1,66 @@
+<div class="mb-3 btop">
+    <div class="card-header-tab card-header p-0">
+        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+            <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i> {{'Room Type List'}}
+        </div>
+    </div>
+    <form>
+        <div class="p-2">
+            <div class="form-group form-inline mb-0">
+                Full text search:
+                <input class="form-control ml-2" type="text" name="searchTerm"
+                    (keyup)="applyFilter($event.target.value)" />
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-borderless table-striped table-hover" matSort (matSortChange)="sortData($event)">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-left text-nowrap" *ngFor="let header of displayColumn;"
+                            mat-sort-header="{{header.key}}">
+                            {{header.value }} </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="noData">
+                        <td colspan="11">
+                            <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                        </td>
+                    </tr>
+                    <tr
+                        *ngFor="let data of respData | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
+                        <td class="text-left text-muted">{{i+1}}.</td>
+                        <td class="text-left"> {{data['room_type_name']}} </td>
+                        <td>
+                            <span title="Slide for Active/Deactive">
+                                <mat-slide-toggle readonly class="example-margin" [color]="''"
+                                    [checked]="data['status']" [(ngModel)]="data['status']" name="status{{i}}"
+                                    (click)="onStatusUpdate(data, i)">
+                                </mat-slide-toggle>
+                            </span>
+                        </td>
+                        <td class="text-left  btncontainer">
+                            <button mat-raised-button color="primary" class="btnStyle" (click)="updateRoomType(data)"
+                                style="line-height: unset; padding: 0 10px;">{{'Update'}}</button>&nbsp;
+                                <button mat-raised-button color="primary" class="btnStyle" (click)="deleteRoomType(data)"
+                                style="line-height: unset; padding: 0 10px;">{{'Delete'}}</button>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer pb-0">
+            <div class="d-flex w-100 justify-content-between">
+                <ngb-pagination [collectionSize]="collectionSize" [maxSize]="12" [rotate]="true" [boundaryLinks]="true" [(page)]="page"
+                    [pageSize]="pageSize">
+                </ngb-pagination>
+                <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                    <option [ngValue]="10">10 items per page</option>
+                    <option [ngValue]="20">20 items per page</option>
+                    <option [ngValue]="50">50 items per page</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>

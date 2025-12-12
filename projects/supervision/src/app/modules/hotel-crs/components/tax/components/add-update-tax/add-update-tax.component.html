@@ -1,0 +1,93 @@
+<form [formGroup]="hotelTypeForm" (ngSubmit)="handleValidSubmit()" class="needs-validation btop pt-0" novalidate>
+    <div class="card border-light p-0">
+        <div class="card-header">
+            Tax and Other Charges
+        </div>
+        <div class="card-body pl-0">
+            <fieldset form="user">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="checkbox" formControlName="paidTax" />
+                          <span><b> Add Tax </b></span><br>
+                        <div class="form-row">
+                            <label class="col-sm-3 control-label" for="tax">
+                                Tax Type
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-sm-8">
+                                <input formControlName="tax" type="text" placeholder="Eg : VAT"
+                                    class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tax.errors }" required />
+                            </div>
+                            <div *ngIf="submitted && f.tax.errors" class="invalid-feedback">
+                                <div *ngIf="f.tax.errors.required">Hotel Type Name is required</div>
+                            </div>
+                        </div> <br>
+
+                        <div class="form-row">
+                            <label class="col-sm-3 control-label">Percentage (%) <span class="text-danger">*</span></label>
+
+                            <div class="col-sm-8 d-flex align-items-center">
+                                <input formControlName="tax_value" placeholder="Enter Tax Value" type="number" [min]="0"
+                                    onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45 && this.value.indexOf("-") === -1 && this.selectionStart == 0)'
+                                    class="form-control">
+                            </div>
+
+                            <div *ngIf="submitted && f.tax_value.errors" class="invalid-feedback">
+                                <!-- <div *ngIf="f.tax_value.errors.required">Tax Value is required</div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="checkbox" formControlName="payUponArrival" />
+                        <span><b>Pay Upon Arrival</b> (Not calculated in the room price. Paid at hotel upon arrival) </span><br>
+                        <div class="form-row">
+                            <label class="col-sm control-label">
+                                Description
+                            </label>
+                            <div class="col-sm-10">
+                                <textarea formControlName="description" style="height: 50px !important;"
+                                    class="form-control"></textarea>
+                            </div>
+                        </div><br>
+
+                        <div class="form-row">
+                            <div class="col-sm-12 d-flex align-items-center">
+                                <select formControlName="currency" class="form-control me-2">
+                                    <option value="" disabled selected>Select Currency</option>
+                                    <option *ngFor="let coreCountry of currencyList" [ngValue]="coreCountry.currency">
+                                        {{ coreCountry.currency }}
+                                    </option>
+                                </select> &nbsp;
+
+                                <input formControlName="arrival_tax_value" placeholder="Enter Tax Value" type="number" [min]="0"
+                                    onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45 && this.value.indexOf("-") === -1 && this.selectionStart == 0)'
+                                    class="form-control">
+                            </div>
+
+                            <div *ngIf="submitted && f.tax_value.errors" class="invalid-feedback">
+                                <!-- <div *ngIf="f.tax_value.errors.required">Tax Value is required</div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div><br>
+                <div class="form-row text-center">
+                    <label class="col-sm-3 control-label" for="hotel_type_name">
+                        Status
+                        <span class="text-danger">*</span>
+                    </label>
+                    <span title="Slide for Active/Deactive" class="slide-toggle-container">
+                        <mat-slide-toggle class="example-margin" formControlName="status" [color]="''">
+                        </mat-slide-toggle>
+                    </span>
+                </div>
+            </fieldset>
+            <div class="form-group">
+                <div class="col-sm-8 col-sm-offset-4 btncontainer text-center">
+                    <button type="submit" id="user_submit" class="btn btn-success btnStyle">Save</button> &nbsp;
+                    &nbsp;
+                    <button type="reset" id="user_reset" class="btn btn-secondary btnStyle" (click)="resetForm()">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

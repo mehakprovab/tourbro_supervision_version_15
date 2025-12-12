@@ -1,0 +1,95 @@
+<div class="login-banner-slider w-100">
+    <div class="banner-bg ">
+        <div class="">
+            <!-- <div class="banner-slider">
+                <div class="banner-section">
+                    <img src="assets/images/dmc_banner.png">
+                </div>
+             </div> -->
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <div class="left-txt-sec">
+                            <figure>
+                                <img src="assets/images/suppli-logo.svg">
+                            </figure>
+                            <h1>Destination
+                                Management Company Login</h1>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="login-form">
+                            <div class="login-container">
+                                <div class="alert alert-danger" *ngIf="errorMessage">
+                                    {{ errorMessage }}
+                                </div>
+                                <div class="login-content">
+                                    <form autocomplete="off" *ngIf="!showOtpComponent"class="needs-validation" [formGroup]="loginForm"novalidate
+                                    (validSubmit)="onLogin()">
+                                        
+                                        <div class="form-field">
+                                            <label>Username</label>
+                                            <input placeholder="Enter Username" id="exampleEmail" formControlName="email" name="email" type="email"
+                                            class="form-control">
+                                        </div>
+                                        <div class="form-field">
+                                            <label>Password</label>
+                                            <input type="password" placeholder="Password"      formControlName="password" id="examplePassword" name="password"
+                                            class="form-control">
+                                        </div>
+                                        <div *ngIf=" (loginForm.get('password').dirty || loginForm.get('password').touched) && loginForm.get('password').invalid"
+                                        class="alert alert-danger">
+                                        Password is required
+                                    </div>
+                                        <div class="login-footer">
+                                            <div class="forgot-password">
+                                                <a class="c-pointer" routerLink="/auth/forgot-password">Forgot Password ?</a>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <button type="submit" class="btn srch_btn">Login</button>
+                                        </div>
+                                        <div class="login-footer">
+                                            <div class="register-here">
+                                                <a class="c-pointer" href="https://booking247.com/b2b/#/auth/b2b" target="_blank" rel="noopener noreferrer">
+                                                    New User? Register here
+                                                  </a>                                                  
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <form [formGroup]="VerifyOtpForm" (ngSubmit)="otpverify(VerifyOtpForm.value)" *ngIf="showOtpComponent">
+                                        <div class="row justify-content-center">
+                                          <div class="col-12 col-md-6 col-lg-4" style="min-width: 500px;">
+                                            <div class="card bg-white mb-5 mt-5 border-0" style="box-shadow: 0 12px 15px rgba(0, 0, 0, 0.02);">
+                                              <div class="card-body p-5 text-center">
+                                                <h4>Verify</h4>
+                                                <p>Your code was sent to you via email</p>
+                                                <div class="otp-field mb-4">
+                                                  <ng-otp-input #ngOtpInput  (onInputChange)="onOtpChange($event)" [config]="config"></ng-otp-input>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary mb-3">Verify</button>
+                                                <p class="resend text-muted mb-0">
+                                                  Didn't receive code? <a (click)="requestAgain()" style="cursor: pointer;">Request again</a>
+                                                </p>
+                                                <div class="mb-3 login-footer">
+                                                    <a class="btn w-100" (click)="back()">Back</a>
+                                                </div>
+                                           
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        </form> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+
+
+
+

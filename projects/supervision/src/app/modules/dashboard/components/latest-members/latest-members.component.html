@@ -1,0 +1,45 @@
+<div class="card mb-3">
+    <div class="card-header-tab card-header">
+        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+            <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+            {{'Latest Members'}}
+        </div>
+        <div class="">
+            <sup>
+                <span *ngIf="howManyAgentUser"> <small class="badge badge-info m-1"> {{howManyAgentUser}} B2B Users
+                    </small> </span>
+                <span *ngIf="howManySubAgentUser"> <small class="badge badge-info m-1"> {{howManySubAgentUser}}
+                        Sub-Agent Users </small></span>
+                <span *ngIf="howManyStaffUser"> <small class="badge badge-info m-1"> {{howManyStaffUser}} Staff Users
+                    </small> </span>
+            </sup>
+        </div>
+    </div>
+    <div class="card-body">
+        <ul class="w-100 p-0 border rounded">
+            <li class="w-100" *ngIf="noDataFound; else notShow;">
+                <!-- <mat-spinner [diameter]="30" mode="indeterminate" style="margin: 0 auto;"></mat-spinner> -->
+                <div class="text-center">
+                    No data found
+                </div>
+            </li>
+            <ng-template #notShow>
+                <li class="w-25 text-center" *ngFor="let item of latestMembers | slice: 0:8; let i = index;">
+                    <img class="rounded-circle p-4 w-100" src="./assets/images/avatars/face.png" alt="">
+                    <div class="w-100">
+                        <i class="fa fa-circle"></i>
+                        <span class="text-dark f-16 text-truncate"> {{ item['first_name'] }} </span>
+                    </div>
+                    <div class="w-100 text-muted f-12">
+                        {{'(Since:'}} {{item['created_at'] | date: 'MMM, y'}} {{')'}}
+                    </div>
+                </li>
+                <!-- <li class="text-center p-2 mt-3 w-100 btop">
+                    <a [routerLink]="['/user/subAdmin/active']" [queryParams]="{type: 'active'}">
+                        View More
+                    </a>
+                </li> -->
+            </ng-template>
+        </ul>
+    </div>
+</div>

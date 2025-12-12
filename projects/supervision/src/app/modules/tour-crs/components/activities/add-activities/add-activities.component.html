@@ -1,0 +1,21 @@
+<div>
+    <form [formGroup]="activitiesForm" (ngSubmit)="onActivitiesSave()">
+        <div class="activitiesInput px-4">
+            <label for="activities" class="font-weight-bold" > Tour Activities</label>
+            <input type="text" placeholder="Enter Package Activities"  formControlName="activitiesName" maxlength="150" 
+            (input)="validateInput()"> 
+            <button type="submit" class="orangeButton ml-4"> Save</button>
+        </div>
+        <div *ngIf="activitiesForm.controls.activitiesName.errors && activitiesForm.controls.activitiesName.touched">
+            <div *ngIf="activitiesForm.controls.activitiesName.errors.required" class="errorMessage">
+              *Please enter package activities name.
+            </div>
+            <div *ngIf="activitiesForm.controls.activitiesName.errors.invalidString" class="errorMessage">
+                *Number(s) are not allowed.
+            </div>
+            <div *ngIf="activitiesForm.controls.activitiesName.errors.startOrEndSpace"  class="errorMessage">
+                *Empty space(s) in start and end are not allowed.
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,123 @@
+<div class="wrap row" style="min-height: 250px;">
+    <div class="col-md-8 nopad">
+    <div class="QFocuss cQfocuss">
+        <div class="">
+            <div class="col-md-12 p-0">
+                <div class="sync-details">
+                    <ul id="sync1" class="list-unstyled" [ngClass]="{'nav-owl-expand': sidebarToggle}">
+                        <owl-carousel-o [options]="customOptions" #owlCar1>
+                            <ng-container *ngFor="let hotel of hotels; let i = index;">
+                                <ng-template carouselSlide [id]="i">
+                                    <li class="item">
+                                        <a href="javascript:void(0);">
+                                            <img class="img-responsive" [src]="hotel" height="550"
+                                                (click)="morePhotos();" data-toggle="modal" data-target="#seemore_photos">
+                                        </a>
+                                    </li>
+                                </ng-template>
+                            </ng-container>
+                        </owl-carousel-o>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-12 nopad">
+                <ul id="sync2" class="list-unstyled">
+                    <owl-carousel-o [options]="customOptions2">
+                        <ng-container *ngFor="let hotel of hotels; let i = index;">
+                            <ng-template carouselSlide [id]="i">
+                                <li class="item">
+                                    <a href="javascript:void(0);">
+                                        <img class="img-responsive" width="100" height="150"
+                                            (mouseenter)="handleCarouselImage(i)" [src]="hotel"
+                                           >
+                                    </a>
+                                </li>
+                            </ng-template>
+                        </ng-container>
+                    </owl-carousel-o>
+                </ul>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="col-md-4 pr-0 mobpr-15">
+
+        <div class="wid30 bdrtop">
+            <div class="d-flex">
+               <div class="wid56n2">
+                <span class="toptl text-right"*ngIf="hotel.searchRequest.booking_source !== 'TLAPNO00003'">{{hotel?.RoomDetails[0][0].Rooms[0].Description}}</span>
+                <span class="toptl text-right" *ngIf="hotel.searchRequest.booking_source == 'TLAPNO00003'">{{roomNameandType}}</span>
+                  <p class="sbtoptl">{{travellerAdult}} Adult | {{travellerChild}} Child  |  {{hotel.searchRequest.NoOfRooms}} x Room</p>
+                  <!-- <div class="cantxt mflex">
+                  <img src="assets/images/check-circle.svg" class="tickmrk">
+                  <span>Free Cancellation</span>
+                  </div> -->
+               </div>
+               <div class="wid44n2 t_right">
+                
+                  <!-- <input type="hidden" id="hdnTotalFare" value="3042" autocomplete="off"> -->
+                  <div class="act_price">
+                     {{hotel.Price.Currency}} {{minimumRoomPrice | number:'1.2-2' }}
+                  </div>
+                  <!-- <span class="prntax">+ 326 Taxes &amp; fees</span> -->
+                  <span class="prn">Total Stay Price
+                </span>
+               </div>
+            </div>
+            <div class="checkincol js-sb">
+               <div class="chktimes" style="width: 100%;">
+               <i class="fi fi-rr-calendar-days"></i>
+                <span class="chktime">Check-In: </span>&nbsp; 
+                <span class="blk">{{hotel.booking_source === "TLAPINO00007" ? hotel.CheckIn : (hotel.CheckIn  | date: 'dd/MM/yyyy')}} </span>
+            </div>
+               <div class="chktimes" style="width: 100%;">
+                <i class="fi fi-rr-calendar-days"></i>
+                <span class="chktime">Check-Out: </span>&nbsp; 
+                <span class="blk">{{hotel.booking_source === "TLAPINO00007" ? hotel.CheckOut : (hotel.CheckOut | date: 'dd/MM/yyyy')}} </span>
+            </div>
+            </div>
+            <!-- <div class="mt-2">
+                <div class="row">
+                    <div class="col-sm-4" style="color: #092e53; font-size: 14px; font-weight: 600;">Amenities:</div>
+                    <div class="col-md-12 col-12 p-0 text-left amelists">
+                    <a placement="top"><span class="fi fi-rr-parking"
+                        >
+                    </span> Parking Facility</a>
+             
+
+                   <a placement="top"> <span class="fi fi-rr-tv-music">
+                   </span> TV</a>
+
+                   <a placement="top"> <span class="fi fi-rr-restaurant">
+                   </span> Free BreakFast</a>
+
+                    <a placement="top"> <span class="fi fi-rr-toilet-paper-blank">
+                    </span> Safe Toilet</a>
+                
+                    <a  placement="top"><span class="fi fi-rr-phone-office" tooltip="Telephone">
+                    </span> Telephone </a>
+                    <a placement="top"><span class="fi fi-rr-air-conditioner"> Air Conditioner
+                    </span></a>
+                    <a placement="top"><i  class="fi fi-rr-room-service">
+                    </i> Room service-On request</a>
+                    <a placement="top"><i class="fi fi-rr-wifi">
+                    </i> Free WiFi</a>
+                  
+                </div>
+                    <ng-template #noAmenity>
+                        <div class="col-md-8 text-left">
+                            No Amenities Found
+                        </div>
+                    </ng-template>
+
+                </div>
+            </div> -->
+            <div class="btnhcolnv2 ol d-flex js-sb fixbtn">
+               <a class="ouline-btn" id="room" (click)="goTo('roomDetail')">Select Rooms</a>
+            </div>
+         </div>
+
+        
+    </div>
+</div>
+

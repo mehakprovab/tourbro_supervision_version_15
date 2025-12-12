@@ -1,0 +1,147 @@
+.displayBlock{
+    width: auto;
+    display: block;
+}
+.mealPlan{
+    width: auto;
+}
+
+.priceDetails{
+    width: 100% !important;
+}
+
+.contact{
+  @media(max-width: 767px){
+    margin-left: -173px;
+  }
+}
+
+.contact-info {
+    display: flex;
+    align-items: center;
+    margin: 23px 2px 2px 170px;
+    @media(max-width: 767px){
+      width: 57%;
+    }
+  }
+  
+  .phone-number {
+    margin: 0 10px;
+  }
+  
+  .bannerImage{
+    width: 100px;
+    height: 100px;
+  }
+
+//   tr,td{
+//     width: 100%;
+//   }
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  th, td {
+    border: 1px solid #e3d9d9;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  .totalPrice{
+    border: 1px solid #c9c7c3;;
+    max-width: 40%;
+    margin-left: 8%;
+    
+    @media (max-width:767px){
+      margin: 2% 0% 0% 4%;
+    }
+  }
+  
+.line{
+  width: 100%;
+  border-bottom: 1px solid #c9c7c3;
+  margin: 25px 0px 0px;
+  display: table;
+  background-color: #fff;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+}
+
+button {
+  border: 1px solid #ccc;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 13px;
+    height: 38px;
+    padding: 0px 20px;
+    text-align: center;
+    background: #13354e;
+    font-weight: 610;
+    margin-right: 10px;
+}
+
+.enqTourAdjustment{
+    background: #ccc;
+    height: 2rem;
+    width: 110%;
+    margin: 1rem 0rem 2rem -2rem;
+}
+
+.enquiry{
+    text-align: end;
+    margin: 9px 0px -9px 0px;
+}
+
+
+.modal button {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 13px;
+    height: 47px;
+    padding: 0px 42px;
+    text-align: center;
+    background: #13354e;
+    font-weight: 610;
+    margin-right: 10px;
+  }
+  
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width:100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // @media (max-width:767px){
+    //   all: unset;
+    // }
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    width:30%;
+    position: fixed;
+    top: 7rem;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 9999;
+     @media (max-width:767px){
+      top: 5;
+      width: 90%;
+    }
+  }
+  .btnRight{
+    text-align: end;
+  }

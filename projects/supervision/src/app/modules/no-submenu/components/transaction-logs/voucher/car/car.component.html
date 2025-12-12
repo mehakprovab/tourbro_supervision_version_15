@@ -1,0 +1,202 @@
+<!-- <p>car works!</p> -->
+<div style="background:#ccc; width:100%; padding:40px 0px; position:relative" *ngIf="voucherData">
+
+    <table style="width:100%;max-width: 900px;margin: 0 auto;padding: 0px; background-color: #f3f3f3;">
+        <tbody>
+            <tr>
+                <td colspan="2">
+                    <table
+                        style="width: 100%;border-bottom: 2px solid #e8e8e8;padding: 10px 10px;background-color: #f5f5f5;">
+                        <tbody>
+                            <tr>
+
+                                <td style="text-align: left; padding: 10px;" colspan="2">
+                                    <img src="assets/images/logo_white.png" style="background: #000; width: 60px;">
+                                </td>
+
+                                <td style="color: #333; line-height: 20px; padding:10px; text-align: right;"
+                                    colspan="2">
+                                    <span style="margin: 0px; float: right; font-size: 14px; font-weight: bold">Booking
+                                        Ref - {{voucherData['AppReference']}}</span>
+                                    <br>
+                                    <p style="margin: 0;font-size: 13px;color: #2196f3; font-weight: bold;">Supplier -
+                                        {{voucherData['CarSupplierName']}}</p> <br>
+                                    <span style="margin: 0px; float: right; font-size: 14px; font-weight: bold">Car Name
+                                        - {{voucherData['CarName']}}</span>
+                                </td>
+
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2" style="padding: 0 20px;">
+
+
+            <tr>
+                <td colspan="2" style="padding: 0 15px;">
+                    <h4 style="color: #000;margin: 0px; font-weight: bold; font-size: 16px; padding: 5px 0px;">Car
+                        Details</h4>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td colspan="2" style="padding: 0 15px;">
+                    <table cellspacing="0"
+                        style="width: 100%;color: #000;font-size: 13px; text-align: left;margin-top: 10px;">
+                        <tbody>
+                            <tr style="margin: 0; color:#fff; background-color: #000;padding: 10px;">
+                                <th style="padding: 10px 8px;border-bottom: 1px solid #df9612;width: 20%;">Pick-up
+                                    Location</th>
+                                <th style="padding: 10px 8px;border-bottom: 1px solid #000;width: 20%;">Pick-up
+                                    Date/Time</th>
+                                <th style="padding: 10px 8px;border-bottom: 1px solid #000;width: 20%;">Drop-Off
+                                    Location</th>
+                                <th style="padding: 10px 8px;border-bottom: 1px solid #df9612;width: 20%;">Drop-Off
+                                    Date/Time</th>
+                            </tr>
+
+                            <tr style="font-size: 15px;">
+                                <td style="border-bottom: 1px solid #000;">
+                                    <p style="margin: 9px 0px;">{{voucherData['CarPickupAddress']}}</p>
+                                </td>
+                                <td style="border-bottom: 1px solid #000;">
+                                    <p style="margin: 9px 0px;">{{voucherData['CarFromDate'] | date}}
+                                        {{voucherData['PickUpTime']}}</p>
+                                </td>
+                                <td style="border-bottom: 1px solid #000;">
+                                    <p style="margin: 9px 0px;">{{voucherData['CarDropAddress']}}</p>
+                                </td>
+                                <td style="border-bottom: 1px solid #000;">
+                                    <p style="margin: 9px 0px;">{{voucherData['CarToDate'] | date}}
+                                        {{voucherData['DropTime']}}</p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2"
+                                    style="border-top: 2px solid #000;padding-right: 0px; font-size:14px; line-height: 23px; vertical-align: top;">
+                                    <p style="margin: 0;"><b>Booked by :</b></p>
+                                    <p style="margin: 0;">{{voucherData['PassengerDetails'][0]['first_name'] + ' '+
+                                        voucherData['PassengerDetails'][0]['last_name']}},</p>
+                                    <p style="margin: 0;">{{voucherData['PassengerDetails'][0]['adress1']}}</p>
+                                    <p style="margin: 0;">mani@gmail.com,</p>
+                                    <p style="margin: 0;">{{voucherData['PhoneNumber']}}</p>
+                                </td>
+                                <td colspan="2" style="border-top: 2px solid #000;padding-right: 70px; font-size:14px;">
+                                    <p style="text-align: right;margin:7px 0;"><label
+                                            style="text-align: left; padding: 0 0px 0 0;">Rental Cost</label><span
+                                            style="width: 120px;display: inline-block;">{{voucherData['Currency']}}
+                                            {{voucherData['TotalFare']}}</span></p>
+                                    <p style="text-align: right;margin:0 0 0px 0;"><b><label
+                                                style="padding: 0px 0px 0px 0px;">Total Rental Price</label><span
+                                                style="width: 120px;display: inline-block;">{{voucherData['Currency']}}
+                                                {{voucherData['TotalFare']}}</span></b></p>
+                                    <p style="text-align: right;margin:0 0 7px 0;"><b><label
+                                                style="padding: 0px 0px 0px 0px;">Coupon Discount</label><span
+                                                style="width: 120px;display: inline-block;">{{voucherData['Currency']}}
+                                                0.00</span></b></p>
+                                    <p style="text-align: right;margin:13px 0 7px 0;"><b
+                                            style="padding-top: 5px; border-top: 1px solid #ccc;"><label
+                                                style="padding: 0px 0px 0px 0px;">Amount Paid</label><span
+                                                style="width: 120px;display: inline-block;">{{voucherData['Currency']}}
+                                                {{voucherData['TotalFare']}}</span></b></p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2" style="padding: 0 15px;">
+                    <h4 style="color: #000;margin: 0px; font-weight: bold; font-size: 16px; padding: 5px 0px;">Passenger
+                        Details</h4>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td colspan="2" style="padding: 0 15px;">
+                    <table cellspacing="0"
+                        style="width: 100%;color: #000;font-size: 13px; text-align: left;margin-top: 10px;">
+                        <tbody>
+                            <tr style="margin: 0; color:#fff; background-color: #000;padding: 10px;">
+                                <th style="padding: 10px 8px;border-bottom: 1px solid #df9612;width: 20%;">Passenger
+                                    Name</th>
+                                <th style="padding: 10px 8px;border-bottom: 1px solid #000;width: 20%;">Phone</th>
+                                <th style="padding: 10px 8px;border-bottom: 1px solid #000;width: 20%;">Age</th>
+                                <!-- <th style="padding: 10px 8px;border-bottom: 1px solid #df9612;width: 20%;">Drop-Off Date/Time</th> -->
+                            </tr>
+
+                            <tr style="font-size: 15px;" *ngFor="let user of voucherData['PassengerDetails']">
+                                <td style="border-bottom: 1px solid #000;">
+                                    <p style="margin: 9px 0px;">{{user['first_name'] +' '+user['last_name']}}</p>
+                                </td>
+                                <td style="border-bottom: 1px solid #000;">
+                                    <p style="margin: 9px 0px;">{{user['phone']}}</p>
+                                </td>
+                                <td style="border-bottom: 1px solid #000;">
+                                    <p style="margin: 9px 0px;">{{user['date_of_birth']}}</p>
+                                </td>
+                                <!-- <td style="border-bottom: 1px solid #000;"><p style="margin: 9px 0px;">{{voucherData['CarToDate'] | date}} {{voucherData['DropTime']}}</p></td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td colspan="2" style="padding: 0 15px;">
+                    <h4
+                        style="color: #000; font-weight: bold;margin-bottom: 10px;  font-size: 15px; border-bottom: 2px solid #585858;  padding: 10px 0px; text-transform: uppercase;">
+                        Terms &amp; Conditions</h4>
+                </td>
+            </tr>
+            <tr>
+                <td style="color: #000;font-size: 12px;padding: 0 15px;" colspan="2">
+                    <p>Guarantee - GUARANTEED FOR 365 DAYS</p>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="color: #000;font-size: 12px;padding: 0 15px;" colspan="2">
+                    <p>General - MUST RETURN TO THE SAME STATE</p>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="color: #000;font-size: 12px;padding: 0 15px;" colspan="2">
+                    <p>General - THE MINIMUM RENTAL PERIOD IS 001 DAYS</p>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2" style="padding: 0 15px;">
+                    <h4
+                        style="color: #000; font-weight: bold;margin-bottom: 10px;  font-size: 15px; border-bottom: 2px solid #585858;  padding: 10px 0px; text-transform: uppercase;">
+                        Cancellation Policy</h4>
+                </td>
+            </tr>
+            <tr>
+                <td style="color: #000;font-size: 12px;padding: 0 15px;" colspan="2">
+                    <p>Up to 48hours before pick-up, cancellation free of charge. Within 48hours prior to pick-up and in
+                        the event of a no-show 100% of the sales price will be charged.</p>
+                </td>
+            </tr>
+
+            <!-- <tr> <td style="color: #000;font-size: 12px;padding: 0 15px;" colspan="2"> <p>General - MUST RETURN TO THE SAME STATE</p> </td> </tr> -->
+
+            <!--   <tr> <td style="color: #000;font-size: 12px;padding: 0 15px;" colspan="2"> <p>General - THE MINIMUM RENTAL PERIOD IS 001 DAYS</p> </td> </tr>  -->
+
+        </tbody>
+    </table>
+
+</div>

@@ -1,0 +1,1125 @@
+<div class="container mt-4 mb-4 p-0">
+    <h4>My Cart</h4>
+</div>
+<div class="loader" *ngIf="loading">
+    <!-- <p>Loading Cart...</p>  -->
+</div>
+
+<ng-container *ngIf="!loading && (cartList?.flight || cartList?.hotel || cartList?.transfer || cartList?.activity) && !isCartEmpty; then cart; else emptyCart"></ng-container>
+
+<ng-template #cart>
+<div *ngIf="!loading" class="cart-booking-container container p-0">
+<div class="d-flex">
+    <div class="col-md-8 mb-2 mt-0" style="border:none;">
+        <div *ngIf="cartList && cartList.flight">
+            <h3 class="review_txt p-0 m-0">Flight Booking</h3>
+            <div class="card-body pt-0 pb-3">
+                <div class="row mobile_row">
+                    <div class="col-md-12 col-lg-12 nopad">
+                        <div class="mt-3 float-right pbs">
+                            <button class="btn continue" type="button" (click)="removeCart('flight')"><i class="fas fa-trash"></i></button>
+                        </div>
+      
+                        <div *ngFor="let iList of FlightDetails" class="">
+                            <div *ngFor="let list of iList; let i = index" style="box-shadow: 0px 1px 16px #ddd;"
+                                class="col-md-12 col-lg-12 mt-3 mb-3 cardList rounded border card">
+                                <div class="cardListHead">
+                                    <div class="row">
+                                        <div class="col-md-3 col-5 nopad">
+                                            <i class="fal fa-plane"></i> <b>{{list.Origin.CityName}}
+                                                ({{list.Origin.AirportCode}})</b>
+                                        </div>
+                                        <div class="col-md-1 col-2 text-center nopad"><i
+                                                class="fas fa-exchange-alt"></i>
+                                        </div>
+                                        <div class="col-md-3 col-5 nopad">
+                                            <b>{{list.Destination.CityName}} ({{list.Destination.AirportCode}})</b>
+                                        </div>
+                                        <div class="col-md-5 text-right col-12 nopad ">
+                                            <b class="list_duration" style="color: #000;">{{list.Duration}}</b>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cardListBody">
+                                    <div style="display: table-row">
+                                        <div class="mobile_details_bagg"
+                                            style="width: 600px; display: table-cell; padding: 10px 0px; font-size: 14px;">
+      
+                                            <div class="clearfix"></div>
+                                            <div
+                                                style="display: block; padding: 5px 0px; width: 100%; float: left;">
+                                                <div class="justify-content-between align-items-center">
+                                                    <div class="cellStyles pr-3" style="float: left;">
+                                                        <span
+                                                            style="color: #001D46;font-weight: 600; font-size: 14px;">Departure
+                                                            :
+                                                        </span> &nbsp;{{list.Origin.DateTime | date: 'EEE,
+                                                        dd/MM/yyyy'}}
+                                                    </div>
+                                                </div>
+                                            </div>
+      
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-3 col-5 nopad">
+                                                        <img class="rounded" style="max-width: 95px; height: 40px;"
+                                                            [src]="[airline_logo + list.OperatorCode + '.svg']"
+                                                            alt="">
+      
+                                                        <div class="colImgStyle pl-3">
+                                                            <span style="font-size: 14px;color: #092e53;">
+                                                                {{ list.OperatorName + ' (' + list.OperatorCode +
+                                                                ')'
+                                                                }}</span> <br>
+                                                            <small>{{list.CabinClass}}</small>
+                                                        </div>
+                                                    </div>
+      
+                                                    <div class="col-md-4 col-5 nopad">
+                                                        <div class="colTimeStyle">
+                                                            <span
+                                                                style="color: #092e53;font-size: 18px; font-weight: 500;">
+                                                                {{ list.Origin.DateTime | date: 'HH:mm' }}</span>
+                                                            <br>
+                                                            <small>{{list.Origin.AirportName}}</small> <br>
+                                                            <small *ngIf="list?.Origin?.Terminal">Terminal:
+                                                                ({{list.Origin.Terminal}})</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1 col-2 nopad">
+                                                        <div class="text-center"><span
+                                                                style='font-size:18px;'>&#8594;</span></div>
+                                                    </div>
+                                                    <div class="col-md-4 col-5 pl-3">
+                                                        <div class="colTimeStyle">
+                                                            <span
+                                                                style="color: #092e53;font-size: 18px; font-weight: 500;">{{
+                                                                list.Destination.DateTime | date: 'HH:mm' }}</span>
+                                                            <br>
+                                                            <small>{{list.Destination.AirportName}}</small>
+                                                            <br>
+                                                            <small *ngIf="list?.Destination?.Terminal"> Terminal:
+                                                                ({{list.Destination.Terminal}})</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mobile_details_bagg mobile_font border_left"
+                                            style="display: table-cell; vertical-align: top;">
+                                            <div class="mobile_nopad" style="padding: 12px; font-size: 14px;">
+                                                <h5 style="font-size: 14px; color: #000;">Baggage details</h5>
+                                                <i class="fa fa-suitcase"></i> &nbsp; Check In:
+                                                {{getBaggage(list.Attr.Baggage)}}<br />
+                                                <i class="fa fa-suitcase"></i> &nbsp; Cabin:
+                                                {{getBaggage(list.Attr.CabinBaggage)}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="card mt-3 rounded border p-2 search_again">
+                            <a (click)="navigateToFlight()"> <i class="fal fa-angle-left"></i>
+                                &nbsp; Search Again</a>
+                        </div> -->
+      
+                        <div class="clearfix"></div>
+                    </div>
+      
+                </div>
+            </div>
+        </div>
+      
+        <div *ngIf="cartList && cartList.hotel">
+            <h3 class="review_txt">Hotel Booking</h3>
+            <div class="container p-0">
+                <div class="d-flex" *ngIf="hotel && hotel.HotelName">
+                    <div class="col-md-12 col-lg-12 p-0">
+                        <div class="mt-3 float-right pbs">
+                            <button class="btn continue" type="button" (click)="removeCart('hotel')"><i class="fas fa-trash"></i></button>
+                        </div>
+                        <div class="comon_backbg mb-4 mt-3">
+                            <div class="card-body pb-3">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-12">
+                                        <h5 style="
+                                      font-size: 18px;
+                                      color: #092e53;
+                                      margin-bottom: 0px;
+                                  " class="cusromGrey"><strong>{{hotel.HotelName}}</strong> </h5>
+                                        <ng-template *ngIf="hotel.StarRating === '' then noStar; else stars">
+                                        </ng-template>
+                                        <ng-template #noStar>
+                                            <span class="star_rtng">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                            </span>
+                                        </ng-template>
+                                        <ng-template #stars>
+                                            <span class="star_rtng">
+                                                <i class="fas fa-star star_rtng_clr"
+                                                    *ngFor="let s of hotel.StarRating | map: getStarArray"></i>
+                                                <i class="fas fa-star"
+                                                    *ngFor="let s of hotel.StarRating | map: getStarArrayRemaining"></i>
+                                            </span>
+                                        </ng-template>
+                                        <p class="cusromGrey mt-2">
+                                            {{hotel.HotelAddress}}
+                                        </p>
+                                        <p class="cusromGrey mt-3"
+                                            *ngIf="(booking_source =='TLAPNO00003' && hotel?.CancellationPolicy?.$t.length)"
+                                            style="margin-bottom: 15px; font-size:14px;">
+                                            <strong>
+                                                {{'Cancellation Policy:'}}
+                                            </strong>
+      
+                                            <span *ngIf="booking_source !='TLAPNO00003'"
+                                                [innerHTML]="hotel.CancellationPolicy">
+                                            </span>
+                                        </p>
+                                        <p class="cusromGrey mt-3"
+                                            *ngIf="(booking_source !='TLAPNO00003' && hotel?.CancellationPolicy)"
+                                            style="margin-bottom: 15px; font-size:14px;">
+                                            <strong>
+                                                {{'Cancellation Policy:'}}
+                                            </strong>
+      
+                                            <span *ngIf="booking_source !='TLAPNO00003'"
+                                                [innerHTML]="hotel.CancellationPolicy">
+                                            </span>
+                                        </p>
+                                        <div class="cancellation_policy"
+                                            *ngIf="booking_source ==='TLAPNO00003' && hotel?.CancellationPolicy?.$t.length">
+      
+      
+                                            <ng-container *ngFor="let policy of hotel?.CancellationPolicy.$t">
+      
+                                                <span class="f12 wt600" style="line-height: 25px;
+                                                font-weight: 500;
+                                                font-size: 13px;">
+                                                    <span>Cancellation from <b>{{policy.date_from | date:
+                                                            'dd/MM/yyyy'
+                                                            }}</b> To <b>{{policy.date_to | date: 'dd/MM/yyyy'
+                                                            }}</b> will
+                                                        charge <b>{{ policy?.charge }}
+                                                            {{policy?.currency}}</b><br></span>
+                                                </span>
+      
+                                            </ng-container>
+      
+                                        </div>
+                                        <p class="cusromGrey" *ngIf="hotel.Remarks"
+                                            style="margin-bottom: 15px; font-size:14px;">
+                                            <strong>
+                                                {{'Remarks:'}}
+                                            </strong>
+                                            <span class=""> {{hotel.Remarks}} </span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <section class="font-weight-bold ml-0 marin_zero mobile_elements elements_bg">
+                                    <div class="d-flex mobile_row">
+                                        <!-- <div class="col-md-2 p-0"
+                                                *ngIf="booking_source == 'ZBAPINO00008' || booking_source == 'TLAPINO00004' || booking_source == 'TLAPINO00007'">
+                                                <img class="imgStyle" src="{{hotel.HotelPicture}}" alt="">
+                                            </div> -->
+                                        <div class="col-md-2 p-0">
+                                            <img class="imgStyle" src="{{hotel.HotelPicture}}" alt="">
+                                        </div>
+                                        <div class="col-md-2 p-1 text-center">
+                                            <p class="cusromBlue m-0">
+                                                Check-In:
+                                            </p>
+                                            <p class="m-0">
+                                                {{hotel.booking_source === 'TLAPINO00007' ? hotel.CheckIn : (hotel.CheckIn | date: 'dd/MM/yyyy')}}
+                                            </p>
+                                        </div>
+                                        <div class="col-md-2 p-1 text-center">
+                                            <p class="cusromBlue m-0">
+                                                Check-Out:
+                                            </p>
+                                            <p class="m-0">
+                                                {{hotel.booking_source === 'TLAPINO00007' ? hotel.CheckOut : hotel.CheckOut | date: 'dd/MM/yyyy'}}
+                                            </p>
+                                        </div>
+                                        <div class="col-md-2 p-1 text-center">
+                                            <p class="cusromBlue m-0">
+                                                Passenger(s):
+                                            </p>
+                                            <p class="m-0">
+                                                {{travellerAdult +
+                                                    travellerChild}}
+                                            </p>
+                                        </div>
+                                        <div class="col-md-2 p-1 text-center">
+                                            <p class="cusromBlue m-0">
+                                                Room(s):
+                                            </p>
+                                            <p class="m-0">
+                                                {{hotel.searchRequest.NoOfRooms}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                        <!-- <div class="card mt-3 rounded border p-2 search_again">
+                                <a (click)="navigateToHotel()"> <i class="fal fa-angle-left"></i>
+                                    &nbsp; Search Again</a>
+                            </div> -->
+      
+                    </div>
+      
+                </div>
+            </div>
+        </div>
+      
+        <div class="mb-3" *ngIf="cartList && cartList.transfer">
+            <h3 class="review_txt">Transfer Booking</h3>
+      
+            <div class="container p-0">
+                <div class="d-flex hotel_list1">
+                    <div class="col-md-12 col-lg-12 mt-3 nopad">
+                        <div class="d-flex mob_pad" *ngIf="transfer">
+                            <div class="col-md-12 nopad mob_pad">
+                                <div class="mt-0 float-right pbs">
+                                    <button class="btn continue" type="button"
+                                        (click)="removeCart('transfer')"><i class="fas fa-trash"></i></button>
+                                </div>
+                                <div class="card-body nopad bg-whites">
+                                    <div class="row text-center">
+                                        <div class="col-md-4">
+                                            <img class="rounded imgStyle" src="{{transfer.ProductImage}}" alt="">
+                                            <div class="transport-provider">Transfer provided by:<br>
+                                                <div class="transport-provider-company">
+                                                    <img class="transport-provider-company-logo"
+                                                        src="{{transfer?.ProductPhotos[0]?.photoHiResURL}}" alt="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 mb-2 pb-0 row mobile_row" style="padding: 8px;">
+                                            <div class="col-md-12" style="text-align: left;">
+                                                <h5 class="cusromGrey">
+                                                    {{transfer.NumUnits}} X  {{transfer.ProductName}}
+                                                </h5>
+                                                <ng-template
+                                                    *ngIf="transfer.StarRating === '' then noStar; else stars">
+                                                </ng-template>
+                                                <ng-template #noStar>
+                                                    <span class="star_rtng">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                    </span>
+                                                </ng-template>
+                                                <ng-template #stars>
+                                                    <span class="star_rtng">
+                                                        <i class="fas fa-star star_rtng_clr"
+                                                            *ngFor="let s of transfer.StarRating | map: getStarArray"></i>
+                                                        <i class="fas fa-star"
+                                                            *ngFor="let s of transfer.StarRating | map: getStarArrayRemaining"></i>
+                                                    </span>
+                                                </ng-template>
+                                                <div class="clearfix"></div>
+                                                <div class="amenties">
+                                                    <i class="fal fa-clock"></i>
+                                                    <p class="f12b">Estimated journey time</p>
+                                                    <ul>
+                                                        <li>
+                                                            <span class="am_ttl2"> {{transfer.Duration}}</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <div class="amenties">
+                                                    <i class="fal fa-user"></i>
+                                                    <p class="f12b">Number of passengers</p>
+                                                    <ul>
+                                                        <li>
+                                                            <span
+                                                                class="am_ttl2">{{transfer?.OccupancyFrom}}-{{transfer?.OccupancyTo}}</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <div class="amenties" style="border: none;">
+                                                    <i class="fal fa-suitcase"></i>
+                                                    <p class="f12b">Luggage allowance</p>
+                                                    <ul>
+                                                        <li>
+                                                            <span class="am_ttl2"
+                                                                *ngIf="transfer.Suitcase">{{transfer.Suitcase}}
+                                                                suitcases
+                                                            </span> &
+                                                            <span class="am_ttl2"
+                                                                *ngIf="transfer.SmallBaggage">{{transfer.SmallBaggage}}
+                                                                Small bag per vehicle </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="card-body bg-whites mt-4">
+                                    <div class="row text-center">
+                                        <div class="col-md-12" style="text-align: left;">
+                                            <h5 class="cusromGreys">
+                                                What's included in your trip
+                                            </h5>
+                                            <div class="clearfix"></div>
+                                            <div class="amentiess" style="border: none;">
+                                                <p class="f12b mb-2 mt-2 pb-2 border-bottom"><strong
+                                                        style="color: #ffa200;"><i class="fal fa-suitcase"></i>
+                                                        Luggage
+                                                        allowance</strong></p>
+                                                <ul>
+                                                    <li>
+                                                        <span class="am_ttl3"
+                                                            *ngIf="transfer.Suitcase">{{transfer.Suitcase}}
+                                                            Suitcases (per
+                                                            vehicle)</span> - Free
+                                                    </li>
+                                                    <li>
+                                                        <span class="am_ttl3"
+                                                            *ngIf="transfer.SmallBaggage">{{transfer.SmallBaggage}}
+                                                            Small
+                                                            bag (per vehicle)</span> - Free
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+                    <div class="card-body bg-whites mt-2 nopad mb-3 float-left w-100"
+                    *ngFor="let journeyList of transfer.Journey; index as i">
+                    <h5 class="cusromGreys p-3 bg-rey">
+                        <i class="fal fa-calendar-check"></i> Journey {{i+1}}
+                    </h5>
+                    <div class="text-center">
+                        <div class="col-md-12" style="text-align: left;">
+                            <div class="clearfix"></div>
+                            <div class="amentiess justify-content-between" style="border: none;">
+                                <p class="f12b mb-2 mt-2 w-100 pb-2 border-bottom">
+                                    <span class="fs-small">From</span><br>
+                                    <strong *ngIf="i === 0" class="fs-small">{{ transfer.body.From.name }}</strong><br>
+                                    <strong class="fs-small" *ngIf="i === 1">{{ transfer.body.To.name }}</strong><br>
+                                    <strong style=" font-size: 14px; color: #092e53;">{{journeyList.From}}</strong>
+                                </p>
+                                <p class="f12b mb-2 mt-2 w-100 text-left pb-2 border-bottom">
+                                    <span class="fs-small">To</span><br>
+                                       <strong *ngIf="i === 1" class="fs-small">{{ transfer.body.From.name }}</strong><br>
+                                    <strong class="fs-small" *ngIf="i === 0">{{ transfer.body.To.name }}</strong><br>
+                                    <strong style="font-size: 14px; color: #092e53;">{{journeyList.To}}</strong>
+                                </p>
+                            </div>
+                            <div class="amentiess d-flex justify-content-between" style="border: none;">
+                                <p class="f12b mb-2 mt-2 w-50 pb-2 border-bottom">
+                                    <span class="fs-small">Date</span><br>
+                                    <strong>{{journeyList.Date}}</strong>
+                                </p>
+                                <p class="f12b mb-2 mt-2 w-50 text-right pb-2 border-bottom">
+                                    <span class="fs-small">Time</span><br>
+                                    <strong>{{journeyList.Time}}</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                                <div class="card-body bg-whites mt-4"
+                                    *ngIf="transfer?.Disclaimer && transfer?.Disclaimer.length>0">
+                                    <div class="row text-center">
+                                        <div class="col-md-12" style="text-align: left;">
+                                            <h5 class="cusromGreys">
+                                                Disclaimer
+                                            </h5>
+                                            <div class="clearfix"></div>
+                                            <div class="amentiess" style="border: none;">
+                                                <div *ngFor="let disclaimer of transfer?.Disclaimer">
+                                                    <p class="f12b mb-2 mt-2 pb-2 border-bottom"><strong
+                                                            style="color: #ffa200;">{{disclaimer.Title}}</strong>
+                                                    </p>
+                                                    <span class="am_ttl3"
+                                                        [innerHTML]="disclaimer.Description"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="card mt-3 rounded border p-2 search_again">
+                                        <a (click)="navigateToTransfer()"> <i class="fal fa-angle-left"></i>
+                                            &nbsp; Search Again</a>
+                                    </div> -->
+      
+                            </div>
+                            <div class="col-md-4 col-lg-4 pr-0 mobile_nopad mobile_top pl40 mobpdt"
+                                style="position: sticky;top: 20px;align-self: start;">
+      
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      
+        <div  *ngIf="cartList && cartList.activity">
+            <h3 class="review_txt">Activity Booking</h3>
+            <div class="container p-0">
+      
+                <div class="d-flex">
+      
+                    <div class="col-md-12 p-0">
+      
+                        <div class="mt-0 float-right pbs">
+                            <button class="btn continue" type="button" (click)="removeCart('activity')"><i class="fas fa-trash"></i></button>
+                        </div>
+                        <div class="topalldesc">
+      
+                            <div class="col-xs-12 nopad">
+                                <div class="rvwpanel">
+                                    <div class="wx100 pad15">
+                                        <div class="hotelrvw-img">
+                                            <img alt="Cab Image" width="150" src="{{activity.ProductImage}}">
+                                        </div>
+                                        <div class="hotelrvw-info">
+                                            <h4 _ngcontent-tov-c2="">{{activity?.ProductName}}</h4>
+                                            <!-- <app-activity-info [activity]="activity" [isActivityBooking]="false"></app-activity-info> -->
+                                            <p class="cusromGrey hotel_location">
+                                                <i class="fal fa-map-marker-alt" style="background: #fbc10a;
+                              padding: 5px;
+                              border-radius: 5px;
+                              width: 28px;
+                              text-align: center; margin-bottom: 5px;
+                              color: #fff;"></i> {{activity.Destination}}
+                                                <br>
+                                                <!-- <i class="fal fa-clock" style="background: #092e53;
+                              padding: 5px;
+                              border-radius: 5px;
+                              width: 28px;
+                              text-align: center;
+                              color: #fff;"></i> {{activity.Duration}} -->
+                                            </p>
+                                            <div class="clr"></div>
+                                            <p *ngIf="activity.Duration" class="hotelrvw-locatn">
+                                                <span class="kms">Duration: {{activity.Duration}}</span>
+                                            </p>
+
+                                            <p class="hotelrvw-locatn">
+                                                <span class="kms">Date: {{getDateFormat(activity.BookingDate)}}</span>
+                                            </p>
+                                            <span [innerHTML]="activity.DeparturePointAddress"></span>
+                                            <!-- <p style="margin-bottom: 0px; color: #092e53;">
+                              <strong>Travelers</strong>: {{noOfTravellers}}
+                            </p> -->
+                                            <div class="clr"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+      
+                    </div>
+                    <!-- <div class="card mt-3 rounded border p-2 search_again">
+                    <a (click)="navigateToActivity()"> <i class="fal fa-angle-left"></i>
+                        &nbsp; Search Again</a>
+                </div> -->
+      
+      
+                </div>
+            </div>
+      
+        </div>
+      
+        <div 
+  
+  class="custom-button-container w-100 mt-3 float-right">
+  <button type="button" class="custom-continue-btn" (click)="continue()">Continue Booking</button>
+</div>
+
+      </div>
+      
+      <div class="col-md-4 col-lg-4 mt-3 padlt">
+        <div >
+            <button class="btn btn_add" (click)="navigateToDashboard('flights')"
+            [ngClass]="{'active-item': (searchTabValue == 'flights')}">
+                <img src="assets/images/plane.svg"> Add Flight 
+            </button>
+        
+            <button class="btn btn_add" (click)="navigateToDashboard('hotels')"
+            [ngClass]="{'active-item': (searchTabValue == 'hotels')}">
+                <img src="assets/images/hotel.svg"> Add Hotel 
+            </button>
+            
+            <button class="btn btn_add" (click)="navigateToDashboard('activity')"
+            [ngClass]="{'active-item': (searchTabValue == 'activity')}">
+                <img src="assets/images/activity.svg"> Add Activity 
+            </button>
+        
+            <button class="btn btn_add" (click)="navigateToDashboard('transfer')"
+            [ngClass]="{'active-item': (searchTabValue == 'transfer')}">
+                <img src="assets/images/transfer.svg"> Add Transfer 
+            </button> 
+        </div>
+      
+              <div class="topsticky mt-4">
+                <div class="fsBorder card" style="box-shadow: 0px 1px 16px #ddd;float:left;" *ngIf="cartList && cartList.flight">
+                    <h4 class="text-muted">Flight Fare Summary </h4>
+                    <div class="px-2 pb-3">
+                        <div>
+                            <div class="row m-0 text-muted" style="font-size: 14px;">
+                                <ng-container *ngIf="isAdult(flight)">
+                                    <div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+                                        <div class="float-left">
+                                            <b>Adult ticket</b>
+                                        </div>
+                                        <div class="float-right customColor">
+                                            {{ flight[0].Price.Currency }} {{
+                                            flight[0].Price.PassengerBreakup.ADT?.TotalPrice }} X {{
+                                            adultCount }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+                                        <div class="float-left customColor">
+                                            Base Fare
+                                        </div>
+                                        <div class="float-right customColor">
+                                            {{ flight[0].Price.Currency }}
+                                            {{ flight[0].Price.PassengerBreakup.ADT?.BasePrice }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 f-14 bbottom pb-2 mb-2 mobile_nopad">
+                                        <div class="float-left customColor">
+                                            Taxes &amp; Fees
+                                        </div>
+                                        <div class="float-right customColor">
+                                            {{ flight[0].Price.Currency }} {{
+                                            flight[0].Price.PassengerBreakup.ADT?.Tax }}
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="isYouth(flight)">
+                                    <div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+                                        <div class="float-left">
+                                            <b>Youth ticket</b>
+                                        </div>
+                                        <div class="float-right customColor">
+                                            {{ flight[0].Price.Currency }} {{
+                                            flight[0].Price.PassengerBreakup.YTH?.TotalPrice }} X {{
+                                            adultCount }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+                                        <div class="float-left customColor">
+                                            Base Fare
+                                        </div>
+                                        <div class="float-right customColor">
+                                            {{ flight[0].Price.Currency }}
+                                            {{ flight[0].Price.PassengerBreakup.YTH?.BasePrice }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 f-14 bbottom pb-2 mb-2 mobile_nopad">
+                                        <div class="float-left customColor">
+                                            Taxes &amp; Fees
+                                        </div>
+                                        <div class="float-right customColor">
+                                            {{ flight[0].Price.Currency }} {{
+                                            flight[0].Price.PassengerBreakup.YTH?.Tax }}
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="isChild(flight)">
+                                    <div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+                                        <div class="float-left">
+                                            <b>Child ticket</b>
+                                        </div>
+                                        <div class="float-right customColor">
+                                            {{ flight[0].Price.Currency }} {{
+                                            flight[0].Price.PassengerBreakup.CHD?.TotalPrice }} X {{
+                                            childCount }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+                                        <div class="float-left customColor">
+                                            Base Fare
+                                        </div>
+                                        <div class="float-right customColor">
+                                            {{ flight[0].Price.Currency }}
+                                            {{ flight[0].Price.PassengerBreakup.CHD?.BasePrice }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 f-14 pb-2 bbottom mb-2 mobile_nopad">
+                                        <div class="float-left customColor">
+                                            Taxes &amp; Fees
+                                        </div>
+                                        <div class="float-right customColor">
+                                            {{ flight[0].Price.Currency }} {{
+                                            flight[0].Price.PassengerBreakup.CHD?.Tax }}
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="isInfant(flight)">
+                                    <div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+                                        <div class="float-left customColor">
+                                            <b>Infant ticket</b>
+                                        </div>
+                                        <div class="float-right customColor">
+                                            {{ flight[0].Price.Currency }} {{
+                                            flight[0].Price.PassengerBreakup.INF?.TotalPrice }} X {{
+                                            infantCount }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+                                        <div class="float-left customColor">
+                                            Base Fare
+                                        </div>
+                                        <div class="float-right customColor">
+                                            {{ flight[0].Price.Currency }}
+                                            {{ flight[0].Price.PassengerBreakup.INF?.BasePrice }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 f-14 bbottom mb-3 mobile_nopad">
+                                        <div class="float-left customColor">
+                                            Taxes &amp; Fees
+                                        </div>
+                                        <div class="float-right customColor">
+                                            {{ flight[0].Price.Currency }} {{
+                                            flight[0].Price.PassengerBreakup.INF?.Tax }}
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <!-- <div class="col-md-12 col-lg-12 f-14 bbottom  mb-2 mobile_nopad" *ngIf="cartList.flight.Price.PriceBreakup.TotalLostBaggageProtection">
+                                    <div class="float-left customColor">
+                                        Baggage Protection Fee
+                                    </div>
+                                    <div class="float-right customColor">
+                                        {{ flight.Price.Currency }} {{ cartList.flight.Price.PriceBreakup.TotalLostBaggageProtection   }}
+                                    </div>
+                                </div> -->
+                                <!-- <div class="col-md-12 col-lg-12 f-14 mb-3 mobile_nopad" *ngIf="flight.Price.PriceBreakup.AdvanceTax">
+                                    <div class="float-left" style="color: #082B3A !important;">
+                                        AIT
+                                    </div>
+                                    <div class="float-right customColor">
+                                        {{ flight.Price.Currency }} {{ flight.Price.PriceBreakup.AdvanceTax   }}
+                                    </div>
+                                </div> -->
+                                <div class="col-md-12 col-lg-12 f-18 mb-0 mobile_nopad">
+                                    <div class="float-left grand_tot" style="font-size: 16px;">
+                                        Total
+                                    </div>
+                                    <div class="float-right text-warning"
+                                        style="color:#092e53 !important; font-size: 16px;">
+                                        {{ flight[0].Price.Currency }} {{
+                                        flight[0].Price.TotalDisplayFare }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+      
+                <div class="comon_backbg" *ngIf="cartList && cartList.hotel">
+                    <h5 class="inpagehed p-2 mb-0" style="color: #000;">Hotel Fare Summary</h5>
+                    <div class="col-md-12 float-left">
+                        <div class="row font-weight-bold pt-0 pb-3 hotl_details_name d-none">
+      
+                            <!-- <div class="col-md-4 mpad"
+                                        *ngIf="booking_source == 'ZBAPINO00008' || booking_source == 'TLAPINO00004' || booking_source == 'TLAPINO00007'">
+                                        <img class="imgStyle" src="{{hotel.HotelPicture}}" alt="">
+                                    </div> -->
+      
+                            <div class="col-md-4 mpad">
+                                <img class="imgStyle" src="{{hotel.HotelPicture}}" alt="">
+                            </div>
+                            <div class="col-md-8 pl-0">
+                                <h5 class="cusromGrey"><strong>{{hotel.HotelName}}</strong> </h5>
+                                <ng-template *ngIf="hotel.StarRating === '' then noStar; else stars">
+                                </ng-template>
+                                <ng-template #noStar>
+                                    <span class="star_rtng">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </span>
+                                </ng-template>
+                                <ng-template #stars>
+                                    <span class="star_rtng">
+                                        <i class="fas fa-star star_rtng_clr"
+                                            *ngFor="let s of hotel.StarRating | map: getStarArray"></i>
+                                        <i class="fas fa-star"
+                                            *ngFor="let s of hotel.StarRating | map: getStarArrayRemaining"></i>
+                                    </span>
+                                </ng-template>
+                                <p class="cusromGrey">
+                                    {{hotel.HotelAddress}}
+                                </p>
+                            </div>
+                        </div>
+      
+                        <div class="row font-weight-bold pt-3 pb-3 hotl_details_check d-none">
+                            <div class="col-md-4 px-3">
+                                <p class="cusromgray m-0">
+                                    Check-In:
+                                </p>
+                                <p class="cusromBlue m-0">
+                                    {{hotel.booking_source === 'TLAPINO00007' ? hotel.CheckIn : (hotel.CheckIn | date: 'dd/MM/yyyy')}}
+                                </p>
+                            </div>
+                            <div class="col-md-4 px-3">
+                                <p class="cusromgray m-0">
+                                    Check-Out:
+                                </p>
+                                <p class="cusromBlue m-0">
+                                    {{hotel.booking_source === 'TLAPINO00007' ? hotel.CheckOut : (hotel.CheckOut | date: 'dd/MM/yyyy')}}
+                                </p>
+                            </div>
+      
+                            <div class="col-md-4 px-y">
+                                <p class="cusromgray m-0">
+                                    No of Nights:
+                                </p>
+                                <p class="cusromBlue m-0">
+                                    {{hotel.NoOfNights}}
+                                </p>
+                            </div>
+                        </div>
+      
+                        <div class="row pt-3 pb-3 trooms_desc">
+                            <div class="col-md-12 p-0">
+                               
+                                <div *ngFor="let r of hotel.RoomDetails; let i = index" class="trooms_desc px-3">
+                                    <div class="valign-wrapper row mt-1 mb-1">
+                                        <div class="col-md-6 col-6">
+                                            <span class="cusromBlue m-0">
+                                                Room {{ i + 1 }}:
+                                            </span>
+                                        </div>
+                                        <div class="col-md-6 col-6 text-right">
+                                            <span class="m-0 pull-right" [innerHTML]=" formatRoomDescription(r)">
+                                                 
+                                            </span>    
+                                            <span [ngClass]="{ 'text-danger': r.NonRefundable, 'text-success': !r.NonRefundable }">
+                                                ({{ r.NonRefundable ? 'Non-Refundable' : 'Refundable' }})
+                                            </span>                                        
+                                        </div>
+                                    </div>
+                        
+                                    <div class="clearfix"></div>
+                        
+                                    <div class="valign-wrapper row mt-1 mb-1">
+                                        <div class="col-md-6 col-6">
+                                            <span class="cusromBlue m-0">
+                                                Meal Plan:
+                                            </span>
+                                        </div>
+                                        <div class="col-md-6 col-6 text-right">
+                                            <span class="m-0 pull-right">
+                                                {{booking_source === 'TLAPNO00003' ? r.Description : (r.RoomType || r.MealPlanCode) }}
+                                            </span>
+                                        </div>
+                                    </div>
+                        
+                                    <div class="clearfix"></div>
+                        
+                                    <div class="valign-wrapper row mt-1 mb-1">
+                                        <div class="col-md-6 col-6 ">
+                                            <span class="cusromBlue m-0">
+                                                Adult(s):
+                                            </span>
+                                        </div>
+                                        <div class="col-md-6 col-6 text-right">
+                                            <span class="m-0 pull-right">
+                                                {{ hotel.searchRequest.RoomGuests[i].NoOfAdults }}
+                                            </span>
+                                        </div>
+                                    </div>
+                        
+                                    <div class="clearfix"></div>
+                        
+                                    <div class="valign-wrapper row mt-1 mb-1">
+                                        <div class="col-md-6 col-6">
+                                            <span class="cusromBlue m-0">
+                                                No of Children:
+                                            </span>
+                                        </div>
+                                        <div class="col-md-6 col-6 text-right">
+                                            <span class="m-0 pull-right">
+                                                {{ hotel.searchRequest.RoomGuests[i].NoOfChild }}  
+                                                <span *ngIf="hotel.searchRequest.RoomGuests[i].NoOfChild > 0">
+                                                    ({{ hotel.searchRequest.RoomGuests[i].ChildAge.length === 1 
+                                                        ? hotel.searchRequest.RoomGuests[i].ChildAge[0] + ' yrs' 
+                                                        : hotel.searchRequest.RoomGuests[i].ChildAge.join(' yrs, ') + ' yrs' }})
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row  pt-3 pb-3">
+                            <div class="col-md-12 px-3">
+                                <!-- <h5>Your Price Summary</h5> -->
+                                <div class="clearfix"></div>
+                                <div class="valign-wrapper row mt-1 mb-1 trooms_desc">
+                                    <div class="col-md-6 col-6 ">
+                                        <span class="cusromBlue m-0">
+                                            Base Price:
+                                        </span>
+                                    </div>
+                                    <div class="col-md-6 col-6 text-right">
+                                        <span class="m-0 pull-right ">
+                                            {{hotel.Price.Currency}} {{hotel.Price.Amount }}
+                                        </span>
+                                    </div>
+      
+                                </div>
+                                <div class="clearfix"></div>
+      
+      
+                                <div *ngIf="booking_source != 'TLAPNO00003'" class="valign-wrapper row mt-1 mb-1">
+                                    <div class="col-md-6 col-6">
+                                        <span class="cusromBlue m-0 grand_tot">
+                                            Total:
+                                        </span>
+                                    </div>
+      
+                                    <div class="col-md-6 col-6 text-right">
+                                        <span class="m-0 pull-right"
+                                            style="color: #082b3a!important; font-size: 16px; font-weight: 700;">
+                                            {{hotel.Price.Currency}} {{hotel.Price.Amount | number:'1.2-2' }}
+                                        </span>
+                                    </div>
+      
+                                </div>
+      
+      
+                                <div *ngIf="booking_source == 'TLAPNO00003'" class="valign-wrapper row mt-1 mb-1">
+                                    <div class="col-md-6 col-6">
+                                        <span class="cusromBlue m-0 grand_tot">
+                                            Total:
+                                        </span>
+                                    </div>
+      
+                                    <div class="col-md-6 col-6 text-right">
+                                        <span class="m-0 pull-right "
+                                            style="color: #082b3a!important; font-size: 16px; font-weight: 700;">
+                                            {{hotel.Price.Currency}} {{hotel.Price.Amount | number:'1.2-2' }}
+                                        </span>
+                                    </div>
+      
+                                </div>
+      
+                            </div>
+                        </div>
+      
+                        <div class="row trooms_desc pt-3 pb-3"
+                            *ngIf="booking_source == 'TLAPINO00004' && hotel?.Supplements && hotel?.Supplements[0]">
+                            <div class="col-md-12 px-3">
+                                <h5>Supplements</h5>
+                                <div class="clearfix"></div>
+                                <div class="valign-wrapper row mt-1 mb-1">
+                                    <div class="col-md-6 col-6">
+                                        <span class="cusromBlue m-0">
+                                            Type:
+                                        </span>
+                                    </div>
+                                    <div class="col-md-6 col-6 text-right">
+                                        <span class="m-0 pull-right ">
+                                            {{hotel?.Supplements[0]?.Type }}
+                                        </span>
+                                    </div>
+      
+                                </div>
+                                <div class="clearfix"></div>
+                                <!-- <div class="valign-wrapper mt-1 mb-1">
+                                      <div class="col-md-6 col-6 nopad">
+                                          <span class="cusromBlue m-0">
+                                              Description
+                                          </span>
+                                      </div>
+      
+                                      <div class="col-md-6 col-6 nopad text-right">
+                                          <span class="m-0 pull-right ">
+                                           {{hotel.RoomDetails[0].Supplements[0].Description }}
+                                          </span>
+                                      </div>
+      
+                                  </div> -->
+      
+                                <div class="clearfix"></div>
+                                <div class="valign-wrapper row mt-1 mb-1">
+                                    <div class="col-md-6 col-6">
+                                        <span class="cusromBlue m-0">
+                                            Price
+                                        </span>
+                                    </div>
+      
+                                    <div class="col-md-6 col-6 text-right">
+                                        <span class="m-0 pull-right ">
+                                            {{hotel?.Supplements[0].Currency}} {{hotel?.Supplements[0].Price }}
+                                        </span>
+                                    </div>
+      
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="mt-2">
+                                    <b>NOTE : Supplement price will be of Local currency and the price will be paid
+                                        at the property.</b>
+                                </div>
+      
+                            </div>
+      
+                        </div>
+                    </div>
+                </div>
+      
+                <div class="tran" *ngIf="cartList && cartList.transfer">
+                    <div class="comon_backbg">
+                        <h5 class="inpagehed">Transfer Fare Summary</h5>
+                        <div class="col-md-12">
+                            <div class="row trooms_desc pt-0 pb-0">
+                                <div class="col-md-12 px-3">
+                                    <div class="clearfix"></div>
+                                    <div class="valign-wrapper row mt-1 mb-1 bbottom" style="font-size: 14px; color: #092e53;">
+                                        <div class="col-md-6 col-6">
+                                            <span class="cusromBlue m-0">
+                                                Base Fare:
+                                            </span>
+                                        </div>
+                                        <div class="col-md-6 col-6 text-right">
+                                            <span class="m-0 pull-right ">
+                                                {{transfer.Price.Currency}}
+                                                {{transfer.data.Price.TotalDisplayFare| number:'1.1-2' }}
+                                            </span>
+                                        </div>
+                                    </div>
+      
+                                    <div class="valign-wrapper row pt-2 pb-2" style="font-size: 16px; color: #092e53;">
+                                        <div class="col-md-6 col-6">
+                                            <span class="cusromBlue m-0">
+                                                Total
+                                            </span>
+                                        </div>
+                                        <div class="col-md-6 col-6 text-right">
+                                            <span class="m-0 pull-right " style="font-weight: 600;">
+                                                {{transfer.Price.Currency}}
+                                                {{transfer.data.Price.TotalDisplayFare |
+                                                number:'1.1-2'}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+      
+                        </div>
+                    </div>
+      
+                </div>
+      
+                <div class="fsBorder card col-12 p-0" style="box-shadow: 0px 1px 16px #ddd; float: left;" *ngIf="cartList && cartList.activity">
+                    <h4 class="text-muted"> Activity Fare Summary </h4>
+                    <div class="px-0 pb-0">
+                        <div>
+                            <div class="row m-0 text-muted">
+                                <!-- <div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+                                    <div class="float-left customColor">
+                                      No of Pax
+                                    </div>
+                                    <div class="float-right customColor">{{noOfTravellers}}</div>
+                                  </div> -->
+                                <!-- <div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+                                    <div class="float-left customColor"> Cancellation Policy </div>
+                                    <div class="float-right customColor"> Refundable </div>
+                                    <br />
+                                    <a class="float-left customColor"> View Cancellation Policy</a>
+                                  </div> -->
+                                <div class="col-md-12 col-lg-12 f-14 bbottom pb-2 mb-2 mobile_nopad">
+                                    <div class="float-left customColor"> Base Price </div>
+                                    <div class="float-right customColor"> {{activity?.Price?.Currency}}
+                                        {{activity?.Price?.TotalDisplayFare }} </div>
+      
+                                </div>
+      
+                                <div class="col-md-12 col-lg-12 f-18 mb-3 mobile_nopad">
+                                    <div class="float-left grand_tot"> Total </div>
+                                    <div class="float-right text-warning" style="font-size: 16px !important;     color: #082b3a !important;
+                            font-weight: 700 !important;">
+                                        {{activity?.Price?.Currency}} {{(activity?.Price?.TotalDisplayFare) |
+                                        number: '1.2-2'}}
+                                    </div>
+      
+                                </div>
+      
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fsBorder card col-12" style="box-shadow: 0px 1px 16px #ddd; float: left;">
+                    <div class="col-md-12 col-lg-12 f-18 px-0 my-2  mobile_nopad">
+                        <div class="float-left grand_tot">Grand Total</div>
+                        <div class="float-right text-warning" 
+                             style="font-size: 16px !important; color: #082b3a !important; font-weight: 700 !important;">
+                            {{ currency }} {{ totalFare | number: '1.2-2' }}
+                        </div>
+                    </div>
+                </div>
+      
+            </div>
+         </div>
+          
+
+</div>
+</div>
+</ng-template>
+
+<ng-template #emptyCart>
+    <div *ngIf="isCartEmpty && !loading">
+        <div class="container mt-100">
+            <div class="row">
+
+                <div class="col-md-12 p-0">
+
+                    <div class="card" style="background: #f5f5f5;">
+
+                        <div class="card-body cart">
+                            <div class="col-sm-12 empty-cart-cls text-center">
+                                <img src="assets/images/empty-cart.png" width="200" height="200"
+                                    class="img-fluid mb-4 mr-3">
+                                <h3 style="font-size: 23px; color: #e1830e;"><strong>Your Cart is Empty</strong></h3>
+                                <h4 style="font-size: 18px;">Add something to make me happy :)</h4>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</ng-template>
+
+
+
+
+<!-- <ngx-loading [show]="loading"
+  [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+  [template]="loadingTemplate"></ngx-loading> -->

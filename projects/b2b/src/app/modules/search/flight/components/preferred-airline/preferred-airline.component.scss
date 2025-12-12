@@ -1,0 +1,100 @@
+/* autocomplete */
+.mn_incld,
+.arpt_list li {
+  border-top: 1px solid #e5ebf0;
+  background: transparent;
+  display: flex;
+  color: #212a30;
+  position: relative;
+}
+
+.in_icon {
+  margin-right: 0.8rem;
+  display: flex;
+  width: 36px;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.in_icon img {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  color: #212a30;
+  padding: 0;
+  background-position: 23px 50%;
+  background-repeat: no-repeat;
+  border-radius: 4px;
+}
+
+.include {
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin: 0;
+//   padding-right: 4rem;// chakri changes (commented)
+  line-height: 1.1rem;
+  display: flex;//chakri changes
+}
+
+.include small {
+  display: block;
+  margin-top: 0.2rem;
+  line-height: 0.9rem;
+}
+
+.airport_complete {
+ width: 100%;
+  position: absolute;
+  background: white;
+  z-index: 1000;
+  top: 110%; border-radius: 10px;
+  box-shadow: 0 2px 5px 0 rgba(23, 35, 44, 0.24),
+    0 -1px 5px 0 rgba(23, 35, 44, 0.2) !important;
+  transition: transform 200ms ease-out, height 200ms ease-out,
+    width 200ms ease-out !important;
+}
+.arpt_list{
+  max-height: 200px;
+  overflow: auto;
+  padding: 0px;
+}
+.arpt_list li  {
+  border-top: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.arpt_list li:hover, .arpt_list li.sub:hover {
+  background-color: #f8f9fa;
+}
+
+.arpt_list li:first-child {
+}
+
+.arpt_list li.sub {
+  padding-left: 3rem !important;
+  background: url('~/assets/images/right_arrow.png') no-repeat left 0;
+  background-position: 1.6rem 1.2rem;
+}
+
+.sub .in_icon {
+  margin-right: 0.25rem;
+}
+
+.ar_rgt {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: right;
+  text-align: right;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 24px;
+  bottom: 0;
+  margin: auto;
+}
+
+span.ar_code {
+  margin-right: 0.5rem;
+}

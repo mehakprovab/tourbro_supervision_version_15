@@ -1,0 +1,63 @@
+.logo-src {
+    // height: $logo-height;
+    // width: $logo-width;
+    // background: url('~/assets/images/logo-inverse.png');
+    //   height: 50px;
+    //   width: -webkit-fill-available;
+    //   background: url(~/assets/images/logo-inverse.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.remove-space{
+    display: flex;
+}
+.closed-sidebar .v-sidebar-menu .vsm-link.collapsed{
+    margin: 0px !important;
+}
+
+.v-sidebar-menu .vsm-link .svg-inline--fa{ color: #fff !important;}
+
+::ng-deep .collapse {
+    transition: max-height .55s, opacity .35s ease-in-out;
+    max-height: 0;
+    opacity: 0;
+    display: block !important;
+  
+    &.show {
+      max-height: 100rem;
+      opacity: 1;
+    }
+  }
+  
+  ::ng-deep .accordion {
+    .card {
+      margin-bottom: 0 !important;
+      border-bottom: 1px solid rgba(0, 0, 0, .04) !important;
+  
+      .card-header {
+        // padding-top: 0;
+        padding: 0;
+  
+        button {
+          padding: 1.2rem;
+          width: 100%;
+  
+          span {
+            float: left;
+            font-size: 1.2rem;
+          }
+        }
+      }
+  
+      .card-body {
+        padding: 1rem;
+      }
+    }
+  }
+  ::ng-deep  .accordion-shadow .card.open {
+      border-radius: 0.571rem;
+      margin: 10px 0;
+      border: 0;
+      box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1) !important;
+  }

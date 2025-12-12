@@ -1,0 +1,15 @@
+<div class="customSlideStyle">
+    <ngx-slick-carousel class="slick-slider slick-dotted" #slickModal="slick-carousel" [config]="slideConfig4">
+        <div ngxSlickItem *ngFor="let airline of airlinesCarousel">
+            <div class="slider-item" (click)="filterByAirline(airline.name);" [class.active]="airline.isChecked">
+                <div>
+                    <img style="width: 30px;" [src]="airline_logo + airline.code + '.svg'" />
+                    <div class="slide_right">{{ airline.name }}
+                   <span class="fligh_currency">{{ currency }}
+                    {{ airline.price  }}</span> 
+                   </div>
+                </div>
+            </div>
+        </div>
+    </ngx-slick-carousel>
+</div>

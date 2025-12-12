@@ -1,0 +1,386 @@
+<form [formGroup]="usersForm" (ngSubmit)="onSubmit(usersForm.value)">
+	<fieldset form="user">
+		<legend class="form_legend">User Profile</legend><input formControlName="user_id" type="hidden" id="user_id"
+			class=" user_id hiddenIp" required="" value="">
+		<div class="form-group"><label class="col-sm-3 control-label" for="title" form="user">Title<span
+					class="text-danger">*</span></label>
+			<div class="col-sm-6"><select required="" dt="PROVAB_SOLID_SB01" formControlName="title"
+					class="title form-control invalid-ip" id="title" data-container="body" data-toggle="popover"
+					data-original-title="Here To Help" data-placement="bottom" data-trigger="hover focus"
+					data-content="Title Ex:Mr, Miss.">
+					<option value="INVALIDIP">Please Select</option>
+					<option value="1">Mr</option>
+					<option value="2">Ms</option>
+					<option value="3">Miss</option>
+					<option value="4">Master</option>
+				</select></div>
+		</div>
+		<div class="form-group"><label class="col-sm-3 control-label" for="first_name" form="user">First
+				Name<span class="text-danger">*</span></label>
+			<div class="col-sm-6"><input value="" formControlName="first_name" dt="PROVAB_SOLID_V45" required="" type="text"
+					placeholder="First Name" class=" first_name form-control" id="first_name" data-container="body"
+					data-toggle="popover" data-original-title="Here To Help" data-placement="bottom" data-trigger="hover focus"
+					data-content="First Name Ex: John."></div>
+		</div>
+		<div class="form-group"><label class="col-sm-3 control-label" for="last_name" form="user">Last Name<span
+					class="text-danger">*</span></label>
+			<div class="col-sm-6"><input value="" formControlName="last_name" dt="PROVAB_SOLID_V45" required="" type="text"
+					placeholder="Last Name" class=" last_name form-control" id="last_name" data-container="body"
+					data-toggle="popover" data-original-title="Here To Help" data-placement="bottom" data-trigger="hover focus"
+					data-content="Last Name Ex: Smith."></div>
+		</div>
+		<div class="form-group"><label class="col-sm-3 control-label" for="date_of_birth" form="user">Date Of
+				Birth</label>
+			<div class="col-sm-6"><input value="" formControlName="date_of_birth" dt="PROVAB_SOLID_DATE" readonly=""
+					type="text" placeholder="Date Of Birth" class="date_of_birth form-control hasDatepicker" id="date_of_birth"
+					data-container="body" data-toggle="popover" data-original-title="Here To Help" data-placement="bottom"
+					data-trigger="hover focus" data-content="Date Of Birth(yyyy-mm-dd) Ex:1989-03-26."></div>
+		</div>
+		<div class="form-group"><label class="col-sm-3 control-label" for="country_code" form="user">Country
+				Code<span class="text-danger">*</span></label>
+			<div class="col-sm-6"><select required="" dt="PROVAB_SOLID_SB03" formControlName="country_code"
+					class=" country_code form-control" id="country_code" data-container="body" data-toggle="popover"
+					data-original-title="Here To Help" data-placement="bottom" data-trigger="hover focus"
+					data-content="Country Telephone Code Ex: India +91.">
+					<option value="INVALIDIP">Please Select</option>
+					<option value="228">Afghanistan +93 </option>
+					<option value="2">Albania +355 </option>
+					<option value="3">Algeria +213 </option>
+					<option value="4">American Samoa +1684 </option>
+					<option value="5">Andorra +376 </option>
+					<option value="6">Angola +244 </option>
+					<option value="7">Anguilla +1264 </option>
+					<option value="8">Antigua And Barbuda +1268 </option>
+					<option value="9">Argentina +54 </option>
+					<option value="10">Armenia +374 </option>
+					<option value="11">Aruba +297 </option>
+					<option value="12">Australia +61 </option>
+					<option value="13">Austria +43 </option>
+					<option value="14">Azerbaijan +994 </option>
+					<option value="15">Bahamas +1242 </option>
+					<option value="16">Bahrain +973 </option>
+					<option value="17">Bangladesh +880 </option>
+					<option value="18">Barbados +1246 </option>
+					<option value="19">Belarus +375 </option>
+					<option value="20">Belgium +32 </option>
+					<option value="21">Belize +501 </option>
+					<option value="22">Benin +229 </option>
+					<option value="23">Bermuda +1441 </option>
+					<option value="24">Bhutan +975 </option>
+					<option value="25">Bolivia +591 </option>
+					<option value="26">Bosnia And Herzegovina +387 </option>
+					<option value="27">Botswana +267 </option>
+					<option value="28">Brazil +55 </option>
+					<option value="29">Brunei Darussalam +673 </option>
+					<option value="30">Bulgaria +359 </option>
+					<option value="31">Burkina Faso +226 </option>
+					<option value="32">Burundi +257 </option>
+					<option value="33">Cambodia +855 </option>
+					<option value="34">Cameroon +237 </option>
+					<option value="35">Canada +1 </option>
+					<option value="36">Cape Verde +238 </option>
+					<option value="37">Cayman Islands +1345 </option>
+					<option value="38">Central African Republic +236 </option>
+					<option value="39">Chad +235 </option>
+					<option value="40">Chile +56 </option>
+					<option value="41">China +86 </option>
+					<option value="42">Christmas Island +61 </option>
+					<option value="43">Cocos (Keeling) Islands +891 </option>
+					<option value="44">Colombia +57 </option>
+					<option value="45">Comoros +269 </option>
+					<option value="46">Congo +242 </option>
+					<option value="47">Congo, DR Of The +243 </option>
+					<option value="48">Cook Islands +682 </option>
+					<option value="49">Costa Rica +506 </option>
+					<option value="51">Croatia +385 </option>
+					<option value="52">Cyprus +357 </option>
+					<option value="53">Czech Republic +420 </option>
+					<option value="54">Denmark +45 </option>
+					<option value="55">Djibouti +253 </option>
+					<option value="56">Dominica +1767 </option>
+					<option value="57">Dominican Republic +1809 </option>
+					<option value="58">Ecuador +593 </option>
+					<option value="59">Egypt +20 </option>
+					<option value="60">El Salvador +503 </option>
+					<option value="61">Equatorial Guinea +240 </option>
+					<option value="62">Eritrea +291 </option>
+					<option value="63">Estonia +372 </option>
+					<option value="64">Ethiopia +251 </option>
+					<option value="65">Falkland Islands +500 </option>
+					<option value="66">Faroe Islands +298 </option>
+					<option value="67">Fiji +679 </option>
+					<option value="68">Finland +358 </option>
+					<option value="69">France +33 </option>
+					<option value="70">French Guiana +594 </option>
+					<option value="71">French Polynesia +689 </option>
+					<option value="72">Gabon +241 </option>
+					<option value="73">Gambia +220 </option>
+					<option value="74">Georgia +995 </option>
+					<option value="75">Germany +49 </option>
+					<option value="76">Ghana +233 </option>
+					<option value="77">Gibralter +350 </option>
+					<option value="78">Greece +30 </option>
+					<option value="79">Greenland +299 </option>
+					<option value="80">Grenada +1473 </option>
+					<option value="81">Guadeloupe +590 </option>
+					<option value="82">Guam +1671 </option>
+					<option value="83">Guatemala +502 </option>
+					<option value="84">Guinea +224 </option>
+					<option value="85">Guinea-Bissau +245 </option>
+					<option value="86">Guyana +592 </option>
+					<option value="87">Haiti +509 </option>
+					<option value="88">Honduras +504 </option>
+					<option value="89">Hong Kong +852 </option>
+					<option value="90">Hungary +36 </option>
+					<option value="91">Iceland +354 </option>
+					<option value="92" selected="selected">India +91 </option>
+					<option value="93">Indonesia +62 </option>
+					<option value="94">Ireland +353 </option>
+					<option value="95">Israel +972 </option>
+					<option value="96">Italy +39 </option>
+					<option value="97">Jamaica +1876 </option>
+					<option value="98">Japan +81 </option>
+					<option value="99">Jordan +962 </option>
+					<option value="100">Kazakhstan +7 </option>
+					<option value="101">Kenya +254 </option>
+					<option value="102">Kiribati +686 </option>
+					<option value="103">Korea, DPR Of +850 </option>
+					<option value="104">Korea, Republic Of +82 </option>
+					<option value="105">Kuwait +965 </option>
+					<option value="106">Kyrgyzstan +996 </option>
+					<option value="107">Laos +856 </option>
+					<option value="108">Latvia +371 </option>
+					<option value="109">Lebanon +961 </option>
+					<option value="110">Lesotho +266 </option>
+					<option value="111">Libyan Arab Jamahiriya +218 </option>
+					<option value="112">Liechtenstein +423 </option>
+					<option value="113">Lithuania +370 </option>
+					<option value="114">Luxembourg +352 </option>
+					<option value="115">Macao +853 </option>
+					<option value="116">Macedonia, FYR Of +389 </option>
+					<option value="117">Madagascar +261 </option>
+					<option value="118">Malawi +265 </option>
+					<option value="119">Malaysia +60 </option>
+					<option value="120">Maldives +960 </option>
+					<option value="121">Mali +223 </option>
+					<option value="122">Malta +356 </option>
+					<option value="123">Marshall Islands +692 </option>
+					<option value="124">Martinique +596 </option>
+					<option value="125">Mauritania +222 </option>
+					<option value="126">Mauritius +230 </option>
+					<option value="127">Mayotte +262 </option>
+					<option value="128">Mexico +52 </option>
+					<option value="129">Micronesia, FS Of +691 </option>
+					<option value="130">Moldova, Republic Of +373 </option>
+					<option value="131">Monaco +377 </option>
+					<option value="132">Mongolia +976 </option>
+					<option value="133">Montenegro +382 </option>
+					<option value="134">Montserrat +1664 </option>
+					<option value="135">Morocco +212 </option>
+					<option value="136">Mozambique +258 </option>
+					<option value="137">Myanmar +95 </option>
+					<option value="138">Namibia +264 </option>
+					<option value="139">Nauru +674 </option>
+					<option value="140">Nepal +977 </option>
+					<option value="141">Netherlands +31 </option>
+					<option value="142">New Caledonia +687 </option>
+					<option value="143">New Zealand +64 </option>
+					<option value="144">Nicaragua +505 </option>
+					<option value="145">Niger +227 </option>
+					<option value="146">Nigeria +234 </option>
+					<option value="147">Niue +683 </option>
+					<option value="148">Norfolk Island +672 </option>
+					<option value="149">Northern Mariana Islands +1670 </option>
+					<option value="150">Norway +47 </option>
+					<option value="151">Oman +968 </option>
+					<option value="152">Pakistan +92 </option>
+					<option value="153">Palau +680 </option>
+					<option value="154">Panama +507 </option>
+					<option value="155">Papua New Guinea +675 </option>
+					<option value="156">Paragua +595 </option>
+					<option value="157">Paraguay +595 </option>
+					<option value="158">Peru +51 </option>
+					<option value="159">Philippines +63 </option>
+					<option value="160">Pitcairn +870 </option>
+					<option value="161">Polan +48 </option>
+					<option value="162">Poland +48 </option>
+					<option value="163">Portugal +351 </option>
+					<option value="164">Puerto Rico +1787 </option>
+					<option value="165">Qatar +974 </option>
+					<option value="166">Reunion +262 </option>
+					<option value="167">Romania +40 </option>
+					<option value="168">Russian Federation +7 </option>
+					<option value="169">Rwanda +250 </option>
+					<option value="170">Saint Barthelemy +590 </option>
+					<option value="171">Saint Kitts And Nevis +1869 </option>
+					<option value="172">Saint Lucia +1758 </option>
+					<option value="173">Saint Martin +1599 </option>
+					<option value="174">Samoa +685 </option>
+					<option value="175">San Marino +378 </option>
+					<option value="176">Sao Tome And Principe +239 </option>
+					<option value="177">Saudi Arabia +966 </option>
+					<option value="178">Senegal +221 </option>
+					<option value="179">Serbia +381 </option>
+					<option value="180">Seychelles +248 </option>
+					<option value="181">Sierra Leone +232 </option>
+					<option value="182">Singapore +65 </option>
+					<option value="183">Slovakia (Slovak Republic) +421 </option>
+					<option value="184">Slovenia +386 </option>
+					<option value="185">Solomon Islands +677 </option>
+					<option value="186">South Africa +27 </option>
+					<option value="187">Spain +34 </option>
+					<option value="188">Sri Lanka +94 </option>
+					<option value="189">St Vincent And The Grenadines +1784 </option>
+					<option value="190">St. Helena +290 </option>
+					<option value="191">St. Pierre And Miquelon +508 </option>
+					<option value="192">Sudan +249 </option>
+					<option value="193">Suriname +597 </option>
+					<option value="194">Svalbard And Jan Mayen Islands +47 </option>
+					<option value="195">Swaziland +268 </option>
+					<option value="196">Sweden +46 </option>
+					<option value="197">Switzerland +41 </option>
+					<option value="198">Taiwan +886 </option>
+					<option value="199">Tajikistan +992 </option>
+					<option value="200">Tanzania +255 </option>
+					<option value="201">Thailand +66 </option>
+					<option value="202">Togo +228 </option>
+					<option value="203">Tonga +676 </option>
+					<option value="204">Trinidad And Tobago +1868 </option>
+					<option value="205">Tunisia +216 </option>
+					<option value="206">Turkey +90 </option>
+					<option value="207">Turkmenistan +993 </option>
+					<option value="208">Turks And Caicos Islands +1649 </option>
+					<option value="209">Tuvalu +688 </option>
+					<option value="210">Uganda +256 </option>
+					<option value="211">Ukraine +380 </option>
+					<option value="212">United Arab Emirates +971 </option>
+					<option value="213">United Kingdom +44 </option>
+					<option value="214">United States +1 </option>
+					<option value="215">Uruguay +598 </option>
+					<option value="216">US Minor Outlying Islands +1 </option>
+					<option value="217">Uzbekistan +998 </option>
+					<option value="218">Vanuatu +678 </option>
+					<option value="219">Vatican City State +379 </option>
+					<option value="220">Venezuela +58 </option>
+					<option value="221">Viet Nam +84 </option>
+					<option value="222">Virgin Islands - British +1284 </option>
+					<option value="223">Virgin Islands - U.S. +1340 </option>
+					<option value="224">Wallis And Futuna Islands +681 </option>
+					<option value="225">Yemen +967 </option>
+					<option value="229">Yugoslavia +381 </option>
+					<option value="226">Zambia +260 </option>
+					<option value="227">Zimbabwe +263 </option>
+				</select></div>
+		</div>
+		<div class="form-group"><label class="col-sm-3 control-label" for="phone" form="user">Phone Number<span
+					class="text-danger">*</span></label>
+			<div class="col-sm-6"><input value="" formControlName="phone" dt="PROVAB_SOLID_I10" required="" type="number"
+					placeholder="Phone Number" class=" phone form-control" id="phone" data-container="body" data-toggle="popover"
+					data-original-title="Here To Help" data-placement="bottom" data-trigger="hover focus"
+					data-content="Phone Number Ex:9773333779."></div>
+		</div>
+		<div class="form-group"><label class="col-sm-3 control-label" for="address" form="user">Address<span
+					class="text-danger">*</span></label>
+			<div class="col-sm-6"><textarea required="" dt="PROVAB_SOLID_V255" formControlName="address" id="address" rows="3"
+					class=" address form-control" data-original-title="" title=""></textarea></div>
+		</div>
+		<div class="radio"><label class="col-sm-3 control-label" for="status" form="user">User Status<span
+					class="text-danger">*</span></label><label class="radio-inline" for="userstatus0"> <input required=""
+					dt="PROVAB_SOLID_B01" class=" status radioIp" type="radio" formControlName="status" id="userstatus0"
+					value="0">Inactive</label><label class="radio-inline" for="userstatus1"> <input required="" checked="checked"
+					dt="PROVAB_SOLID_B01" class=" status radioIp" type="radio" formControlName="status" id="userstatus1"
+					value="1">Active</label>
+		</div><input formControlName="language_preference" type="hidden" id="language_preference"
+			class=" language_preference hiddenIp" value="">
+	</fieldset>
+	<fieldset form="user">
+		<legend class="form_legend">Login Details</legend>
+		<div class="form-group"><label class="col-sm-3 control-label" for="user_type" form="user">User Type<span
+					class="text-danger">*</span></label>
+			<div class="col-sm-6"><select required="" dt="" formControlName="user_type" class=" user_type form-control"
+					id="user_type" data-container="body" data-toggle="popover" data-original-title="Here To Help"
+					data-placement="bottom" data-trigger="hover focus" data-content="User Type Ex: Sales">
+					<option value="INVALIDIP">Please Select</option>
+					<option value="3">B2B User </option>
+					<option value="4">B2C User </option>
+					<option value="5">B2E User </option>
+					<option value="6">Call Center </option>
+					<option value="2">Sub Admin </option>
+				</select></div>
+		</div>
+		<div class="form-group"><label class="col-sm-3 control-label" for="email" form="user">Email ID<span
+					class="text-danger">*</span></label>
+			<div class="col-sm-6"><input value="" formControlName="email" dt="PROVAB_SOLID_V80" required="" type="email"
+					placeholder="Email ID" class=" email form-control" id="email" data-container="body" data-toggle="popover"
+					data-original-title="Here To Help" data-placement="bottom" data-trigger="hover focus"
+					data-content="Email Id Ex: john@travelomatix.com."></div>
+		</div>
+		<div class="form-group"><label class="col-sm-3 control-label" for="password" form="user">Password<span
+					class="text-danger">*</span></label>
+			<div class="col-sm-6"><input value="" formControlName="password" dt="PROVAB_SOLID_V45" required="" type="password"
+					placeholder="Password" class=" password form-control" id="password" data-container="body"
+					data-toggle="popover" data-original-title="Here To Help" data-placement="bottom" data-trigger="hover focus"
+					data-content="Password Ex: A3#FD*3377^*"></div>
+		</div>
+		<div class="form-group"><label class="col-sm-3 control-label" for="confirm_password" form="user">Confirm
+				Password<span class="text-danger">*</span></label>
+			<div class="col-sm-6"><input value="" formControlName="confirm_password" dt="PROVAB_SOLID_V45" required=""
+					type="password" placeholder="Confirm Password" class=" confirm_password form-control" id="confirm_password"
+					data-container="body" data-toggle="popover" data-original-title="Here To Help" data-placement="bottom"
+					data-trigger="hover focus" data-content="Confirm Password Should Be Same As Password Ex: A3#FD*7^*"></div>
+		</div>
+	</fieldset>
+	<div class="form-group">
+		<div class="col-sm-8 col-sm-offset-4"> <button type="submit" id="user_submit"
+				class=" btn btn-success ">Save</button> <button type="reset" id="user_reset"
+				class=" btn btn-warning ">Reset</button></div>
+	</div>
+</form>
+
+
+
+<!-- <div class="main-card mb-3 card">
+	<div class="card-body">
+		<h5 class="card-title">Grid Rows</h5>
+		<form>
+			<div class="form-row">
+				<div class="col-md-6">
+					<div class="position-relative form-group"><label for="exampleEmail11">Email</label><input name="email"
+							id="exampleEmail11" placeholder="with a placeholder" type="email" class="form-control">
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="position-relative form-group"><label for="examplePassword11">Password</label><input
+							name="password" id="examplePassword11" placeholder="password placeholder" type="password"
+							class="form-control"></div>
+				</div>
+			</div>
+			<div class="position-relative form-group"><label for="exampleAddress">Address</label><input name="address"
+					id="exampleAddress" placeholder="1234 Main St" type="text" class="form-control">
+			</div>
+			<div class="position-relative form-group"><label for="exampleAddress2">Address 2</label><input name="address2"
+					id="exampleAddress2" placeholder="Apartment, studio, or floor" type="text" class="form-control"></div>
+			<div class="form-row">
+				<div class="col-md-6">
+					<div class="position-relative form-group"><label for="exampleCity">City</label><input name="city"
+							id="exampleCity" type="text" class="form-control">
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="position-relative form-group"><label for="exampleState">State</label><input name="state"
+							id="exampleState" type="text" class="form-control">
+					</div>
+				</div>
+				<div class="col-md-2">
+					<div class="position-relative form-group"><label for="exampleZip">Zip</label><input name="zip" id="exampleZip"
+							type="text" class="form-control">
+					</div>
+				</div>
+			</div>
+			<div class="position-relative form-check"><input name="check" id="exampleCheck" type="checkbox"
+					class="form-check-input"><label for="exampleCheck" class="form-check-label">Check
+					me out</label></div>
+			<button class="mt-2 btn btn-primary">Sign in</button>
+		</form>
+	</div>
+</div> -->

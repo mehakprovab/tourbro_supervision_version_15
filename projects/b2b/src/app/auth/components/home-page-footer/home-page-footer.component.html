@@ -1,0 +1,15 @@
+<div class="footer-sec">
+    <div class="login-max-screen w-100 max-screen-1130">
+        <div class="login-footer mx-screen-1186 pt-0">
+            <div class="footer-menu-list d-flex justify-content-between pt-4 pb-4">
+                <span>© {{currentYear}} booking247. All rights reserved</span>
+                <ul class="links">
+                    <li *ngFor="let content of staticContentData">
+                        <a style="cursor: pointer;" (click)="onStaticContent(content)">{{content.page_title}}</a>
+                    </li>
+                    <a class="links" style="cursor: pointer;  color: #ffffff;" (click)="onAgentSelect()"> Agent FAQs </a>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

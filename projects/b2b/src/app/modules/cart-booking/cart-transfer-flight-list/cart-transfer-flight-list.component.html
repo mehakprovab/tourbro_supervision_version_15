@@ -1,0 +1,20 @@
+<form  class="airport_complete" *ngIf="hasViewList" autocomplete="off">
+    <ul class="arpt_list">
+        <div class="p-0" *ngFor="let item of getAirports">
+            <li class="p-2" (click)="onAirportSelect(item, inputFor)">
+                <h5 class="include"><span>({{ item.AirportCode }})</span> {{item.AirportCity}}, {{item.CountryName}}, {{ item.AirportName }} </h5>
+            </li>
+            <li class="p-2 sub" *ngFor="let val of item['SubAirport']" (click)="onAirportSelect(val, inputFor)">
+                <span class="in_icon"><i class="far fa-plane-alt"></i></span>
+                <h5 class="include"> {{val.AirportCity}}, {{val.CountryName}}<small> {{val.AirportName}}({{ val.AirportCode }})</small></h5>
+                <div class="ar_rgt">
+                    <span class="ar_code"></span>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" [value]="val.Id" name="example1" (change)="onCheckBoxChange($event)">
+                        <label class="custom-control-label" for="{{val.Id}}"> </label>
+                    </div>
+                </div>
+            </li>
+        </div>
+    </ul>
+</form>

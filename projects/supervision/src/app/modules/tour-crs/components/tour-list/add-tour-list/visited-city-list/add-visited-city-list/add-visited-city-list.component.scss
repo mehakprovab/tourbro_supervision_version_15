@@ -1,0 +1,51 @@
+.radioSelection{
+    display: flex;
+    font-size: unset;
+}
+input[type="radio"] {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+  }
+
+// .activityInput{
+//     maxlength:150px
+// }
+  
+.boxInputList{
+    overflow: auto;
+    height: 150px;
+    padding: 10px 15px;
+    border: 2px solid whitesmoke;
+    margin-left: 1rem;
+}
+
+ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+li:hover{
+    cursor: default;
+}
+.directionSymbol{
+    margin: 10px;
+}
+button.orangeButton{
+    background-color: #f56f42 !important;
+    color: white !important;
+    border: none !important;
+    padding: 0.4rem !important;
+    font-weight: 500 !important;
+    border-radius: 0.3rem 0.3rem !important;
+    height: 2.3rem !important;
+    margin: 0.2rem !important;
+}
+
+.saveButton{
+    margin-left: 21.5rem !important;
+    margin-bottom: 1rem;
+    @media  (max-width: 767px) {
+        margin-left: 6.5rem !important;
+    }
+}

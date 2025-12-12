@@ -1,0 +1,41 @@
+<hr>
+<div class="">
+    <div class="">
+        <ngb-tabset class="tabs-animated tabs-animated-shadow"  #tabs>
+            <ngb-tab id="markup_detail">
+                <ng-template ngbTabTitle>
+                    <span><i class="fa fa-bank"></i> &nbsp; MARKUP DETAILS</span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <app-agent-b2c-markup-detail (toUpdate)="triggerTab($event)"></app-agent-b2c-markup-detail>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab id="default_markup">
+                <ng-template ngbTabTitle>
+                    <span><i class="fa fa-edit"></i> &nbsp; ADD/UPDATE MARKUP </span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <app-agent-b2c-markup-add-update (toList)="triggerTab($event)" [getDataToUpdate]="userData" ></app-agent-b2c-markup-add-update>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab id="default_supplier">
+                <ng-template ngbTabTitle>
+                    <span><i class="fa fa-edit"></i> &nbsp; Supplier Update </span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <app-supplier-markup-update (supplierListdata)="triggerTab($event)" [getSupplierToUpdate]="userData" ></app-supplier-markup-update>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab id="default_supplier_list">
+                <ng-template ngbTabTitle>
+                    <span><i class="fa fa-edit"></i> &nbsp; Supplier List </span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <app-supplir-markup-list (toUpdateSupplier)="triggerTab($event)"  ></app-supplir-markup-list>
+                </ng-template>
+            </ngb-tab>
+        </ngb-tabset>
+    </div>
+</div>
+
+

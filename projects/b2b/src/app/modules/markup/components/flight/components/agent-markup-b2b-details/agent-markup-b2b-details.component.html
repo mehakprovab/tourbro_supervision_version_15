@@ -1,0 +1,54 @@
+<div class="card mt-3" *ngIf="!noData">
+    <div class="card-header">
+        <h5 class="card-title" *ngIf="agencyDetails">
+            {{'Agency Name: '+ agencyDetails?.business_name}}
+        </h5>
+    </div>
+    <table class="card-table table" matSort>
+        <thead>
+            <tr>
+                <th scope="col" class="text-center" *ngFor="let header of displayColumn;">
+                    {{header.value }}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf="noData || !markupList.length">
+                <td colspan="11">
+
+                    <h4 class="text-muted text-center">
+                        No Data Found!
+                    </h4>
+                </td>
+            </tr>
+
+            <tr *ngFor="let data of markupList; let i = index">
+                <td class="align-middle text-center">{{i+1}}.</td>
+                <td class="align-middle text-center">
+                    <!-- <img src="{{airLineLogoUrl+(data?.flightAirline?.code)+'.gif'}}"><br> -->
+                    {{data?.flightAirline?.name}} ({{data?.flightAirline?.code}})
+                </td>
+                <td class="align-middle text-center">
+                    {{data?.value_type}}
+                </td>
+                <td class="align-middle text-center">
+                    {{data?.value}}
+                </td>
+                <td class="align-middle text-center">
+                    <ng-container
+                        *ngFor="let item of data?.segment_list | map: getFormattedSegment | keyvalue;let last=last">
+                        {{item.key}} {{ (item.value)}} <span *ngIf="!last">|</span>
+                    </ng-container>
+                </td>
+                <td class="align-middle text-center">
+                    <button class="btn btn-sm btn-primary" (click)="updateMarkup(data)">
+                        <span><i class="fa fa-edit"></i></span>
+                    </button>&nbsp;
+                    <button class="btn btn-sm btn-primary" (click)="deleteMarkup(data)">
+                        <span><i class="fa fa-trash"></i> </span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

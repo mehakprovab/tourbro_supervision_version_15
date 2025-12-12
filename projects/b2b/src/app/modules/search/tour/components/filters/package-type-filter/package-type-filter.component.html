@@ -1,0 +1,23 @@
+<div>
+    <div class="filter-head">
+        <button data-target="#collapse523" data-toggle="collapse" class="collapsebtn" type="button">Package Type</button>
+    </div>
+  
+    <div *ngIf="tour?.length && tour?.length>0"  id="collapse523" class="collapse show" style="clear: both;">
+        <div class="boxins">
+            <ul class="locationul">
+                <li *ngFor="let item of package; let i = index">
+                    <div class="squaredThree">
+
+                        <input type="checkbox" [attr.id]="'packagetype-'+ i"
+                        (change)="filterByPackage($event.target.checked,item)" 
+                        [checked]="selectedOptions.includes(item)" />
+                        <label [attr.for]="'packagetype-'+ i"></label>
+                    </div>
+                    <label [attr.for]="'packagetype-'+ i" class="lbllbl">{{item}}</label>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>

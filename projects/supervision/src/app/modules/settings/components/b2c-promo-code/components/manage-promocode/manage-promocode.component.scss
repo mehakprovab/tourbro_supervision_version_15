@@ -1,0 +1,33 @@
+    .custom-file-section{
+        .custom-file-label{
+         display: flex;
+         align-items: center;
+         border: 1px solid #12B3DE;
+        border-radius: 5px;
+        height: 40px;
+        letter-spacing: 0px;
+        color: #363636;
+        font-weight: 400;
+        opacity: 1;
+        font-size: 13px;
+        line-height: 15px;
+        &::after{
+            content: "Chose File";
+            display: flex;
+            align-items: center;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 6px;
+            border-radius: 3px;
+            background: #0D7EBF;
+            letter-spacing: 0px;
+            color: #FFFFFF;
+            opacity: 1;
+            font-size: 9px;
+            line-height: 11px;
+            font-weight: normal;
+            border: 0;
+            height: 26px;
+            }   
+        }
+    }

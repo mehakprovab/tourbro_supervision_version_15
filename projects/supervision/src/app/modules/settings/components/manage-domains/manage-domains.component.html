@@ -1,0 +1,34 @@
+<div class="card mb-3">
+    <div class="card-header-tab card-header bg-dark text-white">
+        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+            <i class="header-icon fa fa-edit"></i>
+            {{ 'MANAGE DOMAIN' }}
+        </div>
+    </div>
+    <form class="m-4" [formGroup]="regConfig" (ngSubmit)="onSubmit()">
+        <div class="form-group row">
+            <label for="domainname" class="col-sm-3  col-form-label col-form-label-sm"> Domain Name <sup
+                    class="text-danger">*</sup> </label>
+            <input type="text" formControlName="domain_name" class="col-sm-5 form-control form-control-sm" id="domainName" placeholder="Domain Name">
+        </div>
+        <div class="form-group row">
+            <label for="email" class="col-sm-3  col-form-label col-form-label-sm"> Email Id </label>
+            <input type="text" formControlName="email" class="col-sm-5 form-control form-control-sm" id="email" placeholder="Email ID">
+        </div>
+        <div class="form-group row">
+            <label for="phone" class="col-sm-3  col-form-label col-form-label-sm"> Phone Number </label>
+            <input type="text" formControlName="phone" class="col-sm-5 form-control form-control-sm" id="phone" placeholder="Phone Number">
+        </div>
+        <div class="form-group row">
+            <label for="address" class="col-sm-3  col-form-label col-form-label-sm"> Address <sup
+                    class="text-danger">*</sup> </label>
+            <input type="text" formControlName="address" class="col-sm-5 form-control text-capitalize form-control-sm" id="address" placeholder="Address">
+        </div>
+        <div class="form-group row">
+            <div class="offset-sm-3">
+                <button type="submit" class="btn btn-md btn-primary"> Save </button> &nbsp;
+                <button type="reset" class="btn btn-md btn-danger">Reset</button>
+            </div>
+        </div>
+    </form>
+</div>

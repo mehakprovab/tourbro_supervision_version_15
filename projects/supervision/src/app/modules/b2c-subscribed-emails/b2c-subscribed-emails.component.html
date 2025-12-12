@@ -1,0 +1,23 @@
+<div class="">
+    <div class="">
+        <ngb-tabset class="tabs-animated tabs-animated-shadow" (tabChange)="beforeChange(false)" #tabs [activeId]="activeIdString">
+            <ngb-tab id="newsletter">
+                <ng-template ngbTabTitle>
+                    <span><i class="fa fa-list"></i> &nbsp; NewsLetter Subscriptions</span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <app-newsletter-subscription (updateSubscription)="triggerTab($event)"></app-newsletter-subscription>
+                </ng-template>
+            </ngb-tab>
+            <!-- <ngb-tab id="deals">
+                <ng-template ngbTabTitle>
+                    <span><i class="fa fa-list"></i> &nbsp; Deals/Offers Subscription</span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <app-deals-subscription (updateSubscription)="triggerTab($event)"></app-deals-subscription>
+                </ng-template>
+            </ngb-tab> -->
+         
+        </ngb-tabset>
+    </div>
+</div>

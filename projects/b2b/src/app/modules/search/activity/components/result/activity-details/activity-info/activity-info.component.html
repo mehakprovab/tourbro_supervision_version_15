@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <h5 class="cusromGrey hotel_name">
+            {{activity?.ProductName}}
+        </h5><br>
+        <!-- <ng-template *ngIf="activity.StarRating === '' then noStar; else stars">
+        </ng-template>
+        <ng-template #noStar>
+            <span class="star_rtng">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            </span>
+        </ng-template>
+        <ng-template #stars>
+            <span class="star_rtng">
+                <i class="fas fa-star star_rtng_clr" *ngFor="let s of activity.StarRating | map: getStarArray"></i>
+                <i class="fas fa-star" *ngFor="let s of activity.StarRating | map: getStarArrayRemaining"></i>
+            </span>
+        </ng-template> -->
+        <div class="reviews" *ngIf="isActivityBooking">{{activity?.ReviewCount}} Reviews</div>
+        
+    </div>
+</div>

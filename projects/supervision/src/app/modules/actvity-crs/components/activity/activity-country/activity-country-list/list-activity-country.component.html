@@ -1,0 +1,64 @@
+<div class="mb-3 btop">
+    <div class="card-header-tab card-header col-12">
+        <div class="col-6 card-header-title font-size-lg text-capitalize font-weight-normal">
+            <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i> {{'Country List'}}
+        </div>
+        <div class="form-group mb-0 col-sm-6 col-6 p-0 float-right has-search d-flex justify-content-end">
+            <div class="col-6">
+                <span class="fa fa-search form-control-feedback"></span>
+                <input class="form-control" type="text" name="Search" [(ngModel)]="searchText"
+                    autocomplete="off" placeholder="Search">
+            </div>
+            
+        </div>
+    </div>
+    <form>
+        <div class="table-responsive">
+            <table class="table table-borderless table-striped table-hover" matSort (matSortChange)="sortData($event)">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-left text-nowrap" *ngFor="let header of displayColumn;"
+                            mat-sort-header="{{header.key}}">
+                            {{header.value }} </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="(noData && (!respData.length || (respData | filter:searchText).length === 0))">
+                        <td colspan="11">
+                            <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                        </td>
+                    </tr>
+                    <tr
+                        *ngFor="let data of respData | filter:searchText | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
+                        <td class="text-left text-muted">{{i+1}}.</td>
+                        <td class="text-left text-muted">
+                            <mat-slide-toggle class="example-margin" [(ngModel)]="data.status" (change)="updateStatus($event, data.id)"
+                            >
+                            </mat-slide-toggle>
+                        </td>
+                        <td class="text-left"> {{data['CountryName']}} </td>
+                        <td class="text-left btncontainer" *ngIf="loggedInUser.auth_role_id !== 7">
+                            <button mat-raised-button color="primary" class="btnStyle" (click)="updateCountry(data)"
+                                style="line-height: unset; padding: 0 10px;">{{'Update'}}</button>&nbsp;
+                                <button mat-raised-button color="primary" class="btnStyle" (click)="deleteCountry(data)"
+                                style="line-height: unset; padding: 0 10px;">{{'Delete'}}</button>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer pb-0">
+            <div class="d-flex w-100 justify-content-between">
+                <ngb-pagination [collectionSize]="collectionSize" [maxSize]="12" [rotate]="true" [boundaryLinks]="true" [(page)]="page"
+                    [pageSize]="pageSize">
+                </ngb-pagination>
+                <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                    <option [ngValue]="10">10 items per page</option>
+                    <option [ngValue]="20">20 items per page</option>
+                    <option [ngValue]="50">50 items per page</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>

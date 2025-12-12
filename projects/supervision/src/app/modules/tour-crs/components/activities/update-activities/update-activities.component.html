@@ -1,0 +1,30 @@
+<div class="entireScreen  p-0 col-md-12 col-lg-12">
+    <div class="heading">
+        <p>Tour Activities</p>
+    </div>
+    <div >
+        <form [formGroup]="activitiesForm" (ngSubmit)="onActivitiesSave()">
+            <div class="activitiesInput">
+                <label for="activities" class="font-weight-bold" > Tour Activities</label>
+                <input type="text" placeholder="Enter Package Activities"  formControlName="activitiesName" maxlength="150"
+                (input)="validateInput()">
+            </div>
+            <div *ngIf="activitiesForm.controls.activitiesName.errors">
+                <div *ngIf="activitiesForm.controls.activitiesName.errors.required" class="errorMessage">
+                  *Please enter updated package activities name.
+                </div>
+                <div *ngIf="activitiesForm.controls.activitiesName.errors.invalidString" class="errorMessage">
+                    *Including number(s) are not allowed.
+                </div>
+                <div *ngIf="activitiesForm.controls.activitiesName.errors.startOrEndSpace" class="errorMessage">
+                    *Empty space(s) in start and end are not allowed.
+                </div>
+            </div>
+            <div class="saveButton">
+                <button  class="btn btn-sm btn-primary mr-1 orangeButton">{{'Save'}}
+                </button>
+                <button class="btn btn-sm btn-primary mr-1 orangeButton packageBtn" routerLink="/tour-crs/activities"> {{'Package Activities'}}  </button>
+            </div>
+        </form>
+    </div>
+</div>

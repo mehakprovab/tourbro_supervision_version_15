@@ -1,0 +1,435 @@
+<section class="theme_bg modify-search mx-0 pr-0 pl-0" for="ModifySearch">
+
+  <div class="bbottom">
+      <div class="col-md-12 col-lg-12 p-0">
+          <div id="collapseBasic" style="z-index: 9999; margin-top: 0px;">
+              <div class="">
+                  <div class="col-md-12">
+                      <app-transfer-search (callResult)="searchResult($event)"></app-transfer-search>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+<div class="theme_bg"
+  style=" border-top: 1px solid #ddd; padding-top: 0px; float: left; width:100%;">
+  <div class="my-0">
+    <div class="card-body pb-3">
+      <div class="col-12">
+        <div class="row hotel_list1">
+         
+          <div class="col-md-12 col-lg-12 mt-0 nopad">
+            <div class="wrap d-flex">
+              <div class="col-md-8 nopad">
+
+                <div class="card-body nopad bg-whites">
+                  <div class="row text-center">
+                    <div class="col-md-4">
+                      <img *ngIf="transfers?.BookingSource !== 'ZBAPINO00022'" class="rounded imgStyle" src="{{transfers.product_image}}" alt="">
+                        <img *ngIf="transfers?.BookingSource === 'ZBAPINO00022'" class="rounded imgStyle" [src]="getImage(transfers.product_image)" alt="">
+                      <div class="transport-provider">Transfer provided by:<br><br>
+                          <div class="transport-provider-company">
+                            <img class="transport-provider-company-logo" src="{{transfers.ProductPhotos[0].photoHiResURL}}" alt="">{{transfers?.SupplierName}}</div>
+                      </div>
+                    </div>
+                    <div class="col-md-8 mb-2 pb-0 row mobile_row" style="padding: 8px;">
+                      <div class="col-md-12" style="text-align: left;">
+                        <h5 class="cusromGrey">
+                          {{transfers.NumUnits}} X {{transfers.ProductName}}
+                        </h5>
+                        <ng-template *ngIf="transfers.StarRating === '' then noStar; else stars">
+                        </ng-template>
+                        <ng-template #noStar>
+                          <span class="star_rtng">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                          </span>
+                        </ng-template>
+                        <ng-template #stars>
+                          <span class="star_rtng">
+                            <i class="fas fa-star star_rtng_clr"
+                              *ngFor="let s of transfers.StarRating | map: getStarArray"></i>
+                            <i class="fas fa-star" *ngFor="let s of transfers.StarRating | map: getStarArrayRemaining"></i>
+                          </span>
+                        </ng-template>
+                        <div class="clearfix"></div>
+                        <div class="amenties">
+                         <i class="fal fa-clock"></i> 
+                          <p class="f12b">Estimated journey time</p>
+                          <ul>
+                            <li >
+                              <span class="am_ttl2"> {{transfers.Duration}}</span>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="amenties">
+                          <i class="fal fa-user"></i> 
+                          <p class="f12b">Number of passengers</p>
+                          <ul>
+                            <li >
+                              <span class="am_ttl2">{{transfers?.OccupancyFrom}}-{{transfers?.OccupancyTo}}</span>                              </li>
+                          </ul>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="amenties" style="border: none;">
+                          <i class="fal fa-suitcase"></i> 
+                          <p class="f12b">Luggage allowance</p>
+                          <ul>
+                            <li >
+                              <span class="am_ttl2" *ngIf="transfers.Suitcase">{{transfers.Suitcase}} suitcases </span> &
+                              <span class="am_ttl2" *ngIf="transfers.SmallBaggage">{{transfers.SmallBaggage}} Small bag per vehicle </span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="clearfix"></div>
+               
+                <!-- <div id="prc_rght">
+                  <h5>Select date and participants:</h5>
+                  <form [formGroup]="travellerConfig">
+                    <div class="org_row d-flex">
+                      <div class="col-xs-12 col-sm-4 smpad">
+                        <div class="trvlr">
+                          <input type="hidden" name="" id="total_age_band" value="1">
+                          <div class="totlall" (clickOutside)="closeTravellers();">
+                            <span class="remngwd" (click)="travellersFadeinn=!travellersFadeinn; fadeinn=false;">
+                              <input type="hidden" name="total_pax_count" id="total_pax_count" value="1">
+                              <span id="travel_text">Total Traveller {{totalTraveller}}</span>
+                            </span>
+                            <div class="roomcount pax_count_div {{travellersFadeinn ? 'fadeinn' : ''}}"
+                              *ngIf="travellersFadeinn">
+                              <div class="inallsn">
+                                <div class="oneroom fltravlr">
+                                  <div class="clearfix"></div>
+                                  <ng-container *ngFor="let traveller of transfers.Product_AgeBands">
+                                    <div class="roomrow" *ngIf="(traveller.description | lowercase) =='adult'">
+                                      <div class="celroe col-md-7">
+                                        <i class="fa fa-male"></i> {{traveller.description}}
+                                        <span class="agemns">(Age {{traveller.ageFrom}} to {{traveller.ageTo}})</span>
+                                      </div>
+                                      <div class="celroe col-md-5">
+                                        <div class="input-group countmore pax-count-wrapper adult_count_div">
+                                          <span class="input-group-btn">
+                                            <button (click)="onUpdateTraveller(traveller.description, 'minus')"
+                                              type="button" class="btn btn-default btn-number">
+                                              <span class="fa fa-minus"></span>
+                                            </button>
+                                          </span>
+                                          <input type="text"
+                                            class="form-control input-number centertext valid_class pax_count_value"
+                                            formControlName="adult" min="1" max="9" readonly>
+                                          <span class="input-group-btn">
+                                            <button (click)="onUpdateTraveller(traveller.description, 'plus')"
+                                              type="button" class="btn btn-default btn-number">
+                                              <span class="fa fa-plus"></span>
+                                            </button>
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="roomrow" *ngIf="(traveller.description | lowercase) =='senior'">
+                                      <div class="celroe col-md-7">
+                                        <i class="fa fa-male"></i> {{traveller.description}}
+                                        <span class="agemns">(Age {{traveller.ageFrom}} to {{traveller.ageTo}})</span>
+                                      </div>
+                                      <div class="celroe col-md-5">
+                                        <div class="input-group countmore pax-count-wrapper adult_count_div">
+                                          <span class="input-group-btn">
+                                            <button (click)="onUpdateTraveller(traveller.description, 'minus')"
+                                              type="button" class="btn btn-default btn-number">
+                                              <span class="fa fa-minus"></span>
+                                            </button>
+                                          </span>
+                                          <input type="text"
+                                            class="form-control input-number centertext valid_class pax_count_value"
+                                            formControlName="senior" min="1" max="9" readonly>
+                                          <span class="input-group-btn">
+                                            <button (click)="onUpdateTraveller(traveller.description, 'plus')"
+                                              type="button" class="btn btn-default btn-number">
+                                              <span class="fa fa-plus"></span>
+                                            </button>
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="roomrow" *ngIf="(traveller.description | lowercase) =='youth'">
+                                      <div class="celroe col-md-7">
+                                        <i class="fa fa-male"></i> {{traveller.description}}
+                                        <span class="agemns">(Age {{traveller.ageFrom}} to {{traveller.ageTo}})</span>
+                                      </div>
+                                      <div class="celroe col-md-5">
+                                        <div class="input-group countmore pax-count-wrapper adult_count_div">
+                                          <span class="input-group-btn">
+                                            <button (click)="onUpdateTraveller(traveller.description, 'minus')"
+                                              type="button" class="btn btn-default btn-number">
+                                              <span class="fa fa-minus"></span>
+                                            </button>
+                                          </span>
+                                          <input type="text"
+                                            class="form-control input-number centertext valid_class pax_count_value"
+                                            formControlName="youth" min="1" max="9" readonly>
+                                          <span class="input-group-btn">
+                                            <button (click)="onUpdateTraveller(traveller.description, 'plus')"
+                                              type="button" class="btn btn-default btn-number">
+                                              <span class="fa fa-plus"></span>
+                                            </button>
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="roomrow" *ngIf="(traveller.description | lowercase) =='child'">
+                                      <div class="celroe col-md-7">
+                                        <i class="fa fa-male"></i> {{traveller.description}}
+                                        <span class="agemns">(Age {{traveller.ageFrom}} to {{traveller.ageTo}})</span>
+                                      </div>
+                                      <div class="celroe col-md-5">
+                                        <div class="input-group countmore pax-count-wrapper adult_count_div">
+                                          <span class="input-group-btn">
+                                            <button (click)="onUpdateTraveller(traveller.description, 'minus')"
+                                              type="button" class="btn btn-default btn-number">
+                                              <span class="fa fa-minus"></span>
+                                            </button>
+                                          </span>
+                                          <input type="text"
+                                            class="form-control input-number centertext valid_class pax_count_value"
+                                            formControlName="child" min="1" max="9" readonly>
+                                          <span class="input-group-btn">
+                                            <button (click)="onUpdateTraveller(traveller.description, 'plus')"
+                                              type="button" class="btn btn-default btn-number">
+                                              <span class="fa fa-plus"></span>
+                                            </button>
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="roomrow" *ngIf="(traveller.description | lowercase) =='infant'">
+                                      <div class="celroe col-md-7">
+                                        <i class="fa fa-male"></i> {{traveller.description}}
+                                        <span class="agemns">(Age {{traveller.ageFrom}} to {{traveller.ageTo}})</span>
+                                      </div>
+                                      <div class="celroe col-md-5">
+                                        <div class="input-group countmore pax-count-wrapper adult_count_div">
+                                          <span class="input-group-btn">
+                                            <button (click)="onUpdateTraveller(traveller.description, 'minus')"
+                                              type="button" class="btn btn-default btn-number">
+                                              <span class="fa fa-minus"></span>
+                                            </button>
+                                          </span>
+                                          <input type="text"
+                                            class="form-control input-number centertext valid_class pax_count_value"
+                                            formControlName="infant" min="1" max="9" readonly>
+                                          <span class="input-group-btn">
+                                            <button (click)="onUpdateTraveller(traveller.description, 'plus')"
+                                              type="button" class="btn btn-default btn-number">
+                                              <span class="fa fa-plus"></span>
+                                            </button>
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </ng-container>
+                                  <div class="clear"></div>
+                                  <button (click)="closeTravellers()"
+                                    class="done1 comnbtn_room1 d-block ml-auto btn_hover">Done</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xs-12 col-sm-4 smpad">
+                        <div class="chk_avl">
+                          <button type="button" class="patencls" id="check-avil-btn" [disabled]="desableAvailability"
+                            (click)="getTripList(transfers)">Check
+                            Availability</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-xs-12">
+                      <span class="ac_note">
+                        <strong>Note:</strong> Active calendar date shows availability of the Package. </span>
+                    </div>
+                  </form>
+                </div> -->
+                <div id="pckg_optn" *ngIf="loading || noTransfer || (transferList && transferList.length>0)">
+                  <div class="pckg_optns">
+                    <div *ngIf="noTransfer" class="f19 wt600">
+                      Transfer not available for this date.Kindly change the date and check.
+                    </div>
+                    <div *ngIf="loading" class="spinner">
+                      <div class="bounce1"></div>
+                      <div class="bounce2"></div>
+                      <div class="bounce3"></div>
+                      <div class="bounce4"></div>
+                    </div>
+                    <ng-container *ngIf="transferList && transferList.length>0">
+                      <h3 class="f19 wt600">Select Package Options</h3>
+                      <div class="optn_sngle flx jsb clm" id="varnt0" *ngFor="let transfer of transferList">
+                        <div class="inr_optndv flx jsb">
+                          <div class="lt_optn">
+                            <h4 class="f16 wt600">{{productList?.ProductName}}</h4>
+                            <div class="tym_hrs1 flx alignit" *ngIf="transfer.gradeDepartureTime">
+                              <span class="f12 wt600">DepartureTime: {{transfer.gradeDepartureTime}}</span>
+                            </div>
+                            <div class="tym_hrs1 flx alignit">
+                              <span class="f12 wt600"> Traveler: {{transfer.TotalPax}}</span>
+                            </div>
+                            <div class="tym_hrs1 flx alignit" *ngIf="transfer.language_code=='en'">
+                              <span class="f12 wt600">Language: English</span>
+                            </div>
+                            <div class="tym_hrs1 flx alignit">
+                              <span class="f12 wt600">Code: {{transfer.productCode}}</span>
+                            </div>
+                            <section class="float-left">
+                              <div class="article f14 mt-3">
+                                <p [innerHTML]="transfer.gradeDescription"></p>
+                              </div>
+                            </section>
+                          </div>
+                          <div class="rt_optn flx clm">
+                            <div class="optn_prce f28">{{transfer.Price.Currency}} <span
+                                class="wt700">{{transfer.Price.TotalDisplayFare }}</span>
+                            </div>
+                            <form>
+                              <button type="submit" (click)="blocktrip(transfer)" class="sight_book ">Book</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+                <div id="ovrvw">
+                  <div class="pckg_optns">
+                    <div id="Overview">
+                      <h3 class="f19 wt600">What's included in your trip
+                      </h3>
+                      <p class="f12b mb-2 mt-2 pb-2 border-bottom"><strong style="color: #ffa200;"><i class="fal fa-suitcase"></i>  Luggage allowance</strong></p>
+                      <ul>
+                        <li>
+                          <span class="am_ttl3" *ngIf="transfers.Suitcase">{{transfers.Suitcase}} Suitcases (per vehicle)</span> - Free
+                        </li>
+                        <li>
+                          <span class="am_ttl3" *ngIf="transfers.SmallBaggage">{{transfers.SmallBaggage}} Small bag (per vehicle)</span> -
+                          Free
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="clr"></div>
+                </div>
+                <div class="card-body bg-whites mt-4" *ngIf="transfers?.Disclaimer && transfers?.Disclaimer.length>0">
+                  <div class="row text-center">
+                      <div class="col-md-12" style="text-align: left;">
+                          <h5 class="cusromGreys">
+                            Disclaimer
+                          </h5>
+                          <div class="clearfix"></div>
+                          <div *ngIf="transfers?.BookingSource !== 'ZBAPINO00022'" class="amentiess" style="border: none;">
+                            <div *ngFor="let disclaimer of transfers?.Disclaimer">
+                              <p class="f12b mb-2 mt-2 pb-2 border-bottom"><strong style="color: #ffa200;">{{disclaimer.Title}}</strong></p>
+                              <span class="am_ttl3" [innerHTML]="disclaimer.Description"></span>
+                            </div>
+                          </div>
+
+                          <div *ngIf="transfers?.BookingSource === 'ZBAPINO00022'" class="amentiess" style="border: none;">
+                            <span class="am_ttl3" [innerHTML]="transfers?.Disclaimer"></span>
+                          </div>
+                        </div>
+                  </div>
+              </div>
+                <button type="submit" (click)="blocktrip(transfers)" class="sight_book contnbook">Continue Booking</button>
+              </div>
+              <div class="col-md-4 pr-0">
+                <div class="comon_backbg">
+                  <h5 class="inpagehed" style="color: #1B9AD4;">Fare Summary</h5>
+                  <div class="col-md-12">
+                      <div class="row trooms_desc pt-0 pb-0">
+                          <div class="col-md-12 px-3">
+                              <div class="clearfix"></div>
+                              <div class="valign-wrapper mt-1 mb-1">
+                                  <div class="col-md-6 col-6 nopad">
+                                      <span class="cusromBlue m-0">
+                                          Base Fare:
+                                      </span>
+                                  </div>
+                                  <div class="col-md-6 col-6 nopad text-right">
+                                      <span class="m-0 pull-right ">
+                                          {{transfers.Price.Currency}} {{transfers.Price.TotalDisplayFare | number:'1.1-2'}}
+                                      </span>
+                                  </div>
+                              </div>
+                              <div class="clearfix"></div>
+                          </div>
+                      </div>
+
+                      <div class="col-md-12 col-lg-12 float-left f-18 mb-0 mobile_nopad mt-2 mb-2 p-0">
+                        <div class="float-left  grand_tot"> Grand Total </div>
+                        <div class="float-right text-warning" style="color: #092e53 !important; font-size: 16px; font-weight: 700;">
+                          {{transfers.Price.Currency}} {{transfers.Price.TotalDisplayFare | number:'1.1-2'}}
+                        </div>
+                      </div>
+                     
+                  </div> 
+              </div>
+              <div class="card-body bg-whites mt-2 nopad mb-3 float-left w-100" *ngFor="let journeyList of transfers.Journey; index as i"> 
+                <h5 class="cusromGreys p-3 bg-rey">
+                    <i class="fal fa-calendar-check"></i> Journey {{i+1}} 
+                </h5>
+                <div class="text-center">
+                    <div class="col-md-12" style="text-align: left;">                            
+                        <div class="clearfix"></div>
+                        <div class="amentiess justify-content-between" style="border: none;">
+                          <p class="f12b mb-2 mt-2 w-100 pb-2 border-bottom">
+                            <span class="fs-small">From</span><br>
+                            <!-- <strong  class="fs-small">{{transfers.data.body.From.name}}</strong><br> -->
+                           <strong *ngIf="transfers?.BookingSource === 'ZBAPINO00022'" style="font-size: 14px;
+      color: #092e53;">{{transfers.DeparturePoint}}</strong>
+                              <strong *ngIf="i === 0 && transfers?.BookingSource !== 'ZBAPINO00022'" class="fs-small">{{ transfers.data.body.From.name }}</strong><br>
+                              <strong class="fs-small" *ngIf="i === 1 && transfers?.BookingSource !== 'ZBAPINO00022'">{{ transfers.data.body.To.name }}</strong><br>
+                            <!-- <strong>{{journeyList.From}}</strong> -->
+                          </p>
+                          <p class="f12b mb-2 mt-2 w-100 text-left pb-2 border-bottom">
+                            <span class="fs-small">To</span><br>
+                             <strong *ngIf="transfers?.BookingSource === 'ZBAPINO00022'" style="font-size: 14px;
+      color: #092e53;">{{transfers.Destination}}</strong>
+                            <!-- <strong  class="fs-small">{{transfers.data.body.To.name}}</strong><br> -->
+                            <strong *ngIf="i === 1 && transfers?.BookingSource !== 'ZBAPINO00022'" class="fs-small">{{ transfers.data.body.From.name }}</strong><br>
+                            <strong class="fs-small" *ngIf="i === 0 && transfers?.BookingSource !== 'ZBAPINO00022'">{{ transfers.data.body.To.name }}</strong><br>
+                            <!-- <strong>{{journeyList.To}}</strong> -->
+                          </p>
+                        </div>
+                        <div class="amentiess d-flex justify-content-between" style="border: none;">
+                            <p class="f12b mb-2 mt-2 w-50 pb-2 border-bottom">
+                              <span class="fs-small">Date</span><br>
+                              <strong>{{journeyList.Date}}</strong>
+                            </p>
+                            <p class="f12b mb-2 mt-2 w-50 text-right pb-2 border-bottom">
+                              <span class="fs-small">Time</span><br>
+                              <strong>{{journeyList.Time}}</strong>
+                            </p>
+                          </div>
+                      </div>
+                </div>
+            </div>  
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-loading [show]="showLoader"
+  [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+  [template]="loadingTemplate"></ngx-loading>

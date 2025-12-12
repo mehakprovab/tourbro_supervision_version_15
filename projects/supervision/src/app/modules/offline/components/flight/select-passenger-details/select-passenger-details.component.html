@@ -1,0 +1,32 @@
+<!-- <p>select-passenger-details works!</p> -->
+<div class="card-header-tab card-header">
+    <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+        <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+        {{ 'Select Passenger Details' }}
+    </div>
+</div>
+<form class="p-4 bbottom">
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label class="" for="inputAdult">Adult</label>
+            <select id="inputAdult" class="form-control form-control-sm">
+                <option selected>Choose...</option>
+                <option *ngFor="let num of numOption;" > {{num}} </option>
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <label class="" for="inputChildren">Children</label>
+            <select id="inputChildren" class="form-control form-control-sm">
+                <option selected>Choose...</option>
+                <option *ngFor="let num of numOption;" > {{num}} </option>
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <label class="" for="inputInfants">Infants</label>
+            <select id="inputInfants" class="form-control form-control-sm">
+                <option selected>Choose...</option>
+                <option *ngFor="let num of numOption;" > {{num}} </option>
+            </select>
+        </div>
+    </div>
+</form>

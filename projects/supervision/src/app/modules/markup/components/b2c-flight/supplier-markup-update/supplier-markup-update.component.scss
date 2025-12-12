@@ -1,0 +1,37 @@
+.nrm_input,
+.src_btn {
+    padding    : 0.5rem 0.75rem 0.5rem 2.2rem;
+    line-height: 1.7;
+    height     : calc(2.5em + 0.75rem + 2px);
+}
+
+.card {
+    padding    : 30px;
+    font-family: 'Asap';
+}
+
+.droplocations {
+    background: #fbfbfb;
+    position  : relative;
+    width     : 100%;
+    max-height: 300px;
+    overflow  : auto;
+    display   : block;
+}
+
+.droplocations li {
+    display   : block;
+    padding   : 10px 15px;
+    color     : #000;
+    font-size : 14px;
+    box-shadow: 0px 0px 1px 0px #8c8c8c;
+}
+
+.rmvBtn{
+    background: white;
+    border: none;
+    color: #e41818;
+    position: absolute;
+    top: 40px;
+    left: -6px; z-index: 9999;
+}

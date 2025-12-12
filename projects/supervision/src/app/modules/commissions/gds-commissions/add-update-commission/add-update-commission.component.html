@@ -1,0 +1,102 @@
+<div class="">
+    <hr>
+    <div class="card mb-3">
+        <form [formGroup]="regConfig" autocomplete="off">
+            <div class="p-2">
+                <div class="form-group form-inline mb-0 font-weight-bold">
+                    N.B: Commission amount is calculated from the commission which you get from API
+                </div>
+                <div class="form-group form-inline mb-0 font-weight-bold">
+                    Note: 100/GDS commission= results x no of commission
+                </div>
+            </div>
+            <div>
+                <div class="d-flex flex-row pt-3">
+                    <div class="form-group col-sm-4">
+                        <label for="airlines">Airlines &nbsp;</label>
+                        <select formControlName="airlines" class="form-control col-sm-12"
+                            (change)="checkAirline($event)">
+                            <option [value]="null" disabled>Choose...</option>
+                            <option *ngFor="let airline of preferredAirlines" [value]="airline.id">
+                                {{airline.name}} ({{airline.code}})
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="c_value">Commission Value &nbsp;</label>
+                        <div>
+                            <input type="text" (keypress)="numberOnly($event)"  maxlength="3" id="c_value" class="form-control col-sm-12"
+                                formControlName="c_value">
+                        </div>
+                    </div>
+                </div>
+
+                <div formArrayName="segments">
+                    <div class="d-flex flex-row" style="position: relative;"
+                        *ngFor="let segment of segments()?.controls; let i=index;let last=last" [formGroupName]="i">
+                        <div class="form-group col-md-4">
+                            <label for="from_airport_name">From</label>
+                            <input formControlName="from_airport_name" type="text" class="form-control text-capitalize"
+                                placeholder="From Airport" id="appReference"
+                                (keyup)="getAutoCompleteLocations($event,'from', i)" list="dynamicLocationsOrigin">
+                            <ul class="droplocations" id="dynmicLocations" *ngIf="i==selectedCity">
+                                <li *ngFor="let location of locationsOrigin" (click)="selectedOrigin(location, i)">
+                                    <i class="fal fa-map-marker-alt"></i>
+                                    {{location | map: getAirportLocation}}
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="to_airport_name">To</label>
+                            <input formControlName="to_airport_name" type="text" class="form-control text-capitalize"
+                                placeholder="To Airport" id="phone" (keyup)="getAutoCompleteLocations($event,'to', i)"
+                                list="dynamicLocationsDest">
+                            <ul class="droplocations" id="dynmicLocations" *ngIf="i==selectedCity">
+                                <li *ngFor="let location of locationsDestination" (click)="selectedDest(location, i)">
+                                    <i class="fal fa-map-marker-alt"></i>
+                                    {{location | map: getAirportLocation}}
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="s_value">Value &nbsp;</label>
+                            <div>
+                                <input type="text" (keypress)="numberOnly($event)"  maxlength="3" id="s_value" class="form-control col-sm-12"
+                                    formControlName="s_value">
+                            </div>
+                        </div>
+
+                        <div class="col-md-1">
+                            <label for="city" class="col-2 col-form-label opacity-0"></label>
+                            <button class="col-sm-1" class="rmvBtn" (click)="removeSegment(i)" *ngIf="i>=1">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <label for="city" class="col-2 col-form-label opacity-0"></label>
+                            <div class="col-4" *ngIf="last">
+                                <button type="button" class="btn btn-primary" (click)="addMoreSegments()">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table">
+                    <tr>
+                        <td>
+                            <div id="allbtn" class="customCenter">
+                                <span class="p-1">
+                                    <button (click)="onSubmit()" class="btn btn-primary p-1">{{this.addOrUpdate |
+                                        uppercase}}</button>
+                                </span>
+                                <span class="p-1">
+                                    <button type="reset" class="btn btn-primary p-1" (click)="reset()">RESET</button>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </div>
+</div>

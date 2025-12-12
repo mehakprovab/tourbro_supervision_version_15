@@ -1,0 +1,37 @@
+// .right-side   {
+//         position: absolute; /*or fixed*/
+//         right: 0px;
+//     }
+    
+    @media only screen and (max-width: 767px){
+        .h-logo img { width: 100px !important;}
+    }
+    .right-side li.active a{color:#001C4B!important;font-weight: 700;}
+    .contact-indi svg{     background: #001C4B;
+        color: #fff;
+        padding: 5px;
+        font-size: 24px;
+        margin-right: 4px; }
+    .right-side li{list-style: none;margin: 0px 15px;}
+    .right-side li a{font-size: 14px;font-weight: 500;line-height: 24px;color: #4C4D4F;text-transform: uppercase;}
+    .right-side ul{margin-bottom: 0px;margin-left: 150px;}
+    .right-side li.active a{color:#001C4B!important;font-weight: 700;}
+    .supplier{
+    background: #FBC108;
+    border-radius: 5px;
+    padding: 5px 5px;
+    width: 100%;
+    height: 45px;
+    color: #fff;
+    // left:400px;
+    transition: 0.3s;
+    font-size: 14px;
+    line-height: 26px;
+    font-weight: 400;
+    }
+    .b2b-supplier {
+        background: #001c4b !important;
+    }
+.dropdownBasic1lmenu-list {
+    top: 0px !important;
+}

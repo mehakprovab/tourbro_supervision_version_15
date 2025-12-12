@@ -1,0 +1,88 @@
+<div class="row" #accountsDetails>
+    <div class="col-md-12">
+        <div class="card main-card mb-6">
+            <div *ngIf="showDetails" class="px-4 pt-4 bbottom">
+                <p><strong>Agency Name :</strong> {{agentDetails.agencyname}}</p>
+                <p><strong>Balance :</strong> {{agentDetails.agentbalance}}</p>
+                <p><strong>CreditLimit :</strong> {{agentDetails.agentcredit_limit}}</p>
+                <p><strong>Due Amount :</strong> {{agentDetails.agentdueamount}}</p>
+                <p><strong>Currency :</strong> <b> <mark>{{' '+agentDetails.agentcurrency}} </mark> </b></p>
+            </div>
+            <div class="card-header-tab card-header">
+                <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                    <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+                    {{ 'Agent Balance' }}
+                </div>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="agentForm" (ngSubmit)="onSubmit()">
+                    <div class="position-relative row form-group">
+                        <label for="exampleAgents" class="col-sm-2 col-form-label">Agents
+                            <span style="color: red;">*</span></label>
+                        <div class="col-sm-10">
+                            <select formControlName="agents" (change)="onChange($event.target.value)"
+                                class="form-control">
+                                <option [value]="''" selected>Choose...</option>
+                                <option *ngFor="let agent of respData" [value]="agent.user_id">{{agent.agency_name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="position-relative row form-group">
+                        <label for="exampleEmail" class="col-sm-2 col-form-label">Account Type
+                            <span style="color: red;">*</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <select formControlName="accountType" (change)="onChangeType($event.target.value)"
+                                class="form-control">
+                                <option [value]="''" selected>Choose...</option>
+                                <option *ngFor="let account of accounts" [value]="account.name">{{account.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="position-relative row form-group">
+                        <label for="exampleEmail" class="col-sm-2 col-form-label">{{accountType}} Towards
+                            <span style="color: red;">*</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <select formControlName="towards" class="form-control">
+                                <option [value]="''" selected>Choose...</option>
+                                <option *ngFor="let toward of towards" [value]="toward.name">{{toward.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="position-relative row form-group">
+                        <label for="exampleEmail" class="col-sm-2 col-form-label">Reference Number
+                            <span style="color: red;">*</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <input formControlName="referenceNumber" id="exampleEmail" placeholder="" type="text"
+                                class="form-control">
+                        </div>
+                    </div>
+                    <div class="position-relative row form-group">
+                        <label for="exampleEmail" class="col-sm-2 col-form-label">{{accountType}} Amount
+                            <span style="color: red;">*</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <input formControlName="amount" id="exampleEmail" placeholder="" type="text"
+                                class="form-control">
+                        </div>
+                    </div>
+                    <div class="position-relative row form-group">
+                        <label for="exampleEmail" class="col-sm-2 col-form-label">Comments
+                            <span style="color: red;">*</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <textarea formControlName="comments" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-secondary">Update</button>
+                    &nbsp;&nbsp;
+                    <span class="btn btn-md btn-danger" (click)="onReset()">Reset</span>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

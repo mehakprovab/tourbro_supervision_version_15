@@ -1,0 +1,52 @@
+<div class="row card">
+    <div class=" p-0 col-md-12 col-lg-12">
+        <div class="card-header-tab card-header">
+            <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+                <span> {{'Push Notification to all Subscribers'}} </span>
+            </div>
+        </div>
+    </div>
+    <div class="my-5 offset-lg-2 offset-md-2 col-md-8 col-lg-8">
+        <form class="" [formGroup]="regConfig">
+            <div class="form-group row">
+                <label for="title" class="col-sm-3 col-form-label font-weight-bold"> Title <sup
+                        class="text-danger f-16"> * </sup> </label>
+                <div class="col-sm-9">
+                    <input formControlName="title" type="text" class="form-control " id="title"
+                        placeholder="Title" >
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="message" class="col-sm-3 col-form-label font-weight-bold"> Message<sup
+                        class="text-danger f-16"> * </sup> </label>
+                <div class="col-sm-9">
+                    <input formControlName="message" type="text" maxlength="18" class="form-control " id="message"
+                        placeholder="Message">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="icon" class="col-sm-3 col-form-label font-weight-bold"> Icon 
+                </label>
+                <div class="col-sm-9">
+                    <input formControlName="icon" type="text" class="form-control " id="icon"
+                        placeholder="Icon"  >
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="url" class="col-sm-3 col-form-label font-weight-bold"> URL 
+                </label>
+                <div class="col-sm-9">
+                    <input formControlName="url" type="text" class="form-control " id="url"
+                        placeholder="URL" >
+                </div>
+            </div>
+            
+            <div class="form-group row mb-n2">
+                <div class="col-sm-12 customCenter">
+                    <button type="submit" class="btn btn-sm btn-primary mr-1" (click)="onSubmit()">Send</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

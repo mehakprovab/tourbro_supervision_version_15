@@ -1,0 +1,11 @@
+{
+  "/Antripx/*": {
+    "target": "https://booking247.com",
+    "secure": false,
+    "pathRewrite": {
+      "^/Antripx": "Antripx"
+    },
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

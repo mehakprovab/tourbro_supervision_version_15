@@ -1,0 +1,237 @@
+<div style="background:#ccc; width:100%; position:relative;" *ngIf="tourData">
+    <div style="background:#ccc; max-width: 850px; margin: 0px auto; width:100%; position:relative;">
+        <div class="printformClass" style=" -webkit-print-color-adjust: exact;">
+            <div cellpadding="0" border-collapse="" cellspacing="0" width="100%"
+            style="font-size:12px; font-family: 'Open Sans', sans-serif; border-radius: 5px; margin:10px auto;background-color:#fff; padding:20px;border-collapse:separate; color: #000;">
+                <div>
+                    <h5>Enquiry Details</h5>
+                    <table>
+                        <th colspan="2" style="text-align: center;">Enquiry Information</th>
+                        <tbody>
+                            <tr>
+                                <td style="font-weight: 600;"> Name</td>
+                                <td> {{enqiryDetails?.name}}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 600;"> Contact Number</td>
+                                <td> {{enqiryDetails?.contactNumber}}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 600;"> Email</td>
+                                <td> {{enqiryDetails?.email}}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 600;"> Departure Place</td>
+                                <td> {{enqiryDetails?.departurePlace}}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 600;"> Departure Date</td>
+                                <td> {{enqiryDetails?.departureDate}}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 600;"> Message</td>
+                                <td> {{enqiryDetails?.message}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="enquiry" >
+                        <a (click)="closeEnquiry()"><button>Close Enquiry</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center" style="margin-bottom: 10px;" >
+            <a (click)="downloadA4('pdf', 'potrait')"><button>PDF</button></a>&nbsp;&nbsp;
+            <a [routerLink]="['/report/b2c-tour-enquiry']"><button>Back</button></a>
+            <a (click)="emailBrouchure()"><button>Email Brouchure</button></a>
+        </div>
+        <div class="printformClass no-page-break" style=" -webkit-print-color-adjust: exact;" id="print_brochure" #print_brochure>
+            <div cellpadding="0" border-collapse="" cellspacing="0" width="100%"
+            style="font-size:12px; font-family: 'Open Sans', sans-serif; border-radius: 5px; margin:10px auto;background-color:#fff; padding:20px;border-collapse:separate; color: #000;">
+            <div>
+                <div>
+                    <div class="row">
+                        <div class=" col-md-6">
+                            <img style="width:160px; height: 58px;" src="./assets/images/login-images/l-logo.png">
+                        </div>
+                        <div class=" col-md-6 contact">
+                            <div class="contact-info">
+                                <span>Contact No :</span> &nbsp; 
+                                <i class="fas fa-phone"></i> &nbsp;
+                                <i class="fab fa-whatsapp"></i> &nbsp;
+                                <span class="phone-number">9876786278</span>
+                            </div>        
+                        </div>
+                    </div>
+                    <div  class="line"></div>
+                    <div class="row">
+                        <div>
+                            <h6 style="font-size: 14px; font-weight: bold; color: #13354e;padding-left: 15px;">{{tourName}}</h6>
+                        </div> 
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a  class="bannerImage" href="{{getImage()}}" target="_blank"><img class="bannerImage" width="250"
+                                [src]="getImage()" alt=""></a>
+                        </div>
+                        <div class="col-md-6 totalPrice">
+                            <h5 style="color: #13354e; text-align: center; margin-top: 20px;"> Total Price</h5>
+                            <h5 style="font-weight: 800; text-align: center;">{{priceDetails[0]['adult_airliner_price'] |number :'1.2'}}</h5>
+                        </div>
+                    </div>
+                    <div>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td style="font-weight: 600;">Tour Name:</td>
+                                    <td>{{tourName}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 600;">Tour Price:</td>
+                                    <td>
+                                        <tr>
+                                            <td>Adult Price</td>
+                                            <td>Child Price</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{priceDetails[0]['adult_airliner_price'] |number :'1.2'}}</td>
+                                            <td>{{priceDetails[0]['child_airliner_price']|number :'1.2'}}</td>
+                                        </tr>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th *ngFor="let item of durationPlace" style="background-color: #13354e;">{{item}}</th>
+                                </tr>
+                                <tr>
+                                    <td>{{tourDuration}}</td>
+                                    <!-- <td>{{tourData['tourDetails']startCity']}}</td>
+                                    <td>{{tourData['tourDetails']['endCity']}}</td> -->
+                                    <td></td>
+                                    <td></td>
+                                    <td>{{visitedCity}}</td>
+                                    <!-- <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th style="background-color: #13354e;">Overview</th>
+                                </tr>
+                                <tr>
+                                    <td >{{tourData['toursData']['package_description']}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th colspan="4" style="background-color: #13354e;">Itinerary details</th>
+                                </tr>
+                                <tr *ngFor="let item of programDetials">
+                                    <td style="font-weight: 600;">{{'Day'+item['visited_city_day']}}</td>
+                                    <td><span style="font-weight: 600;">Visiting Place:</span><br> {{item['CityName']}}</td>
+                                    <td><span style="font-weight: 600;">Day's Program:</span><br> {{item['program_title']}}</td>
+                                    <td><span style="font-weight: 600;">Description:</span><br> <span [innerHTML]="item['program_des']"></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th colspan="2" style="background-color: #13354e;">Inclusions & Exclusions</th>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 600;">Price Includes:</td>
+                                    <td [innerHTML]="tourData['toursData']['inclusions']"></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 600;">Price Excludes:</td>
+                                    <td [innerHTML]="tourData['toursData']['exclusions']"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th style="background-color: #13354e;">Terms and Conditions</th>
+                                </tr>
+                                <tr>
+                                    <td [innerHTML]="tourData['toursData']['terms']"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th style="background-color: #13354e;">Optional Tour</th>
+                                </tr>
+                                <tr>
+                                    <td [innerHTML]="tourData['toursData']['optional_tours']"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div  class="line"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="showEmailBrouchure">
+    <div class="modal">
+        <div class="modal-content">
+            <div class="custom-inline-form">
+                <form class="" [formGroup]="brochureForm" autocomplete="off">
+                    <h6 class="enquiryHeader"> Send Brouchure For <span>{{tourDetails?.package_name}}</span></h6>
+                        <div class="form-group required row">
+                            <label for="email " class="required" class="col-md-4 col-form-label"> Email <sup
+                                class="text-danger f-16"> * </sup> </label>
+                            <div class="col-md-8">
+                                <input type="email" class="form-control" id="email" maxlength="50" 
+                                    formControlName="email" placeholder="Enter Your Email">
+                            </div>
+                        </div>
+                        <div class="form-group required row">
+                            <label for="departurePlace" class="required" class="col-md-4 col-form-label"> Brouchure <sup
+                                class="text-danger f-16"> * </sup> </label>
+                            <div class="col-md-8">
+                                <input type="file" class="form-control" id="brochure" (change)="onFileSelected($event.target.files)"
+                                     placeholder="Brochure">
+                            </div>
+                        </div>
+                    <div class="form-group row mb-n2 btnRight">
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-sm btn-primary saveButton" (click)="onSendBrouchure()">Send</button>
+                            <button type="submit" class="btn btn-sm btn-primary mr-1 cancelButton" (click)="cancel()">Cancel</button>
+                        </div>
+                    </div>
+        
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+  

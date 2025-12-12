@@ -1,0 +1,124 @@
+<!-- <p>flight works!</p> -->
+<div class="card mb-3">
+    <div class="card-header-tab card-header">
+        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+            <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+            {{ 'Offline Ticket Booking' }}
+        </div>
+    </div>
+
+    <form class="p-4 bbottom">
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="inputBookingType4">Booking Type</label>
+                <select id="inputBookingType4" class="form-control form-control-sm">
+                    <option selected>Choose...</option>
+                    <option>International</option>
+                    <option>Domestic</option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputModuleType4">ModuleType</label>
+                <select id="inputModuleType4" class="form-control form-control-sm">
+                    <option selected>Choose...</option>
+                    <option>b2c</option>
+                    <option>supervision</option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputCarrierTypeOnward4">Carrier Type Onward</label>
+                <select id="inputCarrierTypeOnward4" class="form-control form-control-sm">
+                    <option selected>Choose...</option>
+                    <option>GDS</option>
+                    <option>LCC</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="inputCarrierTypeReturn4">Carrier Type Return</label>
+                <select id="inputCarrierTypeReturn4" class="form-control form-control-sm" disabled>
+                    <option selected>LCC</option>
+                    
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputBookingStatus4">Booking Status</label>
+                <select id="inputBookingStatus4" class="form-control form-control-sm">
+                    <option selected>Choose...</option>
+                    <option>Booking Confirmed</option>
+                    <option>Booking Inprocess</option>
+                    <option>Booking Hold</option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputIsRefundable4">IsRefundable</label>
+                <select id="inputIsRefundable4" class="form-control form-control-sm">
+                    <option selected>Choose...</option>
+                    <option>Non Refundable</option>
+                    <option>Refundable</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4 mb-0">
+                <label for="example-radio-group-label">Pick a Trip Type </label>
+                <mat-radio-group id="example-radio-group-label" aria-labelledby="example-radio-group-label" class="example-radio-group">
+                    <mat-radio-button class="example-radio-button" *ngFor="let val of radioBtn" [value]="val">
+                        {{val}}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="form-group col-md-4 mb-0">
+                <div class="form-group col-md-12 p-0">
+                    <label for="inputNumSectorsOnward4">Num Sectors Onward</label>
+                    <select id="inputNumSectorsOnward4" class="form-control form-control-sm">
+                        <option selected>Choose...</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-12 p-0">
+                    <label for="inputTolocation">To location</label>
+                    <input type="text" class="form-control form-control-sm" id="inputTolocation"
+                        placeholder="To location">
+                </div>
+            </div>
+            <div class="form-group col-md-4 mb-0">
+                <div class="form-group col-md-12 p-0">
+                    <label for="inputNumSectorsReturn4">Num Sectors Return</label>
+                    <select id="inputNumSectorsReturn4" class="form-control form-control-sm" disabled>
+                        <option selected>Choose...</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-12 p-0">
+                    <label for="inputFromlocation">From location</label>
+                    <input type="text" class="form-control form-control-sm" id="inputFromlocation"
+                        placeholder="From location">
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="inputGDSPnr">GDS PNR</label>
+                <input type="text" class="form-control form-control-sm" id="inputGDSPnr"
+                    placeholder="GDS PNR">
+            </div>
+        </div>
+    </form>
+    <app-passenger-contact-info></app-passenger-contact-info>
+    <app-onward-flight-details></app-onward-flight-details> 
+    <app-select-passenger-details></app-select-passenger-details>
+    <app-adult-info></app-adult-info> 
+    <app-passenger-fare-breakup></app-passenger-fare-breakup>
+    <app-admin-markup></app-admin-markup>
+    <form class="p-4">
+        <div class="form-row">
+            <div class="form-group">
+                <button class="btn btn-lg btn-primary"> {{'Save'}} </button> &nbsp; &nbsp;
+                <button class="btn btn-lg btn-danger"> {{'Reset'}} </button>
+            </div>
+        </div>
+    </form>
+</div>

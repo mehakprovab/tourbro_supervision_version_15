@@ -1,0 +1,132 @@
+<hr>
+<div class="card">
+    <form [formGroup]="regConfig" (ngSubmit)="onSubmit(regConfig.value)" class="form">
+        <div class="card-header">
+            <h5 class="card-title">Transfer Markup</h5>
+        </div>
+        <div class="card-body">
+            <table>
+                <div class="d-flex flex-row pt-3">
+                <div class="form-group col-sm-4">
+                    <label for="airlines">Suppliers &nbsp;</label>
+                    <mat-form-field class="col-sm-12"  appearance="fill" style="padding-left: 0;">
+                        <mat-label>Supplier List</mat-label>
+                        <input type="text" placeholder="Choose..."  class="text-capitalize" matInput formControlName="suppliers"
+                            [matAutocomplete]="supplier">
+                        <mat-autocomplete #supplier="matAutocomplete">
+                            <mat-option *ngFor="let suppliers of supplierList"
+                            [value]="suppliers.name"  (click)="selectedLocation(suppliers)">
+                                {{suppliers.name}} 
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="agent_id">Agent&nbsp;</label>
+                    <mat-form-field class="col-sm-12"  appearance="fill" style="padding-left: 0;">
+                        <mat-label>Agent List</mat-label>
+                        <input type="text" placeholder="Choose..."  class="text-capitalize" matInput formControlName="agent_id"
+                            [matAutocomplete]="auto">
+                        <mat-autocomplete class="text-uppercase" #auto="matAutocomplete" (optionSelected)="onSelectionChanged($event)">
+                            <mat-option *ngFor="let agent of respAgentData "
+                                [value]="agent.name" [id]="agent.id">
+                                {{agent.name}} 
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                </div>
+            </table>
+            <table>
+                <tr>
+                    <td>
+                        <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+                            <label for="airlines" class="mr-sm-2">Markup Type</label>
+                            <div style="display: flex;">
+                                <!-- <div class="position-relative form-check">
+                                    <label class="form-check-label">
+                                        <input value="plus" name="markupType" formControlName="markupType" type="radio"
+                                            class="form-check-input" />
+                                        Plus(+/- {{defaultCurrency}})
+                                    </label>
+                                </div> -->
+                                <div class="position-relative form-check">
+                                    <label class="form-check-label">
+                                        <input value="percentage" formControlName="markupType" checked type="radio"
+                                            class="form-check-input" />
+                                        Percentage(%)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+                            <label for="markupValue" class="mr-sm-2">Markup Value</label>
+                            <input formControlName="markupValue" placeholder="" type="text" class="form-control">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="card-footer customCenter">
+            <button type="reset" class="btn btn-primary">Reset</button>
+            &nbsp; &nbsp;
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+
+<div class="card mt-3" *ngIf="!noData">
+ 
+    <table class="card-table table" matSort>
+        <thead>
+            <tr>
+                <th scope="col" class="text-center" *ngFor="let header of displayColumn;">
+                    {{header.value }}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf="noData">
+                <td colspan="11">
+                    <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                </td>
+            </tr>
+            <tr *ngIf="!noData && !respData.length">
+                <td colspan="11">
+                    <h4 class="text-muted text-center">
+                        No Data Found!
+                    </h4>
+                </td>
+            </tr>
+            <tr *ngFor="let data of respData; let i = index">
+                <td class="align-middle text-center">{{i+1}}.</td>
+                <td class="align-middle text-center">
+                    {{selectedAgentList(data)}}
+                 </td>
+                <td class="align-middle text-center">
+                    
+                     {{getSupplier(data?.supplier) === 'ZBAPINO00011' ? 'Hoppa' : 'Transfer CRS'}}
+                </td>
+         
+                <td class="align-middle text-center">
+                    {{data?.value}}-{{data?.value_type}}
+                </td>
+        
+                <td class="align-middle text-center">
+                    <!-- <button class="btn btn-sm btn-primary" (click)="updateMarkup(data)">
+                        <i class="fa fa-edit text-nowrap">
+                            {{'Update'}}
+                        </i>
+                    </button>&nbsp; -->
+                    <button class="btn btn-sm btn-primary" (click)="deleteMarkup(data)">
+                        <i class="fa fa-edit text-nowrap">
+                            {{'Delete'}}
+                        </i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>

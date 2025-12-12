@@ -1,0 +1,44 @@
+<div class="trip-modal-container">
+    <div class="">
+        <div class="trip-modal-title">
+            <p>Please wait! This will take few seconds</p>
+            <p>While we search the best fares for you.</p>
+        </div>
+        <img src="assets/nosafer/images/l-logo.svg" alt="loader" />
+        <div class="destination-section">
+            <div class="dash-line"></div>
+            <div class="dest-from" *ngIf="flightInfo['tripType']!='Multi-city'">
+                <p>Departure</p>
+                <p> {{ getCity(flightInfo['departureCity'])}} </p>
+                <p>{{ flightInfo.departureDate | date: 'dd/MM/yyyy' }}</p>
+            </div>
+            <div class="dest-from" *ngIf="flightInfo['tripType']=='Multi-city'">
+                <p>Departure</p>
+                <p *ngFor="let f of flightInfo['cities']">
+                    {{f.mDepartureCity}} 
+                </p>
+            </div>
+            <!-- <div class="dest-icon">
+                <img src="assets/images/double-arrow.png" alt="{{arrow_right}}" />
+            </div> -->
+            <div class="dest-to" *ngIf="flightInfo['tripType']!='Multi-city'">
+                <p>Arrival</p>
+                <p> {{ getCity(flightInfo['destinationCity'])}} </p>
+                <p *ngIf='flightInfo.tripType=="Oneway"'>{{ flightInfo.departureDate | date: 'dd/MM/yyyy' }}</p>
+                <p *ngIf='flightInfo.tripType!="Oneway"'>{{ flightInfo.returnDate | date: 'dd/MM/yyyy' }}</p>
+            </div>
+            <div class="dest-to" *ngIf="flightInfo['tripType']=='Multi-city'">
+                <p>Arrival</p>
+                <p *ngFor="let f of flightInfo['cities']">
+                    {{f.mDestinationCity}}
+                </p>
+            </div>
+        </div>
+        <div class="dest-trip">
+            <p>{{ flightInfo.tripType }}</p>
+        </div>
+        <div class="dest-class">
+            <p>Class: {{ flightInfo.CabinClass }} {{ flightInfo.PreferredAirlines }}</p>
+        </div>
+    </div>
+</div>

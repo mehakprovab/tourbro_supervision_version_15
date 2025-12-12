@@ -1,0 +1,63 @@
+<div class="admin-travellerinfo-section" *ngIf="data">
+    <div class="info-sec">
+        <p>Lead Traveller Info</p>
+        <div class="row">
+            <div class="col-6">
+                <ul>
+                    <li>
+                        <label>Address:</label>
+                        <span>{{data.address}}</span>
+                    </li>
+                    <li>
+                        <label for="">Passport Number:</label>
+                        <span>{{data.passport_no}}</span>
+                    </li>
+                    <li>
+                        <label for="">Passport Expiry:</label>
+                        <span>{{data.passport_expiry | date: 'dd/MM/yyyy'}}</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-6">
+                <ul>
+                    <li>
+                        <label>Pin:</label>
+                        <span>{{data.postal_code}}</span>
+                    </li>
+                    <li>
+                        <label for="">Street Address:</label>
+                        <span>{{data.address1}}</span>
+                    </li>
+                    <li>
+                        <label>Country</label>
+                        <span>{{data.country}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="custom-table-layout info-table" *ngIf="data.co_travellers && data.co_travellers>0">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Date of Birth</th>
+                <th scope="col">PIN/ZIP Code</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let coTraveller of data.co_travellers">
+                <td scope="row">{{coTraveller.title}}</td>
+                <td>{{coTraveller.first_name}}</td>
+                <td>{{coTraveller.last_name}}</td>
+                <td>{{coTraveller.date_of_birth}}</td>
+                <td>
+                    {{coTraveller.postal_code}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>

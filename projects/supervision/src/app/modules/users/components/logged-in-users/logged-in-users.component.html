@@ -1,0 +1,48 @@
+<!-- <p>logged-in-users works!</p> -->
+<div class="card mb-3">
+    <div class="card-header-tab card-header">
+        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+            <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+            {{'Logged In Users'}}
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+            <thead>
+                <tr class="p-2">
+                    <th class="text-left text-nowrap" *ngFor="let header of displayedColumns;">
+                        {{header}}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="p-2" *ngFor="let user of loggedInUsers; let i=index;">
+                    <td class="text-left text-muted">{{i+1}}.</td>
+                    <td>
+                        <div class="widget-content p-0">
+                            <div class="widget-content-wrapper">
+                                <div class="widget-content-left mr-3">
+                                    <div class="widget-content-left">
+                                        <img height="50" width="50" class="rounded"
+                                            [src]="user['image']" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-left"> {{user['first_name'] +' '+ user['last_name']}} </td>
+                    <td class="text-left"> {{user['phone'] +'-'+ user['email']}} </td>
+                    <td class="text-left"> {{user['user_type']}} </td>
+                    <td class="text-left"> {{user['login_ip']}} </td>
+                    <td class="text-left"> {{user['login_time']}} </td>
+                </tr>
+                <tr *ngIf="!loggedInUsers.length">
+                    <td colspan="7" class="text-center">
+                        <mat-spinner [diameter]="30" mode="indeterminate" style="margin: 0 auto;"></mat-spinner>
+                        No Data Found
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

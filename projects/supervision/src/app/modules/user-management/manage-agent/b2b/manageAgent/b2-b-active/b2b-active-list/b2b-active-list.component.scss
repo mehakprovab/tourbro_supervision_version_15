@@ -1,0 +1,49 @@
+.wrapper1,
+.wrapper2 {
+  width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+.wrapper1 {
+  height: 20px;
+}
+
+.div1 {
+  width: 2700px;
+  height: 20px;
+}
+.div2 {
+  width: 2700px;
+  overflow: hidden;
+}
+.div2 .table-responsive {overflow: inherit;}
+.invisible-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  ::ng-deep .page-item.active .page-link, ::ng-deep .pagination .active.page-number .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #0683c2 !important;
+    border-color: #0683c2 !important;
+}
+.modal{
+    top: 58%;
+    transform: translate(0, -50%);
+    margin: 0 auto;
+}
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+}

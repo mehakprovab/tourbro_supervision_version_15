@@ -1,0 +1,239 @@
+<div class="tourTabContainer  col-12">
+    <ul class="nav nav-tabs d-flex w-100 justify-content-between">
+      <li>
+          <button class="nav-link active d-flex justify-content-center" (click)="scrolloverview('#Overviewtab')">Overview</button>
+      </li>
+      <li>
+          <button class="nav-link d-flex justify-content-center" (click)="scrolloverview('#Itinerarytab')"> Itinerary </button>
+      </li>
+      <li>
+          <button class="nav-link d-flex justify-content-center" (click)="scrolloverview('#Inclusionstab')"> Inclusions & Exclusions </button>
+      </li>
+      <li>
+          <button class="nav-link d-flex justify-content-center" (click)="scrolloverview('#Termstab')"> Terms & Conditions </button>
+      </li>
+
+      <li>
+        <button class="nav-link d-flex justify-content-center" (click)="scrolloverview('#safety')">Safety </button>
+    </li>
+
+    <li *ngIf="tourDetails?.BookingSource !== 'BGTAPINO00002'">
+        <button class="nav-link d-flex justify-content-center" (click)="scrolloverview('#Location')"> Meeting Point </button>
+    </li>
+     
+   </ul>
+  
+
+  
+  </div>
+  <div>
+  <div id="Overviewtab" class="overviw tabs_parent">
+      <h3>Overview</h3>
+       <h4>{{tourDetails?.package_name}}</h4>
+       <!-- <p class="tourDuration">{{tourDetails?.duration}}</p> -->
+       <p class="startCity" style="color: orange;font-weight: 400;">Start City : <span style="color: black;">{{tourDetails?.startCity}}</span></p>
+       <p class="endCity" style="color: orange;font-weight: 400;">End City: <span style="color: black;">{{tourDetails?.endCity}}</span></p>
+       <div>
+       <p [innerHTML]="tourDetails?.package_description" ></p>
+          <div class="col-xs-12 nopad inclsn">
+  
+  
+              <ng-container *ngFor="let item of tourDetails?.inclusionsChecks; let i=index">
+                  <div *ngIf="item==='Hotel'" class="hicn">
+                      <i class="i-htl"></i> 
+                      <span>Hotel</span>
+                  </div>
+                  <div *ngIf="item==='Meals'" class="hicn">
+                      <i class="i-mea"></i>
+                      <span>Meals</span>
+                  </div>
+                  <div *ngIf="item==='Flight'" class="hicn">
+                      <i class="i-fli"></i>
+                      <span>Flight</span>
+                  </div>
+                  <div *ngIf="item==='Sightseeing'" class="hicn">
+                      <i class="i-sig"></i>
+                      <span>Sightseeing</span>
+                  </div>
+                  <div *ngIf="item==='Transfer'" class="hicn">
+                      <i class="i-car"></i>
+                      <span>Transfer</span>
+                  </div>
+              </ng-container>
+  
+          </div>
+          <div class="highlights" *ngIf="tourDetails?.highlights">
+             <h5>Highlights</h5>
+             <p style="word-break: break-word;
+    overflow-wrap: anywhere;" [innerHTML]="tourDetails?.highlights"></p>
+          </div>
+          </div>
+      <!-- <p class="tourName" style="color: rgb(252, 102, 3);font-weight: 450;">{{tourDetails?.package_name}}</p>
+          <p class="tourDuration">{{tourDetails?.duration}}</p>
+          <p class="startCity" style="color: orange;font-weight: 400;">Start City : <span style="color: black;">{{tourDetails?.startCity}}</span></p>
+          <p class="endCity" style="color: orange;font-weight: 400;">End City: <span style="color: black;">{{tourDetails?.endCity}}</span></p>
+          <p class="cityCovered" style="color: orange;font-weight: 400;">City Covered: <span style="color: black;">{{tourDetails?.placesCovered}}</span></p> -->
+   </div>
+  
+  
+  <div id="Itinerarytab" class="iternry tabs_parent">
+      <h3>Itinerary </h3>
+      
+  <div class="accordion-shadow" id="accord-sec">
+    <ngb-accordion [destroyOnHide]='false' [(activeIds)]="activePanels" #shadow>
+        <ngb-panel *ngFor="let item of itineraryVisitDay; let i = index" id="panel{{item}}">
+            <ng-template ngbPanelTitle>
+                <div (click)="togglePanel('panel' + item, item)" 
+                     [ngClass]="{'activeVisitDayButton': activePanels.includes('panel' + item)}" 
+                     class="iterheader d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <span>{{ 'Day ' + item }}</span>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template ngbPanelContent>
+                <div class="ite_con">
+                    <strong>{{ tourDayDetails[item]?.program_title }}</strong>
+                    <div style="font-size: 14px;" [innerHTML]="tourDayDetails[item]?.program_des"></div>
+                </div>
+            </ng-template>
+        </ngb-panel>
+    </ngb-accordion>   
+   </div>
+  </div>
+  
+  
+  
+  <div id="Inclusionstab" class="incluandexclu tabs_parent">
+     <h3 > Inclusions & Exclusions</h3>
+      <div *ngIf="tourDetails?.inclusions">
+         <h4>Inclusions:</h4>
+          <p  style="word-break: break-word;
+    overflow-wrap: anywhere;" class="safety_div" [innerHTML]="tourDetails?.inclusions"></p>
+      </div>
+      <div *ngIf="tourDetails?.exclusions">
+          <h4>Exclusions:</h4>
+          <p style="word-break: break-word;
+    overflow-wrap: anywhere;" class="safety_div" [innerHTML]="tourDetails?.exclusions"></p>
+      </div>
+  </div>
+  
+  
+   
+  <div id="Termstab" class="termrandcndn tabs_parent">
+    <!-- Terms & Conditions -->
+     <h3>Terms & Conditions</h3>
+     <div *ngIf="!tourDetails?.terms">
+      <p class="safety_div">No Terms & Conditions</p>
+    </div>
+    <div *ngIf="tourDetails?.terms">
+      <p class="safety_div" [innerHTML]="getShortText(tourDetails.terms, showFullTerms)"></p>
+      <a *ngIf="isTextTruncated(tourDetails.terms)" (click)="toggleTerms()" class="view-more">
+        {{ showFullTerms ? 'View Less' : 'View More' }}
+      </a>
+    </div>
+  
+    <!-- Cancellation Policy -->
+    <div *ngIf="tourDetails?.canc_policy && tourDetails?.BookingSource !== 'BGTAPINO00001'">
+      <h4>Cancellation Policy:</h4>
+      <p class="safety_div" [innerHTML]="getShortText(tourDetails.canc_policy, showFullCancel)"></p>
+      <a *ngIf="isTextTruncated(tourDetails.canc_policy)" (click)="toggleCancel()" class="view-more">
+        {{ showFullCancel ? 'View Less' : 'View More' }}
+      </a>
+    </div>
+  </div>
+  
+
+
+
+
+  <div id="safety" class="termrandcndn tabs_parent">
+    <div>
+        <h3> Safety</h3>
+           <div class="safety_div">
+               <h4>Health Precautions</h4>
+               <ul>
+                 <li>All required protective equipment is provided</li>
+                 <li>All areas that customers touch are frequently cleaned</li>
+                 <li>You must keep social distance while in vehicles</li>
+                 <li>The number of visitors is limited to reduce crowds</li>
+                </ul>
+            </div>
+    </div>
+</div>
+
+
+<div *ngIf="tourDetails?.BookingSource !== 'BGTAPINO00002'" id="Location" class="termrandcndn tabs_parent">
+    <div class="list_item_d">
+        <h3> Meeting Point</h3>
+           <div class="safety_div d-flex justify-content-between">
+            <span style="    white-space: pre-line;
+">{{tourDetails.meeting_point}}</span>
+            </div>
+    </div>
+</div>
+
+
+  </div>
+  
+  <!-- <div class="tourTabContainer">
+      <ul *ngFor="let item of tourTab">
+          <li><button (click)="setActiveItem(item)" [ngClass]="{'activeButton': activeItem === item}">
+              {{item}}
+          </button></li>
+      </ul>
+  </div>
+  
+  <div class="card"> 
+      <div class="card-body container">
+          <div *ngFor="let activeTab of tabToShow">
+              <div *ngIf="activeTab.value==true && activeTab.name=='Overview' ">
+                  <p> {{tourDetails?.package_description}} </p>
+              </div>
+              <div *ngIf="activeTab.value==true && activeTab.name=='Itinerary' ">
+                  <div class="tourItinerary">
+                      <div class="first-part">
+                          <ul *ngFor="let item of itineraryVisitDay">
+                              <li class="tourDay"><button (click)="setActiveVisitDayItem('Day'+item)" [ngClass]="{'activeVisitDayButton': activeVisitDayItem === 'Day'+item}">
+                                  {{'Day'+ item}}
+                              </button></li>
+                          </ul>
+                      </div>
+                      <div class="second-part">
+                          <div *ngFor="let item of itineraryVisitDay ; let i=index">
+                              <p *ngIf="(i+1)==dayNumber" style="margin: 15px 12px;">{{selectedTourDay +':'}} <span [innerHTML]="selectedTourDayDes"></span></p>
+                          </div>
+                      </div>
+                  </div> 
+              </div>
+              <div *ngIf="activeTab.value==true && activeTab.name=='Inclusions & Exclusions' ">
+                  <div *ngIf="tourDetails?.inclusions">
+                      <p  class="borderLine"></p>
+                      <p>Inclusions:</p>
+                      <p [innerHTML]="tourDetails?.inclusions"></p>
+                  </div>
+                  <div *ngIf="tourDetails?.exclusions">
+                      <p  class="borderLine"></p>
+                      <p>Exclusions:</p>
+                      <p [innerHTML]="tourDetails?.exclusions"></p>
+                  </div>
+              </div>
+              <div *ngIf="activeTab.value==true && activeTab.name=='Terms & Conditions' ">
+                  <div *ngIf="tourDetails?.terms">
+                      <p  class="borderLine"></p>
+                      <p>Terms & Conditions:</p>
+                      <p [innerHTML]="tourDetails?.terms"></p>
+                  </div>
+                  <div *ngIf="tourDetails?.canc_policy">
+                      <p  class="borderLine"></p>
+                      <p>Cancellation Policy:</p>
+                      <p [innerHTML]="tourDetails?.canc_policy"></p>
+                  </div>
+              </div>
+              <div *ngIf="activeTab.value==true && activeTab.name=='Optional Tours' ">
+                  <p [innerHTML]="tourDetails?.optional_tours"></p>
+              </div>
+          </div>
+      </div>
+  </div> -->
+  

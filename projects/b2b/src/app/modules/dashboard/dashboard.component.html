@@ -1,0 +1,278 @@
+<div >
+    <div>
+      <app-flight></app-flight>
+    </div>
+<!-- <div class="flight-destination-section">
+    <div class="section-title">
+        <h2 class="">Top Flight Destination</h2>
+    </div>
+    <div class="section-body">
+        <div class="destination-slider banner-section-with-text">
+            <ngx-slick-carousel class="slick-slider slick-dotted" #slickModal="slick-carousel"
+                [config]="destinationSliderConfig">
+                <div ngxSlickItem *ngFor="let slide of destinationSlides">
+                    <div class="banner-section text-center" (click)="navigateToTop(slide);">
+                        <img src="{{slide.image | map: getImage}}" height="210px" width="100%" alt="brands" class="slick_main_img">
+                        <span><img src="assets/images/login-images/assets/flit.png" /></span>
+                        <p>{{slide.from_airport_code}}&nbsp;&nbsp;
+                                <span style="margin-bottom: -7px;">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </span>&nbsp;&nbsp;
+                            {{slide.to_airport_code}}
+                        </p>
+                    </div>
+                </div>
+            </ngx-slick-carousel>
+        </div>
+    </div>
+</div> -->
+
+<!-- <div class="bookings-section">
+    <div class="left-section">
+        <div class="booking-cards w-293">
+            <div class="title">
+                <h3>flight booking</h3>
+            </div>
+            <div class="content">
+                <img src="assets/images/login-images/assets/flight_book.png" alt="flight" /> <span>{{bookingFlightsCount ? bookingFlightsCount : ''}}</span>
+            </div>
+            <div class="footer">
+                <ul class="horizontal">
+                    <li routerLink="/reports/flight-booking-details">B2B Report</li>
+                </ul>
+            </div>
+        </div> -->
+        <!-- <div class="booking-cards w-293 m-t-15">
+            <div class="title">
+                <h3>HOTEL BOOKING</h3>
+            </div>
+            <div class="content">
+                <img src="assets/images/login-images/assets/hospital.png" alt="hotel" /> <span>{{bookingHotelCount ? bookingHotelCount : ''}}</span>
+            </div>
+            <div class="footer">
+                <ul class="horizontal">
+                    <li routerLink="/reports/hotel-booking-details">B2B Report</li>
+                </ul>
+            </div>
+        </div> -->
+        <!-- <div class="booking-cards w-293 m-t-15" class="hide" >
+            <div class="title">
+                <h3>flight booking</h3>
+            </div>
+            <div class="content">
+                <img src="assets/images/login-images/assets/flight_book.png" alt="flight" /> <span>{{bookingFlightsCount ? bookingFlightsCount : ''}}</span>
+            </div>
+            <div class="footer">
+                <ul class="vertical">
+                    <li>Total Amount - 0/- </li>
+                    <li>B2B Markup - 0/-</li>
+                    <li>B2B Paid - 0/-
+                </ul>
+            </div>
+        </div> -->
+        <!-- <div class="booking-cards w-293 m-t-15" class="hide">
+            <div class="title">
+                <h3>hotel booking</h3>
+            </div>
+            <div class="content">
+                <img src="assets/images/login-images/assets/hospital.png" alt="hotel" /> <span>{{bookingHotelCount ? bookingHotelCount : ''}}</span>
+            </div>
+            <div class="footer">
+                <ul class="vertical">
+                    <li>Total Amount - 0/- </li>
+                    <li>B2B Markup - 0/-</li>
+                    <li>B2B Paid - 0/-</li>
+                </ul>
+            </div>
+        </div> -->
+    <!-- </div> -->
+    <!-- <div class="right-section ml-3">
+        <div class="row col-md-12 col-lg-12 m-0 p-0 booking-cards">
+            <table style="table-layout: fixed; width: 100%;" id="sub-agent-list">
+                <tr>
+                    <td>
+                        <div class="table-responsive">
+                            <table class="align-middle mb-0 table table-borderless table-striped table-hover" matSort
+                                (matSortChange)="sortData($event)">
+                                <thead>
+                                    <tr class="p-2">
+                                        <th scope="col" class="text-nowrap" *ngFor="let header of displayColumn;"
+                                            mat-sort-header="{{header.key}}">
+                                            {{header.value }}
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngIf="noData">
+                                        <td colspan="12">
+                                            <p>No Data Found</p>
+                                        </td>
+                                    </tr>
+                                    <tr class="p-2"
+                                        *ngFor="let subagent of respData ; let i=index;">
+                                        <td class="text-left text-muted">{{i+1}}.</td>
+                                        <td class="text-left text-capitalize"> {{subagent['first_name']}} </td>
+                                        <td class="text-left"> {{subagent['uuid']}} </td>
+                                        <td class="text-left"> {{subagent['phone']}} </td>
+                                        <td class="text-left"> {{subagent['email']}} </td>
+                                        <td class="text-left"> {{subagent['created_at'] | date: 'dd/MM/yyyy'}} </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div> -->
+<!-- </div> -->
+<!-- today-purchase -->
+<!-- <div class="today-purchase-section">
+    <div class="section-title">
+        <h2>Todays Purchase</h2>
+    </div>
+    <div class="d-flex">
+        <div class="booking-cards w-100 m-t-15 m-r-20">
+            <div class="title">
+                <h3>flight booking</h3>
+            </div>
+            <div class="content">
+                <img src="assets/images/login-images/assets/flight_book.png" alt="hotel" />
+                <div class="footer">
+                    <ul class="vertical">
+                        <li>Total Amount - 0/- </li>
+                        <li>B2B Markup - 0/-</li>
+                        <li>B2B Paid - 0/-</li>
+                    </ul>
+                </div>
+            </div>
+        </div> -->
+        <!-- <div class="booking-cards w-320 m-t-15 m-r-20">
+            <div class="title">
+                <h3>hotel booking</h3>
+            </div>
+            <div class="content">
+                <img src="assets/images/login-images/assets/hospital.png" alt="hotel" />
+                <div class="footer">
+                    <ul class="vertical">
+                        <li>Total Amount - 0/- </li>
+                        <li>B2B Markup - 0/-</li>
+                        <li>B2B Paid - 0/-</li>
+                    </ul>
+                </div>
+            </div>
+        </div> -->
+    <!-- </div>
+</div> -->
+<!-- Cancellation Report -->
+<!-- <div class="cancellation-report-section">
+    <div class="section-title">
+        <h2>Cancellation Report</h2>
+    </div>
+    <div class="d-flex">
+        <div class="booking-cards w-100 m-t-15 m-r-20">
+            <div class="title">
+                <h3>flight cancellation</h3>
+            </div>
+            <div class="content">
+                <img src="assets/images/login-images/assets/flight_book.png" alt="hotel" />
+                <span>{{cancellationFlightsCount ? cancellationFlightsCount : 0}}</span>
+                <div class="footer">
+                    <ul class="vertical">
+                        <li>B2B Report </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="booking-cards w-320 m-t-15 m-r-20">
+            <div class="title">
+                <h3>hotel cancellation</h3>
+            </div>
+            <div class="content">
+                <img src="assets/images/login-images/assets/hospital.png" alt="hotel" />
+                <span>{{cancellationHotelCount ? cancellationHotelCount : 0}}</span>
+                <div class="footer">
+                    <ul class="vertical">
+                        <li>B2B Report</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+<div class="recent-transaction m-t-15">
+    <div class="d-flex">
+        <!-- <div class="left-section m-r-20">
+            <div class="bg-white">
+                <div class="booking-flight-chat">
+                    <div class="booking-chat-title pl-3 mb-4">Booking Details</div>
+                    <highcharts-chart [Highcharts]="highcharts" [options]="chartOptions"
+                        style="width: 100%; height: 480px; display: block;border-radius: 5px;">
+                    </highcharts-chart>
+                </div>
+                <ng-template #notShow>
+                    <div class="col-12">
+                        <mat-spinner [diameter]="50" style="margin: 0 auto;" mode="indeterminate"></mat-spinner>
+                        <div class="text-center">
+                            No Data Found
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+        </div> -->
+        <div class="right-section">
+            <!-- <app-recent-booking-transactions></app-recent-booking-transactions> -->
+            <div class="grid-container" *ngIf="!noTransactions">
+                <div class="grid-body-container">
+                    <table mat-table [dataSource]="topTransactions">
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="recent bookings">
+                        <th mat-header-cell *matHeaderCellDef class="booking-title"> Recent Booking Transactions </th>
+                        <td mat-cell *matCellDef="let element" class="pl-2">
+                            <div class="d-flex book-flight-details-section">
+                                <div class="logo">
+                                    <img src="assets/images/login-images/assets/Group 178.png" alt="flight"/> 
+                                </div>
+                                <div class="book-details" style="width: 100%;">
+                                    <p class="float-left">{{element?.app_refernce}}- {{element?.transactiondate | date: "dd/MM/yyyy"}}</p>
+                                    <p class="float-right badge badge-primary">{{element?.fare}}</p>
+                                    <p style="clear: both;">{{element?.remarks}}</p>
+                                </div>
+                            </div> </td>
+                            <td mat-footer-cell *matFooterCellDef colspan="5"> <button class="btn mt-4 mb-4" routerLink="/payment/transaction-logs">View All
+                                transaction</button></td>
+                        </ng-container>
+
+                        
+                    
+                        <tr mat-header-row *matHeaderRowDef="displayedFlightColumns; sticky: true" style="height: 43px;border-bottom: 1px solid #dddddd;"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedFlightColumns;"></tr>
+                        <tr mat-footer-row *matFooterRowDef="displayedFlightColumns; sticky: true" class="text-center"></tr>
+                    </table>
+                </div>
+            </div>
+            <div *ngIf="showNoRecordsFound" class="grid-container row col-4 justify-content-end m-auto no-records-found">
+                <ng-container >
+                  <span>
+                    
+                    <img style="height: 100px;" src="assets/images/no-records-found.png" />
+                    <div>
+                        <strong>
+                            No Recent Transactions found
+                        </strong>
+                    </div>
+                  </span>
+                </ng-container>
+              </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-lg-6 p-0">
+
+    </div>
+    <div class="col-md-6 col-lg-6 py-0 pr-0">
+        <!-- <app-latest-members></app-latest-members> -->
+    </div>
+</div>
+</div>

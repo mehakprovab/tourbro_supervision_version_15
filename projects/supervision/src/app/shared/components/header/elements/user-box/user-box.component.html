@@ -1,0 +1,108 @@
+<div class="d-flex">
+    <div class="header-btn-lg pr-0">
+        <div class="widget-content p-0">
+            <div class="widget-content-wrapper">
+                <div class="widget-content-left">
+                    <div class="btn-group" ngbDropdown placement="bottom-right">
+                        <button type="button" class="btn btn-link p-0 mr-2" ngbDropdownToggle>
+                            <span>
+                                <div class="icon-wrapper icon-wrapper-alt rounded-circle">
+                                    <i class="far fa-user"></i>
+                                    <!-- <img width="42" [src]="imageURL" alt="" class="rounded-circle"> -->
+                                </div>
+                            </span>
+                        </button>
+                        <div class="dropdown-menu-lg" ngbDropdownMenu>
+                            <div class="dropdown-menu-header">
+                                <div class="dropdown-menu-header-inner bg-info">
+                                    <div class="menu-header-image opacity-2 dd-header-bg-6"></div>
+                                    <div class="menu-header-content text-left">
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left mr-3">
+                                                    <i class="far fa-user"></i>
+                                                    <!-- <img width="42" [src]="imageURL" alt="" class="rounded-circle"> -->
+                                                </div>
+                                                <div class="widget-content-left">
+                                                    <div  class="widget-heading" *ngIf="currentUser.auth_role_id != 6 && currentUser.auth_role_id != 3 && currentUser.auth_role_id != 7">{{'Super Admin'}}</div>
+                                                    <div class="widget-heading text-uppercase" *ngIf="currentUser.auth_role_id == 6">{{'Supplier'}}: {{currentUser?.business_name}}</div>
+                                                    <div class="widget-heading" *ngIf="currentUser.auth_role_id == 3">{{'Sub Admin'}}</div>
+                                                    <div class="widget-heading text-uppercase" *ngIf="currentUser.auth_role_id == 7">{{'DMC'}}: {{currentUser?.business_name}}</div>
+                                                    <div class="widget-subheading opacity-8">{{'User:'}} {{currentUser?.first_name + ' '+
+                                                        currentUser?.last_name}} - {{currentUser?.uuid}}</div>
+                                                </div>
+                                                <div class="widget-content-right mr-2">
+                                                    <button class="btn-pill btn-shadow btn-shine btn btn-focus"
+                                                        (click)="onLogout()">Logout</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="scroll-area-xs">
+                                <perfect-scrollbar [autoPropagation]="true">
+                                    <ul class="nav flex-column">
+                                        <!-- <li class="nav-item-header nav-item">Activity</li> -->
+                                        <li class="nav-item">
+                                            <a routerLink="/user/admin-profile" class="nav-link">
+                                                Update Profile
+                                            </a>
+                                        </li>
+                                        <li class="nav-item"><a routerLink="/user/change-password"
+                                                class="nav-link">Change Password</a></li>
+                                        <!-- <li class="nav-item-header nav-item">
+                                            My Account
+                                        </li> -->
+                                        <!-- <li class="nav-item">
+                                            <a routerLink="/settings/b2cPromocode" class="nav-link">
+                                                Settings
+                                                <div class="ml-auto badge badge-success">
+                                                    New
+                                                </div>
+                                            </a>
+                                        </li> -->
+                                        <!-- <li class="nav-item">
+                                            <a routerLink="/settings/error-event-logs" class="nav-link">
+                                                Logs
+                                            </a>
+                                        </li> -->
+                                    </ul>
+                                </perfect-scrollbar>
+                            </div>
+                            <ul class="nav flex-column">
+                                <li class="nav-item-divider mb-0 nav-item"></li>
+                            </ul>
+                            <div *ngIf="showUser" class="grid-menu grid-menu-2col overflow-hidden">
+                                <div class="no-gutters row">
+                                    <div class="col-sm-6">
+                                        <button routerLink="/bank/accountDetails"
+                                            class="btn-icon-vertical btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-warning">
+                                            <i class="pe-7s-culture icon-gradient bg-amy-crisp btn-icon-wrapper mb-2"></i>
+                                            Bank Details
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <button routerLink="/agentCallBackSupport"
+                                            class="btn-icon-vertical btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-danger">
+                                            <i
+                                                class="pe-7s-ticket icon-gradient bg-love-kiss btn-icon-wrapper mb-2"></i>
+                                            <b>Support Tickets</b>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-content-left ml-3 header-user-info">
+                    <div class="widget-heading">{{currentUser?.first_name + ' '+ currentUser?.last_name}}</div>
+                    <div *ngIf="currentUser.auth_role_id != 6 && currentUser.auth_role_id != 3 && currentUser.auth_role_id != 7" class="widget-subheading">{{'Super Admin'}}</div>
+                    <div *ngIf="currentUser.auth_role_id == 6"class="widget-subheading">{{'User: '}} {{currentUser?.uuid}}</div>
+                    <div *ngIf="currentUser.auth_role_id == 3"class="widget-subheading">{{'Sub Admin'}}</div>
+                    <div *ngIf="currentUser.auth_role_id == 7"class="widget-subheading">{{'User: '}} {{currentUser?.uuid}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

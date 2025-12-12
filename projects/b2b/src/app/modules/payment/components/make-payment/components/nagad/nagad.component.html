@@ -1,0 +1,66 @@
+<form [formGroup]="regConfig">
+
+  <div class="form-group row" *ngIf="paymentType != 'Cash Bank Deposit' ? true : false">
+    <label for="amount" class="col-sm-2 text-right col-form-label">Given To<sup class="f-16 text-danger">*</sup>
+    </label>
+    <div class="col-sm-10 form-group">
+      <select formControlName="givenTo" class="form-control " id="givenTo">
+      <option selected disabled>Choose one</option>
+      <option [value]="name" *ngFor="let name of receiverList;">
+          {{name}}
+      </option>
+  </select>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="amount" class="col-sm-2 text-right col-form-label">Amount ({{currency}})<sup class="f-16 text-danger">*</sup>
+    </label>
+    <div class="col-sm-10 form-group">
+      <input formControlName="amount" type="text" class="form-control text-capitalize" id="amount" placeholder="Amount" maxlength="12" (keypress)="numberOnly($event)"/>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="date" class="col-sm-2 text-right col-form-label">
+      Date <sup class="f-16 text-danger">*</sup>
+    </label>
+    <div class="col-sm-10 form-group">
+      <span class="icon return_date" (click)="isOpen = !isOpen"></span>
+      <input type="text" id="date" formControlName="date" [maxDate]="maxDate"
+        class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy" bsDatepicker
+        [bsConfig]="bsDateConf" (ngModelChange)="ondateChange($event)" [readonly]="true" [isOpen]="isOpen" />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="remarks" class="col-sm-2 text-right col-form-label">Remarks</label>
+    <div class="col-sm-10 form-group">
+      <textarea formControlName="remarks" rows="3" class="form-control text-capitalize" id="remarks" placeholder="Remarks">
+      </textarea>
+    </div>
+  </div>
+
+  <div class="form-group row" *ngIf="paymentType != 'Cash Bank Deposit' ? false : true">
+    <label for="upload_document" class="col-sm-2 text-right col-form-label">Upload
+      Transaction Document <sup class="f-16 text-danger">*</sup></label>
+    <div class="col-sm-10 form-group">
+      <input type="file" class="form-control-file" id="logo" (change)="onFileSelected($event)" #theFile
+        style="margin-top: 15px" accept=".png, .jpg, .jpeg" formControlName="file_upload" />
+        <span class="text-danger">(Maximum upload file size: 1 MB)</span>
+    </div>
+
+    <div class="col-sm-10 form-group">
+      <img *ngIf="bankLogo" height="50" width="100" class="rounded" [src]="logoBankUri + bankLogo" alt="logo" />
+      <img *ngIf="imageSrc" height="50" width="100" class="rounded" [src]="imageSrc" alt="logo" />
+
+      {{ bankLogo }}
+      &nbsp;&nbsp;
+    </div>
+  </div>
+
+  <div class="form-group row pull-right mr-0">
+    <button class="btn btn-lg btn-primary mr-1" [disabled]="paymentType == 'Cash Bank Deposit' && (logoConfig.invalid || regConfig.invalid)" (click)="onSubmit()">
+      Save
+    </button>
+    <button class="btn btn-lg btn-primary" (click)="onReset()">Reset</button>
+  </div>
+</form>

@@ -1,0 +1,16 @@
+<div *ngIf="data">
+    <h4 class="text-center" style="border-bottom: 1px solid lightgrey;">Low Balance</h4>
+    <div class="my-2">
+        <ul class="list-unstyled">
+            <li class="listcancel">
+                Your balance is low ({{data}}).&nbsp;
+                <a routerLink="/payment/make-payment" target="_blank">
+                    <strong>Click here to deposit now.</strong>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="float-right">
+        <button class="btn btn-primary" (click)="onClose()">Close</button>
+    </div>
+</div>

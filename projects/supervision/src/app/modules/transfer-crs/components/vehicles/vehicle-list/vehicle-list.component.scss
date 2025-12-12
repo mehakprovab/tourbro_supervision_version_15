@@ -1,0 +1,67 @@
+.additional-info-textarea {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+}
+.policy-block {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    width: 100%;
+    border-radius: 10px;
+}
+
+  .remove-reset-btn {
+        background: #dc3545 !important;
+    border: #dc3545 !important;
+}
+.refundable-radio {
+  width: 17px;
+  height: 17px;
+}
+
+.cancellation-lable {
+    font-weight: 700;
+    font-size: 17px;
+    text-decoration: underline;
+}
+
+.border-form {
+    border: 1px solid #dfdfdf;
+    border-radius: 20px;
+    margin: 18px; 
+}
+
+.non-editable {
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  background: #dbdbdb85 !important;
+}
+
+.droplocations {
+    z-index      : 9999;
+    position     : absolute;
+    background   : #fff;
+    top          : 100%;
+    border-radius: 0px;
+    width: 90%;
+    box-shadow   : 0 2px 5px 0 #ddd !important;
+    max-height: 300px;
+    overflow: hidden scroll;
+    transition   : transform 200ms ease-out, height 200ms ease-out, width 200ms ease-out !important;
+  }
+  
+  .droplocations li {
+    padding      : 5px 10px;
+    font-size    : 17px;
+    float        : left;
+    width        : 100%;
+    font-weight: 600;
+    // border-bottom: 1px solid #e5ebf0;
+  }
+
+  .droplocations li i {
+    padding-right: 6px;
+  }
+  
+  .droplocations li:hover {
+    background: #f8f9fa;
+    cursor: pointer;
+  }

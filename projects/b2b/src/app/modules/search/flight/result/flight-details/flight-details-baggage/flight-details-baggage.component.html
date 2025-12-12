@@ -1,0 +1,72 @@
+<div mat-dialog-content>
+    <div *ngFor="let iList of flight.FlightDetails.Details" class="row">
+        <div class="col-md-12">
+            <div class="card pb-0 mb-2">
+                <div class="card-body pb-0">
+                    <div *ngFor="let list of iList" class="row pb-2 bbottom">
+
+                        <div class="col-md-12 pr-0 baggage_col">
+                            <div class="">
+                                <img width="50" class="rounded" [src]="[airline_logo + list.OperatorCode + '.svg']"
+                                    alt="">
+                            </div>
+                            <div class="">
+                                {{ list.Origin.AirportCode + ' - ' + list.Destination.AirportCode }}
+                            </div>
+                            <div class="">
+                                {{ list.OperatorName }}
+                            </div>
+                        </div>
+
+                        <!-- <div class="col-md-3 pr-0">
+                           
+                        </div> -->
+                        <div class="col-md-3 pr-0 baggage_col">
+                            <span>
+                                <div class="d-flex flex-column text-muted">
+                                    <div class="deemFont">
+                                        <!-- <small> {{ list.OperatorName }} </small> -->
+                                        Flight Number
+                                    </div>
+                                    <div class="">
+                                        <!-- <small> {{ list.FlightNumber }} </small> -->
+                                        {{ list.FlightNumber }}
+                                    </div>
+
+                                </div>
+                            </span>
+                        </div>
+                        <div class="col-md-3 pr-0 baggage_col">
+                            <div class="d-flex flex-column">
+                                <div class="timesFont" style="font-size: 13px;font-weight: 400;">
+                                    Check In
+                                </div>
+                                <div class="">
+                                    <span><i class="fa fa-suitcase"></i> {{getBaggage(list.Attr.Baggage)}} </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 pr-0 baggage_col">
+                            <div class="d-flex flex-column">
+                                <div class="timesFont" style="font-size: 13px;font-weight: 400;">
+                                    Cabin
+                                </div>
+                                <div class="">
+                                    <span><i class="fa fa-suitcase"></i> {{getBaggage(list.Attr.CabinBaggage)}} </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- <div class="col-md-3 pr-0">
+                            <div class="d-flex flex-column">
+                                <div class="c-pointer text-center">
+                                    <span><i class="fa fa-suitcase"></i> {{list.Attr.CabinBaggage}} </span>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

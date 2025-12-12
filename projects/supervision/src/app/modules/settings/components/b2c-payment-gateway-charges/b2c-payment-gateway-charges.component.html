@@ -1,0 +1,83 @@
+  <div class="card" style="margin-top: 30px;">
+    <div class="card-header bg-dark text-white">
+      <i class="fa fa-credit-card"></i>&nbsp;<h5 class="text-uppercase">{{' Payment Gateway Charges'}}</h5>
+    </div>
+    <div class="card-body">
+        <p>Total {{respData?.length}} Records</p>
+       <div class="mb-3">
+          <form [formGroup]="regConfig" class="m-4">
+             <div class="table-responsive">
+                <table class="table table-borderless table-striped table-hover" matSort
+                   (matSortChange)="sortData($event)" id="payment">
+                   <thead>
+                      <tr>
+                         <th scope="col" class="text-left text-nowrap" *ngFor="let header of displayColumn;"
+                            >
+                            {{header.value }} 
+                         </th>
+                      </tr>
+                   </thead>
+                   <tbody>
+                    <tr *ngIf="noData">
+                        <td colspan="11">
+                            <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                        </td>
+                    </tr>
+                    <tr *ngIf="!noData && !respData.length">
+                        <td colspan="11">
+                            <h4 class="text-muted text-center">
+                                No Data Found!
+                            </h4>
+                        </td>
+                    </tr>
+                      <ng-container *ngFor="let data of t.controls; let i = index">
+                         <tr [formGroup]="data" *ngIf="data?.get('module_type')?.value">
+                         <td class="text-left text-muted">{{i+1}}.</td>
+                        <td class="text-left">{{data?.get('module_type')?.value}}</td>
+                        <td class="text-left"> <div class="col-sm-4 d-flex align-items-center">
+                    <div class="col-auto">
+                        <label>
+                        <input type="radio" value="percentage" formControlName="fees_type">
+                        <span class="design"></span>
+                        <span class="text">perc%</span>
+                      </label>
+                    </div>
+                    <div class="col-auto">
+                      <label>
+                        <input type="radio" value="plus" formControlName="fees_type">
+                        <span class="design"></span>
+                        <span class="text">plus+</span>
+                      </label>
+                    </div>
+                    </div> </td>
+                        <td class="text-left"><input  type="text" formControlName="fees" placeholder="fees" />  </td>
+                        <td class="text-left"> <div class="col-sm-4 d-flex align-items-center">
+                    <div class="col-auto">
+                        <label>
+                        <input type="radio" value="Yes" formControlName="added_per_pax">
+                        <span class="design"></span>
+                        <span class="text">Yes</span>
+                      </label>
+                    </div>
+                    <div class="col-auto">
+                      <label>
+                        <input type="radio" value="No" formControlName="added_per_pax">
+                        <span class="design"></span>
+                        <span class="text">No</span>
+                      </label>
+                    </div>
+                    </div> </td>
+                      </tr>
+                    </ng-container>
+                   </tbody>
+                </table>
+             </div>
+             <div class="card-footer pb-0">
+              <button class="btn btn-sm btn-primary" (click)="updatePaymentCharges()">Update</button>
+              &nbsp; &nbsp;
+              <button class="btn btn-sm btn-danger" type="reset" (click)="resetData()">Reset</button>
+             </div>
+          </form>
+       </div>
+    </div>
+ </div>

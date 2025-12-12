@@ -1,0 +1,71 @@
+<form [formGroup]="regConfig" (validSubmit)="onSubmit()">
+  <div class="form-group row">
+    <label for="branch" class="col-sm-2 text-right col-form-label">Name <sup class="f-16 text-danger">*</sup>
+    </label>
+    <div class="col-sm-10 form-group">
+      <input formControlName="firstname" type="text" class="form-control text-capitalize" id="Name" placeholder="Name" />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="chequeDDNo" class="col-sm-2 text-right col-form-label">Phone No <sup class="f-16 text-danger">*</sup>
+    </label>
+    <div class="col-sm-10 form-group">
+      <input formControlName="phoneno" type="text" class="form-control" id="phoneno" placeholder="Phone No" (keypress)="numberOnly($event)"/>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="accountnumber" class="col-sm-2 text-right col-form-label">Transaction Ref No / ID<sup
+        class="f-16 text-danger">*</sup>
+    </label>
+    <div class="col-sm-10 form-group">
+      <input formControlName="transrefnumber" type="text" class="form-control text-capitalize" id="transrefnumber"
+        placeholder="Transaction Ref No / ID" />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="amount" class="col-sm-2 text-right col-form-label">Amount ({{currency}}) <sup class="f-16 text-danger">*</sup>
+    </label>
+    <div class="col-sm-10 form-group">
+      <input formControlName="amount" type="text" class="form-control" id="amount" placeholder="Amount" maxlength="12" (keypress)="numberOnly($event)"/>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="date" class="col-sm-2 text-right col-form-label">
+      Date <sup class="f-16 text-danger">*</sup>
+    </label>
+    <div class="col-sm-10 form-group">
+      <span class="icon return_date" (click)="isOpen = !isOpen"></span>
+      <input type="text" id="date" formControlName="date" [maxDate]="maxDate"
+        class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy" bsDatepicker
+        [bsConfig]="bsDateConf" (ngModelChange)="ondateChange($event)" [readonly]="true" [isOpen]="isOpen" />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="remarks" class="col-sm-2 text-right col-form-label">Remarks</label>
+    <div class="col-sm-10 form-group">
+      <textarea formControlName="remarks" rows="3" class="form-control text-capitalize" id="remarks" placeholder="Remarks">
+      </textarea>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="upload_document" class="col-sm-2 text-right col-form-label">Upload Transaction Document <sup
+        class="f-16 text-danger">*</sup></label>
+    <div class="col-sm-10 form-group">
+      <input type="file" class="form-control-file" id="logo" (change)="onFileSelected($event)" #theFile
+        style="margin-top: 15px" accept=".png, .jpg, .jpeg" formControlName="bank_logo" />
+        <span class="text-danger">(Maximum upload file size: 1 MB)</span>
+    </div>
+    <div class="col-sm-10 form-group">
+      <img *ngIf="bankLogo" height="50" width="100" class="rounded" [src]="logoBankUri + bankLogo" alt="logo" />
+      <img *ngIf="imageSrc" height="50" width="100" class="rounded" [src]="imageSrc" alt="logo" />
+
+      {{ bankLogo }}
+      &nbsp;&nbsp;
+    </div>
+  </div>
+  <div class="form-group row pull-right mr-0">
+    <button class="btn btn-lg btn-primary mr-1" [disabled]="logoConfig.invalid || regConfig.invalid" type="submit">Save</button>
+    <button class="btn btn-lg btn-primary" (click)="onReset()">Reset</button>
+  </div>
+</form>

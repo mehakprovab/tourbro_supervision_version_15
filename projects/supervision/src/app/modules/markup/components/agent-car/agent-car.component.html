@@ -1,0 +1,46 @@
+<hr>
+<div class="card">
+    <form [formGroup]="regConfig" (ngSubmit)="onSubmit(regConfig.value)" class="form">
+        <div class="card-header">
+            <h5 class="card-title">Car Markup</h5>
+        </div>
+        <div class="card-body">
+            <table>
+                <tr>
+                    <td>
+                        <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+                            <label for="airlines" class="mr-sm-2">Markup Type</label>
+                            <div style="display: flex;">
+                                <div class="position-relative form-check">
+                                    <label class="form-check-label">
+                                        <input value="plus" name="markupType" formControlName="markupType" type="radio"
+                                            class="form-check-input" />
+                                        Plus(+/- {{defaultCurrency}})
+                                    </label>
+                                </div>
+                                <div class="position-relative form-check">
+                                    <label class="form-check-label">
+                                        <input value="percentage" formControlName="markupType" type="radio"
+                                            class="form-check-input" />
+                                        Percentage(%)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+                            <label for="markupValue" class="mr-sm-2">Markup Value</label>
+                            <input formControlName="markupValue" placeholder="" type="text" class="form-control">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="card-footer customCenter">
+            <button type="reset" class="btn btn-primary">Reset</button>
+            &nbsp; &nbsp;
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>

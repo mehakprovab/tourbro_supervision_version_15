@@ -1,0 +1,975 @@
+<div class="alldownsectn">
+  <div class="col-12">
+    <div class="row mob_pad">
+      <div class="col-xs-12 col-md-8 nopad">
+        <div class="col-xs-12 topalldesc">
+          <div class="col-xs-12 nopad">
+            <div class="rvwpanel">
+              <div class="card-body nopad bg-whites">
+                <div class="row text-center">
+                  <div class="col-md-4">
+                    <img *ngIf="blockedTransfer?.BookingSource === 'ZBAPINO00022'" class="rounded imgStyle" [src]="getImage(blockedTransfer.product_image)" alt="">
+                    <img *ngIf="blockedTransfer?.BookingSource !== 'ZBAPINO00022'" class="rounded imgStyle" src="{{blockedTransfer.ProductImage}}" alt="">
+                    <div class="transport-provider">Transfer provided by:<br><br>
+                      <div class="transport-provider-company">
+                        <img class="transport-provider-company-logo" src="{{blockedTransfer.ProductPhotos[0].photoHiResURL}}" alt="">{{blockedTransfer.SupplierName}}</div>
+                  </div>
+                  </div>
+                  <div class="col-md-8 mb-2 pb-0 row mobile_row" style="padding: 8px;">
+                    <div class="col-md-12" style="text-align: left;">
+                      <h5 class="cusromGrey">
+                        {{blockedTransfer.NumUnits}} X {{blockedTransfer.ProductName}}
+                      </h5>
+                      <div class="clearfix"></div>
+                      <div class="amenties">
+                       <i class="fal fa-clock"></i> 
+                        <p class="f12b mb-0">Estimated journey time</p>
+                        <ul>
+                          <li >
+                            <span class="am_ttl2"> {{blockedTransfer.Duration}}</span>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="clearfix"></div>
+                          <div class="amenties">
+                            <i class="fal fa-user"></i> 
+                            <p class="f12b  mb-0">Number of passengers</p>
+                            <ul>
+                              <li >
+                                <span class="am_ttl2 mb-0">{{blockedTransfer?.OccupancyFrom}}-{{blockedTransfer?.OccupancyTo}}</span>
+                              </li>
+                            </ul>
+                          </div>
+    
+                          <div class="clearfix"></div>
+                          <div class="amenties" >
+                            <i class="fal fa-suitcase"></i> 
+                            <p class="f12b mb-0">Luggage allowance</p>
+                            <ul>
+                              <li >
+                                <span class="am_ttl3" *ngIf="blockedTransfer.Suitcase">{{blockedTransfer.Suitcase}} Suitcases (per vehicle)</span> - Free
+                              </li>
+                              <li >
+                                  <span class="am_ttl3" *ngIf="blockedTransfer.SmallBaggage">{{blockedTransfer.SmallBaggage}} Small bag (per vehicle)</span> - Free
+                                </li>
+                            </ul>
+                          </div>
+                          <div class="clearfix"></div>
+                          <div class="amenties" style="border: none;">
+                            <i class="fal fa-car"></i>
+                             <p class="f12b mb-0">Travel Type</p>
+                             <span>{{blockedTransfer?.IsReturn === 1 ? 'Round Trip' : 'One Way'}}</span>
+                          </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <h6 class="pt-3 float-left mb-0" style="font-size: 14px;"><span style="color: #082E53;">Cancellation Policy</span>: 
+            <span [innerHTML]="blockedTransfer.Cancellation_Policy"></span>
+            </h6>
+
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-xs-12 padpaspotr">
+          <div class="col-xs-12 nopadding">
+            
+              <form [formGroup]="travellerForm">
+                <div class="fligthsdets">
+                <div class="flitab1">
+                  <div class="moreflt boksectn">
+                    <div class="ontyp">
+                      <div class="labltowr arimobold">Lead Guest Details.</div>
+                      <ng-container formArrayName="adult">
+                        <ng-container *ngFor="let item of travellerForm.get('adult')['controls']; index as i"
+                          [formGroupName]="i">
+                          <!-- <div *ngIf="travelList && travelList.length>0">
+                            <label class="textWeight">Select Adult {{
+                              item.get('travellerTypeCount').value }}</label>
+                            <mat-form-field class="col-md-3 f-16 ml-1" appearance="fill">
+                              <mat-select formControlName="PassengerSelection" id="matselectAdult{{i}}">
+                                <mat-option value="" disabled>Select
+                                  Adult</mat-option>
+                                <mat-option *ngFor="let option of travelList" [value]="option.first_name"
+                                  (click)="setPaxDetails(option,i,'adult')">
+                                  {{option.first_name}}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                            <a class="passengerClear" (click)="clearDetails(i,'adult')">
+                              Clear</a>
+                          </div> -->
+                          <div class="clearfix"></div>
+                          <div class="pasngrinput _passenger_hiiden_inputs" style="padding: 5px !important;">
+                            <div class="col-xs-12 col-sm-12 col-md-12 p-0">
+                              <div class="adltnom"> Adult<ng-container *ngIf="i==0">- Lead Pax</ng-container></div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 p-0">
+                              <div class="inptalbox d-flex">
+                                <div class="col-xs-4 col-sm-4 col-md-4 spllty">
+                                  <select *ngIf="titleList.length" class="mySelectBoxClass flyinputsnor name_title"
+                                    formControlName="Title">
+                                    <option value="" disabled>-Select-</option>
+                                    <ng-container *ngFor="let t of titleList">
+                                      <option *ngIf="t.pax_type == 'ADULT'" value="{{t.title}}">
+                                        {{t.title}}</option>
+                                    </ng-container>
+                                  </select>
+                                  <small class="error text-danger" *ngIf="hasError('Title', 'required', 'adult', i);">
+                                    Please Select Title*<br>
+                                  </small>
+                                </div>
+                                <div class="col-xs-4 col-md-4 spllty">
+                                  <input type="text" formControlName="FirstName" id="passenger-first-name{{i}}"
+                                    class="clainput alpha_space " minlength="2" maxlength="45"
+                                    placeholder="Enter First Name" (keypress)="restrictNumbers($event)">
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('FirstName', 'required', 'adult', i);">
+                                    Please Enter First Name*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('FirstName', 'maxlength', 'adult', i);">
+                                    Maximum Characters Exceeded*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('FirstName', 'minLength', 'adult', i);">
+                                    At Least 1 Character Required*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('FirstName', 'pattern', 'adult', i);">
+                                    Enter Valid Name*<br>
+                                  </small>
+                                </div>
+                                <div class="col-xs-4 col-md-4 spllty">
+                                  <input value="" formControlName="LastName" type="text" id="passenger-last-name{{i}}"
+                                    class="clainput alpha_space last_name" minlength="1" maxlength="45"
+                                    placeholder="Enter Last Name" (keypress)="restrictNumbers($event)">
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('LastName', 'required', 'adult', i);">
+                                    Please Enter Last Name*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('LastName', 'maxlength', 'adult', i);">
+                                    Maximum Characters Exceeded*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('LastName', 'minLength', 'adult', i);">
+                                    At Least 1 Character Required*<br>
+                                  </small>
+                                  <small class="error text-danger" *ngIf="hasError('LastName', 'pattern', 'adult', i);">
+                                    Enter Valid Name*<br>
+                                  </small>
+                                </div>
+                                <div class="clearfix"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </ng-container>
+                      </ng-container>
+                      <ng-container formArrayName="senior">
+                        <ng-container *ngFor="let item of travellerForm.get('senior')['controls']; index as i"
+                          [formGroupName]="i">
+                          <div *ngIf="travelList && travelList.length>0">
+                            <label class="textWeight">Select Senior {{
+                              item.get('travellerTypeCount').value }}</label>
+                            <mat-form-field class="col-md-3 f-16 ml-1" appearance="fill">
+                              <mat-select formControlName="PassengerSelection" id="matselectAdult{{i}}">
+                                <mat-option value="" disabled>Select
+                                  Senior</mat-option>
+                                <mat-option *ngFor="let option of travelList" [value]="option.first_name"
+                                  (click)="setPaxDetails(option,i,'senior')">
+                                  {{option.first_name}}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                            <a class="passengerClear" (click)="clearDetails(i,'senior')">
+                              Clear</a>
+                          </div>
+                          <div class="clearfix"></div>
+                          <div class="pasngrinput _passenger_hiiden_inputs" style="padding: 5px !important;">
+                            <div class="col-xs-12 col-sm-12 col-md-12 p-0">
+                              <div class="adltnom"> Senior</div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 p-0">
+                              <div class="inptalbox d-flex">
+                                <div class="col-xs-4 col-sm-4 col-md-4 spllty">
+                                  <select class="mySelectBoxClass flyinputsnor name_title" formControlName="Title">
+                                    <option value="" disabled>-Select-</option>
+                                    <ng-container *ngFor="let t of titleList">
+                                      <option *ngIf="t.paxType == 'ADULT'" value="{{t.titleName}}">
+                                        {{t.titleName}}</option>
+                                    </ng-container>
+                                  </select>
+                                  <small class="error text-danger" *ngIf="hasError('Title', 'required', 'senior', i);">
+                                    Please Select Title*<br>
+                                  </small>
+                                </div>
+                                <div class="col-xs-4 col-md-4 spllty">
+                                  <input type="text" formControlName="FirstName" id="passenger-first-name{{i}}"
+                                    class="clainput alpha_space " minlength="2" maxlength="45"
+                                    placeholder="Enter First Name">
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('FirstName', 'required', 'senior', i);">
+                                    Please Enter First Name*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('FirstName', 'maxlength', 'senior', i);">
+                                    Maximum Characters Exceeded*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('FirstName', 'minLength', 'senior', i);">
+                                    At Least 1 Character Required*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('FirstName', 'pattern', 'senior', i);">
+                                    Enter Valid Name*<br>
+                                  </small>
+
+                                </div>
+                                <div class="col-xs-4 col-md-4 spllty">
+                                  <input value="" formControlName="LastName" type="text" id="passenger-last-name{{i}}"
+                                    class="clainput alpha_space last_name" minlength="1" maxlength="45"
+                                    placeholder="Enter Last Name">
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('LastName', 'required', 'senior', i);">
+                                    Please Enter Last Name*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('LastName', 'maxlength', 'senior', i);">
+                                    Maximum Characters Exceeded*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('LastName', 'minLength', 'senior', i);">
+                                    At Least 1 Character Required*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('LastName', 'pattern', 'senior', i);">
+                                    Enter Valid Name*<br>
+                                  </small>
+                                </div>
+                                <div class="clearfix"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </ng-container>
+                      </ng-container>
+                      <ng-container formArrayName="child">
+                        <ng-container *ngFor="let item of travellerForm.get('child')['controls']; index as i"
+                          [formGroupName]="i">
+                          <div *ngIf="travelList && travelList.length>0">
+                            <label class="textWeight">Select Child {{
+                              item.get('travellerTypeCount').value }}</label>
+                            <mat-form-field class="col-md-3 f-16 ml-1" appearance="fill">
+                              <mat-select formControlName="PassengerSelection" id="matselectAdult{{i}}">
+                                <mat-option value="" disabled>Select
+                                  Child</mat-option>
+                                <mat-option *ngFor="let option of travelList" [value]="option.first_name"
+                                  (click)="setPaxDetails(option,i,'child')">
+                                  {{option.first_name}}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                            <a class="passengerClear" (click)="clearDetails(i,'child')">
+                              Clear</a>
+                          </div>
+                          <div class="clearfix"></div>
+                          <div class="pasngrinput _passenger_hiiden_inputs" style="padding: 5px !important;">
+                            <div class="col-xs-12 col-sm-12 col-md-12 p-0">
+                              <div class="adltnom"> Child</div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 p-0">
+                              <div class="inptalbox d-flex">
+                                <div class="col-xs-4 col-sm-4 col-md-4 spllty">
+                                  <select class="mySelectBoxClass flyinputsnor name_title" formControlName="Title">
+                                    <option value="" disabled>-Select-</option>
+                                    <ng-container *ngFor="let t of titleList">
+                                      <option *ngIf="t.pax_type == 'CHILD'" value="{{t.title}}">
+                                        {{t.title}}</option>
+                                    </ng-container>
+                                  </select>
+                                  <small class="error text-danger" *ngIf="hasError('Title', 'required', 'child', i);">
+                                    Please Select Title*<br>
+                                  </small>
+                                </div>
+                                <div class="col-xs-4 col-md-4 spllty">
+                                  <input type="text" formControlName="FirstName" id="passenger-first-name{{i}}"
+                                    class="clainput alpha_space " minlength="2" maxlength="45"
+                                    placeholder="Enter First Name">
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('FirstName', 'required', 'child', i);">
+                                    Please Enter First Name*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('FirstName', 'maxlength', 'child', i);">
+                                    Maximum Characters Exceeded*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('FirstName', 'minLength', 'child', i);">
+                                    At Least 1 Character Required*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('FirstName', 'pattern', 'child', i);">
+                                    Enter Valid Name*<br>
+                                  </small>
+                                </div>
+                                <div class="col-xs-4 col-md-4 spllty">
+                                  <input value="" formControlName="LastName" type="text" id="passenger-last-name{{i}}"
+                                    class="clainput alpha_space last_name" minlength="1" maxlength="45"
+                                    placeholder="Enter Last Name">
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('LastName', 'required', 'child', i);">
+                                    Please Enter Last Name*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('LastName', 'maxlength', 'child', i);">
+                                    Maximum Characters Exceeded*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('LastName', 'minLength', 'child', i);">
+                                    At Least 1 Character Required*<br>
+                                  </small>
+                                  <small class="error text-danger" *ngIf="hasError('LastName', 'pattern', 'child', i);">
+                                    Enter Valid Name*<br>
+                                  </small>
+                                </div>
+                                <div class="clearfix"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </ng-container>
+                      </ng-container>
+                      <ng-container formArrayName="youth">
+                        <ng-container *ngFor="let item of travellerForm.get('youth')['controls']; index as i"
+                          [formGroupName]="i">
+                          <div *ngIf="travelList && travelList.length>0">
+                            <label class="textWeight">Select Youth {{
+                              item.get('travellerTypeCount').value }}</label>
+                            <mat-form-field class="col-md-3 f-16 ml-1" appearance="fill">
+                              <mat-select formControlName="PassengerSelection" id="matselectAdult{{i}}">
+                                <mat-option value="" disabled>Select
+                                  Youth</mat-option>
+                                <mat-option *ngFor="let option of travelList" [value]="option.first_name"
+                                  (click)="setPaxDetails(option,i,'youth')">
+                                  {{option.first_name}}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                            <a class="passengerClear" (click)="clearDetails(i,'youth')">
+                              Clear</a>
+                          </div>
+                          <div class="clearfix"></div>
+                          <div class="pasngrinput _passenger_hiiden_inputs" style="padding: 5px !important;">
+                            <div class="col-xs-12 col-sm-12 col-md-12 p-0">
+                              <div class="adltnom"> Youth</div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 p-0">
+                              <div class="inptalbox d-flex">
+                                <div class="col-xs-4 col-sm-4 col-md-4 spllty">
+                                  <select class="mySelectBoxClass flyinputsnor name_title" formControlName="Title">
+                                    <option value="" disabled>-Select-</option>
+                                    <ng-container *ngFor="let t of titleList">
+                                      <option *ngIf="t.paxType == 'CHILD'" value="{{t.titleName}}">
+                                        {{t.titleName}}</option>
+                                    </ng-container>
+                                  </select>
+                                  <small class="error text-danger" *ngIf="hasError('Title', 'required', 'youth', i);">
+                                    Please Select Title*<br>
+                                  </small>
+                                </div>
+                                <div class="col-xs-4 col-md-4 spllty">
+                                  <input type="text" formControlName="FirstName" id="passenger-first-name{{i}}"
+                                    class="clainput alpha_space " minlength="2" maxlength="45"
+                                    placeholder="Enter First Name">
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('FirstName', 'required', 'youth', i);">
+                                    Please Enter First Name*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('FirstName', 'maxlength', 'youth', i);">
+                                    Maximum Characters Exceeded*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('FirstName', 'minLength', 'youth', i);">
+                                    At Least 1 Character Required*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('FirstName', 'pattern', 'youth', i);">
+                                    Enter Valid Name*<br>
+                                  </small>
+                                </div>
+                                <div class="col-xs-4 col-md-4 spllty">
+                                  <input value="" formControlName="LastName" type="text" id="passenger-last-name{{i}}"
+                                    class="clainput alpha_space last_name" minlength="1" maxlength="45"
+                                    placeholder="Enter Last Name">
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('LastName', 'required', 'youth', i);">
+                                    Please Enter Last Name*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('LastName', 'maxlength', 'youth', i);">
+                                    Maximum Characters Exceeded*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('LastName', 'minLength', 'youth', i);">
+                                    At Least 1 Character Required*<br>
+                                  </small>
+                                  <small class="error text-danger" *ngIf="hasError('LastName', 'pattern', 'youth', i);">
+                                    Enter Valid Name*<br>
+                                  </small>
+                                </div>
+                                <div class="clearfix"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </ng-container>
+                      </ng-container>
+                      <ng-container formArrayName="infant">
+                        <ng-container *ngFor="let item of travellerForm.get('infant')['controls']; index as i"
+                          [formGroupName]="i">
+                          <div *ngIf="travelList && travelList.length>0">
+                            <label class="textWeight">Select Infant {{
+                              item.get('travellerTypeCount').value }}</label>
+                            <mat-form-field class="col-md-3 f-16 ml-1" appearance="fill">
+                              <mat-select formControlName="PassengerSelection" id="matselectAdult{{i}}">
+                                <mat-option value="" disabled>Select
+                                  Infant</mat-option>
+                                <mat-option *ngFor="let option of travelList" [value]="option.first_name"
+                                  (click)="setPaxDetails(option,i,'infant')">
+                                  {{option.first_name}}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                            <a class="passengerClear" (click)="clearDetails(i,'infant')">
+                              Clear</a>
+                          </div>
+                          <div class="clearfix"></div>
+                          <div class="pasngrinput _passenger_hiiden_inputs" style="padding: 5px !important;">
+                            <div class="col-xs-12 col-sm-12 col-md-12 p-0">
+                              <div class="adltnom"> Infant</div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 p-0">
+                              <div class="inptalbox d-flex">
+                                <div class="col-xs-4 col-sm-4 col-md-4 spllty">
+                                  <select class="mySelectBoxClass flyinputsnor name_title" formControlName="Title">
+                                    <option value="" disabled>-Select-</option>
+                                    <ng-container *ngFor="let t of titleList">
+                                      <option *ngIf="t.pax_type == 'CHILD'" value="{{t.title}}">
+                                        {{t.title}}</option>
+                                    </ng-container>
+                                  </select>
+                                  <small class="error text-danger" *ngIf="hasError('Title', 'required', 'infant', i);">
+                                    Please Select Title*<br>
+                                  </small>
+                                </div>
+                                <div class="col-xs-4 col-md-4 spllty">
+                                  <input type="text" formControlName="FirstName" id="passenger-first-name{{i}}"
+                                    class="clainput alpha_space " minlength="2" maxlength="45"
+                                    placeholder="Enter First Name">
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('FirstName', 'required', 'infant', i);">
+                                    Please Enter First Name*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('FirstName', 'maxlength', 'infant', i);">
+                                    Maximum Characters Exceeded*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('FirstName', 'minLength', 'infant', i);">
+                                    At Least 1 Character Required*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('FirstName', 'pattern', 'infant', i);">
+                                    Enter Valid Name*<br>
+                                  </small>
+                                </div>
+                                <div class="col-xs-4 col-md-4 spllty">
+                                  <input value="" formControlName="LastName" type="text" id="passenger-last-name{{i}}"
+                                    class="clainput alpha_space last_name" minlength="1" maxlength="45"
+                                    placeholder="Enter Last Name">
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('LastName', 'required', 'infant', i);">
+                                    Please Enter Last Name*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('LastName', 'maxlength', 'infant', i);">
+                                    Maximum Characters Exceeded*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('LastName', 'minLength', 'infant', i);">
+                                    At Least 1 Character Required*<br>
+                                  </small>
+                                  <small class="error text-danger"
+                                    *ngIf="hasError('LastName', 'pattern', 'infant', i);">
+                                    Enter Valid Name*<br>
+                                  </small>
+                                </div>
+                                <div class="clearfix"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </ng-container>
+                      </ng-container>
+                    </div>
+                   
+                    
+                    
+                  </div>
+                </div>
+              </div>
+
+              <ng-container *ngIf="blockedTransfer?.BookingQuestions.length">
+                <div formArrayName="bookingQuestions">
+                  <div class="mb-2"
+                    *ngFor="let questionFormGroup of travellerForm.get('bookingQuestions'); let i = index"
+                    [formGroupName]="i">
+                    <label class="col-xs-4 col-sm-4 col-md-4 spllty">{{ questionFormGroup.value.subTitle | lowercase}}</label>
+                    <input class="col-xs-4 col-sm-4 col-md-4 spllty" type="text" formControlName="answer"
+                      class="newinput" placeholder="{{questionFormGroup.value.subTitle | lowercase}}">
+                    <!-- You can adjust the input type and styling as needed -->
+                    <small
+                      *ngIf="(submitted || questionFormGroup.get('answer').touched) && questionFormGroup.get('answer').errors && questionFormGroup.get('answer').errors.required"
+                      class="error text-danger">
+                      {{ questionFormGroup.value.message }}
+                    </small>
+                    <br />
+                  </div>
+                </div>
+              </ng-container>
+              <div class="clearfix"></div>
+           
+              
+              <ng-container formArrayName="accomodation"  >
+                <ng-container *ngFor="let item of travellerForm.get('accomodation')['controls']; index as i "
+                  [formGroupName]="i">
+                  <div class="contbk mb-2">
+                    <div class="contcthdngs">Location pick-up/drop off details
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="notese">To ensure a smooth trip, please ensure your drop-off/pickup location details below are correct
+                      .
+                    </div>
+                    <div class="d-flex">
+                      <div class="col-xs-12 col-md-12 nopad d-flex mb-2">
+                        <div class="col-md-4 nopad">
+                          <input value="" type="text" name="passenger_contact" id="passenger-contact"
+                           class="newslterinput nputbrd _numeric_only" 
+                          formControlName="AccommodationAddress">
+                        </div>
+                        <br/>
+                        <div class="clearfix"></div>
+                      </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="notese">Please note: Your pick-up/drop off location is a non-specific location, please check the current address details are correct
+                      .
+                    </div>
+                    <div class="clearfix"></div>
+                    <!-- <button class="sc-gJWqzi dSgcoi" type="button" (click)="onSelectModule('Transfers')">Edit location pick-up/drop off details</button> -->
+                  </div>
+                </ng-container>
+              </ng-container>
+              <ng-container formArrayName="journey1" *ngIf="blockedTransfer?.LocTypeFrom === 'AP' || blockedTransfer?.LocTypeTo === 'AP'">
+                <ng-container *ngFor="let item of travellerForm.get('journey1')['controls']; index as i "
+                  [formGroupName]="i">
+                  <div class="contbk">
+                    <div class="contcthdngs">Journey 1</div>
+                    <div class="clearfix"></div>
+                    <div class="notese">Please provide your flight details so our pick-up representative can check the status of your flight. If you are travelling on a connecting flight we require the final leg of your trip only.
+                    </div>
+                    <div class="d-flex">
+                      <div class="col-xs-12 col-md-12 nopad d-flex mb-2">
+                        <div class="col-md-4 nopad">
+                          <input value="" type="text" autocomplete="off" name="passenger_contact" id="passenger-contact"
+                          placeholder="Airport you’re flying To?
+                          " class="newslterinput nputbrd _numeric_only" 
+                          formControlName="DepCity" (keyup)="getSearchedList($event,false)">
+                         <app-transfer-flight-list *ngIf="!depPoint" (whichCity)="getCity($event)"
+                          [getAirports]="searchedList" [inputFor]="'DepCity'">
+                      </app-transfer-flight-list> 
+                        <small class="error text-danger" *ngIf="hasError('DepCity', 'required', 'journey1',i);">
+                          Please Enter Airport Name* <br>
+                        </small>
+                        </div>
+                        <div class="col-md-4 nopadding">
+                          <input value="" type="text" name="passenger_contact" id="passenger-contact"
+                            placeholder="Flight Number" class="newslterinput nputbrd _numeric_only" 
+                            formControlName="DepInfo"  >
+                          <small class="error text-danger" *ngIf="hasError('DepInfo', 'required', 'journey1',i);">
+                            Please Enter Flight Number.* <br>
+                          </small>
+                        </div>
+                        <div class="emailperson col-md-4 nopad">
+                            <input autocomplete="off" type="text"  id="PreferredAirlines"
+                            formControlName="DepExtraInfo"
+                            class="newslterinput nputbrd"
+                            (keyup)="getPrefferedAirlineList($event,true)" placeholder="Airline Name"
+                            #prefferedAirline>
+                            <div *ngIf="shouldPreferedAirLineHide">
+                              <app-transfer-preffered-airline (whichCity)="getPreferredAirLineList($event)"
+                                  [getAirports]="searchedAirLineList" [inputFor]="'prefferedAirline'">
+                              </app-transfer-preffered-airline>
+                          </div>
+                          <small class="error text-danger" *ngIf="hasError('DepExtraInfo', 'required', 'journey1',i);">
+                            Please Enter Airline Name* <br>
+                          </small>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </ng-container>
+              <ng-container formArrayName="journey2" *ngIf="blockedTransfer?.IsReturn === 1 && (blockedTransfer?.LocTypeFrom === 'AP' || blockedTransfer?.LocTypeTo === 'AP')">
+                <ng-container *ngFor="let item of travellerForm.get('journey2')['controls']; index as i "
+                  [formGroupName]="i">
+                  <div class="contbk">
+                    <div class="contcthdngs">Journey 2</div>
+                    <div class="clearfix"></div>
+                    <div class="notese">Please provide your flight details so our pick-up representative can check the status of your flight. If you are travelling on a connecting flight we require the first leg of your trip only.
+                      .
+                    </div>
+                    <div class="d-flex">
+                      <div class="col-xs-12 col-md-12 nopad d-flex mb-2">
+                        <div class="col-md-4 nopad">
+                          <input value="" type="text" name="passenger_contact" id="passenger-contact"
+                          placeholder="Airport you’re flying from?
+                          " class="newslterinput nputbrd _numeric_only" 
+                          formControlName="RetCity" (keyup)="getSearchedList($event,true)">
+                         <app-transfer-flight-list *ngIf="depPoint"  (whichCity)="getCity($event)"
+                          [getAirports]="searchedList" [inputFor]="'RetCity'">
+                      </app-transfer-flight-list> 
+                        <small class="error text-danger" *ngIf="hasError('RetCity', 'required', 'journey2',i);">
+                          Please Enter Airport Name* <br>
+                        </small>
+                        </div>
+                        <div class="col-md-4 nopadding">
+                          <input value="" type="text" name="passenger_contact" id="passenger-contact"
+                            placeholder="Flight Number" class="newslterinput nputbrd _numeric_only" 
+                            formControlName="RetInfo" >
+                          <small class="error text-danger" *ngIf="hasError('RetInfo', 'required', 'journey2',i);">
+                            Please Enter Flight Number.* <br>
+                          </small>
+                        </div>
+                        <div class="emailperson col-md-4 nopad">
+                          <input autocomplete="off" type="text"  id="PreferredAirlines"
+                            formControlName="RetExtraInfo"
+                            class="newslterinput nputbrd"
+                            (keyup)="getPrefferedAirlineList($event,false)" placeholder="Airline Name"
+                            #RetExtraInfo>
+                            <div *ngIf="!shouldPreferedAirLineHide">
+                              <app-transfer-preffered-airline (whichCity)="getPreferredAirLineList($event)"
+                                  [getAirports]="searchedAirLineList" [inputFor]="'dest'">
+                              </app-transfer-preffered-airline>
+                          </div>
+                          <small class="error text-danger" *ngIf="hasError('RetExtraInfo', 'required', 'journey2',i);">
+                            Please Enter Airline Name* <br>
+                          </small>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                    </div>
+                   
+                  </div>
+                </ng-container>
+              </ng-container>
+
+              <div class="contbk"  *ngIf="blockedTransfer?.Extras && blockedTransfer?.Extras.length>0">
+                <div>
+                  <div class="contcthdngs">Extras</div>
+                  <div class="clearfix"></div>
+                  <div class="d-flex" *ngFor="let value of blockedTransfer?.Extras;let index=index">
+                    <div class="col-xs-12 col-md-12 nopad d-flex mb-2">
+                      <div class="col-md-1 nopad">
+                        <input type="checkbox" class="extraCheckBox" [checked]="selectedExtras[index] > 0" (change)="setExtras($event.target.checked, value,index,1)">
+                      </div>
+                      <div class="col-md-4 nopad">
+                        {{ value?.Extras_Description }} - {{ value?.Currency }} {{ value?.Price }}
+                      </div>
+                      <select class="mySelectBoxClass flyinputsnor name_title" [(ngModel)]="selectedExtras[index]"
+                        [ngModelOptions]="{standalone: true}" (change)="onDropdownChange($event.target.value, index,value)">
+                        <option value="" selected disabled>-Select-</option>
+                        <option *ngFor="let option of generateOptions(value?.MaxNumberOfExtras)" [value]="option">
+                          {{ option }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                </div>
+                <div class="card-body bg-whites mt-4" *ngIf="blockedTransfer?.Disclaimer && blockedTransfer?.Disclaimer.length>0">
+                  <div class="row text-center">
+                      <div class="col-md-12" style="text-align: left;">
+                          <h5 class="cusromGreys">
+                            Disclaimer
+                          </h5>
+                          <div class="clearfix"></div>
+                          <div *ngIf="blockedTransfer?.BookingSource !== 'ZBAPINO00022'" class="amentiess" style="border: none;">
+                            <div *ngFor="let disclaimer of blockedTransfer?.Disclaimer">
+                              <p class="f12b mb-2 mt-2 pb-2 border-bottom"><strong style="color: #ffa200;">{{disclaimer.Title}}</strong></p>
+                              <span class="am_ttl3" [innerHTML]="disclaimer.Description"></span>
+                            </div>
+                          </div>
+
+                          <div *ngIf="blockedTransfer?.BookingSource === 'ZBAPINO00022'" class="amentiess" style="border: none;">
+                            <span class="am_ttl3" [innerHTML]="blockedTransfer?.Disclaimer"></span>
+                            
+                          </div>
+                        </div>
+                  </div>
+              </div>   
+
+              <ng-container formArrayName="address">
+                <ng-container *ngFor="let item of travellerForm.get('address')['controls']; index as i "
+                  [formGroupName]="i">
+                  <div class="contbk">
+                    <div class="contcthdngs">Contact Details</div>
+                    <div class="d-flex">
+                      <div class="col-xs-12 col-md-12 nopad d-flex">
+                        <div class="col-md-4 nopad">
+                          <select name="country_code" class="newslterinput nputbrd _numeric_only "
+                            id="after_country_code" formControlName="PhoneCodeC">
+                            <option [selected]="p.phone_code==+44" *ngFor="let p of phoneCodes">
+                              {{p.name}} ({{ p.phone_code }})
+                            </option>
+                          </select>
+                        </div>
+                        <!-- <div class="col-md-1">
+                          <div class="sidepo">-</div>
+                        </div> -->
+                        <div class="col-md-4 nopadding">
+                          <input value="" type="text" name="passenger_contact" id="passenger-contact"
+                            placeholder="Customer Mobile Number" class="newslterinput nputbrd _numeric_only" 
+                            formControlName="customer_phone" (keypress)="numberOnly($event)" minlength="8" maxlength="12">
+                          <small class="error text-danger" *ngIf="hasError('Contact', 'required', 'address',i);">
+                            Please Enter customer mobile number* <br>
+                          </small>
+                          <small class="error text-danger" *ngIf="hasError('Contact', 'pattern', 'address',i);">
+                            Please Enter a Valid Number* <br>
+                          </small>
+                        </div>
+                        <div class="emailperson col-md-4 nopad">
+                          <input value="" type="text" maxlength="80" id="billing-email"
+                            class="newslterinput nputbrd" formControlName="customerEmail" placeholder="Customer Email"
+                            name="billing_email">
+                          <small class="error text-danger" *ngIf="hasError('customerEmail', 'required', 'address',i);">
+                            Please Enter Email Address* <br>
+                          </small>
+                          <small class="error text-danger" *ngIf="hasError('customerEmail', 'maxlength', 'address',i);">
+                            Maximum Characters Exceeded* <br>
+                          </small>
+                          <small class="error text-danger" *ngIf="hasError('customerEmail', 'minLength', 'address',i);">
+                            At Least 1 Character Required* <br>
+                          </small>
+                          <small class="error text-danger" *ngIf="hasError('customerEmail', 'pattern', 'address',i);">
+                            Please Enter Valid Email Address* <br>
+                          </small>
+                          <small class="error text-danger" *ngIf="hasError('customerEmail', 'email', 'address',i);">
+                            Please Enter Valid Email Address* <br>
+                          </small>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                      
+                    </div>
+                    <br>
+                    <div class="d-flex">
+                      <div class="col-xs-12 col-md-12 nopad d-flex">
+                        <div class="col-md-4 nopad">
+                          <select name="country_code" class="newslterinput nputbrd _numeric_only "
+                            id="after_country_code" formControlName="PhoneCode">
+                            <option [selected]="p.phone_code==+44" *ngFor="let p of phoneCodes">
+                              {{p.name}} ({{ p.phone_code }})
+                            </option>
+                          </select>
+                        </div>
+                        <!-- <div class="col-md-1">
+                          <div class="sidepo">-</div>
+                        </div> -->
+                        <div class="col-md-4 nopadding">
+                          <input value="" type="text" name="passenger_contact" id="passenger-contact"
+                            placeholder="Agent Mobile Number" class="newslterinput nputbrd _numeric_only" 
+                            formControlName="Contact" (keypress)="numberOnly($event)" minlength="8" maxlength="12">
+                          <small class="error text-danger" *ngIf="hasError('Contact', 'required', 'address',i);">
+                            Please Enter agent phone number* <br>
+                          </small>
+                          <small class="error text-danger" *ngIf="hasError('Contact', 'pattern', 'address',i);">
+                            Please Enter a Valid Number* <br>
+                          </small>
+                        </div>
+                        <div class="emailperson col-md-4 nopad">
+                          <input value="" type="text" maxlength="80" id="billing-email"
+                            class="newslterinput nputbrd" formControlName="Email" placeholder="Email"
+                            name="billing_email" disabled>
+                          <small class="error text-danger" *ngIf="hasError('Email', 'required', 'address',i);">
+                            Please Enter Email Address* <br>
+                          </small>
+                          <small class="error text-danger" *ngIf="hasError('Email', 'maxlength', 'address',i);">
+                            Maximum Characters Exceeded* <br>
+                          </small>
+                          <small class="error text-danger" *ngIf="hasError('Email', 'minLength', 'address',i);">
+                            At Least 1 Character Required* <br>
+                          </small>
+                          <small class="error text-danger" *ngIf="hasError('Email', 'pattern', 'address',i);">
+                            Please Enter Valid Email Address* <br>
+                          </small>
+                          <small class="error text-danger" *ngIf="hasError('Email', 'email', 'address',i);">
+                            Please Enter Valid Email Address* <br>
+                          </small>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                      
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="notese">Your mobile number will be used only for sending transfer related
+                      communication.</div>
+                  </div>
+                </ng-container>
+              </ng-container>
+              
+              <div class="contbk" *ngIf="blockedTransfer?.BookingSource === 'ZBAPINO00022'">
+                <div class="contcthdngs">Meeting Point</div>
+                  <div class="d-flex">
+                    <div class="col-xs-12 col-md-12 nopad d-flex">
+                        <div class="col-12 row mt-3"  >
+                          <div class="col-xs-6 col-md-6 nopad d-flex mb-2">
+                            <input value="" type="text" name="inbound_notes" id="inbound_notes"
+                                    placeholder="Out Bound Notes" class="newslterinput nputbrd _numeric_only" 
+                                    formControlName="inbound_notes" >
+                          </div>
+
+                          <div *ngIf="blockedTransfer?.body?.IsReturn === 1" class="col-xs-6 col-md-6 nopad d-flex mb-2" >
+                            <input value="" type="text" name="outbound_notes" id="outbound_notes"
+                                    placeholder="Out Bound Notes" class="newslterinput nputbrd _numeric_only" 
+                                    formControlName="outbound_notes" >
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              
+              
+             
+
+                <div class="clikdiv">
+                  <div class="squaredThree">
+                    <input id="terms_cond1" type="checkbox" [checked]="terms" name="tc"
+                      (click)="onTerms($event.target.checked)">
+                    <label for="terms_cond1"></label>
+                  </div>
+                  <span class="clikagre" style="display: inline;
+                  font-size: 14px;
+                  margin: 25px;" id="clikagre"> By booking this item , you agree to our <a data-toggle="modal" (click)="openStaticPage('Travel Agent T&Cs')"  class="colorbl">Terms and Conditions</a>and <a data-toggle="modal" (click)="openStaticPage('Refund & Return Policy')"  class="colorbl">Refund Policy</a></span>
+                  <small class="text-danger" *ngIf="submitted && !terms">
+                    Please Check The Terms and Conditions*
+                  </small>
+                </div>
+                <div class="clearfix"></div>
+                <div class="loginspld">
+                  <div class="collogg">
+                    <div class="continye col-xs-3">
+                      <button id="flip" class="bookcont" (click)="confirmBooking()" type="submit">Continue</button>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="sepertr"></div>
+                  </div>
+                </div>
+
+              </form>
+            
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 rhttbepa mobile_nopad mobpadr">
+        <app-transfer-faresummary [noOfTravellers]="noOfTravellers"
+          [blockedTransfer]="blockedTransfer"></app-transfer-faresummary>
+
+          <div class="add_module_but">
+
+            <button class="btn btn_add_cart" (click)="addToCartWithMessage()">&nbsp;Add to Cart</button>
+
+                    <button class="btn btn_add p-0" (click)="openSearch('flight')">Add Flight</button>
+
+                    <button class="btn btn_add p-0" (click)="openSearch('hotel')">Add Hotel</button>
+                    <button class="btn btn_add p-0" (click)="openSearch('activity')">Add Activity</button>
+                    <div *ngIf="cartMessage" class="cart-message">{{ cartMessage }}</div>
+        </div>
+
+        <div class="card-body bg-whites mt-2 nopad mb-3 float-left w-100" *ngFor="let journeyList of blockedTransfer.Journey; index as i"> 
+          <h5 class="cusromGreys p-3 bg-rey">
+              <i class="fal fa-calendar-check"></i> Journey {{i+1}} 
+          </h5>
+          <div class="text-center">
+              <div class="col-md-12" style="text-align: left;">                            
+                  <div class="clearfix"></div>
+                  <div class="amentiess justify-content-between" style="border: none;">
+                    <p class="f12b mb-2 mt-2 w-100 pb-2 border-bottom">
+                      <span class="fs-small">From</span><br>
+                      <!-- <strong  class="fs-small">{{transfers.data.body.From.name}}</strong><br> -->
+                     
+                        <strong *ngIf="i === 0" class="fs-small">{{ blockedTransfer.body.From.name }}</strong><br>
+                        <strong class="fs-small" *ngIf="i === 1">{{ blockedTransfer.body.To.name }}</strong><br>
+                      <!-- <strong>{{journeyList.From}}</strong> -->
+                    </p>
+                    <p class="f12b mb-2 mt-2 w-100 text-left pb-2 border-bottom">
+                      <span class="fs-small">To</span><br>
+                      <!-- <strong  class="fs-small">{{transfers.data.body.To.name}}</strong><br> -->
+                      <strong *ngIf="i === 1" class="fs-small">{{ blockedTransfer.body.From.name }}</strong><br>
+                      <strong class="fs-small" *ngIf="i === 0">{{ blockedTransfer.body.To.name }}</strong><br>
+                      <!-- <strong>{{journeyList.To}}</strong> -->
+                    </p>
+                  </div>
+                  <div class="amentiess d-flex justify-content-between" style="border: none;">
+                      <p class="f12b mb-2 mt-2 w-50 pb-2 border-bottom">
+                        <span class="fs-small">Date</span><br>
+                        <strong>{{journeyList.Date}}</strong>
+                      </p>
+                      <p class="f12b mb-2 mt-2 w-50 text-right pb-2 border-bottom">
+                        <span class="fs-small">Time</span><br>
+                        <strong>{{journeyList.Time}}</strong>
+                      </p>
+                    </div>
+                </div>
+          </div>
+      </div> 
+
+          <!-- <div class="bor mar20 coup">
+            <div class="prc-h1 prc-cup"> Have a coupon code </div>
+            <div class="cpn" id="divCouponCodeApply" style="display: block;">
+              <div class="cpn-l">
+                <input id="txtCouponCode" [(ngModel)]="txtCouponCodeValue" type="text" value="" placeholder="Enter Coupon Code"
+                  minlength="1" [disabled]="disableApplyPromo">
+              </div>
+              <div class="cpn-r">
+                <div *ngIf="!disableApplyPromo" class="apl" [class.disabled]="!txtCouponCodeValue" (click)="applyCoupon()" [attr.disabled]="!txtCouponCodeValue ? true : null">Apply</div>
+                <div *ngIf="disableApplyPromo" class="apl" (click)="removeSelectedPromo()">Remove</div>
+              </div>
+            </div>
+            <div *ngIf="isInvalidPromo" class="error-message" style="color: red; padding-left: 10px;">Invalid Promocode</div>
+            <div class="cpn_dvd" style="display:block"></div>
+            <div class="clearfix"></div>
+            <div class="coupn_inr">
+              <div class="coupn_scrl">
+                <div class="coupn_col">
+                  <label class="coupn_radio" *ngFor="let promocode of promocodeList; let index=index">
+                    <div class="coupn_ttl">{{promocode.promo_code}}</div>
+                    <div class="coupn_para" id="cpnTxtEMTNCF">{{promocode.description}}</div>
+                    <input type="radio" (click)="setSelectedPromo(promocode, index)" name="cpnRadio">
+                    <span class="coupn_checkmark" id="spnRdoEMTNCF"></span>
+                    <span *ngIf="promocode.selected">
+                      <a href="javascript:void(0);" (click)="removeSelectedPromo()" style="color: red; font-size: 11px;">Remove</a>
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div> -->
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-loading [show]="showLoader"
+  [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+  [template]="loadingTemplate"></ngx-loading>

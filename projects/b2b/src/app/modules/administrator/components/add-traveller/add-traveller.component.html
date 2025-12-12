@@ -1,0 +1,177 @@
+<div class="add-traveller">
+  <div class="form-group required">
+    <div class="col-4">
+      <button type="button" class="btn icon-btn lg" (click)="goBack()">
+        Back</button>
+    </div>
+  </div>
+  <div class="title">
+    <h3>Add Traveller</h3>
+  </div>
+  <div class="custom-inline-form">
+    <form autocomplete="off" [formGroup]="addTravellerForm">
+      <div class="form-group required row">
+        <label for="title" class="col-sm-2 col-form-label">Title</label>
+        <div class="col-sm-9">
+          <select id="inputState" class="form-control capitalize" formControlName="title">
+            <option value="" selected disabled>Choose...</option>
+            <ng-container *ngFor="let t of userTitleList">
+              <option  value="{{t.title}}">
+                {{t.title}}
+              </option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+      <div class="form-group required row">
+        <label for="firstName" class="required" class="col-sm-2 col-form-label">First Name</label>
+        <div class="col-sm-9">
+          <input type="text" class="text-capitalize form-control" maxlength="250" (keypress)="omitSpecialCharacters($event)"
+            formControlName="first_name">
+        </div>
+      </div>
+      
+      <div class="form-group required row">
+        <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
+        <div class="col-sm-9">
+          <input type="text" class="text-capitalize form-control" maxlength="250" (keypress)="omitSpecialCharacters($event)"
+            formControlName="last_name">
+        </div>
+      </div>
+      <div class="form-group airport_complete required row">
+        <label for="lastName" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" maxlength="250" formControlName="email"
+            [readonly]="addOrUpdate=='update' ? true : false">
+        </div>
+      </div>
+      <!-- <div class="form-group required row">
+        <label for="dateOfBirth" class="col-sm-2 col-form-label">Date Of Birth</label>
+        <div class="col-sm-9">
+          <input matInput [matDatepicker]="datepicker" class="datpick" datePickerFormat="YYYY/MM/DD" formControlName="date_of_birth" onkeydown="return false">
+          <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+          <mat-datepicker #datepicker></mat-datepicker>
+        </div>
+      </div> -->
+      <div class="form-group required row mb-7">
+        <label for="phone" class="col-sm-2 col-form-label">Phone Number</label>
+        <div class="form-row col-9 m-0">
+          <div class="col-3 pl-0">
+            <select id="phoneCode" class="form-control"formControlName="phone_code">
+              <option [ngValue]="code.phone_code" *ngFor="let code of phoneCodeList">
+                  {{code.name}} ({{code.phone_code}}) </option>
+          </select>
+          </div>
+          <div class="col-9 pr-0">
+            <input type="text" class="form-control" maxlength="15" (keypress)="numberOnly($event)"
+              formControlName="phone_number">
+          </div>
+        </div>
+      </div>
+      <div class="form-group required row">
+        <label for="phone" class="col-sm-2 col-form-label">Gender</label>
+        <div class="col-sm-9">
+          <input style="height:inherit; margin-right: 5px;" type="radio" formControlName="gender" value="male" />Male
+          <input style="height:inherit; margin-right: 5px; margin-left: 12px;" type="radio" formControlName="gender" value="female"> Female
+        </div>
+      </div>
+      <div class="form-group required row col-sm-6">
+        <label for="Passport" class="col-sm-4 col-form-label">Nationality</label>
+        <div class="col-sm-8">
+          <select id="country" class="form-control" formControlName="country">
+            <option selected>Select Country</option>
+            <option *ngFor="let c of staticCountries" value="{{c.code}}">{{c.name}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="title mx-0 pl-30">
+        <h3>Passport Info</h3>
+      </div>
+      <div class="row col-sm-12">
+        <div class="form-group required row col-sm-6">
+          <label for="Passport" class="required" class="col-sm-4 col-form-label">Passport Number</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" maxlength="250" formControlName="passport_no" (keypress)="alphaNumberOnly($event)">
+          </div>
+        </div>
+        <div class="form-group required row col-sm-6">
+          <label for="Passport" class="col-sm-4 col-form-label">Passport Issue Country</label>
+          <div class="col-sm-8">
+            <select id="country" class="form-control" formControlName="issuing_country">
+              <option selected>Select Country</option>
+              <option *ngFor="let c of staticCountries" value="{{c.code}}">{{c.name}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row required col-sm-6">
+          <label for="Passport" class="col-sm-4 col-form-label">Passport Expiry Date</label>
+          <div class="col-sm-8">
+            <!-- <input matInput [matDatepicker]="picker" class="datpick"  [minDate]="maxDate" datePickerFormat="YYYY/MM/DD" formControlName="passport_expiry" onkeydown="return false"> -->
+            <input type="text" id="street_address" name="street_address" class="email form-control logpadding"
+            value="" placeholder="DD/MM/YYYY" aria-required="true" formControlName="passport_expiry"
+            [bsConfig]="bsDateConf" #dp="bsDatepicker" [minDate]="maxDate" bsDatepicker autocomplete="off" [readonly]="true" />
+            <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker> -->
+          </div>
+        </div>
+      </div>
+      <div formArrayName="co_travellers">
+        <div class="row col-sm-12" *ngFor="let traveller of co_travellers().controls; let i=index" [formGroupName]="i">
+          <div class="title mx-0 pl-30 col-sm-12">
+            <h3 class="col-sm-11">Co-Traveller {{i+1}}</h3>
+            <button class="col-sm-1" class="rmvBtn" (click)="removeTraveller(i)"><i class="fas fa-trash"></i></button>
+          </div>
+          <div class="form-group required row col-sm-6">
+            <label for="title" class="col-sm-4 col-form-label">Title</label>
+            <div class="col-sm-8">
+              <select id="inputState" class="form-control" formControlName="title">
+                <option selected>Choose...</option>
+                <option *ngFor="let t of userTitleList" value="{{t.title}}">{{t.title}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group required row col-sm-6">
+            <label for="city" class="required" class="col-sm-4 col-form-label">First Name</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="first_name" (keypress)="omitSpecialCharacters($event)"
+                formControlName="first_name" maxlength="250">
+            </div>
+          </div>
+          <div class="form-group required row col-sm-6">
+            <label for="pin" class="col-sm-4 col-form-label">Last Name</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="last_name" maxlength="250"
+                (keypress)="omitSpecialCharacters($event)" formControlName="last_name">
+            </div>
+          </div>
+          <div class="form-group required row col-sm-6">
+            <label for="dateOfBirth" class="col-sm-4 col-form-label">Date Of Birth</label>
+            <div class="col-sm-8">
+              <span class="icon return_date" (click)="isOpen= !isOpen"></span>
+              <input type="text" id="dateOfBirth" formControlName="date_of_birth"
+                class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy"
+                bsDatepicker [bsConfig]="bsDateConf" [readonly]="true" [maxDate]="maxDate" [isOpen]="isOpen">
+            </div>
+          </div>
+          <div class="form-group required row col-sm-6">
+            <label for="pin" class="col-sm-4 col-form-label">Postal Code</label>
+            <div class="col-sm-8">
+              <input type="number" class="form-control" id="postal_code" maxlength="8" formControlName="postal_code">
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="btn-group">
+        <div class="form-group required row">
+          <div class="col-12 d-flex">
+            <button type="submit" class="btn icon-btn lg mr-4" (click)="onAddTraveller()">Save</button>
+            <button type="reset" class="btn icon-btn lg" (click)="onReset()">Reset</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

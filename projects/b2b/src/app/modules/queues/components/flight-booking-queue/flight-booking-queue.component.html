@@ -1,0 +1,246 @@
+<app-search-queue (searchValuesEvent)="receiveSearchValues($event)"></app-search-queue>
+<div class="card">
+    <div class="card-body">
+        <div class="mb-3">
+            <form>
+                <div class="p-2">
+                    <div class="form-group form-inline mb-0">
+                        Full text search:
+                        <input class="form-control ml-2 text-capitalize" type="text" name="searchTerm"
+                            (keyup)="applyFilter($event.target.value)" />
+
+                        <div class="move-right">
+                            <button class="text-white btn btn-lg btn-primary m-1"
+                                (click)="exportExcel()">Export to Excel</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft"
+                    #scrollOne>
+                    <div class="div1"></div>
+                </div>
+                <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
+                    <div class="div2 invisible-scrollbar">
+                        <div class="table-respons">
+                            <table id="b2b-flight-report" class="table table-borderless table-striped table-hover"
+                                matSort (matSortChange)="sortData($event)">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-left text-nowrap"
+                                            *ngFor="let header of displayColumn;" mat-sort-header="{{header.key}}">
+                                            {{header.value }} </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngIf="noData">
+                                        <td colspan="10">
+                                            <mat-spinner [diameter]="30" style="margin:0 auto;"
+                                                mode="indeterminate"></mat-spinner>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="!noData && !respData.length">
+                                        <td colspan="10">
+                                            <h4 class="text-muted text-center">
+                                                No Data Found!
+                                            </h4>
+                                        </td>
+                                    </tr>
+                                    <tr *ngFor="let data of respData ; let i=index;">
+                                        <td class="text-left text-muted">{{i+1}}.</td>
+                                        <td class="text-left">
+                                            {{data.FlightBookingTransactions[0].gds_pnr || "N/A"}}
+                                        </td>
+                                        <td class="text-left">
+                                            <span *ngIf="data.BookingStatus == 'BOOKING_SUCCESS'"
+                                                class="badge badge-success">
+                                                {{data.BookingStatus}} </span>
+                                            <span *ngIf="data.BookingStatus == 'BOOKING_CONFIRMED'"
+                                                class="badge badge-success">
+                                                {{data.BookingStatus}} </span>
+                                            <span *ngIf="data.BookingStatus == 'BOOKING_HOLD'"
+                                                class="badge badge-warning text-white">
+                                                {{data.BookingStatus}} </span>
+                                            <span *ngIf="data.BookingStatus == 'BOOKING_FAILED'"
+                                                class="badge badge-danger">
+                                                {{data.BookingStatus}} </span>
+                                            <span *ngIf="data.BookingStatus == 'BOOKING_INPROGRESS'"
+                                                class="badge badge-primary text-white">
+                                                {{data.BookingStatus}} </span>
+                                        </td>
+                                        <td class="text-left">{{data.FlightItineraries[0].airline_name}}
+                                        </td>
+                                        <td class="text-left"> {{data['AppReference']}} </td>
+                                        <td class="text-left">
+                                            {{data.FlightBookingTransactions[0].flightBookingTransactionPassengers[0].first_name}}
+                                        </td>
+                                        <td class="text-left"> {{data['JourneyFrom']}} </td>
+                                        <td class="text-left"> {{data['JourneyTo']}} </td>
+                                        <td class="text-left"> {{data['TripType']}} </td>
+                                        <td class="text-left"> {{data['TotalFarePriceBreakUp']['AgentNetFare']}} </td>
+                                        <td class="text-left">
+                                            {{data.FlightBookingTransactions[0].total_fare}}
+                                        </td>
+                                        <td class="text-left"> {{data['JourneyStart'] |
+                                            date:'mediumDate'}} </td>
+                                        <td class="text-left">
+                                            {{data['CreatedDatetime'] | date: "mediumDate" }} </td>
+                                        <td class="text-left">
+                                            <span *ngIf="data['LastDateToTicket']!='N/A'">
+                                                {{data['LastDateToTicket'] }}
+                                            </span>
+                                        </td>
+
+                                        <td class="text-left" style="vertical-align: middle;">
+                                            <div ngbDropdown container="body"><button class="btnStyle"
+                                                    ngbDropdownToggle>
+                                                    {{'Action'}}
+                                                </button>
+                                                <div ngbDropdownMenu>
+                                                    <a (click)="showPaxProfile(data);" ngbDropdownItem> Pax Profile </a>
+                                                    <a (click)="getVoucher(data);" ngbDropdownItem> View Voucher </a>
+                                                    <a *ngIf="data.BookingStatus == 'BOOKING_HOLD'"
+                                                        (click)="submitTicket(data);" ngbDropdownItem hidden> Issue
+                                                        Ticket </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer pb-0">
+                    <div class="d-flex w-100 justify-content-between">
+                        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                        </ngb-pagination>
+                        <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                            <option [ngValue]="50">50 items per page</option>
+                            <option [ngValue]="100">100 items per page</option>
+                            <option [ngValue]="200">200 items per page</option>
+                            <option [ngValue]="500">500 items per page</option>
+                            <option [ngValue]="700">700 items per page</option>
+                            <option [ngValue]="1000">1000 items per page</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="paxProfile" [style.display]="showPaxDetails ? 'block' : 'none'">
+    <div class="modal-dialog">
+        <div class="modal-content" style="min-width:882px;">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Traveller Information:</h4>
+                <button type="button" class="close" data-dismiss="modal" (click)="hide()">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <!-- <h5></h5> -->
+                <table class="table table-bordered table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Sl No.</th>
+                            <th>Tittle</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Gender</th>
+                            <th>Date of Birth</th>
+                            <th>Nationality</th>
+                            <th>Passport Number</th>
+                            <th>Issuing Country</th>
+                            <th>Expiry Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let paxDetail of paxDetails;let i=index;">
+                            <td class="text-left"> {{i+1}}.</td>
+                            <td class="text-left text-uppercase"> {{paxDetail?.title}}</td>
+                            <td class="text-left"> {{paxDetail?.first_name}}</td>
+                            <td class="text-left"> {{paxDetail?.last_name}}</td>
+                            <td class="text-left"> {{paxDetail?.gender}}</td>
+                            <td class="text-left"> {{paxDetail?.date_of_birth}}</td>
+                            <td class="text-left"> {{paxDetail?.passenger_nationality}}</td>
+                            <td class="text-left"> {{paxDetail?.passport_number}}</td>
+                            <td class="text-left"> {{paxDetail?.passport_issuing_country}}</td>
+                            <td class="text-left"> {{paxDetail?.passport_expiry_date}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btnStyle" data-dismiss="modal" (click)="hide()">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Payment modal -->
+<div class="modal" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true"
+    [style.display]="showPaymentDetails ? 'block' : 'none'">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 590px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentModalLabel">Payment Methods</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="paymentForm">
+                    <div class="cc-selector-2">
+                        <div class="row">
+                            <div class="col-md-3" *ngFor="let paymentMethod of paymentGateways">
+                                <span *ngIf="(paymentMethod?.remarks | lowercase)==='wallet'">
+                                    <label style="width: 46px;" class="drinkcard-cc wallet" for="wallet">
+                                    </label>
+                                    <span class="payment_label">
+                                        <input id="wallet" type="radio" name="paymentMethod" value="wallet"
+                                            formControlName="paymentMethod" /> {{paymentMethod?.remarks}}
+                                    </span>
+                                </span>
+                                <span *ngIf="(paymentMethod?.remarks | lowercase)==='nagad'">
+                                    <label class="drinkcard-cc nagad" for="nagad"></label>
+                                    <span class="payment_label">
+                                        <input id="nagad" type="radio" name="paymentMethod" value="nagad"
+                                            formControlName="paymentMethod" /> {{paymentMethod?.remarks}}
+                                    </span>
+                                </span>
+                                <span *ngIf="(paymentMethod?.remarks | lowercase)==='bkash'">
+                                    <label class="drinkcard-cc bKash" for="bKash"></label>
+                                    <span class="payment_label">
+                                        <input id="bKash" type="radio" name="paymentMethod" value="bKash"
+                                            formControlName="paymentMethod" /> {{paymentMethod?.remarks}}
+                                    </span>
+                                </span>
+                                <span *ngIf="(paymentMethod?.remarks | lowercase)==='sslcommerz'">
+                                    <label style="width: 100%; background-position: center;"
+                                        class="drinkcard-cc sslCommerz" for="sslCommerz"></label>
+                                    <span class="payment_label">
+                                        <input id="sslCommerz" type="radio" name="paymentMethod" value="sslCommerz"
+                                            formControlName="paymentMethod" />
+                                        {{paymentMethod?.remarks}}
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="error text-danger col-xs-12 col-12" style="margin-bottom:10px; display:block;"
+                        *ngIf="hasError('paymentMethod', 'required');">
+                        Please select the payment type* <br>
+                    </small>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="paymentConfirm()">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>

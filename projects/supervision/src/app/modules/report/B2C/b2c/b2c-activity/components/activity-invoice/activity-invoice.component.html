@@ -1,0 +1,303 @@
+
+    <div class="text-center" style="margin-top: 20px;">
+        <a ><button (click)="backToreports()" class="btnStyle">Back</button></a>
+        <a id="download" (click)="downloadA4('pdf', 'potrait')" style="margin-left:15px;"><button
+            class="btnStyle">Download PDF</button></a>
+    </div>
+    <table class="table" cellpadding="0" cellspacing="0" width="100%"
+        style="font-size:13px; width:1006px; margin:0px auto;background-color:#f8f8f8; padding:50px 45px;margin-top: 20px;" id="print_voucher" #print_voucher>
+        <tbody>
+            <tr>
+                <td colspan="8" style="padding: 5px 14px; color: #fff; line-height: 31px;" class="logocvr">
+
+                    <table width="100%" style="border-collapse: collapse;" cellpadding="0" cellspacing="0">
+                        <tbody>
+                        
+                            <tr>
+                                <td style="padding: 0px; border-top: 1px solid transparent; border-bottom: 1px solid #082E53;"><img
+                                        style="width:190px; padding: 10px 0px; -webkit-print-color-adjust: exact;"
+                                        src="assets/images/login-images/l-logo.svg">
+                                </td>
+                                <td style="padding: 0px; width: 35%; border-top: 1px solid transparent; border-bottom: 1px solid #082E53;">
+                                    <div class="trapezoid">Activity Invoice</div>
+                                </td>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- <p style="margin-bottom: 0px; font-size:13px; font-weight: 500;">
+                        {{voucherData['BookingDetails']['BusinessName'] || 'N/A'}}
+                    </p>
+                    <p style="margin-bottom: 0px; font-size:13px; color: #dfdfdf;">
+                        {{voucherData['BookingDetails']['Phone'] || 'N/A'}}
+                    </p>
+                    <p style="color:#f5aa1c; margin-top: 10px; font-size: 13px; margin-bottom: 0px;">
+                        {{voucherData['BookingDetails']['Email'] || 'N/A'}}
+                    </p> -->
+                </td>
+                
+            </tr>
+            <tr>
+
+                
+                <td colspan="4" style="width: 60%; padding: 14px;">
+                    <table style="width: 100%;">
+                        <tr><td style="height: 5px; border: none; padding: 0px;"></td></tr>
+                        
+
+                        <tr><td style="height: 5px; border: none; padding: 0px;"></td></tr>
+
+                            <tr>
+                            <td style="border:none; padding:0px 0px 15px; line-height: 25px; font-size: 15px; width: 50%;">
+                            <strong class="label"
+                            style=" font-size:17px;">
+
+                            <ng-container>
+                            <span class="text-uppercase">
+                                {{voucherData?.paxDetails[0]?.title +'. '+voucherData?.paxDetails[0]?.first_name+' '+voucherData?.paxDetails[0]?.last_name}} <br>
+                            </span>
+                        </ng-container>
+                            </strong>
+                            <span><i class="fa fa-phone-alt"></i> {{voucherData?.bookingDetails?.holder_contact || 'N/A'}}</span>
+                            <br>
+                            <span><i class="fa fa-envelope"></i> {{voucherData?.bookingDetails?.holder_email || 'N/A'}}</span>
+                            </td>
+
+                            <td style="border:none; padding:0px 0px 15px; line-height: 25px; font-size: 15px; width: 50%; text-align: right;">
+                                
+                                <span>
+                                    Reservation Code: <strong>{{voucherData?.bookingDetails?.app_reference}}</strong><br>
+                                </span>
+                                <span *ngIf="voucherData?.bookingDetails?.booking_reference">
+                                    Confirmation No: <strong>{{ voucherData?.bookingDetails?.booking_reference }}</strong><br>
+                                  </span>
+                                <!-- <span>
+                                    Invoice No: <strong>{{voucherData['BookingDetails']['InvoiceNumber'] || 'N/A'}}</strong><br>
+                                </span> -->
+
+                                <span>Date of Issue: <strong>{{voucherData?.bookingDetails?.created_at  | date: 'dd/MM/yyyy'}}</strong></span>
+                                
+                   
+                                </td>
+                            </tr>
+                            <tr><td style="height: 5px; border: none; padding: 0px;"></td></tr>
+                  </table>
+                </td>
+                
+            </tr>
+            
+            <tr>
+                <td colspan="8">
+
+                    <table style="width: 100%; margin-top: 15px;">
+                        <tbody>
+
+                            <tr><td colspan="2" style="padding:12px 0px 0px; font-size: 18px; border: none;"><img src="assets/images/users-ic.png">&nbsp;<span style="font-weight: 500;">Lead Passenger Details</span></td></tr>
+                            <tr>
+                                <td colspan="2" width="100%" style="padding:0px; width:100%; ">
+                                    <table width="100%" cellpadding="5" cellspacing="2"
+                                        style="font-size: 13px; border-collapse: separate;  box-shadow: 0 0 2px 0 rgba(0,0,0,.08), 0 2px 8px 0 rgba(0,0,0,.16); background: #fff;">
+                                        <tbody>
+                                            <tr style="white-space:nowrap; background: #092e53; color: #fff;">
+                                                <td
+                                                    style=" -webkit-print-color-adjust: exact;padding:10px 15px;color: #fff; width: 5%; font-weight: 700;">
+                                                    Sl.No</td>
+                                                <td
+                                                    style="-webkit-print-color-adjust: exact; width:30%; padding:10px 15px;color: #fff; font-weight: 700;">
+                                                    Guest's&nbsp;Name</td>
+                                                <td
+                                                    style="-webkit-print-color-adjust: exact; width:20%; padding:10px 15px;color: #fff; font-weight: 700; text-align: center;">
+                                                    Type</td>
+
+                                                    <!-- <td
+                                                    style="-webkit-print-color-adjust: exact; width:20%; padding:10px 15px;color: #fff; font-weight: 700; text-align: center;">
+                                                    Age</td> -->
+                                                
+                                            </tr>
+                                            <tr style="border-bottom: 1px solid #eee;">
+                                                <td style="padding:10px 15px; background: #e7f2fd; font-weight: 600;">
+                                                    {{1}}
+                                                </td>
+                                                <td style="padding:10px 15px; background: #e7f2fd; font-weight: 600;">
+                                                  
+                                                        <span class="text-uppercase">
+                                                            {{voucherData?.paxDetails[0].title}}. {{voucherData?.paxDetails[0].first_name}} {{voucherData?.paxDetails[0].last_name}} <br>
+                                                        </span>
+                                                </td>
+                                                <td
+                                                    style="padding:10px 15px; background: #e7f2fd; font-weight: 600; text-align: center; text-transform: capitalize;">
+                                                    {{voucherData?.paxDetails[0].travellerType}}
+                                                </td>
+<!-- 
+                                                <td
+                                                style="padding:10px 15px; background: #e7f2fd; font-weight: 600; text-align: center;">
+                                                {{passenger.age}}
+                                            </td> -->
+                                           
+                                               
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table><br>
+
+                    <table width="100%" cellpadding="5" cellspacing="0"
+                    style="font-size: 13px; border-collapse: separate;  box-shadow: 0 0 2px 0 rgba(0,0,0,.08), 0 2px 8px 0 rgba(0,0,0,.16); background: #fff;">
+                    <tbody>
+                        
+
+                        <tr style="background: #e7f2fd; height: 280px;">
+                            <td colspan="5" style="padding: 0px; border: none;">
+                            <table style="width: 100%;">
+
+                                <tr style="white-space:nowrap; background: #092e53; color: #fff; font-weight: 500;">
+                            
+                                    <th>#</th>
+                                     <th>Description</th>
+                                     <th>Trip Date</th>
+                                    <!-- <th>Check In</th>
+                                    <th>Check Out</th> -->
+                                    <!-- <th style="border-left: 1px solid #fff;">Room Price</th> -->
+                                    
+                                </tr>
+
+                                <tr>
+                                 
+                            <td>1</td>
+                            <td style="width: 27%;">
+                                {{voucherData?.bookingDetails.attributes.attributes.ProductName}}, {{voucherData?.ItenaryData.attributes.Destination}}<br>
+                                {{voucherData?.bookingDetails.attributes.GradeDescription}}
+                            </td>
+
+                            <td><span style="display: block; font-size: 14px; color: #333; margin-top: 1px;">
+                                {{voucherData?.bookingDetails.attributes.dateFrom  | date: 'dd/MM/yyyy'}} -  {{voucherData?.bookingDetails.attributes.dateTo  | date: 'dd/MM/yyyy'}}
+                            </span></td>
+
+                            <!-- <td><span
+                                style="display: block; font-size: 14px; color: #333; margin-top: 1px;">
+                                {{voucherData?.bookingDetails.attributes.dateTo  | date: 'dd/MM/yyyy'}}
+                            </span></td> -->
+
+                            <!-- <td style="border-left: 1px solid #fff;height: 450px; "><span
+                                style="display: block; font-size: 14px; color: #333; margin-top: 1px;">
+                                {{voucherData['BookingItineraryDetails'][0]['Currency']+ '
+                                    '+voucherData['BookingItineraryDetails'][0]['RoomPrice']}}
+                            </span></td> -->
+                            </tr>
+                            </table>
+                            </td>
+                        </tr>
+
+                        <tr style="position: relative;"><td style="position: absolute;
+                            top: -189px;
+                            border: none;
+                            left: 0px;
+                            right: 0px;
+                            margin: auto;
+                            display: table;"><img style="width: 500px; opacity: 0.1;" src="assets/images/login-images/l-logo.svg"></td></tr>
+
+<tr style="white-space:nowrap; background: #fff; color: #000; font-weight: 500;">
+                            
+    <th>&nbsp;</th>
+     <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <!-- <th style="text-align: right;">Taxes</th> -->
+    <!-- <th style="border-left: 1px solid #ddd; width: 20.5%; text-align: left;">{{voucherData['BookingItineraryDetails'][0]['Tax']}}</th> -->
+    
+<!-- </tr>
+<tr >
+                            
+    <th>&nbsp;</th>
+     <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th style="text-align: right;">	Base Fare</th>
+    <th style="border-left: 1px solid #ddd; width: 20.5%; text-align: left;">{{
+        (voucherData?.bookingDetails.currency)}}&nbsp;
+    {{(voucherData?.ItenaryData.totalAmount - voucherData?.bookingDetails.admin_markup) | number:'1.2-2'}}</th>
+    
+</tr> -->
+<!-- <tr >
+                            
+    <th>&nbsp;</th>
+     <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th style="text-align: right;">	Admin Markup</th>
+    <th style="border-left: 1px solid #ddd; width: 20.5%; text-align: left;">{{
+        voucherData?.bookingDetails.currency+ '
+    '+voucherData?.bookingDetails.admin_markup}}</th>
+    
+</tr> -->
+<!-- <tr >
+                            
+    <th>&nbsp;</th>
+     <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th style="text-align: right;">	Convenience Fee</th>
+    <th style="border-left: 1px solid #ddd; width: 20.5%; text-align: left;">{{
+        voucherData?.bookingDetails.currency+ '
+    '+voucherData?.bookingDetails.convinence}}</th>
+    
+</tr> -->
+<!-- <tr >
+                            
+    <th>&nbsp;</th>
+     <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th style="text-align: right;">Discount</th>
+    <th style="border-left: 1px solid #ddd; width: 20.5%; text-align: left;">{{
+        voucherData?.bookingDetails.currency+ '
+    '+voucherData?.bookingDetails.discount}}</th>
+    
+</tr> -->
+<tr style="white-space:nowrap; background: #fff; color: #000; font-weight: 500;">
+                            
+    <th>&nbsp;</th>
+     <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th style="text-align: right;">Total Amount</th>
+    <th style="border-left: 1px solid #ddd; width: 20.5%; text-align: left;">{{
+            voucherData?.bookingDetails.currency+ '
+        '+voucherData?.bookingDetails.totalNet}} 
+       ({{ voucherData?.bookingDetails.totalNet | numberToWords:voucherData?.bookingDetails.currency }})
+    </th>
+    
+</tr>
+                        
+                    </tbody>
+                </table>
+
+             </td>
+            </tr>
+            <tr><td></td></tr>
+
+            <tr>
+                <td style="padding: 0px; border: none;">
+                    <table style="width: 100%;">
+                    <tr>
+                     <td style="width: 55%;
+                     background: #092e53;
+                     border: none;
+                     color: #fff;
+                     padding: 14px 30px;
+                     line-height: 22px;
+                     font-size: 14px;">
+                     <span><i class="fa fa-phone-alt"></i> +44 1254 66 22 22</span><br>
+                     <span><i class="fa fa-envelope"></i> info@booking247.com</span><br>
+                     <span><i class="fa fa-globe"></i> www.booking247.com</span><br>
+                        <span>41, Victoria Street 
+Blackburn, Lancashire, United Kingdom - BB1 6DN2</span>
+                     </td>
+                     <td style="width: 45%; border: none; padding: 0px;"><img style="width: 75%; margin: 18px auto; display: block" src="assets/images/invoice_foot.png"></td>
+                     </tr>
+                     </table>
+                     </td>
+                </tr>
+
+        </tbody>
+    </table>
+    <ngx-loading [show]="loading"
+    [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+    [template]="loadingTemplate"></ngx-loading>

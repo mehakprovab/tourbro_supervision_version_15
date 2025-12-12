@@ -1,0 +1,36 @@
+<mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium">
+</mat-form-field>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="Sno">
+        <th mat-header-cell *matHeaderCellDef> S.No </th>
+        <td mat-cell *matCellDef="let element"> {{element.Sno}} </td>
+    </ng-container>
+    <ng-container matColumnDef="appReference">
+        <th mat-header-cell *matHeaderCellDef> App Reference </th>
+        <td mat-cell *matCellDef="let element"> {{element.appReference}} </td>
+    </ng-container>
+    <ng-container matColumnDef="pnr">
+        <th mat-header-cell *matHeaderCellDef> PNR </th>
+        <td mat-cell *matCellDef="let element"> {{element.pnr}} </td>
+    </ng-container>
+    <ng-container matColumnDef="bookingDate">
+        <th mat-header-cell *matHeaderCellDef> Booking Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.bookingDate}} </td>
+    </ng-container>
+    <ng-container matColumnDef="canRequestedDate">
+        <th mat-header-cell *matHeaderCellDef> Can Requested Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.canRequestedDate}} </td>
+    </ng-container>
+    <ng-container matColumnDef="travelDate">
+        <th mat-header-cell *matHeaderCellDef> Travel Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.travelDate}} </td>
+    </ng-container>
+    <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element"> {{element.action}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

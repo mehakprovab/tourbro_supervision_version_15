@@ -1,0 +1,79 @@
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <form class="clearfix">
+            <div class="row col-md-12 col-lg-12 m-0 p-0">
+                <table style="table-layout: fixed; width: 100%;">
+                    <tr>
+                        <td>
+                            <div class="table-responsive">
+                                <table class="align-middle mb-0 table table-borderless table-striped table-hover"
+                                    matSort (matSortChange)="sortData($event)">
+                                    <thead>
+                                        <tr class="p-2">
+                                            <th scope="col" class="text-nowrap" *ngFor="let header of displayColumn;"
+                                                mat-sort-header="{{header.key}}">
+                                                {{header.value }}
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="noData">
+                                            <td colspan="11">
+                                                <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="!noData && !respData.length">
+                                            <td colspan="11">
+                                                <h4 class="text-muted text-center">
+                                                    No Data Found!
+                                                </h4>
+                                            </td>
+                                        </tr>
+                                        <tr class="p-2"
+                                            *ngFor="let balance of respData ; let i=index;">
+                                            <td class="text-left text-muted">{{i+1}}.</td>
+                                            <td class="text-left"> {{balance['system_transaction_id']}} </td>
+                                            <td class="text-left"> {{balance['amount']}} </td>
+                                            <td class="text-left"> {{balance['updated_datetime'] && 
+                                                balance['updated_datetime']!="0000-00-00 00:00:00"?(balance['updated_datetime'] | date: 'dd/MM/yyyy HH:MM:SS') :'N/A'}} </td>
+                                            <td class="text-left"> {{balance['last_deposit_amount'] || 'N/A'}} </td>
+                                            <td class="text-left"> 
+                                                <!-- {{balance['transaction_status']}} -->
+                                                <span *ngIf="balance['transaction_status'] == 'pending'"
+                                                    class="badge badge-warning"> {{balance['transaction_status'] | uppercase}}
+                                                </span>
+                                                <span *ngIf="balance['transaction_status'] == 'accepted'"
+                                                    class="badge badge-success"> {{balance['transaction_status'] | uppercase}}
+                                                </span>
+                                                <span *ngIf="balance['transaction_status'] == 'rejected'"
+                                                    class="badge badge-danger"> {{balance['transaction_status'] | uppercase}}
+                                                </span>
+                                            </td>
+                                            <td class="text-left"> {{balance['created_datetime'] | date: 'dd/MM/yyyy HH:MM:SS'}} </td>
+                                            <td class="text-left text-capitalize"> {{balance['update_remarks'] || balance['remarks']}} </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="card-footer pb-0">
+                <div class="d-flex w-100 justify-content-between">
+                    <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                    </ngb-pagination>
+                    <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                        <option [ngValue]="50">50 items per page</option>
+                        <option [ngValue]="100">100 items per page</option>
+                        <option [ngValue]="150">150 items per page</option>
+                        <option [ngValue]="200">200 items per page</option>
+                        <option [ngValue]="500">500 items per page</option>
+                        <option [ngValue]="700">700 items per page</option>
+                        <option [ngValue]="1000">1000 items per page</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

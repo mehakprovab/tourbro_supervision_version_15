@@ -1,0 +1,144 @@
+<div mat-dialog-content>
+    <div *ngFor="let iList of flight?.FlightDetails?.Details;let index = index" class="row">
+        <div class="col-md-12">
+            <div class="card pb-0 mb-2">
+                <div class="card-body pb-0">
+                    <div *ngFor="let list of iList; let i = index">
+                        <!-- <div class="row">
+                            <div class="row col-md-12 m-0 p-0 bbottom" *ngIf="list.LayOverTime">
+                                <div class="col-md-3 text-danger customDetailsCenter">
+                                    <i class="pe-7s-clock f-20 font-weight-bold"></i>
+                                    <span class="f-12">
+                                        {{list.LayOverTime}}
+                                    </span>
+                                </div>
+                                <div class="col-md-9 m-0 pr-0 rounded-0 alert alert-danger" role="alert">
+                                    <div class="d-flex flex-column text-muted">
+                                        <div class="my-2 text-dark">
+                                            {{ 'Layover in ' + list.Origin.CityName + '(' + list.Origin.AirportCode +
+                                            ')' }}
+                                            {{' '+ list.LayOverTime}}
+                                        </div>
+                                        <div class="text-danger">
+                                            <span>
+                                                - A transit visa may be required
+                                            </span>
+                                        </div>
+                                        <div class="text-danger">
+                                            <span>
+                                                - Baggage can be checked through
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <div class="row pb-3 pt-3 bbottom" style="position: relative">
+                            <div class="col-md-3 col-12 pr-0 customDetailsCenter">
+                                <div class="">
+
+                                    <img class="rounded mob_left" style=" padding-top: 5px;
+                                    width: 95px;
+                                    padding-bottom: 5px;"
+                                        [src]="[airline_logo + list.OperatorCode + '.svg']" alt="">
+
+                                    <span class="mob_left">
+                                        <div class="" style="line-height: normal;">
+                                            <div class="deemFont">
+                                                <small> {{ list.OperatorName + ' (' + list.OperatorCode + ')'}}</small>
+                                            </div>
+                                            <div class="">
+                                                <small> {{ 'Flight Number :'+' '+list.FlightNumber }}</small>
+                                            </div>
+                                            <div class="">
+                                                <small> {{'Cabin Class :'+' '+ list.CabinClass }}</small>
+                                                <!-- <small *ngIf="flight?.booking_source==='ZBAPINO00002'">{{ ' ('+ flight?.Price?.PriceBreakup?.RBD[index]+')' }}</small> -->
+                                            </div>
+                                            <div class="" *ngIf="list?.Equipment">
+                                                <small> {{'Aircraft :'+' '+ list.Equipment }}</small>
+                                            </div>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6 pr-0 text-center mobile_left customDetailsCenter">
+                                <div class="">
+
+                                    <div class="timesFont">{{list.Origin.AirportCode}}
+                                        <strong style="color: #082b3a;">{{list.Origin.DateTime | date: 'HH:mm' }}</strong> 
+                                    </div>
+
+                                    <div class="commnp">
+                                        {{list.Origin.DateTime | date: 'EEE, dd/MM/yyyy'}}
+                                    </div>
+                                    <div class="commnp">
+                                        {{list.Origin.AirportName}}
+                                    </div>
+                                    <div class="commnp" *ngIf="list.Origin.Terminal">
+                                        Terminal : {{list.Origin.Terminal ? list.Origin.Terminal : ''}}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="col-md-3 col-6 pr-0 padding_right_mobile text-center mobile_right customDetailsCenter">
+                                <div class="">
+
+                                    <div class="timesFont">{{list.Destination.AirportCode}}
+                                        <strong style="color: #082b3a;">{{list.Destination.DateTime | date: 'HH:mm' }}</strong> 
+                                    </div>
+
+                                    <div class="commnp">
+                                        {{list.Destination.DateTime | date: 'EEE, dd/MM/yyyy'}}
+                                    </div>
+                                    <div class="commnp">
+                                        {{list.Destination.AirportName}}
+                                    </div>
+                                    <div class="commnp" *ngIf="list.Destination.Terminal">
+                                        Terminal : {{list.Destination.Terminal}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12 pr-0 text-right mobile_left customDetailsCenter">
+                                <div class="text-right mobile_left" style="padding-right: 15px !important;">
+                                    <div class="">{{list.Duration}}</div>
+                                    <div class="">Stop: {{i}}</div>
+                                    <div class="text-muted">
+                                        <i class="fa fa-wheelchair"></i>
+                                        <i> {{ list.Attr?.AvailableSeats }} Seats Left</i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="(list?.LayoverTime)"  class="layovertime">Layover Time : {{list?.LayoverTime}}</div>
+                             
+                        </div>
+                        
+                    </div>
+
+                    <div class="row pb-3 pt-3 bbottom m-auto" *ngIf="codeshareInfo(iList)">
+                        <strong>Code Share Info</strong>
+                        <div class="col-md-2  m-auto col-12 pr-0 customDetailsCenter" *ngIf="iList[0]?.CodeshareInfo?.OperatingCarrier">
+
+                            <span class="row">OperatingCarrier:  <p class="ml-3">{{iList[0]?.CodeshareInfo?.OperatingCarrier}}</p></span>
+                        </div>
+
+                        <div class="col-md-2 row  m-auto col-12 pr-0 customDetailsCenter" *ngIf="iList[0]?.CodeshareInfo?.OperatingFlightNumber" >
+
+                            <span class="row">OperatingFlightNumber: <p class="ml-3">{{iList[0]?.CodeshareInfo?.OperatingFlightNumber}}</p></span>
+                        </div>
+
+                        <div class="col-md-6 col-12 m-auto pr-0 customDetailsCenter" *ngIf="iList[0]?.CodeshareInfo?.CodeshareAirlineName">
+
+                            <span class="row">CodeshareAirlineName: <p class="ml-3">{{iList[0]?.CodeshareInfo?.CodeshareAirlineName}}</p></span>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
+    </div>
+                            
+</div>

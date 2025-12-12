@@ -1,0 +1,169 @@
+<div class="card" style="width: auto; height: auto; overflow-y: scroll; padding: 0px;" *ngIf="invoiceData">
+    <div class="text-right" style="margin-top: 20px; padding: 0px 20px;">
+        <a [routerLink]="['/report/b2b-flight']"><button class="btnStyle">Back</button></a>
+        <a id="download" (click)="downloadA4('pdf', 'potrait')" style="margin-left:15px;"><button
+            class="btnStyle">Download PDF</button></a>
+    </div>
+    
+    <div style=" -webkit-print-color-adjust: exact; width: 100%; padding:0px 20px; display: table; margin: auto; height: auto; overflow-y: scroll;" id="print_voucher" #print_voucher>   
+        
+    <table class="table" cellpadding="0" cellspacing="0" width="100%"
+        style="font-size:13px; width:100%; margin:0px auto;background-color:#fff; padding:50px 45px;margin-top:20px;">
+        <tbody style="width: 100%; -webkit-print-color-adjust: exact">
+            <tr>
+              
+                <td colspan="8" style="padding:5px 0px;"><img
+                        style="max-width: 170px;  margin-top: 5px;"
+                        src="assets/images/login-images/l-logo.svg" alt=""></td>
+               </tr>
+            <tr>
+                <td colspan="4" style="width: 0%; padding: 14px;">
+                    <div style="float: left; font-weight: 700;">To:</div>
+                    <div style="float: left; padding-left: 15px;">
+                        <p style="margin-bottom: 0px; font-size:13px; font-weight: 700; color: #000;">
+                            {{(invoiceData['Passengers'][0]['title'] | uppercase) || ''}}. {{(invoiceData['Passengers'][0]['first_name'] | uppercase)
+                            || ''}}
+                            {{
+                            (invoiceData['Passengers'][0]['last_name'] | uppercase) || ''}}
+                        </p>
+                        <p
+                            style="color:#000; margin-top: 4px; text-transform: lowercase; font-weight: 500; font-size: 13px; margin-bottom: 0px;">
+                            {{invoiceData['Email']}} </p>
+                    </div>
+                </td>
+                <td colspan="4" style="width: 50%; padding: 14px;">
+                    <table width="100%" cellspacing="0" cellpadding="10" border="0"
+                        style=" font-weight: bold;  font-size: 13px; line-height: normal;border: 0;">
+                        <tbody class="">
+                            <tr class="">
+                                <td style="text-align: left; border:none; padding: 2px;">INVOICE NO :</td>
+                                <td style="text-align: left; border:none; padding: 2px;">
+                                    {{invoiceNo}} </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left; border:none; padding: 2px;">DATE OF ISSUE :</td>
+                                <td style="text-align: left; border:none; padding: 2px;">{{invoiceData['CreatedDatetime']  | date: 'dd/MM/yyyy'}}</td>
+                            </tr>
+
+                            <tr>
+                                <td style="text-align: left; border:none; padding: 2px;">AGENT :</td>
+                                <td style="text-align: left; border:none; padding: 2px;"> {{invoiceData['AgentBusinessName'] || '' }} {{ '('}}{{invoiceData['AgentFirstName'] || '' }}{{' '}}{{invoiceData['AgentLastName'] || ''}} {{')'}} </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left; padding: 2px; border:none;">
+                                    {{invoiceData['BusinessName'] || '' }} REFERENCE NO: </td>
+                                <td style="text-align: left; padding: 2px; border:none;">
+                                    {{invoiceData['AppReference']}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8" style="border-bottom:1px solid #000; padding:0px;">
+
+                    <table style="width: 100%; border:0px solid transparent;">
+
+                        <tr style="border-top: 1px solid #012756;
+                        border-bottom: 1px solid #012756;
+                        background: #012756;
+                        color: #fff;">
+                            <th style="border:0px solid transparent;">Sl No.</th>
+                            <th style="border:0px solid transparent;">Name of Pax('s)</th>
+                            <th style="border:0px solid transparent;">Tickets No.</th>
+                            <th style="border:0px solid transparent;">Sector  <span *ngIf="invoiceData?.TripType" class="text-capitalize">({{invoiceData?.TripType}})</span></th>
+                            <th style="border:0px solid transparent;">GDS PNR</th>
+                            <th style="border:0px solid transparent;">Pax Type</th>
+                            <th style="border:0px solid transparent;">Gross Amount</th>
+                            <th style="border:0px solid transparent;">Fare GBP</th>
+                            <th style="border:0px solid transparent;">Discount</th>
+                            <th style="border:0px solid transparent;">Tax GBP</th>
+                            <th style="border:0px solid transparent;">Net Amount</th>
+                        </tr>
+                        <tr *ngFor="let passenger of invoiceData.Passengers; let i = index">
+                            <td style="border:0px solid transparent;">{{i+1}}.</td>
+                            <td style="border:0px solid transparent;">{{(passenger['title'] | uppercase) || ''}}.
+                                {{passenger['first_name'] || ''}} {{passenger['middle_name'] ||
+                                ''}}{{passenger['last_name']}}</td>
+                                <td style="border:0px solid transparent;">{{passenger['ticket_no']}}</td>
+                                <th style="border:0px solid transparent;">
+                                    {{invoiceData?.JourneyFrom}} {{'-'}}
+                                    {{invoiceData?.JourneyTo}}</th>
+                                <td style="border:0px solid transparent;">{{invoiceData?.GDS_PNR}}</td>
+                                <td style="border:0px solid transparent;">{{passenger['passenger_type']}}</td>
+                                <td style="border:0px solid transparent;">{{passenger?.gross_Tax }}</td>
+                                <td style="border:0px solid transparent;">{{passenger?.fareBDT }}</td>
+                                <td style="border:0px solid transparent;">{{passenger?.discount }}</td>
+                                <td style="border:0px solid transparent;">{{passenger?.taxBDT }}</td>
+                                <td style="border:0px solid transparent;">{{passenger?.netFare | number:'1.1-2'}}</td>
+                            </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="border: none; padding: 0px;" colspan="8">
+                    <table width="100%" style="margin: 0px auto; border:none; vertical-align: top;" cellspacing="0"
+                        cellpadding="5">
+                        <tbody class="">
+                            <tr>
+                                <td colspan="5" style="width: 60%; border: none;"></td>
+                                <td colspan="3" style="width: 40%; border:none; padding: 0px;">
+                                    <table style="width: 100%; border:none;">
+                                        <tr style="border:none;">
+                                            <td style="border:none; padding: 3px 10px;"><strong> Air Fare:</strong></td>
+                                            <td style="text-align: right; border: none; padding: 3px 10px;"><strong>
+                                                    {{invoiceData['TotalFarePriceBreakUp']['Currency']}} {{invoiceData['TotalFarePriceBreakUp']['PriceBreakup']['BasicFare'] | number:'1.1-2'}}</strong>
+                                            </td>
+                                        </tr>
+                                        <tr style="border:none;">
+                                            <td style="border:none; padding: 3px 10px;"><strong> Taxes & Fees:</strong></td>
+                                            <td style="text-align: right; border:none; padding: 3px 10px;">
+                                                <strong>{{invoiceData['TotalFarePriceBreakUp']['Currency']}} {{invoiceData['TotalFarePriceBreakUp']['PriceBreakup']['Tax'] | number:'1.1-2'}}</strong>
+                                            </td>
+                                        </tr>
+                                        <tr style="border:none;">
+                                            <td style="border:none; padding: 3px 10px;"><strong>AIT:</strong></td>
+                                            <td style="text-align: right; border:none; padding: 3px 10px;">
+                                                <strong>{{invoiceData['TotalFarePriceBreakUp']['Currency']}} {{invoiceData['TotalFarePriceBreakUp']['PriceBreakup']['AdvanceTax'] | number:'1.1-2' }}</strong>
+                                            </td>
+                                        </tr>
+                                        </table>
+                                        </td>
+                                        </tr>
+                                        <tr style="border-top: 1px solid #000; border-bottom: 1px solid #000;">
+                                            <td colspan="5" style="width: 60%; border: none;"></td>
+                                <td colspan="3" style="width: 40%; border:none; padding: 0px;">
+                                    <table style="width: 100%; border:none;">
+                                        <tr style="border:none;">
+                                            <td style="border:none; color: #179ad3; font-size: 20px;"><strong> Total:</strong></td>
+                                            <td style="text-align: right; border: none;font-size: 20px;"><strong>
+                                                    {{invoiceData['TotalFarePriceBreakUp']['Currency']}}
+                                                    {{invoiceData['TotalFarePriceBreakUp']['AgentNetFare'] }}
+
+                                                    ({{ invoiceData['TotalFarePriceBreakUp']['AgentNetFare'] | numberToWords:invoiceData['TotalFarePriceBreakUp']['Currency'] }})
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table width="100%" cellspacing="0" cellpadding="5" border="0"
+                        style="margin: 15px auto; font-size: 13px;">
+                        <tbody>
+                            <tr style="border: none;">
+                                <td style="border: none;">
+                                    <p><strong>Note: </strong>This Invoice will not be recognised as paid unless supported by Company Official
+                                        Receipt .
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</div>

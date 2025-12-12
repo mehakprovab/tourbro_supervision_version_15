@@ -1,0 +1,67 @@
+<div class="container p-0" >
+    <form [formGroup]="roomSeasonForm" (ngSubmit)="onSubmitSeason()">
+        <fieldset form="hotelImage">
+            <div class="card-header-tab card-header mb-3 p-0">
+                <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                    <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i> Add Season
+                </div>
+            </div>
+
+            <input formControlName="status" hidden>
+            <div class="form-group row">
+                <div class="col-sm-4 mb-3">
+                    <label class=" control-label">
+                        Season Name
+                        <span class="text-danger">*</span>
+                    </label>
+                    <input type="text" formControlName="season_name" class="form-control"
+                        [ngClass]="{ 'is-invalid': submittedRoomSeason && hotelRoomSeason?.season_name?.errors }" />
+                    <div *ngIf="submittedRoomSeason && hotelRoomSeason?.season_name?.errors" class="invalid-feedback">
+                        <div *ngIf="hotelRoomSeason?.season_name?.errors.required">Season Name is required</div>
+                    </div>
+                </div>
+            
+                <div class="col-sm-4 mb-3">
+                    <label class=" control-label">
+                        Season Date Start
+                        <span class="text-danger">*</span>
+                    </label>
+                    <span class="date btn btn-success" (click)="isOpenFromDate=!isOpenFromDate" style="position: absolute;
+                    bottom: 7px;
+                    right: 22px;">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+                    <input type="text" id="from_date" formControlName="from_date" class="form-control" bsDatepicker
+                        [bsConfig]="bsDateConf" [isOpen]="isOpenFromDate" readonly>
+                </div>
+                <div class="col-sm-4 mb-3">
+                    <label class=" control-label">
+                        Season Date End
+                        <span class="text-danger">*</span>
+                    </label>
+                    <span class="date btn btn-success" (click)="isOpenToDate=!isOpenToDate" style="position: absolute;
+                    bottom: 7px;
+                    right: 22px;">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+                    <input type="text" id="to_date" formControlName="to_date" class="form-control" bsDatepicker
+                        [bsConfig]="bsDateConf" [isOpen]="isOpenToDate" readonly>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 p-0 control-label" for="status">
+                    Status
+                    <span class="text-danger">*</span>
+                </label>
+                <span title="Slide for Active/Deactive">
+                    <mat-slide-toggle class="example-margin" formControlName="status" [color]="''">
+                    </mat-slide-toggle>
+                </span>
+            </div>
+            <div class="text-left btncontainer">
+                <button class="btn btn-sm btn-primary mr-1 btnStyle">Add Season</button>
+                <button class="btn btn-sm btn-secondary btnStyle" type="reset">Cancel</button>
+            </div>
+        </fieldset>
+    </form>
+</div>

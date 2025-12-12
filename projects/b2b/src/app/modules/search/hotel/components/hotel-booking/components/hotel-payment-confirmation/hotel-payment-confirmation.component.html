@@ -1,0 +1,9 @@
+<div [style.display]="data.paymentType === 'nagad'?'block':'none'">
+    <div>
+        <h4 class="p-4 text-center text-primary">{{'Proceed Payment with'+' '+data.paymentType}}</h4>
+    </div>
+    <div mat-dialog-actions align="center">
+        <button mat-button mat-raised-button class="btn-success" (click)="confirmPayment()"> Confirm</button>
+        <button mat-button mat-raised-button  mat-dialog-close>Close</button>
+    </div>
+</div>

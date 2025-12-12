@@ -1,0 +1,148 @@
+<form [formGroup]="usersForm" (ngSubmit)="handleValidSubmit()" class="needs-validation btop pt-4" novalidate>
+    <fieldset form="user">
+        <legend class="form_legend">User Profile</legend>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="title" form="user">
+                Title
+                <span class="text-danger">*</span>
+            </label>
+            <div class="col-sm-6">
+                <select formControlName="title" class="form-control">
+                    <option value="INVALIDIP">Please Select</option>
+                    <option *ngFor="let t of userTitles" [value]="t.id">{{t.title}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="first_name">
+                First Name
+                <span class="text-danger">*</span>
+            </label>
+            <div class="col-sm-6">
+                <input value="" formControlName="first_name" type="text" placeholder="First Name"
+                    class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="last_name">Last Name<span class="text-danger">*</span></label>
+            <div class="col-sm-6">
+                <input value="" formControlName="last_name" type="text" placeholder="Last Name" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="date_of_birth">Date Of Birth
+                <span class="text-danger">*</span>
+            </label>
+            <div class="col-sm-6">
+                <span class="date btn btn-success" for="date_of_birth" (click)="isOpen=
+                        !isOpen"> <i class="fa fa-calendar"></i></span>
+                <input type="text" id="date_of_birth" formControlName="date_of_birth" class="form-control" bsDatepicker
+                    [bsConfig]="bsDateConf" [isOpen]="isOpen" readonly>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="phone">
+                Phone Number
+                <span class="text-danger">*</span>
+            </label>
+            <div class="col-sm-6">
+                <input value="" formControlName="phone" type="number" placeholder="Phone Number" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="business_name">
+                Business Name
+                <span class="text-danger">*</span>
+            </label>
+            <div class="col-sm-6">
+                <input value="" formControlName="business_name" type="text" placeholder="Business Name"
+                    class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="business_number">
+                Business Number
+                <span class="text-danger">*</span>
+            </label>
+            <div class="col-sm-6">
+                <input value="" formControlName="business_number" type="text" placeholder="Business Number"
+                    class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="business_number">
+                Business Phone
+                <span class="text-danger">*</span>
+            </label>
+            <div class="col-sm-6">
+                <input value="" formControlName="business_phone" type="text" placeholder="Business Phone"
+                    class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row m-3">
+            <label class=" control-label" for="status">
+                Status
+                <span class="text-danger">*</span>
+            </label>
+            <div class="col-sm-1">
+                <mat-slide-toggle formControlName="status" class="example-margin" [color]="''"
+                    [checked]="usersForm.value.status" name="status">
+                </mat-slide-toggle>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="address">
+                Address
+                <span class="text-danger">*</span>
+            </label>
+            <div class="col-sm-6">
+                <textarea formControlName="address" rows="3" class="form-control"></textarea>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset form="user">
+        <legend class="form_legend">Login Details</legend>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="user_type" form="user">User Type<span
+                    class="text-danger">*</span></label>
+            <div class="col-sm-6">
+                <select formControlName="user_type" class="form-control">
+                    <option value="INVALIDIP">Please Select</option>
+                    <option *ngFor="let u of userTypes" [value]="u.id">{{u.user_type}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="email" form="user">Email ID<span
+                    class="text-danger">*</span></label>
+            <div class="col-sm-6">
+                <input formControlName="email" type="email" placeholder="Email ID" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="password" form="user">Password<span
+                    class="text-danger">*</span></label>
+            <div class="col-sm-6">
+                <input formControlName="password" type="password" placeholder="Password" class="form-control" />
+            </div>
+        </div>
+        <small class="text-danger" *ngIf="hasError('password','pattern')">
+            *Must contain at least one special character and one digit</small>
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="confirm_password" form="user">Confirm Password
+                <span class="text-danger">*</span></label>
+            <div class="col-sm-6">
+                <input formControlName="confirm_password" type="password" placeholder="Confirm Password"
+                    class="form-control" />
+            </div>
+        </div>
+
+    </fieldset>
+    <div class="form-group">
+        <div class="col-sm-8 col-sm-offset-4">
+            <button type="submit" id="user_submit" class=" btn btn-success">Save</button>
+            &nbsp; &nbsp;
+            <button type="reset" id="user_reset" class=" btn btn-secondary" (click)="resetFrom()">Reset</button>
+        </div>
+    </div>
+</form>

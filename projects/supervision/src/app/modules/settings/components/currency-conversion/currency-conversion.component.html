@@ -1,0 +1,104 @@
+<div class="card mb-3">
+    <div class="card-header-tab card-header bg-dark text-white">
+        <div class="card-header-title font-size-lg text-uppercase font-weight-normal">
+            <i class="header-icon fa fa-credit-card"></i>
+            <h5>{{' Currency Converter '}}</h5>
+        </div>
+    </div>
+    <form class="m-4">
+        <div class="table-btn-group mb-3 exportWrapper" style="margin-top: 30px;">
+            <div class="col-12 p-0">
+               <h5><strong> Note: Currency conversion is from GBP to Other.</strong></h5>
+            </div>
+        </div>
+        <div class="table-btn-group mb-3 exportWrapper" style="margin-top: 30px;">
+            <div class="col-12 p-0">
+                <div class="form-group mb-0 col-sm-3 p-0 float-right has-search">
+                    <button type="button" class="btnStyle" (click)="updateAllCurrency()">Update Currency</button>
+                </div>
+                <button type="button" class="btnStyle" [routerLink]="'/settings/add-currency'">Add Currency</button>
+            </div>
+            <br/>
+            <div class="col-12 p-0">
+                <div class="form-group mb-0 col-sm-3 p-0 float-right has-search">
+                    <span class="fa fa-search form-control-feedback"></span>
+                    <input placeholder="Search" class="form-control text-capitalize" type="text" name="searchTerm"
+                        (keyup)="applyFilter($event.target.value)" />
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-borderless table-striped table-hover" matSort (matSortChange)="sortData($event)">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-left" *ngFor="let header of displayColumn;"
+                            mat-sort-header="{{header.key}}">
+                            {{header.value }} </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="noData">
+                        <td colspan="4">
+                            <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                        </td>
+                    </tr>
+                    <tr *ngIf="!noData && !currencyConverisonData.length">
+                        <td colspan="4">
+                            <h4 class="text-muted text-center">
+                                No Data Found!
+                            </h4>
+                        </td>
+                    </tr>   
+                    <tr *ngFor="let data of currencyConverisonData | slice: (page-1)*pageSize: (page-1)*pageSize + pageSize; let i=index;">
+                        <td class="text-left text-muted">{{i+1}}.</td>
+                        <td class="text-left"> {{data['currency']}} </td>
+                
+                        <td class="text-left">
+                            <!-- <input type="file" class="form-control form-control-sm nrm_input" accept=".png, .jpg, .jpeg"
+                            id="image" (change)="onFileSelected($event)" #theFile>
+                        <label #labelImport for="image">Upload Image</label>
+                        <span class="text-danger">(Maximum upload file size: 1 MB)</span> -->
+                            <a href="{{getImage(data.flag)}}" target="_blank"><img width="100px" height="50px"
+                                    [src]="getImage(data.flag)" alt=""></a>
+                        </td>
+                        <td class="text-left">
+                            <span title="Slide for Active/Deactive">
+                                <mat-slide-toggle class="example-margin" [color]="''" [checked]="data['status']"
+                                    name="status{{i}}" [(ngModel)]="data['status']" name="status{{i}}" (change)="onUpdateStatus($event,data)">
+                                </mat-slide-toggle>
+                            </span>
+                        </td>
+                        <td class="text-left">
+                            <input type="number" name="conversionRate{{i}}" [(ngModel)]="data['value']" class="form-control"  maxlength="250">
+                        </td>
+                        <td class="text-left">
+                            <button class="btn btn-sm btn-primary"  [disabled]="data.value==null" (click)="onUpdate(data)"> {{'Update'}} </button> &nbsp;
+                            <button *ngIf="data.currency != 'GBP'" class="btn btn-sm btn-primary" (click)="confirmDelete(data?.id)">
+                                <i class="fa fa-trash text-nowrap">&nbsp;
+                                    {{'Delete'}}
+                                </i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer pb-0">
+            <div class="d-flex w-100 justify-content-between">
+                <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" [maxSize]="4">
+                </ngb-pagination>
+                <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                    <option [ngValue]="2">2 items per page</option>
+                    <option [ngValue]="4">4 items per page</option>
+                    <option [ngValue]="10">10 items per page</option>
+                    <option [ngValue]="50">50 items per page</option>
+                    <option [ngValue]="100">100 items per page</option>
+                    <option [ngValue]="200">200 items per page</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>
+<ngx-loading [show]="loading"
+        [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+        [template]="loadingTemplate"></ngx-loading>

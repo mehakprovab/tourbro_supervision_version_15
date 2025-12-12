@@ -1,0 +1,91 @@
+<div class="row" #accountsDetails>
+    <div class="col-md-12">
+        <div class="card main-card mb-6">
+            <div *ngIf="agentDetails" class="card main-card mb-6 mb-3">
+                <div class="card-header-tab card-header bg-dark text-white">
+                    <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                        <i class="header-icon fa fa-credit-card"></i>
+                        <span class="text-uppercase">{{ 'Agent Details' }}</span>
+                    </div>
+                </div>
+                <div class="px-4 pt-4 bbottom">
+                    <p><strong>Agency Name :</strong> {{ agentDetails.business_name}}</p>
+                    <p><strong>Prime User :</strong> {{ agentDetails.first_name+' '+agentDetails.last_name}}</p>
+                    <p><strong>Balance :</strong> {{agentDetails.agent_balance ? agentDetails.agent_balance : 0}}</p>
+                    <p><strong>CreditLimit :</strong> {{agentDetails.credit_limit ? agentDetails.credit_limit : 0}}</p>
+                    <p><strong>Due Amount :</strong> {{agentDetails.due_amount ? agentDetails.due_amount : 0}}</p>
+                    <p><strong>Currency :</strong> <b> <mark>{{defaultCurrency}} </mark> </b></p>
+                </div>
+            </div>
+            <div class="card main-card mb-6">
+            <div class="card-header-tab card-header bg-dark text-white">
+                <div class="card-header-title font-size-lg text-uppercase font-weight-normal">
+                    <i class="header-icon fa fa-edit"> </i>
+                   {{ 'Credit Agent Balance' }} 
+                </div>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="agentForm" (ngSubmit)="onSubmit()" class="m-4">
+                    <div class="position-relative row form-group">
+                        <label for="agents" class="col-sm-2 col-form-label">Agents
+                            <span style="color: red;">*</span></label>
+                        <div class="col-sm-10">
+                            <mat-form-field class="full-width" appearance="fill" style="padding-left: 0;">
+                                <mat-label>Agent List</mat-label>
+                                <input type="text" placeholder="Choose..."  matInput formControlName="agents" class="text-capitalize"
+                                    [matAutocomplete]="auto">
+                                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onChange($event)" class="text-capitalize">
+                                    <mat-option *ngFor="let agent of filteredOptions  | async"
+                                        [value]="agent.business_name+' ('+agent.uuid+')'" [id] ="agent.id">
+                                        {{agent.business_name +" ("+agent.uuid+')'}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="position-relative row form-group">
+                        <label for="towards" class="col-sm-2 col-form-label"> Credit Towards
+                            <span style="color: red;">*</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <select formControlName="towards" class="form-control" id="towards">
+                                <option [value]="''" selected disabled>Choose...</option>
+                                <option *ngFor="let toward of towards" [value]="toward.name">{{toward.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="position-relative row form-group">
+                        <label for="referenceNumber" class="col-sm-2 col-form-label">Reference Number
+                            <span style="color: red;">*</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <input formControlName="referenceNumber" id="referenceNumber" placeholder="" type="text"
+                                class="form-control text-capitalize">
+                        </div>
+                    </div>
+                    <div class="position-relative row form-group">
+                        <label for="amount" class="col-sm-2 col-form-label"> Credit Amount
+                            <span style="color: red;">*</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <input formControlName="amount" id="amount" placeholder="" type="text" class="form-control text-capitalize">
+                        </div>
+                    </div>
+                    <div class="position-relative row form-group">
+                        <label for="comments" class="col-sm-2 col-form-label">Comments
+                            <span style="color: red;">*</span>
+                        </label>
+                        <div class="col-sm-10">
+                            <textarea formControlName="comments" id="comments" class="form-control text-capitalize"></textarea>
+                        </div>
+                    </div>
+                    <div class="customCenter">
+                        <button type="submit" class="btn btn-primary" [disabled]="isButtonDisabled">Update</button>
+                        &nbsp;&nbsp;
+                        <button type="reset" class="btn btn-primary" (click)="onReset()">Reset</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

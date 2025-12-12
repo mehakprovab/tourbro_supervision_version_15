@@ -1,0 +1,186 @@
+
+<section for="ModifySearch" class="mx-0">
+ 
+    <div class="bbottom grid-section-wrapper">
+        <div class="col-md-12 col-lg-12 p-0">
+            <div id="collapseBasic" style="z-index: 9999;display: block; float: left;width: 100%;" >
+                <div class="w-100">
+                    <div class="col-md-12">
+                        <app-activity-search-form (callResult)="searchResult($event)"></app-activity-search-form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section for="FlightFoundAndListSearchedResult" class="loading-container theme_bg mt-3">
+    <div class="d-flex mobile_row">
+        <div class="col-md-3 col-lg-3 nopad mobile_nopad">
+           
+            <div class="flteboxwrp">
+                <div class="fltrboxin rounded-bottom">
+                    <div class="celsrch">
+                        <div style="padding: 0px 3px 10px 0px;">
+                            <a class="pull-left" style="cursor: pointer;" id="reset_filters"
+                                (click)="resetAll()">Reset
+                                All</a>
+                             <!-- <a (click)="closeFilter()" class="pull-right closefilter" style="cursor: pointer;">Close</a> -->
+                        </div>
+                        <app-activity-filters></app-activity-filters>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-9 col-lg-9 pl60 pr-0">
+            <app-activity-sorting></app-activity-sorting>
+            <div *ngIf="activityList.length > 0" infiniteScroll [infiniteScrollDistance]="1"
+                [infiniteScrollUpDistance]="2" [infiniteScrollThrottle]="throttle" (scrolledUp)="onScrollUp()"
+                (scrolled)="onScrollDown()" class="row">
+                <div class="col-md-12 mt-2 col-lg-12 mobpr-15"
+                    *ngFor="let activity of activityList | slice: 0: endSlice; index as i">
+                    <div class="card mb-2 rounded result_hotel nopad">
+                        <div class="card-body nopad">
+                            <div class="row text-center">
+                                <div class="col-md-3 pr-0">
+                                    <img class="rounded imgStyle" src="{{activity.ImageHisUrl}}" alt="">
+                                </div>
+
+                                <div class="col-md-9 mb-2 pb-0 d-flex">
+                                    <div class="col-md-9 pl-0" style="text-align: left;">
+                                        <h5 class="cusromGrey activity_name">
+                                            {{activity.ProductName}}
+                                        </h5>
+                                        <ng-template *ngIf="activity.StarRating === 0 then noStar; else stars">
+                                        </ng-template>
+                                        <ng-template #noStar>
+                                            <span class="star_rtng">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                            </span>
+                                        </ng-template>
+                                        <ng-template #stars>
+                                            <span class="star_rtng">
+                                                <i class="fas fa-star star_rtng_clr"
+                                                    *ngFor="let s of activity.StarRating | map: getStarArray"></i>
+                                                <i class="fas fa-star"
+                                                    *ngFor="let s of activity.StarRating | map: getStarArrayRemaining"></i>
+                                            </span>
+                                        </ng-template>
+
+                                        <p class="address_loc">
+                                            <i class="fal fa-map-marker-alt"></i> {{activity.DestinationName}} 
+                                        </p>
+                                        <div class="clearfix"></div>
+
+                                        <div class="col-md-12 col-12 p-0">
+                                            <span class="c_fmil2">{{activity.Category}}</span>
+                                         </div>
+
+                                         <div class="clearfix"></div>
+
+                                         <p class="address_locs" *ngIf="activity?.Recommendedactivity?.length">
+                                            <i class="fal fa-clock"></i> {{activity.Recommendedactivity}}
+                                        </p>
+
+                                        <div class="clearfix"></div>
+
+
+                                        <div class="row" *ngIf="activity?.Duration">
+                                            <div class="col-md-12 col-12"><span class="c_fmil1">Duration:
+                                                    {{activity.Duration}}</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-3 col-12 border_left_price" style="text-align: center;">
+                                        <h6 class="mob_hide"><strong>Total cost start at</strong>
+                                        </h6>
+                                        <h4 cusromGrey style="font-weight:500;">{{activity.Price.Currency}}
+                                            {{activity.Price.TotalDisplayFare}}</h4>
+                                        <div class="clearfix"></div>
+                                        <a class="hotelDetailsBtn" (click)="onBookNow(activity)"
+                                            aria-controls="collapseBasic" style="color: #fff; font-size: 1rem; cursor: pointer;">
+                                            Book Now
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <ng-template #template>
+                        <div class="modal-header">
+                          <h4 class="modal-title pull-left">{{activity.ProductName}}<br>
+                            <span>Check Starting Points</span>
+                          </h4>
+                          <button type="button" class="close pull-right" aria-label="Close" >
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                         <div class="col-12">
+                           <div class="d-flex">
+                            <div class="location_details">
+                                <h4>Location</h4>
+                                <span><i class="fa fa-map-marker-alt"></i> {{activity.DestinationName}}</span>
+                            </div>
+                            </div>
+
+
+                            <div class="d-flex">
+                                <div class="starting_details">
+                                    <h4><i class="fa fa-map-marker-alt"></i>  Starting Point</h4>
+                                    <span>Location</span>
+                                    <p innerHtml="{{activity.StartingPoints}}"></p>
+                                </div>
+                            </div>
+
+                            <div class="d-flex">
+                                <div class="end_details">
+                                    <h4><i class="fa fa-map-marker-alt"></i>  End Point</h4>
+                                    <span>Location</span>
+                                    <p innerHtml="{{activity.EndPoints}}"></p>
+                                </div>
+                            </div>
+
+
+                          </div>  
+                        </div>
+
+                        <!-- <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark" (click)="modalRef.hide()">Close</button>
+                          </div> -->
+                      </ng-template>
+
+                </div>
+
+
+
+            </div>
+            
+            <div *ngIf="!activityList.length && !loading" class="row">
+                <div class="col-md-12 col-lg-12 pr-0">
+                    <div class="card-body pb-0" style="text-align: center;">
+                        <img class="no_bus_found" src="assets/images/no-bus-found.png" alt="" />
+                        <h3 class="text-center">No Result Found !!! <br />
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<ngx-loading [show]="loading"
+    [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+    [template]="loadingTemplate"></ngx-loading>
+

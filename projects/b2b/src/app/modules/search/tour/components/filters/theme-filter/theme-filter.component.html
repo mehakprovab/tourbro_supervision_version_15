@@ -1,0 +1,22 @@
+<div>
+    <div class="filter-head">
+        <button data-target="#collapse524" data-toggle="collapse" class="collapsebtn" type="button">Theme</button>
+    </div>
+   <div *ngIf="tour?.length && tour?.length>0"  id="collapse524" class="collapse show" style="clear: both;">
+        <div class="boxins">
+            <ul class="locationul">
+                <li *ngFor="let item of theme; let i = index">
+                    <div class="squaredThree">
+
+                        <input type="checkbox" [attr.id]="'themefilter-'+ i"
+                        (change)="filterBytheme($event.target.checked,item)" 
+                        [checked]="selectedOptions.includes(item)" />
+                        <label [attr.for]="'themefilter-'+ i"></label>
+                    </div>
+                    <label [attr.for]="'themefilter-'+ i" class="lbllbl">{{item}}</label>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>

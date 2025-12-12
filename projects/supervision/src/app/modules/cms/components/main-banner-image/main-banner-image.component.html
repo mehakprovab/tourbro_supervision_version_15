@@ -1,0 +1,39 @@
+<div class="">
+    <div class="">
+        <ngb-tabset class="tabs-animated tabs-animated-shadow" (tabChange)="beforeChange(false)" #tabs
+            [activeId]="activeIdString">
+            <ngb-tab id="add_update_sliderimage">
+                <ng-template ngbTabTitle>
+                    <span><i class="fa fa-edit"></i> &nbsp; Manage Slider Image</span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <app-add-update-slider (activateTab)="triggerTab($event)"></app-add-update-slider>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab id="sliderimage_list">
+                <ng-template ngbTabTitle>
+                    <span><i class="fa fa-users"></i> &nbsp; Slider Image List</span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <app-slider-image-list (activateTab)="triggerTab($event)"></app-slider-image-list>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab id="add_update_slider_text">
+                <ng-template ngbTabTitle>
+                    <span><i class="fa fa-edit"></i> &nbsp; Manage Slider Text</span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <app-add-update-slider-text (activateTab)="triggerTab($event)"></app-add-update-slider-text>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab id="slider_text_list">
+                <ng-template ngbTabTitle>
+                    <span><i class="fa fa-users"></i> &nbsp; Slider Text List</span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <app-slider-text-list (activateTab)="triggerTab($event)"></app-slider-text-list>
+                </ng-template>
+            </ngb-tab>
+        </ngb-tabset>
+    </div>
+</div>

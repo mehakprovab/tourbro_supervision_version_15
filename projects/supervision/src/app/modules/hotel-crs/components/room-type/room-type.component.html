@@ -1,0 +1,27 @@
+<div class="row mx-0 pt-2">
+    <div class="col-md-12">
+        <div class="card main-card mb-6">
+            <div class="card-body">
+                <ngb-tabset class="tabs-animated tabs-animated-shadow" (tabChange)="beforeChange($event)" #tabs>
+                    <ngb-tab id="list_room_types">
+                        <ng-template ngbTabTitle>
+                            <span class="">{{'List Room Types'}}</span>
+                        </ng-template>
+                        <ng-template ngbTabContent>
+                            <!-- {{'List User'}} -->
+                            <app-room-type-list (toUpdate)="triggerTab($event)"></app-room-type-list>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab id="add_room_type">
+                        <ng-template ngbTabTitle>
+                            <span class="">{{'Add/Edit Room Type'}}</span>
+                        </ng-template>
+                        <ng-template ngbTabContent>
+                            <app-add-update-room-type (someEvent)="triggerTab($event)" [roomTypeOne]="roomTypeData"></app-add-update-room-type>
+                        </ng-template>
+                    </ngb-tab>
+                </ngb-tabset>
+            </div>
+        </div>
+    </div>
+</div>

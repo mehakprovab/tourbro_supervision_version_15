@@ -1,0 +1,102 @@
+<div class="cancellation_page" *ngIf="invoiceData">
+  <div class="text-center">
+    <a [routerLink]="['/report/b2c-car']"><button class="btnStyle">Back</button></a>
+  </div>
+   <div class="head_can" style="margin-top: 20px">
+      <h3 class="canc_hed">Cancellation</h3>
+      <div class="ref_number">
+         <div class="rows_cancel">Reservation Code: <strong>{{invoiceData['AppReference']}}</strong></div>
+         <div class="rows_cancel">Booking Date: {{invoiceData['CreatedDatetime'] | date}}</div>
+      </div>
+   </div>
+   <div class="clearfix"></div>
+   <div class="cancel_bkd">
+      <div class="container">
+         <div class="row">
+            <div class="col-4">
+               <div class="pad_evry">
+                  <div class="imge_can"><img class="airline-logo" src="{{invoiceData?.PictureURL}}"></div>
+                  <div class="can_flt_name">{{invoiceData['CarSupplierName']}}<strong>{{invoiceData['CarName']}}</strong></div>
+               </div>
+            </div>
+            <div class="col">
+               <div class="pad_evry"><span class="place_big_text">{{invoiceData['CarPickupAddress']}}</span> <span class="place_smal_txt"></span> <span class="date_mension">{{invoiceData['CarFromDate'] | date}} {{invoiceData['PickUpTime']}}</span></div>
+            </div>
+            <div class="col-2">
+               <div class="pad_evry">
+                  <div class="aroow_can fa fa-long-arrow-right"></div>
+               </div>
+            </div>
+            <div class="col">
+               <div class="pad_evry"><span class="place_big_text">{{invoiceData['CarDropAddress']}}</span> <span class="place_smal_txt"></span> <span class="date_mension">{{invoiceData['CarToDate'] | date}} {{invoiceData['DropTime']}}</span></div>
+            </div>
+         </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="row_can_table hed_table">
+         <div class="container">
+            <div class="row">
+               <div class="col">
+                  <div class="can_pads">Passenger Name</div>
+               </div>
+               <div class="col">
+                  <div class="can_pads">Supplier Confirmation Number</div>
+               </div>
+               <div class="col">
+                  <div class="can_pads">Status</div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="row_can_table">
+         <div class="container">
+            <div class="row">
+               <div class="col">
+                  <div class="can_pads">{{invoiceData['PassengerDetails'][0]['first_name'] + ' '+ invoiceData['PassengerDetails'][0]['last_name']}}</div>
+               </div>
+               <div class="col">
+                  <div class="can_pads">{{invoiceData['AppReference']}}</div>
+               </div>
+               <div class="col">
+                  <div class="can_pads">{{invoiceData['Status']}}</div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="clearfix"></div>
+   <div class="ritside_can col-xs-4 nopad">
+      <div class="col-xs-6 nopad">
+         <div class="btn_continue">
+            <div class="amnt_disply">
+               Total Amount Paid:
+               <div class="amnt_paid">{{invoiceData['Currency'] +' '+ invoiceData['TotalFare']}}</div>
+            </div>
+         </div>
+      </div>
+      <div class="col-xs-6 nopad">
+         <div class="btn_continue"><button data-toggle="modal" data-target="#cancel" class="btn btn-warning" type="button">CONFIRM CANCELLATION</button></div>
+      </div>
+   </div>
+</div>
+
+<div id="cancel" class="modal fade cancel" role="dialog">
+  <div class="modal-dialog modal-md">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cancel Booking</h4>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure, you want to cancel booking?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="cancelBooking();">YES</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">NO</button>
+      </div>
+    </div>
+
+  </div>
+</div>

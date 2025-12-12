@@ -1,0 +1,45 @@
+<div class="p-0">
+    <form [formGroup]="mealTypeForm" (ngSubmit)="handleValidSubmit()" class="needs-validation btop pt-0" novalidate>
+        <div class="card border-light p-0">
+            <div class="card-header">
+                Meal type
+            </div>
+            <div class="card-body pl-0">
+                <fieldset form="user">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="hotel_type_name">
+                            Meals
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div class="col-sm-6">
+                            <input value="" formControlName="meals" type="text" placeholder="Meal Type Name"
+                                class="form-control" [ngClass]="{ 'is-invalid': submitted && f.meals.errors }"
+                                required />
+                        </div>
+                        <div *ngIf="submitted && f.meals.errors" class="invalid-feedback">
+                            <div *ngIf="f.meals.errors.required">Meal Type Name is required</div>
+                        </div>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label class="col-sm-3 control-label" for="hotel_type_name">
+                            Status
+                            <span class="text-danger">*</span>
+                        </label>
+                        <span title="Slide for Active/Deactive">
+                            <mat-slide-toggle class="example-margin" formControlName="status"
+                                [color]="''">
+                            </mat-slide-toggle>
+                        </span>
+                    </div> -->
+                </fieldset>
+                <div class="form-group">
+                    <div class="col-sm-8 col-sm-offset-4 btncontainer">
+                        <button type="submit" id="user_submit" class=" btn btn-success btnStyle">Save</button> &nbsp; &nbsp;
+                        <button type="reset" id="user_reset" class=" btn btn-secondary btnStyle"
+                            (click)="resetFrom()">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

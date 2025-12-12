@@ -1,0 +1,383 @@
+<div class="text-center" style="margin-bottom: 10px;" *ngIf="voucherData">
+    <a [routerLink]="['/reports/flight-booking-details']"><button
+            class="text-white btn btn-sm btn-primary m-1">Back</button></a>&nbsp;&nbsp;
+    <a onclick="window.print()"><button class="text-white btn btn-sm btn-primary m-1">Print</button></a>
+</div>
+<div style="background:#ccc; padding:20px; width:100%; position:relative; -webkit-print-color-adjust: exact;"
+    id="print_voucher" #print_voucher>
+    <table cellpadding="0" border-collapse="" cellspacing="0" width="100%"
+        style="font-size:12px; font-family: 'Open Sans', sans-serif; width:850px; border-radius: 5px; margin:10px auto;background-color:#fff; padding:20px;border-collapse:separate; color: #000;">
+        <tbody style="-webkit-print-color-adjust: exact">
+            <tr>
+                <td style="padding-bottom:10px">
+                    <img style="width:100px;height: 40px;" src="./assets/images/login-images/l-logo.svg">
+                </td>
+                <td style="padding-bottom:10px; width: 40%;" align="right">
+                    <table style="width: 100%; display:table; font-size: 13px; font-weight: 500;">
+                        <tr>
+                            <td>
+                                <span>Booking Reference :</span>
+                            </td>
+                            <td style="text-align: right;">
+                                <span [innerHTML]="voucherData?.AppReference"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Booked on :</span>
+                            </td>
+                            <td style="text-align: right;">
+                                <span>{{ voucherData?.CreatedDatetime | date: 'dd/MM/yyyy' }}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Last Date To Ticket :</span>
+                            </td>
+                            <td style="text-align: right;">
+                                <span>{{voucherData?.LastDateToTicket}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Booking Status :</span>
+                            </td>
+                            <td style="text-align: right;">
+                                <span>{{voucherData?.BookingStatus}}</span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <table
+                        style="width: 100%; border-top: 1px solid #ddd;border-bottom: 1px solid #ddd; margin: 0px 0px; display: table; background-color: #fff; padding: 5px 10px;">
+                        <tr>
+                            <td style="padding:5px 0; font-size: 16px;">
+                                <strong style="font-size: 20px; color: #004363;">
+                                    {{voucherData?.JourneyFrom}}
+                                    to
+                                    {{voucherData?.JourneyTo}}
+                                </strong>
+                                {{voucherData?.JourneyStart | date:
+                                'EEE, d MMM y'}}
+                            </td>
+
+                            <td style="padding:0px 0;text-align: right; font-weight: bold;">
+                                <span style="font-size:16px;">
+                                    <form [formGroup]="pnrForm">
+                                        <span style="color:#004363;padding:5px;">
+                                            GDS PNR :
+                                        </span>
+                                        <input type="text" formControlName="pnr" placeholder="PNR" autofocus>
+                                    </form>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="line-height:15px;padding:0;">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="4" style="border-radius: 5px; padding:0;">
+                    <table cellspacing="0" cellpadding="5" width="100%" style="font-size:12px; padding:0;">
+                        <tbody>
+
+                            <ng-container *ngFor="let f of voucherData?.FlightItineraries; let i = index">
+                                <tr>
+                                    <td colspan="4" style="padding:0;">
+                                        <table cellspacing="0" cellpadding="5" width="100%"
+                                            style="font-size:12px; padding:0;">
+                                            <tr>
+                                                <td
+                                                    style="color:#004363; padding: 0px; padding-bottom: 10px; font-size: 18px; font-weight: 600;">
+                                                    <span>
+                                                        {{ f.airline_name }} | {{ f.flight_number }}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 33.33%; padding: 0px; font-size: 16px;">
+                                                    <span>
+                                                        <img style="vertical-align:middle; width: 32px;"
+                                                            src="./assets/images/departure.png">
+                                                        <strong
+                                                            style="font-size:21px; padding-left:10px; vertical-align:middle;">
+                                                            <span style="font-weight: 500; padding-right: 10px;">{{
+                                                                f.from_airport_code }}
+                                                            </span>
+                                                            <span>{{f.departure_datetime | date: 'HH:mm'}}</span>
+                                                        </strong>
+                                                        <br>
+                                                        {{ f.departure_datetime | date: 'dd/MM/yyyy'}}
+                                                        <br>
+                                                        {{ f.from_airport_code }}
+                                                        <br>
+                                                    </span>
+                                                </td>
+                                                <td style="width: 33.33%;">
+                                                    <span style="display:block; padding-left:0%; text-align: center;">
+                                                        <!-- Non Stop -->
+                                                        {{ duration(f.departure_datetime,f.arrival_datetime) }}
+                                                        <br>
+                                                        {{ voucherData?.CabinClass }}
+                                                        <!-- Refundable -->
+                                                    </span>
+                                                </td>
+                                                <td
+                                                    style="width: 33.33%;font-size: 16px; padding: 0px; padding-left: 10%;">
+                                                    <span><img style="vertical-align:middle; width: 32px;"
+                                                            src="./assets/images/arrival.png">
+                                                        <strong
+                                                            style="font-size:21px; padding-left:10px; vertical-align:middle;">
+
+                                                            <span style="font-weight: 500; padding-right: 10px;">
+                                                                {{ f.to_airport_code }}
+                                                            </span>
+                                                            <span>{{f.arrival_datetime | date: 'HH:mm'}}</span>
+                                                        </strong>
+                                                        <br>
+
+                                                        {{ f.arrival_datetime | date: 'dd/MM/yyyy'}}
+                                                        <br>
+                                                        {{ f.to_airport_code }}
+                                                        <br>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="f.attributes">
+                                                <td colspan="3" style="padding:6px 0px;">
+                                                    <span style="font-size: 15px;">
+                                                        <img style="vertical-align:top; width: 21px;"
+                                                            src="./assets/images/baggage.png">
+                                                        Baggage Info -
+                                                        Cabin: {{f.attributes.Attr.CabinBaggage | map: getBaggage}},
+                                                        Check-in: {{f.attributes.Attr.Baggage | map: getBaggage}}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="height:12px; line-height:0px">&nbsp;</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td colspan="4"
+                    style="border-bottom:2px solid #004363; padding:0; border-radius: 5px; overflow: hidden;">
+                    <table cellspacing="0" cellpadding="5" width="100%" style="font-size:12px; padding:0;">
+                        <tbody>
+                            <tr>
+                                <td
+                                    style="background-color:#012756; width: 50%; color:#fff; padding: 10px; border-right:2px solid #004363;">
+                                    <span
+                                        style="vertical-align:middle;font-size:17px; font-weight: 600; ">Travellers</span>
+                                </td>
+
+                                <td style="background-color:#012756; width: 50%; color:#fff; padding: 10px;">
+                                    <span style="vertical-align:middle;font-size:17px; font-weight: 600;">
+                                        Ticket No.
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr *ngFor="let p of t.controls; let i = index" [formGroup]="p">
+                                <td style="padding: 10px; font-size: 17px; border-right:2px solid #004363;">
+                                    <span><strong>{{p.get('name').value | uppercase}}</strong></span>
+                                </td>
+                                <td style="padding: 10px; font-size: 17px;">
+                                    <input type="text" formControlName="ticket_no" placeholder="Ticket No" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="line-height:15px;padding:0;">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="font-size: 15px;"><strong>TIP:</strong> The air inside airplanes is dry, so drink
+                    non-alcoholic, de-caffeinated beverages and water to avoid becoming dehydrated.</td>
+            </tr>
+            <tr>
+                <td style="line-height:15px;padding:0;">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="4"
+                    style="background-color:#012756;     border-radius: 5px 5px 0px 0px; color:#fff; padding: 10px; border-right:2px solid #004363;">
+                    <span style="vertical-align:middle;font-size:17px; font-weight: 600; ">Important Information</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" style="border-bottom:1px solid #999999; line-height:20px; font-size:12px; color:#555">
+                    <ul style="padding-bottom:10px; padding-top: 10px; padding-left: 15px;">
+                        <li>All Guests, including children and infants, must present valid identification at check-in.
+                        </li>
+                        <li>Check-in begins 2 hours prior to the flight for seat assignment and closes 45 minutes prior
+                            to the scheduled departure.</li>
+                        <li>Carriage and other services provided by the carrier are subject to conditions of carriage,
+                            which are hereby incorporated by reference. These conditions may be obtained from the
+                            issuing carrier.</li>
+                        <li>In case of cancellations less than 6 hours before departure please cancel with the airlines
+                            directly. We are not responsible for any losses if the request is received less than 6 hours
+                            before departure.</li>
+                        <li>Please contact airlines for Terminal Queries.</li>
+                        <li>Free Baggage Allowance: Checked-in Baggage = 15kgs in Economy class.</li>
+                        <li>Changes to the reservation will result in the above fee plus any difference in the fare
+                            between the original fare paid and the fare for the revised booking.</li>
+                        <li>The No Show refund should be collected within 15 days from departure date.</li>
+                        <li>If the basic fare is less than cancellation charges then only statutory taxes would be
+                            refunded.
+                        </li>
+                        <li>We are not be responsible for any Flight delay/Cancellation from airline's end.</li>
+                        <li>Kindly contact the airline at least 24 hrs before to reconfirm your flight detail giving
+                            reference of Airline PNR Number.</li>
+                        <li>We are a travel agent and all reservations made through our website are as per the terms and
+                            conditions of the concerned airlines. All modifications,cancellations and refunds of the
+                            airline tickets shall be strictly in accordance
+                            with the policy of the concerned airlines and we disclaim all liability in connection
+                            thereof.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td style="line-height:15px;padding:0;">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="4"
+                    style="border-bottom:2px solid #004363; padding:0; border-radius: 5px; overflow: hidden;">
+                    <table cellspacing="0" cellpadding="5" width="100%" style="font-size:12px; padding:0;">
+                        <tbody>
+                            <tr>
+                                <td colspan="2"
+                                    style="background-color:#012756; color:#fff; padding: 10px; border-right:2px solid #004363;">
+                                    <span style="vertical-align:middle;font-size:17px; font-weight: 600; ">
+                                        Customer Contact Details
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; width: 50%; font-size: 15px;">
+                                    <span>
+                                        E-mail : {{voucherData?.Email }}
+                                    </span>
+                                </td>
+                                <td style="padding: 10px; width: 50%; font-size: 15px;">
+                                    <span>
+                                        Contact No : {{voucherData?.PhoneCode }} {{voucherData?.Phone }}
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="line-height:15px;padding:0;">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="4" style="padding:0;border-radius: 5px;">
+                    <table cellspacing="0" cellpadding="5" width="100%"
+                        style="font-size:12px; padding:0; border-radius: 5px; overflow: hidden;">
+                        <tbody>
+                            <tr>
+                                <td width="100%" style="padding:0;border-radius: 5px;">
+                                    <table cellspacing="0" cellpadding="5" width="100%"
+                                        style="font-size:14px; padding:0;">
+                                        <tbody>
+                                            <tr>
+                                                <td
+                                                    style="background-color: #012756; color: #fff; font-size: 17px; padding: 10px;">
+                                                    <span>Payment Details</span>
+                                                </td>
+                                                <td
+                                                    style="background-color: #012756; color: #fff; font-size: 17px; padding: 10px;">
+                                                    <span>Amount (
+                                                        {{ voucherData?.Currency }}
+                                                        {{ voucherData?.TotalFarePriceBreakUp?.TotalDisplayFare |
+                                                        number:'1.0-0' }})
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><span>Air Fare</span>
+                                                </td>
+                                                <td><span>{{ voucherData?.TotalFarePriceBreakUp?.Currency }} {{
+                                                        voucherData?.TotalFarePriceBreakUp?.PriceBreakup?.BasicFare |
+                                                        number:'1.0-0'
+                                                        }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><span>Taxes &amp; Fees</span>
+                                                </td>
+                                                <td><span>{{ voucherData?.TotalFarePriceBreakUp?.Currency }} {{
+                                                        voucherData?.TotalFarePriceBreakUp?.PriceBreakup?.Tax |
+                                                        number:'1.0-0'
+                                                        }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><span>AIT</span>
+                                                </td>
+                                                <td><span>{{ voucherData?.TotalFarePriceBreakUp?.Currency }} {{
+                                                        voucherData?.TotalFarePriceBreakUp?.PriceBreakup?.AdvanceTax
+                                                        }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><span>Baggage</span>
+                                                </td>
+                                                <td><span>{{ voucherData?.TotalFarePriceBreakUp?.Currency }} {{
+                                                        voucherData?.TotalFarePriceBreakUp?.PriceBreakup?.TotalLostBaggageProtection
+                                                        ||
+                                                        0}}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="border-top:1px solid #ccc"><span style="font-size:16px">Grand
+                                                        Total</span>
+                                                </td>
+                                                <td style="border-top:1px solid #ccc">
+                                                    <span style="font-size:16px">
+                                                        {{ voucherData?.TotalFarePriceBreakUp?.Currency }}
+                                                        {{ voucherData?.TotalFarePriceBreakUp?.TotalDisplayFare |
+                                                        number:'1.0-0' }}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="line-height:15px;padding:0;">&nbsp;</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="line-height:15px;padding:0;">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="4" align="center">
+                    <button class="text-white btn btn-sm btn-primary m-1" (click)="updatePnr()">Update</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<ng-template #notShow>
+    <mat-spinner [diameter]="50" style="margin: 0 auto;" mode="indeterminate"></mat-spinner>
+</ng-template>

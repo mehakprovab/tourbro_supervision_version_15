@@ -1,0 +1,121 @@
+
+
+.w-100 {
+    width: 100% !important;
+}
+.login-banner-slider .banner-bg {
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    height: 100vh;
+}
+.login-banner-slider .banner-bg .banner-slider {
+    flex-basis: 100%;
+    max-width: 100%;
+}
+.login-banner-slider .banner-bg .banner-section {
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    position: relative;
+    flex-direction: column;
+}
+.banner-section img {
+    width: 100%;
+    height: 560px;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+}
+.login-banner-slider .banner-bg .d-flex, .login-banner-slider .banner-bg .slick-list, .login-banner-slider .banner-bg .slick-slide, .login-banner-slider .banner-bg .slick-slider, .login-banner-slider .banner-bg .slick-track {
+    height: 100%;
+    width: 100% !important;
+}
+.login-banner-slider .banner-bg .login-form {
+    // flex-basis: 33%;
+    width: 100%;
+    // max-width: 33%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    // position: absolute;
+    top: 0;
+    bottom: 0;
+    height: 100vh;
+}
+.login-banner-slider .banner-bg .login-form .login-container {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 3px 6px #00000029;
+    padding: 40px;
+    backdrop-filter: blur(11.5px);
+    width: 100%;
+
+}
+.login-banner-slider .banner-bg .login-form .login-container .login-title p {
+    color: #082e53;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 26px;
+    text-align: center;
+    margin-bottom: 8px;
+}
+.login-banner-slider .banner-bg .login-form .login-container .form-field {
+    width: 100%;
+}
+
+.srch_btn {
+    background: #fbc108;
+    border-radius: 10px;
+    padding: 10px 25px;
+    width: 100%;
+    height: 56px;
+    color: #fff;
+    transition: .3s;
+    font-size: 20px;
+    line-height: 26px;
+    font-weight:700;
+}
+.banner-bg{
+    background: url(../../../../assets/images/dmc_banner.png);
+    background-size: cover;
+    width: 100%;
+    background-position: 50%;
+    // padding: 100px 0px;
+    float: left;
+}
+.form-field {margin-bottom: 10px;}
+.form-field input{  
+    padding: 15px 10px !important;
+    border: 1px solid #f5f5f5 !important;
+    border-radius: 10px !important;
+    background: #f5f5f5;
+    width: 100%;
+    height: 56px;
+}
+.form-field input:focus{  background: #f5f5f5!important;}
+.form-control:focus{border: 1px solid #f5f5f5 !important;
+box-shadow: none!important;}
+.form-field label{    
+    width: 100%;
+    display: block;
+    float: left;
+    color: #363636;
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+.register-here{text-align: center;color: #3a3a3a;
+    font-weight: 500;font-size: 14px;margin-top: 20px;}
+.forgot-password{text-align: left;color: #363636;
+        font-weight: 400;font-size: 14px;margin: 10px 0px 20px 0px;}
+.form-field .form-control{}
+.left-txt-sec h1{color: #ffffff;
+    font-weight: 600;
+    font-size: 45px;
+line-height: 49px;}

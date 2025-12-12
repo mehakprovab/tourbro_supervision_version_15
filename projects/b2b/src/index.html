@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Agent</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Asap:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/uicons-regular-rounded.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"
+        type='text/css'>
+    <!-- included for collapsible -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTPwWAm_0E6k4eWqPV30PqhxYsmx-iAA8&libraries=places" type="text/javascript"></script> -->
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3N3Rg1vCjF6FmEc9qisxtS2JOpVUTKDM&libraries=places&callback=initMap"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://scripts.sandbox.bka.sh/versions/1.2.0-beta/checkout/bKash-checkout-sandbox.js"></script>
+    <!-- included for collapsible -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.0/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rasterizehtml/1.3.0/rasterizeHTML.allinone.js"></script>
+    <script type="text/javascript">
+        (function (d, t) {
+            var g = d.createElement(t),
+                s = d.getElementsByTagName(t)[0];
+            g.src = "https://cdn.pushalert.co/integrate_81ba3ca9a6a60cd33ceaf2a7706599cf.js";
+            s.parentNode.insertBefore(g, s);
+        }(document, "script"));
+
+        (pushalertbyiw = window.pushalertbyiw || []).push(['onReady', onPAReady]);
+
+        function onPAReady() {
+            console.log(PushAlertCo.subs_id); //if empty then user is not subscribed
+
+        }
+    </script>
+
+<!-- <script type="text/javascript">
+    function googleTranslateElementInit() {
+        
+    new google.translate.TranslateElement(
+    {
+      pageLanguage: 'en',
+      includedLanguages: 'en,ar',
+    //   layout: google.translate.TranslateElement.FloatPosition.TOP_LEFT,
+      autoDisplay: true
+    },
+    'google_translate_element');}</script>
+
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer=""></script> -->
+
+</head>
+
+<body>
+    <app-root></app-root>
+</body>
+
+</html>

@@ -1,0 +1,9 @@
+<form [formGroup]="regConfig" class="city_complete" *ngIf="hasViewList">
+    <ul class="arpt_list">
+        <div class="p-0" *ngFor="let item of getCities">
+            <li class="p-2" (click)="onCitySelect(item, inputFor)">
+                <h5 class="include">{{item.cityName}} ({{ item.countryCode }})</h5>
+            </li>
+        </div>
+    </ul>
+</form>

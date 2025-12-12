@@ -1,0 +1,34 @@
+<div class="sub-agent-container custom-table-layout card row" style="padding: 20px;">
+    <div class="add-traveller">
+        <div class="title">
+            <h3>Gallery Content</h3>
+        </div>
+        <div class="custom-inline-form">
+            <form class="" [formGroup]="regConfig" autocomplete="off">
+             
+                <div class="form-row">
+               <div class="col-6 pr-0 ">
+                    <div class="form-group">
+                        <label for="email">Image</label>
+                        <input type="file"class="form-control form-control-sm nrm_input" accept=".png, .jpg, .jpeg" 
+                            id="image" (change)="onFileSelected($event)" #theFile>
+                        <label  #labelImport for="image">Upload Image</label>
+                        <span class="text-danger">(Maximum upload file size: 1 MB)</span>
+                        <div *ngIf="flightImage"><img [src]="getImage(flightImage)" width="100" height="50"></div>
+                        <img *ngIf="imageSrc" height="50" width="100" class="rounded" [src]="imageSrc" alt="logo">
+                    </div>
+                </div>
+                </div>
+                <div class="form-group row mb-n2">
+                    <div class="col-sm-12 customCenter">
+                        <button type="submit" class="btn btn-sm btn-primary mr-1" (click)="onSubmit()">Submit</button>
+                        <button type="reset" class="btn btn-sm btn-primary" (click)="onReset()">Reset</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+

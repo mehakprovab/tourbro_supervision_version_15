@@ -1,0 +1,67 @@
+<div class="header-dots">
+    <div class="btn-group" ngbDropdown autoClose="outside" placement="bottom">
+        <button type="button" class="btn btn-link p-0 mr-2" ngbDropdownToggle (click)="viewNotifications()">
+            <span>
+              <div class="icon-wrapper icon-wrapper-alt rounded-circle">
+                <!-- <div class="icon-wrapper-bg bg-danger"></div>
+                <i class="lnr-bullhorn text-danger"></i> -->
+                <img [src]="bellIcon" alt="bell" /><sup class="notification-count text-danger">{{activationCount}}</sup>
+                <!-- badge-danger -->
+                <div class="badge badge-dot badge-dot-sm ">Notifications</div>
+              </div>
+            </span>
+          </button>
+          <div class="dropdown-menu-xl" ngbDropdownMenu>
+            <div class="dropdown-menu-header mb-0">
+              <div class="dropdown-menu-header-inner bg-primary">
+                <div class="menu-header-image opacity-1 dd-header-bg-2"></div>
+                <div class="menu-header-content" style="color: #fff;">
+                  <h5 class="menu-header-title">Notifications</h5>
+                  <h6 class="menu-header-subtitle">You have <b>{{activationCount}}</b> unread messages</h6>
+                </div>
+              </div>
+            </div>
+            <div class="card-tabbed-header">
+              <ngb-tabset class="tabs-animated tabs-animated-shadow" justify="justified">
+               
+                <ngb-tab>
+                  <ng-template ngbTabTitle><span>Events</span></ng-template>
+                  <ng-template ngbTabContent>
+                    <div class="scroll-gradient" *ngIf="respData && respData.length>0;else noNotifications">
+                      <div class="scroll-area-sm shadow-overflow">
+                        <perfect-scrollbar [autoPropagation]="true">
+                          <div
+                            class="vertical-without-time vertical-timeline vertical-timeline--animate vertical-timeline--one-column">
+                            <div *ngFor="let notifications of respData | slice:0:3; let i = index;" class="vertical-timeline-item vertical-timeline-element">
+                              <div><span class="vertical-timeline-element-icon bounce-in"><i
+                                class="badge badge-dot badge-dot-xl badge-success"></i></span>
+                                <div class="vertical-timeline-element-content bounce-in" [ngStyle]="{'color':notifications.viewed_datetime==''?'#000':'#c4bbbb'}"><h4 class="timeline-title" [innerHTML]="notifications['event_title']"></h4>
+                                  <p> <span [innerHTML]="notifications['event_description']" [ngStyle]="{'color':notifications.viewed_datetime==''?'#000':'#c4bbbb'}"></span></p><span
+                                    class="vertical-timeline-element-date"></span></div>
+                              </div>
+                            </div>
+                           
+                          </div>
+                        </perfect-scrollbar>
+                      </div>
+                    </div>
+                  <ng-template #noNotifications>
+                       <div>No New Notifications Found</div>
+                  </ng-template>
+
+                  </ng-template>
+                </ngb-tab>
+              </ngb-tabset>
+            </div>
+            <div class="nav-justified">
+              <ul class="nav flex-column">
+                <li class="nav-item-divider nav-item mt-0"></li>
+                <li class="nav-item-btn text-center nav-item">
+                  <a [routerLink]="['/other/all-notificatons']" class="btn-pill btn btn-primary btn-sm text-white">{{respData && respData.length>0?'View More Notifications':'View Old Notifications'}}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+    </div>
+  </div>
+  

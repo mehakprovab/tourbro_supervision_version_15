@@ -1,0 +1,56 @@
+<div class="card-header-tab card-header">
+    <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+        <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+        {{ 'Adult Info' }}
+    </div>
+</div>
+
+<div class="d-flex flex-row-reverse mt-4 mx-4">
+    <div class="pl-2">
+        <button class="btn btn-lg btn-primary">
+            <span>
+                <i class="fa fa-download"></i> {{'Dowload'}}
+            </span>
+        </button>
+    </div>
+    <div class="pr-2">
+        <div class="custom-file form-group">
+            <input type="file" class="custom-file-input custom-file-input-sm " id="validatedCustomFile" required>
+            <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+        </div>
+    </div>
+</div>
+<form class="p-4 bbottom">
+    <div class="form-row">
+        <div class="form-group col-md-1">
+            <label class="f-12" for="inputtitle">Title</label>
+            <select id="inputtitle" class="form-control form-control-sm">
+                <option *ngFor="let title of titleOption;"> {{title}} </option>
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+            <label class="f-12" for="inputFirstName">First Name</label>
+            <input type="text" id="inputFirstName" class="form-control form-control-sm" placeholder="First Name">
+        </div>
+        <div class="form-group col-md-2">
+            <label class="f-12" for="inputLastName">Last Name</label>
+            <input type="text" id="inputLastName" class="form-control form-control-sm" placeholder="Last Name">
+        </div>
+        <div class="form-group col-md-2">
+            <label class="f-12" for="inputFreqFlyerNo">Freq. Flyer No.</label>
+            <input type="text" id="inputFreqFlyerNo" class="form-control form-control-sm" placeholder="Freq. Flyer No.">
+        </div>
+        <div class="form-group col-md-2">
+            <label class="f-12" for="inputPassPortNo">Pass Port No.</label>
+            <input type="text" id="inputPassPortNo" class="form-control form-control-sm" placeholder="Pass Port No.">
+        </div>
+        <div class="form-group col-md-1">
+            <label class="f-12" for="inputPPExpiry">PPExpiry</label>
+            <input type="text" id="inputPPExpiry" class="form-control form-control-sm" placeholder="PPExpiry">
+        </div>
+        <div class="form-group col-md-2">
+            <label class="f-12" for="inputTicketNumber">Ticket Number</label>
+            <input type="text" id="inputTicketNumber" class="form-control form-control-sm" placeholder="Ticket Number">
+        </div>
+    </div>
+</form>

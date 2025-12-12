@@ -1,0 +1,42 @@
+<div class="card mb-3">
+    <div class="card-header-tab card-header">
+        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+            <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+            {{ 'Manage Social Logins' }}
+        </div>
+    </div>
+    <form>
+        <div class="table-responsive">
+            <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                <thead>
+                    <tr class="p-2">
+                        <th class="text-left text-nowrap" *ngFor="let header of displayColumn;">
+                            {{header}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="p-2" *ngFor="let data of socialLoginData; let i=index;">
+                        <td class="text-left text-muted"># {{data['#']}}</td>
+                        <td class="text-left"> {{data['Social Network']}} </td>
+                        <td scope="row" class="text-left">
+                            <span title="Slide for Active/Deactive">
+                                <mat-slide-toggle class="example-margin" [color]="''" [checked]="data['Status']">
+                                </mat-slide-toggle>
+                            </span>
+                        </td>
+                        <td class="text-left"> <input type="text" class="form-control form-control-sm w-50"
+                                [value]="data['Config Id']"> </td>
+                        <td class="text-left">
+                            <button type="button"
+                                class="btn btn-{{ data['Action']==='Update'? 'primary': 'danger'}} btn-sm"
+                                title="{{data['Action']}}">
+                                {{data['Action']}}
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>

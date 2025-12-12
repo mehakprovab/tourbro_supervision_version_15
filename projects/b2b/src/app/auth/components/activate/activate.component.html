@@ -1,0 +1,249 @@
+<div class="h-100">
+    <div class="row no-gutters">
+         <app-home-page-header></app-home-page-header>
+        <div class="login-banner-slider w-100 login-max-screen">
+            <div class="banner-bg " [ngStyle]="{'background-image': 'url(' + bannerImage + ')'}">
+                <div class="d-flex">
+                    <div class="banner-slider">
+                        <ngx-slick-carousel class="slick-slider slick-dotted" #slickModal="slick-carousel"
+                            [config]="slideConfig2">
+                            <div ngxSlickItem>
+                                <div class="banner-section">
+                                    <h3>Perfect Balance</h3>
+                                    <p>
+                                        ArchitectUI is like a dream. Some think it's too good to be true! Extensive
+                                        collection of
+                                        unified Vue Bootstrap Components and Elements.
+                                    </p>
+                                </div>
+                            </div>
+                            <div ngxSlickItem>
+                                <div class="banner-section">
+                                    <h3>Scalable, Modular, Consistent</h3>
+                                    <p>
+                                        Easily exclude the components you don't require. Lightweight, consistent
+                                        Bootstrap based styles across all elements and components
+                                    </p>
+                                </div>
+                            </div>
+                            <div ngxSlickItem>
+                                <div class="banner-section">
+                                    <h3>Complex, but lightweight</h3>
+                                    <p>
+                                        We've included a lot of components that cover almost all use cases for
+                                        any type of application.
+                                    </p>
+                                </div>
+                            </div>
+                        </ngx-slick-carousel>
+                    </div>
+                    <div class="login-form">
+                        <div class="login-container">
+                            <div class="login-title">
+                                <p>Activate the Booking 247 for business account</p>
+                            </div>
+                            <div class="login-sub-header">
+                                <img src="assets/images/login-images/user-circle.svg" alt="logo" />
+                            </div>
+                            <div class="login-content">
+                             
+                                <form [formGroup]="activationForm" (ngSubmit)="onActivate(activationForm.value)">
+                                    <alert></alert>
+                                    <mat-form-field>
+                                        <mat-label>Email Id</mat-label>
+                                        <input matInput  formControlName="email" placeholder="Enter the mail id">
+                                        <mat-error *ngIf="activationForm.controls.email.hasError('required')">
+                                            Please Enter Email Id
+                                        </mat-error>
+                                        <mat-error
+                                            *ngIf="!activationForm.controls.email.hasError('required') && activationForm.controls.email.hasError('email')">
+                                            Please Enter Valid Email Id
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <div class="login-button">
+                                        <button type="submit">Activate</button>
+                                    </div>
+                                    <div class="f-12 font-weight-light mt-2 text-danger"> {{errorMessage}}</div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="login-brand-section login-max-screen w-100 pt-5">
+            <div class="title mx-screen-1186">
+                <h2>Airline Partners</h2>
+            </div>
+            <div class="brand-section mx-screen-1186">
+                <ngx-slick-carousel class="slick-slider slick-dotted" #slickModal="slick-carousel"
+                    [config]="airlineSlideConfig">
+                    <div ngxSlickItem *ngFor="let slide of airlineSlides">
+                        <div class="banner-section">
+                            <img src="{{ slide.img }}" alt="brands">
+                        </div>
+                    </div>
+                </ngx-slick-carousel>
+            </div>
+        </div>
+        <div class="login-brand-section login-max-screen w-100">
+            <div class="title mx-screen-1186">
+                <h2>Hotel Partners</h2>
+            </div>
+            <div class="brand-section mx-screen-1186">
+                <ngx-slick-carousel class="slick-slider slick-dotted" #slickModal="slick-carousel"
+                    [config]="hotelSBrandslideConfig">
+                    <div ngxSlickItem *ngFor="let slide of hotelSBrandSlides">
+                        <div class="banner-section">
+                            <img src="{{ slide.img }}" alt="brands">
+                        </div>
+                    </div>
+                </ngx-slick-carousel>
+            </div>
+        </div>
+        <div class="login-brand-section login-max-screen w-100 p-t-35">
+            <div class="login-max-screen">
+                <div class="title mx-screen-1186">
+                    <h2>Services</h2>
+                </div>
+                <div class="login-service-section mx-screen-1186">
+                    <div class="sevice-cards">
+                        <div class="card">
+                            <div class="card-icon">
+                                <img src="assets/images/login-images/Group 84.png" alt="service" />
+                            </div>
+                            <div class="card-content-section">
+                                <div class="card-title">
+                                    <h3>XML/API</h3>
+                                </div>
+                                <div class="card-content">
+                                    <p>Are you looking to build a travel website or app that provides users with up-to-date travel information, flight prices, hotel availability, and more? If so, you'll need a reliable travel API to power your platform.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-icon">
+                                <img src="assets/images/login-images/Group 85.png" alt="service" />
+                            </div>
+                            <div class="card-content-section">
+                                <div class="card-title">
+                                    <h3>Whitelable</h3>
+                                </div>
+                                <div class="card-content">
+                                    <p>Our Whitelable solution is a fully customizable travel booking platform that can be branded with your business's logo and colors. It allows you to offer your customers a wide range of travel products, including flights, hotels, car rentals, and activities, all in one place.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-icon">
+                                <img src="assets/images/login-images/Group 86.png" alt="service" />
+                            </div>
+                            <div class="card-content-section">
+                                <div class="card-title">
+                                    <h3>Travel software</h3>
+                                </div>
+                                <div class="card-content">
+                                    <p>Our travel booking system allows traveler's to search and book flights, hotels, car rentals, and other travel products. These systems can be used by travel agents, tour operators, and other travel businesses to manage bookings for their customers.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="presence-layer w-100">
+            <div class="layer-bg" [ngStyle]="{'background-image': 'url(' + layerBg + ')'}"></div>
+        <div class="login-brand-section login-max-screen w-100 pt-0">
+            <div class="title mx-screen-1186 mb-3">
+                <h2 class="mb-1">Presence</h2>
+                <h4 class="sub-title">Our Coverage area</h4>
+            </div>
+            <div class="brand-section banner-section-with-text mx-screen-1186">
+                <ngx-slick-carousel class="slick-slider slick-dotted" #slickModal="slick-carousel"
+                    [config]="PresenceSlideConfig">
+                    <div ngxSlickItem *ngFor="let slide of PresenceSlides">
+                        <div class="banner-section text-center">
+                            <img src="{{ slide.img }}" alt="brands" class="mb-4">
+                            <p>{{slide.title}}</p>
+                        </div>
+                    </div>
+                </ngx-slick-carousel>
+            </div>
+        </div>
+    
+    </div>
+        <div class="login-max-screen w-100 max-screen-1130">
+            <div class="signup-section mx-screen-1186">
+                <div class="hr-line"></div>
+            </div>
+        </div>
+        <div class="login-max-screen w-100 max-screen-1130">
+            <div class="login-footer mx-screen-1186">
+                <ul class="d-flex justify-content-between">
+                    <li class="aboutus">
+                        <div class="footer-title">
+                            <h3>About us</h3>
+                        </div>
+                        <div class="icon-container">
+                            <img src="assets/images/login-images/l-logo.svg" alt="Booking 247" />
+                        </div>
+                        <div class="footer-content">
+                            <p class="mb-4">Lorem ipsum dolor sit amet, consectetuer adipis cingasf elit. Aenean commodo
+                                ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient
+                                montes, nascetur ridiculus mus. Donec quam felis, efcs ultricies nec, pellent esque eu,
+                                pretium quis, sem.</p>
+                        </div>
+                    </li>
+                    <li class="connectus">
+                        <div class="footer-title">
+                            <h3>Connect with us:</h3>
+                        </div>
+                        <div class="footer-content">
+                            <ul class="connect-icons">
+                                <li><a href=""><img src="assets/images/login-images/facebook.png" alt="Facebook" /></a>
+                                </li>
+                                <li><a href=""><img src="assets/images/login-images/youtube.png" alt="Youtube" /></a>
+                                </li>
+                                <li><a href=""><img src="assets/images/login-images/twitter.png" alt="Twitter" /></a>
+                                </li>
+                                <li><a href=""><img src="assets/images/login-images/skype.png" alt="Skype" /></a></li>
+                                <li><a href=""><img src="assets/images/login-images/group.png" alt="" /></a></li>
+                                <li><a href=""><img src="assets/images/login-images/instagram.png"
+                                            alt="Instagram" /></a></li>
+                                <li><a href=""><img src="assets/images/login-images/whatsapp.png" alt="Whatsup" /></a>
+                                </li>
+                            </ul>
+                            <ul class="payment-cards">
+                                <li><img src="assets/images/login-images/mastercard.png" alt="Mastercard" /></li>
+                                <li><img src="assets/images/login-images/visa.png" alt="Visa" /></li>
+                                <li><img src="assets/images/login-images/kindpng.png" alt="Secure" /></li>
+                                <li><img src="assets/images/login-images/sslcommerz.png" alt="Secure" /></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                <hr class="mb-4">
+                <div class="footer-menu-list">
+                    <ul class="links">
+                        <li><a href="#">About us</a></li>
+                        <li><a href="#">Privacy policy</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Terms and conditions</a></li>
+                        <li><a href="#">Contact us</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="company-year w-100">
+            <div class="login-max-screen w-100">
+            <div class="mx-screen-1186" style="padding-left: 38px;">
+            <div class="d-flex">
+                <span>COPYRIGHT @2020.www.Booking 247.com</span>
+            </div>
+            </div>
+        </div>
+       </div>
+        <!-- Footer section end-->
+    </div>
+</div>

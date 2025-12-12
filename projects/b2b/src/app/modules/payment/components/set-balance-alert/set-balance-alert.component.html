@@ -1,0 +1,98 @@
+<div class="row card">
+    <div class="mb-3">
+        <div class="card-header-tab card-header">
+            <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                <span class="my-color">
+                    {{'Set Balance Alert'}}
+                </span>
+            </div>
+        </div>
+    </div>
+        <div class="offset-md-1 col-md-10">
+        <form class="p-3 clearfix" [formGroup]="regConfig">
+            <div class="form-group row">
+                <label for="amount" class="col-sm-2 text-right col-form-label ">Amount ({{currency}}) <sup
+                        class="f-16 text-danger">*</sup> </label>
+                <div class="col-sm-10">
+                        <select class="form-control" formControlName="threshold_amount" required>
+                            <option selected value="select" disabled>Select</option>
+                            <option  value="1000">1000</option>
+                            <option  value="5000">5000</option>
+                            <option  value="10000">10000</option>
+                            <option  value="20000">20000</option>
+                            <option  value="30000">30000</option>
+                            <option  value="40000">40000</option>
+                            <option  value="50000">50000</option>
+                        </select>
+                </div>
+            </div>
+            <!-- <div class="form-group row">
+                <label for="phone" class="col-sm-2 text-right col-form-label "> Mobile Number <sup
+                        class="f-16 text-danger">*</sup> </label>
+                <div class="col-sm-10">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <select class="form-control" formControlName="phone_code">
+                                        <option value="''">Choose...</option>
+                                        <option selected [value]="item.phone_code" *ngFor="let item of staticPhoneCode"> {{ item.name }} ({{item.phone_code}}) </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <input formControlName="mobile_number" type="text" class="form-control"
+                                        placeholder="Enter the number" id="phone" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <div class="form-group row">
+                <label for="email" class="col-sm-2 text-right col-form-label ">Email <sup class="f-16 text-danger">*</sup>
+                </label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="email" formControlName="email_id" required="required">
+                    <span class="err_msg">
+                        <small class="error text-danger" *ngIf="hasError('email_id', 'required');">
+                        Please Enter Your Email Id* <br>
+                        </small>
+                        <small class="error text-danger" *ngIf="hasError('email_id', 'pattern');">
+                        Please Enter a Valid Email Id* <br>
+                        </small>
+                        <small class="error text-danger" *ngIf="hasError('email_id', 'maxlength');">
+                        Maximum Characters Exceeded* <br>
+                        </small>
+                        <small class="error text-danger" *ngIf="hasError('email_id', 'minlength');">
+                        At least 5 Characters Required* <br>
+                        </small>
+                        </span>
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label class="col-sm-2 text-right col-form-label ">
+                </label>
+                <div class="col-sm-10" style="display: flex;">
+                    <!-- <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="sendSMS" value="{{regConfig.value.enable_sms_notification}}" formControlName="enable_sms_notification">
+                        <label class="form-check-label pl-4" for="sendSMS">Send SMS</label>
+                    </div> -->
+                    <div class="form-check" style="margin-left: 20px;">
+                        <input type="checkbox" class="form-check-input" id="notifyToEmail" value="{{regConfig.value.enable_email_notification}}"  formControlName="enable_email_notification"> &nbsp;&nbsp;&nbsp;
+                        <label class="form-check-label pl-4" for="notifyToEmail">Notify To Email</label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <hr>
+    <div style="text-align: center;padding-bottom: 20px;">
+        <button class="btn btn-lg btn-primary mr-1" (click)="updateSetAlert()">Update</button>
+        <button class="btn btn-lg btn-primary">Reset</button>
+    </div>
+</div>

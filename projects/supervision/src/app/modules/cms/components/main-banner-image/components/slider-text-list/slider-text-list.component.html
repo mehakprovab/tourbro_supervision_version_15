@@ -1,0 +1,82 @@
+<div class="card" style="margin-top: 30px;">
+    <div class="card-body">
+        <div class="mb-3">
+            <form>
+                <div class="table-responsive">
+                    <table class="table table-borderless table-striped table-hover" matSort
+                        (matSortChange)="sortData($event)">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-left text-nowrap" *ngFor="let header of displayColumn;"
+                                    mat-sort-header="{{header.key}}">
+                                    {{header.value }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="noData">
+                                <td colspan="11">
+                                    <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                                </td>
+                            </tr>
+                            <tr *ngIf="!noData && !respData.length">
+                                <td colspan="11">
+                                    <h4 class="text-muted text-center">
+                                        No Data Found!
+                                    </h4>
+                                </td>
+                            </tr>
+                            <tr
+                                *ngFor="let data of respData | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
+                                <td class="text-left text-muted">{{i+1}}.</td>
+                                <td class="text-left"> {{data['title']}}
+                                </td>
+                                <td class="text-left"> {{data['description']}}
+                                </td>
+                               
+                                <td class="text-left">
+                                    <select class="w-100 m-auto cust-select" (change)='onStatusChange(data)'>
+                                        <option [selected]="data['status'] == 0">Inactive</option>
+                                        <option [selected]="data['status'] == 1">Active</option>
+                                    </select>
+                                </td>
+                                <td class="text-left">{{data['created_at'] | date: 'dd/MM/yyyy'}} </td>
+                               
+                                <td class="text-left">
+                                     <button class="btn btn-sm btn-primary"
+                                        (click)="updateSlider(data)">
+                                        <i class="fa fa-edit text-nowrap">
+                                            {{'Update'}}
+                                        </i>
+                                    </button>
+                                    &nbsp; &nbsp;
+                                    <button class="btn btn-sm btn-primary"
+                                            (click)="confirmDelete(data?.id)">
+                                            <i class="fa fa-trash text-nowrap">
+                                                {{'Delete'}}
+                                            </i>
+                                        </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer pb-0">
+                    <div class="d-flex w-100 justify-content-between">
+                        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                        </ngb-pagination>
+                        <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                            <option [ngValue]="50">50 items per page</option>
+                            <option [ngValue]="100">100 items per page</option>
+                            <option [ngValue]="150">150 items per page</option>
+                            <option [ngValue]="200">200 items per page</option>
+                            <option [ngValue]="250">250 items per page</option>
+                            <option [ngValue]="500">500 items per page</option>
+                            <option [ngValue]="1000">1000 items per page</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="row mx-0 pt-2">
+    <div class="col-md-12">
+        <div class="card main-card mb-6">
+            <div class="card-body">
+                <ngb-tabset class="tabs-animated tabs-animated-shadow" (tabChange)="beforeChange($event)" #tabs
+                [activeId]="activeIdString">
+                    <ngb-tab id="list_activity_country">
+                        <ng-template ngbTabTitle>
+                            <span class="">{{'Country List'}}</span>
+                        </ng-template>
+                        <ng-template ngbTabContent>
+                            <app-list-activity-country (toUpdate)="triggerTab($event)"></app-list-activity-country>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab id="add_activity_country">
+                        <ng-template ngbTabTitle>
+                            <span class="">{{'Add/Edit Country'}}</span>
+                        </ng-template>
+                        <ng-template ngbTabContent>
+                            <app-add-activity-country (someEvent)="triggerTab($event)"></app-add-activity-country>
+                        </ng-template>
+                    </ngb-tab>
+                </ngb-tabset>
+            </div>
+        </div>
+    </div>
+</div>

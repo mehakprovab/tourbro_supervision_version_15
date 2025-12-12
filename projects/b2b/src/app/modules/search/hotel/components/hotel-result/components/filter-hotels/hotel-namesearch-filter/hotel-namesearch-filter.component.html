@@ -1,0 +1,11 @@
+<div class="rangebox">
+    <button data-target="#collapse513" data-toggle="collapse" class="collapsebtn" type="button">Hotel Name</button>
+    <!-- <a  style="cursor: pointer;font-size: 12px;" class="float-right" (click)="clearHotelName()">Clear</a> -->
+    <div class="vsm-item">
+        <div class="search-container" id="collapse513">
+            <input type="text" #searchInputRef class="search-input text-capitalize" placeholder="Search by Hotel Name"
+            (input)="searchHotels($event.target.value)">
+        </div>
+        
+    </div>
+</div>

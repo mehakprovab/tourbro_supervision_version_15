@@ -1,0 +1,78 @@
+<div class="sub-agent-container custom-table-layout card row" style="padding: 20px;">
+    <div class="add-traveller">
+        <div class="title">
+            <h3>Static Page Content</h3>
+        </div>
+        <div class="custom-inline-form">
+            <form class="" [formGroup]="regConfig" autocomplete="off">
+                <div class="form-group required row">
+                    <label for="title" class="col-sm-2 col-form-label">Page Title</label>
+                    <div class="col-sm-4">
+                        <select id="inputState" class="form-control" formControlName="title">
+                            <option value="" disabled>Choose..</option>
+                            <option *ngFor="let t of TitleList" value="{{t.name}}">{{t.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="firstName" class="required" class="col-sm-2 col-form-label">Page Title</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control text-capitalize" id="firstName" maxlength="50"
+                           formControlName="page_title">
+
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="description" class="col-sm-2 col-form-label">Page Description</label>
+                    <div class="col-sm-10">
+                        <ckeditor [(ngModel)]="model.editorData" formControlName="page_description"
+                            [(config)]="editorConfig"></ckeditor>
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="lastName" class="col-sm-2 col-form-label">Page SEO Title</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control text-capitalize" id="lastName" maxlength="20"
+                            (keypress)="omitSpecialCharacters($event)" formControlName="page_seo_title">
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="lastName" class="col-sm-2 col-form-label">Page SEO Keyword</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control text-capitalize" id="lastName" maxlength="20"
+                            (keypress)="omitSpecialCharacters($event)" formControlName="page_seo_keyword">
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="lastName" class="col-sm-2 col-form-label">Page SEO Description</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control text-capitalize" id="lastName" maxlength="100"
+                            (keypress)="omitSpecialCharacters($event)" formControlName="page_seo_description">
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="lastName" class="col-sm-2 col-form-label">Page Redirection Url</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="lastName" maxlength="150"
+                             formControlName="page_redirection_url">
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="country" class="col-sm-2 col-form-label">Page Position</label>
+                    <div class="col-sm-4">
+                        <select id="country" class="form-control" formControlName="page_position">
+                            <option selected value="" disabled>Choose..</option>
+                            <option *ngFor="let p of Positions" value="{{p.name}}">{{p.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row mb-n2">
+                    <div class="col-sm-12 customCenter">
+                        <button type="submit" class="btn btn-sm btn-primary mr-1" (click)="onSubmit()">Submit</button>
+                        <button type="reset" class="btn btn-sm btn-primary" (click)="onReset()">Reset</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

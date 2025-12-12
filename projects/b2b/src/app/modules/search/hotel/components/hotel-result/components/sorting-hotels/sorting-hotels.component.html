@@ -1,0 +1,79 @@
+<!-- <p>sorting-hotels works!</p> -->
+<div class="filterforall" id="top-sort-list-wrapper">
+    <div class="topmisty" id="top-sort-list-1">
+        <div class="row">
+        <div class="col-md-12">
+            <!-- chakri changes ---- added row class for edges alignment -->
+            <div class="divinsidefltr">
+                <div class="insidemyt col-xs-12 nopad">
+                    <ul class="sortul">
+                        <li class="sortli hide_lines mobhide" style="width: 25%;">
+                            <a class="sorta name-l-2-h loader" style="text-align: left;cursor: pointer;">
+                                <i class="fas fa-filter"></i>
+                                <strong>Filter</strong>
+                            </a>
+                        </li>
+
+                        <li class="sortli hide_lines" style="width: 25%;">
+                            <a (click)="sortByName()" class="sorta name-l-2-h loader"style="cursor: pointer;"
+                                [ngClass]="byName && active == 'byName' ? 'des active' :(active == 'byName' ? 'asc active' : 'asc')">
+                                <i class="fas fa-sort-alpha-down"></i>
+                                <strong>Hotel Name</strong>
+                            </a>
+                        </li>   
+
+                        <li class="sortli hide_lines" style="width: 25%;">
+                            <a (click)="sortByStars()" class="sorta name-l-2-h loader"style="cursor: pointer;"
+                                [ngClass]="byStars && active == 'byStars' ? 'des active' :(active == 'byStars' ? 'asc active' : 'asc')">
+                                <i class="fas fa-star"></i>
+                                <strong>Star</strong>
+                            </a>
+                        </li>
+
+                        <li class="sortli hide_lines" style="width: 25%;">
+                            <a (click)="sortByPrice()" class="sorta name-l-2-h loader"style="cursor: pointer;"
+                                [ngClass]="byPrice && active == 'byPrice' ? 'des active' :(active == 'byPrice' ? 'asc active' : 'asc')">
+                                <i class="fa fa-tag"></i>
+                                <strong>Price</strong>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="col-md-1"> -->
+            <!-- <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</a>
+                </li>
+              </ul>
+              <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">...</div>
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
+              </div> -->
+        <!-- <div class="mapviw noviews">
+            <div class="mapviwlist nopad noviews reswd">
+                <div class="rit_view">
+                    <a class="view_type list_click active">
+                      <i class="fa fa-list"></i>
+                      </a>
+                 </div>
+              </div>
+
+          <div class="mapviwlist nopad noviews reswd">
+                <div class="rit_view">
+                    <a class="view_type list_click">
+                      <i class="fa fa-map-marker-alt"></i>
+                      </a>
+                      {{'asddfdf'}}
+                 </div>
+              </div>
+          </div> -->
+        <!-- </div> -->
+        </div>
+    </div>
+</div>

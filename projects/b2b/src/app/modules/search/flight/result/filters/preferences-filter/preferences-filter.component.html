@@ -1,0 +1,32 @@
+<div class="rangebox">
+    <button data-target="#collapse503" data-toggle="collapse" class="collapsebtn" type="button">Preferences</button>
+    <a *ngIf="flightsCopy.length" style="cursor: pointer;font-size: 12px;" class="float-right" (click)="clearPreferencesFilter()">Clear</a>
+    <form *ngIf="flightsCopy.length" [formGroup]="preferencesForm" style="clear: both;">
+        <div id="collapse503" class="collapse show">
+            <div class="boxins marret" id="preferencesWrapper">
+                <a class="timone toglefil time-wrapper">
+                    <div class="starin">
+                        <div class="tmxdv">
+                            <input formControlName="refundable"
+                                (click)="filterByPreferences('refundable',$event.target.checked)"
+                                type="checkbox"
+                                class="time-category hidecheck" />
+                            <label class="ckboxdv">Refundable</label>
+                        </div>
+                    </div>
+                </a>
+                <a class="timone toglefil time-wrapper">
+                    <div class="starin">
+                        <div class="tmxdv">
+                            <input formControlName="nonRefundable"
+                                (click)="filterByPreferences('nonRefundable',$event.target.checked)"
+                                type="checkbox"
+                                class="time-category hidecheck" />
+                            <label class="ckboxdv">Non Refundable</label>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </form>
+</div>

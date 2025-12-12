@@ -1,0 +1,32 @@
+<div class="row col-lg-12 col-md-12 pt-3 m-0">
+    <ngb-tabset class="tabs-animated tabs-animated-shadow w-100">
+        <ngb-tab *ngFor="let link of navLinks; let i=index;">
+            <ng-template ngbTabTitle>
+                <span class="custom-font text-capitalize" (click)="onSelect(link.component)"> <i
+                        class="{{link.icon}}"></i> &nbsp; {{link.label}} </span>
+            </ng-template>
+            <ng-template ngbTabContent>
+                <div class="row custom-font" [ngSwitch]="link.component">
+                    <div *ngSwitchCase="'credit_limit_request'" class="col-md-12 col-lg-12">
+                        <app-list-credits></app-list-credits>
+                    </div>
+                    <div *ngSwitchCase="'balance_update_request'" class="col-md-12 col-lg-12">
+                        <!-- <app-balance-update-request></app-balance-update-request> -->
+                    </div>
+                    <div *ngSwitchCase="'bus'" class="col-md-12 col-lg-12">
+                        <p>
+                            Bus here
+                        </p>
+                        <!-- <app-bus></app-bus> -->
+                    </div>
+                    <div *ngSwitchCase="'transfers'" class="col-md-12 col-lg-12">
+                        <!-- <app-transfers></app-transfers> -->
+                    </div>
+                    <div *ngSwitchCase="'activities'" class="col-md-12 col-lg-12">
+                        <!-- <app-activities></app-activities> -->
+                    </div>
+                </div>
+            </ng-template>
+        </ngb-tab>
+    </ngb-tabset>
+</div>

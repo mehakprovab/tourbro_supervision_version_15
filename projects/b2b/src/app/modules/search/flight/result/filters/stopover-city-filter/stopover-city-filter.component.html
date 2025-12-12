@@ -1,0 +1,19 @@
+<div class="rangebox">
+    <button data-target="#collapse508" data-toggle="collapse" class="collapsebtn" type="button">Stopover City</button>
+    <a *ngIf="flightsCopy.length" style="cursor: pointer;font-size: 12px;" class="float-right" (click)="clearStopoverCityFilter()">Clear</a>
+    <form [formGroup]="stopoversForm" style="clear: both;">
+        <div id="collapse508" class="collapse show">
+            <div class="boxins" id="allairlines">
+                <ul formArrayName="items" class="locationul">
+                    <li *ngFor="let stopover of stopovers; let i = index">
+                        <div class="squaredThree">
+                            <input [formControlName]="i" [value]="stopover.name" (change)="filterByStopoverCity()" type="checkbox" name="check" class="airlinecheckbox" id="Stopover{{i + 1}}">
+                            <label for="Stopover{{i + 1}}"></label>
+                        </div>
+                        <label for="Stopover{{i + 1}}" class="lbllbl">{{ stopover.name }} ({{stopover.code}})</label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </form>
+</div>

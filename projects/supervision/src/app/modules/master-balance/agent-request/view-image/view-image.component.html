@@ -1,0 +1,21 @@
+<div class="main-card mb-0 card forgot-password-section shadow-none">
+    <div class="card-body p-0">
+        <div class="card-title align-items-center d-flex px-3">
+            <div class="card-profile">
+                <img [src]="profile_logo" />
+            </div>
+            <div class="d-flex flex-column ml-3">
+                <h5 class="title">View Image</h5>
+            </div>
+        </div>
+        <div class="position-relative form-group mb-2">
+            <img *ngIf="!isImageUrlEmpty" class="imageSize" [src]="imageUrl">
+            <span *ngIf="isImageUrlEmpty" class="p-3 mt-1">No image found.</span>
+        </div>
+        <div class="position-relative form-group m-0">
+            <div class="update-btn d-block text-center p-3">
+                <button class="btn btn-default" (click)="hide()">close</button>
+            </div>
+        </div>
+    </div>
+</div>

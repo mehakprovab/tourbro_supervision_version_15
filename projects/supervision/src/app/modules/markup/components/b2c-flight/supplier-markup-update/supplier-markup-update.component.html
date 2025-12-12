@@ -1,0 +1,50 @@
+<div class=""></div>
+    <hr>
+    <div class="card mb-3">
+        <form [formGroup]="regConfig" autocomplete="off">
+            <div>
+                <div class="d-flex flex-row pt-3">
+                    <div class="form-group col-sm-4 pt-1">
+                        <label for="airlines">Suppliers &nbsp;</label>
+                        <mat-form-field class="col-sm-12"  appearance="fill" style="padding-left: 0;">
+                            <mat-label>Supplietr List</mat-label>
+                            <input type="text" placeholder="Choose..."  class="text-capitalize" matInput formControlName="suppliers"
+                                [matAutocomplete]="supplier">
+                            <mat-autocomplete #supplier="matAutocomplete">
+                                <mat-option *ngFor="let suppliers of supplierList"
+                                [value]="suppliers.name" (click)="selectedLocation(suppliers)">
+                                    {{suppliers.name}} 
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-group col-sm-3 py-3 row">
+                        <!-- <input type="radio" value="plus" formControlName="value_type"  /> Plus(+/-
+                        {{defaultCurrency}}) -->
+                        <input type="radio" value="percentage" formControlName="value_type" />
+                        Percentage(%)
+                        <input type="text" onkeypress='return ( event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45 && this.value.indexOf("-") === -1 && this.selectionStart == 0)' formControlName="value" class="form-control"
+                            />
+                    </div>
+
+                </div>
+         
+                <table class="table">
+                    <tr>
+                        <td>
+                            <div id="allbtn" class="customCenter">
+                                <span class="p-1">
+                                    <button (click)="onSubmit()" class="btn btn-primary p-1">{{this.addOrUpdate |
+                                        uppercase}}</button>
+                                </span>
+                                <span class="p-1">
+                                    <button type="reset" class="btn btn-primary p-1" (click)="reset()">RESET</button>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </div>

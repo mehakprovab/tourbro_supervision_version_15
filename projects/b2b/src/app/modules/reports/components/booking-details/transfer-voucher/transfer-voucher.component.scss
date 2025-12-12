@@ -1,0 +1,97 @@
+.seats:before {
+    // background: url(../../../../../assets/images/seats.svg);
+     background-size: 12px 15px;
+     background-position: 50%;
+     background-repeat: no-repeat;
+ }
+ 
+ .cars:before {
+    // background: url(../../../../../assets/images/cars.svg);
+     background-size: 15px 12px;
+     margin-right: 5px;
+     background-position: 50%;
+     background-repeat: no-repeat;
+ }
+ 
+ .cars:before, .seats:before {
+     content: "";
+     width: 15px;
+     height: 15px;
+     vertical-align: middle;
+     display: inline-block;
+ }
+ 
+ .trapezoid {
+     border-bottom: 60px solid #082E53;
+     border-left: 45px solid transparent;
+     border-right: 0px solid transparent;
+     height: 0;
+     width: 100%;
+     color: #fff;
+     text-align: center;
+     line-height: 60px;
+     font-size: 19px;
+     letter-spacing: 8px;
+     text-transform: uppercase;
+     font-weight: 600;
+   }
+ 
+ 
+ 
+ .bags:before {
+     //background: url(../../../../../assets/images/luggage-bag.svg);
+     background-size: 12px 15px;
+     background-position: 50%;
+     background-repeat: no-repeat;
+ }
+ 
+ .kms:before {
+     //background: url(../../../../../assets/images/kms.svg);
+     background-size: 14px 15px;
+     background-position: 50%;
+     background-repeat: no-repeat;
+ }
+ .bags:before, .kms:before {
+     content: "";
+     width: 15px;
+     height: 15px;
+     vertical-align: middle;
+     display: inline-block;
+ }
+
+ .imgStyle {
+    border-radius: 0px !important;
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0px 10px 0px;
+}
+
+.transport-provider {
+    position: relative;
+    width: 100%;
+    flex-basis: 80%;
+    text-align: left;
+    padding: 0px 0px 20px 20px;
+    font-size: 12px;
+    color: #092e53;
+}
+
+.transport-provider-company {
+    display: flex;
+    align-items: center;
+    color: #092e53;
+}
+
+.transport-provider-company-logo{
+    max-width: 100px;
+    max-height: 35px;
+    margin-right: 11px;
+    color: #ddd;
+}
+.btnStyle{    background: #082e53;
+    color: #fff;
+    border: 1px solid #082e53;
+    border-radius: 3px;
+    padding: 5px 20px;
+    margin: 0px auto;
+    display: block;}

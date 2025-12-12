@@ -1,0 +1,301 @@
+<div class="alldownsectn">
+    <div class="container-fluid">
+      <div class="row">
+        
+        <div class="clearfix"></div>
+        <div class="col-xs-12 col-md-8 nopad">
+
+          <div class="col-xs-12 col-md-12 nopad">
+            <div class="col-xs-12 topalldesc">
+              <div class="col-xs-12 nopad">
+                <div class="rvwpanel">
+                  <div class="wx100 pad15">
+                    <div class="hotelrvw-img">
+                      <img alt="Cab Image" width="150" src="{{bookingDetails?.ItenaryData?.attributes.ProductImage}}">
+                    </div>
+                    <div class="hotelrvw-info">
+                      <h4 _ngcontent-tov-c2="">{{bookingDetails?.ItenaryData?.attributes?.ProductName}}</h4>
+                      <!-- <ng-template *ngIf="bookingDetails?.StarRating === '' then noStar; else stars">
+                      </ng-template>
+                      <ng-template #noStar>
+                          <span class="star_rtng">
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                          </span>
+                      </ng-template>
+                      <ng-template #stars>
+                          <span class="star_rtng">
+                              <i class="fas fa-star star_rtng_clr" *ngFor="let s of bookingDetails?.StarRating | map: getStarArray"></i>
+                              <i class="fas fa-star" *ngFor="let s of bookingDetails?.StarRating | map: getStarArrayRemaining"></i>
+                          </span>
+                      </ng-template> -->
+                      <div class="clr"></div>
+                      
+                      <p class="hotelrvw-locatn">
+                        <!-- <span class="cars">1 Unit</span> |
+                        <span class="seats">4 Seats</span> |
+                        <span class="bags"> 2 Luggage Bags</span> | -->
+                        <span>
+                          <strong>Duration: </strong> 
+                          {{bookingDetails?.ItenaryData?.attributes?.Duration}}</span>
+                      </p>
+                      <div class="clr"></div>
+                      <p class="m-0">
+                        <strong>Destination: </strong><span> {{bookingDetails?.ItenaryData?.attributes?.Destination}}</span>
+                        </p>
+                      <div class="clr"></div>
+                      <p class="m-0">
+                        <strong>Travelers :</strong> {{bookingData.body.paxes[0].adultCount}} Adult <span *ngIf="bookingData.body.paxes[0].childCount"> + {{bookingData.body.paxes[0].childCount}} Child ({{bookingData.body.paxes[0].ChildAge}} Age)</span> 
+                      </p>
+                      <p class="mb-1" >
+                        <strong>Travel Date :</strong> {{confirmDetails.BookingDetails?.ToDate | date:'dd-MM-yyyy'}}  
+                      </p>
+
+                      <p class="mb-1" *ngIf="bookingData.body.booking_source !== 'ZBAPINO00003'">
+                        <strong>Preferred Language :</strong> {{confirmDetails.BookingDetails?.operated_language }}  
+                      </p>
+
+                      <p class="mb-1" *ngIf="bookingData.body.booking_source !== 'ZBAPINO00003'">
+                        <strong>Preferred Time :</strong> {{confirmDetails.BookingDetails?.activity_timing }}  
+                      </p>
+                      <p class="mb-1" *ngIf="bookingData.body.booking_source !== 'ZBAPINO00003'">
+                        <strong>Pickup Hotel Name :</strong> {{confirmDetails.BookingDetails?.pickupHotelName}}  
+                      </p>
+                    </div>
+                  </div>
+                  <!-- <div class="wx100b">
+                    <div class="c-cl-1">
+                      <p class="grey_clr xpos">Pickup Location</p>
+                      <p class="font20">Indira Gandhi International Airport, Terminal 1</p>
+                      <hr class="style-one">
+                      <p class="grey_clr xpos">Pickup Date &amp; Time</p>
+                      <p class="grey_clr">
+                        <span class="font20">Thursday, 19 October, 2023 2:07 PM</span>
+                      </p>
+                    </div>
+                    <div class="c-cl-2">
+                      <img width="20px" src="assets/images/arrow-to-right.png">
+                    </div>
+                    <div class="c-cl-3">
+                      <p class="grey_clr xpos">Drop-Off Location</p>
+                      <p class="font20">Agra Fort Railway Station</p>
+                      <hr class="style-two">
+                    </div>
+                  </div> -->
+                  <div class="clr"></div>
+                </div>
+              </div>
+              <div class="clr"></div>
+              <h6 class="mt-2" style="color: #0a2f54; font-weight: 600;">Cancellation Policy:</h6>
+              <p style="font-size: 13px; margin-bottom: 0px; color: #0a2f54;">
+                <span [innerHTML]="bookingDetails?.ItenaryData?.attributes?.Cancellation_Policy"></span>
+              </p>
+            </div>
+          </div>
+          
+          <h3 class="inpagehed">Contact Details</h3>
+          <div class="card p-3 sectionbuk">
+            <div class="row">
+              <div class="col-12 d-flex w-100 justify-content-between capitalize">
+                <h5 class="mb-1">
+                  {{bookingDetails?.ItenaryData?.attributes?.AddressDetails?.Title}}   {{bookingDetails?.ItenaryData?.attributes?.AddressDetails?.FirstName}}   {{bookingDetails?.ItenaryData?.attributes?.AddressDetails?.LastName}} 
+                </h5>
+              </div>
+              <hr class="my-2 w-100">
+              <div class="col-md-4 col-12">
+                <label>Mobile Number</label>
+                <p> {{bookingDetails?.ItenaryData?.attributes?.AddressDetails?.Contact}}</p>
+              </div>
+              <div class="col-md-8 col-12 align-items-end">
+                <label>Email</label>
+                <p>{{bookingDetails?.ItenaryData?.attributes?.AddressDetails?.CustomerEmail}}</p>
+              </div>
+            </div>
+          </div>
+          <!-- <h3 class="inpagehed">Passengers Details</h3>
+          <div class="card p-3 mt-3 sectionbuk">
+            <div class="row" *ngFor="let passenger of confirmDetails.BookingPaxDetails let i = index">
+              <div class="col-12 d-flex w-100 justify-content-between capitalize">
+                <h5 class="mb-1 col-4">{{passenger.title}} {{passenger.first_name}} {{passenger.last_name}}</h5>
+                <span class="col-2">{{confirmDetails?.BookingDetails?.holder_contact}}</span>
+                <span class="col-6">{{confirmDetails?.BookingDetails?.holder_email}}</span>
+              </div>
+              <hr class="my-2 w-100">
+            </div>
+          </div> -->
+          <div class="clearfix"></div>
+          <br>
+          <div style="text-align: center;">
+            <div class="position-relative row form-check">
+              <div class="col-sm-12">
+                &nbsp;&nbsp; <button type="button" (click)="getPayNow(bookingDetails)"
+                  class="btn book_btn">Pay Now</button>
+                  &nbsp;&nbsp; <button type="button" (click)="payLaterShow()" *ngIf="confirmDetails?.BookingDetails?.pay_later == 'true'"
+                  class="btn book_btn">Pay Later</button>
+                &nbsp;&nbsp; <a routerlink="/dashboard" href="#/dashboard">
+                  <button class="btn can_btn">Cancel</button>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 rhttbepa">
+          <app-activity-faresummary [noOfTravellers]="noOfTraveller"
+          [blockedActivity]="bookingDetails"  [grandTotal]="grandTotalPrice" [convienienceFee]="convienienceFee"></app-activity-faresummary>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true"
+    [style.display]="showPaymentDetails ? 'block' : 'none'">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 590px; margin-top: 150px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentModalLabel">Payment Methods</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                (click)="showPaymentDetails=false">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="paymentForm">
+                    <div class="cc-selector-2">
+                        <div class="row">
+                            <div class="col-md-6 col-6" *ngFor="let paymentMethod of paymentGateways">
+                                <span *ngIf="(paymentMethod?.remarks | lowercase)==='wallet' && showDeductFromWallet">
+                                    <img src="./assets/images/wallet.png" height="50px" width="50px">
+                                    <label style="width: 46px;" class="drinkcard-cc wallet" for="wallet">
+                                    </label>
+                                    <span class="payment_label">
+                                        <input id="wallet" type="radio" name="paymentMethod" value="wallet" formControlName="paymentMethod" (change)="onPaymentSelect($event,'wallet')" /> DEDUCT FROM BALANCE
+                                    </span>
+                                </span>
+                                <span *ngIf="(paymentMethod?.remarks | lowercase)==='barclay'">
+                                  <img src="assets/images/Barclays.png" width="200px" height="50px">
+                                  <label class="drinkcard-cc barclay" for="nagad"></label>
+                                  <span class="payment_label">
+                                        <input id="barclay" type="radio" name="paymentMethod" value="barclay" formControlName="paymentMethod" (change)="onPaymentSelect($event,'card')" /> PAY BY CARD
+                                    </span>
+                                </span>
+                                <span *ngIf="(paymentMethod?.remarks | lowercase)==='nagad'">
+                                    <label class="drinkcard-cc nagad" for="nagad"></label>
+                                    <span class="payment_label">
+                                        <input id="nagad" type="radio" name="paymentMethod" value="nagad" formControlName="paymentMethod" (change)="onPaymentSelect($event,'card')" /> {{paymentMethod?.remarks}}
+                                    </span>
+                                </span>
+                                <span *ngIf="(paymentMethod?.remarks | lowercase)==='bkash'">
+                                    <label class="drinkcard-cc bKash" for="bKash"></label>
+                                    <span class="payment_label">
+                                        <input id="bKash" type="radio" name="paymentMethod" value="bKash" formControlName="paymentMethod" (change)="onPaymentSelect($event,'card')" /> {{paymentMethod?.remarks}}
+                                    </span>
+                                </span>
+                                <span *ngIf="(paymentMethod?.remarks | lowercase)==='sslcommerz'">
+                                    <label style="width: 100%; background-position: center;" class="drinkcard-cc sslCommerz" for="sslCommerz"></label>
+                                    <span class="payment_label">
+                                        <input id="sslCommerz" type="radio" name="paymentMethod" value="sslCommerz" formControlName="paymentMethod" />
+                                        {{paymentMethod?.remarks}}
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <small class="error text-danger col-xs-12 col-12" style="margin-bottom:10px; display:block;"
+                        *ngIf="hasError('paymentMethod', 'required');">
+                        Please select the payment type* <br>
+                    </small>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                <button type="button" class="btn btn-primary" (click)="onBooking(bookingDetails.ItenaryData.app_reference)">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true"
+  [style.display]="showConfirm ? 'block' : 'none'">
+  <div class="modal-dialog  modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="paymentModalLabel">Confirm</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Do you really want to {{subjectName}} the booking?</p>
+      </div>
+      <div class="modal-footer" style="justify-content: space-between;">
+        <!-- <button type="button" class="btn btn-success" *ngIf="subjectName=='Cancel'"
+          (click)="cancelBooking()">Yes</button> -->
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="hide()">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true"
+  [style.display]="showPayLater ? 'block' : 'none'">
+  <div class="modal-dialog  modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="paymentModalLabel">Payment Methods - Pay Later (Before Cancellation Deadline)</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Make sure to pay or cancel this booking before {{confirmDetails.BookingDetails.cancellation_deadline}} to avoid cancellation charges.</p>
+        <p style="color: red;"> Date and Time is calculted based on the local time of the destination.</p>
+      </div>
+      <div class="modal-footer" style="justify-content: space-between;">
+        <button type="button" class="btn btn-success" 
+          (click)="PayLaterBooking()">Confirm</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="hide()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<form #form ngNoForm id="nonseamless" method="post" name="redirect" *ngIf="paymentData" [attr.action]="paymentData">
+    <input type="hidden" name="ACCEPTURL" [(ngModel)]="ACCEPTURL" />
+    <input type="hidden" name="CANCELURL" [(ngModel)]="CANCELURL" />
+    <input type="hidden" name="DECLINEURL" [(ngModel)]="DECLINEURL" />
+    <input type="hidden" name="AMOUNT" [(ngModel)]="AMOUNT" />
+    <input type="hidden" name="CN" [(ngModel)]="CN" />
+    <input type="hidden" name="COM" [(ngModel)]="COM" />
+    <input type="hidden" name="CURRENCY" [(ngModel)]="CURRENCY" />
+    <input type="hidden" name="EMAIL" [(ngModel)]="EMAIL" />
+    <input type="hidden" name="FONTTYPE" [(ngModel)]="FONTTYPE" />
+    <input type="hidden" name="LANGUAGE" [(ngModel)]="LANGUAGE" />
+    <input type="hidden" name="LOGO" [(ngModel)]="LOGO" />
+    <input type="hidden" name="OPERATION" [(ngModel)]="OPERATION" />
+    <input type="hidden" name="ORDERID" [(ngModel)]="ORDERID" />
+    <input type="hidden" name="OWNERADDRESS" [(ngModel)]="OWNERADDRESS" />
+    <input type="hidden" name="OWNERCTY" [(ngModel)]="OWNERCTY" />
+    <input type="hidden" name="OWNERTELNO" [(ngModel)]="OWNERTELNO" />
+    <input type="hidden" name="OWNERTOWN" [(ngModel)]="OWNERTOWN" />
+    <input type="hidden" name="OWNERZIP" [(ngModel)]="OWNERZIP" />
+    <input type="hidden" name="PMLISTTYPE" [(ngModel)]="PMLISTTYPE" />
+    <input type="hidden" name="PSPID" [(ngModel)]="PSPID" />
+    <input type="hidden" name="BGCOLOR" [(ngModel)]="BGCOLOR" />
+    <input type="hidden" name="BUTTONBGCOLOR" [(ngModel)]="BUTTONBGCOLOR" />
+    <input type="hidden" name="BUTTONTXTCOLOR" [(ngModel)]="BUTTONTXTCOLOR" />
+    <input type="hidden" name="TBLBGCOLOR" [(ngModel)]="TBLBGCOLOR" />
+    <input type="hidden" name="TBLTXTCOLOR" [(ngModel)]="TBLTXTCOLOR" />
+    <input type="hidden" name="TITLE" [(ngModel)]="TITLE" />
+    <input type="hidden" name="TXTCOLOR" [(ngModel)]="TXTCOLOR" />
+    <input type="hidden" name="SHASIGN" [(ngModel)]="SHASIGN" />
+    <input type="hidden" name="BACKURL" [(ngModel)]="BACKURL" />
+</form>
+
+  <ngx-loading [show]="showLoader"
+    [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+    [template]="loadingTemplate"></ngx-loading>

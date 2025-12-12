@@ -1,0 +1,26 @@
+<div class="col-12">
+    <h2 class="m-0" mat-dialog-title>     
+        <button type="button" style="right: 15px;" class="close position-absolute p-0" (click)="closeModal()" ><span style="font-size: 30px; font-weight: 400;">×</span></button>
+    </h2>
+    <mat-dialog-content  class="brand-fare-modal">
+        <div class="col-12 row d-flex justify-content-between p-3">
+            <span class="p-3 message-content">
+                "You’ve chosen the Direct Hotel Contract along with other supplier services. To ensure a smooth registration, we’ll first collect details for the Direct Hotel Contract before moving on to the information needed for your additional services.
+            </span>
+
+            <strong  class="p-3 col-12 d-flex justify-content-center lets-start"> Let’s get started!"</strong>
+        </div>
+        <div class="col-12 row">
+            <div class="col-6"></div>
+            <div class="col-6 row d-flex justify-content-end">
+                <div class="col-3">
+                    <button class="cancel-btn-reg" type="button" (click)="closeModal()">Cancel</button>
+                </div>
+                <div class="col-3">
+                    <button class="cancel-btn-reg proceed-btn-reg" type="button" (click)="onBookNowPrice(1)">Proceed</button>
+                </div>
+            </div>
+        </div>
+
+    </mat-dialog-content>
+</div>

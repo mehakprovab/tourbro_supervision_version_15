@@ -1,0 +1,230 @@
+// @import "~leaflet/dist/leaflet.css";
+
+.map {
+    height: 100%;
+    padding: 0;
+  }
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .map-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 30px;
+  }
+  
+  .map-frame {
+    border: 2px solid black;
+    height: 80%;
+  }
+  
+//   #map {
+//     height: 80%;
+//   }
+
+  #mapid { height: 180px; }
+
+  #map {
+    width: 100%;
+    height: 600px;
+  }
+
+  .modal {
+    -webkit-transform: translate(0,-50%);
+    -o-transform: translate(0,-50%);
+    transform: translate(0,-50%);
+    top: 60%;
+    margin: 0 auto;
+}
+
+// .tab > div {
+//     display:none;  
+//   }
+  
+//   .tab > div:target {
+//     display:block;  
+//   }
+
+
+// Airline dropdown
+
+/* autocomplete */
+.mn_incld,
+.arpt_list li {
+  border-top: 1px solid #e5ebf0;
+  background: transparent;
+  display: flex;
+  color: #212a30;
+  position: relative;
+}
+
+.in_icon {
+  margin-right: 0.8rem;
+  display: flex;
+  width: 36px;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.in_icon img {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  color: #212a30;
+  padding: 0;
+  background-position: 23px 50%;
+  background-repeat: no-repeat;
+  border-radius: 4px;
+}
+
+.include {
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin: 0;
+//   padding-right: 4rem;// chakri changes (commented)
+  line-height: 1.1rem;
+  display: flex;//chakri changes
+}
+
+.include small {
+  display: block;
+  margin-top: 0.2rem;
+  line-height: 0.9rem;
+}
+
+.airport_complete {
+ width: 100%;
+  position: absolute;
+  background: white;
+  z-index: 1000;
+  box-shadow: 0 2px 5px 0 rgba(23, 35, 44, 0.24),
+    0 -1px 5px 0 rgba(23, 35, 44, 0.2) !important;
+  transition: transform 200ms ease-out, height 200ms ease-out,
+    width 200ms ease-out !important;
+}
+.arpt_list{
+  max-height: 200px;
+  overflow: auto;
+  padding: 0px;
+}
+.arpt_list li  {
+  border-top: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.arpt_list li:hover, .arpt_list li.sub:hover {
+  background-color: #f8f9fa;
+}
+
+.arpt_list li:first-child {
+  border-top: 1px solid #e5ebf0;
+}
+
+.arpt_list li.sub {
+  padding-left: 3rem !important;
+  background: url('~/assets/images/right_arrow.png') no-repeat left 0;
+  background-position: 1.6rem 1.2rem;
+}
+
+.sub .in_icon {
+  margin-right: 0.25rem;
+}
+
+.ar_rgt {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: right;
+  text-align: right;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 24px;
+  bottom: 0;
+  margin: auto;
+}
+
+span.ar_code {
+  margin-right: 0.5rem;
+}
+
+
+// For divide
+
+.vertical-divider {
+    position: absolute;
+    z-index: 10;
+    top: 50%;
+    left: 50%;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    height: 50%;
+    line-height: 0;
+    text-align:center;
+    text-transform: uppercase;
+    transform: translateX(-50%);
+  }
+  
+  .vertical-divider:before, 
+  .vertical-divider:after {
+    position: absolute;
+    left: 50%;
+    content: '';
+    z-index: 9;
+    border-left: 1px solid rgba(34,36,38,.15);
+    border-right: 1px solid rgba(255,255,255,.1);
+    width: 0;
+    height: calc(100% - 1rem);
+  }
+  
+  .row-divided > .vertical-divider {
+    height: calc(50% - 1rem);    
+  }
+  
+  .vertical-divider:before {
+    top: -100%;
+  }
+  
+  .vertical-divider:after {
+    top: auto;
+    bottom: 0;
+  }
+  
+  .row-divided {
+    position:relative;
+  }
+  
+  .row-divided > [class^="col-"],
+  .row-divided > [class*=" col-"] {
+    padding-left: 30px;  /* gutter width (give a little extra room) 2x default */
+    padding-right: 30px; /* gutter width (give a little extra room) 2x default */
+  }
+  
+  
+  
+  
+  /* just to set different column heights - not needed to function */          
+  .column-one {
+    height: 300px; 
+    background-color: #EBFFF9;
+  }
+  .column-two {
+    height: 400px;
+    background-color: #F7F3FF;
+  }
+
+  .vertical {
+    border-left: 2px solid black;
+    // height: 200px;
+    position:absolute;
+    left: 50%;
+}
+    

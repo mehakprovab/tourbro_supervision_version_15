@@ -1,0 +1,1000 @@
+<!-- <app-hotel-booking-steps [rooms]="true" [guests]="true"></app-hotel-booking-steps> -->
+<div class="row">
+    <div class="col-md-8 col-lg-8">
+        <div class="card mb-2 mt-2 border rounded">
+            <div class="card-body pb-3">
+                <div *ngIf="hotel" class="row">
+                    <div class="col-md-12 col-lg-12">
+                        <h5 class="cusromGrey"><strong>{{hotel.HotelName}}</strong> </h5>
+                        <ng-template *ngIf="hotel.StarRating === '' then noStar; else stars">
+                        </ng-template>
+                        <ng-template #noStar>
+                            <span class="star_rtng">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </span>
+                        </ng-template>
+                        <ng-template #stars>
+                            <span class="star_rtng">
+                                <i class="fas fa-star star_rtng_clr" *ngFor="let s of hotel.StarRating | map: getStarArray"></i>
+                                <i class="fas fa-star" *ngFor="let s of hotel.StarRating | map: getStarArrayRemaining"></i>
+                            </span>
+                        </ng-template>
+                        <br>
+                        <p class="cusromGrey">
+                            <strong>
+                                <i class="fa fa-map-marker cusromGrey" aria-hidden="true"></i>
+                                &nbsp; {{hotel.HotelAddress}}
+                            </strong>
+                        </p>
+                        <p class="cusromGrey mt-2"*ngIf="hotel.searchRequest.booking_source !=='TLAPNO00003'">
+                            <strong >
+                                {{ hotel.RoomDetails[0].NonRefundable === true ? 'Non-Refundable' : 'Refundable' }}
+                            </strong>
+                            <!-- <strong *ngIf="hotel.searchRequest.booking_source !== 'TLAPNO00006'">
+                                {{ hotel.Refundable ? 'Refundable' : 'Non-Refundable' }}
+                            </strong> -->
+                        </p> 
+                        <p class="cusromGrey"*ngIf="hotel.RoomDetails[0].Package">
+                            <strong>
+                              
+                               <svg class="package-for-packaging" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M234.5 5.7c13.9-5 29.1-5 43.1 0l192 68.6C495 83.4 512 107.5 512 134.6l0 242.9c0 27-17 51.2-42.5 60.3l-192 68.6c-13.9 5-29.1 5-43.1 0l-192-68.6C17 428.6 0 404.5 0 377.4L0 134.6c0-27 17-51.2 42.5-60.3l192-68.6zM256 66L82.3 128 256 190l173.7-62L256 66zm32 368.6l160-57.1 0-188L288 246.6l0 188z"/></svg> Product for Packaging
+                            </strong>
+                        </p> 
+                        <p class="cusromGrey"*ngIf="hotel.searchRequest.booking_source !=='TLAPNO00003'">
+                            <strong>
+                              
+                               Meal Plan : &nbsp; {{hotel.RoomDetails[0].RoomType ? hotel.RoomDetails[0].RoomType : 'N/A'}}
+                            </strong>
+                        </p>                       
+                       
+                        <p class="cusromGrey mt-3" *ngIf="(hotel.searchRequest.booking_source !='TLAPNO00003' && hotel.RoomDetails[0].NonRefundable == false && hotel?.CancelPolicy)"style="margin-bottom: 15px; font-size:14px;">
+                            <strong>
+                                {{'Cancellation Policy:'}}
+                            </strong>
+                        
+                            <span [innerHTML]="hotel?.CancelPolicy">
+                            </span>
+                        </p>
+
+                        <p class="cusromGrey mt-3" *ngIf="(hotel.searchRequest.booking_source ==='TLAPINO00004' && hotel.RoomDetails[0].NonRefundable === false )"style="margin-bottom: 15px; font-size:14px;">
+                            <strong>
+                                {{'Cancellation Policy:'}}
+                            </strong>
+                        
+                            <span [innerHTML]="hotel?.RoomDetails[0]?.cancellationPolicies">
+                            </span>
+                        </p>
+
+                        <p class="cusromGrey mt-3" *ngIf="(hotel.searchRequest.booking_source ==='TLAPINO00005' && hotel.RoomDetails[0].NonRefundable === false )"style="margin-bottom: 15px; font-size:14px;">
+                            <strong>
+                                {{'Cancellation Policy:'}}
+                            </strong>
+                        
+                            <span [innerHTML]="hotel?.RoomDetails[0]?.cancellationPolicies">
+                            </span>
+                        </p>
+
+                        <p class="cusromGrey mt-3" *ngIf="(hotel.searchRequest.booking_source ==='TLAPINO00007' && hotel.RoomDetails[0].NonRefundable === false || hotel.RoomDetails[0].NonRefundable === '' )"style="margin-bottom: 15px; font-size:14px;">
+                            <strong>
+                                {{'Cancellation Policy:'}}
+                            </strong>
+                        
+                            <span [innerHTML]="hotel?.RoomDetails[0]?.cancellationPolicies">
+                            </span>
+                        </p>
+
+                        <p class="cusromGrey mt-3" *ngIf="(hotel.searchRequest.booking_source ==='TLAPINO00006' && hotel.RoomDetails[0].NonRefundable === false )"style="margin-bottom: 15px; font-size:14px;">
+                            <strong>
+                                {{'Cancellation Policy:'}}
+                            </strong> <br/>
+                        
+                            <span *ngFor="let data of getCancellationPolicy(hotel?.RoomDetails[0]?.cancellationPolicies)">
+                                {{data}} <br/>
+                            </span>
+                        </p>
+                        
+                        <p class="cusromGrey" *ngIf="hotel?.RoomDetails && hotel.RoomDetails[0].remarks"style="margin-bottom: 15px; font-size:14px;">
+                            <span class="row col-12 p-0">
+                                <strong class="col-6 d-flex justify-content-start">
+                                    {{'Remarks:'}}
+                                </strong>
+                                <strong class="d-flex justify-content-end p-0 col-6 view-more" *ngIf="isTextTruncated(remarksData)" (click)="toggleRemarks()">
+                                    {{ showFullRemarks ? 'Show Less' : 'Show More' }}
+                                </strong>
+                            </span>
+                               
+                            <span [innerHTML]="getShortText(remarksData, showFullRemarks)" class="policy-text"></span>
+                            
+                        </p>
+                    </div>
+                </div>
+                <section class="font-weight-bold ml-3 marin_zero" style="background-color: #fafafa !important; border: 1px solid #f0f0f0;">
+                    <div class="row mobile_row">
+                        <div class="col-md-2 p-0">
+                            <img class="imgStyle" src="{{hotel.HotelPicture}}" alt="">
+                        </div>
+                        <div class="col-md-2 p-4 text-center">
+                            <p class="cusromBlue m-0">
+                                Check-In:
+                            </p>
+                            <p class="m-0">
+                                {{hotel?.booking_source === 'TLAPINO00007' ? hotel.CheckIn : (hotel.CheckIn  | date: 'dd/MM/yyyy')}}
+                            </p>
+                        </div>
+                        <div class="col-md-2 p-4 text-center">
+                            <p class="cusromBlue m-0">
+                                Check-Out:
+                            </p>
+                            <p class="m-0">
+                                {{hotel?.booking_source === 'TLAPINO00007' ? hotel.CheckOut : (hotel.CheckOut  | date: 'dd/MM/yyyy')}}
+                            </p>
+                        </div>
+                        
+                        <div class="col-md-2 p-4 text-center">
+                            <p class="cusromBlue m-0">
+                                Passenger(s):
+                            </p>
+                            <p class="m-0">
+                                {{adult + child}}
+                            </p>
+                        </div>
+                        <div class="col-md-2 p-4 text-center">
+                            <p class="cusromBlue m-0">
+                                No of Nights:
+                            </p>
+                            <p class="m-0">
+                                {{nights}}
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <!-- <div class="all_oters p-0" *ngIf="hotel['CancelPenalties']['CancelPenalty']">
+                    <div class="para_sentnce cusromGrey">
+                        <strong>Cancellation Policy:</strong>
+                        <ul class="list-unstyled m-0" *ngIf="!hotel.CancelPenalties.NonRefundable; else nonRefundable">
+                            <ng-container
+                                *ngIf="(hotel.CancelPenalties.CancelPenalty | typeof) == 'object'; else otherPanalty">
+                                <li class="listcancel" *ngFor="let policy of hotel.CancelPenalties.CancelPenalty">
+                                    Cancellation made
+                                    <strong>{{policy.HoursBefore}}</strong> hours before checkin
+                                    <strong>{{policy.Penalty.Currency}} {{policy.Penalty.Value |
+                                        number:'1.2-2'}}</strong>
+                                    will be charged as
+                                    cancellation penalty.
+                                </li>
+                            </ng-container>
+                            <ng-template #otherPanalty>
+                                <li class="listcancel">
+                                    You may cancel your booking for <strong>no charge</strong> on or before
+                                    <strong>{{hotel.CancelPenalties.CancelPenalty | date: 'dd-MM-yyyy'}} </strong>
+                                </li>
+                            </ng-template>
+                        </ul>
+                        <ng-template #nonRefundable>
+                            <ul class="list-unstyled m-0">
+                                <li class="listcancel">
+                                    Non Refundable
+                                </li>
+                            </ul>
+                        </ng-template>
+                        <div class="para_sentnce">
+                            <strong>Remarks:</strong>
+                            {{hotel.Remarks}}
+                        </div>
+                        <div class="para_sentnce"><strong>Additional charges may apply</strong> </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+
+        <form [formGroup]="travellerForm">
+            <div class="col-md-12 col-lg-12 mt-4 p-0">
+            
+              
+                    <div class="wrappay leftboks">
+                        <div class="comon_backbg border rounded">
+                            <h5 class="inpagehed p-2">Add Guest Information</h5>
+                            <div class="sectionbuk">
+                                <div id="tdetails">
+                           
+                                    <div class="onedept" formArrayName="rooms">
+                                     
+                                        <div *ngFor="let room of roomsFormArray.controls; let roomIndex=index" [formGroupName]="roomIndex">
+                                             <strong style="text-decoration: underline;">Room ({{roomIndex + 1}})</strong>
+                                            <!-- <div *ngIf="respData && respData.length > 0"> -->
+                                                <!-- <label class="textWeight">Select Adult</label>
+                                                <mat-form-field class="col-md-3 f-16 ml-1" appearance="fill">
+                                                  <mat-label>Select Adult</mat-label>
+                                                  <mat-select formControlName="PassengerSelection" id="matselectAdult{{ roomIndex }}">
+                                                    <mat-option value="" disabled>Select Adult</mat-option>
+                                                    <mat-option
+                                                      *ngFor="let option of respData"
+                                                      [value]="option.first_name"
+                                                      (click)="setAdultDetails(option, roomIndex, 'adult')"
+                                                    >
+                                                      {{ option.first_name }}
+                                                    </mat-option>
+                                                  </mat-select>
+                                                </mat-form-field>
+                                                <a class="passengerClear" (click)="clearDetails(roomIndex, 'adult')"> Clear</a> -->
+                                              <!-- </div> -->
+                                            <!-- <div class="clearfix"></div> -->
+                                            <ng-container formArrayName="travellers">
+                                    
+                                                <div *ngFor="let traveller of room.get('travellers').controls; let travellerIndex=index" [formGroupName]="travellerIndex">
+                                                 
+                                                    <div class="row" style="margin-bottom: 15px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
+                                                        <div class="col-md-2 downsrt pr-0">
+                                                            <div class="paylabel">&nbsp;</div>
+                                                            <div class="lokter">
+                                                                <span class="whoare text-left"><i class="fa fa-user"></i> {{traveller.value.type | titlecase}} </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3 p-0 mpad">
+                                                            <div class="paylabel">Title <b class="text-danger">*</b></div>
+                                                            <div class="selectedwrap">
+                                                                <select class="flpayinput " name="a_gender290[0]" id="a_gender_0"
+                                                                    aria-required="true" formControlName="Title" required>
+                                                                    <option value="">-Select-</option>
+                                                                    <ng-container *ngFor="let t of titleList">
+                                                                        <option *ngIf="((traveller.value.type=='adult' && t.pax_type == 'ADULT') || (traveller.value.type=='child' && t.pax_type == 'CHILD'))" [value]="t.title">{{t.title}}</option>
+                                                                    </ng-container>
+                                                                </select>
+                                                            </div>
+                                                            <small class="error text-danger" *ngIf="hasError('Title', 'required', 'travellers', travellerIndex,roomIndex);">Please Select Title*</small>
+                                                        </div>
+                                                        <div class="col-md-4 pr-0">
+                                                            <div class="paylabel">First Name <b class="text-danger">*</b> </div>
+                                                            <input placeholder="First Name" name="first_name290[0]" type="text"
+                                                            class="payinput  mytextbox" value="" id="flight-adult-first-0"
+                                                            aria-required="true" formControlName="FirstName" required />
+                                                            <small class="error text-danger" *ngIf="hasError('FirstName', 'required', 'travellers', travellerIndex,roomIndex);">Please Enter First Name*</small>
+                                                            <small class="error text-danger" *ngIf="hasError('FirstName', 'maxlength', 'travellers', travellerIndex,roomIndex);">Maximum Characters Exceeded*</small>
+                                                            <small class="error text-danger" *ngIf="hasError('FirstName', 'minlength', 'travellers', travellerIndex,roomIndex);">At Least 1 Characters Required*</small>
+                                                            <small class="error text-danger" *ngIf="hasError('FirstName', 'pattern', 'travellers', travellerIndex,roomIndex);">Please Enter a Valid Name*</small>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="paylabel">Last Name <b class="text-danger">*</b></div>
+                                                            <input placeholder="Last Name" name="last_name290[0]" type="text"
+                                                            class="payinput  mytextbox" id="flight-adult-last-0" value=""
+                                                            aria-required="true" formControlName="LastName" />
+                                                            <small class="error text-danger" *ngIf="hasError('LastName', 'required', 'travellers', travellerIndex,roomIndex);">Please Enter Last Name*</small>
+                                                            <small class="error text-danger" *ngIf="hasError('LastName', 'maxlength', 'travellers', travellerIndex,roomIndex);">Maximum Characters Exceeded*</small>
+                                                            <small class="error text-danger" *ngIf="hasError('LastName', 'minlength', 'travellers', travellerIndex,roomIndex);">At Least 1 Characters Required*</small>
+                                                            <small class="error text-danger" *ngIf="hasError('LastName', 'pattern', 'travellers', travellerIndex,roomIndex);">Please Enter a Valid Name*</small>
+                                                        </div>
+                                                        <!-- <div class="col-md-3" *ngIf="traveller.value.type=='child'">
+                                                            <div class="paylabel">Date of Birth <b
+                                                                    class="text-danger">*</b>
+                                                            </div>
+                                                            <input  type="text"
+                                                                class="flpayinput date_picker_adult hasDatepicker"
+                                                                 placeholder="dd-mm-yyyy" readonly=""
+                                                                data-id="0"  formControlName="Dob"
+                                                                bsDatepicker [bsConfig]="bsConfig"
+                                                                [minDate]="minDateChild" [maxDate]="maxDateChild" aria-required="true" />
+                                                                <small class="error text-danger" 
+                                                        *ngIf="hasError('Dob', 'required', 'travellers', travellerIndex, roomIndex);">
+                                                      Please Enter a Valid Date of Birth*
+                                                      </small>
+                                                        </div> -->
+                                                 
+                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+             
+                <ng-container formArrayName="address">
+                    <ng-container *ngFor="let item of travellerForm.get('address')['controls']; index as i "
+                        [formGroupName]="i">
+                        <div class="comon_backbg border rounded">
+                            <h5 class="inpagehed p-2">Address</h5>
+                            <div class="sectionbuk billingnob">
+                                <div class="payrow">
+                                    <!-- <div class="form-row">
+                                        <div class="col-md-2 ">
+                                            <div class="paylabel">Title <b class="text-danger">*</b> </div>
+                                            <div class="selectedwrap">
+                                                <select class="flpayinput " name="saluation" formControlName="Title"
+                                                    required>
+                                                    <option value="">-Select-</option>
+                                                    <ng-container *ngFor="let t of titleList">
+                                                        <option *ngIf="t.pax_type == 'ADULT'" value="{{t.title}}">
+                                                            {{t.title}}</option>
+                                                    </ng-container>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5 ">
+                                            <div class="paylabel">First Name <b class="text-danger">*</b> </div>
+                                            <input type="text" id="first_name" name="first_name" class="payinput mytextbox "
+                                                value="test" formControlName="FirstName" required />
+                                        </div>
+                                        <div class="col-md-5 ">
+                                            <div class="paylabel">Last Name <b class="text-danger">*</b> </div>
+                                            <input type="text" id="last_name" name="last_name" class="payinput mytextbox "
+                                                value="test" formControlName="LastName" required />
+                                        </div>
+                                    </div> -->
+    
+                                    <!-- <div class="form-row">
+                                        <div class="col-md-2">
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('Title', 'required', 'address', i);">
+                                                Please Select Title*
+                                            </small>
+                                        </div>
+                                        <div class="col-md-5 nopad">
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('FirstName', 'required', 'address', i);">
+                                                Please Enter First Name* <br>
+                                            </small>
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('FirstName', 'maxlength', 'address', i);">
+                                                Maximum Characters Exceeded* <br>
+                                            </small>
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('FirstName', 'minlength', 'address', i);">
+                                                At Least 1 Characters Required* <br>
+                                            </small>
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('FirstName', 'pattern', 'address', i);">
+                                                Please Enter a Valid First Name* <br>
+                                            </small>
+                                        </div>
+                                        <div class="col-md-5 nopad">
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('LastName', 'required', 'address', i);">
+                                                Please Enter Last Name* <br>
+                                            </small>
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('LastName', 'pattern', 'address', i);">
+                                                Please Enter a Valid Last Name* <br>
+                                            </small>
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('LastName', 'maxlength', 'address', i);">
+                                                Maximum Characters Exceeded* <br>
+                                            </small>
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('LastName', 'minlength', 'address', i);">
+                                                At Least 1 Characters Required* <br>
+                                            </small>
+                                        </div>
+                                    </div> -->
+    
+                                    <!-- <div class="form-row">
+                                        <div class="col-md-8 ">
+                                            <div class="paylabel">Address <b class="text-danger">*</b> </div>
+                                            <input type="text" id="street_address" name="street_address" class="payinput"
+                                                value="bangalore" aria-required="true" formControlName="Address" required />
+                                        </div>
+                                        <div class="col-md-4 ">
+                                            <div class="paylabel">Address2</div>
+                                            <input type="text" id="address2" name="address2" class="payinput"
+                                                value="bangalore" formControlName="Address2" />
+                                        </div>
+                                        <div class="col-md-4 ">
+                                            <div class="paylabel">City <b class="text-danger">*</b> </div>
+                                            <input type="text" id="city" name="city" class="payinput mytextbox"
+                                                value="bangalore" aria-required="true" formControlName="City" required />
+                                        </div>
+                                    </div>
+    
+                                    <div class="form-row">
+                                        <div class="col-md-4">
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('Address', 'required', 'address', i);">
+                                                Please Enter Address* <br>
+                                            </small>
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('Address', 'maxlength', 'address', i);">
+                                                Maximum Characters Exceeded* <br>
+                                            </small>
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('Address', 'minlength', 'address', i);">
+                                                At Leasr 2 Characters Required* <br>
+                                            </small>
+                                        </div>
+                                         <div class="col-md-4">
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('Address2', 'maxlength', 'address', i);">
+                                                Maximum Characters Exceeded* <br>
+                                            </small>
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('Address2', 'minlength', 'address', i);">
+                                                At Least 2 Characters Required* <br>
+                                            </small>
+                                        </div> 
+                                        <div class="col-md-4">
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('City', 'required', 'address', i);">
+                                                Please Enter  City* <br>
+                                            </small>
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('City', 'maxlength', 'address', i);">
+                                                Maximum Characters Exceeded* <br>
+                                            </small>
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('City', 'minlength', 'address', i);">
+                                                At Least 2 Characters Required* <br>
+                                            </small>
+                                        </div>
+                                    </div> -->
+    
+                                    <!-- <div class="form-row">
+                                        <div class="col-md-4 ">
+                                            <div class="paylabel">State <b class="text-danger">*</b> </div>
+                                            <input type="text" id="state" name="state" class="payinput mytextbox"
+                                                value="karnataka" aria-required="true" formControlName="State" required />
+                                        </div>
+                                        <div class="col-md-4 ">
+                                            <div class="paylabel">Postal Code <b class="text-danger">*</b> </div>
+                                            <input type="text" id="zip" data-mask="000000000" name="zip" class="payinput"
+                                                aria-required="true" formControlName="PostalCode" required />
+                                        </div>
+                                    </div>
+    
+                                    <div class="form-row">
+                                        <div class="col-md-4">
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('State', 'required', 'address', i);">
+                                                Please Enter State* <br>
+                                            </small>
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('State', 'maxlength', 'address', i);">
+                                                Maximum Characters Exceeded* <br>
+                                            </small>
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('State', 'minlength', 'address', i);">
+                                                At Least 2 Characters Required* <br>
+                                            </small>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('PostalCode', 'required', 'address', i);">
+                                                Please Enter Postal Code* <br>
+                                            </small>
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('PostalCode', 'pattern', 'address', i);">
+                                                Please Enter a Valid Postal Code* <br>
+                                            </small>
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('PostalCode', 'maxlength', 'address', i);">
+                                                Maximum No.'s Of Digits Exceeded* <br>
+                                            </small>
+                                        </div>
+                                     
+                                    </div> -->
+                                    <div class="col-md-4">
+                                        <small class="error text-danger"
+                                            *ngIf="hasError('Email', 'required', 'address', i);">
+                                            Please Enter Email Address* <br>
+                                        </small>
+                                        <small class="error text-danger"
+                                            *ngIf="hasError('Email', 'pattern', 'address', i);">
+                                            Please Enter a Valid Email Address* <br>
+                                        </small>
+                                        <small class="error text-danger"
+                                            *ngIf="hasError('Email', 'maxlength', 'address', i);">
+                                            Maximum Characters Exceeded* <br>
+                                        </small>
+                                        <small class="error text-danger"
+                                            *ngIf="hasError('Email', 'minlength', 'address', i);">
+                                            At Least 5 Characters Required* <br>
+                                        </small>
+                                    </div>
+    
+                                    <div class="form-row">
+                                        <div class="col-md-3 ">
+                                            <div class="paylabel">Phone Code<b class="text-danger">*</b> </div>
+                                            <div class="selectedwrap">
+                                                <select #selectedCountry class="newslterinput nputbrd _numeric_only flpayinput"
+                                                    (change)="onUpdatePassenges(selectedCountry.value)"
+                                                    id="before_country_code" formControlName="PhoneCode">
+                                                    <option [selected]="p.phone_code == 44" [(value)]="p.phone_code" *ngFor="let p of phoneCodes">
+                                                        {{p.name}}({{ p.phone_code }})
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="paylabel">Contact <b class="text-danger">*</b> </div>
+                                            <input type="text" id="mobile" name="mobile" class="payinput"
+                                                data-mask="000000000000"  (keypress)="numberOnly($event)" minlength="8" maxlength="12" aria-required="true"
+                                                formControlName="Contact" required />
+                                        </div>
+                                        <div class="col-md-3 ">
+                                            <div class="paylabel">Customer Email Id <b class="text-danger">*</b> </div>
+                                            <input type="email" id="email" name="email" class="payinput"
+                                                aria-required="true" formControlName="CustomerEmail" />
+                                                <small class="error text-danger"
+                                                *ngIf="hasError('CustomerEmail', 'required', 'address', i);">
+                                                Please Enter Customer Email*
+                                            </small>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="paylabel">Agent Email Id <b class="text-danger">*</b> </div>
+                                            <input type="email" id="email" name="email" class="payinput"
+                                                aria-required="true" formControlName="Email" disabled />
+                                        </div>
+                                        <!-- <div class="col-md-4 ">
+                                            <div class="paylabel">Country <b class="text-danger">*</b> </div>
+                                            <div class="selectedwrap">
+                                                <select class="flpayinput" id="country" name="Country" aria-required="true"
+                                                    formControlName="Country" required>
+                                                    <option value="">-Select-</option>
+                                                    <option *ngFor="let c of countries" value="{{c.code}}">
+                                                        {{c.name}}</option>
+                                                </select>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-4">
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('PhoneCode', 'required', 'address', i);">
+                                                Please Select Phone Code*
+                                            </small>
+                                            <!-- <small class="error text-danger"
+                                                *ngIf="hasError('PhoneCode', 'pattern', 'address', i);">
+                                                Please Select a Valid Phone Code*
+                                            </small> -->
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('PhoneCode', 'maxlength', 'address', i);">
+                                                Maximum Characters Exceeded*
+                                            </small>
+                                        </div>
+                                        <div class="col-md-4 ">
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('Contact', 'required', 'address', i);">
+                                                Please Enter Contact*
+                                            </small>
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('Contact', 'pattern', 'address', i);">
+                                                Please Enter a Valid Contact*
+                                            </small>
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('Contact', 'maxlength', 'address', i);">
+                                                Maximum Characters Exceeded*
+                                            </small>
+                                        </div>
+                                        <div class="col-md-4 ">
+                                            <small class="error text-danger"
+                                                *ngIf="hasError('Country', 'required', 'address', i);">
+                                                Please Select Country*
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-12 p-0">
+                <div class="col-md-12 mb-3 nopad">
+                    <div class="checkcontent" style="overflow: inherit;">
+                        <div class="customSquaredThree">
+                            <input type="checkbox" value="0" name="confirm" class="filter_airline" id="squaredThree1"
+                                aria-required="true" formControlName="Aggreed" required />
+                            <label for="squaredThree1"></label>
+                        </div>
+                        <label for="squaredThree1" class="lbllbl" style="display: inline; font-size: 14px;margin:22px; color:#333;">
+                            By booking this item , you agree to our
+                            <a data-toggle="modal" (click)="openStaticPage('Travel Agent T&Cs')" class="colorbl">Terms and
+                              Conditions</a>,
+                            <a data-toggle="modal" (click)="openStaticPage('Privacy policy')" class="colorbl">Privacy Policy</a>
+                            and <a data-toggle="modal" (click)="openStaticPage('Refund & Return Policy')" class="colorbl">Refund Policy</a>
+                          </label>
+                    </div>
+                    <div class="checkcontent" style="overflow: inherit;">
+                        <small class="text-danger"
+                            *ngIf="submitted && travellerForm['controls']['Aggreed'].errors?.required">
+                            Please Check The Agreement*
+                        </small>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="payrowsubmt">
+                    <div class="col-md-3 col-sm-12 fulat500 nopad mb-3">
+                        <button type="submit" class="paysubmit" name="continue" id="continue" value="Continue"
+                            (click)="onSubmit()">
+                            <span class="bookbtn-wrapper">
+                                <span class="bookbtn-text">Continue</span>
+                            </span>
+    
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+    <div class="col-md-4 col-lg-4 pl-0 mobile_position" style="position: sticky;top: 80px;">
+        <div class="card mb-2 mt-2 border rounded" style="overflow: hidden;">
+            <section style="color: white;">
+                <h5 style="color: #012756 !important;
+                font-size: 18px !important;
+                font-weight: 600 !important;
+                padding: 14px 10px 14px 17px !important;
+                border-bottom: 1px solid #00000029;" class="p-2 m-0">Purchase Summary</h5>
+            </section>
+            <div class="card-body pb-0">
+                <div class="row font-weight">
+
+                    <div class="col-md-12 col-lg-12 f-14 mb-2 ng-star-inserted">
+                        <div class="float-left customColor">
+                            Check-In:
+                        </div>
+                        <div class="float-right customColor">  {{hotel?.booking_source === 'TLAPINO00007' ?  hotel.CheckIn : (hotel.CheckIn | date: 'dd/MM/yyyy')}} </div>
+                    </div>
+
+                    <div class="col-md-12 col-lg-12 f-14 mb-2 ng-star-inserted">
+                        <div class="float-left customColor">
+                            Check-Out:
+                        </div>
+                        <div class="float-right customColor">  {{hotel?.booking_source === 'TLAPINO00007' ? hotel.CheckOut : (hotel.CheckOut | date: 'dd/MM/yyyy')}} </div>
+                    </div>
+
+
+                    <div class="col-md-12 col-lg-12 f-14 mb-2 ng-star-inserted">
+                        <div class="float-left customColor">
+                            No of Nights:
+                        </div>
+                        <div class="float-right customColor">  {{nights}} </div>
+                    </div>
+
+                    <div class="col-md-12 col-lg-12 f-14 mb-2 ng-star-inserted">
+                        <div class="float-left customColor">
+                            Nationality:
+                        </div>
+                        <div class="float-right customColor">  {{hotel?.searchRequest?.Nationality}} </div>
+                    </div>
+                    <div class="col-md-12 col-lg-12 f-14 mb-2 ng-star-inserted">
+                <div class="row pt-3 pb-3 trooms_desc">
+                            <div class="col-md-12 px-3">
+                                <hr> 
+                                <div *ngFor="let r of hotel.RoomDetails; let i = index">
+                                    <ng-container *ngIf="hotel.searchRequest.booking_source === 'ZBAPINO00008'">
+                                        <ng-container *ngFor="let roomIndex of getRepeatArray(r.Rooms); let ind = index">
+                                            <div class="valign-wrapper row mt-1 mb-1">
+                                                <div class="col-md-6 col-6">
+                                                    <span class="cusromBlue m-0" 
+                                                    *ngIf="!(isSameRoomGuests(hotel.searchRequest.RoomGuests))">
+                                            Room {{ getRoomStartIndex(i) + roomIndex + 1 }}:
+                                            </span>                                   
+                                                </div>
+                                                <div class="col-md-6 col-6 text-right">
+                                                    <span class="m-0 pull-right">
+                                                        {{ r.Description }} 
+                                                        <span [ngClass]="{ 'text-danger': r.NonRefundable, 'text-success': !r.NonRefundable }">
+                                                            ({{ r.NonRefundable ? 'Non-Refundable' : 'Refundable' }})
+                                                        </span>
+                                                    </span>                                            
+                                                </div>
+                                            </div>
+                                            <div class="valign-wrapper row mt-1 mb-1">
+                                                <div class="col-md-6 col-6">
+                                                    <span class="cusromBlue m-0">
+                                                        Meal Plan:
+                                                    </span>
+                                                </div>
+                                                <div class="col-md-6 col-6 text-right">
+                                                    <span class="m-0 pull-right">
+                                                        {{ r.RoomType }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                
+                                            <!-- <div class="clearfix"></div> -->
+                                
+                                            <div class="valign-wrapper row mt-1 mb-1">
+                                                <div class="col-md-6 col-6">
+                                                    <span class="cusromBlue m-0">
+                                                        Adult(s):
+                                                    </span>
+                                                </div>
+                                                <div class="col-md-6 col-6 text-right">
+                                                    <span class="m-0 pull-right">
+                                                        {{ hotel?.searchRequest?.RoomGuests[getRoomStartIndex(i) + roomIndex]?.NoOfAdults }}
+                                                        
+                                                    </span>
+                                                </div>
+                                            </div>
+                                
+                                            <!-- <div class="clearfix"></div> -->
+                                
+                                            <div class="valign-wrapper row mt-1 mb-1">
+                                                <div class="col-md-6 col-6">
+                                                    <span class="cusromBlue m-0">
+                                                        No of Children:
+                                                    </span>
+                                                </div>
+                                                <div class="col-md-6 col-6 text-right">
+                                                    <!-- <span class="m-0 pull-right">
+                                                        {{ r.ChildrenCount }}
+                                                    </span> -->
+                                                    <span class="m-0 pull-right">
+                                                        {{ hotel?.searchRequest?.RoomGuests[getRoomStartIndex(i) + roomIndex]?.NoOfChild }}  
+                                                        <!-- <span *ngIf="hotel.searchRequest.RoomGuests[i].NoOfChild > 0">
+                                                            ({{ hotel.searchRequest.RoomGuests[i].ChildAge.length === 1 
+                                                                ? hotel.searchRequest.RoomGuests[i].ChildAge[0] + ' yrs' 
+                                                                : hotel.searchRequest.RoomGuests[i].ChildAge.join(' yrs, ') + ' yrs' }})
+                                                        </span> -->
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div> 
+                                            <hr> 
+                                        </ng-container>
+                                    </ng-container>
+                                    <ng-container *ngIf="hotel.searchRequest.booking_source !== 'ZBAPINO00008'">
+                                        <div class="valign-wrapper row mt-1 mb-1">
+                                                <div class="col-md-6 col-6">
+                                                    <span class="cusromBlue m-0" 
+                                                    *ngIf="!(isSameRoomGuests(hotel.searchRequest.RoomGuests)  && hotel.searchRequest.booking_source === 'ZBAPINO00008')">
+                                            Room {{ i + 1 }}:
+                                            </span>
+                                            <span class="cusromBlue m-0" 
+                                                    *ngIf="isSameRoomGuests(hotel.searchRequest.RoomGuests) && hotel.searchRequest.booking_source === 'ZBAPINO00008'">
+                                                <span>{{ hotel.searchRequest.NoOfRooms }} x Rooms</span>
+                                            </span>                                                                                                                      
+                                                </div>
+                                                <div class="col-md-6 col-6 text-right" *ngIf="hotel.booking_source != 'TLAPNO00003'">
+                                                    <span class="m-0 pull-right">
+                                                        {{ r.Description }} 
+                                                        <span [ngClass]="{ 'text-danger': r.NonRefundable, 'text-success': !r.NonRefundable }">
+                                                            ({{ r.NonRefundable ? 'Non-Refundable' : 'Refundable' }})
+                                                        </span>
+                                                    </span>                                            
+                                                </div>
+                                                <div class="col-md-6 col-6 text-right" *ngIf="hotel.booking_source == 'TLAPNO00003'">
+                                                    <span class="m-0 pull-right">
+                                                        {{ r.RoomName }} 
+                                                        <span [ngClass]="{ 'text-danger': r.NonRefundable, 'text-success': !r.NonRefundable }">
+                                                            ({{ r.NonRefundable ? 'Non-Refundable' : 'Refundable' }})
+                                                        </span>
+                                                    </span>                                            
+                                                </div>
+                                            </div>
+                                            
+
+                                            <div class="valign-wrapper row mt-1 mb-1">
+                                                <!-- <div class="col-md-6 col-6 nopad" *ngIf="booking_source !== 'TLAPNO00003'">
+                                                    <span class="cusromBlue m-0">
+                                                        Room View
+                                                    </span>
+                                                </div> -->
+                                                <div class="col-md-6 col-6" *ngIf="hotel.booking_source == 'TLAPNO00003'">
+                                                    <span class="cusromBlue m-0">
+                                                        Room View - Meal Plan
+                                                    </span>
+                                                </div>
+                                                <div class="col-md-6 col-6 text-right"*ngIf="hotel.booking_source == 'TLAPNO00003'">
+                                                    <span class="m-0 pull-right">
+                                                        {{ r.Description }} 
+                                                    </span>                                            
+                                                </div>
+                                            </div>
+
+                                            
+                                            <div class="valign-wrapper row mt-1 mb-1" *ngIf="hotel.booking_source == 'TLAPNO00003'">
+                                                <div class="col-md-6 col-6">
+                                                    <span class="cusromBlue m-0">
+                                                        Bed Type:
+                                                    </span>
+                                                </div>
+                                                <div class="col-md-6 col-6 text-right">
+                                                    <span class="m-0 pull-right">
+                                                        {{ r.BedType }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                
+                                            <!-- <div class="clearfix"></div> -->
+                                
+                                            <div class="valign-wrapper row mt-1 mb-1" *ngIf="hotel.booking_source !== 'TLAPNO00003'">
+                                                <div class="col-md-6 col-6">
+                                                    <span class="cusromBlue m-0">
+                                                        Meal Plan:
+                                                    </span>
+                                                </div>
+                                                <div class="col-md-6 col-6 text-right">
+                                                    <span class="m-0 pull-right">
+                                                        {{ r.RoomType }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                
+                                            <!-- <div class="clearfix"></div> -->
+                                
+                                            <div class="valign-wrapper row mt-1 mb-1">
+                                                <div class="col-md-6 col-6">
+                                                    <span class="cusromBlue m-0">
+                                                        Adult(s):
+                                                    </span>
+                                                </div>
+                                                <div class="col-md-6 col-6 text-right">
+                                                    <span class="m-0 pull-right">
+                                                        {{ hotel.searchRequest.RoomGuests[i].NoOfAdults }}
+                                                        
+                                                    </span>
+                                                </div>
+                                            </div>
+                                
+                                            <!-- <div class="clearfix"></div> -->
+                                
+                                            <div class="valign-wrapper row mt-1 mb-1">
+                                                <div class="col-md-6 col-6">
+                                                    <span class="cusromBlue m-0">
+                                                        No of Children:
+                                                    </span>
+                                                </div>
+                                                <div class="col-md-6 col-6 text-right">
+                                                    <!-- <span class="m-0 pull-right">
+                                                        {{ r.ChildrenCount }}
+                                                    </span> -->
+                                                    <span class="m-0 pull-right">
+                                                        {{ hotel.searchRequest.RoomGuests[i].NoOfChild }}  
+                                                        <!-- <span *ngIf="hotel.searchRequest.RoomGuests[i].NoOfChild > 0">
+                                                            ({{ hotel.searchRequest.RoomGuests[i].ChildAge.length === 1 
+                                                                ? hotel.searchRequest.RoomGuests[i].ChildAge[0] + ' yrs' 
+                                                                : hotel.searchRequest.RoomGuests[i].ChildAge.join(' yrs, ') + ' yrs' }})
+                                                        </span> -->
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div> 
+                                            <hr> 
+                                    </ng-container>
+                                     <!-- Separator for better visibility -->
+                                </div>
+                                
+                               
+                                </div>
+                            </div>
+                        </div>
+                    <!-- <div class="col-md-12 col-lg-12 f-14 mb-2 ng-star-inserted">
+                        <div class="float-left customColor">
+                            Adult(s):
+                        </div>
+                        <div class="float-right customColor">  {{adult}} </div>
+                    </div>
+
+                    <div class="col-md-12 col-lg-12 f-14 mb-2 ng-star-inserted">
+                        <div class="float-left customColor">
+                            No of Children:
+                        </div>
+                        <div class="float-right customColor">  {{child}} </div>
+                    </div>      -->
+
+                    <!-- <div class="col-md-12 col-lg-12 f-14 mb-2 ng-star-inserted">
+                        <div class="float-left customColor">
+                            Price:
+                        </div>
+                        <div class="float-right customColor">  {{hotel.Price.Currency}} {{hotel.Price.Amount }} </div>
+                    </div> -->
+
+                    <!-- <div class="col-md-12 col-lg-12 f-14 mb-2 ng-star-inserted">
+                        <div class="float-left customColor">
+                            Room Price:
+                        </div>
+                        <div class="float-right customColor">  {{hotel.Price.Currency}} {{hotel.Price.Amount }} </div>
+                    </div> -->
+
+        
+
+                    <div class="col-md-12 col-lg-12 f-14 mb-2 ng-star-inserted">
+                        <div class="float-left font-weight-bold cusromBlue"  style="font-size: 16px;">
+                            Total Amount:
+                        </div>
+                        <div class="float-right cusromBlue">   
+                            <h4 class="font-weight-bold" style="font-size: 16px;">{{hotel.Price.Currency}} {{hotel.Price.Amount | number: '1.2-2'}}</h4>
+                        </div>
+                    </div>
+                    <div class="trooms_desc pt-3 pb-3"*ngIf="hotel.searchRequest.booking_source == 'TLAPNO00003'">
+                        <div class="col-md-12 px-3">
+                            <h5>Pay On Arrival <span style="color: #e41126;">(Not included in the price) </span></h5>
+                            <div class="clearfix"></div>
+                            <div class="valign-wrapper mt-1 mb-1" *ngFor="let taxData of hotel.RoomDetails;let index=index">
+                                <h5>Room {{index + 1}}</h5>
+                                <div class="col-md-12" *ngFor="let tax of taxData.hotelTax">
+                                    <div class="row">
+                                <div class="col-md-6 col-6" *ngIf="tax.arrival_tax_type == 'plus'">
+                                    <span class="cusromBlue m-0">
+                                     <span *ngIf="tax?.description != ''" >{{tax?.description}}</span>
+                                    </span>
+                                </div>
+                                <div class="col-md-6 col-6 text-right" *ngIf="tax.arrival_tax_type == 'plus'">
+                                    <span class="m-0 pull-right"> 
+                                        {{tax.currency}}   {{tax.arrival_tax_value}}
+                                    </span>
+                                </div>
+                                </div>
+                                </div>
+
+                            </div>
+                            </div>
+                 </div>
+                    <div class="row trooms_desc m-auto pt-3 pb-3"*ngIf="hotel.searchRequest.booking_source == 'TLAPINO00004' && hotel.RoomDetails[0].Supplements[0]">
+                        <div class="col-md-12 px-3">
+                            <h5>Supplements</h5>
+                            <div class="clearfix"></div>
+                            <div class="valign-wrapper mt-1 mb-1 row m-auto">
+                                <div class="col-md-6 col-6 nopad">
+                                    <span class="cusromBlue m-0">
+                                        Type:
+                                    </span>
+                                </div>
+                                <div class="col-md-6 col-6 nopad text-right">
+                                    <span class="m-0 pull-right ">
+                                     {{hotel.RoomDetails[0].Supplements[0].Type }}
+                                    </span>
+                                </div>
+
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="valign-wrapper mt-1 mb-1 row m-auto">
+                                <div class="col-md-6 col-6 nopad">
+                                    <span class="cusromBlue m-0">
+                                        Price
+                                    </span>
+                                </div>
+
+                                <div class="col-md-6 col-6 nopad text-right">
+                                    <span class="m-0 pull-right ">
+                                        {{hotel.RoomDetails[0].Supplements[0].Currency}} {{hotel.RoomDetails[0].Supplements[0].Price }}
+                                    </span>
+                                </div>
+
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="mt-2">
+                                <b>NOTE : Supplement price will be of Local currency and the price will be paid at the property.</b>
+                            </div>
+                           
+                            </div>
+             
+                    </div>
+             
+            </div>
+        </div>
+    </div>
+
+    <div class="add_module_but">
+        <button class="btn btn_add_cart" (click)="addToCartWithMessage('item')">&nbsp;Add to Cart</button>
+
+        
+            <button class="btn btn_add" (click)="openSearch('flight')">
+              Add Flight
+            </button>
+          
+            <button class="btn btn_add" (click)="openSearch('transfer')">
+              Add Transfer
+            </button>
+
+            <button class="btn btn_add" (click)="openSearch('activity')">
+                Add Activity</button>
+         
+          
+          <div *ngIf="cartMessage" class="cart-message">{{ cartMessage }}</div>
+        </div>	
+    
+</div>
+<ngx-loading [show]="loading"
+[config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+[template]="loadingTemplate"></ngx-loading>

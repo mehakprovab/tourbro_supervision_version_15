@@ -1,0 +1,3032 @@
+<div class="theme_bg" style="background: #F2F2F2;">
+	<div class="container nopad">
+		<h3 _ngcontent-vdt-c225 class="review_txt">Guest details</h3>
+		<div class="mb-2 mt-2" style="border:none;">
+			<div class="card-body pb-3">
+				<!-- <app-booking-flight-detail [flight]="flight" [traveller]="traveller"></app-booking-flight-detail> -->
+				<div class="row mobile_row">
+					<div class="col-md-8 col-lg-8 nopad">
+						
+
+						<form [formGroup]="contactForm" class="needs-validation">
+							
+							<div class="clearfix"></div>
+							<!-- <h3 _ngcontent-lbw-c186="" class="inpagehed">Contact Details</h3> -->
+
+							
+							<!-- ****************************************************************************************** -->
+							<!-- <div class="sectionbuk billingnob" style="box-shadow: 0px 1px 16px #ddd;">
+								<div class="col-md-12 col-lg-12 nopad">
+									<div style="padding: 0px; margin: 0px;" class="alert  col-md-12 col-lg-12"
+										role="alert">
+										<ng-template #popTemplate>
+											<div [innerHtml]="html" container="body"></div>
+										</ng-template>
+									</div>
+								</div>
+							</div> -->
+
+							<div class="card mb-3" style="box-shadow: 0px 1px 16px #ddd;"  *ngIf="!currentUser">
+								<div class="card-body">
+									<h5 class="card-title">Log in or register to enjoy this member-only benifit</h5>
+									<a class="card-link loginr" style="color: #092e53;" data-toggle="modal" data-target="#show_log"
+									   >Log In or Register</a>
+								</div>
+							</div>
+							
+							<div class="sectionbuk billingnob" style="box-shadow: 0px 1px 16px #ddd;">
+								<div class="mt-1 ml-2">
+									<h4 class="inpagehed">Traveller Details</h4>
+									<div
+										style="color: #092e53;padding: 0px 10px; float: left; width: 100%; margin-bottom: 0px; display: block; font-size: 14px;">
+										Important : Passport valid for atleast 6
+										months from
+										departure date is required for international travel or transit
+										abroad. </div>
+								</div>
+								<ng-container formArrayName="passengers">
+									<ng-container
+										*ngFor="let item of contactForm.get('passengers')['controls']; let i = index;">
+										<!-- <div style="float: right;" class="mr-3" *ngIf="i===0">
+											<button (click)="copyContact()"
+												class="btn-pill mb-2 mr-2 btn srch_btn">
+												Copy Details </button>
+										</div> -->
+										<div class="clearfix"></div>
+										<div [formGroupName]="i">
+											<div>
+												<div class="col-md-12 col-lg-12 nopad">
+													<div *ngIf="item.get('travellerType').value == 'adults'">
+														<div class="col-md-12 pb-1">
+
+															<div class="form-row form-group row">
+																<div class="form-group col-md-12 mt-2"
+																	style="color: #092e53; font-weight: 500;">
+																	<span>
+																		Adult {{ item.get('travellerTypeCount').value }}
+																		<span *ngIf="!paxCountSame">
+																			(<span *ngFor="let source of passengerspax[i]?.sources; let last = last">
+																			{{ source | titlecase }}<span *ngIf="!last"> + </span>
+																		</span>)
+																		</span>
+																		
+																	</span>
+																</div>
+																<div class="col-md-3">
+																	<label>Title <b class="text-danger">*</b></label>
+																	<select *ngIf="titles.length"
+																		formControlName="Title"
+																		class="form-control form-control-sm payinput capitalize">
+																		<option value='' disabled>Select</option>
+																		<ng-container *ngFor="let t of titles">
+																			<option *ngIf="t.pax_type == 'ADULT'" [value]="t.title">
+																				{{t.title}}
+																			</option>
+																		</ng-container>
+																	</select>
+																	<small class="error text-danger"
+																			*ngIf="hasError('Title', 'required', 'passengers', i);">
+																			Please Select Title* <br>
+																		</small>
+																</div>
+																<div class="col-md-5">
+																	<label>First Name <b class="text-danger">*</b></label>
+																	<input formControlName="FirstName" type="text"
+																		maxlength="50" 
+																		class="form-control form-control-sm payinput"
+																		placeholder="First Name">
+																	<div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('FirstName', 'required', 'passengers', i);">
+																			Please Enter First Name* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('FirstName', 'maxlength', 'passengers', i);">
+																			Maximum Characters Exceeded* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('FirstName', 'minlength', 'passengers', i);">
+																			At Least 1 Character Required* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('FirstName', 'pattern', 'passengers', i);">
+																			Please Enter a Valid Name* <br>
+																		</small>
+																	</div>
+																</div>
+
+																<div class="col-md-4">
+																	<label>Middle Name <b>(optional)</b></label>
+																	<input formControlName="MiddleName" type="text"
+																		maxlength="50" 
+																		class="form-control form-control-sm payinput"
+																		placeholder="Middle Name" >
+																	<!-- <div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('Middle', 'required', 'passengers', i);">
+																			Please Enter Middle Name* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('Middle', 'maxlength', 'passengers', i);">
+																			Maximum Characters Exceeded* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('Middle', 'minlength', 'passengers', i);">
+																			At Least 1 Character Required* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('Middle', 'pattern', 'passengers', i);">
+																			Please Enter a Valid Name* <br>
+																		</small>
+																	</div> -->
+																</div>
+
+																<div class="col-md-4">
+																	<label>Last Name <b class="text-danger">*</b></label>
+																	<input formControlName="LastName" type="text"
+																		maxlength="50" 
+																		class="form-control form-control-sm payinput"
+																		placeholder="Last Name" >
+																	<div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('LastName', 'required', 'passengers', i);">
+																			Please Enter Last Name* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('LastName', 'maxlength', 'passengers', i);">
+																			Maximum Characters Exceeded* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('LastName', 'minlength', 'passengers', i);">
+																			At Least 1 Character Required* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('LastName', 'pattern', 'passengers', i);">
+																			Please Enter a Valid Name* <br>
+																		</small>
+																	</div>
+																</div>
+																
+																
+																<div class="col-md-4">
+																	<label>Date of Birth <b class="text-danger">*</b></label>
+																	<input bsDatepicker 
+																		placement="bottom left" [bsConfig]="bsDateConf"
+																		formControlName="DateOfBirth" type="text"
+																		class="form-control form-control-sm payinput"
+																		placeholder="D.O.B" [minDate]="minDateAdult" [maxDate]="maxDateAdult">
+																	<div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('DateOfBirth', 'required', 'passengers', i);">
+																			Please Select DOB* <br>
+																		</small>
+																		<small class="error text-danger" *ngIf="hasError('DateOfBirth', 'bsDate', 'passengers', i);">Enter Valid DOB</small>
+																	</div>
+																</div>
+																
+																<div class="col-md-4">
+																	<label>Gender <b class="text-danger">*</b></label>
+																	<select formControlName="Gender"
+																		class="form-control form-control-sm payinput">
+																		<option selected value="" disabled>Select</option>
+																		<option value="Male"> Male </option>
+																		<option value="Female"> Female </option>
+																	</select>
+																	<div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('Gender', 'required', 'passengers', i);">
+																			Please Select Gender* <br>
+																		</small>
+																	</div>
+																</div>
+
+																
+
+																<div class="col-md-4">
+																	<label>Nationality <b class="text-danger">*</b></label>
+																	<select formControlName="Nationality"
+																		class="form-control form-control-sm payinput">
+																		<option *ngFor="let c of countries"
+																			[value]="c.code">
+																			{{c.name}}</option>
+																	</select>
+																	<div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('Nationality', 'required', 'passengers', i);">
+																			Please Select Gender* <br>
+																		</small>
+																	</div>
+																</div>
+
+																<div class="col-md-4" *ngIf="flight">
+																	<label>Country of Issue  <b *ngIf="flightType != 'International'">(optional)</b> <b *ngIf="flightType == 'International'" class="text-danger">*</b></label>
+																	<select formControlName="PassportIssuingCountry"
+																		class="form-control form-control-sm payinput">
+																		<option *ngFor="let c of countries"
+																			[value]="c.code">
+																			{{c.name}}</option>
+																	</select>
+																</div>
+
+																<div class="col-md-4" *ngIf="flight">
+																	<label>Passport Number <b *ngIf="flightType != 'International'">(optional)</b> <b *ngIf="flightType == 'International'" class="text-danger">*</b></label>
+																	<input formControlName="PassportNumber" type="text" 
+																		maxlength="20"
+																		class="form-control form-control-sm payinput"
+																		placeholder="Passport Number" (keypress)="alphaNumberOnly($event)" [minDate]="maxDate">
+																	<div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('PassportNumber', 'required', 'passengers', i);">
+																			Please Enter Passport Number <br>
+																		</small>
+																	</div>
+																</div>
+																<div class="col-md-4" *ngIf="flight">
+																	<label>Expiry Date <b *ngIf="flightType != 'International'">(optional)</b> <b *ngIf="flightType == 'International'" class="text-danger">*</b></label>
+																	<input bsDatepicker 
+																		formControlName="PassportExpiryDate"
+																		 placement="bottom left"
+																		[bsConfig]="bsDateConf" type="text"
+																		class="form-control form-control-sm payinput"
+																		placeholder="Date of Expire" [minDate]="maxDate">
+																	<div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('PassportExpiryDate', 'required', 'passengers', i);">
+																			Please Select Passport Expiry Date <br>
+																		</small>
+																		<small class="error text-danger" *ngIf="hasError('PassportExpiryDate', 'bsDate', 'passengers', i);">Enter Valid Passport Expiry</small>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+
+
+
+													<div *ngIf="item.get('travellerType').value == 'youth'">
+														<div class="col-md-12 pb-1">
+
+															<div class="form-row form-group row">
+																<div class="form-group col-md-12 mt-2"
+																	style="color: #092e53; font-weight: 500;">
+																	Youth {{ item.get('travellerTypeCount').value }}
+																</div>
+
+																<div class="col-md-3">
+																	<label>Title <b class="text-danger">*</b></label>
+																	<select *ngIf="titles.length"
+																		formControlName="Title"
+																		class="form-control form-control-sm payinput capitalize">
+																		<option value='' disabled>Select</option>
+																		<ng-container *ngFor="let t of titles">
+																			<option *ngIf="t.pax_type == 'ADULT'" [value]="t.title">
+																				{{t.title}}
+																			</option>
+																		</ng-container>
+																	</select>
+																	<small class="error text-danger"
+																			*ngIf="hasError('Title', 'required', 'passengers', i);">
+																			Please Select Title* <br>
+																		</small>
+																</div>
+																<div class="col-md-5">
+																	<label>First Name <b class="text-danger">*</b></label>
+																	<input formControlName="FirstName" type="text"
+																		maxlength="50" 
+																		class="form-control form-control-sm payinput"
+																		placeholder="First Name">
+																	<div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('FirstName', 'required', 'passengers', i);">
+																			Please Enter First Name* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('FirstName', 'maxlength', 'passengers', i);">
+																			Maximum Characters Exceeded* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('FirstName', 'minlength', 'passengers', i);">
+																			At Least 1 Character Required* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('FirstName', 'pattern', 'passengers', i);">
+																			Please Enter a Valid Name* <br>
+																		</small>
+																	</div>
+																</div>
+
+																<div class="col-md-4">
+																	<label>Middle Name <b>(optional)</b></label>
+																	<input formControlName="MiddleName" type="text"
+																		maxlength="50" 
+																		class="form-control form-control-sm payinput"
+																		placeholder="Middle Name" >
+																	<!-- <div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('Middle', 'required', 'passengers', i);">
+																			Please Enter Middle Name* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('Middle', 'maxlength', 'passengers', i);">
+																			Maximum Characters Exceeded* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('Middle', 'minlength', 'passengers', i);">
+																			At Least 1 Character Required* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('Middle', 'pattern', 'passengers', i);">
+																			Please Enter a Valid Name* <br>
+																		</small>
+																	</div> -->
+																</div>
+
+																<div class="col-md-4">
+																	<label>Last Name <b class="text-danger">*</b></label>
+																	<input formControlName="LastName" type="text"
+																		maxlength="50" 
+																		class="form-control form-control-sm payinput"
+																		placeholder="Last Name" >
+																	<div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('LastName', 'required', 'passengers', i);">
+																			Please Enter Last Name* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('LastName', 'maxlength', 'passengers', i);">
+																			Maximum Characters Exceeded* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('LastName', 'minlength', 'passengers', i);">
+																			At Least 1 Character Required* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('LastName', 'pattern', 'passengers', i);">
+																			Please Enter a Valid Name* <br>
+																		</small>
+																	</div>
+																</div>
+																
+																
+																<div class="col-md-4">
+																	<label>Date of Birth <b class="text-danger">*</b></label>
+																	<input bsDatepicker 
+																		placement="bottom left" [bsConfig]="bsDateConf"
+																		formControlName="DateOfBirth" type="text"
+																		class="form-control form-control-sm payinput"
+																		placeholder="D.O.B" [minDate]="minYouthDateOfBirth" [maxDate]="maxYouthDateOfBirth">
+																	<div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('DateOfBirth', 'required', 'passengers', i);">
+																			Please Select DOB* <br>
+																		</small>
+																		<small class="error text-danger" *ngIf="hasError('DateOfBirth', 'bsDate', 'passengers', i);">Enter Valid DOB</small>
+																	</div>
+																</div>
+																
+																<div class="col-md-4">
+																	<label>Gender <b class="text-danger">*</b></label>
+																	<select formControlName="Gender"
+																		class="form-control form-control-sm payinput">
+																		<option selected value="" disabled>Select</option>
+																		<option value="Male"> Male </option>
+																		<option value="Female"> Female </option>
+																	</select>
+																	<div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('Gender', 'required', 'passengers', i);">
+																			Please Select Gender* <br>
+																		</small>
+																	</div>
+																</div>
+
+																
+
+																<div class="col-md-4">
+																	<label>Nationality <b class="text-danger">*</b></label>
+																	<select formControlName="Nationality"
+																		class="form-control form-control-sm payinput">
+																		<option *ngFor="let c of countries"
+																			[value]="c.code">
+																			{{c.name}}</option>
+																	</select>
+																	<div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('Nationality', 'required', 'passengers', i);">
+																			Please Select Gender* <br>
+																		</small>
+																	</div>
+																</div>
+
+																<div class="col-md-4" *ngIf="flight">
+																	<label>Country of Issue  <b *ngIf="flightType != 'International'">(optional)</b> <b *ngIf="flightType == 'International'" class="text-danger">*</b></label>
+																	<select formControlName="PassportIssuingCountry"
+																		class="form-control form-control-sm payinput">
+																		<option *ngFor="let c of countries"
+																			[value]="c.code">
+																			{{c.name}}</option>
+																	</select>
+																</div>
+
+																<div class="col-md-4" *ngIf="flight">
+																	<label>Passport Number <b *ngIf="flightType != 'International'">(optional)</b> <b *ngIf="flightType == 'International'" class="text-danger">*</b></label>
+																	<input formControlName="PassportNumber" type="text" 
+																		maxlength="20"
+																		class="form-control form-control-sm payinput"
+																		placeholder="Passport Number" (keypress)="alphaNumberOnly($event)" [minDate]="maxDate">
+																	<div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('PassportNumber', 'required', 'passengers', i);">
+																			Please Enter Passport Number <br>
+																		</small>
+																	</div>
+																</div>
+																<div class="col-md-4" *ngIf="flight">
+																	<label>Expiry Date <b *ngIf="flightType != 'International'">(optional)</b> <b *ngIf="flightType == 'International'" class="text-danger">*</b></label>
+																	<input bsDatepicker 
+																		formControlName="PassportExpiryDate"
+																		 placement="bottom left"
+																		[bsConfig]="bsDateConf" type="text"
+																		class="form-control form-control-sm payinput"
+																		placeholder="Date of Expire" [minDate]="maxDate">
+																	<div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('PassportExpiryDate', 'required', 'passengers', i);">
+																			Please Select Passport Expiry Date <br>
+																		</small>
+																		<small class="error text-danger" *ngIf="hasError('PassportExpiryDate', 'bsDate', 'passengers', i);">Enter Valid Passport Expiry</small>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div *ngIf="item.get('travellerType').value == 'childrens'">
+														<div class="clearfix"></div>
+														<div class="col-md-12 pb-1">
+															
+															<div class="form-row form-group row">
+																<div class="form-group col-md-12 mt-2"
+																	style="color: #092e53;">
+																	Child {{ item.get('travellerTypeCount').value }}
+																</div>
+																<div class="col-md-3">
+																	<label>Title <b class="text-danger">*</b></label>
+																	<select formControlName="Title" class="form-control form-control-sm payinput capitalize">
+																		<option value='' disabled>Select</option>
+																		<ng-container *ngFor="let t of titles">
+																			<option *ngIf="t.pax_type == 'CHILD'" [value]="t.title">
+																				{{t.title}}
+																			</option>
+																		</ng-container>
+																	</select>
+																	<small class="error text-danger"
+																			*ngIf="hasError('Title', 'required', 'passengers', i);">
+																			Please Select Title* <br>
+																		</small>
+																</div>
+																<div class="col-md-5">
+																	<label>First Name <b class="text-danger">*</b></label>
+																	<input formControlName="FirstName" type="text"
+																		maxlength="50" 
+																		class="form-control form-control-sm payinput"
+																		placeholder="First Name" >
+																	<div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('FirstName', 'required', 'passengers', i);">
+																			Please Enter First Name* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('FirstName', 'maxlength', 'passengers', i);">
+																			Maximum Characters Exceeded* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('FirstName', 'minlength', 'passengers', i);">
+																			At Least 1 Character Required* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('FirstName', 'pattern', 'passengers', i);">
+																			Please Enter a Valid Name* <br>
+																		</small>
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<label>Middle Name <b>(optional)</b></label>
+																	<input formControlName="MiddleName" type="text"
+																		maxlength="50" 
+																		class="form-control form-control-sm payinput"
+																		placeholder="Middle Name" >
+																	<!-- <div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('Middle', 'required', 'passengers', i);">
+																			Please Enter Middle Name* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('Middle', 'maxlength', 'passengers', i);">
+																			Maximum Characters Exceeded* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('Middle', 'minlength', 'passengers', i);">
+																			At Least 1 Character Required* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('Middle', 'pattern', 'passengers', i);">
+																			Please Enter a Valid Name* <br>
+																		</small>
+																	</div> -->
+																</div>
+																<div class="col-md-4">
+																	<label>Last Name <b class="text-danger">*</b></label>
+																	<input formControlName="LastName" type="text"
+																		maxlength="50" 
+																		class="form-control form-control-sm payinput"
+																		placeholder="Last Name" >
+																	<div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('LastName', 'required', 'passengers', i);">
+																			Please Enter Last Name* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('LastName', 'maxlength', 'passengers', i);">
+																			Maximum Characters Exceeded* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('LastName', 'minlength', 'passengers', i);">
+																			At Least 1 Character Required* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('LastName', 'pattern', 'passengers', i);">
+																			Please Enter a Valid Name* <br>
+																		</small>
+																	</div>
+																</div>
+																<div class="clearfix"></div>
+																<div class="col-md-4">
+																	<label>Date of Birth <b class="text-danger">*</b></label>
+																	<input bsDatepicker 
+																		placement="bottom left" [bsConfig]="bsDateConf"
+																		formControlName="DateOfBirth" type="text"
+																		class="form-control form-control-sm payinput"
+																		placeholder="D.O.B" [minDate]="getMinDateForChild(i)" [maxDate]="getMaxDateForChild(i)" >
+																	<div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('DateOfBirth', 'required', 'passengers', i);">
+																			Please Select DOB* <br>
+																		</small>
+																		<small class="error text-danger" *ngIf="hasError('DateOfBirth', 'bsDate', 'passengers', i);">Enter Valid DOB</small>
+																	</div>
+																</div>
+																
+																<div class="col-md-4">
+																	<label>Gender <b class="text-danger">*</b></label>
+																	<select formControlName="Gender"
+																		class="form-control form-control-sm payinput">
+																		<option selected value="" disabled>Select</option>
+																		<option value="Male"> Male </option>
+																		<option value="Female"> Female </option>
+																	</select>
+																	<div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('Gender', 'required', 'passengers', i);">
+																			Please Select Gender* <br>
+																		</small>
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<label>Nationality <b class="text-danger">*</b></label>
+																	<select formControlName="Nationality"
+																		class="form-control form-control-sm payinput">
+																		<option *ngFor="let c of countries"
+																			[value]="c.code">
+																			{{c.name}}</option>
+																	</select>
+																</div>
+																<div class="clearfix"></div>
+
+																<div class="col-md-4" *ngIf="flight">
+																	<label>Country of Issue  <b *ngIf="flightType != 'International'">(optional)</b> <b *ngIf="flightType == 'International'" class="text-danger">*</b></label>
+																	<select formControlName="PassportIssuingCountry"
+																		class="form-control form-control-sm payinput">
+																		<option *ngFor="let c of countries"
+																			[value]="c.code">
+																			{{c.name}}</option>
+																	</select>
+																</div>
+
+																<div class="col-md-4" *ngIf="flight">
+																	<label>Passport Number <b *ngIf="flightType != 'International'">(optional)</b> <b *ngIf="flightType == 'International'" class="text-danger">*</b></label>
+																	<input formControlName="PassportNumber" type="text"
+																		maxlength="20"
+																		class="form-control form-control-sm payinput capitalize"
+																		placeholder="Passport Number" (keypress)="alphaNumberOnly($event)">
+																	<div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('PassportNumber', 'required', 'passengers', i);">
+																			Please Enter Passport Number <br>
+																		</small>
+																	</div>
+																</div>
+																<div class="form-group col-md-4" *ngIf="flight">
+																	<label>Expiry Date  <b *ngIf="flightType != 'International'">(optional)</b> <b *ngIf="flightType == 'International'" class="text-danger">*</b></label>
+																	<input bsDatepicker
+																		formControlName="PassportExpiryDate"
+																		 placement="bottom left"
+																		[bsConfig]="bsDateConf" type="text"
+																		class="form-control form-control-sm payinput"
+																		placeholder="Date of Expire" [minDate]="maxDate">
+																	<div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('PassportExpiryDate', 'required', 'passengers', i);">
+																			Please Select Passport Expiry Date <br>
+																		</small>
+																		<small class="error text-danger" *ngIf="hasError('PassportExpiryDate', 'bsDate', 'passengers', i);">Enter Valid Passport Expiry</small>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div *ngIf="item.get('travellerType').value == 'infants'">
+														<div class="col-md-12 pb-1">
+															
+															<div class="form-row row form-group ">
+																<div class="form-group col-md-12 mt-2"
+																	style="color: #092e53;">
+																	Infant {{ item.get('travellerTypeCount').value }}
+																</div>
+																<div class="col-md-3">
+																	<label>Title <b class="text-danger">*</b></label>
+																	<select formControlName="Title"
+																		class="form-control form-control-sm payinput capitalize">
+																		<option value='' disabled>Select</option>
+																		<ng-container *ngFor="let t of titles">
+																			<option *ngIf="t.pax_type == 'CHILD'" [value]="t.title">
+																				{{t.title}}</option>
+																		</ng-container>
+																	</select>
+																	<small class="error text-danger"
+																			*ngIf="hasError('Title', 'required', 'passengers', i);">
+																			Please Select Title* <br>
+																		</small>
+																</div>
+																<div class="col-md-5">
+																	<label>First Name <b class="text-danger">*</b></label>
+																	<input formControlName="FirstName" type="text"
+																		maxlength="50" 
+																		class="form-control form-control-sm payinput"
+																		placeholder="First Name" >
+																	<div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('FirstName', 'required', 'passengers', i);">
+																			Please Enter First Name* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('FirstName', 'maxlength', 'passengers', i);">
+																			Maximum Characters Exceeded* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('FirstName', 'minlength', 'passengers', i);">
+																			At Least 1 Character Required* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('FirstName', 'pattern', 'passengers', i);">
+																			Please Enter a Valid Name* <br>
+																		</small>
+																	</div>
+																</div>
+
+																<div class="col-md-4">
+																	<label>Middle Name <b>(optional)</b></label>
+																	<input formControlName="MiddleName" type="text"
+																		maxlength="50" 
+																		class="form-control form-control-sm payinput"
+																		placeholder="Middle Name" >
+																	<!-- <div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('Middle', 'required', 'passengers', i);">
+																			Please Enter Middle Name* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('Middle', 'maxlength', 'passengers', i);">
+																			Maximum Characters Exceeded* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('Middle', 'minlength', 'passengers', i);">
+																			At Least 1 Character Required* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('Middle', 'pattern', 'passengers', i);">
+																			Please Enter a Valid Name* <br>
+																		</small>
+																	</div> -->
+																</div>
+																
+																<div class="col-md-4">
+																	<label>Last Name <b class="text-danger">*</b></label>
+																	<input formControlName="LastName" type="text"
+																		maxlength="50" 
+																		class="form-control form-control-sm payinput"
+																		placeholder="Last Name" >
+																	<div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('LastName', 'required', 'passengers', i);">
+																			Please Enter Last Name* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('LastName', 'maxlength', 'passengers', i);">
+																			Maximum Characters Exceeded* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('LastName', 'minlength', 'passengers', i);">
+																			At Least 1 Character Required* <br>
+																		</small>
+																		<small class="error text-danger"
+																			*ngIf="hasError('LastName', 'pattern', 'passengers', i);">
+																			Please Enter a Valid Name* <br>
+																		</small>
+																	</div>
+																</div>
+																<div class="clearfix"></div>
+																<div class="col-md-4">
+																	<label>Date of Birth <b class="text-danger">*</b></label>
+																	<input bsDatepicker 
+																		placement="bottom left" [bsConfig]="bsDateConf"
+																		formControlName="DateOfBirth" type="text"
+																		class="form-control form-control-sm payinput"
+																		placeholder="D.O.B" [minDate]="minDateInfant" [maxDate]="maxDateInfant">
+																	<div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('DateOfBirth', 'required', 'passengers', i);">
+																			Please Select DOB* <br>
+																		</small>
+																		<small class="error text-danger" *ngIf="hasError('DateOfBirth', 'bsDate', 'passengers', i);">Enter Valid DOB</small>
+																	</div>
+																</div>
+																
+																<div class="col-md-4">
+																	<label>Gender <b class="text-danger">*</b></label>
+																	<select formControlName="Gender"
+																		class="form-control form-control-sm payinput">
+																		<option selected value="" disabled>Select</option>
+																		<option value="Male"> Male </option>
+																		<option value="Female"> Female </option>
+																	</select>
+																	<div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('Gender', 'required', 'passengers', i);">
+																			Please Select Gender* <br>
+																		</small>
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<label>Nationality <b class="text-danger">*</b></label>
+																	<select formControlName="Nationality"
+																		class="form-control form-control-sm payinput">
+																		<option *ngFor="let c of countries"
+																			[value]="c.code">
+																			{{c.name}}</option>
+																	</select>
+																</div>
+																<div class="clearfix"></div>
+
+																<div class="col-md-4" *ngIf="flight">
+																	<label>Country of Issue  <b *ngIf="flightType != 'International'">(optional)</b> <b *ngIf="flightType == 'International'" class="text-danger">*</b></label>
+																	<select formControlName="PassportIssuingCountry"
+																		class="form-control form-control-sm payinput">
+																		<option *ngFor="let c of countries"
+																			[value]="c.code">
+																			{{c.name}}</option>
+																	</select>
+																</div>
+
+																<div class="col-md-4" *ngIf="flight">
+																	<label>Passport Number  <b *ngIf="flightType != 'International'">(optional)</b> <b *ngIf="flightType == 'International'" class="text-danger">*</b></label>
+																	<input formControlName="PassportNumber" type="text"
+																		maxlength="20" 
+																		class="form-control form-control-sm payinput" 
+																		placeholder="Passport Number" (keypress)="alphaNumberOnly($event)">
+																	<div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('PassportNumber', 'required', 'passengers', i);">
+																			Please Enter Passport Number <br>
+																		</small>
+																	</div>
+																</div>
+																<div class="col-md-4" *ngIf="flight">
+																	<label>Expiry Date  <b *ngIf="flightType != 'International'">(optional)</b> <b *ngIf="flightType == 'International'" class="text-danger">*</b></label>
+																	<input bsDatepicker 
+																		formControlName="PassportExpiryDate"
+																		 placement="bottom left"
+																		[bsConfig]="bsDateConf" type="text"
+																		class="form-control form-control-sm payinput"
+																		placeholder="Date of Expire" [minDate]="maxDate">
+																	<div class="">
+																		<small class="error text-danger"
+																			*ngIf="hasError('PassportExpiryDate', 'required', 'passengers', i);">
+																			Please Select Passport Expiry Date <br>
+																		</small>
+																		<small class="error text-danger" *ngIf="hasError('PassportExpiryDate', 'bsDate', 'passengers', i);">Enter Valid Passport Expiry</small>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<hr *ngIf="passengers.controls.length > i + 1" />
+										</div>
+									</ng-container>
+								</ng-container>
+								<div *ngIf="flight && flight?.Attr?.is_usa" class="my-3 py-4 border rounded"> <span
+										class="f-20 text-info text-upercase float-left">
+										<i class="text-danger ion-md-globe"></i> Ticket to <span class="text-danger">
+											USA
+										</span> to add additional information </span>
+									<div class="col-md-12 mt-4 text-muted f-12">
+										<div formGroupName="usaDetailsForm" class="col-md-12 col-lg-12">
+											<div class="form-row">
+												<div class="form-group col-md-4">
+													<input type="text" formControlName="country_name" readonly
+														class="form-control form-control-sm" [value]="'USA'"
+														placeholder="">
+												</div>
+												<div class="form-group col-md-4">
+													<select formControlName="gender" #selectedCountry
+														class="form-control form-control-sm">
+														<option value="Male"> Male </option>
+														<option value="Female"> Female </option>
+														<option value="Others"> Others </option>
+													</select>
+												</div>
+												<div class="form-group col-md-4">
+													<select formControlName="types" #selectedCountry
+														class="form-control form-control-sm">
+														<option value="resident"> Resident </option>
+														<option value="official"> Official </option>
+													</select>
+												</div>
+											</div>
+											<div class="form-row">
+												<div class="form-group col-md-12">
+													<textarea formControlName="address"
+														class="form-control form-control-sm" rows="2"
+														placeholder="Address"></textarea>
+												</div>
+											</div>
+											<div class="form-row">
+												<div class="form-group col-md-4">
+													<input formControlName="city" type="text"
+														class="form-control form-control-sm" placeholder="City">
+												</div>
+												<div class="form-group col-md-4">
+													<input formControlName="state" type="text"
+														class="form-control form-control-sm" placeholder="State">
+												</div>
+												<div class="form-group col-md-4">
+													<input formControlName="postal_code" type="text"
+														class="form-control form-control-sm" placeholder="Postal COde">
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- <div class="row mt-3 py-3 rounded border card">
+                            <div class="col-md-12 col-lg-12">
+                                <h4 class="text-muted cardListHead px-0"> Lost Baggage Protection </h4>
+                                <div class="">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <span class="font-weight-bold pt-2">
+                                                For USD $5.00 per traveller:
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12 form-group p-3 border rounded">
+                                            <p class="">
+                                                <i class="fa fa-check text-success" aria-hidden="true"> </i>
+                                                Blue Ribbon Bags will track and expedite your delayed bagage
+                                            </p>
+                                            <p class="">
+                                                <i class="fa fa-check text-success" aria-hidden="true"> </i>
+                                                Provides real-time push notifications via email or SMS regarding the status
+                                                of your bagage
+                                            </p>
+                                            <p class="">
+                                                <i class="fa fa-check text-success" aria-hidden="true"> </i>
+                                                Receive USD $1,000.00 if your bag is not at the destination within 96 hours
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="form-row mt-4">
+                                        <div class="form-group col-md-12">
+                                            <input formControlName="baggageProtection" [value]="true" type="radio" name="" id="yes" class=""> <label for="yes"
+                                                class="" (click)="getBaggageProtection(true)">
+                                                Yes, add to my reservation <span class="text-success ml-3"> HIGHLY RECOMMENDED
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <input formControlName="baggageProtection" [value]="false" type="radio" name="" id="no" class=""> <label for="no"
+                                                class="" (click)="getBaggageProtection(false)">
+                                                No I'll run the risk
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+						 <!-- Seat selection start -->
+				
+						<!-- Seat selection end -->
+						<div class="clearfix"></div>
+						<br/>
+						<div class="col-md-12 col-lg-12 nopad">
+							<div class="form-row">
+								<div class="alert alert-warning text-justify"> <small>
+										Most countries require travellers to have a passport valid for more than 3 to 6
+										months from the date of entry into or exit from the country. Please check the
+										exact rules for your destination country before completing the booking.
+									</small> </div>
+							</div>
+						</div>
+						<div class="sectionbuk billingnob" style="">
+							<div formGroupName="contact" class="col-md-12 col-lg-12 nopad">
+								<h6 _ngcontent-lbw-c186="">Contact Details (For E-ticket/voucher)</h6>
+								<div class="clearfix"></div>
+								<div class="col-md-12">
+
+									<div class="form-row form-group">
+										<div class="col-md-3" style="display: none;">
+											<label>Title <b class="text-danger">*</b></label>
+											<select *ngIf="titles.length" formControlName="Title"
+												class="form-control form-control-sm payinput capitalize">
+												<option value='' disabled>Select</option>
+												<ng-container *ngFor="let t of titles">
+													<option *ngIf="t.paxType == 'ADULT'" [value]="t.titleName">
+														{{t.titleName}}
+													</option>
+												</ng-container>
+											</select>
+											<div class="">
+												<small class="error text-danger"
+													*ngIf="hasContactError('Title', 'required', 'contact');">
+													Please Enter First Name* <br>
+												</small>
+											</div>
+										</div>
+										<div class="col-md-5" style="display: none;">
+											<label>First Name <b class="text-danger">*</b></label>
+											<input formControlName="FirstName" type="text" 
+												class="form-control form-control-sm payinput"
+												placeholder="First Name" >
+											<div class="">
+												<small class="error text-danger"
+													*ngIf="hasContactError('FirstName', 'required', 'contact');">
+													Please Enter First Name* <br>
+												</small>
+												<small class="error text-danger"
+													*ngIf="hasContactError('FirstName', 'maxlength', 'contact');">
+													Maximum Characters Exceeded* <br>
+												</small>
+												<small class="error text-danger"
+													*ngIf="hasContactError('FirstName', 'minlength', 'contact');">
+													At Least 1 Character Required* <br>
+												</small>
+												<small class="error text-danger"
+													*ngIf="hasContactError('FirstName', 'pattern', 'contact');">
+													Please Enter a Valid Name* <br>
+												</small>
+											</div>
+										</div>
+										
+										<div class="col-md-4" style="display: none;">
+											<label>Last Name <b class="text-danger">*</b></label>
+											<input formControlName="LastName" type="text"
+												class="form-control form-control-sm payinput" 
+												placeholder="Last Name" >
+											<div class="">
+												<small class="error text-danger"
+													*ngIf="hasContactError('LastName', 'required', 'contact');">
+													Please Enter Last Name* <br>
+												</small>
+												<small class="error text-danger"
+													*ngIf="hasContactError('LastName', 'maxlength', 'contact');">
+													Maximum Characters Exceeded* <br>
+												</small>
+												<small class="error text-danger"
+													*ngIf="hasContactError('LastName', 'minlength', 'contact');">
+													At Least 1 Character Required* <br>
+												</small>
+												<small class="error text-danger"
+													*ngIf="hasContactError('LastName', 'pattern', 'contact');">
+													Please Enter a Valid Name* <br>
+												</small>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<label>Country Code <b class="text-danger">*</b></label>
+											<select #selectedCountry formControlName="PhoneCode"
+												(change)="onUpdatePassenges(selectedCountry.value)"
+												class="form-control form-control-sm payinput">
+												<option [selected]="p.id == 280"
+													*ngFor="let p of phoneCodes">
+													{{p.name}}({{ p.phone_code }}) </option>
+											</select>
+											<div class="">
+												<small class="error text-danger"
+													*ngIf="hasContactError('PhoneCode', 'required', 'contact');">
+													Select Country Code* <br>
+												</small>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<label>Phone Number <b class="text-danger">*</b></label>
+											<input formControlName="Contact" type="text"
+												(keypress)="numberOnly($event)" maxlength="15"
+												class="form-control form-control-sm payinput"
+												placeholder="1234567890">
+											<div class="">
+												<small class="error text-danger"
+													*ngIf="hasContactError('Contact', 'required', 'contact');">
+													Please Enter Phone Number* <br>
+												</small>
+												<small class="error text-danger"
+													*ngIf="hasContactError('Contact', 'maxlength', 'contact');">
+													Maximum Characters Exceeded* <br>
+												</small>
+												<small class="error text-danger"
+													*ngIf="hasContactError('Contact', 'minlength', 'contact');">
+													At Least 1 Character Required* <br>
+												</small>
+												<small class="error text-danger"
+													*ngIf="hasContactError('Contact', 'pattern', 'contact');">
+													Please Enter a Valid Number* <br>
+												</small>
+												<span class="pass_de">
+													e.g +20 1234 567890, for country code (+20) and Mobile Number
+													1234
+													567890.
+												</span>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<label>Customer Email <b class="text-danger">*</b></label>
+											<input formControlName="CustomerEmail" type="email"
+												class="form-control payinput form-control-sm" maxlength="40"
+												placeholder="example@gmail.com">
+											<div class="">
+												<small class="error text-danger"
+													*ngIf="hasContactError('CustomerEmail', 'required', 'contact');">
+													Please Enter Email* <br>
+												</small>
+												<small class="error text-danger"
+													*ngIf="hasContactError('CustomerEmail', 'maxlength', 'contact');">
+													Maximum Characters Exceeded* <br>
+												</small>
+												<small class="error text-danger"
+													*ngIf="hasContactError('CustomerEmail', 'minlength', 'contact');">
+													At Least 1 Character Required* <br>
+												</small>
+												<small class="error text-danger"
+													*ngIf="hasContactError('CustomerEmail', 'pattern', 'contact');">
+													Please Enter a Valid Email* <br>
+												</small>
+											</div>
+											<span class="pass_de">
+												e.g email@example.com
+											</span>
+										</div>
+										<div class="col-md-6">
+											<label>Agent Email </label>
+											<input style="cursor: not-allowed; background: #cfd1d2;" readonly formControlName="Email" type="email"
+												class="form-control payinput form-control-sm" maxlength="40"
+												placeholder="example@gmail.com">
+											<!-- <div class="">
+												<small class="error text-danger"
+													*ngIf="hasContactError('Email', 'required', 'contact');">
+													Please Enter Email* <br>
+												</small>
+												<small class="error text-danger"
+													*ngIf="hasContactError('Email', 'maxlength', 'contact');">
+													Maximum Characters Exceeded* <br>
+												</small>
+												<small class="error text-danger"
+													*ngIf="hasContactError('Email', 'minlength', 'contact');">
+													At Least 1 Character Required* <br>
+												</small>
+												<small class="error text-danger"
+													*ngIf="hasContactError('Email', 'pattern', 'contact');">
+													Please Enter a Valid Email* <br>
+												</small>
+											</div>
+											<span class="pass_de">
+												e.g email@example.com
+											</span> -->
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+	<div class="wrappay leftboks mt-3" *ngIf="activity && activity?.BookingQuestions">
+		<div class="comon_backbg">
+			<h5 class="inpagehed p-2">Activity Booking Questions</h5>
+			<div class="sectionbuk">
+				<div id="tdetails">
+					<div class="onedept">
+						<div class="row">
+							<div class="col-md-12">
+							<form [formGroup]="activityContactForm">
+								<ng-container>
+									<div formArrayName="bookingQuestions">
+										<div class="mb-2"
+											*ngFor="let questionFormGroup of activityContactForm.get('bookingQuestions')['controls']; let i = index"
+											[formGroupName]="i">
+											<label class="col-xs-4 col-sm-4 col-md-4 spllty"
+												style="text-transform: capitalize;white-space: nowrap;text-overflow: ellipsis;">{{
+												questionFormGroup.value.subTitle | lowercase}}</label>
+											<input class="col-xs-4 col-sm-4 col-md-4 spllty" type="text"
+												formControlName="answer" class="newinput form-control payinput form-control-sm"
+												placeholder="{{questionFormGroup.value.subTitle | lowercase}}">
+											<!-- You can adjust the input type and styling as needed -->
+											<small
+												*ngIf="(submitted || questionFormGroup.get('answer').touched) && questionFormGroup.get('answer').errors && questionFormGroup.get('answer').errors.required"
+												class="error text-danger">
+												{{ questionFormGroup.value.message }}
+											</small>
+											<br />
+										</div>
+									</div>
+								</ng-container>
+							</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+						<form [formGroup]="transferContactForm">
+							<ng-container *ngIf="transfer?.BookingQuestions">
+								<div formArrayName="bookingQuestions">
+								  <div class="mb-2"
+									*ngFor="let questionFormGroup of transferContactForm.get('bookingQuestions')['controls']; let i = index"
+									[formGroupName]="i">
+									<label class="col-xs-4 col-sm-4 col-md-4 spllty" style="text-transform: capitalize;white-space: nowrap;text-overflow: ellipsis;">{{ questionFormGroup.value.subTitle  | lowercase}}</label>
+									<input class="col-xs-4 col-sm-4 col-md-4 spllty" type="text" formControlName="answer"
+									  class="newinput" placeholder="{{questionFormGroup.value.subTitle | lowercase}}">
+									<!-- You can adjust the input type and styling as needed -->
+									<small
+									  *ngIf="(submitted || questionFormGroup.get('answer').touched) && questionFormGroup.get('answer').errors && questionFormGroup.get('answer').errors.required"
+									  class="error text-danger">
+									  {{ questionFormGroup.value.message }}
+									</small>
+									<br />
+								  </div>
+								</div>
+							  </ng-container>
+							  <div class="clearfix"></div>
+	
+							  <ng-container *ngIf="transfer" formArrayName="accomodation"  >
+								<ng-container *ngFor="let item of transferContactForm.get('accomodation')['controls']; index as i "
+								  [formGroupName]="i">
+								  <div class="contbk mb-2">
+									<div class="contcthdngs">Location pick-up/drop off details
+									</div>
+									<div class="clearfix"></div>
+									<div class="notese">To ensure a smooth trip, please ensure your drop-off/pickup location details below are correct
+									  .
+									</div>
+									<div class="d-flex">
+									  <div class="col-xs-12 col-md-12 nopad d-flex mb-2">
+										<div class="col-md-4 nopad">
+										  <input value="" type="text" name="passenger_contact" id="passenger-contact"
+										   class="newslterinput nputbrd _numeric_only" 
+										  formControlName="AccommodationAddress">
+										</div>
+										<br/>
+										<div class="clearfix"></div>
+									  </div>
+									</div>
+									<div class="clearfix"></div>
+									<div class="notese">Please note: Your pick-up/drop off location is a non-specific location, please check the current address details are correct
+									  .
+									</div>
+									<div class="clearfix"></div>
+									 <!-- <button class="sc-gJWqzi dSgcoi" type="button" (click)="onSelectModule('Transfers')">Edit location pick-up/drop off details</button>  -->
+								  </div>
+								</ng-container>
+							  </ng-container>
+	
+							  <ng-container formArrayName="journey1"*ngIf="transfer?.IsReturn === 0 && (transfer?.LocTypeFrom == 'AP' || transfer?.LocTypeTo === 'AP') ">
+								<ng-container *ngFor="let item of transferContactForm.get('journey1')['controls']; index as i "
+								  [formGroupName]="i">
+								  <div class="contbk">
+									<div class="contcthdngs">Journey 1</div>
+									<div class="clearfix"></div>
+									<div class="notese">Please provide your flight details so our pick-up representative can check the status of your flight. If you are travelling on a connecting flight we require the final leg of your trip only.
+									</div>
+									<div class="d-flex">
+									  <div class="col-xs-12 col-md-12 nopad d-flex mb-2 mobile_block">
+										<div class="col-md-4 col-12 nopad">
+										  <input required value="" type="text" autocomplete="off" name="passenger_contact" id="passenger-contact"
+										  placeholder="Airport you're flying from?
+										  " class="newslterinput nputbrd _numeric_only" 
+										  formControlName="DepCity" (keyup)="getSearchedList($event,false)">
+										 <app-cart-transfer-flight-list *ngIf="!depPoint" (whichCity)="getCity($event)"
+										  [getAirports]="searchedList" [inputFor]="'DepCity'">
+									  </app-cart-transfer-flight-list> 
+										<small class="error text-danger" *ngIf="submitted && item.get('DepCity').errors.required">
+										  Please Enter Airport Name <br>
+										</small>
+										</div>
+										<div class="col-md-4 col-12 nopadding mob_mt-1 mobile_nopad">
+										  <input required value="" type="text" autocomplete="off" name="passenger_contact" id="passenger-contact"
+											placeholder="Flight Number" class="newslterinput nputbrd _numeric_only" 
+											formControlName="DepInfo"  >
+										  <small class="error text-danger" *ngIf="submitted && item.get('DepInfo').errors.required">
+											Please Enter Flight Number. <br>
+										  </small>
+										</div>
+										<div class="emailperson col-12 col-md-4 nopad mob_mt-1">
+											<input autocomplete="off" autocomplete="off" required type="text"  id="PreferredAirlines"
+											formControlName="DepExtraInfo"
+											class="newslterinput nputbrd"
+											(keyup)="getPrefferedAirlineList($event,true)" placeholder="Airline Name"
+											#prefferedAirline>
+											<div *ngIf="shouldPreferedAirLineHide">
+											  <app-cart-transfer-preffered-airline (whichCity)="getPreferredAirLineList($event)"
+												  [getAirports]="searchedAirLineList" [inputFor]="'prefferedAirline'">
+											  </app-cart-transfer-preffered-airline>
+										  </div>
+										  <small class="error text-danger" *ngIf="submitted && item.get('DepExtraInfo').errors.required">
+											Please Enter Airline Name <br>
+										  </small>
+										</div>
+										<div class="clearfix"></div>
+									  </div>
+									</div>
+								  </div>
+								</ng-container>
+								<div  class="text-danger" *ngIf="showJournerError">
+								<p>Please Enter Airport name, Flight Number and Airline Name are required</p>
+							</div>
+							  </ng-container>
+				
+							  <ng-container formArrayName="journey2" *ngIf="transfer?.IsReturn==1 && transfer?.LocTypeTo == 'AP'">
+								<ng-container *ngFor="let item of transferContactForm.get('journey2')['controls']; index as i "
+								  [formGroupName]="i">
+								  <div class="contbk">
+									<div class="contcthdngs">Journey 2</div>
+									<div class="clearfix"></div>
+									<div class="notese">Please provide your flight details so our pick-up representative can check the status of your flight. If you are travelling on a connecting flight we require the first leg of your trip only.
+									  .
+									</div>
+									<div class="d-flex">
+									  <div class="col-xs-12 col-md-12 nopad d-flex mobile_block mb-2">
+										<div class="col-md-4 col-12 nopad">
+										  <input value="" type="text" name="passenger_contact" id="passenger-contact"
+										  placeholder="Airport you’re flying from?
+										  " class="newslterinput nputbrd _numeric_only" 
+										  formControlName="RetCity" autocomplete="off" (keyup)="getSearchedList($event,true)">
+										  <app-transfer-flight-list *ngIf="depPoint"  (whichCity)="getCity($event)"
+										  [getAirports]="searchedList" [inputFor]="'RetCity'">
+									  </app-transfer-flight-list> 
+										<small class="error text-danger" *ngIf="submitted && item.get('RetCity').errors.required">
+										  Please Enter Airport Name <br>
+										</small>
+										</div>
+										<div class="col-md-4 c0l-12 nopadding mob_mt-1 mobile_nopad">
+										  <input value="" type="text" autocomplete="off" name="passenger_contact" id="passenger-contact"
+											placeholder="Flight Number" class="newslterinput nputbrd _numeric_only" 
+											formControlName="RetInfo" >
+										  <small class="error text-danger" *ngIf="submitted && item.get('RetInfo').errors.required">
+											Please Enter Flight Number. <br>
+										  </small>
+										</div>
+										<div class="emailperson col-12 col-md-4 nopad mob_mt-1">
+										  <input autocomplete="off" type="text"  id="PreferredAirlines"
+											formControlName="RetExtraInfo"
+											class="newslterinput nputbrd"
+											(keyup)="getPrefferedAirlineList($event,false)" placeholder="Airline Name"
+											#RetExtraInfo>
+											<div *ngIf="!shouldPreferedAirLineHide">
+											  <app-transfer-preffered-airline (whichCity)="getPreferredAirLineList($event)"
+												  [getAirports]="searchedAirLineList" [inputFor]="'dest'">
+											  </app-transfer-preffered-airline>
+										  </div>
+										  <small class="error text-danger" *ngIf="submitted && item.get('RetExtraInfo').errors.required">
+											Please Enter Airline Name <br>
+										  </small>
+										</div>
+										<div class="clearfix"></div>
+									  </div>
+									</div>
+								   
+								  </div>
+								</ng-container>
+							  </ng-container>
+							  <div class="contbk" *ngIf="transfer?.Extras && transfer?.Extras.length>0">
+							  <div >
+								<div class="contcthdngs">Extras</div>
+								<div class="clearfix"></div>
+								<div class="d-flex" *ngFor="let value of transfer?.Extras;let index=index">
+								  <div class="col-xs-12 col-md-12 nopad d-flex mb-2">
+									<div class="col-md-1 nopad">
+									  <input type="checkbox" class="extraCheckBox" [checked]="selectedExtras[index] > 0" (change)="setExtras($event.target.checked, value,index,1)">
+									</div>
+									<div class="col-md-4 nopad">
+									  {{ value?.Extras_Description }} - {{ value?.Currency }} {{ value?.Price }}
+									</div>
+									<select class="mySelectBoxClass flyinputsnor name_title" [(ngModel)]="selectedExtras[index]"
+									  [ngModelOptions]="{standalone: true}" (change)="onDropdownChange($event.target.value, index,value)">
+									  <option value="" selected disabled>-Select-</option>
+									  <option *ngFor="let option of generateOptions(value?.MaxNumberOfExtras)" [value]="option">
+										{{ option }}
+									  </option>
+									</select>
+								  </div>
+								</div>
+							  </div>
+							  </div>
+							  <div class="card-body bg-whites mt-4" *ngIf="transfer?.Disclaimer && transfer?.Disclaimer.length>0">
+								<div class="row text-center">
+									<div class="col-md-12" style="text-align: left;">
+										<h5 class="cusromGreys">
+										  Disclaimer
+										</h5>
+										<div class="clearfix"></div>
+										<div class="amentiess" style="border: none;">
+										  <div *ngFor="let disclaimer of transfer?.Disclaimer">
+											<p class="f12b mb-2 mt-2 pb-2 border-bottom"><strong style="color: #ffa200;">{{disclaimer.Title}}</strong></p>
+											<span class="am_ttl3" [innerHTML]="disclaimer.Description"></span>
+										  </div>
+										</div>
+									  </div>
+								</div>
+							</div> 
+						</form>
+					 
+						<div class="wrappay leftboks mt-3">
+							<div class="comon_backbg">
+								<h5 class="inpagehed p-2">Remarks</h5>
+								<div class="sectionbuk">
+									<div id="tdetails">
+										<div class="onedept">
+											<div class="row">
+												<div class="col-md-12 ">
+													<p style="font-size: 14px;">Special requests cannot be guaranteed–but the
+														property will do its best to meet your needs.
+														You can always make a special request after your booking is complete!
+													</p>
+												</div>
+												<div class="col-md-12 ">
+													<textarea style="height:120px;" formControlName="remark"class="payinput"></textarea>
+												</div>
+											</div>
+											<div class="clearfix"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+	
+						<div class="sectionbuk billingnob mt-3"
+								style="box-shadow: 0px 1px 16px #ddd; padding: 12px !important; display: none;">
+								<div class="mt-1 ml-2">
+									<h4 style="color: #000; font-size:20px; padding-top:0px; margin:0px;"
+										class="inpagehed">Extra Add ons</h4>
+
+									<div class="mt-0 py-0 rounded border card" style=" border: none !important;
+									padding: 0px !important;">
+
+										<div id="baggage_meal_seat" class="col-md-12 nopad hidden collapse show addons">
+
+											<!-- <ngb-tabset> -->
+												<!-- <ngb-tab>
+													<ng-template ngbTabTitle>
+														<i class=" fi-rr-suitcase-alt"></i> Baggage Selection
+													</ng-template>
+													<ng-template ngbTabContent>
+														<div class="panel-body d-flex col-12">
+															<div class="col-md-12 set_margin mt-3 spllty splinmar">
+																<div class="row mt-3 py-3 rounded border card"
+																	*ngIf="showSeatSelection">
+																	<div class="col-md-12 col-lg-12">
+																		<h4 class="text-muted"
+																			style="color:#189AD3 !important;"> Purchase
+																			Your Extra Baggages </h4>
+																		<div class="panel-body  d-flex col-12 nopad">
+																			<div
+																				class="col-md-3 set_margin spllty splinmar">
+																				<img class="seatImage"
+																					src="assets/images/suitcase.jpg">
+																			</div>
+																			<div
+																				class="col-md-7 set_margin mt-0 spllty splinmar">
+																				<div
+																					class="well seat_well sel_seat_well">
+																					<div style="width: 100%;">
+																						<p style="margin:0px;">
+																							Choose your extra baggage.
+																						</p>
+																					</div>
+																				</div>
+																				<div class="chooseSeatSec">
+																					<div class="col-md-12 nopad"
+																						*ngIf="!isSeatLoading && (baggageMapSectors && baggageMapSectors?.size>0)">
+																						<div class="btn mail_box_btn seat_sel_btn collapsed"
+																							data-toggle="collapse"
+																							data-target="#baggage_sel"
+																							aria-expanded="false"
+																							(click)="setSelectedPassenger(0)">
+																							Choose Extra Baggage
+																						</div>
+																						<div class="inlineSec">
+																						</div>
+																					</div>
+																					<div class="col-md-12 nopad"
+																						*ngIf="!isSeatLoading && (!baggageMapSectors || baggageMapSectors?.size==0)">
+																						<div class="text-center">No
+																							Baggage Available</div>
+																						<div class="inlineSec">
+																						</div>
+																					</div>
+																					<div class="inlineSec">
+																						<div *ngIf="isSeatLoading"
+																							style="text-align: center; margin-top: 50px; margin-bottom: 50px;">
+																							<br />
+																							<br />
+																							<br />
+																							<div class="spinner-grow text-primary"
+																								role="status">
+																								<span
+																									class="sr-only">Loading...</span>
+																							</div>
+																							<div class="spinner-grow text-secondary"
+																								role="status">
+																								<span
+																									class="sr-only">Loading...</span>
+																							</div>
+																						</div>
+																						<table
+																							class="table table-striped">
+																							<tbody>
+																								<ng-container
+																									*ngFor="let selectedBaggageSector of baggageMapSectors | keyvalue : originalOrder">
+																									<tr>
+																										<td>{{
+																											selectedBaggageSector.key.split(',')[2]
+																											}}-{{
+																											selectedBaggageSector.key.split(',')[3]
+																											}}</td>
+																										<td>
+																											<ng-container
+																												*ngFor="let selectedBaggage of selectedBaggageSector.value | keyvalue; let last = last">
+																												<ng-container
+																													*ngFor="let baggage of selectedBaggage.value | keyvalue">
+																													<ng-container
+																														*ngIf="baggage?.value">
+																														<span>{{baggage?.value?.Weight}}
+																															-
+																															{{baggage?.value?.Currency}}
+																															{{baggage?.value?.Price}}
+																														</span>
+																														<span
+																															*ngIf="!last">,
+																														</span>
+																													</ng-container>
+																												</ng-container>
+																											</ng-container>
+																										</td>
+																									</tr>
+																								</ng-container>
+																							</tbody>
+																						</table>
+																					</div>
+																					<div *ngIf="baggageArray && baggageArray.length>0"
+																						class="btn remove collapsed"
+																						id="remove_selected_baggage"
+																						data-target="#baggage_sel"
+																						data-toggle="collapse"
+																						style="display: inline-block;"
+																						aria-expanded="false"
+																						(click)="setSelectedPassenger(0)">
+																						Remove Baggage
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<ng-container formArrayName="passengers">
+																		<div id="baggage_sel"
+																			class="col-md-12 collapse hidden">
+																			<div class="panel-body d-flex col-12">
+																				<div
+																					class="col-md-12 set_margin mt-3 spllty splinmar">
+																					<ngb-tabset
+																						(tabChange)="onBaggageTabSelected($event)"
+																						[(activeId)]="selectedBaggageTabIndex">
+																						<ngb-tab
+																							*ngFor="let item of baggageMapData | keyvalue : originalOrder;let sectorIndex = index;"
+																							title="{{item.key.split(',')[2]}}-{{item.key.split(',')[3]}}"
+																							[id]="sectorIndex">
+																							<ng-template ngbTabContent>
+																								<div class="col-12 row"
+																									style="margin-top: 17px;">
+																									<div
+																										class="col-md-4">
+																										<div
+																											style="margin-top: 20px;">
+																											<div class="seat_passenger"
+																												*ngFor="let passenger of passengers.controls; let ii = index;"
+																												[formGroupName]="ii">
+																												<input
+																													type="radio"
+																													id="label{{ii}}"
+																													#baggageOptionRef
+																													[value]="ii"
+																													[checked]="ii === 0"
+																													(change)="setSelectedPassenger(ii)"
+																													class="seat_radio"
+																													name="passengerSelection">
+																												<ng-container
+																													*ngIf="passenger.get('SelectedBaggage').value === null || passenger.get('SelectedBaggage').value.length==0">
+																													<span>Not
+																														Selected</span>
+																												</ng-container>
+																												<ng-container
+																													*ngIf="passenger.get('SelectedBaggage').value !== null">
+																													<ng-container
+																														*ngFor="let baggage of passenger.get('SelectedBaggage').value | keyvalue : originalOrder; let i = index">
+																														<ng-container
+																															*ngFor="let value of baggage.value | keyvalue : originalOrder; let j = index">
+																															<ng-container
+																																*ngIf="i === ii">
+
+																																<span
+																																	*ngIf="value?.value && value?.value?.SelectedBaggageSector===selectedBaggageTabIndex">
+																																	{{
+																																	value?.value?.Weight
+																																	}}
+																																	-
+																																	{{
+																																	value?.value?.Currency
+																																	}}
+																																	{{
+																																	value?.value?.Price
+																																	}}
+																																</span>
+																																<span
+																																	*ngIf="!value?.value">
+																																	Not
+																																	Selected
+																																</span>
+																																<a *ngIf="value?.value"
+																																	(click)="removeBaggage(item,sectorIndex,ii, passenger)"
+																																	class="text-danger cancle-btn"
+																																	style="display: block; color: #C71C22!important; z-index: 999; position: relative;">
+																																	<i
+																																		class="fa fa-times"></i>
+																																</a>
+																														
+																															</ng-container>
+																														</ng-container>
+																													</ng-container>
+																												</ng-container>
+																												<b>
+																													<p
+																														class="A_N_1">
+																														{{
+																														passenger.get('FirstName').value}}
+																														{{
+																														passenger.get('LastName').value}}
+																													</p>
+																												</b>
+																												<b>
+																												</b>
+																											</div>
+																										</div>
+																									</div>
+																									<div
+																										class="col-md-8">
+																										<div *ngFor="let passenger of passengers.controls; let ii = index;"
+																											[formGroupName]="ii">
+																											<select
+																												class="form-control form-control-sm mt-2 baggage_sel"
+																												#baggageSelect
+																												formControlName="Baggage"
+																												(change)="onBaggageSelection(item, sectorIndex, $event.target.value,ii,passenger)"
+																												id="passenger_bag_selector">
+																												<option
+																													value=""
+																													selected
+																													disabled>
+																													Select
+																													Baggage
+																												</option>
+																												<option
+																													*ngFor="let rows of item.value | keyvalue : originalOrder"
+																													[value]="rows.key">
+																													{{
+																													rows.value.Weight
+																													}} -
+																													{{
+																													rows.value.Currency
+																													}}
+																													{{
+																													rows.value.Price
+																													}}
+																												</option>
+																											</select>
+																										</div>
+																									</div>
+																								</div>
+																							</ng-template>
+																						</ngb-tab>
+																					</ngb-tabset>
+																				</div>
+																			</div>
+																		</div>
+																	</ng-container>
+																</div>
+															</div>
+														</div>
+													</ng-template>
+												</ngb-tab> -->
+
+
+
+
+												<!-- <ngb-tab>
+													<ng-template ngbTabTitle>
+														<i class="fi-rr-burger-fries"></i> Meals Selection
+													</ng-template>
+													<ng-template ngbTabContent>
+														<div class="panel-body d-flex col-12">
+															<div class="col-md-12 set_margin mt-3 spllty splinmar">
+																<div class="row mt-3 py-3 rounded border card"
+																	*ngIf="showSeatSelection">
+																	<div class="col-md-12 col-lg-12">
+																		<h4 class="text-muted"
+																			style="color:#189AD3 !important;"> Purchase
+																			Meal </h4>
+																		<div class="panel-body  d-flex col-12 nopad">
+																			<div
+																				class="col-md-3 set_margin spllty splinmar">
+																				<img class="seatImage"
+																					src="assets/images/meals-flight.jpg">
+																			</div>
+																			<div
+																				class="col-md-7 set_margin mt-0 mb-1 spllty splinmar">
+																				<div
+																					class="well seat_well sel_seat_well">
+																					<div style="width: 100%;">
+																						<p style="margin:0px;">
+																							Choose your meal.
+																						</p>
+																					</div>
+																				</div>
+																				<div class="chooseSeatSec">
+																					<div class="col-md-12 nopad">
+																						<div class="btn mail_box_btn seat_sel_btn collapsed"
+																							data-toggle="collapse"
+																							*ngIf="mealMapSectors && mealMapSectors?.size>0"
+																							data-target="#meal_sel"
+																							aria-expanded="false"
+																							(click)="setSelectedPassenger(0)">
+																							Choose Meal
+																						</div>
+																						<div class="inlineSec">
+																						</div>
+																					</div>
+																					<div class="col-md-12 nopad"
+																						*ngIf="!mealMapSectors || mealMapSectors?.size==0">
+																						<div class="text-center">No Meal
+																							Available</div>
+																						<div class="inlineSec">
+																						</div>
+																					</div>
+																					<div class="inlineSec">
+																						<div *ngIf="isSeatLoading"
+																							style="text-align: center; margin-top: 50px; margin-bottom: 50px;">
+																							<br />
+																							<br />
+																							<br />
+																							<div class="spinner-grow text-primary"
+																								role="status">
+																								<span
+																									class="sr-only">Loading...</span>
+																							</div>
+																							<div class="spinner-grow text-secondary"
+																								role="status">
+																								<span
+																									class="sr-only">Loading...</span>
+																							</div>
+																						</div>
+																						<table
+																							class="table table-striped">
+																							<tbody>
+																								<ng-container
+																									*ngFor="let selectedMealSector of mealMapSectors | keyvalue : originalOrder">
+																									<tr>
+																										<td>{{
+																											selectedMealSector.key.split(',')[2]
+																											}}-{{
+																											selectedMealSector.key.split(',')[3]
+																											}}</td>
+																										<td>
+																											<ng-container
+																												*ngFor="let selectedMeal of selectedMealSector.value | keyvalue; let last = last">
+																												<ng-container
+																													*ngFor="let meal of selectedMeal.value | keyvalue">
+																													<ng-container
+																														*ngIf="meal?.value">
+																														<span>{{meal?.value?.Code}}-
+																															{{meal?.value?.Currency}}
+																															{{meal?.value?.Price}}
+																														</span>
+																														<span
+																															*ngIf="!last">,
+																														</span>
+																													</ng-container>
+																												</ng-container>
+																											</ng-container>
+																										</td>
+																									</tr>
+																								</ng-container>
+																							</tbody>
+																						</table>
+																					</div>
+																					<div *ngIf="mealArray && mealArray.length>0"
+																						class="btn remove collapsed"
+																						id="remove_selected_meal"
+																						data-target="#meal_sel"
+																						data-toggle="collapse"
+																						style="display: inline-block;"
+																						aria-expanded="false"
+																						(click)="setSelectedPassenger(0)">
+																						Remove Meal
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<ng-container formArrayName="passengers">
+																		<div id="meal_sel"
+																			class="col-md-12 collapse hidden">
+																			<div class="panel-body d-flex col-12">
+																				<div
+																					class="col-md-12 set_margin mt-3 spllty splinmar">
+																					<ngb-tabset
+																						(tabChange)="onMealTabSelected($event)"
+																						[(activeId)]="selectedMealTabIndex">
+																						<ngb-tab
+																							*ngFor="let item of mealMapData | keyvalue : originalOrder;let sectorIndex = index;"
+																							title="{{item.key.split(',')[2]}}-{{item.key.split(',')[3]}}"
+																							[id]="sectorIndex">
+																							<ng-template ngbTabContent>
+																								<div class="col-12 row"
+																									style="margin-top: 17px;">
+																									<div
+																										class="col-md-4">
+																										<div
+																											style="margin-top: 20px;">
+																											<div class="seat_passenger"
+																												*ngFor="let passenger of passengers.controls; let ii = index;"
+																												[formGroupName]="ii">
+																												<input
+																													type="radio"
+																													id="label{{ii}}"
+																													#baggageOptionRef
+																													[value]="ii"
+																													[checked]="ii === 0"
+																													(change)="setSelectedPassenger(ii)"
+																													class="seat_radio"
+																													name="passengerSelection">
+																												<ng-container
+																													*ngIf="passenger.get('SelectedMeal').value === null || passenger.get('SelectedMeal').value.length==0">
+																													<span>Not
+																														Selected</span>
+																												</ng-container>
+																												<ng-container
+																													*ngIf="passenger.get('SelectedMeal').value !== null">
+																													<ng-container
+																														*ngFor="let meal of passenger.get('SelectedMeal').value | keyvalue : originalOrder; let i = index">
+																														<ng-container
+																															*ngFor="let value of meal.value | keyvalue : originalOrder; let j = index">
+																															<ng-container
+																																*ngIf="i === ii">
+																																
+																																<span
+																																	*ngIf="value?.value && value?.value?.SelectedMealSector===selectedMealTabIndex">
+																																	{{
+																																	value?.value?.Code}}-
+																																	{{value?.value?.Currency}}
+																																	{{
+																																	value?.value?.Price
+																																	}}
+																																</span>
+																																<span
+																																	*ngIf="!value?.value">
+																																	Not
+																																	Selected
+																																</span>
+																																<a *ngIf="value?.value"
+																																	(click)="removeMeal(item,sectorIndex,ii, passenger)"
+																																	class="text-danger cancle-btn"
+																																	style="display: block; color: #C71C22!important; z-index: 999; position: relative;">
+																																	<i
+																																		class="fa fa-times"></i>
+																																</a>
+																																
+																															</ng-container>
+																														</ng-container>
+																													</ng-container>
+																												</ng-container>
+																												<b>
+																													<p
+																														class="A_N_1">
+																														{{
+																														passenger.get('FirstName').value}}
+																														{{
+																														passenger.get('LastName').value}}
+																													</p>
+																												</b>
+																												<b>
+																												</b>
+																											</div>
+																										</div>
+																									</div>
+																									<div
+																										class="col-md-8">
+																										<div
+																											*ngIf="item.value">
+																											<div *ngFor="let passenger of passengers.controls; let ii = index;"
+																												[formGroupName]="ii">
+																												<select
+																													class="form-control baggage_sel form-control-sm mt-2 meal_sel"
+																													#mealSelect
+																													formControlName="Meal"
+																													(change)="onMealSelection(item, sectorIndex, $event.target.value,ii,passenger)"
+																													id="passenger_meal_selector">
+																													<option
+																														value=""
+																														selected
+																														disabled>
+																														Select
+																														Meal
+																													</option>
+																													<option
+																														*ngFor="let rows of item.value | keyvalue : originalOrder"
+																														[value]="rows.key">
+																														{{
+																														rows.value.AirlineDescription}}-
+																														{{
+																														rows.value.Currency
+																														}}
+																														{{
+																														rows.value.Price
+																														}}
+																													</option>
+																												</select>
+																											</div>
+																										</div>
+																									</div>
+																								</div>
+																							</ng-template>
+																						</ngb-tab>
+																					</ngb-tabset>
+																				</div>
+																			</div>
+																		</div>
+																	</ng-container>
+																</div>
+															</div>
+														</div>
+													</ng-template>
+												</ngb-tab> -->
+
+
+
+
+												<!-- <ngb-tab>
+													<ng-template ngbTabTitle>
+														<i class="fi-rr-person-seat"></i> Seats Selection
+													</ng-template>
+													<ng-template ngbTabContent>
+														<div class="panel-body d-flex col-12 nopad">
+															<div class="col-md-12 set_margin mt-0 spllty splinmar">
+																
+																<div class="mt-3 py-3 rounded border card"
+															*ngIf="showSeatSelection">
+															<div class="col-md-12 col-lg-12">
+																<h4 class="text-muted"
+																	style="color:#189AD3 !important;"> Seat Selection
+																</h4>
+																<div class="panel-body mobile_block mt-3 p-0 d-flex mobile-block col-12">
+																	<div
+																		class="col-md-3 col-12 p-0 set_margin spllty splinmar">
+																		<img class="seatImage"
+																			src="assets/images/seat_sel.jpg">
+																	</div>
+																	<div
+																		class="col-md-9 col-12 set_margin mt-0 spllty splinmar">
+																		<div
+																			class="well mt-0 mb-3 seat_well sel_seat_well">
+																			<div style="width: 100%;">
+																				<p style="margin:0px;">
+																					<b style="color: #2196F3;">Aisle or
+																						Window ? </b>
+																					<br>
+																					For extra peace of mind reserve your
+																					preffered seat now.
+																				</p>
+																			</div>
+																		</div>
+																		<div class="chooseSeatSec">
+																			<div class="col-md-12 nopad"
+																				*ngIf="!isSeatLoading && (seatMapSectors && seatMapSectors?.size>0)">
+																				<div class="btn mail_box_btn seat_sel_btn collapsed"
+																					data-toggle="collapse"
+																					data-target="#seat_sel"
+																					aria-expanded="false"
+																					(click)="setSelectedPassenger(0)">
+																					Choose Your Seat</div>
+																				<div class="inlineSec">
+																				</div>
+																			</div>
+																			<div class="col-md-12 nopad"
+																				*ngIf="!isSeatLoading && (!seatMapSectors || seatMapSectors?.size==0)">
+																				<div class="text-center">No Seats
+																					Available</div>
+																				<div class="inlineSec">
+																				</div>
+																			</div>
+																			<div class="inlineSec">
+																				<div *ngIf="isSeatLoading"
+																					style="text-align: center; margin-top: 50px; margin-bottom: 50px;">
+																					<br />
+																					<br />
+																					<br />
+																					<div class="spinner-grow text-primary"
+																						role="status">
+																						<span
+																							class="sr-only">Loading...</span>
+																					</div>
+																					<div class="spinner-grow text-secondary"
+																						role="status">
+																						<span
+																							class="sr-only">Loading...</span>
+																					</div>
+																				</div>
+																				<table class="table table-striped">
+																					<tbody>
+																						<ng-container
+																							*ngFor="let selectedSector of seatMapSectors | keyvalue : originalOrder">
+																							<tr>
+																								<td>{{selectedSector.key.split(',')[2]}}-{{selectedSector.key.split(',')[3]}}
+																								</td>
+																								<td>
+																									<ng-container
+																										*ngFor="let selectedSeats of selectedSector.value | keyvalue; let last = last">
+																										<span>{{selectedSeats?.value?.SeatCode}}{{last
+																											? '' : ',
+																											'}} </span>
+																									</ng-container>
+																								</td>
+																							</tr>
+																						</ng-container>
+																					</tbody>
+																				</table>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<ng-container formArrayName="passengers">
+																<div id="seat_sel" class="col-md-12 collapse hidden">
+																	<div class="panel-body d-flex col-12 p-0">
+																		<div
+																			class="col-md-12 set_margin p-0 mt-3 spllty splinmar">
+																			<ngb-tabset
+																				(tabChange)="onTabSelected($event)"
+																				[(activeId)]="selectedTabIndex">
+																				<ngb-tab
+																					*ngFor="let item of seatMapData | keyvalue : originalOrder;let sectorIndex = index;"
+																					title="{{item.key.split(',')[2]}}-{{item.key.split(',')[3]}}"
+																					[id]="sectorIndex">
+																					<ng-template ngbTabContent>
+																						<div class="well seat_well">
+																							<img src="assets/images/seat_window.png"
+																								style="width: 40px;">
+																							&nbsp; &nbsp; Choose your
+																							seat now to avoid
+																							disappointment.
+																							<div class="clearfix"></div>
+																						</div>
+																						<div class="col-12 d-flex p-0 mobile-block"
+																							style="margin-top: 17px;">
+																							<div class="col-md-4 col-12 p-0">
+																								<div
+																									style="margin-top: 20px;">
+																									<div class="seat_passenger"
+																										*ngFor="let passenger of passengers.controls; let ii = index;"
+																										[formGroupName]="ii">
+																										<input
+																											type="radio"
+																											id="label{{ii}}"
+																											#optionRef
+																											[value]="ii"
+																											[checked]="ii === 0"
+																											(change)="setSelectedPassenger(ii)"
+																											class="seat_radio"
+																											name="passengerSelection">
+																										<ng-container
+																											*ngIf="isSeatSelected(sectorIndex, ii, passenger)">
+																											
+																											<span
+																												class="seatcode"
+																												*ngFor="let seats of passenger.get('SelectedSeats').value; let selectedSeatIndex=index;">
+																												<ng-container
+																													*ngIf="seats.sectorIndex===sectorIndex && seats.selectedPassenger===ii">
+																													{{
+																													seats.SeatCode
+																													}}
+																												</ng-container>
+																												<a *ngIf="seats.sectorIndex===sectorIndex && seats.selectedPassenger===ii"
+																													(click)="removeSeat(item,sectorIndex, seats,ii, passenger)"
+																													class="text-danger cancle-btn"
+																													style="display: block; color: #C71C22!important; z-index: 999; position: relative;">
+																													<i
+																														class="fa fa-times"></i>
+																												</a>
+																											</span>
+																										</ng-container>
+																										<ng-container
+																											*ngIf="!isSeatSelected(sectorIndex, ii,passenger)">
+																											
+																											<label
+																												class="seat_label"
+																												for="label{{ii}}"><span
+																													class="psngr_rgt_box1">Not
+																													Selected</span></label>
+																											<div
+																												class="check">
+																											</div>
+																										</ng-container>
+																										<b>
+																											<p
+																												class="A_N_1">
+																												{{
+																												passenger.get('FirstName').value}}
+																												{{
+																												passenger.get('LastName').value}}
+																											</p>
+																										</b>
+																										<b>
+																										</b>
+																									</div>
+																								</div>
+																							</div>
+																							<div class="col-md-8 col-12">
+																								<div class="flightWrap">
+																									<div
+																										class="flightSeatMatrix international">
+																										<div>
+																											<div class="seatRow"
+																												*ngIf="item?.value | keyvalue | slice:0:1 as rows">
+																												<div
+																													class="seatCol">
+																													<div
+																														class="seatLabel">
+																													</div>
+																												</div>
+																												<ng-container
+																													*ngFor="let columnData of rows[0]?.value | keyvalue">
+																								
+																													<div class="seatCol"
+																														*ngIf="!(columnData.key.match('\\d+'))">
+																														<div
+																															class="seatLabel">
+																															{{columnData?.key}}
+																														</div>
+																													</div>
+																													<div class="seatCol bgWhite"
+																														*ngIf="(columnData?.key?.match('\\d+'))">
+																														<div
+																															class="seatEmptyLabel">
+																														</div>
+																													</div>
+																												</ng-container>
+																												<div
+																													class="seatCol">
+																													<div
+																														class="seatLabel">
+																													</div>
+																												</div>
+																											</div>
+																											<div class="seatRow"
+																												*ngFor="let rows of item?.value | keyvalue : originalOrder">
+																												<div
+																													class="seatCol">
+																													<div>
+																														<div
+																															class="seatLabel">
+																															{{rows?.key}}
+																														</div>
+																													</div>
+																												</div>
+																												<div
+																													*ngFor="let coloumn of rows?.value | keyvalue : originalOrder">
+																													<div class="seatCol"
+																														*ngIf="coloumn?.value?.seatAvailability=='Available'">
+																														<div
+																															class="relative seat">
+																															<div
+																																class="seatBlock pointer new_seat_blk ">
+																																<label
+																																	class="seats seat--chargable price"
+																																	[class.seat--selected]="coloumn?.value?.isSelected"
+																																	(mouseenter)="tooltip.style.display='block'"
+																																	(mouseleave)="tooltip.style.display='none'">
+																																	<input
+																																		type="checkbox"
+																																		id=""
+																																		(change)=onCheckboxChange(item,sectorIndex,coloumn,$event)
+																																		class="seatBtn seatBtn_DXB_BOM">
+																																	<span
+																																		class="seatMar"
+																																		title="Seat: {{coloumn?.value?.SeatCode}},Price : {{coloumn?.value?.seat_charge}}"></span>
+																																</label>
+																																<div class="tooltiptext"
+																																	style="display: none;"
+																																	#tooltip>
+																																	<ng-container
+																																		*ngFor="let seatCharacteristics of coloumn?.value?.characteristics">
+																																		<ng-container
+																																			[ngSwitch]="seatCharacteristics?.code">
+																																			<ng-container
+																																				*ngSwitchCase="'W'">
+																																				<img src="assets/images/window_seat.jpg"
+																																					alt="">
+																																				<div
+																																					class="pop_img_txt">
+																																					Window
+																																					seat
+																																				</div>
+																																			</ng-container>
+																																			<ng-container
+																																				*ngSwitchCase="'A'">
+																																				<img src="assets/images/aisle_seat.jpg"
+																																					alt="">
+																																				<div
+																																					class="pop_img_txt">
+																																					Aisle
+																																					seat
+																																				</div>
+																																			</ng-container>
+																																			<ng-container
+																																				*ngSwitchCase="'C'">
+																																				<img src="assets/images/center_seat.jpg"
+																																					alt="">
+																																				<div
+																																					class="pop_img_txt">
+																																					Center
+																																					seat
+																																				</div>
+																																			</ng-container>
+																																		</ng-container>
+																																	</ng-container>
+																																	<div
+																																		class="pop_txt_pd">
+																																		<ng-container
+																																			*ngFor="let seatCharacteristics of coloumn?.value?.characteristics">
+																																			<div class="pop_head"
+																																				*ngIf="seatCharacteristics?.description">
+																																				{{seatCharacteristics?.description}}
+																																			</div>
+																																		</ng-container>
+																																		<span
+																																			class="pop_txt_left">{{coloumn?.value?.SeatCode}}</span><span
+																																			class="pop_txt_right">
+																																			{{coloumn?.value?.seat_charge}}
+																																		</span>
+																																	</div>
+																																</div>
+																															</div>
+																														</div>
+																													</div>
+																													<div class="seatCol"
+																														*ngIf="coloumn?.value?.seatAvailability=='Blocked' || coloumn?.value?.seatAvailability=='Occupied'">
+																														<div class="relative"
+																															id="">
+																															<div
+																																class="seatNotAvailable">
+																																<div
+																																	class="seats seat--unavailable">
+																																	<span
+																																		class="seat-text">x</span>
+																																</div>
+																															</div>
+																														</div>
+																													</div>
+																													<div class="seatCol bgWhite"
+																														*ngIf="(coloumn?.value?.Aisle==1 && coloumn?.value?.seatAvailability=='NotExist') ||  coloumn?.value?.seatAvailability=='NoSeat' || coloumn?.value?.seatAvailability=='NotExist'">
+																														<div>
+																															<div
+																																class="seatEmptyLabel">
+																															</div>
+																														</div>
+																													</div>
+																												</div>
+																												<div
+																													class="seatCol">
+																													<div>
+																														<div
+																															class="seatLabel">
+																															{{rows.key}}
+																														</div>
+																													</div>
+																												</div>
+																											</div>
+																										</div>
+																									</div>
+																								</div>
+																							</div>
+																						</div>
+																					</ng-template>
+																				</ngb-tab>
+																			</ngb-tabset>
+																		</div>
+																	</div>
+																</div>
+															</ng-container>
+														</div>
+															
+															</div>
+														</div>
+													</ng-template>
+												</ngb-tab> -->
+											<!-- </ngb-tabset> -->
+
+										</div>
+
+									</div>
+
+								</div>
+							</div>
+							<div class="mt-3 py-3 border rounded" style="display: none;">
+								<a class="col-md-12 col-lg-12" (click)="isCollapsedGst = !isCollapsedGst"
+									[attr.aria-expanded]="!isCollapsedGst" aria-controls="collapseBasic"> <span
+										class="f-20 text-info text-upercase float-left"> GST Information (Optional)
+									</span> <span class="float-right">
+										<i class="f-20 fa fa-plus fa-plus--lineHeight"></i>
+									</span> </a>
+								<!-- <div class="col-md-12 mt-4 text-muted f-12" id="collapseBasic" [collapse]="isCollapsedGst"
+                                [isAnimated]="true"> -->
+								<div class="col-md-12 mt-4 text-muted f-12" id="collapseBasic">
+									<div class="form-group row">
+										<label for="gstNo" class="col-md-3 col-lg-3 col-sm-3 col-form-label"> GST Number
+										</label>
+										<div class="col-sm-9 col-md-9 col-lg-9">
+											<input type="text" class="form-control form-control-sm" id="gstNo"
+												placeholder="ABCD1234E">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label for="gstCompName" class="col-md-3 col-lg-3 col-sm-3 col-form-label"> GST
+											Company Name </label>
+										<div class="col-sm-9 col-md-9 col-lg-9">
+											<input type="text" class="form-control form-control-sm" id="gstCompName"
+												placeholder="Provab Technosoft Pvt. Ltd.">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label for="email" class="col-md-3 col-lg-3 col-sm-3 col-form-label"> Email
+										</label>
+										<div class="col-sm-9 col-md-9 col-lg-9">
+											<input type="email" class="form-control form-control-sm" id="email"
+												placeholder="example@gmail.com">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label for="phone" class="col-md-3 col-lg-3 col-sm-3 col-form-label"> Phone
+											Number
+										</label>
+										<div class="col-sm-9 col-md-9 col-lg-9">
+											<input type="number" class="form-control form-control-sm" id="phone"
+												placeholder="1234567890">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label for="address" class="col-md-3 col-lg-3 col-sm-3 col-form-label"> Address
+										</label>
+										<div class="col-sm-9 col-md-9 col-lg-9">
+											<input type="text" class="form-control form-control-sm" id="address"
+												placeholder="Electronic City Bangaluru">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label for="state" class="col-md-3 col-lg-3 col-sm-3 col-form-label"> State
+										</label>
+										<div class="col-sm-9 col-md-9 col-lg-9">
+											<select class="form-control form-control-sm" id="state">
+												<option selected>Choose...</option>
+												<option>State-2</option>
+												<option>State-3</option>
+												<option>State-4</option>
+												<option>State-5</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div *ngIf="extraServices" class="my-3 py-4 border rounded">
+								<a class="col-md-12 col-lg-12 {{ !isCollapsedServiceReqs ? 'bbottom pb-3': '' }}"
+									(click)="isCollapsedServiceReqs = !isCollapsedServiceReqs"
+									[attr.aria-expanded]="!isCollapsedServiceReqs" aria-controls="collapseBasic"> <span
+										class="f-20 text-info text-upercase float-left"> Service Requests (Optional)
+									</span> <span class="float-right">
+										<i class="f-20 fa fa-plus fa-plus--lineHeight"></i>
+									</span> </a>
+								<!-- <div class="col-md-12 mt-4 text-muted f-12" id="collapseBasic"
+                                [collapse]="isCollapsedServiceReqs" [isAnimated]="true"> -->
+								<div class="col-md-12 mt-4 text-muted f-12" id="collapseBasic">
+									<!-- <app-service-requests [flight]="flight" [passengers]="passengers"
+                                    [contactForm]="contactForm"></app-service-requests> -->
+								</div>
+							</div>
+							<!--  -->
+							<div class="col-md-12 nopad mt-3">
+								<div class="checkcontent" style="overflow: inherit; float: left; width: 100%;">
+									
+									<div class="squaredThree">
+										<input type="checkbox" [checked]="terms" value="0" name="confirm"
+											class="filter_airline" id="squaredThree1" aria-required="true" required
+											(click)="onTerms($event.target.checked)" />
+										<label for="squaredThree1"></label>
+									</div>
+
+									<label for="squaredThree1" class="lbllbl"
+										style="display: inline; font-size: 14px;color: #082B3A;"> By booking this item ,
+										you
+										agree to our 
+										
+										<a data-toggle="modal"(click)="openStaticPage('Travel Agent T&Cs')"class="colorbl">Terms and Conditions</a>,
+											<a data-toggle="modal"(click)="openStaticPage('Privacy policy')" class="colorbl">Privacy Policy</a>
+											 and <a data-toggle="modal" (click)="openStaticPage('Refund & Return Policy')" class="colorbl">Refund Policy</a></label>.
+								</div>
+								<div class="text-danger" *ngIf="!terms"> <small> Please accept Terms and
+										Conditions/Privacy
+										Policy.
+									</small> </div>
+							</div>
+							<div class="btn_book">
+								<button type="submit" (click)="onSubmitBooking()"
+									class=" p-2 btn srch_btn">
+									Book Now </button>
+							</div>
+						</form>
+
+						
+					</div>
+					<div class="col-md-4 col-lg-4 mt-3 padlt">
+						<div class="">
+							<div class="mb-2 p-3 blue-bg">
+								<p>This booking session will expire in <strong>{{ formattedTime }} </strong></p>
+							  </div>
+							<div class="">
+								<div class="fsBorder card" style="box-shadow: 0px 1px 16px #ddd;">
+									<h4 class="text-muted"> Fare Summary </h4>
+									<div class=" px-0 pb-3">
+										<div>
+											<div class="row m-0 text-muted" style="font-size: 14px;" *ngIf="flight">
+												<h5 class="px-3">Flight Price Summary</h5>
+												<ng-container *ngIf="isAdult(flight)">
+													<div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+														<div class="float-left">
+															<b>Adult ticket</b>
+														</div>
+														<div class="float-right customColor">
+															{{ flight.Price.Currency }} {{
+															flight.Price.PassengerBreakup.ADT?.TotalPrice }} X {{
+															adultCount }}
+														</div>
+													</div>
+													<div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+														<div class="float-left customColor">
+															Base Fare:
+														</div>
+														<div class="float-right customColor">
+															{{ flight.Price.Currency }}
+															{{ flight.Price.PassengerBreakup.ADT?.BasePrice }}
+														</div>
+													</div>
+													<div
+														class="col-md-12 col-lg-12 f-14 bbottom pb-2 mb-2 mobile_nopad">
+														<div class="float-left customColor">
+															Taxes &amp; Fees
+														</div>
+														<div class="float-right customColor">
+															{{ flight.Price.Currency }} {{
+															flight.Price.PassengerBreakup.ADT?.Tax }}
+														</div>
+													</div>
+												</ng-container>
+												<ng-container *ngIf="isYouth(flight)">
+                                    <div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+                                        <div class="float-left">
+                                            <b>Youth ticket</b>
+                                        </div>
+                                        <div class="float-right customColor">
+                                            {{ flight.Price.Currency }} {{
+                                            flight.Price.PassengerBreakup.YTH?.TotalPrice }} X {{
+                                            adultCount }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+                                        <div class="float-left customColor">
+                                            Base Fare
+                                        </div>
+                                        <div class="float-right customColor">
+                                            {{ flight.Price.Currency }}
+                                            {{ flight.Price.PassengerBreakup.YTH?.BasePrice }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 f-14 bbottom pb-2 mb-2 mobile_nopad">
+                                        <div class="float-left customColor">
+                                            Taxes &amp; Fees
+                                        </div>
+                                        <div class="float-right customColor">
+                                            {{ flight.Price.Currency }} {{
+                                            flight.Price.PassengerBreakup.YTH?.Tax }}
+                                        </div>
+                                    </div>
+                                </ng-container>
+												<ng-container *ngIf="isChild(flight)">
+													<div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+														<div class="float-left">
+															<b>Child ticket</b>
+														</div>
+														<div class="float-right customColor">
+															{{ flight.Price.Currency }} {{
+															flight.Price.PassengerBreakup.CHD?.TotalPrice }} X {{
+															childCount }}
+														</div>
+													</div>
+													<div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+														<div class="float-left customColor">
+															Base Fare:
+														</div>
+														<div class="float-right customColor">
+															{{ flight.Price.Currency }}
+															{{ flight.Price.PassengerBreakup.CHD?.BasePrice }}
+														</div>
+													</div>
+													<div
+														class="col-md-12 col-lg-12 f-14 pb-2 bbottom mb-2 mobile_nopad">
+														<div class="float-left customColor">
+															Taxes &amp; Fees
+														</div>
+														<div class="float-right customColor">
+															{{ flight.Price.Currency }} {{
+															flight.Price.PassengerBreakup.CHD?.Tax }}
+														</div>
+													</div>
+												</ng-container>
+												<ng-container *ngIf="isInfant(flight)">
+													<div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+														<div class="float-left customColor">
+															<b>Infant ticket</b>
+														</div>
+														<div class="float-right customColor">
+															{{ flight.Price.Currency }} {{
+															flight.Price.PassengerBreakup.INF?.TotalPrice }} X {{
+															infantCount }}
+														</div>
+													</div>
+													<div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+														<div class="float-left customColor">
+															Base Fare:
+														</div>
+														<div class="float-right customColor">
+															{{ flight.Price.Currency }}
+															{{ flight.Price.PassengerBreakup.INF?.BasePrice }}
+														</div>
+													</div>
+													<div class="col-md-12 col-lg-12 f-14 bbottom mb-3 mobile_nopad">
+														<div class="float-left customColor">
+															Taxes &amp; Fees
+														</div>
+														<div class="float-right customColor">
+															{{ flight.Price.Currency }} {{
+															flight.Price.PassengerBreakup.INF?.Tax }}
+														</div>
+													</div>
+												</ng-container>
+												<!-- <div class="col-md-12 col-lg-12 f-14 bbottom  mb-2 mobile_nopad" *ngIf="cartList.flight.Price.PriceBreakup.TotalLostBaggageProtection">
+											<div class="float-left customColor">
+												Baggage Protection Fee
+											</div>
+											<div class="float-right customColor">
+												{{ flight.Price.Currency }} {{ cartList.flight.Price.PriceBreakup.TotalLostBaggageProtection   }}
+											</div>
+										</div> -->
+												<!-- <div class="col-md-12 col-lg-12 f-14 mb-3 mobile_nopad" *ngIf="flight.Price.PriceBreakup.AdvanceTax">
+											<div class="float-left" style="color: #082B3A !important;">
+												AIT
+											</div>
+											<div class="float-right customColor">
+												{{ flight.Price.Currency }} {{ flight.Price.PriceBreakup.AdvanceTax   }}
+											</div>
+										</div> -->
+												<div class="col-md-12 col-lg-12 f-18 mb-3 mobile_nopad bbottom ">
+													<div class="float-left grand_tot" style="font-size: 16px;">
+														Total:
+													</div>
+													<div class="float-right text-warning"
+														style="color:#092e53 !important; font-size: 16px;">
+														{{ flight.Price.Currency }} {{
+														flight.Price.TotalDisplayFare }}
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								<div class="col-md-12" *ngIf="hotel">
+										<h5 class="px-3"> Hotel Price Summary </h5>
+										<div class="row font-weight-bold pt-0 pb-3 hotl_details_name">
+			
+											<!-- <div class="col-md-4 mpad"
+												*ngIf="booking_source == 'ZBAPINO00008' || booking_source == 'TLAPINO00004' || booking_source == 'TLAPINO00007'">
+												<img class="imgStyle" src="{{hotel.HotelPicture}}" alt="">
+											</div> -->
+			
+											<!-- <div class="col-md-4 mpad">
+												<img class="imgStyle" src="{{hotel.HotelPhoto}}" alt="">
+											</div> -->
+											<!-- <div class="col-md-8 pl-0">
+												<h5 class="cusromGrey"><strong>{{hotel.HotelName}}</strong> </h5>
+												<ng-template *ngIf="hotel.StarRating === '' then noStar; else stars">
+												</ng-template>
+												<ng-template #noStar>
+													<span class="star_rtng">
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star"></i>
+														<i class="fas fa-star"></i>
+													</span>
+												</ng-template>
+												<ng-template #stars>
+													<span class="star_rtng">
+														<i class="fas fa-star star_rtng_clr"
+															*ngFor="let s of hotel.StarRating | map: getStarArray"></i>
+														<i class="fas fa-star"
+															*ngFor="let s of hotel.StarRating | map: getStarArrayRemaining"></i>
+													</span>
+												</ng-template>
+												<p class="cusromGrey">
+													{{hotel.HotelAddress}}
+												</p>
+											</div> -->
+										</div>
+			
+										<!-- <div class="row font-weight-bold pt-3 pb-3 hotl_details_check">
+											<div class="col-md-4 px-3">
+												<p class="cusromgray m-0">
+													Check-In:
+												</p>
+												<p class="cusromBlue m-0">
+													{{hotel.HotelCheckIn | date: 'dd/MM/yyyy'}}
+												</p>
+											</div>
+											<div class="col-md-4 px-3">
+												<p class="cusromgray m-0">
+													Check-Out:
+												</p>
+												<p class="cusromBlue m-0">
+													{{hotel.HotelCheckOut | date: 'dd/MM/yyyy'}}
+												</p>
+											</div>
+			
+											<div class="col-md-4 px-y">
+												<p class="cusromgray m-0">
+													No of Nights:
+												</p>
+												<p class="cusromBlue m-0">
+													{{hotel.NoOfNights}}
+												</p>
+											</div>
+										</div> -->
+			
+										<div class="row pt-3 pb-3 trooms_desc">
+											<!-- <div class="col-md-12 px-3">
+												
+												<div *ngFor="let r of hotel.RoomDetails; let i = index">
+													<div class="valign-wrapper row mt-1 mb-1">
+														<div class="col-md-6 col-6">
+															<span class="cusromBlue m-0">
+																Room {{ i + 1 }}:
+															</span>
+														</div>
+														<div class="col-md-6 col-6 text-right">
+															<span class="m-0 pull-right" [innerHTML]="formatRoomDescription(r)">
+															</span>     
+															<span [ngClass]="{ 'text-danger': r.NonRefundable, 'text-success': !r.NonRefundable }">
+																({{ r.NonRefundable ? 'Non-Refundable' : 'Refundable' }})
+															</span>                                       
+														</div>
+													</div>
+										
+													<div class="clearfix"></div>
+										
+													<div class="valign-wrapper row mt-1 mb-1">
+														<div class="col-md-6 col-6">
+															<span class="cusromBlue m-0">
+																Meal Plan:
+															</span>
+														</div>
+														<div class="col-md-6 col-6 text-right">
+															<span class="m-0 pull-right">
+																{{ r.booking_source === "TLAPINO00003" ? r.Description : (r.MealPlanCode || r.RoomType) }}
+															</span>
+														</div>
+													</div>
+										
+													<div class="clearfix"></div>
+										
+													<div class="valign-wrapper row mt-1 mb-1">
+														<div class="col-md-6 col-6">
+															<span class="cusromBlue m-0">
+																Adult(s):
+															</span>
+														</div>
+														<div class="col-md-6 col-6 text-right">
+															<span class="m-0 pull-right">
+																{{ hotel.searchRequest.RoomGuests[i].NoOfAdults }}
+															</span>
+														</div>
+													</div>
+										
+													<div class="clearfix"></div>
+										
+													<div class="valign-wrapper row mt-1 mb-1">
+														<div class="col-md-6 col-6">
+															<span class="cusromBlue m-0">
+																No of Children:
+															</span>
+														</div>
+														<div class="col-md-6 col-6 text-right">
+															<span class="m-0 pull-right">
+																{{ hotel.searchRequest.RoomGuests[i].NoOfChild }}  
+																<span *ngIf="hotel.searchRequest.RoomGuests[i].NoOfChild > 0">
+																	({{ hotel.searchRequest.RoomGuests[i].ChildAge.length === 1 
+																		? hotel.searchRequest.RoomGuests[i].ChildAge[0] + ' yrs' 
+																		: hotel.searchRequest.RoomGuests[i].ChildAge.join(' yrs, ') + ' yrs' }})
+																</span>
+															</span>
+														</div>
+													</div>
+													<div class="clearfix"></div>
+													
+												</div>
+											</div> -->
+										<div class="col-md-12 col-lg-12 f-14 mb-2 ng-star-inserted">
+											<div class="row pt-3 pb-3 trooms_desc">
+														<div class="col-md-12 p-0">
+															 
+															<div *ngFor="let r of hotel.RoomDetails; let i = index" class="trooms_desc px-3">
+																<div class="valign-wrapper row mt-1 mb-1">
+																	<div class="col-md-6 col-6">
+																		<span class="cusromBlue m-0" 
+																		*ngIf="!(isSameRoomGuests(hotel.searchRequest.RoomGuests) && hotel.searchRequest.booking_source === 'ZBAPINO00008')">
+																	  Room {{ i + 1 }}:
+																  </span>
+																  <span class="cusromBlue m-0" 
+																		*ngIf="isSameRoomGuests(hotel.searchRequest.RoomGuests) && hotel.searchRequest.booking_source === 'ZBAPINO00008'">
+																	  <span>{{ hotel.searchRequest.NoOfRooms }} x Rooms</span>
+																  </span>                                                                                                                      
+																	</div>
+																	<div class="col-md-6 col-6 text-right" *ngIf="hotel.booking_source != 'TLAPNO00003'">
+																		<span class="m-0 pull-right">
+																			{{ formatRoomDescription(r) }} 
+																			<span [ngClass]="{ 'text-danger': r.NonRefundable, 'text-success': !r.NonRefundable }">
+																				({{ r.NonRefundable ? 'Non-Refundable' : 'Refundable' }})
+																			</span>
+																		</span>                                            
+																	</div>
+																	<div class="col-md-6 col-6 text-right" *ngIf="hotel.booking_source == 'TLAPNO00003'">
+																		<span class="m-0 pull-right">
+																			{{ r.RoomName }} 
+																			<span [ngClass]="{ 'text-danger': r.NonRefundable, 'text-success': !r.NonRefundable }">
+																				({{ r.NonRefundable ? 'Non-Refundable' : 'Refundable' }})
+																			</span>
+																		</span>                                            
+																	</div>
+																</div>
+							
+																<div class="valign-wrapper row mt-1 mb-1">
+																	<!-- <div class="col-md-6 col-6 nopad" *ngIf="booking_source !== 'TLAPNO00003'">
+																		<span class="cusromBlue m-0">
+																			Room View
+																		</span>
+																	</div> -->
+																	<div class="col-md-6 col-6" *ngIf="hotel.booking_source == 'TLAPNO00003'">
+																		<span class="cusromBlue m-0">
+																			Room View - Meal Plan
+																		</span>
+																	</div>
+																	<div class="col-md-6 col-6 text-right"*ngIf="hotel.booking_source == 'TLAPNO00003'">
+																		<span class="m-0 pull-right">
+																			{{ r.Description }} 
+																		</span>                                            
+																	</div>
+																</div>
+													
+																<!-- <div class="clearfix"></div> -->
+													
+																<div class="valign-wrapper row mt-1 mb-1" *ngIf="hotel.booking_source !== 'TLAPNO00003'">
+																	<div class="col-md-6 col-6">
+																		<span class="cusromBlue m-0">
+																			Meal Plan:
+																		</span>
+																	</div>
+																	<div class="col-md-6 col-6 text-right">
+																		<span class="m-0 pull-right">
+																			{{ r.MealPlanCode }}
+																		</span>
+																	</div>
+																</div>
+													
+																<!-- <div class="clearfix"></div> -->
+													
+																<div class="valign-wrapper row mt-1 mb-1">
+																	<div class="col-md-6 col-6">
+																		<span class="cusromBlue m-0">
+																			Adult(s):
+																		</span>
+																	</div>
+																	<div class="col-md-6 col-6 text-right">
+																		<span class="m-0 pull-right">
+																			{{ r.AdultCount }}
+																		</span>
+																	</div>
+																</div>
+													
+																<!-- <div class="clearfix"></div> -->
+													
+																<div class="valign-wrapper row mt-1 mb-1">
+																	<div class="col-md-6 col-6">
+																		<span class="cusromBlue m-0">
+																			No of Children:
+																		</span>
+																	</div>
+																	<div class="col-md-6 col-6 text-right">
+																		<!-- <span class="m-0 pull-right">
+																			{{ r.ChildrenCount }}
+																		</span> -->
+																		<span class="m-0 pull-right">
+																			{{ hotel.searchRequest.RoomGuests[i].NoOfChild }}  
+																			<span *ngIf="hotel.searchRequest.RoomGuests[i].NoOfChild > 0">
+																				({{ hotel.searchRequest.RoomGuests[i].ChildAge.length === 1 
+																					? hotel.searchRequest.RoomGuests[i].ChildAge[0] + ' yrs' 
+																					: hotel.searchRequest.RoomGuests[i].ChildAge.join(' yrs, ') + ' yrs' }})
+																			</span>
+																		</span>
+																	</div>
+																</div>
+																<!-- <div class="clearfix"></div> -->
+																<!-- <hr>  -->
+																<!-- Separator for better visibility -->
+															</div>
+															</div>
+														</div>
+													</div>
+										<div class="row col-lg-12 m-auto">
+											<div class="col-md-12 px-3">
+												<div class="clearfix"></div>
+												<div class="valign-wrapper row mt-1 mb-1">
+													<div class="col-md-6 col-6">
+														<span class="cusromBlue m-0">
+															Base Fare:
+														</span>
+													</div>
+													<div class="col-md-6 col-6 text-right">
+														<span class="m-0 pull-right ">
+															{{hotel.Price.Currency}} {{hotel.Price.Amount }}
+														</span>
+													</div>
+			
+												</div>
+												<div class="clearfix"></div>
+			
+			
+												<div  class="valign-wrapper row mt-1 mb-1">
+													<div class="col-md-6 col-6">
+														<span class="cusromBlue m-0 grand_tot">
+															Total:
+														</span>
+													</div>
+			
+													<div class="col-md-6 col-6 text-right">
+														<span class="m-0 pull-right"
+															style="color: #082b3a!important; font-size: 16px; font-weight: 700;">
+															{{hotel.Price.Currency}} {{hotel.Price.Amount }}
+														</span>
+													</div>
+			
+												</div>
+			
+											</div>
+			
+			
+			
+										</div>
+		
+									 
+		
+									</div>
+									
+		
+									<!-- <div class="col-md-12 col-lg-12 f-18 mb-3 mobile_nopad">
+
+										<div class="float-left grand_tot" style="font-size: 16px;">
+											Grand Total
+										</div>
+										<div class="float-right text-warning" style="color:#092e53 !important; font-size: 16px;">
+											{{ currency }} 
+											{{  ((flight?.Price?.TotalDisplayFare || 0) + (hotel?.Price?.Amount || 0) + (activity?.Price.TotalDisplayFare || 0) + (transfer?.Price.TotalDisplayFare || 0))}}
+										  </div>
+										
+									</div> -->
+
+									
+								</div>
+
+								<div class="row trooms_desc pt-3 pb-3" *ngIf="transfer">
+										<div class="col-md-12 px-3">
+											<h5 class="px-3">Transfer Price Summary</h5>
+											<div class="clearfix"></div>
+											<div class="col-md-12">
+												<div class="row  pt-0 pb-0">
+													<div class="col-md-12 px-3">
+														<div class="clearfix"></div>
+														<div class="valign-wrapper row mt-1 mb-1"
+															style="font-size: 14px; color: #092e53;">
+															<div class="col-md-6 col-6">
+																<span class="cusromBlue m-0">
+																	Base Fare:
+																</span>
+															</div>
+															<div class="col-md-6 col-6 text-right">
+																<span class="m-0 pull-right ">
+																	{{transfer.Price.Currency}}
+																	{{transfer.Price.TotalDisplayFare| number:'1.1-2' }}
+																</span>
+															</div>
+														</div>
+			
+														<div class="valign-wrapper row pt-2 pb-2"
+															style="font-size: 16px; color: #092e53;">
+															<div class="col-md-6 col-6">
+																<span class="cusromBlue m-0">
+																	Total:
+																</span>
+															</div>
+															<div class="col-md-6 col-6 text-right">
+																<span class="m-0 pull-right " style="font-weight: 600;">
+																	{{transfer.Price.Currency}}
+																	{{transfer.Price.TotalDisplayFare |
+																	number:'1.1-2'}}
+																</span>
+															</div>
+														</div>
+														<div class="clearfix"></div>
+													</div>
+												</div>
+			
+											</div>
+											<div class="clearfix"></div>
+		
+		
+										</div>
+		
+		
+		
+									</div>
+		
+		
+									<div class="row trooms_desc pt-3 pb-3" *ngIf="activity">
+										<div class="col-md-12 px-3">
+											<h5 class="px-3">Activity Price Summary</h5>
+											<div class="clearfix"></div>
+											<div class="col-md-12">
+												<div class="row pt-0 pb-0">
+													<div class="col-md-12 px-3">
+														<div class="clearfix"></div>
+														<div class="valign-wrapper row mt-1 mb-1"
+															style="font-size: 14px; color: #092e53;">
+															<div class="col-md-6 col-6 ">
+																<span class="cusromBlue m-0">
+																	Base Fare:
+																</span>
+															</div>
+															<div class="col-md-6 col-6 text-right">
+																<span class="m-0 pull-right ">
+																	{{activity.Price.Currency}}
+																	{{activity.Price.TotalDisplayFare | number:'1.1-2' }}
+																</span>
+															</div>
+														</div>
+			
+														<div class="valign-wrapper row pt-2 pb-2"
+															style="font-size: 16px; color: #092e53;">
+															<div class="col-md-6 col-6">
+																<span class="cusromBlue m-0">
+																	Total:
+																</span>
+															</div>
+															<div class="col-md-6 col-6 text-right">
+																<span class="m-0 pull-right " style="font-weight: 600;">
+																	{{activity.Price.Currency}}
+																	{{activity.Price.TotalDisplayFare |
+																	number:'1.1-2'}}
+																</span>
+															</div>
+														</div>
+														<div class="clearfix"></div>
+													</div>
+												</div>
+			
+											</div>
+											<div class="clearfix"></div>
+		
+		
+										</div>
+		
+		
+		
+									</div>
+
+									<div class="col-md-12 col-lg-12 f-18 mb-3 p-3 mobile_nopad">
+										<div class="mb-2">
+											<div class="float-left grand_tot">Grand Total</div>
+											<div class="float-right text-warning" 
+												 style="font-size: 16px !important; color: #082b3a !important; font-weight: 700 !important;">
+												{{ currency }} {{ totalFare | number: '1.2-2' }}
+											</div>
+										</div>
+										
+									</div>
+		
+							</div>
+
+		
+		
+							<div class="clearfix"></div>
+
+							<!-- <div class="bor mar20 coup">
+								<div class="prc-h1 prc-cup"> Have a coupon code </div>
+								<div class="cpn" id="divCouponCodeApply" style="display: block;">
+								  <div class="cpn-l">
+									<input id="txtCouponCode" [(ngModel)]="txtCouponCodeValue" type="text" value="" placeholder="Enter Coupon Code"
+									  [disabled]="disableApplyPromo">
+								  </div>
+								  <div class="cpn-r">
+									<div *ngIf="!disableApplyPromo" class="apl" [class.disabled]="!txtCouponCodeValue" (click)="applyCoupon()" [attr.disabled]="!txtCouponCodeValue ? true : null">Apply</div>
+									<div *ngIf="disableApplyPromo" class="apl" (click)="removeSelectedPromo()">Remove</div>
+								  </div>
+								</div>
+								<div *ngIf="isInvalidPromo" class="error-message" style="color: red; padding-left: 10px;">Invalid Promocode</div>
+								<div class="cpn_dvd" style="display:block"></div>
+								<div class="clearfix"></div>
+								<div class="coupn_inr">
+								  <div class="coupn_scrl">
+									<div class="coupn_col">
+									  <label class="coupn_radio" *ngFor="let promocode of promocodeList;let index=index">
+										<div class="coupn_ttl">{{promocode.promo_code}}</div>
+										<div class="coupn_para" id="cpnTxtEMTNCF">{{promocode.description}}</div>
+										<input type="radio" (click)="setSelectedPromo(promocode,index)" name="cpnRadio">
+										<span class="coupn_checkmark" id="spnRdoEMTNCF"></span>
+										 <span *ngIf="promocode.selected" >
+											<a href="javascript:void(0);" (click)="removeSelectedPromo()" style="color: red;font-size: 11px;">Remove</a>
+										</span>
+									  </label>
+									</div>
+								  </div>
+								</div>
+							  </div> -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- <ngx-loading [show]="loading"
+            [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+            [template]="loadingTemplate"></ngx-loading> -->
+		</div>
+	</div>
+</div>

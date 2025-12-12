@@ -1,0 +1,108 @@
+<div class="main-card mb-3 card">
+    <div class="card-body">
+        <h5 class="card-title">Account Information</h5>
+        <form [formGroup]="accountForm" novalidate (ngSubmit)="onSubmit()">
+            <div class="position-relative row form-group">
+                <label for="exampleEmail" class="col-sm-2 col-form-label">Account Name</label>
+                <div class="col-sm-10">
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Account Name" formControlName="accountname">
+                        <mat-error *ngIf="accountForm.controls['accountname'].hasError('required')">
+                            Account name is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label for="exampleEmail" class="col-sm-2 col-form-label">Account Number</label>
+                <div class="col-sm-10">
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Account Number" formControlName="accountnumber">
+                        <mat-error *ngIf="accountForm.controls['accountnumber'].hasError('required')">
+                            Account number is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="position-relative row form-group">
+                <label for="exampleEmail" class="col-sm-2 col-form-label">Bank Name</label>
+                <div class="col-sm-10">
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Bank Name" formControlName="bankname">
+                        <mat-error *ngIf="accountForm.controls['bankname'].hasError('required')">
+                            Bank name is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label for="exampleEmail" class="col-sm-2 col-form-label">Branch Name</label>
+                <div class="col-sm-10">
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Branch Name" formControlName="branchname">
+                        <mat-error *ngIf="accountForm.controls['branchname'].hasError('required')">
+                            Branch name is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="position-relative row form-group">
+                <label for="exampleEmail" class="col-sm-2 col-form-label">IFSC Code</label>
+                <div class="col-sm-10">
+                    <mat-form-field class="full-width">
+                        <textarea matInput placeholder="IFSC Code" formControlName="ifsccode"></textarea>
+                        <mat-error *ngIf="accountForm.controls['ifsccode'].hasError('required')">
+                            IFSC code is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label for="exampleEmail" class="col-sm-2 col-form-label">PAN</label>
+                <div class="col-sm-10">
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="PAN" formControlName="pannumber">
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="position-relative row form-group">
+                <label for="exampleFile" class="col-sm-2 col-form-label">Bank Logo</label>
+                <div class="col-sm-10">
+                    <input name="BankLogo" formControlName="banklogo" id="exampleFile" type="file"
+                        class="form-control-file">
+                    <small class="form-text text-muted">This is some placeholder block-level help text for the above
+                        input. It's a bit lighter and easily wraps to a new line.
+                    </small>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label for="exampleEmail" class="col-sm-2 col-form-label">Status</label>
+                <div class="col-sm-10">
+                    <mat-slide-toggle formControlName="status" [checked]="accountForm.controls.status">
+                    </mat-slide-toggle>
+                    <!-- <div class="position-relative form-check">
+            <label class="form-check-label">
+              Status
+            </label>
+            <mat-radio-group formControlName="Status">
+              <mat-radio-button [value]="accountForm.controls.Status ? true : false">Inactive</mat-radio-button>
+              <mat-radio-button [value]="!accountForm.controls.Status ? false : true">Active</mat-radio-button>
+            </mat-radio-group>
+          </div> -->
+                </div>
+            </div>
+            <div class="position-relative row form-check">
+                <div class="col-sm-10">
+                    <mat-card-actions>
+                        <button mat-raised-button color="primary" type="submit">Submit</button>
+                        &nbsp;&nbsp;
+                        <span class="btn btn-danger btn-md" (click)="onReset()">Reset</span>
+                    </mat-card-actions>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

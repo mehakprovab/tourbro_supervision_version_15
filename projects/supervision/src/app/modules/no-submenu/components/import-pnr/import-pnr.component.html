@@ -1,0 +1,64 @@
+<div class="row card">
+    <div class=" p-0 col-md-12 col-lg-12">
+        <div class="card-header-tab card-header bg-dark text-white">
+            <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                <i class="header-icon fa fa-edit"> </i>
+                <span class="text-uppercase">Import Pnr</span>
+            </div>
+        </div>
+    </div>
+    <div class="my-5 offset-lg-2 offset-md-2 col-md-8 col-lg-8">
+        <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+            <div class="position-relative row form-group">
+                <label for="agent" class="col-sm-2 col-form-label font-weight-bold">Agent
+                    <span style="color: red;">*</span></label>
+                <div class="col-sm-9">
+                    <mat-form-field appearance="fill" style="padding-left: 0;width:100%">
+                        <mat-label>Agent List</mat-label>
+                        <input type="text" placeholder="Choose..." class="text-capitalize" matInput
+                            formControlName="agent" [matAutocomplete]="auto">
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectionChanged($event)"
+                            class="text-uppercase">
+                            <mat-option *ngFor="let agent of filteredOptions  | async"
+                                [value]="agent.business_name+' ('+ agent.uuid+')'" [id]="agent.id">
+                                {{agent.business_name}} ({{agent.uuid}})
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="position-relative row form-group">
+                <label for="pnr_name" class="col-sm-2 col-form-label font-weight-bold">Select API<sup
+                        class="text-danger f-16">
+                        *
+                    </sup> </label>
+                <div class="col-sm-9">
+                    <select formControlName="selectedApi" class="form-control" id="selectedApi">
+                        <option [value]="''" selected disabled>Choose...</option>
+                        <option value="ZBAPINO00002">Travelport </option>
+                        <option value="ZBAPINO00003">Amadeus </option>
+                        <option value="ZBAPINO00007">Sabre</option>
+                    </select>
+                </div>
+            </div>
+            <div class="position-relative form-group row">
+                <label for="pnr" class="col-sm-2 col-form-label font-weight-bold"> Enter PNR<sup
+                        class="text-danger f-16">
+                        * </sup> </label>
+                <div class="col-sm-9">
+                    <input formControlName="pnr" type="text" maxlength="18" class="form-control text-capitalize"
+                        id="EnterPNR" placeholder="Enter PNR">
+                </div>
+            </div>
+            <div class="form-group row mb-n2">
+                <div class="col-sm-12 customCenter">
+                    <button type="button" class="btn btn-sm btn-primary mr-1" (click)="onSubmit()">Submit</button>
+                    <button class="btnStyle" (click)="reset()" type="button">Reset</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<ngx-loading [show]="loading"
+    [config]="{primaryColour: '#fff', secondaryColour: '#ccc', tertiaryColour: '#fff', backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+    [template]="loadingTemplate"></ngx-loading>

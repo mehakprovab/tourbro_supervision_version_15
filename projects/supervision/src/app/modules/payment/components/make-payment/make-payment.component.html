@@ -1,0 +1,40 @@
+<div class="row col-lg-12 col-md-12 pt-3 m-0 card">
+    <ngb-tabset class="tabs-animated tabs-animated-shadow">
+        <ngb-tab *ngFor="let link of navLinks; let i=index;">
+            <ng-template ngbTabTitle>
+                <span (click)="onSelect(link.component)"> <i class="{{link.icon}}"></i> &nbsp; {{link.label}} </span>
+            </ng-template>
+            <ng-template ngbTabContent>
+                <div class="row" [ngSwitch]="link.component">
+                    <div *ngSwitchCase="'Deposit_Request'" class="col-md-12 col-lg-12">
+                        <div class="mb-3">
+                            <div class="card-header-tab card-header">
+                                <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                                    <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+                                    {{'Update Balance/ Deposit Request / Due Payment'}}
+                                </div>
+                            </div>
+                        </div>
+                        <app-deposit-request></app-deposit-request>
+                    </div>
+                    <div *ngSwitchCase="'History_Deposit_Request'" class="col-md-12 col-lg-12">
+                        <app-history-deposit-request></app-history-deposit-request>
+                    </div>
+                    <div *ngSwitchCase="'bus'" class="col-md-12 col-lg-12">
+                        <p>
+                            Bus here
+                        </p>
+                        <!-- <app-bus></app-bus> -->
+                    </div>
+                    <div *ngSwitchCase="'transfers'" class="col-md-12 col-lg-12">
+
+                        <!-- <app-transfers></app-transfers> -->
+                    </div>
+                    <div *ngSwitchCase="'activities'" class="col-md-12 col-lg-12">
+                        <!-- <app-activities></app-activities> -->
+                    </div>
+                </div>
+            </ng-template>
+        </ngb-tab>
+    </ngb-tabset>
+</div>

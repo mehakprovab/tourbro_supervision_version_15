@@ -1,0 +1,38 @@
+::ng-deep .cdk-overlay-container .copy-items-modal-register {    width: 800px !important; height: 300px !important;}
+::ng-deep .cdk-overlay-container .copy-items-modal-register .mat-dialog-container {padding: 20px 10px !important;}
+
+.brand-fare-list {
+  scroll-snap-type: x mandatory;
+  gap:10px;
+}
+
+.brand-card {
+  scroll-snap-align: start;
+  min-width: 370px;
+}
+
+.brand-fare-modal {
+    max-height: 67vh !important;
+}
+
+.lets-start {
+    color: #ffc107;
+    font-size: 25px;
+}
+
+.message-content {
+    font-size: 15px;
+}
+
+.cancel-btn-reg {
+    height: 30px;
+    border: none;
+    border-radius: 6px;
+    background: #9b9b9b;
+    color: #ffffff;
+    font-weight: 600;
+}
+.proceed-btn-reg {
+    background: #ffc107 !important;
+    color: #000000 !important;
+}

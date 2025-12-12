@@ -1,0 +1,53 @@
+<form class="my-3" [formGroup]="regConfig">
+    <div class="card-header-tab card-header">
+        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+            <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+            <span> {{'Credit Limit Request Details'}} </span>
+        </div>
+    </div>
+    <div class="offset-md-1 col-md-10 offset-lg-1 col-lg-10 px-5 pt-5 pb-3" style="margin-top: -15px;">
+        <div class="form-group row">
+            <label for="agentName" class="col-sm-4 col-form-label "> Agent Name <sup
+                    class="f-16 text-danger">*</sup> </label>
+            <div class="col-sm-8 p-0">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <input formControlName="agentName" type="text" class="form-control"
+                                    placeholder="Md. Farhad" id="agentName">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="form-group row">
+                            <label for="agentId" class="col-sm-6 col-form-label text-center">Agent Id <sup
+                                    class="f-16 text-danger">*</sup> </label>
+                            <div class="col-sm-6">
+                                <input formControlName="agentId" type="text" class="form-control" placeholder="AGR749357" id="agentId"> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="amount" class="col-sm-4"> Amount(GBP) <sup class="f-16 text-danger">*</sup> </label>
+            <input formControlName="amount" type="number" class="col-sm-8 form-control" placeholder="Amount" id="amount">
+        </div>
+        <div class="form-group row">
+            <label for="creditdue" class="col-sm-4"> Credit Already Due(GBP) <sup class="f-16 text-danger">*</sup> </label>
+            <input formControlName="creditdue" type="number" class="col-sm-8 form-control" placeholder="GBP 123456" id="creditdue">
+        </div>
+        <div class="form-group row">
+            <label for="remarks" class="col-sm-4"> Remarks </label>
+            <textarea formControlName="remarks" rows="3" class="col-sm-8 form-control" placeholder="Remarks" id="remarks"> </textarea>
+        </div>
+        <div class="form-group row pull-right">
+            <div class="">
+                <button class="btn btn-lg btn-primary mr-1" (click)="onSubmit()"> Save </button>
+                <button class="btn btn-lg btn-danger"(click)="onReset()"> Reset </button>
+            </div>
+        </div>
+    </div>
+</form>

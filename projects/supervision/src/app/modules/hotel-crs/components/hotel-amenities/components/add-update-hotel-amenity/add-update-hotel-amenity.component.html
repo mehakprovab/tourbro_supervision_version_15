@@ -1,0 +1,45 @@
+<div class="p-0">
+    <form [formGroup]="hotelAmenityForm" (ngSubmit)="handleValidSubmit()" class="needs-validation btop pt-4" novalidate>
+        <div class="card border-light">
+            <div class="card-header p-0">
+                Hotel Amenity
+            </div>
+            <div class="card-body p-0 mt-3">
+                <fieldset form="user">
+                    <div class="form-group">
+                        <label class="col-sm-3 p-0 control-label" for="hotel_amenity_name">
+                            Hotel Amenity Name
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div class="col-sm-6 p-0">
+                            <input value="" formControlName="hotel_amenity_name" type="text" placeholder="Hotel Amenity Name"
+                                class="form-control" [ngClass]="{ 'is-invalid': submitted && f.hotel_amenity_name.errors }"
+                                required />
+                        </div>
+                        <div *ngIf="submitted && f.hotel_amenity_name.errors" class="invalid-feedback">
+                            <div *ngIf="f.hotel_amenity_name.errors.required">Hotel Amenity Name is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 p-0 control-label" for="status">
+                            Status
+                            <span class="text-danger">*</span>
+                        </label>
+                        <span title="Slide for Active/Deactive">
+                            <mat-slide-toggle class="example-margin" formControlName="status" 
+                                [color]="'green'">
+                            </mat-slide-toggle>
+                        </span>
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    <div class="col-sm-8 col-sm-offset-4 btncontainer">
+                        <button type="submit" id="user_submit" class=" btn btn-success btnStyle">Save</button> &nbsp; &nbsp;
+                        <button type="reset" id="user_reset" class=" btn btn-secondary btnStyle"
+                            (click)="resetFrom()">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

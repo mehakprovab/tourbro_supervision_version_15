@@ -1,0 +1,606 @@
+<div class="col-12" #roomDetail id="roomDetail">
+    <div class="row">
+        <div class="col-md-12 mpad p-0">
+            <div class="tabbable-panel">
+                <div class="tabbable-line">
+                    <ul class="nav nav-tabs ">
+                      <li class="nav-item">
+                        <a class="nav-link active" (click)="scrollToRooms(roomstab)">
+                            Rooms
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="scrolloverview(overview_tab)">
+                            Overview
+                        </a>
+                    </li>
+                    <li class="nav-item" >
+                        <a class="nav-link" (click)="scrolloverview(location)">
+                            Location
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="scrolloverview(amenitytab)">
+                            Amenities
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" (click)="scrolloverview(policy_tab)">
+                          Hotel Policy
+                      </a>
+                  </li>
+                  <li class="nav-item"*ngIf="booking_source ==='TLAPNO00003'">
+                    <a class="nav-link" (click)="scrolloverview(child_tab)">
+                      Child Policy
+                    </a>
+                </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" (click)="scrolloverview(policy_tab)">
+                            Hotel Policy
+                        </a>
+                    </li> -->
+                        
+
+                    </ul>
+                    <div class="tab-content">
+
+
+                      <div class="tabs_hotel" #roomstab id="room_tab" style="border-radius: 10px;">
+                        <div class="col-12 p-0">
+                            <div class="d-flex justify-content-between">   
+                             <h3>Room options</h3>
+                             <!-- <div class="float-right d-flex">
+                             <div class="form-check check_cust mr-3">
+                               <input class="form-check-input" type="checkbox" value="" id="free-cancel">
+                               <label class="form-check-label" for="free-cancel">
+                                   Free Cancellation
+                               </label>
+                             </div>
+
+                             <div class="form-check check_cust">
+                               <input class="form-check-input" type="checkbox" value="" id="breakfast">
+                               <label class="form-check-label" for="breakfast">
+                                   BreakFast Included
+                               </label>
+                             </div>
+                             </div> -->
+                             </div>
+                             </div>
+                             <div class="d-flex">
+                              <div class="col-md-12 mb-2 nopad">
+                                  <div class="w-100" style="border-bottom: none;">
+                                      <div class="row m-0">
+                                          <div class="text-center col-md-9 pl-0"*ngIf="hotel?.RoomDetails.length > 0">
+                                              <ngb-accordion #acc="ngbAccordion" class="w-100 accordion_custom" [(activeIds)]="activePanelId"(panelChange)="onPanelChange($event.panelId)">
+                                                 
+                                                  <!-- Iterate over each room group in hotel.RoomDetails -->
+                                   
+                                                      <h3>Room options</h3>
+                                                  <ng-container *ngFor="let roomGroup of hotel?.RoomDetails; let groupIndex = index">
+                                                    <ngb-panel id="ngb-panel-{{groupIndex}}">
+                                                      <ng-template ngbPanelTitle>
+                                                        <div class="room_name" style="color:#03A9F4; font-size:18px; margin-bottom:0px !important">
+                                                          Room {{groupIndex + 1}}
+                                                        </div>
+                                                      </ng-template>
+                                                      <ng-template ngbPanelContent>
+                                                        <!-- Iterate over individual rooms within each room group -->
+                                                        <ng-container *ngFor="let roomDetails of roomGroup; let roomIndex = index">
+                                                          <ng-container *ngFor="let room of roomDetails?.Rooms; let innerRoomIndex = index">
+                                                            <div class="room_loop justify-space-between" >
+                                                              <div class="col-12 d-flex p-0">
+                                                                <div class="col-md-5 p-0 text-left align-self-start">
+                                                                  <h6 class="cusromGrey m-0 mb-2" style="font-size: 14px;">
+                                                                    <strong> {{room.RoomName}}</strong>
+                                                                  </h6>
+                                                                <h6 class="cusromGrey m-0 mb-2" style="font-size: 14px;">
+                                                                  <strong> {{room.Description}} x {{room.Rooms}}</strong>
+                                                                </h6>
+                                                                <h6 *ngIf="booking_source ==='TLAPNO00003'" class="cusromGrey m-0 mb-2" style="font-size: 14px;">
+                                                                  <strong>Bed Type: {{room.BedType}}</strong>
+                                                                </h6>
+                                                                <p class="cusromGrey mb-2" *ngIf="booking_source ==='TLAPNO00003'">
+                                                                  <img 
+                                                                    [src]="room?.roomImages[0]?.image_url" 
+                                                                    alt="Room Image" 
+                                                                    class="img-fluid"
+                                                                    width="120px"
+                                                                    height="120px"
+                                                                    *ngIf="room.roomImages && room.roomImages.length > 0;">
+                                                                </p>
+                                          
+                                                              
+                                                                  <p class="cusromGrey BoardType_c">{{room.RoomType}}</p>
+                                                                  <h6 class="cusromGrey m-0 mb-2" *ngIf="booking_source ==='TLAPINO00004' && room.RoomPromotion.length">Room Promotion:
+                                                                      <strong style="color:blue">  {{room.RoomPromotion[0]}}</strong>
+                                                                    </h6>
+                                                                  <!-- <p class="cusromGrey mb-2">
+                                                                    <img src='assets/images/sleeps-09.png'>&nbsp; &nbsp;Max Occupancy {{room.Occupancy}}
+                                                                  </p> -->
+                                                                  <p *ngIf="booking_source ==='TLAPINO00004'"class=" BoardType_c">{{room.Inclusion}}</p>
+                                                                  <p *ngIf="room.Package"><svg class="product-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M234.5 5.7c13.9-5 29.1-5 43.1 0l192 68.6C495 83.4 512 107.5 512 134.6l0 242.9c0 27-17 51.2-42.5 60.3l-192 68.6c-13.9 5-29.1 5-43.1 0l-192-68.6C17 428.6 0 404.5 0 377.4L0 134.6c0-27 17-51.2 42.5-60.3l192-68.6zM256 66L82.3 128 256 190l173.7-62L256 66zm32 368.6l160-57.1 0-188L288 246.6l0 188z"/></svg> Product For Packaging</p>
+                                                                  <p class="refund  mb-2"*ngIf="!room.NonRefundable">
+                                                                     Refundable
+                                                                    </p>
+                                                                    <p class="non-refunds mb-2"*ngIf="room.NonRefundable">
+                                                                      Non Refundable
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-md-3 p-0 text-left align-self-start" style="line-height: 20px; border-left: 1px solid #ddd; border-right: 1px solid #ddd; padding: 0px 12px !important;">
+                                                                  <p class="cusromGrey mb-2">
+                                                                    <span class="iconsr fi-rr-person-simple"></span> Adults: {{room?.AdultCount}}
+                                                                  </p>
+                                                                  <p class="cusromGrey">
+                                                                    <span class="iconsr fi-rr-child-head"></span> Child: {{room?.ChildrenCount}}
+                                                                  </p>
+                                                                </div>
+                                                                <div class="col-md-4 mobile-top p-0">
+                                                                  <div class=" d-flex text-left row m-auto">
+                                                                      <div class="col-7 " style="font-size: 14px;">
+                                                                    <span style="font-size: 13px; font-weight: 400; color: #5b5b5b;">Total Price</span>
+                                                                    <h5 class="mt-0" style="line-height: 17px; margin-bottom: 12px;">
+                                                                      <ng-template #popTemplate>
+                                                                        <div class="fsBorder card">
+                                                                          <div class="bg-gradient-light px-0 pt-2 pb-3">
+                                                                         
+                                                                                <div class="row m-0 text-muted mt-4">
+                                                                                    <ng-container >
+                                                                                      <div class="col-md-12 col-lg-12 f-14 mb-2">
+                                                                                        <div class="float-left">
+                                                                                            <b>Base Fare</b>
+                                                                                        </div>
+                                                                                        <div class="float-right customColor">
+                                                                                          {{room?.Price[0]?.Currency}} {{room?.basePrice | number: '1.2-2' }}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                        <div class="col-md-12 col-lg-12 f-14 mb-2">
+                                                                                            <div class="float-left">
+                                                                                                <b>Child Policy</b>
+                                                                                            </div>
+                                                                                            <div class="float-right customColor">
+                                                                                              {{room?.Price[0]?.Currency}} {{room?.mealsAmount | number: '1.2-2'}}
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-12 col-lg-12 f-14 mb-2">
+                                                                                            <div class="float-left customColor">
+                                                                                                Tax
+                                                                                            </div>
+                                                                                            <div class="float-right customColor">
+                                                                                              {{room?.Price[0]?.Currency}} {{room?.Price[0].hotelTaxCharge | number: '1.2-2' }}
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <!-- <div class="col-md-12 col-lg-12 f-14 pb-2 bbottom mb-2" >
+                                                                                            <div class="float-left customColor">
+                                                                                               DOS Dis %
+                                                                                            </div>
+                                                                                            <div class="float-right customColor">
+                                                                                              {{room?.Price[0]?.Currency}} {{isEmptyObject(room?.getEarlyAndDurationDetails[0]?.durationOfStay) ? 0 : room?.getEarlyAndDurationDetails[0]?.durationOfStay.Amount  }}
+                                                                                            </div>
+                                                                                        </div> -->
+                                                                                        <!-- <div class="col-md-12 col-lg-12 f-14 pb-2 bbottom mb-2" >
+                                                                                          <div class="float-left customColor">
+                                                                                             EBD Dis %
+                                                                                          </div>
+                                                                                          <div class="float-right customColor">
+                                                                                            {{room?.Price[0]?.Currency}} {{isEmptyEbdObject(room?.getEarlyAndDurationDetails[0]?.earlyBooking) ? 0 : room?.getEarlyAndDurationDetails[0]?.earlyBooking.Amount }}
+                                                                                          </div>
+                                                                                      </div> -->
+                                                                                      <div class="col-md-12 col-lg-12 f-14 pb-2 bbottom mb-2" >
+                                                                                        <div class="float-left customColor">
+                                                                                          Discount %
+                                                                                        </div>
+                                                                                        <div class="float-right customColor">
+                                                                                          {{room?.Price[0]?.Currency}} {{room.dateRangeDiscount | number: '1.2-2'}}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    </ng-container>
+                                                                                    </div>
+                                                                                  </div>
+                                                                         
+                                                                    </div>
+                                                                    </ng-template>
+                                                                    <!-- <span *ngIf="booking_source === 'TLAPNO00003'" placement="left"
+                                                                    class="tooltip-300 amnFont row">
+                                                                     <span *ngIf="!isEmptyObject(room?.getEarlyAndDurationDetails[0]?.durationOfStay) || !isEmptyEbdObject(room?.getEarlyAndDurationDetails[0]?.earlyBooking) || room.dateRangeDiscount != 0"style="text-decoration: line-through;color:red">{{room?.Price[0]?.Currency}} {{room?.basePrice | number: '1.2-2'}}</span><br>
+                                                                 
+                                                                   </span> -->
+                                                                   <br>
+                                                                   <span *ngIf="booking_source === 'TLAPNO00003'"[ngbTooltip]="popTemplate" placement="left"
+                                                                   class="tooltip-300 amnFont row">
+                                                                   <i style="color: #082E53;" class="fal fa-info-circle"></i>&nbsp;
+                                                                  
+                                                                   <span >{{room?.Price[0]?.Currency}} {{room?.Price[0]?.Amount | number: '1.2-2' }}</span><br>
+                                                                
+                                                                  </span>
+                                                                      <span *ngIf="booking_source !== 'TLAPNO00003'"style="color: #092e53; font-size: 18px;">{{room?.Price[0]?.Currency}} {{room?.Price[0]?.Amount | number: '1.2-2'}}</span><br>
+                                                                      <span style="font-size: 13px; font-weight: 400; color: #5b5b5b;">Inclusive of all taxes</span>
+                                                                    </h5>
+                                                                    <ng-container class="mt-2"*ngIf="booking_source === 'TLAPNO00003' && room?.hotelTax?.length && isEmptyPay(room?.hotelTax)">
+                                                                      <span style="color: #092e53; font-size: 10px;"> Pay Upon Arrival</span><br>
+                                                                      <span style="color: #e41126; font-size: 10px;"> (Not included in the price)</span><br>
+                                                                      <div *ngFor="let tax of room?.hotelTax">
+                                                                        <div class="mb-1" *ngIf="tax?.arrival_tax_type === 'plus'">
+                                                                          <span style="color: #092e53; font-size: 10px;">
+                                                                             <span *ngIf="tax?.description != ''" >{{tax?.description}}</span>
+                                                                             - {{ tax?.currency }} {{ tax?.arrival_tax_value }}
+                                                                          </span>
+                                                                        </div>
+                                                                      </div>
+                                                                    </ng-container>
+                                                                    </div>
+                                                                    
+                                                                  <div class="col-4 p-0">
+                                                                    <label class="btn btn-lg p-0 mb-0" *ngIf="groupIndex === 0 && booking_source === 'ZBAPINO00008' || (booking_source === 'ZBAPINO00008' && groupIndex > 0 && selectedBoardType === room.RoomType)">
+                                                                      <input type="radio" name="roomSelection{{groupIndex}}" (click)="selectedRoom(roomDetails, room, groupIndex,roomIndex)" class="d-none">
+                                                                      <span class="button-label" [class.selected]="room.isSelected">{{ room.isSelected ? 'Selected' : 'Select' }}</span>
+                                                                    </label>
+                                                  
+                                                                    <label class="btn btn-lg p-0 mb-0"  *ngIf="groupIndex === 0 && booking_source ==='TLAPINO00004' || (booking_source ==='TLAPINO00004' && groupIndex > 0 && selectedRoomId === room.Id)">
+                                                                      <input type="radio" name="roomSelection{{groupIndex}}" (click)="selectedRoom(roomDetails, room, groupIndex,roomIndex)" class="d-none">
+                                                                      <span class="button-label" [class.selected]="room.isSelected">{{ room.isSelected ? 'Selected' : 'Select' }}</span>
+                                                                    </label>
+                                                                    <label class="btn btn-lg p-0 mb-0"  *ngIf="groupIndex === 0 && booking_source ==='TLAPINO00007' || (booking_source ==='TLAPINO00007' && groupIndex > 0 && selectedDescription === room.MealPlanCode)">
+                                                                      <input type="radio" name="roomSelection{{groupIndex}}" (click)="selectedRoom(roomDetails, room, groupIndex,roomIndex)" class="d-none">
+                                                                      <span class="button-label" [class.selected]="room.isSelected">{{ room.isSelected ? 'Selected' : 'Select' }}</span>
+                                                                    </label>
+                                                                    <label class="btn btn-lg p-0 mb-0"  *ngIf="groupIndex === 0 && booking_source ==='TLAPINO00005' || (booking_source ==='TLAPINO00005' && groupIndex > 0 && selectedSutbaMeal === room.RoomType)">
+                                                                      <input type="radio" name="roomSelection{{groupIndex}}" (click)="selectedRoom(roomDetails, room, groupIndex,roomIndex)" class="d-none">
+                                                                      <span class="button-label" [class.selected]="room.isSelected">{{ room.isSelected ? 'Selected' : 'Select' }}</span>
+                                                                    </label>
+                                                                    <label class="btn btn-lg p-0 mb-0"  *ngIf="groupIndex === 0 && booking_source ==='TLAPINO00006' || (booking_source ==='TLAPINO00006' && groupIndex > 0 && selectedDotWaMeal === room.RoomType)">
+                                                                      <input type="radio" name="roomSelection{{groupIndex}}" (click)="selectedRoom(roomDetails, room, groupIndex,roomIndex)" class="d-none">
+                                                                      <span class="button-label" [class.selected]="room.isSelected">{{ room.isSelected ? 'Selected' : 'Select' }}</span>
+                                                                    </label>
+                                                                    <label class="btn btn-lg p-0 mb-0"  *ngIf="booking_source ==='TLAPNO00003'">
+                                                                      <input type="radio" name="roomSelection{{groupIndex}}" (click)="selectedHotelRoom(roomDetails, room, groupIndex,roomIndex)" class="d-none">
+                                                                      <span class="button-label" [class.selected]="room.isSelected">{{ room.isSelected ? 'Selected' : 'Select' }}</span>
+                                                                    </label>
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                              <div class="cancellation_policy" *ngIf="booking_source ==='TLAPNO00003' && room.NonRefundable ">
+                                                                <h6 class="non-refund mt-1">Cancellation Policy :
+                                                                  <a class="cancelmore" (click)="showNonCancelPolicy(room.Index)">View More <i class="fa fa-chevron-down"></i></a>
+                                                                </h6>
+                                                                <div class="clearfix"></div>
+                                      
+                                                                <div *ngIf="visibleNonCancelPolicyIndex === room.Index" class="subheader text-left">
+                                                                  <ng-container >
+                                    
+                                                                      <span class="f12 wt600" style="line-height: 25px;
+                                                                      font-weight: 500;
+                                                                      font-size: 13px;">
+                                                                        <span >• This booking is Non-Refundable - Any amendment or cancellation will be charged  <b>{{room?.Price[0]?.Amount}} {{room?.Price[0]?.Currency}}</b>  <br></span>   
+                                                                   </span>                                                                                                                                                                                                                
+                                                               
+                                                                  </ng-container>
+                                                                </div>
+                                                              </div>   
+                                                              <div class="cancellation_policy" *ngIf="booking_source ==='TLAPNO00003' && room?.CancellationPolicies.$t.length && !room.NonRefundable">    
+                                                                <h6 class="non-refund mt-1">Cancellation Policy :
+                                                                    <a class="cancelmore" (click)="showSubCancelPolicy(room.Index,room?.CancellationPolicies.$t)">View More <i class="fa fa-chevron-down"></i></a>
+                                                                 </h6>
+                                                                <div class="clearfix"></div>
+                                      
+                                                                <div *ngIf="visibleCancelPolicyIndex === room.Index" class="subheader text-left">
+                                                                  <ng-container >
+                                    
+                                                                      <span class="f12 wt600" style="line-height: 25px;
+                                                                      font-weight: 500;
+                                                                      font-size: 13px;">
+                                                                      <span >• Free Cancellation Until <b>{{updatedDateFrom | date: 'dd/MM/yyyy' }}</b> 12:00 AM  <b>{{hotel.LocalTimeZone}}</b> <br></span>
+                                                                      <span *ngFor="let policy of room?.CancellationPolicies.$t">
+                                                                        <span >• Cancellations from <b>{{policy.date_from | date: 'dd/MM/yyyy' }}</b> 12:01 AM <b>{{hotel.LocalTimeZone}}</b> will be charged <b>{{ policy?.charge }} {{policy?.currency}}</b><br></span>
+                                                                      </span>
+                                                                      <span >• No Show will be Charged <b>{{room?.Price[0]?.Amount}} {{room?.Price[0]?.Currency}}</b> <br></span>    
+                                                                      </span>                                                                                                                                                                                                                
+                                                               
+                                                                  </ng-container>
+                                                                </div>
+                                                              </div> 
+                                                              <div *ngIf="booking_source ==='TLAPINO00004' && room.CancellationPolicies !== '' && !room.NonRefundable "class=" non-refund mx-1 col-12 row mt-1">
+                                                              <div class="col-10 p-0 d-flex justify-content-start">
+                                                                <span style="color: #092e53;"  class="collapsable float-left" > 
+                                                                  <h6 class="cancellation-policy">Cancellation Policy:</h6>
+                                                                  <ng-container >
+                                                                        {{ room.CancellationPolicies }}
+                                                                      </ng-container>
+                                                                  <!-- {{ 
+                                                                    (expandedItemId === room.Index) 
+                                                                      ? getPolicies(room?.CancellationPolicies) 
+                                                                      : (getPolicies(room?.CancellationPolicies) | slice:0:135) + '..' 
+                                                                  }} -->
+                                                                </span>
+                                                              </div>
+                                                                <div class="col-2 p-0 d-flex justify-content-end ">
+                                                                  <a style="color: #092e53;"  class="redTxt" *ngIf="(room?.CancellationPolicies.length>140)" (click)="toggleSkil(room.Index)"  >
+                                                                    {{expandedItemId === room.Index ? 'Show Less': 'Show More'}} <i class="fa fa-chevron-down"></i>
+                                                                  </a>
+                                                                </div>
+                                                                
+                                                              </div>
+
+                                                              <div *ngIf="booking_source !=='TLAPINO00004' && booking_source !== 'TLAPNO00003' && room.cancellationPolicies !== '' && !room.NonRefundable "class=" non-refund mx-1 col-12 row mt-1">
+                                                                <div *ngIf="booking_source !== 'TLAPINO00007' && booking_source !== 'TLAPINO00006'" class="col-10 p-0 d-flex justify-content-start">
+                                                                  <span style="color: #092e53;"  class="collapsable float-left" > 
+                                                                    <h6 class="cancellation-policy">Cancellation Policy:</h6>
+                                                                    {{ 
+                                                                      (expandedItemId === room.Index) 
+                                                                        ? getPolicies(room?.cancellationPolicies) 
+                                                                        : getPolicies(room?.cancellationPolicies).length > 130
+                                                                        ? (getPolicies(room?.cancellationPolicies) | slice:0:135) + '...'
+                                                                        : getPolicies(room?.cancellationPolicies)
+                                                                    }}
+                                                                  </span>
+                                                                </div>
+                                                                  <div *ngIf="booking_source !== 'TLAPINO00007' && booking_source !== 'TLAPINO00006'" class="col-2 p-0 d-flex justify-content-end ">
+                                                                    <a style="color: #092e53;"  class="redTxt" (click)="toggleSkil(room.Index)"  >
+                                                                      {{expandedItemId === room.Index ? 'Show Less': 'Show More'}} <i class="fa fa-chevron-down"></i>
+                                                                    </a>
+                                                                  </div>
+
+                                                                  <div *ngIf="booking_source === 'TLAPINO00007'" class="col-10 p-0 d-flex justify-content-start">
+                                                                    <span style="color: #092e53;"  class="collapsable float-left" > 
+                                                                      <h6 class="cancellation-policy">Cancellation Policy:</h6>
+                                                                      <span *ngFor="let data of getPoliciesPlit(room?.cancellationPolicies)">
+                                                                          {{ data }} <br/>
+                                                                      </span>
+                                                                    </span>
+                                                                  </div>
+                                                                  <div *ngIf="booking_source === 'TLAPINO00006'" class="col-10 p-0 d-flex justify-content-start">
+                                                                    <span style="color: #092e53;"  class="collapsable float-left" > 
+                                                                      <h6 class="cancellation-policy">Cancellation Policy:</h6>
+                                                                      <span *ngFor="let data of getPolicieSplit(room?.cancellationPolicies)">
+                                                                          {{ data }} <br/>
+                                                                      </span>
+                                                                    </span>
+                                                                  </div>
+                                                                </div>
+
+                                                                <div *ngIf="booking_source !=='TLAPINO00004' && booking_source !== 'TLAPNO00003' && room.cancellationPolicies === '' && !room.NonRefundable "class=" non-refund mx-1 col-12 row mt-1">
+                                                                <div class="col-10 p-0 d-flex justify-content-start">
+                                                                  <span style="color: #092e53;"  class="collapsable float-left" > 
+                                                                    <h6 class="cancellation-policy">Cancellation Policy:</h6>
+                                                                    No refund policies.
+                                                                  </span>
+                                                                </div>
+                                                                </div>
+
+                                                                <h6 *ngIf="booking_source === 'TLAPINO00006'"class="non-refund mt-1 mx-1 row col-12">
+
+                                                                  <div class="col-10 p-0 d-flex justify-content-start">
+                                                                    <span style="color: #092e53;"  class="collapsable float-left" > 
+                                                                      <h6 class="cancellation-policy">Note :</h6>
+                                                                      {{ 
+                                                                        (expandedNoteId === room.Index) 
+                                                                          ? getNotes(room?.tariffNotes) 
+                                                                          : (getNotes(room?.tariffNotes) | slice:0:135) + '..' 
+                                                                      }}
+                                                                    </span>
+                                                                  </div>
+                                                                    <div class="col-2 p-0 d-flex justify-content-end ">
+                                                                      <a style="color: #092e53;"  class="redTxt" *ngIf="(room?.tariffNotes.length>140)" (click)="toggleNote(room.Index)"  >
+                                                                        {{expandedNoteId === room.Index ? 'Show Less': 'Show More'}} <i class="fa fa-chevron-down"></i>
+                                                                      </a>
+                                                                    </div>
+                                                                </h6>
+                                                               
+                                                            </div>
+                                                          </ng-container>
+                                                        </ng-container>
+                                                      </ng-template>
+                                                    </ngb-panel>
+                                                  </ng-container>
+                                             
+                                              
+                                                </ngb-accordion>
+                                                
+                                                
+                                          </div>
+                                          <div class="room_list text-center" *ngIf="hotel?.RoomDetails.length == 0">
+                                              No Rooms Available
+                                            </div>
+                                          <div class="col-md-3 pr-0 room_list1" style="text-align: center;" *ngIf="hotel?.RoomDetails.length > 0">
+                                              <div class="sticky-top">
+                                                  <ng-container *ngFor="let roomList of hotel?.RoomDetails; let index=index">
+                                                      <ng-container *ngFor="let rooms of roomList;">
+                                                         
+                                                    <div class="rooms_selection" *ngIf="rooms?.SelectedRoom">
+                                                  
+                                                              <div class="room_selected">
+                                                                  <span>Room {{index+1}} {{ booking_source === 'ZBAPINO00008' ? 'x' + rooms?.SelectedRoom?.Rooms : ''}} :</span> {{ booking_source ==='TLAPNO00003' ? rooms?.SelectedRoom?.RoomName : rooms?.SelectedRoom?.Description }}                                                                                                          
+                                                                  <div style="text-align: right;" style="position: absolute; top: 0px; right: 0px;">
+                                                                      <button  (click)="unselectRoom(index, rooms?.SelectedRoom?.Id)" class=" close-btn">X</button>
+                                                                      <!-- <button  (click)="unselectTboRoom(groupIndex, rooms.Id)" class=" close-btn">X</button> -->
+                                                                      </div>      
+                                                                  <div style="text-align: center;">
+                                                                      <span>{{rooms?.SelectedRoom?.Price[0]?.Currency}} {{rooms?.SelectedRoom?.Price[0]?.Amount | number: '1.2-2'}}</span>
+
+                                                                  </div>
+                                                              </div>
+                                                           
+                                                          </div>
+                                                   
+                                                      </ng-container>
+                                                  </ng-container>
+                                                  <div class="bottom_button">
+                                                      <ng-container *ngFor="let roomList of hotel?.RoomDetails; let index=index">
+                                                          <ng-container *ngFor="let rooms of roomList;">
+                                                              <div class="rooms_selection" *ngIf="rooms?.SelectedRoom ">
+                                                                  <div class="selected_price" *ngIf="index == 0">
+                                                                      {{rooms?.SelectedRoom?.Price[0]?.Currency}} {{totalPrice | number: '1.2-2'}}
+                                                                  </div>
+                                                              </div>
+                                                          </ng-container>
+                                                      </ng-container>
+                                                      <br />
+                                                      <button (click)="onBookNow(hotel, true)" [disabled]="!allRoomsSelected" class="btn btn-lg btn-success booknowroom">
+                                                          {{'Book Now'}}
+                                                      </button>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                     
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                    </div>
+
+
+                        <div class="tabs_hotel" #overview_tab id="overview_tab" style="border-radius: 0px 0px 10px 10px;">
+                            <h3>Overview</h3>
+
+                            <div class="col-12 p-0">
+                                <div class="d-flex">
+                                    <div class="col-md-5 pl-0">
+                                        <div class="seacure d-flex">
+                                        <img class="float-left mr-3" src="assets/images/liquid-soap.png" alt="" />
+                                        <div class="float-left">
+                                        <h5>Hygiene Plus</h5>
+                                        <p>This Property has self-selected and self-certified</p>
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 pl-0">
+                                        <div class="seacure d-flex">
+                                        <img class="float-left mr-3" src="assets/images/check-in-desk.png" alt="" />
+                                        <div class="float-left">
+                                        <h5>Check-in/Out</h5>
+                                        <p>Hassle free check-in</p>
+                                        </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-3 pl-0">
+                                        <div class="seacure d-flex">
+                                        <img class="float-left mr-3" src="assets/images/shield.png" alt="" />
+                                        <div class="float-left">
+                                        <h5>Cancellation Charges</h5>
+                                        <p>Cancellation Charges Apply</p>
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                    
+                                </div>
+                            </div>
+
+                            <p style="text-align: justify;" *ngIf="hotel?.HotelDescription != ''; else other">
+                                {{hotel?.HotelDescription}}
+                            </p>
+
+                           
+                            <ng-template #other>
+                                <p>
+                                    No Description Available
+                                </p>
+                            </ng-template>
+                            
+                            <!-- <div class="show-more" style="color: #1B9AD4;"><a (click)="shortDescText()">{{
+                                    showShortDescOverview ? 'Read more..': 'Read Less' }}</a>
+                            </div> -->
+                         
+                            
+                        </div>
+                        
+                        <div class="tabs_hotel"  #location id="location_tab" style="border-radius: 10px;">
+                            <h3>Location</h3>
+                        <div class="col-xs-12 map_Sec">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div #mapContainer id="map1" style="width: 100%; height:300px;"></div>
+                                </div>
+                                <!-- <div class="col-md-6">
+                                    <div class="whats_near">
+                                        <h4>What’s Nearby?</h4>
+                                        <div class="clearfix"></div>
+                                        <ul>
+                                            <li>3.7km from city centre</li>
+                                            <li>1 mile from the Walt Disney Concert Hall</li>
+                                            <li>11-minute walk from The Grammy Museum</li>
+                                        </ul>
+
+                                    </div>
+                                </div> -->
+
+                            </div>
+                        </div>
+                        </div>
+
+            
+                        <div class="tabs_hotel" #amenitytab id="amenities_tab">
+                          <h3>Amenities</h3>
+                          <div *ngIf="hotel.HotelAmenities.length > 0; else noAmenity">
+                         
+                          <div class="row">
+                              <ul class="list-unstyled col-md-4" *ngFor="let amenity of hotel.HotelAmenities">
+                                  <li style="padding: 5px 0px;"> <i class="fa fa-check-square" style="color: #a3a3a3;"> </i> {{amenity}}</li>
+                              </ul>
+                          </div>
+                      </div>
+                      <ng-template #noAmenity>
+                          
+                          No Amenities Found
+                  </ng-template>
+                      </div>
+
+                        <div class="tabs_hotel"  #policy_tab id="policy_tab">
+                          <h3>Hotel Policy</h3>
+                          <div *ngIf="booking_source ==='TLAPNO00003' && hotel.HotelPolicy[0];else defaultHotelPolicies "class="bplicy">
+                            <span  [innerHTML]="hotelPolicy"></span>
+                          </div>
+                          <!-- <ul *ngIf="booking_source ==='TLAPNO00003' && hotel.HotelPolicy[0];else defaultHotelPolicies "class="bplicy">
+
+                              <li  [innerHTML]="hotelPolicy">
+                               
+                              </li>
+                          </ul> -->
+                          <ng-template #defaultHotelPolicies>
+                            <ul>
+                             <li> Your booking confirmation number is required upon check in.</li>
+                             <li> Valid passport or personal ID copy is required upon check in.</li>
+                            <li> Early check in and late check out are based on the hotel availability and might be extra charged according to the hotel policy.</li>
+                              <li> Early check out will be charged the full booking amount.</li>
+                             <li> Pets are not allowed in this property.</li>
+                    
+                            </ul>
+                        </ng-template>
+                          <!-- <p *ngIf="booking_source ==='TLAPNO00003' && !hotel.HotelPolicy[0]">No Hotel Policy Found</p> -->
+                          <!-- <app-hotel-policy *ngIf="booking_source !=='TLAPNO00003'"></app-hotel-policy> -->
+                      </div>
+                      <div class="tabs_hotel"  #child_tab id="child_tab">
+                        <h3>Child Policy</h3>
+                        
+                        <div *ngIf="booking_source ==='TLAPNO00003' && hotel?.RoomDetails[0][0].Rooms[0].childrenPolicyDetails.length && hotel?.RoomDetails[0][0].Rooms[0].childrenPolicyDetails[0].description ;else defaultChildrenPolicies">
+                          <span [innerHTML]="childPolicy"></span>
+                        </div>
+                        <!-- <ul *ngIf="booking_source ==='TLAPNO00003' && hotel?.RoomDetails[0][0].Rooms[0].childrenPolicyDetails.length && hotel?.RoomDetails[0][0].Rooms[0].childrenPolicyDetails[0].description ;else defaultChildrenPolicies">
+                        
+                          <li [innerHTML]="hotel?.RoomDetails[0][0].Rooms[0].childrenPolicyDetails[0].description">
+
+
+                          </li>
+                        </ul> -->
+                        <ng-template #defaultChildrenPolicies>
+                          <ul>
+                              <li> To see correct prices and occupancy information, please add the number of children in your group and their ages to your search.</li>
+                              <li> Minimum check-in age is 18 years old. Children under 18 years can't be accommodated without being accompanied by an adult.</li>
+                              <li> Some hotels may require extra documents like children's date of birth certificates upon check-in.</li>
+                              <li> Baby cots and extra beds are based on hotel policy and availability at the time of arrival and might be extra charged. You need to check with the hotel before your arrival.</li>
+                          </ul>
+                      </ng-template>
+                        <!-- <td class="text-left" > </td> -->
+
+                        <!-- <p *ngIf="booking_source ==='TLAPNO00003' && !hotel?.RoomDetails[0][0].Rooms[0].childrenPolicyDetails.length">No Child Policy Found</p> -->
+                        <!-- <p *ngIf="booking_source ==='TLAPNO00003' && !hotel.HotelPolicy[0]">No Hotel Policy Found</p> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

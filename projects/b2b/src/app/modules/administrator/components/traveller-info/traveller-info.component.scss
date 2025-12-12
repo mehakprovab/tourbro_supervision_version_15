@@ -1,0 +1,71 @@
+.admin-travellerinfo-section{
+    height: 100%;
+    position: relative;
+    border: 1px solid #D2D2D2;
+    border-radius: 4px;
+    .info-sec{
+        padding: 15px 30px;
+        ul{
+            padding: 0;
+            margin: 0;
+            list-style-type: none;
+            li{
+                font: normal normal normal 13px/24px Asap;
+                letter-spacing: 0px;
+                color: #707070;
+                opacity: 1;
+                margin-bottom: 0;
+                margin-right: 5px;
+                label{
+                    margin-bottom: 0;
+                    min-width: 100px;
+                }
+            }
+        }
+    }
+    .btn-group{
+        position: absolute;
+        bottom: 0;
+        button{
+            &:hover{
+                color: #fff;
+            }
+        }
+    }
+}
+.custom-table-layout{
+    &.info-table{
+        th,td{
+            font: normal normal normal 12px/24px Asap;
+            letter-spacing: 0px;
+            opacity: 1;
+        }
+        thead{
+            tr{
+                border-bottom: 1px solid #D2D2D2;
+                height: 16px;
+                th{
+                    line-height: 22px;
+                    background: #F5F5F5 0% 0% no-repeat;
+                }
+            }
+            th{
+                color: #082B3A;
+            }
+        }
+        tbody{
+            tr{
+                border-bottom: 1px solid #D2D2D2;
+                &:hover{
+                    background: #F5F5F5 0% 0% no-repeat;
+                }
+            }
+            td{
+                color: #707070;
+            }
+        }
+    }
+}
+span{
+    padding-left: 12px;
+}

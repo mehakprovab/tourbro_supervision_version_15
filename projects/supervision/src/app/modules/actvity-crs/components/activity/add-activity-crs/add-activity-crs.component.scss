@@ -1,0 +1,128 @@
+.refundable-check {
+    height: 20px !important;
+}
+
+.additional-info-textarea {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+}
+
+.cancellation-lable {
+    font-weight: 700;
+    font-size: 17px;
+    text-decoration: underline;
+}
+
+.f-700 {
+    font-weight: 700;
+}
+
+.refund-policy-div {
+    background: #ced4da;
+    border-radius: 10px;
+}
+
+
+::ng-deep.cke_notification_warning {
+    display: none;
+}
+.cancellatin-terms-lable {
+    position: absolute;
+    bottom: 125px;
+}
+
+.remove-reset-btn {
+        background: #dc3545 !important;
+    border: #dc3545 !important;
+}
+
+::ng-deep.invalid-feedback{
+    display: none !important;
+}
+// span.invalid-feedback.ng-star-inserted {
+//     position: relative !important;
+//     left: 70px !important;
+// }
+
+.season-pricing-block {
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 15px;
+}
+
+.season-index{
+    font-size: 15px;
+    font-weight: 600;
+}
+
+
+
+.bannerImage{
+    @media(max-width: 767px){
+        margin-top: -8px;
+        width: 231px;
+    }
+}
+
+.imageList {
+    display: inline-flex;
+    margin: 5px;
+  }
+
+    .imageList {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+.galleryImageItem{
+    width: 180px; 
+    height: 180px; 
+    margin-left: 4rem;
+    @media(max-width: 767px){
+        width: 233px;
+        height: 151px;
+        margin-left: 5rem;
+    }
+  }
+
+  .imageGallery{
+    margin-left: 160px;
+    margin-top: -34px;
+    @media(max-width: 767px){
+        margin-left: -100px;
+        margin-top: -5px;
+    }
+  }
+
+    
+  .image-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .galleryImageItem {
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .delete-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: red;
+    background: none;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 18px;
+  }
+
+::ng-deep .multiselect-dropdown .dropdown-btn .dropdown-multiselect__caret {
+  right: -10px !important;
+}

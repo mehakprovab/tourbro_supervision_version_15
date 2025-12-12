@@ -1,0 +1,40 @@
+<div class="custom-navtabs" *ngIf="flightIcon">
+    <ul ngbNav #nav="ngbNav" class="nav-pills m-0" orientation="horizontal" [(activeId)]="activeIdString">
+        <li ngbNavItem="left" (click)="onSearchTypeChange('flight')">
+            <a ngbNavLink><img class="mr-1" src="assets/images/plane.svg" alt="flight" /> flight</a>
+            <ng-template ngbNavContent>
+                <app-search-form [moduleType]="module" (searchFormEvent)="receiveSearchForm($event)"></app-search-form>
+            </ng-template>
+        </li>
+
+        <li ngbNavItem="middle" (click)="onSearchTypeChange('hotel')">
+            <a ngbNavLink><img class="mr-2" src="assets/images/hotel.svg" alt="hotels" />hotels</a>
+            <ng-template ngbNavContent>
+               
+                <app-search-form [moduleType]="module" (searchFormEvent)="receiveSearchForm($event)"></app-search-form>
+            </ng-template>
+        </li>
+        <li ngbNavItem="activity" (click)="onSearchTypeChange('activity')">
+            <a ngbNavLink><img class="mr-2" src="assets/images/activity.svg" alt="activity" />activity</a>
+            <ng-template ngbNavContent>
+               
+                <app-search-form [moduleType]="module" (searchFormEvent)="receiveSearchForm($event)"></app-search-form>
+            </ng-template>
+        </li>
+        <li ngbNavItem="transfer" (click)="onSearchTypeChange('transfer')">
+            <a ngbNavLink><img class="mr-2" src="assets/images/transfer.svg" alt="transfer" />transfer</a>
+            <ng-template ngbNavContent>
+               
+                <app-search-form [moduleType]="module" (searchFormEvent)="receiveSearchForm($event)"></app-search-form>
+            </ng-template>
+        </li>
+        <li ngbNavItem="tour" (click)="onSearchTypeChange('tour')">
+            <a ngbNavLink><img class="mr-2" src="assets/images/holiday.svg" alt="tour" />tour</a>
+            <ng-template ngbNavContent>
+               
+                <app-search-form [moduleType]="module" (searchFormEvent)="receiveSearchForm($event)"></app-search-form>
+            </ng-template>
+        </li>
+    </ul>
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+</div>

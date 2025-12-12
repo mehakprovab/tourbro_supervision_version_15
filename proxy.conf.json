@@ -1,0 +1,11 @@
+{
+    "/antrip_webservices/*": {
+        "target": "https://booking247.com",
+        "secure": false,
+        "pathRewrite": {
+            "^/antrip_webservices": "antrip_webservices"
+        },
+        "logLevel": "debug",
+        "changeOrigin": true
+    }
+}

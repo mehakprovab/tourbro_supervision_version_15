@@ -1,0 +1,19 @@
+<ngb-tabset class="tabs-animated tabs-animated-shadow" (tabChange)="beforeChange(false)" #tabs
+    [activeId]="activeIdString">
+    <ngb-tab id="add_update_subagent">
+        <ng-template ngbTabTitle>
+            <span><i class="fa fa-edit"></i> &nbsp; Create/Update Sub Agent </span>
+        </ng-template>
+        <ng-template ngbTabContent>
+            <app-create-sub-agent (subagentUpdate)="triggerTab($event)"></app-create-sub-agent>
+        </ng-template>
+    </ngb-tab>
+    <ngb-tab id="subagent_list">
+        <ng-template ngbTabTitle>
+            <span><i class="fa fa-users"></i> &nbsp; Sub Agent List</span>
+        </ng-template>
+        <ng-template ngbTabContent>
+            <app-sub-agent-list (subagentUpdate)="triggerTab($event)"></app-sub-agent-list>
+        </ng-template>
+    </ngb-tab>
+</ngb-tabset>

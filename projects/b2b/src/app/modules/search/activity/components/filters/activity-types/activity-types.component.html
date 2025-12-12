@@ -1,0 +1,28 @@
+<div class="rangebox">
+    <button data-target="#collapse511" data-toggle="collapse" class="collapsebtn" type="button">DayTime</button>
+    <!-- <a style="cursor: pointer;font-size: 12px;" class="float-right" (click)="clearFilter()">Clear</a> -->
+    <form [formGroup]="regConfig" style="clear: both;">
+        <div id="collapse511" class="collapse show">
+            <div class="boxins" id="allairlines">
+                <ul class="locationul">
+                    <ng-container formArrayName="amenities">
+                        <ng-container *ngFor="let item of regConfig.get('amenities')['controls']; index as i"
+                            [formGroupName]="i">
+                            <li>
+                                <div class="squaredThree">
+                                    <input formControlName="isChecked"
+                                        (change)="filterByAmenities($event.target.checked, item.get('name').value)"
+                                        type="checkbox" name="check" class="airlinecheckbox"
+                                        id="{{item.get('name').value}}">
+                                    <label for="{{item.get('name').value}}"></label>
+                                </div>
+                                <label for="{{item.get('name').value}}" class="lbllbl">{{ item.get('name').value
+                                    }}</label>
+                            </li>
+                        </ng-container>
+                    </ng-container>
+                </ul>
+            </div>
+        </div>
+    </form>
+</div>

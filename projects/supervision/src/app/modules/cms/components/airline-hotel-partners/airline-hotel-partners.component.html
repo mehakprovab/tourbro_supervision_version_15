@@ -1,0 +1,31 @@
+<div class="">
+    <div class="">
+        <ngb-tabset class="tabs-animated tabs-animated-shadow" (tabChange)="beforeChange(false)" #tabs
+            [activeId]="activeIdString">
+            <ngb-tab id="add_update_airline">
+                <ng-template ngbTabTitle>
+                    <span><i class="fa fa-edit"></i> &nbsp; Add/Update Airline/Hotel Logo</span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <app-add-update-airline-partner (staticContentTab)="triggerTab($event)"></app-add-update-airline-partner>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab id="airline_list">
+                <ng-template ngbTabTitle>
+                    <span><i class="fa fa-users"></i> &nbsp; Airline List</span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <app-list-airline-partner (staticContentTab)="triggerTab($event)"></app-list-airline-partner>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab id="hotel_partner_list">
+                <ng-template ngbTabTitle>
+                    <span><i class="fa fa-users"></i> &nbsp; Hotel Partner List</span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <app-hotel-parters-list (staticContentTab)="triggerTab($event)"></app-hotel-parters-list>
+                </ng-template>
+            </ngb-tab>
+        </ngb-tabset>
+    </div>
+</div>

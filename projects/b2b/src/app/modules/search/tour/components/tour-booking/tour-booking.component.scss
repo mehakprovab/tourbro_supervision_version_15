@@ -1,0 +1,140 @@
+.card {
+  border-radius: 8px;
+}
+
+::ng-deep .theme-dark .theme_bg {
+  background: #042634;
+  float: left;
+  width: 100%;
+}
+
+::ng-deep .theme-dark .tabbable-line .nav-tabs { border:none !important}
+
+::ng-deep .theme-dark .tabs_hotel {background-color: #042634;
+  border: 1px solid #364750 !important;
+  box-shadow: -1px 2px 5px 0px #001c28 !important; }
+::ng-deep .theme-dark .lettrfty p { color: #fff !important;}    
+::ng-deep .theme-dark .map_Sec {
+  border-top: 1px solid #0b394c;
+}
+::ng-deep .theme-dark .whats_near ul li { color: #fff;}
+
+
+::ng-deep .theme-dark .room_loop{ background: #042634 !important;
+  border: 1px solid #38515c !important;}
+::ng-deep .theme-dark .room_opt h3, ::ng-deep .theme-dark .sleeps, ::ng-deep .theme-dark .room_faci span { color: #fff !important;}   
+::ng-deep .theme-dark .mat-dialog-container {    background: #193342 !important;
+  color: #fff !important;}
+::ng-deep .theme-dark .rating-block h2 small {color: #fff !important;} 
+::ng-deep .theme-dark .review-block-rate h4 {color: #fff !important;} 
+::ng-deep .theme-dark .review-block-name, ::ng-deep .theme-dark .review-block-description {color: #fff !important;} 
+::ng-deep .theme-dark .tabs_hotel ul li {color: #fff !important;}
+
+// .broucherButton{
+//         color: #ffffff; 
+//         padding: 14px 108px;
+//         background: #189AD3;
+//         border-radius: 15px;
+//         display: flex;
+//         float: inherit;
+//         margin-top: 45px;
+//         width: 336px;
+// }
+
+button {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 13px;
+  height: 47px;
+  padding: 0px 42px;
+  text-align: center;
+  background: #189AD3;
+  font-weight: 610;
+  margin-right: 10px;
+ // margin-left: 76%;
+}
+
+.sendButton button{
+  margin-left: 2% !important;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  width:53%;
+  margin-top: -25%;
+}
+
+
+.form-control{
+  width: 318% !important;
+  @media (max-width: 767px){
+      width: 100% !important;
+  }
+}
+
+.errorMessage{
+  color: red;
+  margin-left: 2%;
+  margin-top: -12px;
+  @media(max-width: 767px){
+      margin-left: 4%;
+  }
+}
+
+.info{
+  margin-left: 2%;
+  font-size: 14px;
+  @media(max-width: 767px){
+    margin-left: 4%;
+  }
+}
+
+.card-header{
+  display: inline-flex;
+  justify-content: space-between;
+}
+
+.card-header button{
+all: initial;
+}
+
+.close{
+  color: #898484 !important;
+  font-size: 28px !important;
+  height: 47px !important;
+  font-weight: 900 !important;
+}
+
+.BrochureAndPdf{
+  display: inline-flex;
+  margin-left: 73%;
+  margin-top: -1%;
+  @media (max-width:676px){
+    margin-left: 4%;
+  }
+}
+
+.emailBroucherButton{
+  font-size: 12px;
+  padding: 0 10px;
+  height: 33px;
+}
+.printBroucher{
+  font-size: 12px;
+  padding: 0 10px;
+  height: 33px;
+}
+.theme_bg{background-color: #F3F8FF;}
+

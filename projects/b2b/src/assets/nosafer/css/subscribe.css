@@ -1,0 +1,48 @@
+.subscribe { width: 100%; float: left; height: auto; position: relative; background: #fff; padding: 80px 0px;}
+.newsletter_Sec { border-radius: 10px; float: left; position: relative; width: 100%; overflow: hidden; background: #f5f5f5; }
+.subsc_img { width: 100%; height: 600px; }
+.subsc_img img { width: 100%; height: 100%; object-fit: cover; }
+.subscribe_right { float: left; width: 100%; padding: 30px; }
+.subscribe_right h3 { text-align: center; font-size: 30px; color: #1B9AD4; font-weight: 600; margin-top: 20px; }
+.subs_subtitle { display:block; font-size: 16px; color: #092C3B; text-align: center; margin-top: 20px; }
+
+.sub_email { width: 100%; display: table;}
+.email_subscribe { float: left; width: 60%; margin: 0px 0px;  }
+.email_subscribe label { font-size: 16px; color: #092C3B; }
+.email_subscribe .emailinp_sub {        width: 99%;
+    background: #fff;
+    border-radius: 4px;
+    padding: 7px 12px;
+    color: #092C3B;
+    border: 1px solid #ffffff;
+ }
+/* .email_submit { width: 120px; margin: auto; display: table; } */
+.email_submit .subscibe_btn { width: 40%;border-radius: 4px;padding: 8px; background: #e3a32e; border:none; color: #fff; }
+
+.find_us { border-top: 1px solid #2A4B59; float:left; width: 100%; padding:25px 15px;}
+.find_us h3 { text-align: center; font-size: 30px; color: #1B9AD4; font-weight: 600; margin-top: 20px; }
+.shareicons { display: table; margin: auto; margin-top: 20px;  }
+.shareicons a{ float: left; padding: 0px 10px; }
+.shareicons a img { width: 45px; }
+/*  */
+/* .container{
+    min-width: 1000px;
+    max-width: 1100px;
+} */
+::ng-deep .theme-dark .subscribe { background: #092C3B;}
+::ng-deep .theme-dark .newsletter_Sec { border-radius: 10px; float: left; position: relative; width: 100%; overflow: hidden; background: #0c3445; }
+::ng-deep .theme-dark .subs_subtitle { display:block; font-size: 16px; color: #fff; text-align: center; margin-top: 20px; }
+::ng-deep .theme-dark .email_subscribe label { font-size: 16px; color: #fff !important; }
+::ng-deep .theme-dark .email_subscribe .emailinp_sub { width: 100%; background: #2A4B59 !important; border-radius: 10px; padding: 8px 12px; color: #fff !important; border:none; }
+
+@media only screen and (max-width: 767px) {
+.subsc_img { height: 300px;}
+.sub_email { width: 100%; margin-bottom: 20px;}
+.subscribe { padding: 20px 0px;}
+.qodef-page-footer { padding:20px 0px !important;}
+.subscribe_right { padding: 15px !important;}
+.find_us { padding: 0px;}
+.shareicons a{ padding: 0px !important;}
+.qodef-page-footer { padding: 0px 15px !important;}
+.contactlink { padding-left: 0px !important; width: 100% !important; margin-top: 10px; margin-bottom: 15px;}
+}

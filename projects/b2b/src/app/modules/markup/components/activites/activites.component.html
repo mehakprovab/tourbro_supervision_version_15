@@ -1,0 +1,42 @@
+<div class="row bg-white">
+    <div class="bbottom py-3 col-md-12 col-lg-12">
+        <div class="clearfix">
+            <span class="float-left"> <i class="fa fa-edit"></i> <b style="font-size: 20px;"> Manage Activities Markup
+                </b></span>
+            <span class="float-right"> <strong>Note:</strong> Application Default Currency <b> GBP </b> </span>
+        </div>
+    </div>
+    <div class="p-0 bg-light col-md-12 col-lg-12">
+        <div class="card-header-tab card-header">
+            <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+                <span> Activities - Markup</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-12 py-3 bbottom">
+        <form class="form-inline clearfix">
+            <label class="font-weight-bold my-1 mr-3" for="markupType">Markup Type <sup class="text-danger">*</sup>
+            </label>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="markupType" name="markupType" class="custom-control-input">
+                <label class="custom-control-label" for="markupType">Plus(+USD)</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline mr-sm-3">
+                <input type="radio" id="customRadioInline2" name="markupType" class="custom-control-input">
+                <label class="custom-control-label" for="customRadioInline2">Percentage(%)</label>
+            </div>
+
+            <div class="form-group">
+                <label class="font-weight-bold" for="markupValue">Markup Value</label>
+                <input type="text" class="form-control form-control-sm mx-sm-3" id="markupValue"
+                    placeholder="Markup Value">
+            </div>
+
+            <div class="form-row py-2">
+                <button type="submit" class="btn btn-sm btn-primary my-1">Add</button> &nbsp;
+                <button type="submit" class="btn btn-sm btn-danger my-1">Reset</button>
+            </div>
+        </form>
+    </div>
+</div>

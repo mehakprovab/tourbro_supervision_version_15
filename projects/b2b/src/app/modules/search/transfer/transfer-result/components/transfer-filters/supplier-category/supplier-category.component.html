@@ -1,0 +1,27 @@
+<div class="rangebox">
+    <button data-target="#collapseSupplier" data-toggle="collapse" class="collapsebtn" type="button">Suppliers</button>
+    <form [formGroup]="regConfig" style="clear: both;">
+        <div id="collapseSupplier" class="collapse show">
+            <div class="boxins" id="allairlines">
+                <ul class="locationul">
+                    <ng-container formArrayName="supplierType">
+                        <ng-container *ngFor="let item of regConfig.get('supplierType')['controls']; index as i"
+                            [formGroupName]="i">
+                            <li>
+                                <div class="squaredThree">
+                                    <input formControlName="isChecked"
+                                        (change)="filterBySupplierType($event.target.checked, item.get('name').value)"
+                                        type="checkbox" name="check" class="airlinecheckbox"
+                                        id="{{item.get('name').value}}">
+                                    <label for="{{item.get('name').value}}"></label>
+                                </div>
+                                <label for="{{item.get('name').value}}" class="lbllbl">{{ item.get('name').value
+                                    }}</label>
+                            </li>
+                        </ng-container>
+                    </ng-container>
+                </ul>
+            </div>
+        </div>
+    </form>
+</div>

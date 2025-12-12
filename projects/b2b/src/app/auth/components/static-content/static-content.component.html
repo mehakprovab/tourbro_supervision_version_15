@@ -1,0 +1,8 @@
+<app-home-page-header></app-home-page-header>
+<div class="static-wrapper" style="min-height: 100vh;">
+    <div  *ngIf="staticData">
+    <h5 *ngIf="staticData">{{staticData.page_title}}</h5>
+    <div style="text-align: justify;" [innerHTML]="sanitizedPageDescription"></div>
+</div>
+</div>
+<app-home-page-footer (changeContent)="getContent($event)"></app-home-page-footer>

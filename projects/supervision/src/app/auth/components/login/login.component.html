@@ -1,0 +1,84 @@
+<div class="h-100">
+    <div class="h-100 no-gutters">
+        <div class="h-100 d-flex bg-white justify-content-center align-items-center col-md-12 col-lg-12">
+            <div class="mx-auto app-login-box col-sm-12 col-md-10 col-lg-9">
+                <img src="assets/images/l-logo.svg" alt="logo" />
+                <h4 class="mb-0">
+                    <div>Welcome back,</div>
+                    <span>Please sign in to your account.</span>
+                </h4>
+                <div class="divider"></div>
+                <div class="alert alert-danger" *ngIf="errorMessage">
+                    {{ errorMessage }}
+                </div>
+                <div>
+                    <form autocomplete="off" *ngIf="!showOtpComponent"class="needs-validation" [formGroup]="loginForm"novalidate
+                        (validSubmit)="onLogin()">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <div tabindex="-1" role="group"><label for="exampleEmail">Email</label><input
+                                            id="exampleEmail" formControlName="email" name="email" type="email"
+                                            placeholder="Email here..." class="form-control">
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-6">
+                                <fieldset class="form-group">
+                                    <div tabindex="-1" role="group"><label for="examplePassword">Password</label><input
+                                            formControlName="password" id="examplePassword" name="password"
+                                            type="password" placeholder="Password here..." class="form-control"></div>
+                                    <div *ngIf="loginForm.get('password').invalid && (loginForm.get('password').dirty || loginForm.get('password').touched) && errorMessage"
+                                        class="alert alert-danger">
+                                    </div>
+                                </fieldset>
+                            </div>
+                        
+                        </div>
+                        <div class="divider"></div>
+                        <div class="d-flex align-items-center">
+                            <div class="ml-auto"><a routerLink="/auth/forgot-password"
+                                    class="btn-lg btn btn-link">Recover
+                                    Password</a>
+                                <button type="submit" class="btn btn-red btn-lg">Login to Dashboard</button>
+                            </div>
+                        </div>
+                    </form> 
+                
+                    <form [formGroup]="VerifyOtpForm" (ngSubmit)="otpverify(VerifyOtpForm.value)" *ngIf="showOtpComponent">
+                    <div class="row justify-content-center">
+                      <div class="col-12 col-md-6 col-lg-4" style="min-width: 500px;">
+                        <div class="card bg-white mb-5 mt-5 border-0" style="box-shadow: 0 12px 15px rgba(0, 0, 0, 0.02);">
+                          <div class="card-body p-5 text-center">
+                            <h4>Verify</h4>
+                            <p>Your code was sent to you via email</p>
+                            <div class="otp-field mb-4">
+                              <ng-otp-input #ngOtpInput  (onInputChange)="onOtpChange($event)" [config]="config"></ng-otp-input>
+                            </div>
+                            <button type="submit" class="btn btn-primary mb-3">Verify</button>
+                            <p class="resend text-muted mb-0">
+                              Didn't receive code? <a (click)="requestAgain()" style="cursor: pointer;">Request again</a>
+                            </p>
+                            <div class="mb-3 login-footer">
+                                <a class="btn w-100" (click)="back()">Back</a>
+                            </div>
+                       
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    </form> 
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+
+
+ 
+
+

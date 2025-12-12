@@ -1,0 +1,26 @@
+<div>
+    <div class="filter-head">
+        <button data-target="#collapse5222" data-toggle="collapse" class="collapsebtn" type="button">Duration</button>
+    </div>
+    
+    <div *ngIf="tour?.length && tour?.length>0"  id="collapse5222" class="collapse show" style="clear: both;">
+        <div class="boxins">
+            <ul class="locationul">
+                <li *ngFor="let item of visibleDurations; let i = index">
+                    <div class="squaredThree">
+
+                        <input type="checkbox"  [attr.id]="'durationtype-'+ i"
+                        (change)="filterByDuration($event.target.checked,item)" 
+                        [checked]="selectedOptions.includes(item)" />
+                        <label [attr.for]="'durationtype-'+ i"></label>
+                    </div>
+                    <label [attr.for]="'durationtype-'+ i" class="lbllbl">{{item}}</label>
+                </li>
+            </ul>
+            <button class="btn btn-link col-12 d-flex p-0 ms-2 justify-content-end showamenities" (click)="toggleAmenities()">
+                    {{ showAllAmenities ? 'Show less' : 'Show more' }}
+            </button>
+        </div>
+    </div>
+
+</div>

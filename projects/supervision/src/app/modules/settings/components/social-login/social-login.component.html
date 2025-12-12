@@ -1,0 +1,52 @@
+<div class="card mb-3">
+    <div class="card-header-tab card-header">
+        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+            <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+            {{ 'Manage Social Logins' }}
+        </div>
+    </div>
+    <form>
+        <div class="table-responsive">
+            <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                <thead>
+                    <tr class="p-2">
+                        <th class="text-left text-nowrap" *ngFor="let header of displayColumn;">
+                            {{header}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- <tr *ngIf="noData">
+                        <td colspan="12">
+                            <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                        </td>
+                    </tr> -->
+                    <!-- <tr *ngIf="!noData && !socialLoginData.length">
+                        <td colspan="11">
+                            <h4 class="text-muted text-center">
+                                No Data Found!
+                            </h4>
+                        </td>
+                    </tr> -->
+                    <tr class="p-2" *ngFor="let data of socialLoginData; let i=index;">
+                        <td class="text-left text-muted">{{data['id']}}.</td>
+                        <td class="text-left"> {{data['socialnetwork']}} </td>
+                        <td scope="row" class="text-left">
+                            <span title="Slide for Active/Deactive">
+                                <mat-slide-toggle class="example-margin" [color]="''" [checked]="data['status']" [(ngModel)]="data.status" name="status{{i}}">
+                                </mat-slide-toggle>
+                            </span>
+                        </td>
+                        <td class="text-left"> <input type="text" class="form-control form-control-sm w-50"
+                                [(ngModel)]="data['authentication_key']" name="configid{{i}}"> </td>
+                        <td class="text-left">
+                            <button type="button" class="btn btn-primary btn-sm" (click)="update(data)">
+                                {{'Update'}}
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,87 @@
+.star_rtng {
+    font-size   : 12px;
+    display     : inline-block;
+    bottom      : 2px; letter-spacing: 4px; left: 0px;
+    position    : relative; color: #bcbcbc;
+}
+
+.star_rtng_clr {
+    color: #f99e00;
+}
+
+.trapezoid {
+    border-bottom: 60px solid #082E53;
+    border-left: 45px solid transparent;
+    border-right: 0px solid transparent;
+    height: 0;
+    width: 100%;
+    color: #fff;
+    text-align: center;
+    line-height: 60px;
+    font-size: 19px;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .nationality-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .agent-details {
+    position: relative;
+    left: 215px;
+  }
+
+  .flag-icon {
+    width: 20px;
+    height: 20px;
+  }
+  .policy-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+  }
+  .policy-text ul {
+    margin: 0 0 1em 1.5em;
+  }
+  .policy-text li {
+    margin-bottom: 0.5em;
+  }
+
+  @media print {
+    body, html {
+      visibility: hidden;
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+    }
+    table {
+      display: table;
+      width: 100%;
+      border-collapse: collapse;
+    }
+    thead {
+      display: table-header-group;
+    }
+    th {
+      background-color: #092e53 !important;
+      color: #fff !important;
+      -webkit-print-color-adjust: exact; 
+      print-color-adjust: exact;
+    }
+
+    #print_voucher {
+      position: absolute;
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+      box-sizing: border-box;
+    }
+  
+    @page {
+      margin: 0;
+      size: A4;
+    }
+  }

@@ -1,0 +1,151 @@
+<div class="sub-agent-container custom-table-layout">
+    <div class="add-traveller bg-white rounded px-4 pt-4">
+        <div class="title">
+            <h3>Add/Update Promo Code</h3>
+        </div>
+        <div class="custom-inline-form">
+            <form class="" [formGroup]="regConfig" autocomplete="off">
+                <div class="form-group required row">
+                    <label for="promo_code"class="required" class="col-sm-2 col-form-label">Promo Code</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control text-capitalize" id="promo_code" maxlength="20" 
+                        formControlName="promo_code">
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="promo_code"class="required" class="col-sm-2 col-form-label">Image</label>
+                    <div class="col-sm-4">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" accept=".png, .jpg, .jpeg" formControlName="promo_image" id="promo_image"
+                                (change)="onFileChange($event.target.files)">
+                    <label class="custom-file-label" #labelImport for="promo_image">Upload Image</label>
+                    <span class="text-danger">(Maximum upload file size: 1 MB)</span>
+                </div>
+                    </div>
+                </div>
+                <div class="form-group  row">
+                    <label for="description" class="col-sm-2 col-form-label">Description</label>
+                    <div class="col-sm-4">
+                        <textarea type="text" class="form-control text-capitalize" id="description" maxlength="120" formControlName="description" rows="4"></textarea>
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="category" class="col-sm-2 col-form-label">Category</label>
+                    <div class="col-sm-4">
+                        <select id="inputState" class="form-control" formControlName="category">
+                            <option selected value="" disabled>Choose...</option>
+                           <option value="Flight">Flight</option>
+                           <option value="Hotel" >Hotel</option>
+                           <!-- <option value="Car">Car</option> -->
+                           <option value="Activity">Activity</option>
+                           <option value="Transfer">Transfer</option>
+                           <option value="holiday">Holiday</option>
+                           <option value="bundle">Bundle Booking</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group required row cust-radio-group">
+                    <label class="col-sm-2 col-form-label">Discount Type</label>
+                    <div class="col-sm-4 d-flex align-items-center">
+                    <div class="col-auto">
+                        <label>
+                        <input type="radio" value="plus" formControlName="discount_type">
+                        <span class="design"></span>
+                        <span class="text">Plus(+ GBP)</span>
+                      </label>
+                    </div>
+                    <div class="col-auto">
+                      <label>
+                        <input type="radio" value="percentage" formControlName="discount_type">
+                        <span class="design"></span>
+                        <span style="margin-left:7px"class="text">Percentage(%)</span>
+                      </label>
+                    </div>
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="discount_value"class="required" class="col-sm-2 col-form-label">Discount Value</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control text-capitalize" id="discount_value" maxlength="20" 
+                        formControlName="discount_value">    
+                    </div>
+                </div>
+               <!-- <div class="form-group row cust-radio-group">
+                    <label class="col-sm-2 col-form-label">Usage Type*</label>
+                    <div class="col-sm-4 d-flex align-items-center">
+                    <div class="col-auto">
+                        <label>
+                        <input type="radio" value="Single" formControlName="use_type">
+                        <span class="design"></span>
+                        <span style="margin-left:7px" class="text">Single</span>
+                      </label>
+                    </div>
+                    <div class="col-auto">
+                      <label>
+                        <input type="radio" value="Multiple" formControlName="use_type">
+                        <span class="design"></span>
+                        <span style="margin-left:7px" class="text">Multiple</span>
+                      </label>
+                    </div>
+                    </div>
+                </div> -->
+                <div class="form-group  row" *ngIf="regConfig?.get('use_type').value=='Multiple'">
+                    <label for="promo_code"class="required" class="col-sm-2 col-form-label">Limitation</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="promo_code"  
+                        formControlName="limitation" minlength="1">
+    
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="start_date" class="col-sm-2 col-form-label">Start Date</label>
+                    <div class="col-sm-4">
+                        <span class="icon return_date" (click)="isOpen= !isOpen"></span>
+                        <input type="text" id="start_date" formControlName="start_date"
+                        class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy"
+                        bsDatepicker [bsConfig]="bsDateConf"  [minDate]="minDate"
+                        [isOpen]="isOpen" onkeydown="return false">
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="start_date" class="col-sm-2 col-form-label">Expiry Date</label>
+                    <div class="col-sm-4">
+                        <span class="icon return_date" (click)="isExpDateOpen= !isExpDateOpen"></span>
+                        <input type="text" id="start_date" formControlName="expiry_date"
+                        class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy"
+                        bsDatepicker [bsConfig]="bsDateConf" 
+                        [isOpen]="isExpDateOpen" onkeydown="return false">
+                    </div>
+                </div>
+                <div class="form-group row cust-radio-group">
+                    <label class="col-sm-2 col-form-label">Status</label>
+                    <div class="col-sm-4 d-flex align-items-center">
+                    <div class="col-auto">
+                        <label>
+                        <input type="radio" value="1" formControlName="status">
+                        <span class="design"></span>
+                        <span style="margin-left:7px" class="text">Active</span>
+                      </label>
+                    </div>
+                    <div class="col-auto">
+                      <label>
+                        <input type="radio" value="0" formControlName="status">
+                        <span class="design"></span>
+                        <span style="margin-left:7px" class="text">Inactive</span>
+                      </label>
+                    </div>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <div class="form-group required row">
+                        <div class="col-12 d-flex">
+                            <button class="btnStyle" type="submit" class="btn btn-primary icon-btn lg mr-4" (click)="onSubmit()">Save</button>
+                            <button class="btnStyle" type="reset" class="btn btn-danger icon-btn lg" (click)="onReset()">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,25 @@
+<div>
+    <div *ngIf="!updateDepature" class="checkboxNotification" style="text-align: center;">
+        <input type="checkbox" id="skipToNext">
+        <label for="skipToNext">Would you like to skip adding the departure date list?</label>
+    </div>   
+    <form [formGroup]="departureForm" (ngSubmit)="onDepartureSave()" autocomplete="off">
+       <div class="departureDateInput">
+            <label for="departureDate" class="font-weight-bold" >Add Date <sup
+                class="text-danger f-16"> * </sup> </label>
+            <input type="text " class="form-control" id="departureDate" maxlength="50"  [minDate]="minDate"
+             formControlName="departureDate" placeholder="dd/mm/yyyy" (bsValueChange)="departureDateSelected()" bsDatepicker [bsConfig]="bsDateConf">
+              
+        </div>
+        <div *ngIf="departureForm?.get('departureDate').errors && departureForm?.get('departureDate').touched">
+            <div *ngIf="departureForm?.get('departureDate').errors.required" class="errorMessage">
+              *Please enter date to save.
+            </div>
+        </div>
+        <div class="saveButton">
+            <button *ngIf="saveButtonEnable" type="submit" class="orangeButton"> Save</button>
+            <button *ngIf="!updateDepature" type="button" class="orangeButton" (click)="nextButton()"> Next</button>
+            <button *ngIf="updateDepature" type="button" class="orangeButton" routerLink="/tour-crs/tour-list"> Go back to Tour list</button>
+        </div>
+    </form>
+</div>

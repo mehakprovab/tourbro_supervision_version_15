@@ -1,0 +1,25 @@
+@media print {
+    .blackbg{
+        background-color:#000;
+       -webkit-print-color-adjust:exact; 
+    }
+    }
+    .trapezoid {
+        border-bottom: 60px solid #082E53;
+        border-left: 45px solid transparent;
+        border-right: 0px solid transparent;
+        height: 0;
+        width: 100%;
+        color: #fff;
+        text-align: center;
+        line-height: 60px;
+        font-size: 19px;
+        letter-spacing: 8px;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+
+      .icon-images {
+        width: 15px;
+        height: 15px;
+      }

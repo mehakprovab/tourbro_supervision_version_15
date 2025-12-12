@@ -1,0 +1,172 @@
+
+<div class="container p-0">
+    <form [formGroup]="hotelTypeForm" (ngSubmit)="handleValidSubmit()" class="needs-validation btop pt-0" novalidate>
+        <div class="card border-light p-0">
+            <div class="card-header">
+                Children Policy
+            </div>
+            <div class="card-body pl-0">
+                <fieldset form="user">
+                    <div class="d-flex col-12 row m-auto p-0 mb-3 pb-3" style="border-bottom: 1px solid #ddd;" >
+                        <div class="col-sm-3 d-flex justify-content-center mb-0">
+                            <div class="custom-control custom-checkbox custom-control-inline pl-4 pt-3">
+                                <input type="checkbox"
+                                    class="custom-control-input" id="calendar_days"  (change)="isAccomdationdata($event)"[checked]="hotelTypeForm.value.is_accommodation"name="example5"  />
+                                    <span class="custom-control-indicator"></span>
+                                <label class="custom-control-label" for="calendar_days">Accommodation </label>
+                            </div>
+                            </div>
+                            <div class="col-sm-9 mb-0 p-0" *ngIf="accomdationData">
+                        
+                                <div class="d-flex">
+                                    <div class="col-sm-4 mb-3">
+                                        <label class="control-label">Children Free Before</label>
+                                        <select formControlName="children_free_accom" class="form-control" (change)="updatePaidFromAgeOptions()">
+                                            <option *ngFor="let num of fromAgeArray" [value]="num">{{ num }}</option>
+                                          </select>
+                                      </div>
+                                      
+                                      <div class="col-sm-4 mb-3">
+                                        <label class="control-label">Paid Children From Age</label>
+                                        <select formControlName="accom_children_from_age" class="form-control" (change)="updatePaidToAgeOptions()">
+                                            <option *ngFor="let num of toAgeArray" [value]="num">{{ num }}</option>
+                                          </select>
+                                      </div>
+                                      
+                                      <div class="col-sm-4 mb-3">
+                                        <label class="control-label">Paid Children To Age</label>
+                                        <select formControlName="accom_children_to_age" class="form-control">
+                                          <option *ngFor="let num of finalAgeArray" [value]="num">{{ num }}</option>
+                                        </select>
+                                      </div>
+                                      
+                                    <!-- <div class="col-sm-2 mb-3" > -->
+                                        <!-- <label class=" control-label">
+                                            Charge 
+                
+                                        </label>
+                                        <input type="number" formControlName="accommodation_charge" class="form-control" 
+                                       />
+                                        <div *ngIf="submittedRoom && hotelRoom.no_of_rooms.errors" class="invalid-feedback">
+                                            <div *ngIf="hotelRoom.no_of_rooms.errors.required">No of rooms is required</div>
+                                        </div>
+                                    </div> -->
+                                    </div>
+                                    </div>
+                        </div>
+                        <div class="d-flex col-12 m-auto row p-0 mb-3 pb-3" style="border-bottom: 1px solid #ddd;" >
+                            <div class="col-sm-3 d-flex justify-content-center mb-0">
+                                <div class="custom-control custom-checkbox custom-control-inline pl-4 pt-3">
+                                    <input type="checkbox"
+                                        class="custom-control-input" id="calendar_days1"  (change)="isMealdata($event)"[checked]="hotelTypeForm.value.is_meals"name="example5"  />
+                                        <span class="custom-control-indicator"></span>
+                                    <label class="custom-control-label" for="calendar_days1"> Meals </label>
+                                </div>
+                                </div>
+                                <div class="col-sm-9 mb-0 p-0" *ngIf="mealData">
+                        
+                                    <div class="d-flex">
+
+
+                                        <div class="col-sm-4 mb-3">
+                                            <label class="control-label">Children Free Before</label>
+                                            <select formControlName="children_free_meals" class="form-control" (change)="updateMealPaidFromAgeOptions()">
+                                              <option *ngFor="let num of mealFromAgeArray" [value]="num">{{ num }}</option> 
+                                            </select>
+                                          </div>
+                                          
+                                          <div class="col-sm-4 mb-3">
+                                            <label class="control-label">Paid Children From Age</label>
+                                            <select formControlName="meal_children_from_age" class="form-control" (change)="updateMealPaidToAgeOptions()">
+                                              <option *ngFor="let num of mealToAgeArray" [value]="num">{{ num }}</option>
+                                            </select>
+                                          </div>
+                                          
+                                          <div class="col-sm-4 mb-3">
+                                            <label class="control-label">Paid Children To Age</label>
+                                            <select formControlName="meal_children_to_age" class="form-control">
+                                              <option *ngFor="let num of mealFinalAgeArray" [value]="num">{{ num }}</option>
+                                            </select>
+                                          </div>
+                                          
+                                      
+                                            </div>
+                                           
+                                  
+                                                <div class="col-sm-12 mb-3 p-0">
+                                                <div formArrayName="meals" class="form-row p-0 m-0">
+                                                    <div *ngFor="let meal of hotelOneData.meal_plans.split(','); let i = index" class="col-sm-4 mb-3">
+                                                      <label class="control-label">{{ meal }}</label>
+                                                      <input
+                                                        type="number"
+                                                        [min]="0"
+                                                        class="form-control"
+                                                        [formControlName]="i"
+                                                        placeholder="Enter value"
+                                                        (keypress)="numberOnly($event)"
+                                                      />
+                                                    </div>
+                                                  </div>
+                                                  </div>
+                                                
+                                           
+                                            <div class="form-group">
+                                                <label class="col-sm-6 control-label">Discount<span class="text-danger">*</span></label>
+                                                <div class="col-sm-6 position-relative d-flex">
+                                                <label class="control-label">
+                                                <input value="Amount" name="discount_type" formControlName="discount_type" type="radio"
+                                                 />
+                                            Minus(-)
+                                            </label>
+                                            <label class="form-check-label pl-4">
+                                                <input value="Percentage" name="discount_type"formControlName="discount_type" type="radio"
+                                                    />
+                                                Percentage(%)
+                                            </label>
+                                            </div>
+                                            <div class="col-sm-6">
+                                            <input formControlName="discount_value" placeholder="" type="number" [min]="0" onkeypress='return ( event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45 && this.value.indexOf("-") === -1 && this.selectionStart == 0)' class="form-control">
+                                            </div>
+                                       
+                                        </div>
+
+                                        </div>
+                                      
+                                
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">
+                                     Description
+                    
+                                </label>
+                                <div class="">
+                                <!-- <textarea type="text" formControlName="description" style="height: 90px !important;" class="form-control"
+                                    ></textarea> -->
+                                        <ckeditor type="text" formControlName="description" style="height: auto;"
+                    ></ckeditor>
+                                    </div>
+                              
+                            </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="hotel_type_name">
+                            Status
+                            <span class="text-danger">*</span>
+                        </label>
+                        <span title="Slide for Active/Deactive">
+                            <mat-slide-toggle class="example-margin" formControlName="status"
+                                [color]="''">
+                            </mat-slide-toggle>
+                        </span>
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    <div class="col-sm-8 col-sm-offset-4 btncontainer">
+                        <button type="submit" id="user_submit" class=" btn btn-success btnStyle">Save</button> &nbsp; &nbsp;
+                        <button type="reset" id="user_reset" class=" btn btn-secondary btnStyle"
+                            (click)="resetFrom()">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

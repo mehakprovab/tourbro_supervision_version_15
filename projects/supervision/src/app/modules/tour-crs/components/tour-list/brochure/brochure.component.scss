@@ -1,0 +1,18 @@
+.displayBlock{
+    width: auto;
+    display: block;
+}
+.mealPlan{
+    width: auto;
+}
+
+.priceDetails{
+    width: 100% !important;
+}
+
+.buttonAllign{
+    margin-left: 15.5rem;
+    @media(max-width:767px){
+        margin-left: unset;
+    }
+  }

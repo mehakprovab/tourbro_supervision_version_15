@@ -1,0 +1,40 @@
+table {
+    width: 100%;
+}
+th {
+    color: #012756;
+    font-size: 14px;
+}
+td {
+    color: #082b3a;
+    font-size: 12px;
+}
+.btnStyle {
+    padding: 5px 12px;
+    background: #012756;
+    border-radius: 5px;
+    color: #ffffff;
+    border: none;
+    height: 34px;
+}
+.topSectionContainer {
+    margin-bottom: 10px; width: 100%; float: left;
+    font-family: 'Asap';
+}
+.dropdownStyle {
+    padding: 0 0 0 10px;
+    font-weight: 600;
+}
+select#module {
+    padding: 8px;
+    border-radius: 5px;
+    margin-left: 10px;
+    // border: 1px solid #ffffff; //Commented since on first screen load "module type" dropdown list was getting white dorder
+}
+label{
+    color: #082B3A;
+    font-size: 16px;
+}
+.card{
+    font-family: 'Asap';
+}

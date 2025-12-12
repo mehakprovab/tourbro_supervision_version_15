@@ -1,0 +1,63 @@
+.nrm_input,
+.src_btn {
+    padding    : 0.5rem 0.75rem 0.5rem 2.2rem;
+    line-height: 1.7;
+    height     : calc(2.5em + 0.75rem + 2px);
+}
+
+.card {
+    padding    : 30px;
+    font-family: 'Asap';
+}
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex { padding: 0px !important; }
+.droplocations {
+    background: #fbfbfb;
+    position  : relative;
+    width     : 100%;
+    max-height: 300px;
+    overflow  : auto;
+    display   : block;
+}
+
+.droplocations li {
+    display   : block;
+    padding   : 10px 15px;
+    color     : #000;
+    font-size : 14px;
+    box-shadow: 0px 0px 1px 0px #8c8c8c;
+}
+
+.rmvBtn{
+    background: white;
+    border: none;
+    color: #e41818;
+    position: absolute;
+    top: 30px;
+    left: -6px; z-index: 9999;
+}
+::ng-deep .mat-form-field-wrapper{ padding-bottom: 0px !important; }
+.form-control{
+    padding: 15px 10px !important;
+    border: 1px solid #aeaeae !important;
+    border-radius: 5px !important; height: 48px;
+}
+
+
+
+table {
+    width: 100%;
+}
+table td{
+    width: 25%;
+}
+
+.form-group label {
+    color: black;
+}
+input[type=text]:focus {
+    border: #000000;
+}
+
+.customCenter .p-1:first-child .btn-primary { padding: 10px 15px !important; background: #fbc108 !important; border: 1px solid #fbc108 !important;}
+.customCenter .p-1:nth-child(2) .btn-primary { padding: 10px 15px !important; background: #012756 !important;}

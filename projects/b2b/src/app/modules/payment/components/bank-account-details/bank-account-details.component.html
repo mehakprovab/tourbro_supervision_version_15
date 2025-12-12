@@ -1,0 +1,66 @@
+<div class="mb-3 custom-font">
+    <div class="card-header-tab card-header">
+        <div class="card-header-title text-capitalize">
+            <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+            {{'Bank Account Details'}}
+        </div>
+    </div>
+    <form class="card">
+        <div class="p-2">
+            <div class="form-group form-inline mb-0">
+                Full text search:
+                <input class="form-control ml-2" type="text" name="searchTerm"
+                    (keyup)="applyFilter($event.target.value)" />
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-borderless table-striped table-hover" matSort (matSortChange)="sortData($event)">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-left" *ngFor="let header of displayColumn;"
+                            mat-sort-header="{{header.key}}">
+                            {{header.value }} </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="noData">
+                        <td colspan="7">
+                            <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                        </td>
+                    </tr>
+                    <tr
+                        *ngFor="let data of respData | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
+                        <td class="text-left text-muted">{{i+1}}.</td>
+                        <td class="text-left">
+                            <div class="widget-content p-0">
+                                <div class="widget-content-wrapper">
+                                    <div class="widget-content-left mr-3">
+                                        <div class="widget-content-left">
+                                            <img height="50" width="50" class="rounded" [src]="data['banklogo'] || 'https://travelomatix.in/extras/custom/TMX1512291534825461/images/bank_logo/1561127037.png'" alt="logo">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-left"> {{data['accountname']}} </td>
+                        <td class="text-left"> {{data['accountnumber']}} </td>
+                        <td class="text-left"> {{data['bankname']}} </td>
+                        <td class="text-left"> {{data['branchname']}} </td>
+                        <td class="text-left"> {{data['ifsccode']}} </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer pb-0">
+            <div class="d-flex w-100 justify-content-between">
+                <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                </ngb-pagination>
+                <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                    <option [ngValue]="2">2 items per page</option>
+                    <option [ngValue]="4">4 items per page</option>
+                    <option [ngValue]="6">6 items per page</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>

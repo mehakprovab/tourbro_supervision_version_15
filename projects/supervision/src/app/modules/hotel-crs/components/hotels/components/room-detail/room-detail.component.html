@@ -1,0 +1,307 @@
+<ng-container>
+    <div class="" *ngIf="showRoomList">
+        <div class="card-header-tab card-header p-0">
+            <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"></i> Room List
+            </div>
+        </div>
+        <div class="text-left m-2">
+           <p>Hotel List / {{hotelOne['hotel_name']}} / Manage Room & Rate</p>
+
+        </div>
+        <div class="text-right m-2">
+            <button class="btn btn-sm btn-primary mr-1" (click)="onClickAddRoom()">Add Room</button>
+            <button class="btn btn-sm btn-primary" (click)="goToHotelList()"
+                [routerLink]="['/hotels/hotel-crs-list']">Hotel List</button>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-left text-nowrap">Sl No.</th>
+                        <th class="text-left text-nowrap">Room Name</th>
+                        <th class="text-left text-nowrap">Capacity</th>
+                        <th class="text-left text-nowrap">Adults</th>
+                        <th class="text-left text-nowrap">Child</th>
+                        <th class="text-left text-nowrap">Infant</th>
+                        <th class="text-left text-nowrap">Status</th>
+                        <th class="text-left text-nowrap">Actions</th>
+                    </tr>
+                </thead>
+                <tr *ngIf="noData ">
+                    <td colspan="12">
+                        <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                    </td>
+                </tr>
+                <tr *ngIf="!noData && !roomList?.length">
+                    <td colspan="12">
+                        <h4 class="text-muted text-center">
+                            No Data Found!
+                        </h4>
+                    </td>
+                </tr>
+                <tbody>
+                    <tr *ngFor="let rooms of roomList; let i=index;">
+                        <td class="text-left text-muted">{{i+1}}.</td>
+                        <td class="text-left">{{rooms.room_name}}</td>
+                        <td class="text-left">{{rooms.occupancy}}</td>
+                        <td class="text-left">{{rooms.occupancy_adult}}</td>
+                        <td class="text-left">{{rooms.occupancy_child}}</td>
+                        <td class="text-left">{{rooms.occupancy_infant}}</td>
+                        <!-- <td class="text-left">{{rooms.max_adult_capacity}}</td>
+                        <td class="text-left">{{rooms.max_child_capacity}}</td> -->
+                        <td>
+                            <span title="Slide for Active/Deactive">
+                                <mat-slide-toggle readonly class="example-margin" [color]="''"
+                                    [checked]="rooms['room_status']" [(ngModel)]="rooms['room_status']"
+                                    name="status{{i}}" (click)="onStatusUpdate(rooms,i)">
+                                </mat-slide-toggle>
+                            </span>
+                        </td>
+                        <td class="text-left">
+                            <button (click)="onEdit(rooms)" class="btnStyle mr-2">
+                                <a title="Edit" class="p-1">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                            </button>
+                            <button (click)="goToRoom(rooms,'room')" class="btnStyle mr-2">
+                                <a title="upload" class="p-1">
+                                    Upload Image
+                                </a>
+                            </button>
+                            <button (click)="goToRoom(rooms,'price')" class="btnStyle mr-2">
+                                <a title="Price Info List" class="p-1">
+                                    <i class="fa fa-inr">Add Price</i>
+                                </a>
+                            </button>
+                            <button (click)="goToRoom(rooms,'price_management')" class="btnStyle mr-2">
+                                <a title="Price Info List" class="p-1">
+                                    Price Management
+                                </a>
+                            </button>
+                            <!-- <button (click)="goToRoom(rooms,'cancel')">
+                            <a title="Cancellation Policy List" class="p-1">
+                                <i class="fa fa-handshake">Cancellation</i>
+                            </a>
+                        </button> -->
+                            <button (click)="onDelete(rooms)" class="p-1 mt-1 text-primarys">
+                                <a title="Delete">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </button>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container" *ngIf="showRoomForm">
+        <form [formGroup]="roomDetailForm" (ngSubmit)="onSubmitRoomDetail()" class="needs-validation btop pt-4"
+            novalidate>
+            <fieldset form="hotelImage">
+                <div class="card-header-tab card-header p-0 mb-2">
+                    <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                        <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"></i> Add Hotel Room Details
+                    </div>
+                </div>
+                <input type="text" formControlName="hotel_id" hidden />
+                <div class="row">
+                    <div class="col-sm-4 mb-3 ">
+                        <label class=" control-label">
+                            Hotel Room Type
+                            <span class="text-danger">*</span>
+                        </label>
+
+                        <select formControlName="hotel_room_type_id" class="form-control"
+                            [ngClass]="{ 'is-invalid': submittedRoom && hotelRoom.hotel_room_type_id.errors }">
+                            <option value="" disabled selected>Select Room Type</option>
+                            <option *ngFor="let roomType of roomTypeList" [ngValue]="roomType.room_type_name">
+                                {{roomType.room_type_name}}
+                            </option>
+                        </select>
+                        <div *ngIf="submittedRoom && hotelRoom.hotel_room_type_id.errors" class="invalid-feedback">
+                            <div *ngIf="hotelRoom.hotel_room_type_id.errors.required">Room Type is required</div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 mb-3">
+                        <label class=" control-label">
+                            Room Name
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" formControlName="room_name" class="form-control"
+                            [ngClass]="{ 'is-invalid': submittedRoom && hotelRoom.room_name.errors }" />
+                        <div *ngIf="submittedRoom && hotelRoom.room_name.errors" class="invalid-feedback">
+                            <div *ngIf="hotelRoom.room_name.errors.required">Room Name is required</div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-sm-4 mb-3 ">
+                        <label class=" control-label">
+                            No of rooms
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="number" formControlName="no_of_rooms" class="form-control" 
+                        [ngClass]="{ 'is-invalid': submittedRoom && hotelRoom.no_of_rooms.errors }"/>
+                        <div *ngIf="submittedRoom && hotelRoom.no_of_rooms.errors" class="invalid-feedback">
+                            <div *ngIf="hotelRoom.no_of_rooms.errors.required">No of rooms is required</div>
+                        </div>
+                    </div> -->
+
+                    <div class="col-sm-4 mb-3">
+                        <label class=" control-label">
+                            Bed Type
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" formControlName="bed_type" class="form-control"
+                            [ngClass]="{ 'is-invalid': submittedRoom && hotelRoom.bed_type.errors }" />
+                        <div *ngIf="submittedRoom && hotelRoom.bed_type.errors" class="invalid-feedback">
+                            <div *ngIf="hotelRoom.bed_type.errors.required">Bed Type is required</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 mb-3 meal-plan-dropdown">
+                        <label class=" control-label">
+                            Meal Plans
+                            <span class="text-danger">*</span>
+                        </label>
+                        <ng-multiselect-dropdown #multiSelect formControlName="meal_type"
+                            [placeholder]="'Select Meal Plans'" [data]="filteredMealView"
+                            [settings]="dropdownSettingsForHotel" class="form-control meal-plan-dropdown">
+                        </ng-multiselect-dropdown>
+                        <div *ngIf="submittedRoom && hotelRoom.meal_type.errors" class="invalid-feedback">
+                            <div *ngIf="hotelRoom.meal_type.errors.required">Meal Plans are required</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 mb-3 meal-plan-dropdown">
+                        <label class=" control-label">Room Views
+                            <span class="text-danger">*</span>
+                        </label>
+                        <ng-multiselect-dropdown formControlName="room_view" [placeholder]="'Select View'"
+                            [data]="filteredViewList" [settings]="dropdownSettingsForview" class="form-control">
+                        </ng-multiselect-dropdown>
+                        <div *ngIf="submittedRoom && hotelRoom.room_view.errors" class="invalid-feedback">
+                            <div *ngIf="hotelRoom.room_view.errors.required">Room Views are required</div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-sm-6 mb-3">
+                        <label class=" control-label">
+                             Bed Type
+                            <span classs="text-danger">*</span>
+                        </label>
+                        <select formControlName="bedType" class="form-control"
+                            [ngClass]="{ 'is-invalid': submittedRoom && hotelRoom.bedType.errors }">
+                            <option value="" disabled selected>Select Bed Type</option>
+                            <option [Value]="single">Single Room</option>
+                            <option [Value]="double">Doublr Room</option>
+                        </select>
+                        <div *ngIf="submittedRoom && hotelRoom.bedType.errors" class="invalid-feedback">
+                            <div *ngIf="hotelRoom.bedType.errors.required">Please Select Bed Type</div>
+                        </div>
+                    </div> -->
+
+                    <div class="col-sm-4 mb-3">
+                        <label class="control-label">
+                            Room Max Occupancy <span class="text-danger">*</span>
+                        </label>
+                        <select formControlName="occupancy" class="form-control"
+                            (change)="validateOccupancy()"
+                            [ngClass]="{ 'is-invalid': submittedRoom && hotelRoom.occupancy.errors }">
+                            <option *ngFor="let num of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" [value]="num">{{ num }}</option>
+                        </select>
+                        <div *ngIf="submittedRoom && hotelRoom.occupancy.errors" class="invalid-feedback">
+                            <div *ngIf="hotelRoom.occupancy.errors.required">Occupancy is required</div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm-4 mb-3">
+                        <label class="control-label">
+                            Adult <span class="text-danger">*</span>
+                        </label>
+                        <select formControlName="occupancy_adult" class="form-control"
+                            (change)="validateOccupancy()"
+                            [ngClass]="{ 'is-invalid': submittedRoom && hotelRoom.occupancy_adult.errors }">
+                            <option *ngFor="let num of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" [value]="num">{{ num }}</option>
+                        </select>
+                        <div *ngIf="submittedRoom && hotelRoom.occupancy_adult.errors" class="invalid-feedback">
+                            <div *ngIf="hotelRoom.occupancy_adult.errors.required">Adult is required</div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm-4 mb-3">
+                        <label class="control-label">
+                            Child
+                        </label>
+                        <select formControlName="occupancy_child" class="form-control"
+                            (change)="validateOccupancy()"
+                            [ngClass]="{ 'is-invalid': submittedRoom && hotelRoom.occupancy_child.errors }">
+                            <option *ngFor="let num of [0, 1, 2, 3]" [value]="num">{{ num }}</option>
+                        </select>
+                        <div *ngIf="submittedRoom && hotelRoom.occupancy_child.errors" class="invalid-feedback">
+                            <div *ngIf="hotelRoom.occupancy_child.errors.required">Child is required</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 mb-3">
+                        <label class=" control-label">
+                            Infant
+                        </label>
+                        <select formControlName="occupancy_infant" class="form-control"
+                            [ngClass]="{ 'is-invalid': submittedRoom && hotelRoom.occupancy_infant.errors }">
+                            <option *ngFor="let num of [0, 1, 2]" [value]="num">{{ num }}</option>
+                        </select>
+
+                        <div *ngIf="submittedRoom && hotelRoom.occupancy_infant.errors" class="invalid-feedback">
+                            <div *ngIf="hotelRoom.occupancy_infant.errors.required">Room Name is required</div>
+                        </div>
+                    </div>
+                    <div *ngIf="occupancyError" class="text-danger">
+                        Total Adults and Children must not exceed the selected Occupancy!
+                    </div>
+                    <div class="col-sm-6 mb-3">
+                        <label class=" control-label">
+                            Room Amenities
+                            <span class="text-danger">*</span>
+                        </label>
+                        <ng-multiselect-dropdown #multiSelect formControlName="hotel_room_amenity_ids"
+                            [placeholder]="'Select Amenities'" [data]="roomAmenityList"
+                            [settings]="dropdownSettingsForRoom" class="form-control meal-plan-dropdown">
+                        </ng-multiselect-dropdown>
+                        <div *ngIf="submittedRoom && hotelRoom.hotel_room_amenity_ids.errors" class="invalid-feedback">
+                            <div *ngIf="hotelRoom.hotel_room_amenity_ids.errors.required">Room Amenities are required
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-sm-12 mb-3">
+                        <label class=" control-label"> -->
+                            <!-- Room Description -->
+                            <!-- <span class="text-danger">*</span> -->
+                        <!-- </label>
+                        <textarea type="text" formControlName="room_description" style="height: 130px !important;"
+                            class="form-control"
+                            [ngClass]="{ 'is-invalid': submittedRoom && hotelRoom.room_description.errors }"></textarea>
+                        <div *ngIf="submittedRoom && hotelRoom.room_description.errors" class="invalid-feedback">
+                            <div *ngIf="hotelRoom.room_description.errors.required">Please enter room description</div>
+                        </div>
+                    </div> -->
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 p-0 control-label" for="status">
+                        Room Status
+                        <span class="text-danger">*</span>
+                    </label>
+                    <span title="Slide for Active/Deactive">
+                        <mat-slide-toggle class="example-margin" formControlName="status" [color]="''">
+                        </mat-slide-toggle>
+                    </span>
+                </div>
+                <div class="text-left btncontainer">
+                    <button class="btn btn-sm btn-primary mr-1 btnStyle">Save</button>
+                    <button class="btn btn-sm btn-primary btnStyle" (click)="onbBackClick()">Back</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</ng-container>

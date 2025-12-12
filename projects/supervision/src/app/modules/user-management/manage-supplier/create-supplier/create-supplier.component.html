@@ -1,0 +1,117 @@
+<div class="sub-agent-container custom-table-layout">
+    <div class="add-traveller">
+        <div class="title">
+            <h3>User Profile</h3>
+        </div>
+        <div class="bg-white custom-inline-form mb-4 px-3 py-4 rounded">
+            <form class="" [formGroup]="regConfig" autocomplete="off">
+                <div class="form-group required row">
+                    <label for="title" class="col-sm-2 col-form-label">Title</label>
+                    <div class="col-sm-4">
+                        <select id="inputState" class="form-control capitalize" formControlName="title">
+                            <option selected value="" disabled >Choose...</option>
+                            <option *ngFor="let t of userTitleList" value="{{t.id}}">{{t.title}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="firstName"class="required" class="col-sm-2 col-form-label">First Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control text-capitalize" id="firstName" maxlength="250" 
+                     (keypress)="omitSpecialCharacters($event)"
+                        formControlName="first_name">
+    
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control text-capitalize" id="lastName" maxlength="250"
+                        (keypress)="omitSpecialCharacters($event)"
+                    formControlName="last_name">
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="phone" class="col-sm-2 col-form-label">Phone Number</label>
+                    <div class="col-sm-4">
+                            <input type="text" formControlName="phone_number" class="form-control" id="phone" minlength="8" maxlength="15" (keypress)="numberOnly($event)">
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="phone" class="col-sm-2 col-form-label">Alternate Phone Number</label>
+                    <div class="col-sm-4">
+                            <input type="text" formControlName="alternate_phone_number" class="form-control" id="phone" minlength="8" maxlength="15" (keypress)="numberOnly($event)">
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="country" class="col-sm-2 col-form-label">City</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="middleName" maxlength="250"
+                            formControlName="city">
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="country" class="col-sm-2 col-form-label">State</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="middleName" maxlength="250"
+                         formControlName="state">
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="country" class="col-sm-2 col-form-label">Country</label>
+                    <div class="col-sm-4">
+                        <select id="country" class="form-control text-capitalize" formControlName="country">
+                            <option selected disabled>Select Country</option>
+                            <option *ngFor="let c of countriesList" value="{{c.id}}">{{c.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="lastName" class="col-sm-2 control-label"> Job Title</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control text-capitalize" id="lastName" maxlength="250"
+                        (keypress)="omitSpecialCharacters($event)"
+                    formControlName="job_title">
+                    </div>
+                    </div>
+                <div class="form-group required row">
+                    <label for="email"class="required" class="col-sm-2 control-label">Email ID</label>
+                    <div class="col-sm-4">
+                <input formControlName="email" type="text" class="form-control" id="email" maxlength="250" 
+                >    
+                </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="email"class="required" class="col-sm-2 control-label">Alternate Email ID</label>
+                    <div class="col-sm-4">
+                <input formControlName="alternate_email" type="text" class="form-control" id="email" maxlength="250" 
+                >    
+                </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="user_type"class="required" class="col-sm-2 control-label">
+                        Supplier Type
+        
+                        <span class="text-danger">*</span>
+                    </label>
+                    <div class="col-sm-4">
+                    <select formControlName="supplier_type" class="form-control">
+                        <option value="" disabled selected>Select user type</option>
+                        <option Value="B2C">B2C</option>
+                        <option Value="B2B">B2B</option>
+                        <option Value="Both">Both</option>
+                  </select>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <div class="form-group required row">
+                        <div class="col-12 d-flex">
+                            <button class="btnStyle" type="submit" class="btn btn-primary icon-btn lg mr-4" (click)="onSubmit()">Save</button>
+                            <!-- <button class="btnStyle" type="reset" class="btn btn-danger icon-btn lg" (click)="onReset()">Reset</button> -->
+                        </div>
+                    </div>
+                </div>
+                </form>
+                </div>
+                </div>
+                </div>

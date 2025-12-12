@@ -1,0 +1,689 @@
+
+
+<div class="h-100">
+    <div class="no-gutters ">
+        <!-- login header start -->
+        <app-home-page-header></app-home-page-header>
+
+        <!-- login header end -->
+        <div class="login-max-screen-1260 row register-section" style="padding-left: 0 !important; background:#faf8f8;">
+            <!-- <div class="col-5 p-0">
+                <div class="register-banner">
+                    <div class="register-banner-bg" [ngStyle]="{'background-image': 'url(' + registerImage + ')'}">
+                        <div class="register-banner-content">
+                            <div class="entry-title">
+                                <h1>Welcome to Booking 247 for Business</h1>
+                                <div class="entry-content">
+                                    <p>The LARGEST platform to book & manage all your Business Travels!</p>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <div class="register-form-section col-12 p-5">
+                <div class="container p-0">
+                    <div class="register-form-title text-center">
+                        <alert></alert>
+                        <h3>DMC (Destination Management Company) - Registration Form</h3>
+                        <span>It only takes a few seconds to create your account ...</span>
+                    </div>
+                    <div class="register-form-fields">
+                        <form autocomplete="off" class="needs-validation" [formGroup]="registerForm" novalidate
+                            (ngSubmit)="onRegister(registerForm)">
+
+
+                            <section class="section1">
+                                <header>
+                                    <div class="bead"><span>1</span></div>COMPANY MANAGER DETAILS(PRIME ADMIN DETAILS)
+                                </header>
+                                <div class="content form-row">
+                                    <div class="col-md-2">
+                                        <fieldset class="form-group">
+                                            <label for="firstName" class="required">Title</label>
+                                            <div tabindex="-1" role="group">
+                                                <select id="inputState" class="form-control capitalize"
+                                                    formControlName="title">
+                                                    <option selected value="" disabled>Select</option>
+                                                    <option *ngFor="let t of userTitleList" value="{{t.titleId}}">
+                                                        {{t.titleName}}</option>
+                                                </select>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <fieldset class="form-group">
+                                            <label for="firstName" class="required">First Name</label>
+                                            <div tabindex="-1" role="group">
+                                                <input formControlName="first_name" id="firstName" type="text"
+                                                    (keypress)="omitSpecialCharacters($event)" placeholder="First Name"
+                                                    class="form-control">
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="lastName" class="required">Last Name</label>
+                                            <div tabindex="-1" role="group">
+                                                <input formControlName="last_name" type="text" placeholder="Last Name"
+                                                    (keypress)="omitSpecialCharacters($event)" class="form-control"
+                                                    formControlName="last_name">
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="phone" class="required">Phone Number</label>
+                                            <div tabindex="-1" role="group">
+                                                <!-- <input formControlName="phone" type="text" placeholder="Phone"
+                                                    class="form-control" (keypress)="numberOnly($event)"> -->
+
+                                                        <ngx-intl-tel-input 
+                                                        [cssClass]="'custom'" 
+                                                        [preferredCountries]="preferredCountries"
+                                                        [enableAutoCountrySelect]="false" 
+                                                        [enablePlaceholder]="true" 
+                                                        [searchCountryFlag]="true"
+                                                        [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                                        [selectFirstCountry]="false" 
+                                                        [selectedCountryISO]="CountryISO.UnitedKingdom"
+                                                        [maxLength]="15" 
+                                                        [tooltipField]="TooltipLabel.Name" 
+                                                        [phoneValidation]="false" 
+                                                        [separateDialCode]="false"
+                                                        name="phone" formControlName="phone">
+                                                        </ngx-intl-tel-input>
+
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="email" class="required">Email</label>
+                                            <div tabindex="-1" role="group">
+                                                <input formControlName="email" (keyup)="transformToLowerCase($event)"  style="text-transform: none;" type="email" placeholder="Email Id"
+                                                    class="form-control">
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <!-- <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="business_phone" class="required">Business Phone</label>
+                                            <div tabindex="-1" role="group">
+                                                <input formControlName="business_phone" type="text" placeholder="Email Id"
+                                                    class="form-control" (keypress)="numberOnly($event)">
+                                            </div>
+                                        </fieldset>
+                                    </div> -->
+                                </div>
+                            </section>
+
+                            <section class="section2">
+                                <header>
+                                    <div class="bead"><span>2</span></div>SUPPLIER COMPANY DETAILS
+                                </header>
+                                <div class="content form-row">
+
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="businessName" class="required"> Registered Legal Name</label>
+                                            <div tabindex="-1" role="group">
+                                                <input formControlName="business_name" type="text"
+                                                    placeholder="Registered Legal Name" class="form-control">
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="businessName" class="required"> Company Trade Name</label>
+                                            <div tabindex="-1" role="group">
+                                                <input formControlName="business_trade_name" type="text"
+                                                    placeholder="Company Trade Name" class="form-control">
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6">  
+                                        <fieldset class="form-group">
+                                            <label for="businessName"> Chain Name - if operationg under chain</label>
+                                            <div tabindex="-1" role="group">
+                                                <input formControlName="business_chain_name" type="text"
+                                                    placeholder="Chain Name -if operating under chain"
+                                                    class="form-control">
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="businessName"> Company Website</label>
+                                            <div tabindex="-1" role="group">
+                                                <input formControlName="business_website" type="text"
+                                                    placeholder="Company Website" class="form-control">
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="businessName" class="required"> Registration Number</label>
+                                            <div tabindex="-1" role="group">
+                                                <input formControlName="registration_number" type="text"
+                                                    placeholder="Registration Number" class="form-control">
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="businessNumber" class="required">Country Of Registration</label>
+                                            <div tabindex="-1" role="group">
+                                                <select formControlName="country_of_registartion" class="form-control">
+                                                    <option value='' disabled>Country Of Registration</option>
+                                                    <option *ngFor="let c of registerCountries" [ngValue]="c.name">
+                                                        {{c.name}}</option>
+                                                </select>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="businessName" class="required"> Tax Registration Number</label>
+                                            <div tabindex="-1" role="group">
+                                                <input formControlName="tax_reg_no" type="text"
+                                                    placeholder="Tax Registration Number" class="form-control">
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="businessNumber">License (IATA/ABTA/ATOL, ..etc)</label>
+                                            <div tabindex="-1" role="group">
+                                                <select formControlName="affiliations"
+                                                    class="form-control text-capitalize" id="affiliations"
+                                                    (change)="onSelect($event.target.value)">
+                                                    <option value="">Select License</option>
+                                                    <option [value]="reqType.name" *ngFor="let reqType of requestTypes">
+                                                        {{ reqType.name }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6" *ngIf="showAffiliationNumber">
+                                        <fieldset class="form-group">
+                                            <label for="affiliation_number" class="required">Affiliation Number</label>
+                                            <div tabindex="-1" role="group">
+                                                <input formControlName="affiliation_number" type="text"
+                                                    class="form-control text-capitalize" id="amount"
+                                                    placeholder="Affiliation Number" 
+                                                    (keypress)="numbersOnly($event)" />
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="phone" class="required">Office Phone Number</label>
+                                            <div tabindex="-1" role="group">
+                                                <!-- <input formControlName="office_number" type="email"
+                                                    placeholder="Office Number" class="form-control" (keypress)="numberOnly($event)">  -->
+
+                                                    <ngx-intl-tel-input 
+                                                        [cssClass]="'custom'" 
+                                                        [preferredCountries]="preferredCountries"
+                                                        [enableAutoCountrySelect]="false" 
+                                                        [enablePlaceholder]="true" 
+                                                        [searchCountryFlag]="true"
+                                                        [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                                                        [selectFirstCountry]="false" 
+                                                        [selectedCountryISO]="CountryISO.UnitedKingdom"
+                                                        [maxLength]="15" 
+                                                        [tooltipField]="TooltipLabel.Name" 
+                                                        [phoneValidation]="false" 
+                                                        [separateDialCode]="false"
+                                                        name="office_number" formControlName="office_number">
+                                                        </ngx-intl-tel-input>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <!-- <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="email" class="required">Alternative company Email ID</label>
+                                            <div tabindex="-1" role="group">
+                                                <input formControlName="office_number" type="email"
+                                                    placeholder="Office Number" class="form-control"
+                                                    (keypress)="numberOnly($event)">
+                                            </div>
+                                        </fieldset>
+                                    </div> -->
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                          <label for="email" class="required">Alternative Company Email Id</label>
+                                          <div tabindex="-1" role="group">
+                                            <input 
+                                              formControlName="alter_email" 
+                                              type="email"
+                                              placeholder="Alternative Company Email Id" 
+                                              class="form-control"
+                                              (keyup)="transformToLowerCase($event)">
+                                          </div>
+                                        </fieldset>
+                                      </div>
+                                      
+
+                                </div>
+                            </section>
+
+                            <section>
+                                <header>
+                                    <div class="bead"><span>3</span></div>SUPPLIER COMPANY ADDRESS (MAILING ADDRESS)
+                                </header>
+
+                                <div class="content row">
+
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="firstName" class="required">Address Line1 (Building number, Street)</label>
+
+                                            <input type="text" formControlName="address1"
+                                                placeholder="Address Line 1 (Building number, Street, Area, ...etc)"
+                                                class="form-control text-capitalize" id="firstName" maxlength="250">
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="firstName">Address line 2</label>
+
+                                            <input type="text" formControlName="address2"
+                                                class="form-control text-capitalize" id="firstName" maxlength="250">
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="selectCountry" class="required">Select Country</label>
+                                            <div tabindex="-1" role="group">
+                                                <select formControlName="country" class="form-control"
+                                                    (change)="onCountryChange($event)">
+                                                    <option value="">Select Country</option>
+                                                    <option *ngFor="let country of registerCountries"
+                                                        [value]="country.id">{{ country.name }}</option>
+                                                </select>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="selectState" class="required">Select State</label>
+                                            <div tabindex="-1" role="group">
+                                                <select formControlName="state" class="form-control"
+                                                    (change)="onStateChange($event)">
+                                                    <option value="">Select State</option>
+                                                    <option *ngFor="let state of filteredStates" [value]="state.id">{{
+                                                        state.name }}</option>
+                                                </select>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="cityInput" class="required">City</label>
+                                            <select formControlName="city" class="form-control"
+                                                >
+                                                <option value="">Select State</option>
+                                                <option *ngFor="let city of filteredCities" [value]="city.name">{{
+                                                    city.name }}</option>
+                                            </select>
+
+                                            <!-- <input type="text" formControlName="city" placeholder="City" autocomplete="off"
+                                                class="form-control text-capitalize" id="cityInput"
+                                                (input)="filterCities($event.target.value)" [attr.list]="'city-list'"
+                                                maxlength="250" />
+                                            <datalist id="city-list">
+                                                <option *ngFor="let city of filteredCities" [value]="city.name">
+                                                </option>
+                                            </datalist> -->
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="firstName" class="required">Zip/Postal Code</label>
+
+                                            <input type="text" formControlName="zip_code"
+                                                placeholder="Zip / Postal Code" class="form-control text-capitalize"
+                                                id="firstName">
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </section>
+
+
+                            <section>
+                                <header>
+                                    <div class="bead"><span>4</span></div>SUPPLIER ACCOUNTING DETAILS
+                                </header>
+
+                                <div class="content form-row">
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="firstName" class="required">Accounting Email ID</label>
+
+                                            <input type="text" formControlName="acc_email"
+                                                class="form-control" id="firstName"
+                                                placeholder="Accounting Email Id">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="email" class="required">Accounting Tel. Number</label>
+                                            <div tabindex="-1" role="group">
+                                                <input formControlName="acc_tel_no" type="email"
+                                                    placeholder="Accounting Tel. Number" class="form-control"
+                                                    (keypress)="numberOnly($event)">
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="firstName">Bank Name</label>
+
+                                            <input type="text" formControlName="bank_name"
+                                                class="form-control text-capitalize" id="firstName"
+                                                placeholder="Bank Name">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="firstName">Bank Branch Address</label>
+
+                                            <input type="text" formControlName="branch_addrs"
+                                                class="form-control text-capitalize" id="firstName"
+                                                placeholder="Bank Branch Address">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="firstName">Bank Account Holder Name </label>
+
+                                            <input type="text" formControlName="acc_holder_name"
+                                                class="form-control text-capitalize" id="firstName"
+                                                placeholder="Bank Account Holder Name">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="firstName">Account Number </label>
+
+                                            <input type="text" formControlName="acc_number"
+                                                class="form-control text-capitalize" id="firstName"
+                                                placeholder="Account Number" (keypress)="numberOnly($event)">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="firstName">IBAN </label>
+
+                                            <input type="text" formControlName="iban"
+                                                class="form-control text-capitalize" id="firstName" placeholder="IBAN">
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="firstName">Swift Code </label>
+
+                                            <input type="text" formControlName="swift_code"
+                                                class="form-control text-capitalize" id="firstName"
+                                                placeholder="Swift Code">
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </section>
+
+
+                            <section>
+                        <header>
+                          <div class="bead"><span>5</span></div>SELECTED SERVICES
+                        </header>
+
+                        <div class="content form-row">
+                            <div class="col-md-4" *ngFor="let services of selectedSuppliers">
+                                <fieldset class="form-group">
+                                    
+                                    <div class="col-12 services-placeholder" >
+                                        <span class="p-2">{{services}}</span>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                         </div>
+                      </section>
+
+                      <section>
+                        <header>
+                          <div class="bead"><span>6</span></div>DISTRIBUTION CHANNEL
+                        </header>
+
+                        <div class="content form-row">
+
+                            <div class="col-md-1">
+                                <fieldset class="form-group">
+                                   <label>
+                                        <input type="radio" value="B2C" required name="supplier_type" formControlName="supplier_type">
+                                        <span class="design"></span>
+                                        <span class="text" style="margin-left: 4px;">B2C</span>
+                                    </label>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-1">
+                                <fieldset class="form-group">
+                                    <label>
+                                        <input type="radio" value="B2B" required  name="supplier_type" formControlName="supplier_type">
+                                        <span class="design"></span>
+                                        <span class="text" style="margin-left: 4px;">B2B</span>
+                                    </label>
+                                    <!-- <label >B2B</label>
+                                    <div tabindex="-1" role="group">
+                                        <input type="radio" required  name="supplier_type" (click)="selectdistributionChannel('B2B')"  formControlName="supplier_type"
+                                            class="selectdistributionChannel"></div> -->
+                                </fieldset>
+                            </div>
+                            <div class="col-md-1">
+                                <fieldset class="form-group">
+                                    <label>
+                                        <input type="radio" value="B2C,B2B" required name="supplier_type" formControlName="supplier_type">
+                                        <span class="design"></span>
+                                        <span class="text" style="margin-left: 4px;">Both</span>
+                                    </label>
+                                    <!-- <label>Both</label>
+                                    <div tabindex="-1" role="group">
+                                        <input type="radio" required name="supplier_type" (click)="selectdistributionChannel('Both')"  formControlName="supplier_type"
+                                            class="selectdistributionChannel"></div> -->
+                                </fieldset>
+                            </div>
+
+                         </div>
+                      </section>
+
+                        <section>
+                            <header>
+                            <div class="bead"><span>7</span></div>SELECT CURRENCY
+                            </header>
+
+                            <div class="content form-row">
+                                <div class="col-md-6">
+                                    <fieldset class="form-group">
+                                        <label for="selectState" class="required">Select Currency</label>
+                                        <div tabindex="-1" role="group">
+                                            <select formControlName="supplierCurrency" class="form-control"
+                                                >
+                                                <option value="">Select Currency</option>
+                                                <option *ngFor="let state of currencyList" [value]="state.currency">{{
+                                                    state.currency }}</option>
+                                            </select>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </section>
+
+
+                            <section>
+                                <header>
+                                    <div class="bead"><span>8</span></div>LEGAL SUPPLIER AGREEMENT CONFIRMATION
+                                </header>
+
+                                <div class="content form-row">
+
+                                    <div class="col-md-12 nopad">
+                                        <div class="checkcontent" style="overflow: inherit;">
+                                            <div class="squaredThree">
+                                                <input type="checkbox" value="0" name="confirmCheckbox"
+                                                    class="filter_airline" id="squaredThree1" aria-required="true"
+                                                    formControlName="confirmCheckbox" required />
+                                                <label for="squaredThree1"></label>
+                                            </div>
+                                            <label for="squaredThree1"
+                                                style="display: inline; font-size: 14px;color: #082B3A;">
+                                                <strong>Accept Booking247.com's Supplier's
+                                                    <a (click)="openStaticPage('Service Provider T&Cs')"
+                                                        class="colorbl">Terms and Conditions</a>
+                                                    <a data-toggle="modal" (click)="openStaticPage('Privacy policy')"
+                                                        class="colorbl">, Privacy Policy</a>
+                                                    and <a data-toggle="modal"
+                                                        (click)="openStaticPage('Cancellation & refund policy')"
+                                                        class="colorbl"> Refund Policy</a>.
+                                                </strong>
+                                            </label>
+                                        </div>
+                                        <div class="checkcontent" style="overflow: inherit;">
+                                            <small class="text-danger"
+                                                *ngIf="submitted && registerForm['controls']['confirmCheckbox'].errors?.required">
+                                                Please Check The Agreement
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </section>
+
+
+
+
+                            <div class="row">
+
+                                <!--                            
+                          
+                              <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="affiliations" >Affiliation </label>
+
+                                    <select formControlName="affiliations" class="form-control text-capitalize" id="affiliations"
+                                        (change)="onSelect($event.target.value)">
+                                        <option selected disabled>Select affiliations</option>
+                                        <option [value]="reqType.name" *ngFor="let reqType of requestTypes">{{reqType.name}}</option>
+                                    </select>
+                         
+                            </div>
+                            </div>
+                            
+          
+                            <div class="col-md-6" *ngIf="showAffiliationNumber">
+                            <div class="form-group">
+                                <label for="affiliation_number" >Affiliation Number 
+                                </label>
+                            
+                                  <input formControlName="affiliation_number" type="text" class="form-control text-capitalize" id="amount" placeholder="affiliation_number" maxlength="12" (keypress)="numbersOnly($event)"/>
+                           
+                              </div>
+                              </div>
+                            -->
+
+
+
+                                <!-- <div class="col-md-12 mt-4">
+                                <fieldset class="form-group pb-1">
+                                    <div class="custom-control custom-checkbox">
+                                        <input id="confirmCheckbox" name="confirmCheckbox" type="checkbox" name="check"
+                                            class="custom-control-input" value="0" formControlName="confirmCheckbox">
+                                            <label for="squaredThree1"></label>
+                                        <label  >
+                                            Accept our 
+                                            <a  (click)="onTerms()" style="letter-spacing: 0px;
+    color: #012756;">Terms and Conditions.</a>
+                                        </label></div>
+                                </fieldset>
+                            </div> -->
+
+                                
+                            </div>
+                            <div class="center-section col-md-12">
+                                <button type="submit" class="btn">Submit Request</button>
+                            </div>       
+                           <br>
+                            <div class="col-md-12 mt-1">
+                                <fieldset class="form-group">
+                                    <div class="sign-in">
+                                        <h5 class="mb-0">
+                                            Already have an account?
+                                            <a class="c-pointer" href="https://booking247.com/dmc/#/auth/login" target="_blank" rel="noopener noreferrer">
+                                                Please Sign in
+                                              </a> 
+                                        </h5>
+                                    </div>
+                                    <hr>
+                                    <!-- <div class="forgot-password">
+                                    <a class="c-pointer" (click)="openDialog()">Forgot Password</a>
+                                </div> -->
+                                </fieldset>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+   
+        <app-home-page-footer></app-home-page-footer>
+    </div>
+</div>

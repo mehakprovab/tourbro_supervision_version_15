@@ -1,0 +1,67 @@
+<div *ngIf="oneWayCalendarList" class="col-md-12 nopad onewaycalendar" id="flexi_fare_result">
+    <div class="table-responsive">
+        <table class="table table_flxi">
+            <thead>
+                <tr>
+                    <th *ngFor="let flight of oneWayCalendarList">
+                        <span>Departure</span><br>
+                        {{ flight.FlightDate | date: "dd-MM-yyyy" }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td *ngFor="let flight of oneWayCalendarList"(click)="handleOneFlightClick(flight)" class="cltd"><span class="airline">
+                            {{flight.OperatorName}}-({{flight.FlightNumber}})[{{flight?.OperatorCode}}]</span><br><span
+                            class="number">{{flight.Currency}}
+                            {{flight.TotalDisplayFare}}</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<div *ngIf="roundTripCalendarList && roundTripCalendarList.length >0" class="col-md-12 nopad roundcalendar" id="flexi_fare_result">
+    <div class="table-responsive">
+        <table class="table table_flxi">
+            <thead>
+                <tr>
+                    <!-- Render the header for departure dates -->
+                    <th></th>
+                    <th *ngFor="let date of departureDates">
+                        <span>Departure</span><br>
+                        {{ date | date: "dd-MM-yyyy" }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let returnDate of returnDates">
+                    <tr>
+                        <th class="ylw">
+                            <span>Return</span><br>
+                            {{ returnDate | date: "dd-MM-yyyy" }}
+                        </th>
+                        <ng-container *ngFor="let departureDate of departureDates">
+                            <td *ngIf="getFlight(departureDate, returnDate)" (click)="handleFlightClick(getFlight(departureDate, returnDate))">
+                                <!-- Check if there is a flight for the given departure and return date -->
+                                    <span class="airline">
+                                        {{ getFlight(departureDate, returnDate)?.OperatorName }}-({{ getFlight(departureDate, returnDate)?.FlightNumber }})[{{ getFlight(departureDate, returnDate)?.OperatorCode }}]
+                                    </span><br>
+                                    <span class="number">
+                                        {{ getFlight(departureDate, returnDate)?.Currency }} {{ getFlight(departureDate, returnDate)?.TotalDisplayFare }}
+                                    </span>
+                                    </td>
+                                <td class="noflights" *ngIf="!getFlight(departureDate, returnDate)">
+                                    No Flights
+                            </td>
+                        </ng-container>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+</div>
+

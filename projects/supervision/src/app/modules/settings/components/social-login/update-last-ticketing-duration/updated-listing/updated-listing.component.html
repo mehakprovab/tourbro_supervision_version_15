@@ -1,0 +1,79 @@
+<div class="mb-3 btop">
+    <br />
+    <div class="table-btn-group mb-3 row">
+        <div class="col-12 p-0">
+            <div class="form-group mb-0 col-sm-3 p-0 float-right has-search">
+                <span class="fa fa-search form-control-feedback"></span>
+                <input class="form-control text-capitalize" type="text" name="Search" [(ngModel)]="searchText" autocomplete="off"
+                    placeholder="Search">
+            </div>
+        </div>
+    </div>
+    <div class="card-body" style="font-size: 16px;">
+        <div class="mb-3">
+            <form>
+                <div class="table-responsive">
+                    <table class="table table-borderless table-striped table-hover" matSort
+                        (matSortChange)="sortData($event)">
+                        <thead>
+                            <tr class="p-2">
+                                <th scope="col" class="text-left text-nowrap" *ngFor="let header of displayColumn">
+                                    {{ header }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="!noData && (!updateLastTicketingDataList.length || (updateLastTicketingDataList | filter:searchText).length === 0)">
+                                <td colspan="11">
+                                  <h4 class="text-muted text-center">No Data Found!</h4>
+                                </td>
+                              </tr>
+                              <tr *ngIf="noData">
+                                <td colspan="11">
+                                    <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                                </td>
+                            </tr>
+                            <tr
+                                *ngFor="let data of updateLastTicketingDataList | filter:searchText  | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
+                                <td class="text-left text-muted">{{ i+1}}.</td>
+                                <td class="text-left">{{ data.name }}</td>
+                                <td *ngIf="editable && i==selectedIndex" [contentEditable]="editable"
+                                    (input)="onInputChange($event, 'duration', data)" class="text-left editable"
+                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57">{{
+                                    data.last_ticketing_time }}</td>
+                                <td *ngIf="(!editable) || (editable && i!=selectedIndex)" class="text-left">{{
+                                    data.last_ticketing_time }}</td>
+                                <td class="text-left buttontdsize">
+                                    <button *ngIf="editable && i==selectedIndex" class="btn btn-sm btn-primary mr-1"
+                                        (click)="onSaveRecords(data)">{{'Save'}}
+                                    </button>
+                                    <button *ngIf="editable && i==selectedIndex" class="btn btn-sm btn-primary mr-1"
+                                        (click)="editable=false">{{'Cancel'}}
+                                    </button>
+                                    <button *ngIf="(!editable) || (editable && i!=selectedIndex)"
+                                        class="btn btn-sm btn-primary mr-1" (click)="onUpdateTime(data,i)">{{'Update'}}
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer pb-0">
+                    <div class="d-flex w-100 justify-content-between">
+                        <ngb-pagination [collectionSize]="collectionSize" [maxSize]="12" [rotate]="true"
+                            [boundaryLinks]="true" [(page)]="page" [pageSize]="pageSize">
+                        </ngb-pagination>
+                        <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                            <option [ngValue]="50">50 items per page</option>
+                            <option [ngValue]="100">100 items per page</option>
+                            <option [ngValue]="200">200 items per page</option>
+                            <option [ngValue]="500">500 items per page</option>
+                            <option [ngValue]="700">700 items per page</option>
+                            <option [ngValue]="1000">1000 items per page</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

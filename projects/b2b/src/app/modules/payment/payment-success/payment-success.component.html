@@ -1,0 +1,56 @@
+<div style="background:#eee; width:100%; position:relative;min-height: 680px;">
+    <div style="background:#eee; max-width: 850px; margin: 0px auto; padding:20px; width:100%; position:relative;">
+      <div class="printformClass" style=" -webkit-print-color-adjust: exact;" id="print_voucher" #print_voucher>
+        <table cellpadding="0" border-collapse="" cellspacing="0" width="100%"
+          style="font-size:12px; font-family: 'Open Sans', sans-serif; border-radius: 15px; margin:10px auto;background-color:#fff; padding:20px;border-collapse:separate; color: #000;
+          min-height: 565px;">
+          <tbody style="-webkit-print-color-adjust: exact">
+            <tr>
+              <td style="line-height:15px;padding:0;">&nbsp;</td>
+            </tr>
+            <tr>
+              <td colspan="4" style="padding:0; border-radius: 5px; overflow: hidden;">
+                <table cellspacing="0" cellpadding="5" width="100%" style="font-size:12px; padding:0;">
+                  <tbody>
+                    <tr>
+                      <td colspan="2"
+                        style="color:#f00; padding: 10px;">
+                        <img class="failed" src="assets/images/success.png" alt="" />
+                        <span class="text-uppercase" style="vertical-align:middle;font-size:22px; display: block; text-align: center; font-weight: 600; ">
+                          Payment status
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="nrm_input" colspan="2" style="line-height: normal; height: auto;  text-align:center; color: #004363;">
+                        <span>
+                           {{message}}
+                          <span *ngIf="app_reference"><br>Your Booking Reference No is <span style="color: #2fa4e7; font-weight: 600;">{{app_reference}}</span></span>
+                          <span *ngIf="order_id"><br>Your Order ID is <span style="color: #2fa4e7; font-weight: 600;">{{order_id}}</span></span>
+                          <span *ngIf="updateWalletResponse && updateWalletResponse[2]"><br>Updated Balance: <span style="color: #2fa4e7; font-weight: 600;">{{updateWalletResponse[2]?.RemainingBalance}}</span></span>
+                        </span>
+                      </td>
+                    </tr>
+
+                    <tr>
+                        <td class="nrm_input" colspan="2" style="line-height: normal; height: auto;  text-align:center; color: #004363;">
+                          <a routerLink="/dashboard" class="balance-back btn">
+                           Go to Home
+                          </a>
+                        </td>
+                      </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td style="line-height:15px;padding:0;">&nbsp;</td>
+            </tr>
+            <tr>
+              <td style="line-height:15px;padding:0;">&nbsp;</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

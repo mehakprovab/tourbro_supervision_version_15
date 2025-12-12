@@ -1,0 +1,376 @@
+.imgStyle {
+    width : 100%;
+    height: 90px;
+}
+
+.text-center {
+    margin: auto;
+}
+
+.para_sentnce {
+    display  : block;
+    font-size: 13px;
+    margin   : 15px 0;
+    overflow : hidden;
+}
+#paymentModal .modal-dialog {
+    margin-top: 90px !important;
+}
+.comon_backbg {
+    background   : #fff none repeat scroll 0 0;
+    border-radius: 7px;
+    float        : left;
+    overflow     : hidden;
+    margin       : 0 0 33px;
+    width        : 100%;
+    box-shadow   : rgba(0, 0, 0, 0.08) 0px 0px 2px 0px, rgba(0, 0, 0, 0.16) 0px 2px 8px 0px;
+}
+
+.hotl_details_name,
+.hotl_details_check {
+    border-bottom: 1px solid #ddd;
+}
+
+.hotl_details_name img {
+    border-radius: 10px;
+}
+
+.inpagehed {
+    padding: 15px 16px !important;
+    float: left;
+    width: 100%;
+    font-weight: 700;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    font-size: 15px;
+}
+
+.hotl_details_name,
+.hotl_details_check {
+    border-bottom: 1px solid #ddd;
+}
+
+.hotl_details_name img {
+    border-radius: 10px;
+}
+
+.hotl_details_name h5 {
+    font-size: 18px;
+    line-height: normal;
+    color: #092e53;
+}
+
+.hotl_details_name p {
+    color: #707070;
+    font-size: 13px;
+    margin-bottom: 0px;
+    font-weight: normal;
+}
+
+.hotl_details_check .cusromgray {
+    font-size: 13px;
+    color: #000000;
+    font-weight: 500;
+}
+
+.hotl_details_check .cusromBlue {
+    font-size: 14px;
+    color: #092e53;
+    font-weight: 600;
+}
+
+.trooms_desc {
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+    color: #001D46;
+}
+
+.grand_tot {color: #092e53;
+    font-size: 16px;}
+
+.totel_price {
+    font-size: 18px;
+    margin   : 15px 0px;
+    color    : #292929;
+}
+
+.cancel_policy_book h3 {
+    font-size  : 16px;
+    font-weight: bold;
+    color      : #292929;
+}
+
+.trooms_desc h5 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #092e53;
+}
+
+.btn_confirm {
+    background: #fbc10a !important; font-size: 14px !important; color:#fff; height: 41px;
+    border    : 1px solid #fbc10a !important;
+}
+
+.btn_confirm:focus{ box-shadow: none !important;}
+
+// .inpagehed {
+//     color        : #26282C;
+//     background   : #e3eaf1 none repeat scroll 0 0;
+//     border-bottom: 1px solid #ddd;
+//     font-size    : 17px;
+//     padding      : 10px 15px !important;
+//     font-weight  : 600;
+//     margin-bottom: 0px;
+// }
+
+.all_oters {
+    display      : block;
+    overflow     : hidden;
+    padding      : 0 15px;
+    margin-bottom: 10px;
+}
+
+// For payment 
+.cc-selector input {
+    margin            : 0;
+    padding           : 0;
+    -webkit-appearance: none;
+    -moz-appearance   : none;
+    appearance        : none;
+}
+
+.cc-selector-2 input {
+    position: relative;
+    z-index : 999;
+    top     : 2px;
+}
+
+.valign-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.bg_back{ background: rgba(0,0,0,0.6);}
+.title_bg{background: #082E53;}
+.title_bg h5 { color: #fff;}
+.close span { color: #0c0c0c;}
+.book_btn { background: #fbc10a; color: #fff; padding:9px 22px; border:1px solid #fbc10a; font-size: 15px;}
+.book_btn1 { background: #092e53; color: #fff; padding:9px 22px; border:1px solid #092e53; font-size: 15px;}
+.book_btn:focus, .book_btn1:focus { box-shadow: none !important; }
+
+// .nagad {
+//     background-image: url('../../../../../../../assets/images/nagad-logo.png');
+//     width           : 130px;
+// }
+
+// .bKash {
+//     background-image: url('../../../../../../../assets/images/bKash-logo.png');
+//     width           : 130px;
+// }
+
+// .sslCommerz {
+//     background-image: url('../../../../../../../assets/images/ssl-thumb.jpg');
+//     width           : 130px;
+// }
+
+.cc-selector-2 input:active+.drinkcard-cc,
+.cc-selector input:active+.drinkcard-cc {
+    opacity: .9;
+}
+
+.cc-selector-2 input:checked+.drinkcard-cc,
+.cc-selector input:checked+.drinkcard-cc {
+    -webkit-filter: none;
+    -moz-filter   : none;
+    filter        : none;
+}
+
+.drinkcard-cc {
+    cursor            : pointer;
+    background-size   : contain;
+    background-repeat : no-repeat;
+    display           : inline-block;
+    width             : 100px;
+    height            : 60px;
+    -webkit-transition: all 100ms ease-in;
+    -moz-transition   : all 100ms ease-in;
+    transition        : all 100ms ease-in;
+    // -webkit-filter: brightness(1) grayscale(1) opacity(.6);
+    //    -moz-filter: brightness(1) grayscale(1) opacity(.6);
+    //         filter: brightness(1) grayscale(1) opacity(.6);
+
+    -webkit-filter: none;
+    -moz-filter   : none;
+    filter        : none;
+}
+
+.drinkcard-cc:hover {
+    -webkit-filter: none;
+    -moz-filter   : none;
+    filter        : none;
+}
+
+/* Extras */
+a:visited {
+    color: #888
+}
+
+a {
+    color          : #444;
+    text-decoration: none;
+}
+
+p {
+    margin: 0px 0px 5px !important;
+    font-size: 14px;     font-weight: 500; color: #092e53;
+}
+
+a.paysubmit {
+    color: #fff !important;
+}
+
+.paysubmit {
+    height                     : 42px;
+    background                 : #092e53;
+    /* box-shadow              : 1px 1px 3px 0px #c8c6c6; */
+    border                     : 1px solid #092e53;
+    position                   : relative;
+    cursor                     : pointer;
+    display                    : inline-block;
+    overflow                   : hidden;
+    -webkit-user-select        : none;
+    -moz-user-select           : none;
+    -ms-user-select            : none;
+    user-select                : none;
+    -webkit-tap-highlight-color: transparent;
+    vertical-align             : middle;
+    z-index                    : 1;
+    font-weight                : 500;
+    -webkit-transition         : .3s ease-out;
+    transition                 : .3s ease-out;
+    line-height                : 40px;
+    text-align                 : center;
+    letter-spacing             : .5px;
+    padding                    : 0 40px;
+    border-radius              : 8px;
+    color                      : #fff;
+    font-size                  : 16px;
+    width                      : auto;
+    margin-right               : 15px;
+}
+
+// * { font-family:monospace; }
+.cc-selector-2 .payment_label {
+    display: table;
+    margin : 0px auto;
+}
+
+.cc-selector-2 label {
+    display: table;
+    margin : auto;
+}
+
+span.cc {
+    color: #6d84b4
+}
+
+@media only screen and (max-width: 767px) {
+    .mobile_row {
+        margin: 0px !important
+    }
+
+    .marin_zero {
+        margin: 0px !important;
+    }
+
+    .hotl_details_name {
+        padding: 0px 15px;
+    }
+
+    .mpad {
+        padding: 0px !important;
+    }
+
+    .imgStyle {
+        height       : 250px !important;
+        margin-bottom: 15px;
+    }
+
+    .btn_confirm {
+        margin : 15px auto !important;
+        display: table;
+    }
+
+    #paymentModal .modal-dialog {
+        margin-top: 90px !important;
+    }
+
+    .hotl_details_check p {
+        margin-right: 10px !important;
+        float       : left;
+    }
+
+    .mobile_elements p {
+        margin-left : 10px !important;
+        margin-right: 10px !important;
+        float       : left;
+    }
+
+    .mobile_position {
+        position: relative !important;
+        top     : 0px !important;
+        padding : 0px 15px !important;
+    }
+
+    ::ng-deep header {
+        display: none !important;
+    }
+
+    ::ng-deep footer {
+        display: none !important;
+    }
+
+}
+
+.elements_bg {background-color: #fff !important; border:1px solid #ddd;}
+
+::ng-deep .theme-dark .theme_bg { background: #042634;
+    float: left;
+    width: 100%;}
+::ng-deep .theme-dark .theme_bg .comon_backbg {background: #092c3b none repeat scroll 0 0;}
+::ng-deep .theme-dark .theme_bg .elements_bg {background-color: #092c3b !important; border:1px solid #2e4650; color: #fff;}
+::ng-deep .theme-dark .theme_bg .hotl_details_check .cusromgray { color: #fff !important;}
+::ng-deep .theme-dark .theme_bg .trooms_desc{ color: #fff !important; }
+::ng-deep .theme-dark .theme_bg .cusromGrey { color: #fff !important; }
+.star_rtng {
+    font-size   : 12px;
+    display     : inline-block;
+    bottom      : 2px; letter-spacing: 4px; left: 0px;
+    position    : relative; color: #bcbcbc;
+}
+
+.star_rtng_clr {
+    color: #f99e00;
+}
+
+#confirmModal .modal-dialog {
+    margin-top: 90px;
+    max-width: 700px !important;
+}
+
+.policy-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #092e53 !important;
+  }
+  .policy-text ul {
+    margin: 0 0 1em 1.5em;
+  }
+  .policy-text li {
+    margin-bottom: 0.5em;
+  }
+  .view-more {
+    color: #06164c;
+    cursor: pointer;
+  }

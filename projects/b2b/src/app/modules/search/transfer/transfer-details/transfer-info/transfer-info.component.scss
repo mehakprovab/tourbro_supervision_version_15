@@ -1,0 +1,175 @@
+.hotelDetailsBtn {
+    background: #F1F1F1 !important;
+    border-radius: 25px;
+    padding: 10px;
+    margin-top: 8px;
+}
+
+.star_rtng {
+    font-size: 12px;
+    display: inline-block;
+    bottom: 2px;
+    letter-spacing: 4px;
+    left: 10px;
+    position: relative;
+    color: #bcbcbc;
+}
+
+.star_rtng_clr {
+    color: #f99e00;
+}
+
+/* Solid border */
+hr.solid {
+    border-top: 1px solid #bbb;
+    width: 100%;
+}
+
+.hotel_name {
+    font-size: 23px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.hotel_location {
+    font-size: 14px;
+    line-height: 19px;
+    color: #656565;
+}
+
+.modal {
+    -webkit-transform: translate(0, -50%);
+    -o-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    top: 58%;
+    margin: 0 auto;
+}
+
+.modal-backdrop {
+    opacity: 0.5 !important;
+}
+
+.modal-backdrop.show {
+    opacity: -99.5 !important;
+}
+
+.overlay {
+    position: fixed;
+    /* Positioning and size */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(128, 128, 128, 0.5);
+    /* color */
+    display: block;
+    /* making it hidden by default */
+}
+
+@media only screen and (max-width: 767px) {
+    .paysubmit {
+        margin-bottom: 12px !important;
+    }
+
+    .ai-fs {
+        margin: 0px !important;
+    }
+
+    .padlt {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    .mobile_left {
+        text-align: left !important;
+    }
+
+    .mobile_right {
+        text-align: right !important;
+    }
+
+    .mobile_row {
+        margin: 0px;
+    }
+
+    .mobile_pad7 {
+        padding: 0px 7px !important;
+    }
+
+    .mobile_pad {
+        padding: 0px 15px !important;
+    }
+
+    .mobile_nopad {
+        padding: 0px 0px !important;
+    }
+
+    .mobile_top {
+        margin-top: 12px;
+    }
+
+    .mobile_bot {
+        margin-bottom: 12px;
+    }
+
+    .mob_show {
+        display: inline;
+    }
+
+    .mob_hide {
+        display: none;
+    }
+
+    .review_txt {
+        text-align: center;
+    }
+
+    .star_rtng {
+        padding-left: 0px !important;
+    }
+
+    .address_loc {
+        font-size: 13px;
+    }
+
+    .form-group label {
+        font-size: 12px;
+    }
+
+    .cusromGrey {
+        padding-top: 0px;
+        font-size: 16px;
+    }
+
+    .mobile_botpad {
+        padding-bottom: 12px !important;
+    }
+
+    .hotelDetailsBtn {
+        margin-top: 0px !important;
+    }
+
+    ::ng-deep #sync2 {
+        display: none;
+    }
+
+    .mobile_details_bagg {
+        width: 100% !important;
+        display: block !important;
+        border: none !important;
+    }
+}
+
+.star_rtng {
+    font-size: 12px;
+    display: inline-block;
+    bottom: 5px;
+    position: relative;
+    letter-spacing: 4px;
+    color: #fe8d00;
+}
+
+.reviews {
+    bottom: 10px;
+    position: relative;
+}

@@ -1,0 +1,60 @@
+<div class="entireScreen  p-0 col-md-12 col-lg-12">
+    <div class="heading">
+        <p>{{'Visited City List : [ Tour Name :' + tourName + ']'}}</p>
+        <button *ngIf="!isAddTourCity" class="orangeButton" type="submit" routerLink="/tour-crs/tour-list" >Go Back to tour list</button>
+    </div>      
+    <app-add-visited-city-list *ngIf="isAddTourCity" 
+        (insertedRecord)="insertedRecordReceived()"
+        [totalAddedNight]="nightsAlreadyAdded"> 
+    </app-add-visited-city-list>
+    <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft" #scrollOne >
+        <div class="div1"></div>
+   </div>
+    <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
+        <div class="div2 invisible-scrollbar">
+            <div class="table-responsive">
+                <table class="table table-borderless table-striped table-hover" matSort (matSortChange)="sortData($event)">
+                    <thead>
+                        <tr class="p-2">
+                            <ng-container *ngFor="let header of displayColumn">
+                                <th *ngIf="!((!isAddTourCity) && header == 'Action')"
+                                    scope="col" 
+                                    class="text-left text-nowrap" 
+                                    mat-sort-header="{{header}}">
+                                    {{ header }}
+                                </th>
+                            </ng-container>                                                      
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngIf="searchSpin">
+                            <td colspan="12">
+                                <mat-spinner [diameter]="30" style="margin:0 auto;"
+                                    mode="indeterminate"></mat-spinner>
+                            </td>
+                        </tr>
+                        <tr *ngIf="!searchSpin && !visitedCityList.length">
+                            <td colspan="11">
+                                <h4 class="text-muted text-center">
+                                    No Data Found!
+                                </h4>
+                            </td>
+                        </tr>
+                        <tr *ngFor="let item of visitedCityList; let i=index">
+                                <td class="text-left text-muted">{{(i+1) }}</td>
+                                <td class="text-left">{{ item.CityName }}</td>
+                                <td class="text-left">{{ item.no_of_nights}}</td>
+                                <td *ngIf="isAddTourCity" class="text-left buttontdsize">
+                                    <button class="btn btn-sm btn-primary mr-1" (click)="editTourVisitedCity(item)"> {{'Update'}}  </button>
+                                    <button class="btn btn-sm btn-primary mr-1" (click)="onDeletedRecord(item)"> {{'Delete'}}  </button>
+                                </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="Note" *ngIf="!isAddTourCity">
+                    <p><b>Note:</b> &nbsp;&nbsp;&nbsp; The cities data can not be modified once the itinerary has been entered during the creation of a holiday package.</p>
+                </div>
+            </div>
+            </div>
+    </div>
+</div>

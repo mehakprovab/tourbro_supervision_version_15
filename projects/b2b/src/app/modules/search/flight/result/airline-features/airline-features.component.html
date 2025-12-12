@@ -1,0 +1,17 @@
+<button class="mb-2 mr-2 btn custom-btn">
+    All Flights
+    <span class="badge badge-pill badge-light">{{ totalFlights }} Flights</span>
+</button>
+<button class="mb-2 mr-2 btn custom-btn">
+    Fastest Flights
+    <span class="badge badge-pill badge-light">{{ fastestFligtTime }}</span>
+</button>
+<button class="mb-2 mr-2 btn custom-btn">
+    Cheapest Flights
+    <span class="badge badge-pill badge-light" *ngIf="cheapestFlight?.Price">{{ cheapestFlight?.Price?.TotalDisplayFare  }}</span>
+    <span class="badge badge-pill badge-light" *ngIf="!cheapestFlight?.Price">{{ cheapestFlight }}</span>
+</button>
+
+<button class="mb-2 mr-2 btn custom-btn1" style="float: right; cursor: pointer;" (click)="showFare()">
+    {{name}}
+</button>

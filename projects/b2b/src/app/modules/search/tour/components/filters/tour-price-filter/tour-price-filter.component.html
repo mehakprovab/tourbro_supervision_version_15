@@ -1,0 +1,13 @@
+<div>
+    <button data-target="#collapse525" data-toggle="collapse" class="collapsebtn" type="button">Price</button>
+    <div *ngIf="tour?.length && tour?.length>0" id="collapse525" class="collapse show" style="clear: both;">
+        <a *ngIf="tour.length" style="cursor: pointer;font-size: 12px;" class="float-right"
+            (click)="clearPriceFilter()">Clear</a>
+        <div class="price_slider1">
+            <span *ngIf="tour.length" class="lable-slider">
+                <ngx-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"
+                    (valueChange)="valueChange($event)" (highValueChange)="highValueChange($event)"></ngx-slider>
+            </span>
+        </div>
+    </div>
+</div>

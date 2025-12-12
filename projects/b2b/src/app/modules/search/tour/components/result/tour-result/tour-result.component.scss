@@ -1,0 +1,1140 @@
+.grid-section-wrapper {
+    background: none;
+    float     : left;
+    width     : 100%;
+    position  : relative; background: #092e53; padding: 20px 0px;
+    margin-top: 0px;
+}
+
+.searchtabs {
+    float        : left;
+    width        : 100%;
+ 
+}
+
+.moduletabs li a {
+    background   : rgba(255, 255, 255, 0.7);
+    padding      : 11px 48px;
+    font-size    : 16px;
+    border       : none !important;
+    border-radius: 0px !important;
+    color        : #092C3B;
+    font-weight  : 600;
+}
+
+.moduletabs li a.active {
+    background-color: #092C3B !important;
+    color           : #fff !important;
+}
+
+/*serach area*/
+.nav-tabs {
+    border: none;
+}
+
+.loading-container .rounded.result_hotel {
+    border-radius: 10px;
+    box-shadow   : -1px 1px 10px #ddd;
+    overflow     : hidden;
+}
+
+.captngrp {
+    display : block;
+    margin  : 8% 0;
+    overflow: hidden;
+}
+
+.bigcaption {
+    color         : #fff;
+    display       : block;
+    font-size     : 58px;
+    font-weight   : 700;
+    overflow      : hidden;
+    text-align    : center;
+    text-transform: uppercase;
+}
+
+.smalcaptn {
+    color     : #fff;
+    display   : block;
+    font-size : 30px;
+    overflow  : hidden;
+    text-align: center;
+}
+
+.secndblak {
+    background: #08182f;
+    float     : left;
+    width     : 100%;
+}
+
+.sidebord {
+    border-right: 1px solid #d8d8d8;
+}
+
+.alladvnce {
+    background   : none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-bottom: 1px dashed #fff;
+    color        : #fff;
+    cursor       : pointer;
+    float        : left;
+    font-size    : 15px;
+    height       : 50px;
+    line-height  : 50px;
+    padding      : 0 10px;
+    position     : relative;
+    width        : 96%;
+}
+
+.alladvnce::after {
+    content       : "\f078";
+    background    : none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    bottom        : 0;
+    color         : #fff;
+    font-family   : "FontAwesome";
+    font-size     : 12px;
+    line-height   : 50px;
+    pointer-events: none;
+    position      : absolute;
+    right         : 0;
+    text-align    : center;
+    top           : 0;
+    width         : 30px;
+}
+
+.advncedown::before {
+    content    : "\f0d8";
+    color      : #fff;
+    font-family: "FontAwesome";
+    font-size  : 45px;
+    position   : absolute;
+    right      : 50px;
+    top        : -30px;
+}
+
+.advncedown {
+    display      : none;
+    background   : none repeat scroll 0 0 #fff;
+    border-radius: 3px;
+    box-shadow   : 0 0 10px -5px #000;
+    line-height  : normal;
+    position     : absolute;
+    right        : 0;
+    top          : 55px;
+    width        : auto;
+    transition   : all 400ms ease-in-out;
+    z-index      : 10000;
+}
+
+.advncedown.fadeinn {
+    display: block;
+}
+
+.scroladvc {
+    display : block;
+    overflow: hidden;
+    padding : 10px;
+}
+
+.adscrla {
+    color        : #444;
+    display      : block;
+    overflow     : hidden;
+    padding      : 10px 15px;
+    text-overflow: ellipsis;
+    white-space  : nowrap;
+    width        : 100%;
+}
+
+.advncedown.spladvnce {
+    left: 0;
+}
+
+.iconcmn {
+    float : left;
+    height: 60px;
+    width : 40px;
+}
+
+.nopad {
+    padding: 0;
+}
+
+.tabspl {
+    float  : left;
+    padding: 25px 40px;
+    width  : 100%;
+}
+
+.lablform {
+    color       : #000;
+    font-weight : 500;
+    padding-left: 15px;
+    font-size   : 14px;
+    margin      : 0 0 5px;
+}
+
+.deprtures::before {
+    content    : "\f072";
+    bottom     : 0;
+    color      : #d1bd9c;
+    font-family: "FontAwesome";
+    font-size  : 18px;
+    left       : 0;
+    line-height: 50px;
+    position   : absolute;
+    text-align : center;
+    top        : 0;
+    width      : 40px;
+}
+
+.destinatios::before {
+    content          : "\f072";
+    bottom           : 0;
+    color            : #d1bd9c;
+    font-family      : "FontAwesome";
+    font-size        : 18px;
+    left             : 0;
+    line-height      : 50px;
+    position         : absolute;
+    text-align       : center;
+    top              : 0;
+    -webkit-transform: rotate(90deg);
+    -moz-transform   : rotate(90deg);
+    -o-transform     : rotate(90deg);
+    transform        : rotate(90deg);
+    width            : 40px;
+}
+
+
+.plcetogo {
+    position: relative;
+}
+
+.plcemark::before {
+    content    : "\f041";
+    bottom     : 0;
+    color      : #d1bd9c;
+    font-family: "FontAwesome";
+    font-size  : 18px;
+    left       : 0;
+    line-height: 50px;
+    position   : absolute;
+    text-align : center;
+    top        : 0;
+    width      : 40px;
+}
+
+.datemark::before {
+    content    : "\f073";
+    bottom     : 0;
+    color      : #d1bd9c;
+    font-family: "FontAwesome";
+    font-size  : 18px;
+    left       : 0;
+    line-height: 50px;
+    position   : absolute;
+    text-align : center;
+    top        : 0;
+    width      : 40px;
+}
+
+.nitmark::before {
+    content    : "\f186";
+    bottom     : 0;
+    color      : #d1bd9c;
+    font-family: "FontAwesome";
+    font-size  : 18px;
+    left       : 0;
+    line-height: 50px;
+    position   : absolute;
+    text-align : center;
+    top        : 0;
+    width      : 40px;
+}
+
+.selctmark::after {
+    content       : "\f078";
+    background    : none repeat scroll 0 0 #fff;
+    bottom        : 0;
+    color         : #999;
+    font-family   : "FontAwesome";
+    font-size     : 12px;
+    line-height   : 50px;
+    pointer-events: none;
+    position      : absolute;
+    right         : 0;
+    text-align    : center;
+    top           : 0;
+    width         : 30px;
+}
+
+.normalsel {
+    border  : 1px solid #fff;
+    display : block;
+    height  : 50px;
+    overflow: hidden;
+    width   : 100%;
+}
+
+.normalinput::-webkit-input-placeholder {
+    /* Safari, Chrome and Opera */
+    color: #000;
+}
+
+.normalinput:-moz-placeholder {
+    /* Firefox 18- */
+    color: #000;
+}
+
+.normalinput::-moz-placeholder {
+    /* Firefox 19+ */
+    color: #000;
+}
+
+.normalinput:-ms-input-placeholder {
+    /* IE 10+ */
+    color: #000;
+}
+
+.normalinput::-ms-input-placeholder {
+    /* Edge */
+    color: #000;
+}
+
+.normalinput:placeholder-shown {
+    /* Standard one last! */
+    color: #000;
+}
+
+
+.padselct {
+    color     : #666;
+    font-size : 15px;
+    padding   : 0 20px 0 40px;
+    text-align: center;
+}
+
+.normalinput {
+    border   : 1px solid #fff;
+    color    : #333;
+    display  : block;
+    font-size: 16px;
+    height   : 50px;
+    overflow : hidden;
+    padding  : 0 10px 0 40px;
+    width    : 100%;
+}
+
+.tab-content.custmtab {
+    float: left;
+    width: 100%;
+}
+
+.padfive {
+    padding: 0;
+}
+
+.totlall {
+    background : none repeat scroll 0 0 #fff;
+    border     : 1px solid #fff;
+    cursor     : pointer;
+    float      : left;
+    font-size  : 14px;
+    height     : 50px;
+    line-height: 50px;
+    padding    : 0 10px;
+    position   : relative;
+    width      : 100%;
+}
+
+.totlall::after {
+    content       : "\f078";
+    background    : none repeat scroll 0 0 #fff;
+    bottom        : 0;
+    color         : #999;
+    font-family   : "FontAwesome";
+    font-size     : 12px;
+    line-height   : 50px;
+    pointer-events: none;
+    position      : absolute;
+    right         : 0;
+    text-align    : center;
+    top           : 0;
+    width         : 30px;
+}
+
+.roomcount {
+    display      : none;
+    background   : none repeat scroll 0 0 #fff;
+    border-radius: 3px;
+    box-shadow   : 0 0 10px -5px #000;
+    line-height  : normal;
+    position     : absolute;
+    right        : 0;
+    top          : 55px;
+    width        : auto;
+    transition   : all 400ms ease-in-out;
+    z-index      : 10000;
+}
+
+.roomcount.fadeinn {
+    display: block;
+}
+
+.inallsn {
+    display: table;
+    width  : 100%;
+}
+
+.oneroom {
+    display       : table-cell;
+    min-width     : 250px;
+    padding       : 14px;
+    vertical-align: top;
+}
+
+.roomrow {
+    display: table;
+    width  : 100%;
+}
+
+.celroe {
+    display       : table-cell;
+    padding       : 10px;
+    float         : none;
+    vertical-align: middle;
+}
+
+.agemns {
+    color    : #666;
+    display  : block;
+    font-size: 11px;
+    overflow : hidden;
+}
+
+.countmore {
+    min-width: 130px;
+}
+
+.centertext {
+    text-align: center;
+}
+
+.chilagediv {
+    display : block;
+    margin  : 10px 0 0;
+    overflow: hidden;
+}
+
+.normalsel.padselctsmal {
+    border : 1px solid #ddd;
+    height : 30px;
+    padding: 0 5px;
+}
+
+.chldrnage {
+    color    : #666;
+    display  : block;
+    font-size: 13px;
+    margin   : 0 0 5px;
+    overflow : hidden;
+}
+
+.selctmarksml::after {
+    background    : none repeat scroll 0 0 #fff;
+    bottom        : 1px;
+    color         : #999;
+    content       : "\f078";
+    font-family   : "FontAwesome";
+    font-size     : 12px;
+    line-height   : 25px;
+    pointer-events: none;
+    position      : absolute;
+    right         : 1px;
+    text-align    : center;
+    top           : 1px;
+    width         : 30px;
+}
+
+.addrooms {
+    color    : #bc760c;
+    cursor   : pointer;
+    float    : left;
+    font-size: 13px;
+    margin   : 12px 0 0;
+}
+
+.addrooms .fa {
+    margin-right: 6px;
+}
+
+.roomone {
+    background   : none repeat scroll 0 0 #eee;
+    border-radius: 3px;
+    display      : block;
+    overflow     : hidden;
+    padding      : 5px 10px;
+    text-align   : center;
+}
+
+.roomcount::before {
+    content    : "\f0d8";
+    color      : #fff;
+    font-family: "FontAwesome";
+    font-size  : 45px;
+    position   : absolute;
+    right      : 50px;
+    top        : -30px;
+}
+
+.nav-tabs.customtab li .dropdown-menu {
+    left : auto;
+    right: 0;
+}
+
+.nav-tabs.customtab li .dropdown-menu li {
+    display : block;
+    overflow: hidden;
+}
+
+.nav-tabs.customtab li .dropdown-menu li a {
+    height     : auto;
+    line-height: 35px;
+    width      : 100%;
+}
+
+.searchsbmt {
+    background    : rgb(235, 169, 22);
+    background    : -moz-linear-gradient(top, rgba(235, 169, 22, 1) 0%, rgba(211, 131, 14, 1) 100%);
+    background    : -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(235, 169, 22, 1)), color-stop(100%, rgba(211, 131, 14, 1)));
+    background    : -webkit-linear-gradient(top, rgba(235, 169, 22, 1) 0%, rgba(211, 131, 14, 1) 100%);
+    background    : -o-linear-gradient(top, rgba(235, 169, 22, 1) 0%, rgba(211, 131, 14, 1) 100%);
+    background    : -ms-linear-gradient(top, rgba(235, 169, 22, 1) 0%, rgba(211, 131, 14, 1) 100%);
+    background    : linear-gradient(to bottom, rgba(235, 169, 22, 1) 0%, rgba(211, 131, 14, 1) 100%);
+    filter        : progid:DXImageTransform.Microsoft.gradient(startColorstr='#eba916', endColorstr='#d3830e', GradientType=0);
+    border        : medium none;
+    color         : #fff;
+    font-size     : 16px;
+    line-height   : 50px;
+    padding       : 0 20px 0 0;
+    position      : relative;
+    text-transform: uppercase;
+    width         : 100%;
+}
+
+.searchsbmtfot {
+    position: relative;
+}
+
+.searchsbmtfot::after {
+    content    : "\f054";
+    background : none repeat scroll 0 0 rgba(0, 0, 0, 0.1);
+    bottom     : 0;
+    color      : #fff;
+    font-family: "FontAwesome";
+    line-height: 50px;
+    position   : absolute;
+    right      : 0;
+    text-align : center;
+    top        : 0;
+    width      : 30px;
+}
+
+.searchsbmt:hover {
+    background: #bc760c;
+}
+
+
+.contentarae {
+    background: none repeat scroll 0 0 #fff;
+    float     : left;
+    position  : relative;
+    width     : 100%;
+}
+
+.relfst {
+    position: relative;
+    height  : 100%;
+}
+.shw_rslt{ margin-bottom: 20px;}
+.shw_rslt h3{ font-weight: 600; font-size: 23px; color: #082E53;}
+.shw_rslt h4 { color: #778088; font-size: 15px; }
+.cmsun {
+    color    : #fff;
+    display  : block;
+    font-size: 20px;
+    overflow : hidden;
+    padding  : 20px;
+}
+
+.advncebtn {
+    float  : left;
+    padding: 10px 20px 0 0;
+}
+
+.togleadvnce.open .advncebtn {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
+    cursor    : pointer;
+    margin    : 0px 10px 0 0;
+    padding   : 6px 10px;
+    text-align: center;
+}
+
+.togleadvnce.open .advncebtn::after {
+    content    : "\f053";
+    color      : #fff;
+    font-family: "FontAwesome";
+    font-size  : 26px;
+}
+
+.togleadvnce.open .advncebtn .labladvnce {
+    display: none;
+}
+
+.advsncerdch {
+    display: none;
+    margin : 10px 0 0;
+    width  : 100%;
+}
+
+.togleadvnce.open .advsncerdch {
+    display: block;
+}
+
+
+
+.labladvnce {
+    color      : #fff;
+    cursor     : pointer;
+    display    : block;
+    font-size  : 14px;
+    line-height: 48px;
+    overflow   : hidden;
+}
+
+.labladvnce::after {
+    content    : "\f054";
+    color      : #999;
+    font-family: "FontAwesome";
+    font-size  : 11px;
+    margin-left: 5px;
+}
+
+.seladvnce {
+    display     : block;
+    margin-right: 5px;
+    overflow    : hidden;
+    position    : relative;
+}
+
+.seladvnce::after {
+    content       : "\f078";
+    background    : none repeat scroll 0 0 #fff;
+    bottom        : 0;
+    color         : #999;
+    font-family   : "FontAwesome";
+    font-size     : 12px;
+    line-height   : 40px;
+    pointer-events: none;
+    position      : absolute;
+    right         : 0;
+    text-align    : center;
+    top           : 0;
+    width         : 30px;
+}
+
+.advnceopton {
+    background: none repeat scroll 0 0 #fff;
+    border    : medium none;
+    color     : #666;
+    float     : left;
+    font-size : 15px;
+    height    : 40px;
+    padding   : 0 10px;
+    width     : 100%;
+}
+
+
+/*Search end*/
+.customPlacement {
+    margin: 10px 0px !important;
+    color : #ffffff !important;
+}
+
+.hotelDetailsBtn {
+    color        : #ffffff;
+    padding      : 10px 30px;
+    background   : #189AD3;
+    border-radius: 15px;
+    display      : table;
+    float        : right;
+    margin-top   : 45px;
+}
+
+/* Solid border */
+hr.solid {
+    border-top: 1px solid #bbb;
+    width     : 100%;
+}
+
+.imgStyle {
+    width        : 100%;
+    height       : 280px;
+    border-radius: 0px !important;
+}
+
+#reset_filters {
+    cursor       : pointer;
+    background   : #022756;
+    padding      : 5px 10px;
+    margin-bottom: 10px;
+    display      : table;
+    font-size    : 15px;
+    color        : #fff;
+    border-radius: 5px;
+}
+
+.celsrch {
+    margin-top: 0px;
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.cusromGrey {
+    padding-top: 10px;
+}
+
+.star_rtng {
+    font-size   : 12px;
+    display     : inline-block;
+    bottom      : 10px;
+    position    : relative;
+}
+
+.star_rtng_clr {
+    color: #F9BF2D;
+}
+
+.address_loc {
+    margin-bottom: 20px;
+}
+
+.g_fmil {
+    border-radius: 10px;
+    background   : #333;
+    color        : #fff;
+    padding      : 3px 10px;
+    display      : table;
+    font-size    : 12px;
+    margin-bottom: 12px;
+}
+.no_hotel_found { text-align: center; margin: auto; display: table;}
+
+.c_fmil {
+    background   : #8DC5DE;
+    border-radius: 10px;
+    color        : #fff;
+    padding      : 3px 10px;
+    display      : block;
+    font-size    : 12px;
+    margin-bottom: 12px;
+}
+
+.border_left_price {
+    border-left: 1px solid #ddd;
+    padding    : 10px 10px;
+}
+
+.border_left_price h6 {
+    color     : #C4C4C4;
+    text-align: right;
+    font-size : 14px;
+}
+
+.border_left_price h6 strong {
+    display: block;
+}
+
+.border_left_price h4 {
+    margin-top: 25px;
+    color     : #1B9AD4;
+}
+
+.border_left_price p {
+    margin       : 0px;
+    padding      : 0px !important;
+    font-size    : 14px;
+    margin-bottom: 0px;
+    ;
+}
+
+.cancel_msg {
+    color     : #1B9AD4;
+    font-size : 13px;
+    margin-top: 20px;
+}
+
+.mob_show {
+    display: none;
+}
+
+::ng-deep .theme-dark .searchtabs {
+    float        : left;
+    width        : 100%;
+    background   : #092C3B;
+    box-shadow: -1px 2px 5px 0px #011b26;
+    border-radius: 0px 10px 10px 10px;
+}
+::ng-deep .theme-dark .theme_bg { background   : #042634;}
+::ng-deep .theme-dark .moduletabs li:last-child a {
+    box-shadow: -1px -3px 5px 0px #011b26;
+}
+
+::ng-deep .theme-dark .grid-section-wrapper{
+    background: #042634; margin-top: 0px;
+}
+
+::ng-deep .theme-dark .collapsebtn {
+    border-bottom: 1px solid #1c3c4a !important;
+}
+
+::ng-deep .theme-dark .locationul li .lbllbl { color: #fff !important;}
+
+::ng-deep .theme-dark .divinsidefltr { background: none !important; border:none !important;}
+::ng-deep .theme-dark .sortul {    border: 1px solid #041b24 !important; background: #042634 !important;}
+::ng-deep .theme-dark .sortul .sorta {background: #042634 !important; color: #fff !important;}
+::ng-deep .theme-dark .sortul .sorta strong { color: #fff !important; }
+::ng-deep .theme-dark .sortul .sorta.active , 
+::ng-deep .theme-dark .sortul .sorta:hover{background: #06212c !important;}
+::ng-deep .theme-dark .wht_clr { color: #fff !important; }
+::ng-deep .theme-dark .card.result_hotel {
+    background-color: #042634 !important;
+    border: 1px solid #0e394c !important; box-shadow: -1px 2px 5px 0px #011b26 !important
+}
+::ng-deep .theme-dark .cusromGrey  { color: #189ad3 !important; }
+::ng-deep .theme-dark .star_rtng { color: #fff !important;}
+::ng-deep .theme-dark .address_loc { color: #fff !important;}
+
+::ng-deep .theme-dark .g_fmil{
+    background: #189ad3;
+}
+
+::ng-deep .theme-dark .ngx-slider .ngx-slider-bubble { color: #fff !important;}
+
+::ng-deep .theme-dark .filter-list .custom-control-label::before { background-color: #294b59 !important;
+    border: #092c3b solid 1px !important;}
+::ng-deep .theme-dark .border_left_price  {  border-left: 1px solid #14455a; }
+
+::ng-deep .theme-dark .c_fmil{
+    background: #4a7f96;}
+@media only screen and (max-width: 767px) {
+    .paysubmit {
+        margin-bottom: 12px !important;
+    }
+
+    .ai-fs {
+        margin: 0px !important;
+    }
+
+    .padlt {
+        padding-left : 0px !important;
+        padding-right: 0px !important;
+    }
+
+    .mobile_left {
+        text-align: left !important;
+    }
+
+    .mobile_right {
+        text-align: right !important;
+    }
+
+    .mobile_row {
+        margin: 0px;
+    }
+
+    .mobile_pad7 {
+        padding: 0px 7px !important;
+    }
+
+    .mobile_pad {
+        padding: 0px 15px !important;
+    }
+
+    .mobile_nopad {
+        padding: 0px 0px !important;
+    }
+
+    .mobile_top {
+        margin-top: 12px;
+    }
+
+    .mobile_bot {
+        margin-bottom: 12px;
+    }
+
+    .mob_show {
+        display: inline;
+    }
+
+    .mob_hide {
+        display: none;
+    }
+
+    .review_txt {
+        text-align: center;
+    }
+
+    .star_rtng {
+        padding-left: 0px !important;
+    }
+
+    .address_loc {
+        font-size: 13px;
+    }
+
+    .form-group label {
+        font-size: 12px;
+    }
+
+    .cusromGrey {
+        padding-top: 0px;
+        font-size  : 16px;
+    }
+
+    .mobile_botpad {
+        padding-bottom: 12px !important;
+    }
+
+    .hotelDetailsBtn {
+        margin-top: 0px !important;
+    }
+
+    .mobile_details_bagg {
+        width  : 100% !important;
+        display: block !important;
+        border : none !important;
+    }
+}
+
+.f-search-wrap{
+    width: auto;
+}
+
+// .tourCityDetails{
+//     display: flex;
+// }
+
+// .startCity{
+//     text-align: left;
+// }
+
+// .endCity{
+//     text-align: center;
+// }
+
+// .cityCovered{
+//     text-align: right;
+
+// }
+.tourCityDetails{
+    display: flex;
+    justify-content: space-between;
+    @media (max-width:767px){
+        all: unset;
+        margin-left: 5px
+    }
+  }
+  
+  .startCity {
+    text-align: left;
+  }
+  
+  .endCity {
+    text-align: center;
+    @media (max-width:767px){
+        text-align: left;
+    }
+  }
+  
+  .cityCovered {
+    text-align: right;
+    @media (max-width:767px){
+        text-align: left;
+    }
+  }
+
+  .fal-icon {
+    color: #000;font-size: 20px;font-weight: 500;
+  }
+
+  .taxInfo{
+    margin-left: 49%;
+  }
+  
+  .inculstionCheckShow{
+    display: flex;
+}
+.padT15{padding-top: 30px;padding-right: 0px;padding-left: 0px;}
+.strip_all_tour_list {
+    min-height: 210px;
+}
+.strip_all_tour_list .norow {
+    display: block;
+    color: #777;
+    -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, .2);
+    -moz-box-shadow: 0 0 5px 0 rgba(0, 0, 0, .2);
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, .2);
+    float: left;
+    width: 100%;
+    border-radius: 12px;
+    background: #FFF;
+    padding: 0px;    
+    margin-bottom: 10px;}
+    .img_list {
+        overflow: hidden;
+        min-height: 210px;
+        text-align: center;
+        position: relative;
+        border-right: 1px solid #d2d2d2;
+        border-radius: 12px 0px 0px 12px;
+    }
+    .img_list img {
+        width: 100%;
+        height: 210px;
+        position: absolute;
+        left: 0;
+    }
+    .wdt2 {
+        width: 60.4%;
+    }
+    .tour_list_desc {
+        padding: 0px;
+        /* height: 210px; */
+        line-height: 17px;
+        background: #fff;
+        position: relative;
+    }
+    .tour_list_desc img { margin-right: 5px;}
+    .tour_list_desc p.ellipsis {
+        padding: 0 0 16px 0;
+        font-size: 13px;
+        color:  #495560;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        border-bottom: 1px dashed #C2C7D0;
+        margin-bottom: 16px;
+    }
+    .pk_prce { padding: 15px 0px;}
+    .details_btn { background: #FBC108;
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        font-size: 14px;
+        color: #fff;
+        font-weight: 600;}
+
+    .price_list a.btn_1 {
+        padding: 5px 10px;
+        color: #ee6126;
+        text-align: center;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 150%;
+        background: transparent !important;
+        border: 1px solid #ee6126 !important;
+        border-radius: 5.673px;
+        white-space: nowrap;
+        }
+
+        .price_list a.quot.btn_1 {
+            background: #ee6126 !important;
+            color: #fff!important;
+            margin-left: 20px;
+            padding-right: 30px;
+            position: relative;
+        }
+        .price_list a.quot.btn_1:after {
+            content: "\f105";
+            font-style: normal;
+            font-weight: 400;
+            font-family:"Font Awesome 5 Pro";
+            position: absolute;
+            right: 0;
+            top: 0;
+            line-height: 35px;
+            font-size: 20px;
+            width: 25px;
+            text-align: center;
+        }
+        .tour_list_desc h3{color: #1C2B38;font-size: 20px; font-weight: 600;}
+        .pk_duration_details{ margin-bottom: 15px;}
+        .pk_duration_details i{margin-right: 10px;
+            font-size: 20px;
+            color: #ee6126;
+            font-weight: 500;
+        }
+        
+        .inclsn {
+            width: 100%;
+            float: left;
+            margin: 8px 0 0px 0;
+            display: flex;
+            justify-content: flex-start;
+            padding: 7px 0;
+        }
+        .hicn {
+            float: left;
+            margin-right: 15px;
+        }
+        .i-htl {
+            width: 35px;
+            height: 35px;
+            background: url(../../../../../../../assets/images/hotel-1.svg) no-repeat 0 0;
+            background-size: 35px 35px;
+            display: table;
+            margin: 0 auto;
+        }
+        .incTxt {
+            font-size: 11px;
+            color: #000;
+            display: block;
+            text-align: center;
+        }
+        .i-sig {
+            width: 35px;
+            height: 35px;
+            background: url(../../../../../../../assets/images/sightseeing-1.svg) no-repeat 0 0;
+            background-size: 35px 35px;
+            display: table;
+            margin: 0 auto;
+        }
+        .i-car {
+            width: 35px;
+            height: 35px;
+            background: url(../../../../../../../assets/images/transfer-1.svg) no-repeat 0 0;
+            background-size: 35px 35px;
+            display: table;
+            margin: 0 auto;
+        }
+        .i-mea {
+            width: 35px;
+            height: 35px;
+            background: url(../../../../../../../assets/images/meal-1.svg) no-repeat 0 0;
+            background-size: 35px 35px;
+            display: table;
+            margin: 0 auto;
+        }
+        .i-fli {
+            width: 35px;
+            height: 35px;
+            background: url(../../../../../../../assets/images/flight-1.svg) no-repeat 0 0;
+            background-size: 35px 35px;
+            display: table;
+            margin: 0 auto;
+        }

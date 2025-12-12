@@ -1,0 +1,417 @@
+<div class="card-header text-uppercase bg-dark text-white">
+    <h5 style="border-bottom: 0;">
+        <i class="fa fa-edit"></i>
+        B2C Flight report
+    </h5>
+</div>
+<div class="card">
+    <form [formGroup]="regConfig">
+        <div class="form-row">
+            <div class="col-4 pr-0">
+                <div class="form-group">
+                    <label for="appReference">Reservation Code</label>
+                    <input formControlName="app_reference" type="text"
+                        class="form-control text-capitalize form-control-sm nrm_input"
+                        placeholder="Application Reference" id="appReference">
+                </div>
+            </div>
+            <div class="col-4 pr-0">
+                <div class="form-group">
+                    <label for="phone">PNR</label>
+                    <input formControlName="pnr" type="text"
+                        class="form-control text-capitalize form-control-sm nrm_input" placeholder="PNR" id="phone">
+                </div>
+            </div>
+            <div class="col-4 pr-0">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input formControlName="email" type="email" class="form-control form-control-sm nrm_input"
+                        placeholder="Email" id="email">
+                    <div style="color: #d92550;" *ngIf="regConfig?.get('email').hasError('pattern') && regConfig?.get('email').touched">
+                        Invalid Email
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 PR-0">
+                <div class="form-group">
+                <label class=" control-label">
+                    Currency
+                    <span class="text-danger">*</span>
+                </label>
+                <select formControlName="currency" class="form-control form-control-sm nrm_input"
+                   >
+                    <option value="" disabled selected>Select Currency</option>
+                    <option *ngFor="let coreCountry of currencyList" [ngValue]="coreCountry.currency">
+                        {{coreCountry.currency}}
+                    </option>
+                </select>
+                </div>
+                <!-- <div *ngIf="submittedHotel && hotel.core_country_id.errors" class="invalid-feedback">
+                    <div *ngIf="hotel.core_country_id.errors.required">Country is required</div>
+                </div> -->
+            </div>
+            <div class="col-4 pr-0">
+                <div class="form-group">
+                    <label for="bookedBy">Status</label>
+                    <select formControlName="status" name="cars" id="bookedBy"
+                        class="form-control form-control-sm nrm_input">
+                        <option value="ALL" selected>ALL</option>
+                        <option value="BOOKING_CONFIRMED">CONFIRMED</option>
+                        <option value="TICKED">TICKED</option>
+                        <option value="BOOKING_CANCELLED">CANCELLED</option>
+                        <option value="cancelInProgress">CANCELLATION IN PROGRESS</option>
+                        <option value="BOOKING_FAILED">FAILED</option>
+                        <option value="BOOKING_INPROGRESS">IN PROGRESS</option>
+                        <option value="BOOKING_HOLD">BOOKING HOLD</option>
+                        <option value="BOOKING_VOIDED">BOOKING VOIDED</option>
+                    </select>
+                    <div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 pr-0">
+                <div class="form-group">
+                    <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
+                    <label for="fromDate">Booked From Date</label>
+                    <input formControlName="booked_from_date" type="text" id="fromDate" autocomplete="off"
+                        class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy"
+                        bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen"  onkeydown="return false">
+                </div>
+            </div>
+            <div class="col-4 pr-0">
+                <div class="form-group">
+                    <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
+                    <label for="toDate">Booked To Date</label>
+                    <input formControlName="booked_to_date" type="text" id="toDate" autocomplete="off"
+                        class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy"
+                        bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen"  onkeydown="return false">
+                </div>
+            </div>
+        </div>
+        <div class="btncontainer">
+            <button type="submit" class="btnStyle" (click)="onSearchSubmit()">Search</button> &nbsp;
+            <button type="button" class="btnStyle" (click)="onReset()">Reset</button>
+        </div>
+    </form>
+</div>
+<div class="card" style="margin-top: 30px;">
+    <div class="card-body">
+        <p>Total {{respData?.length}} Bookings</p>
+        <div style="padding-bottom: 15px;">
+            <button class="btnStyle" (click)="downloadPdf()">PDF</button>&nbsp;
+            <button class="btnStyle" (click)="download('xlsx', 'portrait')">Export to excel</button>
+            <div class="form-group mb-0 col-sm-3 p-0 float-right has-search">
+                <span class="fa fa-search form-control-feedback"></span>
+                <input class="form-control" type="text" name="Search" [(ngModel)]="searchText"
+                    autocomplete="off" placeholder="Search">
+            </div>
+        </div>
+        <div class="mb-3">
+            <form>
+                <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft"
+                    #scrollOne>
+                    <div class="div1"></div>
+                </div>
+
+                <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
+                    <div class="div2 invisible-scrollbar">
+                        <div class="table-respons">
+                            <table class="table table-borderless table-striped table-hover" matSort
+                                (matSortChange)="sortData($event)" id="b2c-flight-report">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-left text-nowrap"
+                                            *ngFor="let header of displayColumn;" mat-sort-header="{{header.key}}">
+                                            {{header.value }}
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngIf="noData">
+                                        <td colspan="11">
+                                            <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="!noData && (!respData.length || (respData | filter:searchText).length === 0)">
+                                        <td colspan="11">
+                                            <h4 class="text-muted text-center">
+                                                No Data Found!
+                                            </h4>
+                                        </td>
+                                    </tr>
+                                    <tr
+                                        *ngFor="let data of respData | filter:searchText | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
+                                        <td class="text-left text-muted">{{i+1}}.</td>
+                                        <td class="text-left overflow-hidden">
+                                            <div ngbDropdown container="body"><button class="btnStyle"
+                                                    ngbDropdownToggle>
+                                                    {{'Action'}}
+                                                </button>
+                                                <div ngbDropdownMenu>
+                                                    <a [routerLink]="['/report/b2c-flight/voucher']"
+                                                        [queryParams]="{appReference: data['AppReference']}"><button
+                                                            ngbDropdownItem>View Voucher</button></a>
+                                                    <a [routerLink]="['/report/b2c-flight/invoice']"
+                                                        [queryParams]="{appReference: data['AppReference']}"><button
+                                                            ngbDropdownItem>View Invoice</button></a>
+                                                    <button ngbDropdownItem (click)="showPaxProfile(data)">Pax
+                                                        Profile</button>
+                                                    <button style="display: none;" ngbDropdownItem (click)="showPaymentInfo(data);">Payment
+                                                        Information</button>
+                                                    <a *ngIf="data.BookingStatus == 'BOOKING_HOLD'"
+                                                        (click)="submitTicket(data);" ngbDropdownItem hidden> Auto
+                                                        Ticket </a>
+                                                    <button
+                                                        *ngIf="(data.BookingStatus == 'BOOKING_CONFIRMED'|| data.BookingStatus == 'BOOKING_FAILED'|| data.BookingStatus == 'BOOKING_VOIDED' || data.BookingStatus =='BOOKING_HOLD') && checkDateExtend(data)"
+                                                        ngbDropdownItem (click)="cancelTicketPopup(data)"> Cancel
+                                                    </button>
+                                                    <button
+                                                        *ngIf="data.BookingStatus == 'BOOKING_CONFIRMED' && (data.ApiCode == 'ZBAPINO00002' || data.ApiCode == 'ZBAPINO00003' || data.ApiCode == 'ZBAPINO00007') && checkDate(data)"
+                                                        ngbDropdownItem (click)="voidTicketPopup(data)"> Void Ticket
+                                                    </button>
+                                                    <a ngbDropdownItem [routerLink]="['/report/flight/update-pnr']"
+                                                        [queryParams]="{'AppReference': data.AppReference,'Module':'B2C'}">
+                                                        Update PNR & Ticket
+                                                    </a>
+                                                    <a ngbDropdownItem [routerLink]="['/report/flight/update-pnr']"
+                                                    [queryParams]="{'AppReference': data.AppReference,'Module':'LTT'}">
+                                                    Update Last Ticketing Time
+                                                </a>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td class="text-left"> {{data['AppReference']}} </td>
+                                        <!-- <td class="text-left"> {{data['AppReference']}} </td> -->
+                                        <td class="text-left">
+                                            <span *ngIf="data['BookingStatus'] == 'BOOKING_FAILED'"
+                                                class="badge badge-danger">
+                                                Booking Failed
+                                            </span>
+                                            <span *ngIf="data['BookingStatus'] == 'BOOKING_CONFIRMED'"
+                                                class="badge badge-success">
+                                                Booking Confirmed
+                                            </span>
+                                            <span *ngIf="data['BookingStatus'] == 'BOOKING_CANCELLED'"
+                                                class="badge badge-danger">
+                                                Booking Cancelled
+                                            </span>
+                                            <span *ngIf="data['BookingStatus'] == 'BOOKING_INPROGRESS'"
+                                                class="badge badge-info">
+                                                Booking Inprogress
+                                            </span>
+                                            <span *ngIf="data['BookingStatus'] == 'BOOKING_HOLD'"
+                                                class="badge badge-warning">
+                                                Booking Hold
+                                            </span>
+                                            <span *ngIf="data['BookingStatus'] == 'BOOKING_VOIDED'"
+                                                class="badge badge-secondary">
+                                                Booking Voided
+                                            </span>
+                                            {{data['BookingStatus'] ? '' : 'N/A'}}
+                                        </td>
+                                        <td class="text-left"> 
+                                            {{data['FlightItineraries'].length ? data['FlightItineraries'][0]['airline_name'] : ''}} 
+                                        </td>
+                                        <td class="text-left"> {{data['TripType']}} </td>
+                                        <td class="text-left"> {{data['CreatedDatetime'] | date: 'dd/MM/yyyy'}} </td>
+                                        <!-- <td class="text-left"> {{data?.TicketIssueDate  | date: 'dd/MM/yyyy'}}</td> -->
+                                        <td class="text-left"> {{data['Pnr'] || 'N/A'}} </td>
+                                        <td class="text-left"> {{data['GDS_PNR'] || ''}}</td>
+                                        <td class="text-left capitalize">
+                                            {{data['Passengers'].length > 0 ?
+                                            findLeaduserDetails(data['Passengers']) : ''}}
+                                        </td>
+                                        <td class="text-left"> {{data['Email'] ? data['Email'] : ''}} </td>
+                                        <td class="text-left"> {{data['Phone']}} </td>
+                                        <td class="text-left text-capitalize"> {{data['DomainOrigin']}} </td>
+                                        <td class="text-left">
+                                            {{data['TotalFarePriceBreakUp']['PriceBreakup']['BasicFare'] ||
+                                            0}} </td>
+                                        <td class="text-left"> {{data['TotalFarePriceBreakUp']['PriceBreakup']['Tax'] ||
+                                            0}}
+                                        </td>
+
+                                        <td class="text-left"> {{data['TotalFarePriceBreakUp']['TotalDisplayFare'] ?
+                                            data['TotalFarePriceBreakUp']['TotalDisplayFare'] +' '+
+                                            data['TotalFarePriceBreakUp']['Currency'] : 'N/A'}} </td>
+                                        <td class="text-left"> {{data['JourneyFrom']}} </td>
+                                        <td class="text-left"> {{data['JourneyTo']}} </td>
+                                        <td class="text-left"> {{data['JourneyStart']  | date: 'dd/MM/yyyy'}} </td>
+                                        <td class="text-left"> {{data['JourneyEnd']  | date: 'dd/MM/yyyy'}} </td>
+                                        <td class="text-left"> {{data['AdminMarkup'] || 0}} </td>
+                                        <!-- <td class="text-left"> {{data.TotalFarePriceBreakUp.PriceBreakup.AdvanceTax?
+                                            data.TotalFarePriceBreakUp.PriceBreakup.AdvanceTax: '0'}} </td> -->
+                                        <td class="text-left"> {{data['ConvinenceAmount'] || 0}} </td>
+                                        <td class="text-left"> {{data['PromoCode'] || 'N/A'}} </td>
+                                        <td class="text-left"> {{data['Discount'] || 0}} </td>
+                                        <!-- <td class="text-left"> {{data['BaggageInsurancesDetails'].length ?
+                                            data['BaggageInsurancesDetails'][0]['product_code'] : 'N/A'}} </td>
+                                        <td class="text-left"> {{data['BaggageInsurancesDetails'].length ?
+                                            data['BaggageInsurancesDetails'][0]['amount']+' '+
+                                            data['BaggageInsurancesDetails'][0]['currency'] : 'N/A'}} </td> -->
+                                        <td class="text-left"> {{data['Currency']}} </td>
+                                        <td class="text-left text-capitalize"> {{data['PaymentMode']}} </td>
+                                        <td class="text-left"> {{data['FinalCancellationDate']  | date: 'dd/MM/yyyy'}} </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="loadWrapper1" *ngIf="load">
+                    <div class="loader1"></div>
+                </div>
+                <div class="card-footer pb-0">
+                    <div class="d-flex w-100 justify-content-between">
+                        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                        </ngb-pagination>
+                        <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                            <option [ngValue]="50">50 items per page</option>
+                            <option [ngValue]="100">100 items per page</option>
+                            <option [ngValue]="150">150 items per page</option>
+                            <option [ngValue]="200">200 items per page</option>
+                            <option [ngValue]="500">500 items per page</option>
+                            <option [ngValue]="700">700 items per page</option>
+                            <option [ngValue]="1000">1000 items per page</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="paxProfile" [style.display]="showModal ? 'block' : 'none'">
+    <div class="modal-dialog">
+        <div class="modal-content" style="min-width: 910px;">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Traveller Information:</h4>
+                <button type="button" class="close" data-dismiss="modal" (click)="hide()">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <table class="table table-bordered table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Sl No.</th>
+                            <th>Tittle</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Gender</th>
+                            <th>Date of Birth</th>
+                            <th>Nationality</th>
+                            <th>Passport Number</th>
+                            <th>Issuing Country</th>
+                            <th>Expiry Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let paxDetail of paxDetails;let i=index;">
+                            <td class="text-left"> {{i+1}}.</td>
+                            <td class="text-left text-uppercase"> {{paxDetail?.title}}</td>
+                            <td class="text-left"> {{paxDetail?.first_name}}</td>
+                            <td class="text-left"> {{paxDetail?.last_name}}</td>
+                            <td class="text-left"> {{paxDetail?.gender}}</td>
+                            <td class="text-left"> {{paxDetail?.date_of_birth}}</td>
+                            <td class="text-left"> {{paxDetail?.passenger_nationality}}</td>
+                            <td class="text-left"> {{paxDetail?.passport_number}}</td>
+                            <td class="text-left"> {{paxDetail?.passport_issuing_country}}</td>
+                            <td class="text-left"> {{paxDetail?.passport_expiry_date}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btnStyle" data-dismiss="modal" (click)="hide()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="cancelPolicy" [style.display]="showCancelModal ? 'block' : 'none'">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Cancellation Policy</h4>
+                <button type="button" class="close" data-dismiss="modal" (click)="hide()">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                {{"From 06 Jan 2021,USD 25 will be charged as cancellation penalty."}}
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btnStyle" data-dismiss="modal" (click)="hide()">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Payment Info Modal -->
+<div class="modal " tabindex="-1" role="dialog" id="paymentInfo" [style.display]="showPaymentModal ? 'block' : 'none'">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Payment Information:</h4>
+                <button type="button" class="close" data-dismiss="modal" (click)="hide()">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <h5>Card Information</h5>
+                <p>Card Type : {{''}}</p>
+                <p>Card No : {{''}}</p>
+                <p>Card Exp Date : {{''}}</p>
+                <h5>Customer Billing Address</h5>
+                <p>Billing Person Name : {{''}}</p>
+                <p>Email : {{''}}</p>
+                <p>Mobile : {{''}}</p>
+                <p>Apartment / Suite : {{''}}</p>
+                <p>Street Address : {{''}}</p>
+                <p>City : {{''}}</p>
+                <p>State / Province : {{''}}</p>
+                <p>Country : {{''}}</p>
+                <p>Postal/Zip Code : {{''}}</p>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btnStyle" data-dismiss="modal" (click)="hide()">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true"
+    [style.display]="showConfirm ? 'block' : 'none'">
+    <div class="modal-dialog  modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentModalLabel">Confirm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Do you really want to {{subjectName}} the booking?</p>
+            </div>
+            <div class="modal-footer" style="justify-content: space-between;">
+                <button type="button" class="btn btn-success" *ngIf="subjectName=='Cancel'"
+                    (click)="cancelTicket()">Yes</button>
+                <button type="button" class="btn btn-success" *ngIf="subjectName=='Void'"
+                    (click)="voidTicket()">Yes</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="hide()">No</button>
+            </div>
+        </div>
+    </div>
+</div>

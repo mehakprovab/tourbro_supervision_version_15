@@ -1,0 +1,64 @@
+  <div class="card" style="margin-top: 30px;">
+  	<div class="card-header bg-dark text-white"><h5>Group Booking Car Reports</h5></div>
+    <div class="card-body">
+        <p>Total {{respData?.length}} Records</p>
+       <div class="mb-3">
+          <form>
+             <div class="table-responsive">
+                <table class="table table-borderless table-striped table-hover" matSort
+                   (matSortChange)="sortData($event)" id="subscriptions">
+                   <thead>
+                      <tr>
+                         <th scope="col" class="text-left text-nowrap" *ngFor="let header of displayColumn;"
+                            >
+                            {{header.value }} 
+                         </th>
+                      </tr>
+                   </thead>
+                   <tbody>
+                      <tr *ngIf="noData || !respData.length">
+                         <td colspan="11">
+                            <h4 class="text-muted text-center">
+                               No Data Found!
+                            </h4>
+                         </td>
+                      </tr>
+                      <tr
+                         *ngFor="let data of respData | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
+                         <td class="text-left text-muted">{{i+1}}.</td>
+                        <td class="text-left"><a href="javascript:void(0)"><i class="fa fa-th-large"></i>Reply To customer</a>
+                        	<a href="javascript:void(0)"><i class="fa fa-trash">Delete</i></a></td>
+                        <td class="text-left">{{data['status']}}</td>
+                        <td class="text-left">{{data['first_name']}}</td>
+                        <td class="text-left">{{data['last_name']}}</td>
+                        <td class="text-left">{{data['email']}}</td>
+                        <td class="text-left">{{data['phone']}}</td>
+                        <td class="text-left">{{data['from']}}</td>
+                        <td class="text-left">{{data['to']}}</td>
+                        <td class="text-left">{{data['pick_up_date'] | date}}</td>
+                        <td class="text-left">{{data['drop_off_date'] | date}}</td>
+                        <td class="text-left">{{data['pick_up_time']}}</td>
+                        <td class="text-left"> {{data['drop_off_time']}} </td>
+                        <td class="text-left"> {{data['total_pax']}} </td>
+                        <td class="text-left"> {{data['recieved_on'] | date}} </td>
+                        <td class="text-left"> {{data['comments']}} </td>
+                      </tr>
+                   </tbody>
+                </table>
+             </div>
+             <div class="card-footer pb-0">
+                <div class="d-flex w-100 justify-content-between">
+                   <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                   </ngb-pagination>
+                   <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                   <option [ngValue]="50">50 items per page</option>
+                   <option [ngValue]="100">100 items per page</option>
+                   <option [ngValue]="150">150 items per page</option>
+                   <option [ngValue]="200">200 items per page</option>
+                   </select>
+                </div>
+             </div>
+          </form>
+       </div>
+    </div>
+ </div>

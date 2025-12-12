@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card main-card mb-6">
+            <div class="card-body">
+                <ngb-tabset class="tabs-animated tabs-animated-shadow" (tabChange)="beforeChange($event)" #tabs>
+                    <ngb-tab id="list_users">
+                        <ng-template ngbTabTitle>
+                            <span class="">{{'List User'}}</span>
+                        </ng-template>
+                        <ng-template ngbTabContent>
+                            <app-inactive-user-list (toUpdate)="triggerTab($event)"></app-inactive-user-list>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab id="add_user">
+                        <ng-template ngbTabTitle>
+                            <span class="">{{'Add/Edit User'}}</span>
+                        </ng-template>
+                        <ng-template ngbTabContent>
+                            <app-inactive-add-edit (someEvent)="triggerTab($event)" [userOne]="userData">
+                            </app-inactive-add-edit>
+                        </ng-template>
+                    </ngb-tab>
+                </ngb-tabset>
+            </div>
+        </div>
+    </div>
+</div>

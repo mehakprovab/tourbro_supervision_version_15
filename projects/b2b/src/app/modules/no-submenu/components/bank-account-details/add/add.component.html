@@ -1,0 +1,102 @@
+<div class="main-card mb-3 card">
+  <div class="card-body">
+    <h5 class="card-title">Account Information</h5>
+    <form [formGroup]="accountForm" novalidate (ngSubmit)="onSubmit()">
+      <div class="position-relative row form-group">
+        <label for="exampleEmail" class="col-sm-2 col-form-label">Account Name</label>
+        <div class="col-sm-10">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Account Name" formControlName="AccountName">
+            <mat-error *ngIf="accountForm.controls['AccountName'].hasError('required')">
+              Account name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="position-relative row form-group">
+        <label for="exampleEmail" class="col-sm-2 col-form-label">Account Number</label>
+        <div class="col-sm-10">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Account Number" formControlName="AccountNumber">
+            <mat-error *ngIf="accountForm.controls['AccountNumber'].hasError('required')">
+              Account number is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      
+      <div class="position-relative row form-group">
+        <label for="exampleEmail" class="col-sm-2 col-form-label">Bank Name</label>
+        <div class="col-sm-10">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Bank Name" formControlName="BankName">
+            <mat-error *ngIf="accountForm.controls['BankName'].hasError('required')">
+              Bank name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="position-relative row form-group">
+        <label for="exampleEmail" class="col-sm-2 col-form-label">Branch Name</label>
+        <div class="col-sm-10">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Branch Name" formControlName="BranchName">
+            <mat-error *ngIf="accountForm.controls['BranchName'].hasError('required')">
+              Branch name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="position-relative row form-group">
+        <label for="exampleEmail" class="col-sm-2 col-form-label">IFSC Code</label>
+        <div class="col-sm-10">
+          <mat-form-field class="full-width">
+            <textarea matInput placeholder="IFSC Code" formControlName="IFSCCode"></textarea>
+            <mat-error *ngIf="accountForm.controls['IFSCCode'].hasError('required')">
+              IFSC code is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="position-relative row form-group">
+        <label for="exampleEmail" class="col-sm-2 col-form-label">PAN</label>
+        <div class="col-sm-10">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="PAN" formControlName="PAN">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="position-relative row form-group"><label for="exampleFile" class="col-sm-2 col-form-label">Bank
+          Logo</label>
+        <div class="col-sm-10">
+          <input name="BankLogo" formControlName="BankLogo" id="exampleFile" type="file" class="form-control-file">
+          <small class="form-text text-muted">This is some placeholder block-level help text for the above
+            input. It's a bit lighter and easily wraps to a new line.
+          </small>
+        </div>
+      </div>
+      <div class="position-relative row form-group">
+        <div class="col-sm-10">
+          <div class="position-relative form-check">
+            <label class="form-check-label">
+              Status
+            </label>
+            <mat-radio-group formControlName="Status">
+              <mat-radio-button value="Inactive">Inactive</mat-radio-button>
+              <mat-radio-button value="Active">Active</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+      </div>
+      <div class="position-relative row form-check">
+        <div class="col-sm-10 offset-sm-2">
+          <mat-card-actions>
+            <button mat-raised-button color="primary" type="submit">Submit</button>
+          </mat-card-actions>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

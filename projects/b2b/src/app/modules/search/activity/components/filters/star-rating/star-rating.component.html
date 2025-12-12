@@ -1,0 +1,70 @@
+
+<form [formGroup]="starFrom">
+    <div class="filter_section">
+        <div class="filter-head">
+            <button data-target="#collapse520" data-toggle="collapse" class="collapsebtn" type="button">Star Rating</button>
+        </div>
+        <div class="multi-selection" id="collapse520">
+            <div class="filter-list">
+                <div class="custom-control custom-checkbox mycustomcheckboxwrapper">
+                    <input type="checkbox" formControlName="star0" class="custom-control-input" id="zero"
+                        (change)="filterByStars($event.target.checked)" [attr.disabled]="isDisabled(0)"
+                        [checked]="isWidgetUnchecked(0)" />
+                    <label class="custom-control-label" for="zero">
+                        <img src="./assets/images/star_rating_black_0.png" tooltip="Unrated" placement="bottom" />
+                    </label>
+                </div>
+            </div>
+            <div class="filter-list">
+                <div class="custom-control custom-checkbox mycustomcheckboxwrapper">
+                    <input type="checkbox" formControlName="star1" class="custom-control-input" id="ones"
+                        (change)="filterByStars($event.target.checked)" [attr.disabled]="isDisabled(1)"
+                        [checked]="isWidgetUnchecked(1)" />
+                    <label class="custom-control-label" for="ones">
+                        <img src="./assets/images/star_rating_black_1.png" tooltip="1" placement="bottom" />
+                    </label>
+                </div>
+            </div>
+            <div class="filter-list">
+                <div class="custom-control custom-checkbox mycustomcheckboxwrapper">
+                    <input type="checkbox" formControlName="star2" class="custom-control-input" id="twos"
+                        (change)="filterByStars($event.target.checked)" [attr.disabled]="isDisabled(2)"
+                        [checked]="isWidgetUnchecked(2)" />
+                    <label class="custom-control-label" for="twos">
+                        <img src="./assets/images/star_rating_black_2.png" tooltip="2" placement="bottom" />
+                    </label>
+                </div>
+            </div>
+            <div class="filter-list">
+                <div class="custom-control custom-checkbox mycustomcheckboxwrapper">
+                    <input type="checkbox" formControlName="star3" class="custom-control-input" id="threes"
+                        (change)="filterByStars($event.target.checked)" [attr.disabled]="isDisabled(3)"
+                        [checked]="isWidgetUnchecked(3)" />
+                    <label class="custom-control-label" for="threes">
+                        <img src="./assets/images/star_rating_black_3.png" tooltip="3" placement="bottom" />
+                    </label>
+                </div>
+            </div>
+            <div class="filter-list">
+                <div class="custom-control custom-checkbox mycustomcheckboxwrapper">
+                    <input type="checkbox" formControlName="star4" class="custom-control-input" id="fours"
+                        (change)="filterByStars($event.target.checked)" [attr.disabled]="isDisabled(4)"
+                        [checked]="isWidgetUnchecked(4)" />
+                    <label class="custom-control-label" for="fours">
+                        <img src="./assets/images/star_rating_black_4.png" tooltip="4" placement="bottom" />
+                    </label>
+                </div>
+            </div>
+            <div class="filter-list">
+                <div class="custom-control custom-checkbox mycustomcheckboxwrapper">
+                    <input type="checkbox" formControlName="star5" class="custom-control-input" id="fives"
+                        (change)="filterByStars($event.target.checked)" [attr.disabled]="isDisabled(5)"
+                        [checked]="isWidgetUnchecked(5)" />
+                    <label class="custom-control-label" for="fives">
+                        <img src="./assets/images/star_rating_black_5.png" tooltip="5" placement="bottom" />
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

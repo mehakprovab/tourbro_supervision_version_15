@@ -1,0 +1,38 @@
+<div class="rangebox">
+    <button data-target="#collapse505" data-toggle="collapse" class="collapsebtn" type="button">Airport Nearby</button>
+    <a *ngIf="flightsCopy.length" style="cursor: pointer;font-size: 12px;" class="float-right" (click)="clearAirportsNearByFilter()">Clear</a>
+    <form *ngIf="flightsCopy.length" [formGroup]="airportsForm" style="clear: both;">
+        <div id="collapse505" class="collapse show">
+            <div class="boxins" id="near_airports">
+                <ul formArrayName="items" class="locationul">
+                    <ng-container *ngIf="nearbyAirportsDepart.length">
+                        <li>Depart from</li>
+                        <li *ngFor="let airport of nearbyAirportsDepart; let i = index">
+                            <div class="squaredThree">
+                                <input [formControlName]="i" [value]="airport.name"
+                                    (change)="filterByNearestAirport($event.target.checked, 0, airport.code)" type="checkbox"
+                                    name="check" class="airlinecheckbox" id="airport{{i + 1}}">
+                                <label for="airport{{i + 1}}"></label>
+                            </div>
+                            <label for="squaredThree{{i + 1}}" class="lbllbl">{{ airport.name }}
+                                ({{airport.code}})</label>
+                        </li>
+                    </ng-container>
+                    <ng-container *ngIf="nearbyAirportsArrival.length">
+                        <li>Arrive at</li>
+                        <li *ngFor="let airport of nearbyAirportsArrival; let i = index">
+                            <div class="squaredThree">
+                                <input [formControlName]="i + nearbyAirportsDepart.length" [value]="airport.name"
+                                    (change)="filterByNearestAirport($event.target.checked, 1, airport.code)" type="checkbox"
+                                    name="check" class="airlinecheckbox" id="airport{{i + nearbyAirportsDepart.length + 1}}">
+                                <label for="airport{{i + nearbyAirportsDepart.length + 1}}"></label>
+                            </div>
+                            <label for="squaredThree{{i + nearbyAirportsDepart.length + 1}}" class="lbllbl">{{ airport.name }}
+                                ({{airport.code}})</label>
+                        </li>
+                    </ng-container>
+                </ul>
+            </div>
+        </div>
+    </form>
+</div>

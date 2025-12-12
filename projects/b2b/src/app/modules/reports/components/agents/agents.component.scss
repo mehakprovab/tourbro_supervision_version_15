@@ -1,0 +1,47 @@
+.card {
+  .card-body {
+    .nav-tabs {
+      border-bottom: unset;
+
+      .nav-item {
+        .active {
+          color: #fff !important;
+          cursor: default;
+          background-color: #ff9800 !important;
+          border: 1px solid #ff9800 !important;
+          border-bottom-color: transparent;
+        }
+
+        .nav-link {
+          &:hover {
+            color: #fff !important;
+            background-color: #ff9800 !important;
+            border: 1px solid #ff9800 !important;
+            border-bottom-color: transparent;
+          }
+
+          margin-right: 2px;
+          line-height: 1.42857143;
+          border: 1px solid transparent;
+          border-radius: 4px 4px 0 0;
+          background: #f4f4f4;
+          color: #3c8dbc;
+        }
+      }
+    }
+  }
+}
+
+
+
+// .list_of_sections a {
+//   background: #fff none repeat scroll 0 0;
+//   border: 1px solid #eeeeee;
+//   border-radius: 3px;
+//   box-shadow: 0 1px 2px 0 #ccc;
+//   color: #666;
+//   float: left;
+//   font-size: 14px;
+//   margin: 5px;
+//   padding: 5px 10px;
+// }

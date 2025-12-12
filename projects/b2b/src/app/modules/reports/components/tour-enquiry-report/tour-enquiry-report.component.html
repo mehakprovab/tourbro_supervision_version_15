@@ -1,0 +1,152 @@
+<div class="card-header text-uppercase bg-dark text-white">
+    <h5 style="border-bottom: 0;">B2B Tour Enquiry</h5>
+</div>
+<div class="card">
+    <form [formGroup]="regConfig">
+      <div class="row">
+          <div class="col-4 pr-0">
+             <div class="form-group">
+                <label for="phone">Phone</label>
+                <input formControlName="phone" type="text" class="form-control form-control-sm nrm_input"
+                   placeholder="contact Number" id="phone">
+             </div>
+          </div>
+          <div class="col-4 pr-0">
+             <div class="form-group">
+                <label for="email">Email</label>
+                <input formControlName="email" type="email" class="form-control form-control-sm nrm_input"
+                   placeholder="Email" id="email">
+             </div>
+          </div>
+          <div class="col-4 pr-0">
+            <div class="form-group">
+               <label for="bookedBy">Status</label>
+               <select formControlName="status" name="cars" id="bookedBy"
+                  class="form-control form-control-sm nrm_input">
+                  <option value="ALL">ALL</option>
+                  <option value=1>Enquiry Open</option>
+                  <option value=0>Enquiry Closed</option>
+               </select>
+            </div>
+         </div>
+          <div class="col-4 pr-0">
+            <div class="form-group">
+               <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
+               <label for="fromDate">Enquiry From Date</label>
+               <input formControlName="fromDate" type="text" id="fromDate" autocomplete="off"
+               class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy"
+               bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen">
+            </div>
+         </div>
+          <div class="col-4 pr-0">
+             <div class="form-group">
+                <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
+                <label for="toDate">Enquiry To Date</label>
+                <input formControlName="toDate" type="text" id="toDate" autocomplete="off" 
+                class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy"
+                bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen">
+             </div>
+          </div>
+       </div>
+       <div class="btncontainer">
+          <button type="submit" class="btnStyle" (click)="onSearchSubmit()">Search</button> &nbsp;
+          <button type="button" class="btnStyle" (click)="onReset()">Reset</button>
+       </div>
+    </form>
+ </div>
+ <div class="card" style="margin-top: 30px;">
+    <div class="card-body">
+        <p>Total {{respData?.length}} Enquiry</p>
+        <button class="btnStyle" (click)="download('pdf', 'landscape')">PDF</button>&nbsp;
+        <button class="btnStyle" (click)="download('xlsx', 'portrait')">Export to excel</button>
+        <div class="form-group mb-0 col-sm-3 p-0 float-right">
+            <input class="form-control ml-2" type="text" name="searchTerm"
+            (keyup)="applyFilter($event.target.value)" />
+        </div>
+       <div class="mb-3">
+          <form>
+            <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft" #scrollOne >
+                <div class="div1"></div>
+            </div>
+            <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
+                <div class="div2 invisible-scrollbar">
+                    <div class="table-respons">
+                        <table class="table table-borderless table-striped table-hover" matSort
+                        (matSortChange)="sortData($event)" id="b2b-tour-enquiry">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-left text-nowrap" *ngFor="let header of displayColumn;"
+                                    mat-sort-header="{{header.key}}">
+                                    {{header.value }} 
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="searchSpin">
+                                <td colspan="12">
+                                    <mat-spinner [diameter]="30" style="margin:0 auto;"
+                                        mode="indeterminate"></mat-spinner>
+                                </td>
+                            </tr>
+                            <tr *ngIf="!searchSpin && !respData.length">
+                                <td colspan="11">
+                                    <h4 class="text-muted text-center">
+                                        No Data Found!
+                                    </h4>
+                                </td>
+                            </tr>
+                            <tr
+                                *ngFor="let data of respData; let i=index;">
+                                <td class="text-left text-muted">#{{i+1}}</td>
+                                <td class="text-left overflow-hidden"> 
+                                <div ngbDropdown container="body"><button class="btnStyle" ngbDropdownToggle>
+                                    {{'Action'}}
+                                    </button>
+                                    <div ngbDropdownMenu>
+                                        <!-- <button ngbDropdownItem (click)="showEnquiryDetails(data)">View Enquiry</button> -->
+                                        <button ngbDropdownItem (click)="openEnquiry(data)" *ngIf="data['status'] == 0">Open Enquiry</button>
+                                        <button ngbDropdownItem (click)="closeEnquiry(data)" *ngIf="data['status'] == 1">Close Enquiry</button>
+                                        <!-- <button ngbDropdownItem (click)="tourBrochure(data)">Tour Brochure</button> -->
+                                    </div>
+                                </div>
+                                </td>
+                                <td class="text-left"> 
+                                        <span *ngIf="data['status'] == 1" class="badge badge-success ">
+                                            Enquiry Open
+                                        </span>
+                                        <span *ngIf="data['status'] == 0"
+                                            class="badge badge-danger">
+                                            Enquiry Closed
+                                        </span>   
+                                </td>
+                                <td class="text-left">{{data['name']}} </td>
+                                <td class="text-left"> {{data['phone']}} </td>
+                                <td class="text-left"> {{data['email']}} </td>
+                                <td class="text-left"> {{data['departure_place']}} </td>
+                                <td class="text-left"> {{data['departure_date'] | date: 'dd/MM/yyyy'}} </td>
+                                <!-- <td class="text-left"> {{data['message']}} </td> -->
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+             </div>
+             <div class="card-footer pb-0">
+                <div class="d-flex w-100 justify-content-between">
+                   <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                   </ngb-pagination>
+                   <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                    <option [ngValue]="50">50 items per page</option>
+                    <option [ngValue]="100">100 items per page</option>
+                    <option [ngValue]="150">150 items per page</option>
+                    <option [ngValue]="200">200 items per page</option>
+                    <option [ngValue]="500">500 items per page</option>
+                    <option [ngValue]="700">700 items per page</option>
+                    <option [ngValue]="1000">1000 items per page</option>  
+                 </select>
+                </div>
+            </div>
+          </form>
+       </div>
+    </div>
+ </div>

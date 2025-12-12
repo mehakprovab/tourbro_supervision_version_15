@@ -1,0 +1,68 @@
+.trapezoid {
+    border-bottom: 60px solid #082E53;
+    border-left: 45px solid transparent;
+    border-right: 0px solid transparent;
+    height: 0;
+    width: 100%;
+    color: #fff;
+    text-align: center;
+    line-height: 60px;
+    font-size: 19px;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  // .safety_div { list-style-type: disc; line-height: 30px; font-size: 1rem;}
+
+  // .safety-wrapper {
+  //   overflow: hidden;
+  //   display: -webkit-box;
+  //   -webkit-line-clamp: 3; /* Show 3 lines */
+  //   -webkit-box-orient: vertical;
+  // }
+  
+  // .safety-wrapper.expanded {
+  //   -webkit-line-clamp: unset;
+  //   overflow: visible;
+  //   display: block;
+  // }
+.safety_div ul{ padding-left: 14px;}
+.safety_div ul li { list-style-type: disc; line-height: 30px; font-size: 1rem;}
+.view-more {
+  color: #007bff !important;
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 10px;
+  text-decoration: underline;
+}
+
+ #print_voucher {
+    page-break-after: avoid;
+  }
+
+  #print_voucher section,
+  #print_voucher div,
+  #print_voucher .row,
+  #print_voucher .form-group {
+    page-break-inside: avoid;
+  }
+
+  #print_voucher h2,
+  #print_voucher h3,
+  #print_voucher h4 {
+    page-break-after: avoid;
+    margin-bottom: 10px;
+  }
+
+  #print_voucher p {
+    page-break-inside: avoid;
+  }
+
+  #print_voucher table {
+    page-break-inside: avoid;
+  }
+
+  #print_voucher tr {
+    page-break-inside: avoid;
+  }

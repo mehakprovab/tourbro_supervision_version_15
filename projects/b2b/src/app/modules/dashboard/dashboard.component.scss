@@ -1,0 +1,51 @@
+.w-35 {
+    width: 35%;
+}
+.link{
+    color: #3c8dbc;
+    cursor: pointer;
+}
+.link:hover {
+    color: darken($color: #3c8dbc, $amount: 10) ;
+
+}
+.customCenter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}.flight-destination-section .destination-slider .banner-section { width: 100% !important;}
+.flight-destination-section .destination-slider .banner-section img { height: 290px !important;}
+.booking-cards{
+    width: 100%;
+}
+.booking-cards .content .textStyle{
+font-size: 10px;
+line-height: 2px;
+}
+.booking-cards {
+    border-radius: 5px !important;
+}
+
+::ng-deep .slick-slide {
+	margin: 0 15px !important;
+}
+/* the parent */
+::ng-deep .slick-list {
+	margin: 0 -15px !important;
+}
+
+@media only screen and (max-width: 767px) {
+    .d-flex, .bookings-section { display: block !important;}
+    .bookings-section .left-section { max-width: 100% !important; flex-basis:100% !important;}
+    .bookings-section .right-section { max-width: 100% !important; flex-basis:100% !important; margin-top: 15px !important; margin-left: 0px !important;}
+    .recent-transaction .d-flex .left-section { margin-right: 0px !important; margin-bottom: 10px !important;}
+    }
+
+.hide{
+    display: none;
+}
+
+.no-records-found {
+    top: 100px;
+    position: relative;
+}

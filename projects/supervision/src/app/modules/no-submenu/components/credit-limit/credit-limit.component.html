@@ -1,0 +1,73 @@
+<div class="row mx-0 pt-2">
+    <div class="col-md-12">
+        <div class="card main-card mb-6">
+            <div class="card-body">
+                <ngb-tabset class="tabs-animated tabs-animated-shadow" #tabs>
+                    <ngb-tab id="update">
+                        <ng-template ngbTabTitle>
+                            <span class="">
+                                <i class="fa fa-save" aria-hidden="true"></i>
+                                &nbsp;{{fromDeduct === 'deductCredit' ? 'Deduct Credit Limit' : 'Update Credit Limit'}}
+                            </span>
+                        </ng-template>
+                        <ng-template ngbTabContent>
+                            <form class="" [formGroup]="creditConfig" autocomplete="off">
+                                <div>
+                                    <div class="pb-3">
+                                        <div class="pl-0 card-header-tab card-header">
+                                            <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                                                <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
+                                                <span> {{fromDeduct === 'deductCredit' ? 'Deduct Limit' : 'Credit Limit Details'}} </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group required row">
+                                        <label for="agent_balance" class="col-sm-2 col-form-label text-capitalize">Agent Name</label>
+                                        <div class="col-sm-4">
+                                            <input formControlName="agent_name" type="text" readonly class="form-control" id="agent_balance"
+                                                maxlength="250">
+                                        </div>
+                                    </div>
+                                    <div class="form-group required row">
+                                        <label for="agent_balance" class="col-sm-2 col-form-label text-capitalize">Agent Id</label>
+                                        <div class="col-sm-4">
+                                            <input formControlName="agent_uuid" type="text" readonly class="form-control" id="agent_balance"
+                                                maxlength="250">
+                                        </div>
+                                    </div>
+                                    <div class="form-group required row">
+                                        <label for="agent_balance" class="col-sm-2 col-form-label text-capitalize">Balance</label>
+                                        <div class="col-sm-4">
+                                            <input formControlName="agent_balance" type="text" readonly class="form-control" id="agent_balance"
+                                                maxlength="250">
+                                        </div>
+                                    </div>
+                                    <div class="form-group required row">
+                                        <label for="due_amount" class="col-sm-2 col-form-label text-capitalize">Due amount</label>
+                                        <div class="col-sm-4">
+                                            <input formControlName="due_amount" type="text" readonly class="form-control" id="due_amount"
+                                                maxlength="250">
+                                        </div>
+                                    </div>
+                                    <div class="form-group required row">
+                                        <label for="credit_limit" class="col-sm-2 col-form-label text-capitalize"> {{fromDeduct === 'deductCredit' ? 'Deduct Limit' : 'Credit Limit'}} </label>
+                                        <div class="col-sm-4">
+                                            <input formControlName="credit_limit" type="text" class="form-control" id="credit_limit"
+                                                maxlength="250" (keypress)="numberOnly($event)" maxlength="8">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row mb-n2">
+                                        <div class="col-sm-12 customCenter">
+                                            <button type="submit" [disabled]="!creditConfig.valid"  class="btn btn-sm btn-primary mr-1" (click)="onSubmit()"> Submit</button>
+                                            <button type="submit" class="btn btn-sm btn-primary" (click)="goBack()">Back</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </ng-template>
+                    </ngb-tab>
+                </ngb-tabset>
+            </div>
+        </div>
+    </div>
+</div>

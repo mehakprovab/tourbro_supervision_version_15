@@ -1,0 +1,902 @@
+<div class="theme_bg" style="background: #F2F2F2;">
+    <div class="container nopad">
+        <!-- <app-booking-steps [travellers]="true" [passengerDetails]="true" [review]="true"></app-booking-steps> -->
+        <div class="row mobile_row m-0" #gotoBaggageProtection>
+            <div class="col-md-12">
+            <!-- <app-booking-flight-detail *ngIf="flight" [flight]="flight" [traveller]="traveller"></app-booking-flight-detail> -->
+            </div>
+            <div class="col-md-8 pl-0 mb-5 mobile_pad">
+                <div class="card mt-3" style="box-shadow: 0px 1px 16px #ddd;"  *ngIf="!currentUser">
+                    <div class="card-body">
+                        <h5 class="card-title">Log in or register to enjoy this member-only benifit</h5>
+                        <a class="card-link loginr" style="color: #092e53;" data-toggle="modal" data-target="#show_log"
+                           >Log In or Register</a>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <h3 class="inpagehed">Passenger Details</h3>
+                <div class="card p-3 mt-3 sectionbuk" *ngFor="let p of paxDetail; let i = index">
+                    <div class="row">
+                        <div class="col-12 d-flex w-100 justify-content-between capitalize">
+                            <h5 class="mb-1">{{p.Title+' '+p.FirstName +' '+ p.LastName}}</h5>
+                            <!-- <button type="button" class="btn btn-link" (click)="editPassengers()">Edit</button> -->
+                        </div>
+                        <hr class="my-2 w-100">
+                        <div class="col-6 cus_details">
+                            <label>Date of Birth</label>
+                            <p>{{ p.DateOfBirth | date: 'dd/MM/yyyy'}}</p>
+                        </div>
+                        <div class="col-6 cus_details">
+                            <label>Nationality</label>
+                            <p>{{getCountryName(p?.Nationality)}}</p>
+                        </div>
+                        <hr class="my-2 w-100">
+                        <div class="col-6 cus_details">
+                            <label>Type</label>
+                            <p style="text-transform: capitalize;">
+                                <ng-container *ngIf="p?.PassengerType">{{p.PassengerType}}</ng-container>
+                                <ng-container *ngIf="!p?.PassengerType">{{passengerType(p?.PaxType)}}</ng-container>
+                            </p>
+                        </div>
+                        <div class="col-6 cus_details" *ngIf="flight">
+                            <label>ID Number</label>
+                            <p>{{ p.PassportNumber }}</p>
+                        </div>
+                        <hr class="my-2 w-100" *ngIf="flight">
+                        <div class="col-6 cus_details">
+                            <label>Country of Issue</label>
+                            <p>{{getCountryName(p.PassportIssuingCountry)}}</p>
+                        </div>
+                        <div class="col-6 cus_details" *ngIf="flight">
+                            <label>Expiry Date</label>
+                            <p>{{p.PassportExpiryDate | date: 'dd/MM/yyyy'}}</p>
+                        </div>
+                        <ng-container *ngIf="isSeatInfoNotEmpty && p?.SeatInfo && p?.SeatInfo.length>0">
+                            <hr class="my-2 w-100">
+                            <div class="col-12">
+                                <label>Selected Seat</label>
+                                <br/>
+                                <ng-container *ngFor="let seat of p?.SeatInfo; let last = last">
+                                    <span>{{ seat.Code }} ({{ seat.FromAirportCode }}-{{seat.ToAirportCode}})</span>
+                                        <ng-container *ngIf="!last">, </ng-container>
+                                </ng-container>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <h3 class="inpagehed">Contact Details</h3>
+                <div class="card p-3 sectionbuk">
+                    <div class="row">
+                        <!-- <div class="col-12 d-flex w-100 justify-content-between capitalize">
+                            <h5 class="mb-1">{{ contact.Title +' '+ contact.FirstName +' '+contact.MiddleName+' '+contact.LastName}}</h5>
+                            <button type="button" class="btn btn-link" (click)="editPassengers()">Edit</button>
+                        </div>
+                        <hr class="my-2 w-100"> -->
+                        <div class="col-md-4 col-12 cus_details">
+                            <label>Mobile Number</label>
+                            <p>{{ addressDetail.PhoneCode }} {{ addressDetail.Contact }}</p>
+                        </div>
+                        <div class="col-md-4 col-12 cus_details align-items-end">
+                            <label>Email</label>
+                            <p>{{ addressDetail.CustomerEmail }}</p>
+                        </div>
+    
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <h3 class="inpagehed hide">Baggage Protection</h3>
+                <div class="card p-3 mt-3 sectionbuk hide" *ngIf="baggageLoaded | async">
+                    <div class="row">
+                        <div class="col-12 d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">For {{'BDT'}} {{baggagelist?.ProductPrice}} per traveller:</h5>
+                        </div>
+                        <hr class="my-2 w-100">
+                        <div class="col-12">
+                            <div class="form-row">
+                                <div class="form-group col-md-12 form-group p-3 border rounded">
+                                    <p class="">
+                                        <i class="fa fa-check text-success" aria-hidden="true"> </i>
+                                        Blue Ribbon Bags will track and expedite your delayed bagage
+                                    </p>
+                                    <p class="">
+                                        <i class="fa fa-check text-success" aria-hidden="true"> </i>
+                                        Provides real-time push notifications via email or SMS regarding the status
+                                        of your bagage
+                                    </p>
+                                    <p class="">
+                                        <i class="fa fa-check text-success" aria-hidden="true"> </i>
+                                        Receive {{'BDT'}} {{baggagelist.BagCoverage}} if your bag is not at the destination
+                                        within 96 hours
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-row mt-1">
+                                <form [formGroup]="baggageForm">
+                                    <div class="form-group col-md-12 nopad">
+                                        <input formControlName="baggageProtection" [value]="true" type="radio" name=""
+                                            id="yes" class="" (change)="updateBaggage(true)"> <label for="yes"
+                                            class="text-info">
+                                            &nbsp;Yes, add to my reservation <span class="text-success ml-3"> HIGHLY
+                                                RECOMMENDED
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group col-md-12 nopad">
+                                        <input formControlName="baggageProtection" [value]="false" type="radio" name=""
+                                            id="no" class="" (change)="updateBaggage(false)" [checked]="baggageRadio">
+                                        <label for="no" class="text-info">
+                                            &nbsp;No I'll run the risk
+                                        </label>
+                                    </div>
+                                    <div class="">
+                                        <small class="error text-danger"
+                                            *ngIf="hasError('baggageProtection', 'required', 'baggageForm');">
+                                            Please Select Baggage Protection Option* <br>
+                                        </small>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <br>
+                <div style="text-align: center;">
+                    <div class="position-relative row form-check">
+                        <div class="col-sm-12">
+                            <!-- <button type="button" class="btn btn-primary book_btn btn_hover"
+                                (click)="onFinalBooking()" style="background:#fbc10a; border: 1px solid #fbc10a;">Continue</button> -->
+                                <button type="button" class="btn btn-primary book_btn btn_hover"
+                                (click)="proceedToConfirm()">Pay Now </button>
+                            &nbsp;&nbsp;
+                                <button *ngIf="checkPayLaterOption(bookingDetails)" type="button" class="btn btn-primary book_btn btn_hover"
+                                (click)="showPayLaterPopUp = true">Pay Later </button>
+                             &nbsp;&nbsp;
+                            <a routerLink="/dashboard"><button class="btn btn-success book_btn1 btn_hover">Cancel</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg-4 mt-3 padlt">
+                <div class="topsticky">
+
+                    <div class="topsticky">
+                        <div class="fsBorder card" style="box-shadow: 0px 1px 16px #ddd;">
+                            <h4 class="text-muted"> Fare Summary </h4>
+                            <div class=" px-2 pb-3" *ngIf="flight">
+                                <h5>Flight Price Summary</h5>
+                                <div>
+                                    <div class="row m-0 text-muted" style="font-size: 14px;">
+                                        <ng-container *ngIf="isAdult(flight)">
+                                            <div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+                                                <div class="float-left">
+                                                    <b>Adult ticket</b>
+                                                </div>
+                                                <div class="float-right customColor">
+                                                    {{ flight.Price.Currency }} {{
+                                                    flight.Price.PassengerBreakup.ADT?.TotalPrice }} X {{
+                                                    adultCount }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+                                                <div class="float-left customColor">
+                                                    Base Fare
+                                                </div>
+                                                <div class="float-right customColor">
+                                                    {{ flight.Price.Currency }}
+                                                    {{ flight.Price.PassengerBreakup.ADT?.BasePrice }}
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="col-md-12 col-lg-12 f-14 bbottom pb-2 mb-2 mobile_nopad">
+                                                <div class="float-left customColor">
+                                                    Taxes &amp; Fees
+                                                </div>
+                                                <div class="float-right customColor">
+                                                    {{ flight.Price.Currency }} {{
+                                                    flight.Price.PassengerBreakup.ADT?.Tax }}
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="isYouth(flight)">
+                                            <div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+                                                <div class="float-left">
+                                                    <b>Youth ticket</b>
+                                                </div>
+                                                <div class="float-right customColor">
+                                                    {{ flight.Price.Currency }} {{
+                                                    flight.Price.PassengerBreakup.YTH?.TotalPrice }} X {{
+                                                    adultCount }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+                                                <div class="float-left customColor">
+                                                    Base Fare
+                                                </div>
+                                                <div class="float-right customColor">
+                                                    {{ flight.Price.Currency }}
+                                                    {{ flight.Price.PassengerBreakup.YTH?.BasePrice }}
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="col-md-12 col-lg-12 f-14 bbottom pb-2 mb-2 mobile_nopad">
+                                                <div class="float-left customColor">
+                                                    Taxes &amp; Fees
+                                                </div>
+                                                <div class="float-right customColor">
+                                                    {{ flight.Price.Currency }} {{
+                                                    flight.Price.PassengerBreakup.YTH?.Tax }}
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="isChild(flight)">
+                                            <div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+                                                <div class="float-left">
+                                                    <b>Child ticket</b>
+                                                </div>
+                                                <div class="float-right customColor">
+                                                    {{ flight.Price.Currency }} {{
+                                                    flight.Price.PassengerBreakup.CHD?.TotalPrice }} X {{
+                                                    childCount }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+                                                <div class="float-left customColor">
+                                                    Base Fare
+                                                </div>
+                                                <div class="float-right customColor">
+                                                    {{ flight.Price.Currency }}
+                                                    {{ flight.Price.PassengerBreakup.CHD?.BasePrice }}
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="col-md-12 col-lg-12 f-14 pb-2 bbottom mb-2 mobile_nopad">
+                                                <div class="float-left customColor">
+                                                    Taxes &amp; Fees
+                                                </div>
+                                                <div class="float-right customColor">
+                                                    {{ flight.Price.Currency }} {{
+                                                    flight.Price.PassengerBreakup.CHD?.Tax }}
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="isInfant(flight)">
+                                            <div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+                                                <div class="float-left customColor">
+                                                    <b>Infant ticket</b>
+                                                </div>
+                                                <div class="float-right customColor">
+                                                    {{ flight.Price.Currency }} {{
+                                                    flight.Price.PassengerBreakup.INF?.TotalPrice }} X {{
+                                                    infantCount }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 f-14 mb-2 mobile_nopad">
+                                                <div class="float-left customColor">
+                                                    Base Fare
+                                                </div>
+                                                <div class="float-right customColor">
+                                                    {{ flight.Price.Currency }}
+                                                    {{ flight.Price.PassengerBreakup.INF?.BasePrice }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 f-14 bbottom mb-3 mobile_nopad">
+                                                <div class="float-left customColor">
+                                                    Taxes &amp; Fees
+                                                </div>
+                                                <div class="float-right customColor">
+                                                    {{ flight.Price.Currency }} {{
+                                                    flight.Price.PassengerBreakup.INF?.Tax }}
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                        <!-- <div class="col-md-12 col-lg-12 f-14 bbottom  mb-2 mobile_nopad" *ngIf="cartList.flight.Price.PriceBreakup.TotalLostBaggageProtection">
+                                    <div class="float-left customColor">
+                                        Baggage Protection Fee
+                                    </div>
+                                    <div class="float-right customColor">
+                                        {{ flight.Price.Currency }} {{ cartList.flight.Price.PriceBreakup.TotalLostBaggageProtection   }}
+                                    </div>
+                                </div> -->
+                                        <!-- <div class="col-md-12 col-lg-12 f-14 mb-3 mobile_nopad" *ngIf="flight.Price.PriceBreakup.AdvanceTax">
+                                    <div class="float-left" style="color: #082B3A !important;">
+                                        AIT
+                                    </div>
+                                    <div class="float-right customColor">
+                                        {{ flight.Price.Currency }} {{ flight.Price.PriceBreakup.AdvanceTax   }}
+                                    </div>
+                                </div> -->
+                                        <div class="col-md-12 col-lg-12 f-18 mb-3 mobile_nopad">
+                                            <div class="float-left grand_tot" style="font-size: 16px;">
+                                                Total
+                                            </div>
+                                            <div class="float-right text-warning"
+                                                style="color:#092e53 !important; font-size: 16px;">
+                                                {{ flight.Price.Currency }} {{
+                                                flight.Price.TotalDisplayFare }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                  <hr>
+                            </div>
+                            <div class="col-md-12" *ngIf="hotel">
+                                <div class="row font-weight-bold pt-0 pb-3 hotl_details_name">
+    
+                                    <!-- <div class="col-md-4 mpad"
+                                        *ngIf="booking_source == 'ZBAPINO00008' || booking_source == 'TLAPINO00004' || booking_source == 'TLAPINO00007'">
+                                        <img class="imgStyle" src="{{hotel.HotelPicture}}" alt="">
+                                    </div> -->
+    
+                                    <!-- <div class="col-md-4 mpad">
+                                        <img class="imgStyle" src="{{hotel.HotelPhoto}}" alt="">
+                                    </div> -->
+                                    <!-- <div class="col-md-8 pl-0">
+                                        <h5 class="cusromGrey"><strong>{{hotel.HotelName}}</strong> </h5>
+                                        <ng-template *ngIf="hotel.StarRating === '' then noStar; else stars">
+                                        </ng-template>
+                                        <ng-template #noStar>
+                                            <span class="star_rtng">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                            </span>
+                                        </ng-template>
+                                        <ng-template #stars>
+                                            <span class="star_rtng">
+                                                <i class="fas fa-star star_rtng_clr"
+                                                    *ngFor="let s of hotel.StarRating | map: getStarArray"></i>
+                                                <i class="fas fa-star"
+                                                    *ngFor="let s of hotel.StarRating | map: getStarArrayRemaining"></i>
+                                            </span>
+                                        </ng-template>
+                                        <p class="cusromGrey">
+                                            {{hotel.HotelAddress}}
+                                        </p>
+                                    </div> -->
+                                </div>
+    
+                                <!-- <div class="row font-weight-bold pt-3 pb-3 hotl_details_check">
+                                    <div class="col-md-4 px-3">
+                                        <p class="cusromgray m-0">
+                                            Check-In:
+                                        </p>
+                                        <p class="cusromBlue m-0">
+                                            {{hotel.HotelCheckIn | date: 'dd/MM/yyyy'}}
+                                        </p>
+                                    </div>
+                                    <div class="col-md-4 px-3">
+                                        <p class="cusromgray m-0">
+                                            Check-Out:
+                                        </p>
+                                        <p class="cusromBlue m-0">
+                                            {{hotel.HotelCheckOut | date: 'dd/MM/yyyy'}}
+                                        </p>
+                                    </div>
+    
+                                    <div class="col-md-4 px-y">
+                                        <p class="cusromgray m-0">
+                                            No of Nights:
+                                        </p>
+                                        <p class="cusromBlue m-0">
+                                            {{hotel.NoOfNights}}
+                                        </p>
+                                    </div>
+                                </div> -->
+    
+                                <div class="row pt-3 pb-3 trooms_desc">
+                                    <div class="col-md-12 px-3">
+                                        <h5>Hotel Price Summary</h5>
+                                        <hr>
+                                        <div class="col-md-12 px-3" *ngIf="hotel.booking_source !== 'TLAPNO00003'">
+											
+											<div *ngFor="let r of hotel?.CancellationReason?.RoomDetails;let i=index" style="border-bottom: 1px solid #d6d6d6;"  class="mb-2" >
+												<div class="valign-wrapper row mt-1 mb-1">
+													<div class="col-md-6 col-6 nopad">
+														<span class="cusromBlue m-0">
+															Room {{ i + 1 }}:
+														</span>
+													</div>
+													<div class="col-md-6 col-6 nopad text-right">
+														<span class="m-0 pull-right">
+															{{ r.roomName }} 
+															<span [ngClass]="{ 'text-danger': r.NonRefundable, 'text-success': !r.NonRefundable }">
+																({{ r.NonRefundable ? 'Non-Refundable' : 'Refundable' }})
+															</span>
+														</span>                                            
+													</div>
+												</div>
+				
+												<!-- <div class="valign-wrapper mt-1 mb-1">
+													<div class="col-md-6 col-6 nopad">
+														<span class="cusromBlue m-0">
+															Room View 
+														</span>
+													</div>
+													<div class="col-md-6 col-6 nopad text-right">
+														<span class="m-0 pull-right">
+															{{ r.Description }} 
+														</span>                                            
+													</div>
+												</div> -->
+									
+												<div class="clearfix"></div>
+									
+												<div class="valign-wrapper row mt-1 mb-1">
+													<div class="col-md-6 col-6 nopad">
+														<span class="cusromBlue m-0">
+															Meal Plan:
+														</span>
+													</div>
+													<div class="col-md-6 col-6 nopad text-right">
+														<span class="m-0 pull-right">
+															{{ r.roomType }}
+														</span>
+													</div>
+												</div>
+									
+												<div class="clearfix"></div>
+									
+												<div class="valign-wrapper row mt-1 mb-1">
+													<div class="col-md-6 col-6 nopad">
+														<span class="cusromBlue m-0">
+															Adult(s):
+														</span>
+													</div>
+													<div class="col-md-6 col-6 nopad text-right">
+														<span class="m-0 pull-right">
+															{{ r.AdultCount }}
+														</span>
+													</div>
+												</div>
+									
+												<div class="clearfix"></div>
+									
+												<div class="valign-wrapper row mt-1 mb-1">
+													<div class="col-md-6 col-6 nopad">
+														<span class="cusromBlue m-0">
+															No of Children:
+														</span>
+													</div>
+													<div class="col-md-6 col-6 nopad text-right">
+														<span class="m-0 pull-right">
+															{{ hotel.CancellationReason.searchRequest.RoomGuests[i].NoOfChild }}  
+															<span *ngIf="hotel.CancellationReason.searchRequest.RoomGuests[i].NoOfChild > 0">
+																({{ hotel.CancellationReason.searchRequest.RoomGuests[i].ChildAge.length === 1 
+																	? hotel.CancellationReason.searchRequest.RoomGuests[i].ChildAge[0] + ' yrs' 
+																	: hotel.CancellationReason.searchRequest.RoomGuests[i].ChildAge.join(' yrs, ') + ' yrs' }})
+															</span>
+														</span>
+													</div>
+												</div>
+												<div class="clearfix"></div>
+												<hr> <!-- Separator for better visibility -->
+											</div>
+                                            <hr>
+										</div>
+				
+										<div class="col-md-12 px-3" *ngIf="hotel.booking_source === 'TLAPNO00003'">
+											<hr> 
+											<div class="mb-2" style="border-bottom: 1px solid #d6d6d6;" *ngFor="let r of hotel?.CancellationReason?.hotelBody.RoomDetails;let i=index">
+												<div class="valign-wrapper row mt-1 mb-1">
+													<div class="col-md-6 col-6 nopad">
+														<span class="cusromBlue m-0">
+															Room {{ i + 1 }}:
+														</span>
+													</div>
+													<div class="col-md-6 col-6 nopad text-right">
+														<span class="m-0 pull-right">
+															{{ r.RoomName }} 
+															<span [ngClass]="{ 'text-danger': r.NonRefundable, 'text-success': !r.NonRefundable }">
+																({{ r.NonRefundable ? 'Non-Refundable' : 'Refundable' }})
+															</span>
+														</span>                                            
+													</div>
+												</div>
+				
+												<div class="valign-wrapper row mt-1 mb-1">
+													<div class="col-md-6 col-6 nopad" *ngIf="bookingSource !== 'TLAPNO00003'">
+														<span class="cusromBlue m-0">
+															Room View 
+														</span>
+													</div>
+													<div class="col-md-6 col-6 nopad" *ngIf="bookingSource == 'TLAPNO00003'">
+														<span class="cusromBlue m-0">
+															Room View - Meal Plan
+														</span>
+													</div>
+													<div class="col-md-6 col-6 nopad text-right">
+														<span class="m-0 pull-right">
+															{{ r.Description }} 
+														</span>                                            
+													</div>
+												</div>
+									
+												<div class="clearfix"></div>
+									
+												<div class="valign-wrapper row mt-1 mb-1" *ngIf="bookingSource !== 'TLAPNO00003'">
+													<div class="col-md-6 col-6 nopad">
+														<span class="cusromBlue m-0">
+															Meal Plan:
+														</span>
+													</div>
+													<div class="col-md-6 col-6 nopad text-right">
+														<span class="m-0 pull-right">
+															{{ r.roomType }}
+														</span>
+													</div>
+												</div>
+									
+												<div class="clearfix"></div>
+									
+												<div class="valign-wrapper row mt-1 mb-1">
+													<div class="col-md-6 col-6 nopad">
+														<span class="cusromBlue m-0">
+															Adult(s):
+														</span>
+													</div>
+													<div class="col-md-6 col-6 nopad text-right">
+														<span class="m-0 pull-right">
+															{{ r.AdultCount }}
+														</span>
+													</div>
+												</div>
+									
+												<div class="clearfix"></div>
+									
+												<div class="valign-wrapper row mt-1 mb-1">
+													<div class="col-md-6 col-6 nopad">
+														<span class="cusromBlue m-0">
+															No of Children:
+														</span>
+													</div>
+													<div class="col-md-6 col-6 nopad text-right">
+													 
+															<span class="m-0 pull-right">
+																{{ hotel.CancellationReason.hotelBody.searchRequest.RoomGuests[i].NoOfChild }}  
+																<span *ngIf="hotel.CancellationReason.hotelBody.searchRequest.RoomGuests[i].NoOfChild > 0">
+																	({{ hotel.CancellationReason.hotelBody.searchRequest.RoomGuests[i].ChildAge.length === 1 
+																		? hotel.CancellationReason.hotelBody.searchRequest.RoomGuests[i].ChildAge[0] + ' yrs' 
+																		: hotel.CancellationReason.hotelBody.searchRequest.RoomGuests[i].ChildAge.join(' yrs, ') + ' yrs' }})
+																</span>
+															</span>
+													
+													</div>
+												</div>
+												<div class="clearfix"></div>
+												 <!-- Separator for better visibility -->
+											</div>
+										</div>
+			
+                                    </div>
+                                </div>
+                                <div class="row trooms_desc m-auto pb-3">
+                                    <div class="col-md-12 px-3">
+                                        <!-- <h5>Hotel Price Summary</h5> -->
+                                        <div class="clearfix"></div>
+                                        <div class="valign-wrapper row mt-1 mb-1">
+                                            <div class="col-md-6 col-6 nopad">
+                                                <span class="cusromBlue m-0">
+                                                    Price:
+                                                </span>
+                                            </div>
+                                            <div class="col-md-6 col-6 nopad text-right">
+                                                <span class="m-0 pull-right ">
+                                                    {{hotel.Currency}} {{hotel.TotalAmount }}
+                                                </span>
+                                            </div>
+    
+                                        </div>
+                                        <div class="clearfix"></div>
+    
+    
+                                        <div  class="valign-wrapper row mt-1 mb-1">
+                                            <div class="col-md-6 col-6 nopad">
+                                                <span class="cusromBlue m-0 grand_tot">
+                                                    Total:
+                                                </span>
+                                            </div>
+    
+                                            <div class="col-md-6 col-6 nopad text-right">
+                                                <span class="m-0 pull-right"
+                                                    style="color: #082b3a!important; font-size: 16px; font-weight: 700;">
+                                                    {{hotel.Currency}} {{hotel.TotalAmount | number:'1.2-2' }}
+                                                </span>
+                                            </div>
+    
+                                        </div>
+    
+                                    </div>
+    
+    
+    
+                                </div>
+
+                             
+<hr>
+                            </div>
+                            
+                            <div  style="border-bottom: 1px solid #d6d6d6;" class="row trooms_desc pt-3 pb-3 col-12 m-auto" *ngIf="transfer">
+                                <div class="col-md-12 px-3">
+                                    <h5>Transfer Price Summary</h5>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-12">
+                                        <div class="row trooms_desc pt-0 pb-0">
+                                            <div class="col-md-12 px-3">
+                                                <div class="clearfix"></div>
+                                                <div class="valign-wrapper row mt-1 mb-1"
+                                                    style="font-size: 14px; color: #092e53;">
+                                                    <div class="col-md-6 col-6 nopad">
+                                                        <span class="cusromBlue m-0">
+                                                            Base Fare:
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-md-6 col-6 nopad text-right">
+                                                        <span class="m-0 pull-right ">
+                                                            {{transfer.BookingItineraryDetails.currency}}
+                                                            {{transfer.BookingItineraryDetails.total_fare| number:'1.1-2' }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+    
+                                                <div class="valign-wrapper row pt-2 pb-2"
+                                                    style="font-size: 16px; color: #092e53;">
+                                                    <div class="col-md-6 col-6 nopad">
+                                                        <span class="cusromBlue m-0">
+                                                            Total
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-md-6 col-6 nopad text-right">
+                                                        <span class="m-0 pull-right " style="font-weight: 600;">
+                                                            {{transfer.BookingItineraryDetails.currency}}
+                                                            {{transfer.BookingItineraryDetails.total_fare |
+                                                            number:'1.1-2'}}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </div>
+    
+                                    </div>
+                                    <div class="clearfix"></div>
+
+
+                                </div>
+
+
+<hr>
+                            </div>
+
+                            
+
+                            <div  style="border-bottom: 1px solid #d6d6d6;" class="row trooms_desc m-1 pt-3 pb-3" *ngIf="activity">
+                                <div class="col-md-12 px-3">
+                                    <h5>Activity Price Summary</h5>
+                                    <div class="clearfix"></div>
+                                    <div class="col-md-12">
+                                        <div class="row trooms_desc pt-0 pb-0">
+                                            <div class="col-md-12 px-3">
+                                                <div class="clearfix"></div>
+                                                <div class="valign-wrapper row mt-1 mb-1"
+                                                    style="font-size: 14px; color: #092e53;">
+                                                    <div class="col-md-6 col-6 nopad">
+                                                        <span class="cusromBlue m-0">
+                                                            Base Fare:
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-md-6 col-6 nopad text-right">
+                                                        <span class="m-0 pull-right ">
+                                                            {{activity.currency}}
+                                                            {{activity.totalNet | number:'1.1-2' }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+    
+                                                <div class="valign-wrapper row pt-2 pb-2"
+                                                    style="font-size: 16px; color: #092e53;">
+                                                    <div class="col-md-6 col-6 nopad">
+                                                        <span class="cusromBlue m-0">
+                                                            Total
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-md-6 col-6 nopad text-right">
+                                                        <span class="m-0 pull-right " style="font-weight: 600;">
+                                                            {{activity.currency}}
+                                                            {{activity.totalNet |
+                                                            number:'1.1-2'}}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </div>
+    
+                                    </div>
+                                    <div class="clearfix"></div>
+
+
+                                </div>
+
+
+  <hr>
+                            </div>
+                          
+                            <div class="col-md-12 col-lg-12 f-18 mb-3 mobile_nopad">
+                                <div class="float-left grand_tot" style="font-size: 16px;">
+                                    Grand Total
+                                </div>
+                                <div class="float-right text-warning"
+                                    style="color:#092e53 !important; font-size: 16px;">
+                                    {{ currency }} {{
+                                        bookingDetails.grandTotal | number:'1.1-2'}}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <!-- <div class="col-md-4 pl-0 pl-2 pr-0 pt-3 mobile_pad mobile_bot"*ngIf="flight">
+                <app-booking-fare-summary [flight]="flight" [convienceFee]="true" [showFlightDetails]="false"></app-booking-fare-summary>
+            </div> -->
+        </div>
+    </div>
+    </div>
+    <form #form ngNoForm id="nonseamless" method="post" name="redirect" *ngIf="paymentData" [attr.action]="paymentData">
+        <input type="hidden" name="ACCEPTURL" [(ngModel)]="ACCEPTURL" />
+        <input type="hidden" name="CANCELURL" [(ngModel)]="CANCELURL" />
+        <input type="hidden" name="DECLINEURL" [(ngModel)]="DECLINEURL" />
+        <input type="hidden" name="AMOUNT" [(ngModel)]="AMOUNT" />
+        <input type="hidden" name="CN" [(ngModel)]="CN" />
+        <input type="hidden" name="COM" [(ngModel)]="COM" />
+        <input type="hidden" name="CURRENCY" [(ngModel)]="CURRENCY" />
+        <input type="hidden" name="EMAIL" [(ngModel)]="EMAIL" />
+        <input type="hidden" name="FONTTYPE" [(ngModel)]="FONTTYPE" />
+        <input type="hidden" name="LANGUAGE" [(ngModel)]="LANGUAGE" />
+        <input type="hidden" name="LOGO" [(ngModel)]="LOGO" />
+        <input type="hidden" name="OPERATION" [(ngModel)]="OPERATION" />
+        <input type="hidden" name="ORDERID" [(ngModel)]="ORDERID" />
+        <input type="hidden" name="OWNERADDRESS" [(ngModel)]="OWNERADDRESS" />
+        <input type="hidden" name="OWNERCTY" [(ngModel)]="OWNERCTY" />
+        <input type="hidden" name="OWNERTELNO" [(ngModel)]="OWNERTELNO" />
+        <input type="hidden" name="OWNERTOWN" [(ngModel)]="OWNERTOWN" />
+        <input type="hidden" name="OWNERZIP" [(ngModel)]="OWNERZIP" />
+        <input type="hidden" name="PMLISTTYPE" [(ngModel)]="PMLISTTYPE" />
+        <input type="hidden" name="PSPID" [(ngModel)]="PSPID" />
+        <input type="hidden" name="BGCOLOR" [(ngModel)]="BGCOLOR" />
+        <input type="hidden" name="BUTTONBGCOLOR" [(ngModel)]="BUTTONBGCOLOR" />
+        <input type="hidden" name="BUTTONTXTCOLOR" [(ngModel)]="BUTTONTXTCOLOR" />
+        <input type="hidden" name="TBLBGCOLOR" [(ngModel)]="TBLBGCOLOR" />
+        <input type="hidden" name="TBLTXTCOLOR" [(ngModel)]="TBLTXTCOLOR" />
+        <input type="hidden" name="TITLE" [(ngModel)]="TITLE" />
+        <input type="hidden" name="TXTCOLOR" [(ngModel)]="TXTCOLOR" />
+        <input type="hidden" name="SHASIGN" [(ngModel)]="SHASIGN" />
+        <input type="hidden" name="BACKURL" [(ngModel)]="BACKURL" />
+    </form>
+    <div class="modal bg_back" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true"
+      [style.display]="showConfirm ? 'block' : 'none'">
+      <div class="modal-dialog  modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-header title_bg">
+            <h5 class="modal-title" id="paymentModalLabel">Confirm</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hide()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" >
+            <p style="font-weight: 600; color: #092e53;">Do you really want to {{subjectName}} the booking?</p>
+            <p style="font-size: 14px;">Note: Surcharge will be applied based on the payment card type.</p>
+          </div>
+          <div class="modal-footer" style="">
+            <button type="button" class="btn book_btn" *ngIf="subjectName=='confirm'"
+              (click)="confirmTicket()">Yes</button>
+            <!-- <button type="button" class="btn book_btn" *ngIf="subjectName=='Void'" (click)="voidTicket()">Yes</button> -->
+            <button type="button" class="btn book_btn1" data-dismiss="modal" (click)="hide()">No</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ngx-loading [show]="loading"
+        [config]="{primaryColour: '#fff', secondaryColour: '#ccc', tertiaryColour: '#fff', backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+        [template]="loadingTemplate"></ngx-loading>
+
+
+        <div class="modal" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true"
+    [style.display]="showPaymentDetails ? 'block' : 'none'">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 590px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentModalLabel">Payment Methods</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                (click)="showPaymentDetails=false">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="paymentForm">
+                    <div class="cc-selector-2">
+                        <div class="row">
+                            <div class="col-md-6 col-6" *ngFor="let paymentMethod of paymentGateways">
+                              
+                                <span *ngIf="(paymentMethod?.remarks | lowercase)==='wallet'">
+                                    <img src="./assets/images/wallet.png" height="50px" width="50px">
+                                    <label style="width: 46px;" class="drinkcard-cc wallet" for="wallet">
+                                    </label>
+                                    <span class="payment_label">
+                                        <input id="wallet" type="radio" name="paymentMethod" value="wallet" formControlName="paymentMethod" />  DEDUCT FROM BALANCE
+                                    </span>
+                                </span>
+                                <span *ngIf="(paymentMethod?.remarks | lowercase)==='barclay'">
+                                    <img src="assets/images/Barclays.png" width="200px" height="50px">
+                                    <label class="drinkcard-cc barclay" for="nagad"></label>
+                                    <span class="payment_label">
+                                        <input id="barclay" type="radio" name="paymentMethod" value="barclay" formControlName="paymentMethod" /> PAY BY CARD
+                                    </span>
+                                </span>
+                                <span *ngIf="(paymentMethod?.remarks | lowercase)==='nagad'">
+                                    <label class="drinkcard-cc nagad" for="nagad"></label>
+                                    <span class="payment_label">
+                                        <input id="nagad" type="radio" name="paymentMethod" value="nagad" formControlName="paymentMethod" /> {{paymentMethod?.remarks}}
+                                    </span>
+                                </span>
+                                <span *ngIf="(paymentMethod?.remarks | lowercase)==='bkash'">
+                                    <label class="drinkcard-cc bKash" for="bKash"></label>
+                                    <span class="payment_label">
+                                        <input id="bKash" type="radio" name="paymentMethod" value="bKash" formControlName="paymentMethod" /> {{paymentMethod?.remarks}}
+                                    </span>
+                                </span>
+                                <span *ngIf="(paymentMethod?.remarks | lowercase)==='sslcommerz'">
+                                    <label style="width: 100%; background-position: center;" class="drinkcard-cc sslCommerz" for="sslCommerz"></label>
+                                    <span class="payment_label">
+                                        <input id="sslCommerz" type="radio" name="paymentMethod" value="sslCommerz" formControlName="paymentMethod" />
+                                        {{paymentMethod?.remarks}}
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <small class="error text-danger col-xs-12 col-12" style="margin-bottom:10px; display:block;"
+                        *ngIf="hasError('paymentMethod', 'required');">
+                        Please select the payment type* <br>
+                    </small>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                <button type="button" class="btn btn-primary" (click)="onBooking(payReference)">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true"
+  [style.display]="showPayLaterPopUp ? 'block' : 'none'">
+  <div class="modal-dialog show-pay-later  modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="paymentModalLabel">Payment Methods - Pay Later (Before Cancellation Deadline)</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Make sure to pay or cancel this booking before {{bundelBookingDeadLine}} to avoid cancellation charges.</p>
+        <p style="color: red;"> Date and Time is calculted based on the local time of the destination.</p>
+      </div>
+      <div class="modal-footer" style="justify-content: space-between;">
+        <button type="button" class="btn btn-success" 
+          (click)="payLater('pay_later')">Confirm</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="hide()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

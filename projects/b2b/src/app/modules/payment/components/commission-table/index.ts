@@ -1,0 +1,1 @@
+export * from './percentage-commission/percentage-commission.component';

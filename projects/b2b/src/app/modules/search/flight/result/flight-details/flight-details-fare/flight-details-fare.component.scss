@@ -1,0 +1,51 @@
+.custom-prices td {
+    text-align: right;
+}
+
+.rules_dropdown {
+    max-height: 150px;
+    overflow  : auto;
+}
+
+::ng-deep .fare_rules_second {
+    float      : left;
+    width      : 100%;
+    position   : relative;
+}
+
+::ng-deep .fare_rules_second h3 {
+    font-size: 20px;
+    color    : #092c3b;
+}
+
+::ng-deep .fare_rules_table {
+    width          : 100%;
+    display        : table;
+    border-collapse: collapse;
+    box-shadow     : 0px 0px 3px 1px #ddd;
+    border-radius  : 10px;
+    overflow       : hidden;
+}
+
+::ng-deep .fare_rules_table th {
+    text-align: left;
+    background: #1b9ad4;
+    color     : #fff;
+    padding   : 10px;
+    font-size : 15px;
+}
+
+::ng-deep .fare_rules_table td {
+    text-align: left;
+    background: #fff;
+    font-size : 15px;
+    color     : #333;
+    padding   : 10px;
+    border    : 1px solid #ddd;
+}
+
+::ng-deep .fare_rules_table td span {
+    display: block;
+    padding: 4px 0px;
+}
+.table thead th{background-color: #fff;}

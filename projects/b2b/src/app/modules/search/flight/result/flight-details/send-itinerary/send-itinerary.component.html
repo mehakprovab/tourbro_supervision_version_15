@@ -1,0 +1,34 @@
+<div class="containter">
+    <div class="row my-4">
+        <div class="offset-2 col-8">
+            <form [formGroup]="regConfig" (ngSubmit)="onSubmit()">
+                <div class="form-group row">
+                    <label class="col-sm-3 text-right">
+                        Email :
+                    </label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control form-control-sm" formControlName="email" name="email"
+                            id="email" placeholder="Email">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 text-right">
+                        Markup :
+                    </label>
+                    <div class="col-sm-9">
+                        <input type="number" class="form-control form-control-sm" formControlName="markup" name="markup"
+                            id="markup" placeholder="Markup Value" min="0">
+                    </div>
+                </div>
+                <div class="form-group row customCenter">
+                    <div class="offset-sm-3">
+                        <button class="btn btn-primary btn-sm ml-3 mr-2"> Send Itinerary </button>
+                        <button class="btn btn-danger btn-sm mr-2" type="button"
+                            (click)="flight.FlightDetails.Details[0][0]['isFlightDetailsCollapsed'] = !flight.FlightDetails.Details[0][0]['isFlightDetailsCollapsed']">
+                            Close </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

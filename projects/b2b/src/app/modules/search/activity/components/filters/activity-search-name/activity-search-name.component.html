@@ -1,0 +1,11 @@
+<div class="rangebox">
+    <button data-target="#collapse522" data-toggle="collapse" class="collapsebtn" type="button">Search Activities</button>
+    <div class="vsm-item">
+        <div class="search-container" id="collapse522">
+            <a style="cursor: pointer;font-size: 12px;" class="float-right" (click)="clearActivityName()">Clear</a>
+            <input type="text" #searchInputRef class="search-input text-capitalize"
+            placeholder="Search by Activity Name" (input)="searchActivity($event.target.value)"
+            [ngStyle]="{'background-image': 'url(' + searchIcon + ')'}">
+        </div>
+    </div>
+</div>

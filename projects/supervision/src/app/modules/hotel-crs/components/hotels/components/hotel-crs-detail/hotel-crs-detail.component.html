@@ -1,0 +1,445 @@
+<ng-container>
+    <div class="p-0">
+        <form [formGroup]="hotelForm">
+            <fieldset form="hotelImage">
+                <h4 class="form_legend">Add Hotel Details</h4>
+                <div class="row">
+                    <div class="col-sm-4 mb-3">
+                        <label class=" control-label">
+                            Hotel Type
+                            <span class="text-danger">*</span>
+                        </label>
+                        <select formControlName="hotel_hotel_type_id" class="form-control"
+                            [ngClass]="{ 'is-invalid': submittedHotel && hotel?.hotel_hotel_type_id.errors }">
+                            <option value="" disabled selected>Select Hotel Type</option>
+                            <option *ngFor="let hotelType of hotelTypeList" [value]="hotelType.hotel_type_name">
+                                {{hotelType.hotel_type_name}}
+                            </option>
+                        </select>
+                        <div *ngIf="submittedHotel && hotel?.hotel_hotel_type_id.errors" class="invalid-feedback">
+                            <div *ngIf="hotel.hotel_hotel_type_id.errors.required">Hotel Type is required</div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 mb-3">
+                        <label class=" control-label">
+                            Hotel Name
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" formControlName="hotel_name" class="form-control"
+                            [ngClass]="{ 'is-invalid': submittedHotel && hotel.hotel_name.errors }" />
+                        <div *ngIf="submittedHotel && hotel.hotel_name.errors" class="invalid-feedback">
+                            <div *ngIf="hotel.hotel_name.errors.required">Hotel Name is required</div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-4 mb-3">
+                        <label class=" control-label">
+                            Star Rating
+                            <span class="text-danger">*</span>
+                        </label>
+                        <select formControlName="star_rating" class="form-control"
+                            [ngClass]="{ 'is-invalid': submittedHotel && hotel.star_rating.errors }">
+                            <option value="" disabled selected>Select Rating</option>
+                            <option value="Unrated">Unrated</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <div *ngIf="submittedHotel && hotel.star_rating.errors" class="invalid-feedback">
+                            <div *ngIf="hotel.star_rating.errors.required">Star Rating is required</div>
+                        </div>
+                    </div>
+
+
+                    <!-- <div class="col-sm-4 mb-3">
+                        <label class=" control-label">
+                            Amenities
+                            <span class="text-danger">*</span>
+                        </label>
+                        <ng-multiselect-dropdown #multiSelect formControlName="hotel_hotel_amenities"
+                            [placeholder]="'Select Amenities'" [data]="hotelAmenityList"
+                            [settings]="dropdownSettingsForHotel">
+                        </ng-multiselect-dropdown>
+                        <div *ngIf="submittedHotel && hotel.hotel_hotel_amenities.errors" class="invalid-feedback">
+                            <div *ngIf="hotel.hotel_hotel_amenities.errors.required">Amenities are required</div>
+                        </div>
+                    </div> -->
+
+                    <!-- <div class="col-sm-12 mb-3">
+                        <label class=" control-label">
+                            Hotel Description
+                            <span class="text-danger">*</span>
+                        </label>
+                        <textarea type="text" formControlName="hotel_description" style="height: 130px !important;" class="form-control"
+                            [ngClass]="{ 'is-invalid': submittedHotel && hotel.hotel_description.errors }"></textarea>
+                        <div *ngIf="submittedHotel && hotel.hotel_description.errors" class="invalid-feedback">
+                            <div *ngIf="hotel.hotel_description.errors.required">Hotel Description is required</div>
+                        </div>
+                    </div> -->
+                    <div class="col-sm-4 mb-3">
+                        <label class="control-label">
+                            Currency <span *ngIf="disableCurrency" style="font-size: small;">(Contact Admin for Currency Update)</span>
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div class="d-flex align-items-center">
+                            <select formControlName="currency" class="form-control mr-2">
+                                <option value="" disabled selected>Select Currency</option>
+                                <option *ngFor="let coreCountry of currencyList" [ngValue]="coreCountry.currency">
+                                    {{ coreCountry.currency }}
+                                </option>
+                            </select>
+                            <!-- <button *ngIf="disableCurrency" class="btn btn-sm btn-secondary btnStyle" (click)="supplierRequest()">Request</button> -->
+                        </div>
+                    </div>                    
+                    <div class="col-sm-4 mb-3">
+                        <label class=" control-label">
+                            Country
+                            <span class="text-danger">*</span>
+                        </label>
+                        <select formControlName="core_country_id" class="form-control"
+                            (change)="getCityListAuto($event)"
+                            [ngClass]="{ 'is-invalid': submittedHotel && hotel.core_country_id.errors }">
+                            <option value="" disabled selected>Select Country</option>
+                            <option *ngFor="let coreCountry of coreCountryList" [value]="coreCountry.name">
+                                {{coreCountry.name}}
+                            </option>
+                        </select>
+                        <div *ngIf="submittedHotel && hotel.core_country_id.errors" class="invalid-feedback">
+                            <div *ngIf="hotel.core_country_id.errors.required">Country is required</div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 mb-3">
+                        <label class="control-label">
+                            City
+                            <span class="text-danger">*</span>
+                        </label>
+                        <select formControlName="city_name" class="form-control" (ngModelChange)="onCityChange($event)"
+                            [ngClass]="{ 'is-invalid': submittedHotel && hotel.city_name.errors }">
+                            <option value="" disabled selected>Select City</option>
+                            <option id="autocomplete" *ngFor="let coreCity of coreCityList" [value]="coreCity.cityName">
+                                {{coreCity.cityName}}
+                            </option>
+                        </select>
+                        <div *ngIf="submittedHotel && hotel.city_name.errors" class="invalid-feedback">
+                            <div *ngIf="hotel.city_name.errors.required">City is required</div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-sm-12 mb-3">
+                        <label class="control-label">
+                            Hotel Map
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div #mapContainer id="map">
+                            
+                        </div>
+                    </div> -->
+                    <div class="col-sm-12 mb-3">
+                        <label class="control-label">
+                            Hotel Map
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div>
+                            <input #searchInput type="text" placeholder="Search location..."
+                                class="form-control mb-3" />
+                        </div>
+                        <div #mapContainer id="map" style="height: 500px; width: 100%;"></div>
+                    </div>
+                    <div class="col-sm-12 mb-3">
+                        <label class=" control-label">
+                            Hotel Address
+                            <span class="text-danger">*</span>
+                        </label>
+                        <textarea type="text" formControlName="address" class="form-control"
+                            [ngClass]="{ 'is-invalid': submittedHotel && hotel.address.errors }"></textarea>
+                        <div *ngIf="submittedHotel && hotel.address.errors" class="invalid-feedback">
+                            <div *ngIf="hotel.address.errors.required">Hotel Address is required</div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 mb-3">
+                        <label class=" control-label">
+                            Latitude
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input id="lat" type="text" formControlName="latitude" class="form-control"
+                            [ngClass]="{ 'is-invalid': submittedHotel && hotel.latitude.errors }" />
+                        <div *ngIf="submittedHotel && hotel.latitude.errors" class="invalid-feedback">
+                            <div *ngIf="hotel.latitude.errors.required">Latitude is required</div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 mb-3">
+                        <label class=" control-label">
+                            Longitude
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input id="lng" type="text" formControlName="longitude" class="form-control"
+                            [ngClass]="{ 'is-invalid': submittedHotel && hotel.longitude.errors }" />
+                        <div *ngIf="submittedHotel && hotel.longitude.errors" class="invalid-feedback">
+                            <div *ngIf="hotel.longitude.errors.required">Longitude is required</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 mb-3 meal-plan-dropdown">
+                        <label class=" control-label">
+                            Meal Plans
+                            <span class="text-danger">*</span>
+                        </label>
+                        <ng-multiselect-dropdown formControlName="meal_plans" [placeholder]="'Select Meal Plans'"
+                            [data]="mealList" [settings]="dropdownSettingsForHotel" class="form-control meal-plan-dropdown">
+                        </ng-multiselect-dropdown>
+                        <div *ngIf="submittedHotel && hotel.meal_plans.errors" class="invalid-feedback">
+                            <div *ngIf="hotel.meal_plans.errors.required">Meal Plans are required</div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 mb-3 meal-plan-dropdown">
+                        <label class=" control-label">
+                            Weekend Days
+                            <span class="text-danger">*</span>
+                        </label>
+
+                        <ng-multiselect-dropdown formControlName="weekend_days" [placeholder]="'Select Weekend Days'"
+                            [data]="datas" [settings]="dropdownSettingsForWeek" class="form-control meal-plan-dropdown">
+                        </ng-multiselect-dropdown>
+                        <div *ngIf="submittedHotel && hotel.weekend_days.errors" class="invalid-feedback">
+                            <div *ngIf="hotel.weekend_days.errors.required">weekend_days are required</div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 mb-3 meal-plan-dropdown">
+                        <label class="control-label">Room Views
+                            <span class="text-danger">*</span>
+                        </label>
+                        <ng-multiselect-dropdown formControlName="room_view_ids" [placeholder]="'Select View'"
+                            [data]="viewList" [settings]="dropdownSettingsForview" class="form-control meal-plan-dropdown">
+                        </ng-multiselect-dropdown>
+                        <div *ngIf="submittedHotel && hotel.room_view_ids.errors" class="invalid-feedback">
+                            <div *ngIf="hotel.room_view_ids.errors.required">Room Views are required</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 mb-3">
+                        <label for="checkInTime" class="control-label">checkInTime
+                            <span class="text-danger">*</span>
+                        </label>
+                        <!-- <div class="col-sm-12"> -->
+                        <select class="form-control" formControlName="check_in_time">
+                            <option value="" disabled selected>Please Select</option>
+                            <option *ngFor="let time of times" [value]="time" class="ui-menu-item">
+                                {{ time }}
+                            </option>
+                        </select>
+                        <!-- </div> -->
+                    </div>
+                    <div class="col-sm-6 mb-3">
+                        <label for="checkin_time" class="control-label">checkOutTime
+                            <span class="text-danger">*</span>
+                        </label>
+                        <!-- <div class="col-sm-12"> -->
+                        <select class="form-control" formControlName="check_out_time">
+                            <option value="" disabled selected>Please Select</option>
+                            <option *ngFor="let time of times" [value]="time" class="ui-menu-item">
+                                {{ time }}
+                            </option>
+                        </select>
+                        <!-- </div> -->
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label class=" control-label">
+                            Hotel policy
+                           
+                        </label>
+                        <ckeditor type="text" formControlName="hotel_policy" style="height: auto;"
+                        ></ckeditor>
+                        <!-- <textarea type="text" formControlName="hotel_policy" style="height: 130px !important;"
+                            class="form-control"
+                            [ngClass]="{ 'is-invalid': submittedHotel && hotel.hotel_policy.errors }"></textarea> -->
+                        <!-- <div *ngIf="submittedHotel && hotel.hotel_policy.errors" class="invalid-feedback">
+                            <div *ngIf="hotel.hotel_policy.errors.required">Latitude is required</div>
+                        </div> -->
+                    </div>
+                    <div class="col-4 p-0">
+                        <label for="checkin_time" class="required col-sm-12 col-form-label">Time zone
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div class="col-sm-12">
+                            <select class="form-control form-control-sm nrm_input" formControlName="local_timezone">
+                                <option value="" disabled selected>Please Select</option>
+                                <option *ngFor="let time of timezones" [value]="time" class="ui-menu-item">
+                                    {{ time }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 mb-3 position-relative">
+                        <label class="control-label">
+                            Contract Expiry Date
+                            <span class="text-danger">(Optional)</span>
+                        </label>
+                        <div class="input-group">
+                            <input type="text" id="contract_expiry_date" formControlName="contract_expiry_date"
+                                [minDate]="minDate" class="form-control" bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen" readonly>
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-outline-secondary" (click)="clearExpiryDate()">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 mb-3">
+                        <label class="required col-sm-12 col-form-label pl-0">
+                            Channels
+
+                            <span class="text-danger">*</span>
+                        </label>
+                        <select formControlName="channel" class="form-control">
+                            <option value="" disabled selected>Select Channels</option>
+                            <option Value="Extranet">Extranet</option>
+                            <!-- <option Value="Staah CM">Staah CM</option>
+                                        <option Value="HotelRunner CM">HotelRunner CM</option>
+                                        <option Value="Rategain CM">Rategain CM</option>
+                                        <option Value="Ezee Centrix CM">Ezee Centrix CM</option>
+                                        <option Value="AxisRooms CM">AxisRooms CM</option>
+                                        <option Value="Yieldplanet CM">Yieldplanet CM</option> -->
+                        </select>
+                        <div class="invalid-feedback">
+                            <!-- <div *ngIf="hotelRoom.propertyRating.errors.required">Please Select maximum
+                                            passengers
+                                            capacity</div> -->
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 mb-3" *ngIf="showUserType(hotelOne?.auth_role_id)">
+                        <label class="required col-sm-12 col-form-label pl-0">
+                          Distribution Channel <span class="text-danger">*</span>
+                        </label>
+                        <div class="d-flex align-items-center">
+                          <select formControlName="user_type" class="form-control mr-2" [disabled]="isB2BDefault">
+                            <option value="" disabled>Select User Type</option>
+                            <option value="B2C">B2C</option>
+                            <option value="B2B">B2B</option>
+                            <option value="Both">Both</option>
+                          </select>
+                          <button
+                          *ngIf="disableUserType && loggedInUser?.auth_role_id !== 7"
+                          class="btn btn-sm btn-secondary btnStyle"
+                          (click)="supplierUserRequest()"
+                        >
+                          Request
+                        </button>                        
+                        </div>
+                        <div class="invalid-feedback"></div>
+                      </div>
+                      
+                  
+                </div>
+                <div class="text-center mt-3 mb-3 btncontainer p-0">
+                    <button class="btn btn-sm btn-primary btnStyle mr-3" (click)="onSubmitHotelDetail()">Continue</button>
+                  
+                </div>
+            </fieldset>
+        </form>
+        <div class="text-center mt-3 mb-3 btncontainer p-0">
+           
+            <button class="btn btn-sm btn-secondary btnStyle mr-3" (click)="backToHotel()">Back</button>
+        </div>
+    </div>
+</ng-container>
+
+
+<div class="modal" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true"
+    [style.display]="currencyRequest ? 'block' : 'none'">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 590px;top:234px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentModalLabel">Currency Update Request</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                (click)="currencyRequest=false">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="requestForm">
+                    <div class="cc-selector-2">
+                        <div class="row">
+                   
+                            <div class="col-sm-12 mb-3">
+                                <label class="control-label">
+                                    Choose Currency 
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="d-flex align-items-center">
+                                    <select formControlName="currency" class="form-control mr-2">
+                                        <option value="" disabled selected>Select Currency</option>
+                                        <option *ngFor="let coreCountry of filteredCurrencyList" [ngValue]="coreCountry.currency">
+                                            {{ coreCountry.currency }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                <button type="button" class="btn btn-primary" (click)="updateCurrencyRequest()">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true"
+    [style.display]="usertypeRequest ? 'block' : 'none'">
+    <div class="modal-dialog modal-lg" role="document" style="max-width: 590px;top:234px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentModalLabel">User Type Update Request</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                (click)="usertypeRequest=false">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="userTypeForm">
+                    <div class="cc-selector-2">
+                        <div class="row">
+                   
+                            <div class="col-sm-12 mb-3">
+                                <label class="control-label">
+                                    User Type 
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="d-flex align-items-center">
+                                    <select formControlName="user_type" class="form-control">
+                                        <option value="" disabled selected>Select User Type</option>
+                                        <option *ngFor="let option of filteredOptions" [value]="option.value">
+                                            {{ option.label }}
+                                        </option>
+                                        
+                                    </select>
+                                </div>
+                                 <span *ngIf="userTypeSubmit && userTypeForm?.get('user_type')?.invalid" class="text-danger">
+                                        Please select User type.
+                                    </span>
+                            </div>    
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                <button type="button" class="btn btn-primary" (click)="updateUserTypeRequest()">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-loading [show]="loading"
+[config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+[template]="loadingTemplate"></ngx-loading>

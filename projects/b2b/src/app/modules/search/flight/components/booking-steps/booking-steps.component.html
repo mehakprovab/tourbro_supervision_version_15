@@ -1,0 +1,221 @@
+<div class="mt-3 py-2">
+    <div class="mobile_row d-flex" *ngIf="travellers && !review && !ticket">
+        <a href="javascript: void(0);" class="col-sm" style="border-bottom: 5px solid #012756;">
+            <div class="d-flex flex-column">
+                <div [ngClass]="{ 'getActive' : travellers}">
+                    <div>
+                        <i class="fa fa-users" aria-hidden="true"> </i> &nbsp;&nbsp;
+                        <span style="color: #012756;">Travellers</span>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <a href="javascript: void(0);" class="col-sm" style="border-bottom: 5px solid #D2D2D2;">
+            <div class="d-flex flex-column">
+                <div>
+                    <i class="fa fa-eye" aria-hidden="true"></i> &nbsp;&nbsp; Review
+                </div>
+            </div>
+        </a>
+
+        <a href="javascript: void(0);" class="col-sm" style="border-bottom: 5px solid #D2D2D2;">
+            <div class="d-flex flex-column">
+                <div>
+                    <i class="fa fa-credit-card" aria-hidden="true"></i> &nbsp;&nbsp; Ticket
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="row" *ngIf="travellers && review && !ticket">
+        <a href="javascript: void(0);" class="col-sm customCenter" style="border-bottom: 5px solid #012756;">
+            <div class="d-flex flex-column">
+                <div [ngClass]="{'getDone': travellers }">
+                    <i class="fa fa-users" aria-hidden="true"></i> &nbsp;&nbsp;
+                    <span style="color: #012756;">Travellers</span>
+                </div>
+
+            </div>
+        </a>
+
+        <a href="javascript: void(0);" class="col-sm customCenter" style="border-bottom: 5px solid #012756;">
+            <div class="d-flex flex-column">
+                <div [ngClass]="{'getActive': review }">
+                    <i class="fa fa-eye" aria-hidden="true"></i> &nbsp;&nbsp;
+                    <span style="color: #012756;">Review</span>
+                </div>
+
+            </div>
+        </a>
+
+        <a href="javascript: void(0);" class="col-sm customCenter" style="border-bottom: 5px solid #D2D2D2;">
+            <div class="d-flex flex-column">
+                <div>
+                    <i class="fa fa-credit-card" aria-hidden="true"></i> &nbsp;&nbsp;Ticket
+                </div>
+
+            </div>
+        </a>
+    </div>
+
+    <div class="row" *ngIf="travellers && review && ticket">
+        <a href="javascript: void(0);" class="col-sm customCenter" style="border-bottom: 5px solid #012756;">
+            <div class="d-flex flex-column">
+                <div [ngClass]="{'getDone': travellers }">
+                    <i class="fa fa-users" aria-hidden="true"></i> &nbsp;&nbsp;
+                    <span style="color: #012756;">Travellers</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="javascript: void(0);" class="col-sm customCenter" style="border-bottom: 5px solid #012756;">
+            <div class="d-flex flex-column">
+                <div class="" [ngClass]="{'getDone': review }">
+                    <i class="fa fa-eye" aria-hidden="true"></i> &nbsp;&nbsp;
+                    <span style="color: #012756;">Review</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="javascript: void(0);" class="col-sm customCenter" style="border-bottom: 5px solid #012756;">
+            <div class="d-flex flex-column">
+                <div class="" [ngClass]="{'getActive': ticket }">
+                    <i class="fa fa-credit-card" aria-hidden="true"></i> &nbsp;&nbsp;
+                    <span style="color: #012756;">Ticket</span>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+
+<!-- <div class="container mt-3 bg-white py-2 border">
+    <div class="row" *ngIf="travellers && !review && !ticket">
+        <a href="javascript: void(0);" class="col-sm customCenter">
+            <div class="d-flex flex-column">
+                <div class="p-2 circle" [ngClass]="{ 'getActive' : travellers}">
+                    <i class="fa fa-users p-2" aria-hidden="true"></i>
+                </div>
+                <div class="">
+                    Travellers
+                </div>
+            </div>
+        </a>
+        <div class="col-sm customCenter">
+            <span class="">
+                <img src="assets/images/stop_1.png" style="width: 120px !important" alt="" srcset="">
+                <span style='font-size:20px;color: #012756;'>&#8594;</span>
+            </span>
+        </div>
+        <a href="javascript: void(0);" class="col-sm customCenter">
+            <div class="d-flex flex-column">
+                <div class="p-2 circle ">
+                    <i class="fa fa-eye p-2" aria-hidden="true"></i>
+                </div>
+                <div class="">
+                    Review
+                </div>
+            </div>
+        </a>
+        <div class="col-sm customCenter">
+            <span class="lnr-arrow-right" style="visibility: hidden;"></span>
+        </div>
+        <a href="javascript: void(0);" class="col-sm customCenter">
+            <div class="d-flex flex-column">
+                <div class="p-2 circle">
+                    <i class="fa fa-credit-card p-2" aria-hidden="true"></i>
+                </div>
+                <div class="">
+                    Ticket
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="row" *ngIf="travellers && review && !ticket">
+        <a href="javascript: void(0);" class="col-sm customCenter">
+            <div class="d-flex flex-column">
+                <div class="p-2 circle " [ngClass]="{'getDone': travellers }">
+                    <i class="fa fa-users p-2" aria-hidden="true"></i>
+                </div>
+                <div class="">
+                    Travellers
+                </div>
+            </div>
+        </a>
+        <div class="col-sm customCenter">
+            <span class="">
+                <img src="assets/images/stop_1.png" style="width: 120px !important" alt="" srcset="">
+            </span>
+        </div>
+        <a href="javascript: void(0);" class="col-sm customCenter">
+            <div class="d-flex flex-column">
+                <div class="p-2 circle" [ngClass]="{'getActive': review }">
+                    <i class="fa fa-eye p-2" aria-hidden="true"></i>
+                </div>
+                <div class="">
+                    Review
+                </div>
+            </div>
+        </a>
+        <div class="col-sm customCenter">
+            <span class="">
+                <img src="assets/images/stop_1.png" style="width: 120px !important" alt="" srcset="">
+            </span>
+        </div>
+        <a href="javascript: void(0);" class="col-sm customCenter">
+            <div class="d-flex flex-column">
+                <div class="p-2 circle">
+                    <i class="fa fa-credit-card p-2" aria-hidden="true"></i>
+                </div>
+                <div class="">
+                    Ticket
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="row" *ngIf="travellers && review && ticket">
+        <a href="javascript: void(0);" class="col-sm customCenter">
+            <div class="d-flex flex-column">
+                <div class="p-2 circle " [ngClass]="{'getDone': travellers }">
+                    <i class="fa fa-users p-2" aria-hidden="true"></i>
+                </div>
+                <div class="">
+                    Travellers
+                </div>
+            </div>
+        </a>
+        <div class="col-sm customCenter">
+            <span class="">
+                <img src="assets/images/stop_1.png" style="width: 120px !important" alt="" srcset="">
+            </span>
+        </div>
+        <a href="javascript: void(0);" class="col-sm customCenter">
+            <div class="d-flex flex-column">
+                <div class="p-2 circle" [ngClass]="{'getDone': review }">
+                    <i class="fa fa-eye p-2" aria-hidden="true"></i>
+                </div>
+                <div class="">
+                    Review
+                </div>
+            </div>
+        </a>
+        <div class="col-sm customCenter">
+            <span class="">
+                <img src="assets/images/stop_1.png" style="width: 120px !important" alt="" srcset="">
+            </span>
+        </div>
+        <a href="javascript: void(0);" class="col-sm customCenter">
+            <div class="d-flex flex-column">
+                <div class="p-2 circle" [ngClass]="{'getActive': ticket }">
+                    <i class="fa fa-credit-card p-2" aria-hidden="true"></i>
+                </div>
+                <div class="">
+                    Ticket
+                </div>
+            </div>
+        </a>
+    </div>
+</div> -->

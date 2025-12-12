@@ -1,0 +1,1062 @@
+
+.bbottom {
+    border-bottom: 1px solid rgba(26, 54, 126, 0.125);
+}
+
+.btop {
+    border-top: 1px solid rgba(26, 54, 126, 0.125);
+}
+
+.f-12 {
+    font-size: 12px;
+}
+
+.f-14 {
+    font-size: 14px;
+}
+
+.f-16 {
+    font-size: 16px;
+}
+
+.f-18 {
+    font-size: 18px;
+}
+
+.f-20 {
+    font-size: 20px;
+}
+
+.fw-4 {
+    font-weight: 400;
+}
+
+.fw-5 {
+    font-weight: 500;
+}
+
+.fw-6 {
+    font-weight: 600;
+}
+
+.c-pointer {
+    cursor: pointer;
+}
+
+.text-justify {
+    text-align: justify !important;
+    text-justify: inter-word !important;
+}
+
+.customCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.my-color {
+    color: #189ad3;
+}
+
+.custom-font {
+    font: normal 14px/16px Asap;
+    letter-spacing: 0px;
+    opacity: 1;
+}
+
+/* range slider */
+.barClass {
+    width: 80%;
+    height: 5px;
+    background: lightgray;
+    border-radius: 5px;
+}
+
+.sliderClass {
+    width: 14px;
+    height: 14px;
+    background: white;
+    border-radius: 50%;
+    border: 1px solid blue;
+    bottom: -72% !important;
+}
+
+.highlightClass {
+    background: blue;
+}
+
+.stepBarClass {
+    width: 100%;
+    height: 4px;
+    background: lightgray;
+    border-radius: 5px;
+}
+
+.stepSliderClass {
+    width: 12px; //chakri changes
+    height: 12px; //chakri changes
+    background: #189ad3; //chakri changes
+    border-radius: 50%;
+    border: 1px solid #189ad3; //chakri changes
+    bottom: -4px !important; //chakri changes
+    box-shadow: 0px 0px 0px 4px #ffffff, 0px 0px 0px 5px #189ad3 !important; //chakri changes
+}
+
+.stephighlightClass {
+    background: #189ad3;
+}
+
+.p-t-b {
+    padding: 28px 0 28px 0;
+}
+
+//date picker style
+.mat-calendar-header {
+    background: #189ad3 !important;
+    color: #ffffff;
+}
+
+.mat-calendar-previous-button::after {
+    color: #ffffff;
+}
+
+.mat-calendar-next-button::after {
+    color: #ffffff;
+}
+
+.mat-calendar-arrow {
+    border-top-color: #ffffff !important;
+}
+
+//chakri changes
+// span.ng-star-inserted {
+//     top: -35px !important;
+// }
+.price_slider1 .slidersContainer span.ng-star-inserted {
+    top: -35px !important;
+}
+
+.dialog-container {
+    .mat-dialog-container {
+        padding: 0;
+    }
+}
+
+// input boxes styles
+.nrm_input,
+.src_btn {
+    padding: 0.5rem 0.75rem 0.5rem 2.7rem;
+    line-height: 1.7;
+    height: calc(2em + 0.75rem + 2px);
+}
+
+.src_btn {
+    padding: 0.5rem 0.75rem;
+}
+
+.nrm_input,
+.src_btn {
+    padding: 0.5rem 0.75rem 0.5rem 2.7rem;
+    line-height: 1.7;
+    height: calc(2.5em + 0.75rem + 2px);
+}
+
+//background theme
+.bg-theme {
+    background: #189ad3;
+}
+
+//flight and hotel search result styles
+
+.timesFont {
+    color: #0096cf;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.amnFont {
+    color: #2d3e52;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.deemFont {
+    color: #848484;
+    font-size: 13px;
+}
+
+.card {
+    border-radius: unset;
+}
+
+.card:hover {
+    background: #fff;
+    // border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 8px 0px rgba(0, 0, 0, 0.2);
+    // border-radius: unset !important;
+}
+
+/* MAIN'S CSS*/
+.mat-form-field + .mat-form-field {
+    margin-left: 8px;
+}
+
+.mat-expansion-panel-header-description,
+.mat-expansion-panel-header-title {
+    display: block !important;
+}
+
+.flteboxwrp {
+    float: left;
+    margin: 20px 0px;
+    width: 100%;
+}
+
+.filtersho {
+    background: none repeat scroll 0 0 #0545b2;
+    color: #fff;
+    float: left;
+    padding: 10px;
+    position: relative;
+    width: 100%;
+}
+
+.avlhtls {
+    display: block;
+    color: #fff;
+    font-size: 16px;
+    margin: 4px 0;
+    overflow: hidden;
+    text-align: center;
+}
+
+.avlhtls strong {
+    color: #fc901b;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 19px;
+}
+
+.close_fil_box {
+    display: none;
+}
+
+.filtersho::after {
+    content: "\f002";
+    top: 25px;
+    color: #fff;
+    font-family: "Font Awesome 5 Pro";
+    font-size: 23px;
+    left: 15px;
+    position: absolute;
+    line-height: 0;
+    text-align: center;
+}
+
+.fltrboxin {
+    float: left;
+    width: 100%;
+    padding: 10px 0px 0px 0px;
+    box-shadow: none;
+    border: none;
+    background: #fff;
+}
+
+.celsrch {
+    display: block;
+    overflow: hidden;
+    padding: 0px;
+}
+
+#reset_filters {
+    background: #dfdfdf;
+    padding: 5px;
+    margin-right: 10px;
+    color: #303030;
+}
+
+.nopad {
+    padding: 0px !important;
+}
+
+/* price filter START */
+.rangebox {
+    padding: 0px 0px;
+}
+
+.collapsebtn {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 0 none;
+    border-bottom: 1px solid #E8E8E8;
+    color: #000;
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    overflow: hidden;
+    padding: 9px 0;
+    position: relative;
+    text-align: left;
+    width: 100%;
+}
+
+.collapsebtn::after {
+    content: "\f078";
+    color: #000;
+    font-family: "FontAwesome";
+    font-size: 14px;
+    line-height: 34px;
+    position: absolute;
+    right: 2px;
+    top: 5px;
+    font-weight: 600;
+}
+
+.price_slider1 {
+    margin: 0 0 15px;
+    padding: 10px;
+}
+
+.level {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 0 none;
+    color: #0545b2;
+    display: block;
+    font-size: 15px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    text-align: center;
+    width: 100%;
+    font-weight: 500;
+}
+
+.price_slider1 .ui-widget-content {
+    background: #ddd;
+    border: medium none;
+    border-radius: 30px !important;
+    box-shadow: none;
+    height: 4px;
+}
+
+.price_slider1 .ui-widget-header {
+    background: none repeat scroll 0 0 #0545b2;
+    box-shadow: 0 0 10px -5px #7e7e7e inset;
+}
+
+.price_slider1 .ui-slider-horizontal .ui-slider-range {
+    height: 100%;
+    top: 0px;
+}
+
+// .price_slider1 .ui-state-default, .price_slider1 .ui-widget-content .ui-state-default, .price_slider1 .ui-widget-header .ui-state-default {
+//     background : rgba(0, 0, 0, 0) url(~/assets/images/tips.png) no-repeat;
+//     border: none;
+//     cursor: pointer;
+//     height: 28px;
+//     margin-left: -14px;
+//     top: -11px;
+//     width: 28px;
+//   }
+
+/* price filter END */
+
+/* stops filter START */
+.boxins {
+    display: block;
+    overflow: hidden;
+    padding: 10px 0;
+}
+
+.marret {
+    margin: 0 -1px;
+}
+
+.stopone {
+    display: table;
+    height: 33.333%;
+    width: 100%;
+}
+
+.stopone {
+    float: left;
+    width: 33.333%;
+    background-color: white;
+}
+
+.stopone {
+    position: relative;
+}
+
+.stop-wrapper.disabled::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.4);
+    cursor: not-allowed;
+    z-index: 100;
+}
+
+input.hidecheck[type="checkbox"] {
+    cursor: pointer;
+    height: 100%;
+    left: 0;
+    margin: 0;
+    opacity: 0;
+    top: 0;
+    width: 100%;
+    z-index: 98;
+}
+
+.starin {
+    display: table-cell;
+    border-bottom: 1px solid #7ca81e;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.starin {
+    background: none repeat scroll 0 0 #fff;
+    border: 1px solid #e8e8e8;
+    display: block;
+    font-size: 14px;
+    margin: 1px;
+    overflow: hidden;
+    padding: 6px 0 0;
+    text-align: center;
+}
+
+.toglefil.active.disabled .starin,
+.toglefil.disabled .starin {
+    background: #fff none repeat scroll 0 0;
+    color: #666;
+}
+
+#stopCountWrapper .starin {
+    padding: 0;
+}
+
+.toglefil.active.disabled .starin,
+.toglefil.disabled .starin {
+    background: #fff none repeat scroll 0 0;
+    color: #666;
+}
+
+#stopCountWrapper .starin {
+    padding: 0;
+}
+
+.septor {
+    background: #e2e2e2 none repeat scroll 0 0;
+    border-bottom: 1px solid #f7f7f7;
+    border-top: 1px solid #f7f7f7;
+    display: block;
+    height: 2px;
+    margin: 12px 0;
+    overflow: hidden;
+}
+
+.tmxdv {
+    float: left;
+}
+
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+    position: absolute;
+    left: -9999px;
+}
+
+input.hidecheck[type="checkbox"] {
+    cursor: pointer;
+    height: 100%;
+    left: 0;
+    margin: 0;
+    opacity: 0;
+    top: 0;
+    width: 100%;
+    z-index: 98;
+}
+
+.tmxdv input[type="checkbox"] {
+    display: block;
+}
+
+#collapse503 input.hidecheck[type="checkbox"] {
+    opacity: 0;
+    width: 100%;
+}
+
+.ckboxdv {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    padding-left: 30px;
+    margin-right: 15px;
+    font-size: 12px;
+    color: #001d46;
+    font-weight: 500;
+    line-height: 26px;
+}
+
+[type="checkbox"]:not(:checked) + label,
+[type="checkbox"]:checked + label {
+    cursor: pointer;
+    margin: 0;
+    position: relative;
+    background: rgb(247, 247, 247);
+    border: 1px solid #b8b8b8;
+}
+
+[type="checkbox"]:disabled + label {
+    color: #aaa;
+}
+
+.tmxdv [type="checkbox"]:not(:checked) + label,
+.tmxdv [type="checkbox"]:checked + label {
+    background: none !important;
+}
+
+.time-wrapper [type="checkbox"]:not(:checked) + label,
+[type="checkbox"]:checked + label {
+    border: none !important;
+}
+
+.ckboxdv::before {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    position: absolute;
+    left: 0;
+    bottom: 1px;
+    background-color: #f7f7f7;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2) inset;
+    border-radius: 1px !important;
+    border: 1px solid #b8b8b8;
+}
+
+.tmxdv .ckboxdv:before {
+    border-radius: 3px;
+    top: 5px !important;
+}
+
+.ckboxdv::after {
+    top: 5px !important;
+}
+
+[type="checkbox"]:not(:checked) + label:after {
+    opacity: 0;
+    transform: scale(0);
+}
+
+.htlcount {
+    background: none repeat scroll 0 0 #fafafa;
+    color: #666;
+    display: block;
+    margin: 3px 0 0;
+    overflow: hidden;
+    padding: 2px 0;
+}
+
+.timone .htlcount {
+    font-size: 12px;
+}
+
+#collapse503 .htlcount {
+    float: right;
+    padding: 2px 10px;
+    background: none;
+}
+
+#collapse503 .starin {
+    border: none;
+}
+
+#collapse504 .htlcount {
+    float: right;
+    padding: 2px 10px;
+    background: none;
+}
+
+#collapse504 .starin {
+    border: none;
+}
+
+.timone.toglefil.time-wrapper.disabled {
+    opacity: 0.5;
+}
+
+.disabled {
+    cursor: not-allowed;
+}
+
+.timone .starin {
+    padding: 0px !important;
+    margin: 0;
+}
+
+.timone {
+    display: table;
+    height: auto;
+    width: 100%;
+}
+
+.timone {
+    float: left;
+    position: relative;
+    width: 25%;
+}
+
+#collapse503 .timone {
+    width: 100%;
+}
+
+#collapse504 .timone {
+    width: 100%;
+}
+
+#collapse503 input.hidecheck[type="checkbox"] {
+    opacity: 0;
+    width: 100%;
+}
+
+#collapse504 input.hidecheck[type="checkbox"] {
+    opacity: 0;
+    width: 100%;
+}
+
+.boxins {
+    display: block;
+    overflow: hidden;
+    padding: 10px 0px 25px 0px;
+}
+
+.locationul {
+    padding: 0;
+}
+
+.locationul li {
+    float: left;
+    padding: 5px 0;
+    width: 100%;
+}
+
+.squaredThree {
+    float: left;
+    margin-right: 8px;
+    position: relative;
+    width: 20px;
+}
+
+.customSquaredThree {
+    float: left;
+    margin-right: 8px;
+    position: relative;
+    width: 20px;
+    top: -12px;
+}
+
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+    position: absolute;
+    left: -9999px;
+}
+
+.squaredThree input[type="checkbox"] {
+    visibility: hidden;
+    margin: 0;
+}
+
+[type="checkbox"]:not(:checked) + label:before {
+    border-radius: 100% !important;
+    width: 18px !important;
+    height: 18px !important;
+    box-shadow: none;
+    content: "";
+    left: 0;
+    position: absolute;
+    top: 0px;
+    background: #fafafa;
+    border: 1px solid #ddd;
+}
+
+[type="checkbox"]:checked + label:before {
+    color: #fff;
+    border-color: #333;  content: ""; position: absolute;
+    background-color: #000;
+    border-radius: 100% !important;
+    width: 18px !important;
+    height: 18px !important;
+}
+
+.squaredThree [type="checkbox"]:not(:checked) + label:before,
+[type="checkbox"]:checked + label:before {
+    left: 0px;
+    top: 0px;
+}
+
+[type="checkbox"]:not(:checked) + label:after,
+[type="checkbox"]:checked + label:after {
+    background: #fff; position: absolute;
+    border-radius: 50% !important;
+    width: 8px; content: "";
+    height: 8px;
+    top: 5px;
+    left: 5px;
+}
+
+[type="checkbox"]:not(:checked) + label:after {
+    opacity: 0;
+    transform: scale(0);
+}
+
+.lbllbl {
+    color: #666;
+    display: block;
+    font-size: 13px;
+    font-weight: normal;
+    margin: 0;
+    overflow: hidden;
+}
+
+.locationul li .lbllbl {
+    margin-bottom: 0px;
+    color: #3d3d3d;
+    display: block;
+    font-size: 15px;
+    line-height: 19px;
+    padding: 3px 0;
+    float: left;
+    text-transform: capitalize;
+    font-weight: 500;
+}
+
+.squaredThree label {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    position: absolute;
+    left: 0;
+    top: 2px;
+    // background-color: rgb(252, 144, 27);
+    // border-radius   : 1px !important;
+    // border          : 1px solid rgb(252, 144, 27);
+}
+
+[type="checkbox"]:not(:checked) + label,
+[type="checkbox"]:checked + label {
+    cursor: pointer;
+    margin: 0;
+    position: relative;
+    background: none;
+    border: none;
+    border-radius: 0px !important;
+    padding-left: 25px;
+}
+
+.insidebosc {
+    display: block;
+    float: left;
+    padding: 0 0 0 15px;
+    margin: 20px 0px;
+    width: 100%;
+}
+
+.airlinrmatrix {
+    float: left;
+    width: 100%;
+}
+
+.inside_shadow_airline {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #fff;
+    box-shadow: 0 1px 2px 0 #ccc;
+}
+
+.linefstr {
+    float: left;
+}
+
+.airlineall {
+    background: none repeat scroll 0 0 #0545b2;
+    color: #fff;
+    display: block;
+    font-size: 14px;
+    line-height: 52px;
+    overflow: hidden;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.linescndr {
+    display: block;
+    overflow: hidden;
+}
+
+.matrx {
+    float: left;
+    padding: 0 30px;
+    width: 100%;
+}
+
+.airlinesd {
+    background: #fff none repeat scroll 0 0;
+    border-right: 1px solid #e6e6e6;
+    display: block;
+    height: 52px;
+    margin: 0;
+    overflow: hidden;
+    padding: 5px;
+    position: relative;
+}
+
+input.airline-slider[type="checkbox"] {
+    cursor: pointer;
+    height: 100%;
+    left: 0;
+    margin: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+.imgemtrx {
+    float: left;
+    height: 40px;
+    line-height: 40px;
+    overflow: hidden;
+    text-align: center;
+    margin-right: 5px;
+    width: 50px;
+}
+
+.imgemtrx img {
+    max-width: 100%;
+}
+
+.alsmtrx strong {
+    color: #000;
+    display: block;
+    font-weight: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+}
+
+.mtrxprice {
+    color: #555;
+    display: block;
+    font-size: 12px;
+    overflow: hidden;
+}
+
+.owl-carousel.matrixcarsl .owl-controls {
+    margin: 0;
+}
+
+.owl-carousel.matrixcarsl .owl-buttons {
+    bottom: 0;
+    left: -30px;
+    position: absolute;
+    right: -30px;
+    top: 0;
+    z-index: 10;
+}
+
+.owl-carousel.matrixcarsl .owl-buttons {
+    top: -1px;
+}
+
+// .owl-carousel.matrixcarsl .owl-controls .owl-buttons .owl-prev {
+//   background: url(../images/prev3.png) no-repeat scroll center center #eee;
+//   left: 0;
+// }
+// .owl-carousel.matrixcarsl .owl-controls .owl-buttons .owl-next {
+//   background: url(../images/next3.png) no-repeat scroll center center #eee;
+//   right: 0;
+// }
+
+.topmisty {
+    float: left;
+    margin: 6px 0 4px;
+    width: 100%;
+}
+
+.divinsidefltr {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #fff;
+    box-shadow: 0 1px 2px 0 #ccc;
+    display: block;
+    overflow: hidden;
+}
+
+.sortul {
+    display: block;
+    overflow: hidden;
+    margin: 0px;
+    padding: 0px;
+    background: #dfe5ec;
+    background: -moz-linear-gradient(top, #f8f4fc 0%, #d9d9d9 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f8f4fc', endColorstr='#d9d9d9', GradientType=0);
+}
+
+.divinsidefltr .sortul {
+    border: 0;
+}
+
+.sortli {
+    float: left;
+    width: 20%;
+}
+
+.sorta {
+    border-top: 2px solid #bfc1c3;
+    color: #444;
+    display: block;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 38px;
+    overflow: hidden;
+    padding: 0 0px;
+    position: relative;
+    text-align: left;
+    margin: 0px 1px;
+    background: #fff;
+    padding-left: 10px;
+}
+
+.sorta i {
+    margin-right: 2px;
+}
+
+.sorta .fal {
+    color: #999;
+    margin-right: 5px;
+    font-size: 12px;
+}
+
+.sorta strong {
+    font-weight: normal;
+    font-size: 13px;
+}
+
+.sorta.asc::after {
+    content: "\f0d7";
+    color: #999;
+    font-family: "Font Awesome 5 Pro";
+    margin-right: 10px;
+    float: right;
+    font-weight: 700;
+}
+
+::-webkit-input-placeholder {
+    /* Edge */
+    opacity: 0.2;
+}
+
+:-ms-input-placeholder {
+    /* Internet Explorer */
+    opacity: 0.2;
+}
+
+::placeholder {
+    opacity: 0.2;
+}
+
+.form-control::-webkit-input-placeholder {
+    color: #bbb;
+    // opacity: 0.2;
+}
+
+// ----------  changes -----------
+.theme-blue .bs-datepicker-head {
+    background-color: #189ad3;
+}
+.v-sidebar-menu .vsm-link .svg-inline--fa {
+    color: #189ad3;
+}
+// .svg-inline--fa{
+//     color: #189ad3
+// }
+// i.fas {
+//     color: #189ad3 !important;
+// }
+// i.fab {
+//     color: #189ad3 !important;
+// }
+span.vsm-title.lm {
+    margin-left: 15px !important;
+}
+label.lbllbl {
+    font-size: 12px;
+    font-weight: 500;
+    color: #001d46;
+}
+
+.cusromGrey {
+    color: #06164c;
+}
+
+.cusromBlue {
+    color: #189ad3;
+}
+
+// Print Voucher - Hotel Module
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    #print_voucher,
+    #print_voucher * {
+        visibility: visible;
+    }
+
+    #print_voucher {
+        //   position: absolute;
+        left: 0;
+        top: 0;
+        margin: 0 auto;
+    }
+
+    #print_voucher tr {
+        td.blackbg {
+            background-color: #000000 !important;
+            -webkit-print-color-adjust: exact;
+        }
+    }
+}
+.login-content {
+    .mat-form-field + .mat-form-field {
+        margin-left: 0px;
+    }
+}
+
+//tabs naming style
+.custom-navtabs .nav-pills .nav-item .nav-link {
+    text-transform: capitalize;
+}
+
+.btn_hover:hover {
+    background-color: #ffffff !important;
+    color: #189ad3 !important;
+    background: #ffffff !important;
+    border: #189ad3 !important;
+    // opacity: 0.5;
+}
+.mat-dialog-container {
+    height: 60% !important;
+    width: 60% !important;
+}
+.search-container { float: left; width: 100%; margin-top: 15px; margin-bottom: 10px;}
+.search-container .search-input { width: 100%; padding: 12px 15px; font-size: 15px; border-radius: 5px;
+    border: 1px solid #222222;}
+
+.search-container .search-input::placeholder{
+    color: #6a6a6a !important;
+    font-size: 15px !important;
+}

@@ -1,0 +1,28 @@
+
+.droplocations {
+    z-index      : 1;
+    position     : absolute;
+    background   : #fff;
+    top          : 110%;
+    border-radius: 0px;
+    top          : 110%;
+    box-shadow   : 0 2px 5px 0 #ddd !important;
+    transition   : transform 200ms ease-out, height 200ms ease-out, width 200ms ease-out !important;
+  }
+  
+  .droplocations li {
+    padding      : 5px 10px;
+    font-size    : 14px;
+    float        : left;
+    width        : 100%;
+    border-bottom: 1px solid #e5ebf0;
+  }
+  
+  .droplocations li i {
+    padding-right: 6px;
+  }
+  
+  .droplocations li:hover {
+    background: #1b9ad4;
+    color     : #fff;
+  }

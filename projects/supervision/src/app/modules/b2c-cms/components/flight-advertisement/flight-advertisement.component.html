@@ -1,0 +1,133 @@
+<div class="card-header text-uppercase bg-dark text-white"><h5 style="border-bottom: 0;"><i class="fa fa-tag fa-lg"></i>&nbsp;Flight Advertisements</h5></div>
+<div class="card">
+    <form [formGroup]="regConfig" autocomplete="off">
+      <div >
+       <div class="form-row">
+       	<input type="hidden" name="id" formControlName="id">
+         
+          <div class="col-6 pr-0">
+             <div class="form-group">
+                <label for="email">Heading *</label>
+                <input formControlName="heading" type="text" class="form-control text-capitalize form-control-sm nrm_input"  
+                   placeholder="Heading" id="title" autocomplete="off" (keypress)="omitSpecialCharacters($event)">
+             </div>
+          </div>
+
+          <div class="col-6 pr-0">
+            <div class="form-group">
+               <label for="phone">Content *</label>
+                  <input formControlName="content" type="text" class="form-control text-capitalize form-control-sm nrm_input"  
+                  placeholder="Content" id="description" 
+                  autocomplete="off">
+            </div>
+         </div>
+
+          <div class="col-6 pr-0">
+            <div class="form-group">
+               <label for="phone">Ad Info *</label>
+                  <input formControlName="ad_info" type="text" class="form-control form-control-sm nrm_input"  
+                  placeholder="Ad Info" id="discount_value" autocomplete="off">
+            </div>
+         </div>
+          <div class="col-6 pr-0">
+            <label for="image" class="mb-2">Image</label>
+               <div class="form-group">
+                  
+                  <input type="file" accept=".png, .jpg, .jpeg" class="col-12 p-0" formControlName="image" id="image"
+                              (change)="onFileChange($event.target.files)">
+                  <label class="custom-file-label" #labelImport style="display: none;" for="image">Upload Image</label> 
+                  <span class="col-sm-12 text-danger px-0">(Maximum upload file size: 1 MB)</span>
+                  <img *ngIf="discountImage" height="50" width="100" class="rounded" [src]="getImage(discountImage)"
+                  alt="logo">
+                  <img *ngIf="imageSrc" height="50" width="100" class="rounded" [src]="imageSrc" alt="logo">
+                  <div *ngIf="regConfig?.get('image').value && !regConfig?.get('image').value.includes('fakepath')">
+                     <img [src]="getImage(regConfig?.get('image').value)" width="100" height="50" class="rounded">
+                  </div>              
+               </div>
+          </div>
+       </div>
+       <div class="btncontainer">
+          <button type="submit" class="btnStyle" (click)="onSearchSubmit()">{{this.btnName}}</button> &nbsp;
+          <button type="button" class="btnStyle" (click)="onReset()">Reset</button>
+       </div>
+     </div>
+    </form>
+ </div>
+ <div class="card" style="margin-top: 30px;">
+    <div class="card-body">
+        <p>Total {{respData?.length}} Records</p>
+       <div class="mb-3">
+          <form>
+             <div class="table-responsive">
+                <table class="table table-borderless table-striped table-hover" matSort
+                   (matSortChange)="sortData($event)" id="b2c-testimonial">
+                   <thead>
+                      <tr>
+                         <th scope="col" class="text-left text-nowrap" *ngFor="let header of displayColumn;"
+                            >
+                            {{header.value }} 
+                         </th>
+                      </tr>
+                   </thead>
+                   <tbody>
+                    <tr *ngIf="noData">
+                        <td colspan="11">
+                            <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                        </td>
+                    </tr>
+                      <tr *ngIf="!noData && !respData.length">
+                         <td colspan="11">
+                            <h4 class="text-muted text-center">
+                               No Data Found!
+                            </h4>
+                         </td>
+                      </tr>
+                      <tr
+                         *ngFor="let data of respData | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
+                         <td class="text-left text-muted">{{i+1}}.</td>
+                         <td class="text-left"><div>
+                           <ul>
+                              <li *ngIf="data['ad_status']==1"><a href="javascript:void(0)" (click)="updateStatus(data.id,0)">In Activate</a></li>
+                              <li *ngIf="data['ad_status']==0"><a href="javascript:void(0)" (click)="updateStatus(data.id,1)">Activate</a></li>
+                              <li><a href="javascript:void(0)" (click)="editList(data)">Edit</a></li>
+                              <li><a href="javascript:void(0)" (click)="deleteList(data.id)">Delete</a></li>
+                           </ul>
+                        </div></td>
+                        <td class="text-left">
+                            <span *ngIf="data['ad_status'] == 1" class="badge badge-success">
+                                {{'Active'}} </span>
+                            <span *ngIf="data['ad_status'] == 0" class="badge badge-danger">
+                                {{'In active'}} </span>
+                        </td>
+                          <td class="text-left">
+                            <a href="{{getImage(data.image)}}" target="_blank"><img width="100" [src]="getImage(data.image)"  alt="" ></a>
+                        </td>
+                        <td class="text-left">{{data['heading']}}</td>
+                         <td class="text-left">{{data['content']}}</td>
+                         <td class="text-left">{{data['ad_info']}}</td>
+                         <!-- <td class="text-left">{{data['discount_type']}}</td> -->
+                      </tr>
+                   </tbody>
+                </table>
+             </div>
+             <div class="card-footer pb-0">
+                <div class="d-flex w-100 justify-content-between">
+                   <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                   </ngb-pagination>
+                   <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                   <option [ngValue]="10">10 items per page</option>
+                   <option [ngValue]="20">20 items per page</option>
+                   <option [ngValue]="50">50 items per page</option>
+                   <option [ngValue]="100">100 items per page</option>
+                    <option [ngValue]="500">500 items per page</option>
+                    <option [ngValue]="700">700 items per page</option>
+                    <option [ngValue]="1000">1000 items per page</option>
+                   </select>
+                </div>
+             </div>
+          </form>
+       </div>
+    </div>
+ </div>
+
+

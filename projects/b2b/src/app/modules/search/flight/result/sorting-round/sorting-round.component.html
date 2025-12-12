@@ -1,0 +1,40 @@
+
+                    <ul class="sortul">
+                        <li class="sortli hide_lines">
+                            <a (click)="sortByAirlines()" class="sorta name-l-2-h loader c-pointer" 
+                            [ngClass]="airlines && active == 'airlines' ? 'des active' :(active == 'airlines' ? 'asc active' : 'asc')">
+                                <strong>Airline</strong>
+                            </a>
+                        </li>
+
+                        <li class="sortli">
+                            <a (click)="sortByDepartureTime()" class="sorta name-l-2-h loader c-pointer" 
+                            [ngClass]="departureTime && active == 'departureTime' ? 'des active' :(active == 'departureTime' ? 'asc active' : 'asc')">
+                                <strong>Depart</strong>
+                            </a>
+                        </li>
+
+                        <li class="sortli hide_lines">
+                            <a (click)="sortByDuration()" class="sorta name-l-2-h loader c-pointer" 
+                            [ngClass]="duration && active == 'duration' ? 'des active' :(active == 'duration' ? 'asc active' : 'asc')">
+                                <strong>Duration</strong>
+                            </a>
+                        </li>
+
+                        <li class="sortli">
+                            <a (click)="sortByArrivalTime()" class="sorta name-l-2-h loader c-pointer"
+                            [ngClass]="arrivalTime && active == 'arrivalTime' ? 'des active' :(active == 'arrivalTime' ? 'asc active' : 'asc')">
+                                <strong>Arrive</strong>
+                            </a>
+                        </li>
+
+                        <li class="sortli">
+                            <a (click)="sortByPrice()" class="sorta name-l-2-h loader c-pointer" 
+                            [ngClass]="price && active == 'price' ? 'des active' :(active == 'price' ? 'asc active' : 'asc')">
+                                <strong>Price</strong>
+                            </a>
+                        </li>
+                    </ul>
+         
+
+

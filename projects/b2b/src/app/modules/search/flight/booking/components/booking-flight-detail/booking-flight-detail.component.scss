@@ -1,0 +1,116 @@
+a.changeFlight {
+    color: #16aaff !important;
+}
+a {
+    color: #3f6ad8 !important;
+    text-decoration: none !important ;
+    cursor: pointer !important;
+}
+a:hover {
+    color: #337ab7 !important;
+}
+.fa-plus--lineHeight {
+    line-height: 30px;
+}
+
+.sprt1 {
+    width: 40px;
+    height: 45px;
+    position: absolute;
+    left: 30px;
+    top: -10px;
+    background: url("~/assets/images/login-images/assets/flight_takeoff.svg") no-repeat 0 0;
+}
+.sprt2 {
+    width: 40px;
+    height: 45px;
+    position: absolute;
+    top: -10px;
+    right: 38px;
+    background: url("~/assets/images/login-images/assets/flight_down.svg") no-repeat 0 0;
+}
+
+.flt_in .form-group {
+    position: relative;
+}
+//chakri changes
+.depart {
+    // background-position: -19px -252px;
+    // background-size: 650px;
+}
+
+.return {
+    // background-position: -80px -252px;
+    // background-size: 650px;
+}
+.fas,
+.fa {
+    color: #012756;
+}
+.row pb-3 {
+    font-family: "Asap" !important;
+}
+
+.cardMargin {
+    margin-bottom: 25px;
+}
+.cardList {
+    padding: 2px 0px;
+}
+.cardList b {
+    padding: 0px 20px;
+    font-size: 17px;
+    font-weight: 500;
+    color: #001d46;
+}
+.customStyle {
+    font-size: 17px;
+    font-weight: 500;
+    color: #001d46;
+}
+.f-14 {
+    font-weight: 500;
+    font-family: "Asap";
+    color: #001d46;
+    font-size: 14px;
+    width: 100%;
+    float: left;
+    padding: 6px 15px 10px 50px;
+}
+.f-18 {
+    font-weight: 600;
+    font-family: "Asap";
+    color: #001d46;
+}
+.text-info {
+    color: #012756;
+}
+
+#boxes {
+    padding: 0px 15px;
+}
+.h4 {
+    padding: 0px 15px !important;
+    color: #001d46 !important;
+}
+#leftbox {
+    float: left;
+    width: 70%;
+}
+
+#rightbox {
+    float: right;
+    width: 30%;
+}
+.travellerSpace{
+    padding: 0px 2px;
+}
+
+@media only screen and (max-width: 767px) {
+
+    .mobhide { display: none;}
+    .cardList b { padding: 0px 5px !important;}
+    #leftbox { width: 100% !important;}
+    .f-14 {     padding: 6px 15px 10px 18px;}
+    a.changeFlight { margin: 0px !important;}
+}

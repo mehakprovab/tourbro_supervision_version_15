@@ -1,0 +1,38 @@
+
+<div class="rangebox">
+    <button data-target="#collapse506" data-toggle="collapse" class="collapsebtn" type="button">Product For Packaging</button>
+
+    <form [formGroup]="packagesForm" style="clear: both;">
+        <div id="collapse506" class="collapse show">
+            <div class="boxins marret" id="departureTimeWrapper">
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <a class="timone toglefil time-wrapper enabled">
+                            <div class="starin cusromGrey">
+                                <input type="radio" id="packaging" (change)="packageFilter($event)" name="packaging" value="all" formControlName="packaging">
+                               &nbsp; <span>All</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a class="timone toglefil time-wrapper enabled">
+                            <div class="starin cusromGrey">
+                                <input type="radio" id="packaging" (change)="packageFilter($event)" name="packaging" value="with_packages" formControlName="packaging">
+                                 &nbsp; <span>With Packaging</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="grid-item">
+                        <a class="timone toglefil time-wrapper enabled">
+                            <div class="starin cusromGrey">
+                                <input type="radio" id="packaging" (change)="packageFilter($event)" name="packaging" value="without_packages" formControlName="packaging">
+                                 &nbsp; <span>Without Packaging</span>
+                               
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,86 @@
+<!-- <p>car-booking-report works!</p> -->
+<app-search (searchValuesEvent)="receiveSearchValues($event)" [searchtype]="searchType"></app-search>
+
+<div class="card">
+    <div class="card-body">
+
+        <!-- <app-dynamic-table [data]=" tabsData "></app-dynamic-table> -->
+        <div class="mb-3">
+
+            <form>
+                <div class="p-2">
+                    <div class="form-group form-inline mb-0">
+                        Full text search:
+                        <input class="form-control ml-2" type="text" name="searchTerm"
+                            (keyup)="applyFilter($event.target.value)" />
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-borderless table-striped table-hover" matSort
+                        (matSortChange)="sortData($event)">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-left text-nowrap" *ngFor="let header of displayColumn;"
+                                    mat-sort-header="{{header.key}}">
+                                    {{header.value }} </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="noData">
+                                <td colspan="11">
+                                    <!-- <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate">
+                                    </mat-spinner> -->
+                                    <p style="text-align: center;">No Data Found.</p>
+                                </td>
+                            </tr>
+                            
+                            <tr
+                                *ngFor="let data of respData | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
+                                <td class="text-left text-muted">{{i+1}}.</td>
+                                <td class="text-left"> {{data.AppReference }} </td>
+                                    <td class="text-left">
+                                        <span *ngIf="data.Status == 'BOOKING_SUCCESS'" class="badge badge-success">
+                                            {{data.Status}} </span>
+                                        <span *ngIf="data.Status == 'BOOKING_HOLD'" class="badge badge-warning">
+                                            {{data.Status}} </span>
+                                        <span *ngIf="data.Status == 'BOOKING_FAILED'" class="badge badge-danger">
+                                                {{data.Status}} </span>
+                                        <span *ngIf="data.Status == 'BOOKING_INPROGRESS'" class="badge badge-primary">
+                                                    {{data.Status}} </span>
+                                        <!-- "BOOKING_INPROGRESS" -->
+                                    </td>
+                                <td class="text-left"> {{data['SupplierIdentifier']}} </td>
+                                <td class="text-left">{{data['CarBookingPassengers'][0].first_name}} </td>
+                                <td class="text-left"> {{data['CarFromDate']}} </td>
+                                <td class="text-left"> {{data['CarToDate']}} </td>
+                                <td class="text-left"> {{data['CarFromDate']}} </td>
+                                <td class="text-left">{{data['FinalCancelDate']}} </td>
+                                <td class="text-left"> {{data['TotalFare']}} </td>
+                                <td class="text-left"> {{data['agent_commission']}} </td>
+                                <td class="text-left"> {{data['TotalFare']}} </td>
+                                <td class="text-left"> {{data['Currency']}} </td>
+                                <td class="text-left"> {{data['CreatedDatetime']}} </td>
+                                <td class="text-left" style="vertical-align: middle;">
+                                    <a class="text-white btn btn-sm btn-primary m-1" [innerHTML]="'Voucher'">
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer pb-0">
+                    <div class="d-flex w-100 justify-content-between">
+                        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                        </ngb-pagination>
+                        <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                            <option [ngValue]="2">2 items per page</option>
+                            <option [ngValue]="4">4 items per page</option>
+                            <option [ngValue]="6">6 items per page</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

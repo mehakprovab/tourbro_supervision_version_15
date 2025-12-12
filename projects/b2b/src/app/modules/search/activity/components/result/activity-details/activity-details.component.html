@@ -1,0 +1,605 @@
+
+<section for="ModifySearch" class="mx-0">
+ 
+  <div class="bbottom grid-section-wrapper">
+      <div class="col-md-12 col-lg-12 p-0">
+          <div id="collapseBasic" style="z-index: 9999;display: block; float: left;width: 100%;" >
+              <div class="w-100">
+                  <div class="col-md-12">
+                      <app-activity-search-form (callResult)="searchResult($event)"></app-activity-search-form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+<div class="theme_bg"
+  style="background:#fafafa; border-top: 1px solid #ddd; padding-top: 15px; float: left; width:100%;">
+  <div class="my-0">
+    <div class="card-body pb-3">
+      <div class="col-12">
+        <div class="row hotel_list1">
+          <div class="col-md-12 col-lg-12 nopad mt-0" *ngIf="activity">
+            <app-activity-info [activity]="activity"></app-activity-info>
+            <p class="cusromGrey hotel_location">
+              <i class="fal fa-map-marker-alt" style="background: #fbc10a;
+              padding: 5px;
+              border-radius: 5px;
+              width: 28px;
+              text-align: center; margin-bottom: 5px;
+              color: #fff;"></i> {{activity.Region}}
+              <br>
+              <!-- <i class="fal fa-clock" style="background: #092e53;
+              padding: 5px;
+              border-radius: 5px;
+              width: 28px;
+              text-align: center;
+              color: #fff;"></i> {{activity.Duration}} -->
+          </p>
+          </div>
+          <div class="col-md-12 col-lg-12 mt-3 nopad">
+            <div class="wrap d-flex">
+              <div class="col-md-8 nopad">
+                <app-activity-detail-images [activity]="activity"></app-activity-detail-images>
+
+                
+                <div class="clearfix"></div>
+                <div class="basic_info">
+                  <h4>Important Information</h4>
+                  <ul class="list-inline">
+                    <!-- <li *ngIf="activity.Cancellation_available">
+                      <img src="assets/images/free_cancellation.svg" alt="icon">Free Cancelation -
+                      {{activity.Cancellation_Policy}} days prior
+                    </li> -->
+                    <li *ngIf="activity?.VoucherOption">
+                      <img src="assets/images/show_mobile.svg" alt="icon"> {{activity?.VoucherOption}}
+                    </li>
+                    <li *ngIf="activity?.Duration">
+                      <img src="assets/images/duration.svg" alt="icon">{{activity?.Duration}} Duration
+                    </li>
+                    <li>
+                      <img src="assets/images/language.svg" alt="icon">English
+                    </li>
+                    <!-- <li>
+                      <img src="assets/images/join_group.svg" alt="icon"> Maximum Traveller <b
+                        style="color:#0096ce">{{activity.MaxTravellerCount}}</b>
+                    </li> -->
+                    <!-- <li>
+                      <img src="assets/images/meet_up.svg" alt="icon"> Meet Up At Location
+                    </li> -->
+                  </ul>
+                </div>
+
+                <div id="prc_rght" class="mb-4 d-none">
+                  <!-- <h5>Select date and participants:</h5> -->
+                  <form [formGroup]="travellerConfig">
+                    <div class="org_row d-none">
+                      <!-- <div class="col-xs-12 col-sm-4 smpad">
+                        <div class="outdate">
+                          <input type="text" placement="bottom left" class="form-control outdatadiv" bsDatepicker
+                            formControlName="date" [bsConfig]="bsDateConf" placeholder="Select Date" #activitydate
+                            readonly id="activitydate">
+                        </div>
+                      </div>
+                      <div class="col-xs-12 col-sm-4 smpad d-none">
+                        <div class="trvlr">
+                          <input type="hidden" name="" id="total_age_band" value="1">
+                          <div class="totlall" (clickOutside)="closeTravellers();">
+                            <span class="remngwd" (click)="activityFadeinn=!activityFadeinn; fadeinn=false;">
+                              <input type="hidden" name="total_pax_count" id="total_pax_count" value="1">
+                              <span id="travel_text">Total Traveller {{totalTraveller}}</span>
+                            </span>
+                            <div class="roomcount pax_count_div {{activityFadeinn ? 'fadeinn' : ''}}"
+                              *ngIf="activityFadeinn">
+                              <div class="inallsn">
+                                <div class="oneroom fltravlr">
+                                  <div class="clearfix"></div>
+                                  <ng-container *ngFor="let activity of activity.Product_AgeBands">
+                                    <div class="roomrow" *ngIf="(activity.description | lowercase) =='adult'">
+                                      <div class="celroe col-md-7">
+                                        <i class="fa fa-male"></i> {{activity.description}}
+                                        <span class="agemns">(Age {{activity.ageFrom}} to {{activity.ageTo}})</span>
+                                      </div>
+                                      <div class="celroe col-md-5">
+                                        <div class="input-group countmore pax-count-wrapper adult_count_div">
+                                          <span class="input-group-btn">
+                                            <button (click)="onUpdateTraveller(activity.description, 'minus')"
+                                              type="button" class="btn btn-default btn-number">
+                                              <span class="fa fa-minus"></span>
+                                            </button>
+                                          </span>
+                                          <input type="text"
+                                            class="form-control input-number centertext valid_class pax_count_value"
+                                            formControlName="adult" min="1" max="9" readonly>
+                                          <span class="input-group-btn">
+                                            <button (click)="onUpdateTraveller(activity.description, 'plus')"
+                                              type="button" class="btn btn-default btn-number">
+                                              <span class="fa fa-plus"></span>
+                                            </button>
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="roomrow" *ngIf="(activity.description | lowercase) =='senior'">
+                                      <div class="celroe col-md-7">
+                                        <i class="fa fa-male"></i> {{activity.description}}
+                                        <span class="agemns">(Age {{activity.ageFrom}} to {{activity.ageTo}})</span>
+                                      </div>
+                                      <div class="celroe col-md-5">
+                                        <div class="input-group countmore pax-count-wrapper adult_count_div">
+                                          <span class="input-group-btn">
+                                            <button (click)="onUpdateTraveller(activity.description, 'minus')"
+                                              type="button" class="btn btn-default btn-number">
+                                              <span class="fa fa-minus"></span>
+                                            </button>
+                                          </span>
+                                          <input type="text"
+                                            class="form-control input-number centertext valid_class pax_count_value"
+                                            formControlName="senior" min="1" max="9" readonly>
+                                          <span class="input-group-btn">
+                                            <button (click)="onUpdateTraveller(activity.description, 'plus')"
+                                              type="button" class="btn btn-default btn-number">
+                                              <span class="fa fa-plus"></span>
+                                            </button>
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="roomrow" *ngIf="(activity.description | lowercase) =='youth'">
+                                      <div class="celroe col-md-7">
+                                        <i class="fa fa-male"></i> {{activity.description}}
+                                        <span class="agemns">(Age {{activity.ageFrom}} to {{activity.ageTo}})</span>
+                                      </div>
+                                      <div class="celroe col-md-5">
+                                        <div class="input-group countmore pax-count-wrapper adult_count_div">
+                                          <span class="input-group-btn">
+                                            <button (click)="onUpdateTraveller(activity.description, 'minus')"
+                                              type="button" class="btn btn-default btn-number">
+                                              <span class="fa fa-minus"></span>
+                                            </button>
+                                          </span>
+                                          <input type="text"
+                                            class="form-control input-number centertext valid_class pax_count_value"
+                                            formControlName="youth" min="1" max="9" readonly>
+                                          <span class="input-group-btn">
+                                            <button (click)="onUpdateTraveller(activity.description, 'plus')"
+                                              type="button" class="btn btn-default btn-number">
+                                              <span class="fa fa-plus"></span>
+                                            </button>
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="roomrow" *ngIf="(activity.description | lowercase) =='child'">
+                                      <div class="celroe col-md-7">
+                                        <i class="fa fa-male"></i> {{activity.description}}
+                                        <span class="agemns">(Age {{activity.ageFrom}} to {{activity.ageTo}})</span>
+                                      </div>
+                                      <div class="celroe col-md-5">
+                                        <div class="input-group countmore pax-count-wrapper adult_count_div">
+                                          <span class="input-group-btn">
+                                            <button (click)="onUpdateTraveller(activity.description, 'minus')"
+                                              type="button" class="btn btn-default btn-number">
+                                              <span class="fa fa-minus"></span>
+                                            </button>
+                                          </span>
+                                          <input type="text"
+                                            class="form-control input-number centertext valid_class pax_count_value"
+                                            formControlName="child" min="1" max="9" readonly>
+                                          <span class="input-group-btn">
+                                            <button (click)="onUpdateTraveller(activity.description, 'plus')"
+                                              type="button" class="btn btn-default btn-number">
+                                              <span class="fa fa-plus"></span>
+                                            </button>
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="roomrow" *ngIf="(activity.description | lowercase) =='infant'">
+                                      <div class="celroe col-md-7">
+                                        <i class="fa fa-male"></i> {{activity.description}}
+                                        <span class="agemns">(Age {{activity.ageFrom}} to {{activity.ageTo}})</span>
+                                      </div>
+                                      <div class="celroe col-md-5">
+                                        <div class="input-group countmore pax-count-wrapper adult_count_div">
+                                          <span class="input-group-btn">
+                                            <button (click)="onUpdateTraveller(activity.description, 'minus')"
+                                              type="button" class="btn btn-default btn-number">
+                                              <span class="fa fa-minus"></span>
+                                            </button>
+                                          </span>
+                                          <input type="text"
+                                            class="form-control input-number centertext valid_class pax_count_value"
+                                            formControlName="infant" min="1" max="9" readonly>
+                                          <span class="input-group-btn">
+                                            <button (click)="onUpdateTraveller(activity.description, 'plus')"
+                                              type="button" class="btn btn-default btn-number">
+                                              <span class="fa fa-plus"></span>
+                                            </button>
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </ng-container>
+                                  <div class="clear"></div>
+                                  <button (click)="closeTravellers()"
+                                    class="done1 comnbtn_room1 d-block ml-auto btn_hover">Done</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div> -->
+                      <!-- <div class="col-xs-12 col-sm-4 smpad">
+                        <div class="chk_avl">
+                          <button type="button" class="patencls" id="check-avil-btn" 
+                            (click)="getTripList(activity)">Check
+                            Availability</button>
+                        </div>
+                      </div> -->
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-xs-12 d-none">
+                      <span class="ac_note">
+                        <strong>Note:</strong> Active calendar date shows availability of the Activity. </span>
+                    </div>
+                  </form>
+                </div>
+                 <div id="pckg_optn" >
+                  <div class="pckg_optns">
+                    <div *ngIf="noActivity" class="f19 wt600">
+                      Activity not available for this date.
+                    </div>
+                    <!-- <div *ngIf="loading" class="spinner">
+                      <div class="bounce1"></div>
+                      <div class="bounce2"></div>
+                      <div class="bounce3"></div>
+                      <div class="bounce4"></div>
+                    </div> -->
+                    <ng-container *ngIf=" activity || (uniqueActivityList && uniqueActivityList.length>0)">
+                      <h3 class="f19 wt600">Select Pickup Location
+                      </h3>
+                      <div class="optn_sngle flx jsb clm" id="varnt0" *ngFor="let activityTrip of uniqueActivityList;let index=index">
+                        <div class="inr_optndv flx jsb">
+                          <div class="lt_optn">
+                            <h4 class="f16 wt600" style="color: #092e53;
+                            font-weight: 600; margin-bottom: 0px;
+                            font-size: 16px;">{{activityTrip?.grade_Title}}</h4>
+                           
+                            <section class="float-left w-100 d-block">
+                              <div class="article f14 mt-1">
+                                <p style="  color: #092e53; font-size: large14px; margin-bottom: 10px;" [innerHTML]="activityTrip.gradeDescription"></p>
+                              </div>
+                              <div *ngIf="activityTrip.selectedLanguage">
+                                   <h3 class="f19 wt600">Select Language</h3>
+                              <div *ngFor="let lang of activityTrip.language; let langIndex = index" class="flx alignit d-flex">
+                                <input
+                                  type="radio"
+                                  [id]="'trip_' + index + '_lang_' + lang.langCode"
+                                  [value]="lang.langCode"
+                                  [(ngModel)]="activityTrip.selectedLanguage"
+                                  name="language_trip_{{ index }}"
+                                  (change)="onTripLanguageChange(activityTrip, lang)"
+                                  [checked]="lang.langCode === activityTrip.selectedLanguage"
+                                />
+                                <label
+                                  [for]="'trip_' + index + '_lang_' + lang.langCode"
+                                  class="f14 wt500 ml-2"
+                                >
+                                  {{ lang.langName }}
+                                </label>
+                              </div>
+                              </div>
+                              <div class="flx timetxt alignit m-0 w-100" *ngIf="activityTrip.gradeDepartureTime">
+                                <span class="f12 wt600">Hour: {{activityTrip.gradeDepartureTime}}h</span>
+                              </div>
+                              <strong style="font-size: 15px; font-weight: 600; color: #092e53;"><i class="fal fa-info-circle"></i> Cancellation Policy:</strong><br>
+                              <div class="tym_hrs1 flx alignit m-0">
+                         
+                                <span class="f12 wt600" style="line-height: 25px;
+                                font-weight: 500;
+                                font-size: 13px;">
+                                  <!-- <span
+                                  [innerHTML]="getCancelationPolicy(voucher?.BookingDetails?.CancellationPolicy)"></span> -->
+                                  
+                                 <ng-container *ngFor="let cancel of activityTrip.from;let i=index">
+                                  <!-- <p>1{{activityTrip.selectedDate}}</p>
+                                  <p>2{{cancel.from| date: 'dd-MM-yyyy'}}</p> -->
+                                  <!-- <p *ngIf="activityTrip.selectedDate && activityTrip.selectedDate !== (cancel.from | date: 'dd-MM-yyyy')">Non-Refundable</p> -->
+                                  <span *ngIf="(i == 0 || activityTrip.selectedDate) && activityTrip.selectedDate == (cancel.from | date: 'dd-MM-yyyy')">
+                                    <span [innerHTML]="cancel?.policy"></span>
+                                  </span>
+                                  
+                                  
+                                  <!-- <span *ngIf="(i==0 &&  !(activityTrip.hasOwnProperty('selectedDate'))) || (activityTrip.selectedDate && activityTrip.selectedDate==(cancel.from | date: 'dd-MM-yyyy'))">Cancellation from {{cancel.cancellationPolicies[0].dateFrom  | date: 'dd-MM-yyyy'}} will charge {{cancel.cancellationPolicies[0].amount | number: '1.2-2' }}<br></span> -->
+                                </ng-container>
+                                
+                                </span>
+                              </div>
+                              <!-- <div class="flx alignit m-0 w-100" *ngIf="activityTrip.activityRemark">
+                                <span class="f12 wt600">Remarks: {{activityTrip.activityRemark[0].text}}</span>
+                              </div> -->
+                            </section>
+                          </div>
+                          <div class="rt_optn flx clm">
+                            <strong class="optn_prce f28 f-15" style="font-size: 15px;">Price</strong>
+                            <div class="optn_prce f28" >
+                              {{ activityTrip?.selectedPrice?.Currency }}
+                              <span class="wt700">{{ activityTrip?.selectedPrice?.TotalDisplayFare }}</span>
+                            </div> 
+                            
+                            <div class="form-row">
+                              <label class="col-12 p-0 m-0">Choose Date</label>
+                            <select class="w-100 form-control" style="height: 40px;
+                            font-size: 14px;
+                            border: 1px solid #333;" (change)="setValue($event.target.value,index,activityTrip)" [(ngModel)]="activityTrip.selectedDate">
+                            <option *ngFor="let produtDate of activity.Product_available_date" [value]="produtDate">{{produtDate}}</option>
+                            </select>
+                            </div>
+                                                  
+                            
+                            <form>
+                              <button type="submit" (click)="blocktrip(activityTrip)" class="sight_book">Book</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+                <div id="ovrvw">
+                  <div class="pckg_optns1">
+                    
+                    <div class="pckg_optns m-0 mb-2" *ngIf="activity.BookingSource !== 'ZBAPINO00004'">
+                      <div id="Description">
+                        <div class="row col-12">
+                          <h3 class=" col-6 d-flex justify-content-start f19 wt600">Description</h3>
+                          <span class="col-6 d-flex justify-content-end p-0">
+                            <strong class="d-flex justify-content-end p-0 col-6 view-more" *ngIf="isTextTruncated(activity.Description)" (click)="toggleRemarks()">
+                                {{ showFullRemarks ? 'Show Less' : 'Show More' }}
+                            </strong>
+                          </span>
+                        </div>
+                        
+                        <ul>
+                          <li [innerHTML]="getShortText(activity.Description, showFullRemarks)"></li>
+                        </ul>
+
+                        
+                         
+
+                        <ng-container *ngIf="showMore">
+                       
+                        <ng-container *ngIf="activityList[0].Inclusions.length">
+                          <br />
+                          <h3 class="f19 wt600">Inclusions</h3>
+                          <ul>
+                            <li *ngFor="let inclusion of activityList[0].Inclusions">{{inclusion}}</li>
+                          </ul>
+                        </ng-container>
+                      </ng-container>
+                      </div>
+                      <!-- <div class="show-more"> <a (click)="showMore = !showMore">{{ showMore ? 'Show less...': 'Show More...' }}</a> </div> -->
+                    </div>
+                  
+                    <div class="pckg_optns mt-2" *ngIf="activity?.Inclusions?.length && activity?.BookingSource === 'ZBAPINO00004' ">
+                      <div id="Description" >
+                        <h3 class="f19 wt600">Inclusions</h3>                                                        
+                             <span [innerHTML]="(activity?.Inclusions[0])"></span>                                                       
+                      </div>
+                      <!-- <div class="show-more"> <a (click)="showMoreServices = !showMoreServices">{{ showMoreServices ? 'Show less...': 'Show More...' }}</a> </div> -->
+                    </div>
+
+                    <div class="pckg_optns mt-2" *ngIf="activity?.Exclusions?.length && activity?.BookingSource === 'ZBAPINO00004' ">
+                      <div id="Description" >
+                        <h3 class="f19 wt600">Exclusions</h3>                                                        
+                             <span [innerHTML]="(activity?.Exclusions[0])"></span>                                                        
+                      </div>
+                      <!-- <div class="show-more"> <a (click)="showMoreServices = !showMoreServices">{{ showMoreServices ? 'Show less...': 'Show More...' }}</a> </div> -->
+                    </div>
+
+                    <div class="pckg_optns mt-2" *ngIf="activity?.TermsAndConditions && activity?.BookingSource === 'ZBAPINO00004' ">
+                      <div id="Description" >
+                        <h3 class="f19 wt600">Terms & Conditions</h3>                                                        
+                            <span [innerHTML]="(activity?.TermsAndConditions)"></span>                                                        
+                      </div>
+                      <!-- <div class="show-more"> <a (click)="showMoreServices = !showMoreServices">{{ showMoreServices ? 'Show less...': 'Show More...' }}</a> </div> -->
+                    </div>
+
+
+                    <div class="pckg_optns mt-2" *ngIf="activity?.Services?.length">
+                      <div id="Description" >
+                        <h3 class="f19 wt600">Services</h3>                                                        
+                            <ul class="list-inline">
+                              <li *ngFor="let service of activity.Services">
+                             {{service}}
+                             </li>                         
+                            </ul>                                                        
+                      </div>
+                      <!-- <div class="show-more"> <a (click)="showMoreServices = !showMoreServices">{{ showMoreServices ? 'Show less...': 'Show More...' }}</a> </div> -->
+                    </div>
+                    <div class="pckg_optns m-0" >
+                      <div id="Description">
+                        <h3 class="f19 wt600">Meeting Point and End Point</h3>
+                        <ul >
+                          <li>
+                            <strong>Starting Point:</strong>
+                            <span *ngIf="activity?.BookingSource !== 'ZBAPINO00004' " class="ml-2" [innerHTML]="activity.StartingPoints[0] && activity.StartingPoints[0].trim() ? activity.StartingPoints[0] : 'Hotel Pickup Point'"></span>
+                            
+                            <span class="ml-2" *ngIf="activity?.BookingSource === 'ZBAPINO00004' " [innerHTML]="activity.StartingPoints"></span>
+                          </li>
+                          <li>
+                            <strong>End Point:</strong> 
+                            <span class="ml-2" *ngIf="activity?.BookingSource !== 'ZBAPINO00004' " [innerHTML]="activity.EndPoints[0] && activity.EndPoints[0].trim() ? activity.EndPoints[0] : 'Same as Starting Point'"></span>
+                            <span class="ml-2" *ngIf="activity?.BookingSource === 'ZBAPINO00004' " [innerHTML]="activity.EndPoints"></span>
+                          </li>
+                        </ul>                        
+                        <!-- <ng-container *ngIf="showMore">
+                        <h3 class="f19 wt600">Max Traveller Count: {{activity.MaxTravellerCount}}</h3>
+                        <ng-container *ngIf="activity.Voucher_req">
+                          <br />
+                          <h3 class="f19 wt600">Voucher Information </h3>
+                          <div> {{activity.Voucher_req}}</div>
+                        </ng-container>
+                        <ng-container *ngIf="activity.Inclusions">
+                          <br />
+                          <h3 class="f19 wt600">Inclusions</h3>
+                          <ul>
+                            <li *ngFor="let inclusion of activity.Inclusions">{{inclusion}}</li>
+                          </ul>
+                        </ng-container>
+                        <ng-container *ngIf="activity.Exclusions">
+                          <br />
+                          <h3 class="f19 wt600">Exclusions</h3>
+                          <ul>
+                            <li *ngFor="let exclusions of activity.Exclusions">{{exclusions}}</li>
+                          </ul>
+                        </ng-container>
+                        <ng-container *ngIf="activity.AdditionalInfo">
+                          <br />
+                          <h3 class="f19 wt600">Additional Info</h3>
+                          <ul>
+                            <li *ngFor="let additionalInfo of activity.AdditionalInfo">{{additionalInfo}}</li>
+                          </ul>
+                          <br />
+                        </ng-container> -->
+                        <!-- <ng-container *ngIf="activity.Cancellation_Policy">
+                          <h3 class="f19 wt600">Cancellation Policy</h3>
+                          <div>
+                            {{activity.Cancellation_Policy}}
+                          </div>
+                          <br />
+                        </ng-container> -->
+                        <!-- <ng-container *ngIf="activity.AdditionalInfo">
+                          <h3 class="f19 wt600">DeparturePoint
+                          </h3>
+                          <div [innerHTML]="activity.DeparturePoint"></div>
+                        </ng-container> -->
+                      <!-- </ng-container> -->
+                      </div>
+                      <!-- <div class="show-more"> <a (click)="showMoreMeetingPoint = !showMoreMeetingPoint">{{ showMoreMeetingPoint ? 'Show less...': 'Show More...' }}</a> </div> -->
+                    </div>
+                    <!-- <div class="pckg_optns">
+                      <div>
+                        <h3 class="f19 wt600"> Customer Reviews
+                        </h3>
+                        <ng-container *ngIf="activity.Product_Reviews && activity.Product_Reviews!=''">
+                         
+                          <ng-container *ngFor="let activity of activity.Product_Reviews.slice((currentPage - 1) * reviewPerPage, currentPage * reviewPerPage)">
+                          
+                            <div class="revoutdiv">
+                              <div class="reviewdv">
+                                <img src="assets/images/sadimg.png" alt="Avatar">
+                              </div>
+                              <div class="contdivrew1">
+                                <h5>{{activity.UserName}}</h5>
+                                <div class="rewstar">
+                                  <ng-template *ngIf="activity.Rating === '' then noStar; else stars">
+                                  </ng-template>
+                                  <ng-template #noStar>
+                                    <span class="star_rtng">
+                                      <i class="fas fa-star"></i>
+                                      <i class="fas fa-star"></i>
+                                      <i class="fas fa-star"></i>
+                                      <i class="fas fa-star"></i>
+                                      <i class="fas fa-star"></i>
+                                    </span>
+                                  </ng-template>
+                                  <ng-template #stars>
+                                    <span class="star_rtng">
+                                      <i class="fas fa-star star_rtng_clr"
+                                        *ngFor="let s of activity.Rating | map: getStarArray"></i>
+                                      <i class="fas fa-star"
+                                        *ngFor="let s of activity.Rating | map: getStarArrayRemaining"></i>
+                                    </span>
+                                  </ng-template>
+                                  <span class="xsmall">{{activity.Published_Date}}</span>
+                                </div>
+                                <div class="cms-content mtm">
+                                  <span [innerHTML]="activity.Review"></span>
+                                </div>
+                              </div>
+                            
+                            </div>
+                       
+                          </ng-container>
+                          <div class="show-more"> <a (click)="showMoreReview()" *ngIf = "(currentPage * reviewPerPage < activity.Product_Reviews.length)">{{ showMoreReview ? 'Show More...': 'Show Less...' }}</a> </div>
+                      </ng-container>
+                        <p *ngIf="activity.Product_Reviews && activity.Product_Reviews==''">
+                          No Reviews
+                        </p>
+                      </div>
+                    </div> -->
+                    <div class="clr"></div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-md-4 pr-0">
+                <div style="position: sticky; top: 30px;">
+                <div class="frmdiv">
+                  <div class="booking-price">
+                    <span class="price-from">Best Price From </span>
+                    <span class="price-amount price-amount-l">
+                      <span class="currency-sign">{{activityList[0]?.Price?.Currency}} </span>
+                      <span class="currency-amount"> {{activityList[0]?.Price?.TotalDisplayFare}}</span>
+                    </span>
+                  </div>
+                  <div class="datediv">
+                    <div class="clearfix"></div>
+                    <input type="hidden" name="max_count" value="8">
+                    <input type="hidden" name="all_passenger_name_req" value="">
+                    <div class="clearfix"></div>
+                    <div class="spc_list">
+                      <ul>
+                        <li>
+                          <i class="fal fa-clock"></i> Earliest available date {{datesEnabled[0] | date: ' d MMM y'}}
+                        </li>
+                        <li>
+                          <i class="fal fa-thumbs-up"></i> Instant Confirmation
+                        </li>
+                        <!-- <li *ngIf="activity.Cancellation_available">
+                          <i class="fal fa-check"></i> Free Cancelation - {{activity.Cancellation_Policy}} days prior
+                        </li> -->
+                      </ul>
+                    </div>
+                    <div class="patendiv">
+                      <button type="button" class="patencls" id="bk_now" (click)="scrollToDate()">Check Dates</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="adtn_info f14" id="impInfoDiv">
+                  <div class="tp_hdre flx jsb alignit">
+                    <div class="ad_left f19 wt600 flx alignit">
+                      <img alt="Important information icon" src="assets/images/adtn_mg.svg"> Important Information
+                    </div>
+                  </div>
+                  <div id="importantInfo" class="mt10">
+                    <ul>
+                      <li>Confirm the details with the Activity Supplier with phone number given in the voucher and make sure to be waiting enough time before the pick up at the agreed location.</li>
+                      <li>ID proof is mandatory for each individual guest at the time of pick up.</li>
+                      <li>Any personal expenses or items of personal nature will not be included in the package. </li>
+                      <li>AC transportation vehicles will be used for all itineraries, However you need to check weather forcast and bring suitable clothes for the trip.</li>
+                    </ul>
+                  </div>
+                </div>
+
+              </div>
+              </div>
+            </div>
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<ngx-loading [show]="showLoader"
+  [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+  [template]="loadingTemplate"></ngx-loading>

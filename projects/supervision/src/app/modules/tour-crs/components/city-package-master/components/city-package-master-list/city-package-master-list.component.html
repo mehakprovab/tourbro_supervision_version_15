@@ -1,0 +1,94 @@
+<div class="create-sub-agent-container">
+    <div class="custom-table-layout mt-3">
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <form class="clearfix">
+                    <div class="row col-md-12 col-lg-12 m-0 p-0">
+                        <table style="table-layout: fixed; width: 100%;" id="active-users-report">
+                            <tr>
+                                <td>
+                                    <div class="table-responsive">
+                                        <table
+                                            class="align-middle mb-0 table table-borderless table-striped table-hover"
+                                            matSort >
+                                            <thead>
+                                                <tr class="p-2">
+                                                    <th scope="col" class="text-nowrap"
+                                                        *ngFor="let header of displayColumn;"
+                                                        mat-sort-header="{{header.key}}">
+                                                        {{header.value }}
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngIf="noData">
+                                                    <td colspan="11">
+                                                        <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                                                    </td>
+                                                </tr>
+                                                <tr *ngIf="!noData && !respData.length">
+                                                    <td colspan="11">
+                                                        <h4 class="text-muted text-center">
+                                                            No Data Found!
+                                                        </h4>
+                                                    </td>
+                                                </tr>
+                                                <tr class="p-2"
+                                                *ngFor="let data of respData; let i=index;">
+                                                <td class="text-left text-muted">{{i+1}}.</td>
+                                                <td class="text-left"> {{data['cityname']}}</td>
+                                                <td class="text-left"> {{data['description']}}</td>
+                                                <td class="text-left">
+                                                    <ul>
+                                                      <li *ngFor="let item of data['package_includes']">{{item.package_includes}}</li>
+                                                    </ul>
+                                                  </td>
+                                                    <td class="text-left">
+                                                        <a href="{{getImage(data.Banner_img)}}" target="_blank"><img width="100"
+                                                                [src]="getImage(data.Banner_img)" alt=""></a>
+                                                    </td>
+                                                     <td class="text-left">
+                                                        <select class="w-100 m-auto cust-select" (change)='onStatusChange(data)'>
+                                                            <option [selected]="data['status'] == 0">Inactive</option>
+                                                            <option [selected]="data['status'] == 1">Active</option>
+                                                        </select>
+                                                    </td>  
+                                                    <td > 
+                                                        <button class="btn btn-sm btn-primary"
+                                                        (click)="updateContent(data)">
+                                                            <i class="fa fa-edit text-nowrap">
+                                                                {{'Update'}}
+                                                            </i>
+                                                        </button>
+                                                        
+                                                        &nbsp; &nbsp;
+                                                        <button class="btn btn-sm btn-primary "  (click)="deleteContent(data?.id)">
+                                                            <i class="fa fa-trash text-nowrap">
+                                                                {{'Delete'}}
+                                                            </i>
+                                                        </button>
+                                                    </td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="card-footer pb-0">
+                        <div class="d-flex w-100 justify-content-between">
+                            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                            </ngb-pagination>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

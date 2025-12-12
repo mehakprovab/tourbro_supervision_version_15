@@ -1,0 +1,52 @@
+.circle {
+    height          : 50px;
+    width           : 50px;
+    background-color: #ffffff;
+    border          : solid 1px #cccccc;
+    color           : #000000;
+    border-radius   : 50%;
+    display         : inline-block;
+}
+
+a {
+    text-decoration: none;
+}
+
+.getActive {
+    // background-color: #1ccf1c;
+    color: #ffffff;
+}
+
+//chakri changes
+.fa,
+.fas {
+    color: #012756;
+}
+
+.container.mt-3.bg-white.py-2.border {
+    max-width    : 100% !important;
+    border-radius: 4px !important;
+}
+
+.stepBorderActive {
+    width        : 250px;
+    height       : 5px;
+    background   : #012756;
+    border-radius: 5px;
+}
+
+.stepBorderInactive {
+    width        : 250px;
+    height       : 5px;
+    background   : #D2D2D2;
+    border-radius: 5px;
+}
+
+
+@media only screen and (max-width: 767px) {
+   
+    .mobile_row {  flex-wrap: inherit;}
+
+    .mobhide { display: none;}
+    
+    }

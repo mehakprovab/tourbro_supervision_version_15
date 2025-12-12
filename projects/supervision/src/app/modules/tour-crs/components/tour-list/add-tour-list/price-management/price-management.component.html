@@ -1,0 +1,63 @@
+<div class="entireScreen  p-0 col-md-12 col-lg-12">
+    <div>
+        <app-add-price *ngIf="showAddPriceManagement" (insertedRecord)="insertedRecordReceived($event)" [tourPriceData]="tourUpdateData"></app-add-price>
+        <app-update-price *ngIf="updatePriceManagement" (updated)="updatedList($event)" [updatePriceManagementData]="updatePriceManagementData"></app-update-price>
+    </div>
+    <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft" #scrollOne >
+        <div class="div1"></div>
+   </div>
+    <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
+        <div class="div2 invisible-scrollbar">
+            <div class="table-responsive">
+                <table class="table table-borderless table-striped table-hover" matSort (matSortChange)="sortData($event)">
+                    <thead>
+                        <tr class="p-2">
+                        <th scope="col" class="text-left text-nowrap" *ngFor="let header of displayColumn" mat-sort-header="{{header}}">
+                            {{ header }}
+                        </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngIf="searchSpin">
+                            <td colspan="12">
+                                <mat-spinner [diameter]="30" style="margin:0 auto;"
+                                    mode="indeterminate"></mat-spinner>
+                            </td>
+                        </tr>
+                        <tr *ngIf="!searchSpin && !priceManagementDataList.length">
+                            <td colspan="11">
+                                <h4 class="text-muted text-center">
+                                    No Data Found!
+                                </h4>
+                            </td>
+                        </tr>
+                        <tr *ngFor="let item of priceManagementDataList; let i=index">
+                                <td class="text-left text-muted">{{(i+1) }}</td>
+                                <td class="text-left">{{ item.from_date | date: 'dd/MM/yyyy'}}</td>
+                                <td class="text-left">{{ item.to_date | date: 'dd/MM/yyyy' }}</td>
+                                <td class="text-left">{{ item.adult_airliner_price |number :'1.2' }} {{item?.currency}}</td>
+                                <td class="text-left">
+                                    <span  *ngFor="let data of getChildPrices(item?.child_airliner_price)">
+                                        ({{data.from_age + '-' + data.to_age}} Age Range) {{ data.price | number :'1.2' }} {{item?.currency}}  <br/>
+                                    </span>
+                                </td>
+                                <td class="text-left" *ngIf="getCancellationPloicy(item?.canc_policy).length">
+                                    <span  *ngFor="let policy of getCancellationPloicy(item?.canc_policy); let i=index">
+                                        {{i+1}}. Before {{policy.date_from}} Days till {{policy?.time}} {{policy?.charge}} {{policy?.charge_type === "Plus" ? item?.currency : '%'}} will be Chargable.  <br/>
+                                    </span>
+                                </td>
+                                <td class="text-left" *ngIf="!getCancellationPloicy(item?.canc_policy).length">
+                                    <span>Non Refundable</span>
+                                </td>
+                                <td class="text-left buttontdsize">
+                                    <button  class="btn btn-sm btn-primary mr-1" (click)="onEdit(item)" >{{'Edit'}}
+                                    </button>
+                                    <button class="btn btn-sm btn-primary mr-1" (click)="onDeletedRecord(item)"> {{'Delete'}}  </button>
+                                </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,87 @@
+<form [formGroup]="regConfig">
+  <div class="form-group row">
+    <label for="bank" class="col-sm-2 col-form-label text-right">
+      Bank <sup class="f-16 text-danger">*</sup>
+    </label>
+    <div class="col-sm-10 form-group">
+      <select formControlName="bankname" class="form-control text-capitalize" id="bank" (change)="onSelect($event.target.value)">
+        <option selected disabled>Choose one</option>
+        <option [value]="bank.account_number" *ngFor="let bank of respData">{{bank.bank_name }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="branch" class="col-sm-2 col-form-label text-right">Branch <sup class="f-16 text-danger">*</sup>
+    </label>
+    <div class="col-sm-10 form-group">
+      <input formControlName="branchname" type="text" class="form-control text-capitalize" id="branch" placeholder="Branch Name"
+        readonly />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="onlineTransferID" class="col-sm-2 text-right col-form-label">
+      Online Transfer Id <sup class="f-16 text-danger">*</sup>
+    </label>
+    <div class="col-sm-10 form-group">
+      <input formControlName="transactionnumber" type="text" class="form-control text-capitalize" id="onlineTransferID" />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="accountnumber" class="col-sm-2 text-right col-form-label">Account Number <sup
+        class="f-16 text-danger">*</sup>
+    </label>
+    <div class="col-sm-10 form-group">
+      <input formControlName="accountnumber" type="number" class="form-control" id="accountnumber"
+        placeholder="Account Number" readonly />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="amount" class="col-sm-2 text-right col-form-label">Amount ({{currency}}) <sup class="f-16 text-danger">*</sup>
+    </label>
+    <div class="col-sm-10 form-group">
+      <input formControlName="amount" type="text" class="form-control text-capitalize" id="amount" placeholder="Amount" maxlength="12" (keypress)="numberOnly($event)"/>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="dateOfDepo" class="col-sm-2 text-right col-form-label">
+      Date <sup class="f-16 text-danger">*</sup>
+    </label>
+    <div class="col-sm-10 form-group">
+      <span class="icon return_date" (click)="isOpen = !isOpen"></span>
+      <input type="text" id="dateoftransaction" formControlName="dateoftransaction" [maxDate]="maxDate"
+        class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy" bsDatepicker
+        [bsConfig]="bsDateConf" (ngModelChange)="ondateChange($event)" [readonly]="true" [isOpen]="isOpen" />
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="remarks" class="col-sm-2 text-right col-form-label">Remarks</label>
+    <div class="col-sm-10 form-group">
+      <textarea formControlName="remarks" rows="3" class="form-control text-capitalize" id="remarks" placeholder="Remarks">
+      </textarea>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="upload_document" class="col-sm-2 text-right col-form-label" (change)="onFileSelected($event)">Upload
+      Transaction Document <sup class="f-16 text-danger">*</sup></label>
+    <div class="col-sm-10 form-group">
+      <input type="file" class="form-control-file" id="logo" (change)="onFileSelected($event)" #theFile
+        style="margin-top: 15px" accept=".png, .jpg, .jpeg" formControlName="bank_logo" />
+        <span class="text-danger">(Maximum upload file size: 1 MB)</span>
+    </div>
+    <div class="col-sm-10 form-group">
+      <img *ngIf="bankLogo" height="50" width="100" class="rounded" [src]="logoBankUri + bankLogo" alt="logo" />
+      <img *ngIf="imageSrc" height="50" width="100" class="rounded" [src]="imageSrc" alt="logo" />
+
+      {{ bankLogo }}
+      &nbsp;&nbsp;
+    </div>
+  </div>
+  <div class="form-group row pull-right mr-0">
+    <button class="btn btn-lg btn-primary mr-1" [disabled]="logoConfig.invalid || regConfig.invalid" (click)="onSubmit()">
+      Save
+    </button>
+    <button class="btn btn-lg btn-primary" (click)="onReset()">Reset</button>
+  </div>
+</form>

@@ -1,0 +1,31 @@
+<div class="">
+    <div class="">
+        <ngb-tabset class="tabs-animated tabs-animated-shadow" (tabChange)="beforeChange($event)" #tabs>
+            <ngb-tab id="agent_list">
+                <ng-template ngbTabTitle>
+                    <span><i class="fa fa-bank"></i> &nbsp; AGENT COMMISSION LIST</span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <app-agent-commission-list (toUpdate)="triggerTab($event)"></app-agent-commission-list>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab id="agent_detail">
+                <ng-template ngbTabTitle>
+                    <span><i class="fa fa-bank"></i> &nbsp; COMMISSION DETAILS</span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <app-agent-commission-detail (toUpdate)="triggerTab($event)"></app-agent-commission-detail>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab id="default_commission">
+                <ng-template ngbTabTitle>
+                    <span><i class="fa fa-edit"></i> &nbsp; ADD/UPDATE COMMISSION </span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <app-update-default-commission (toList)="triggerTab($event)" [getDataToUpdate]="userData" ></app-update-default-commission>
+                </ng-template>
+            </ngb-tab>
+        </ngb-tabset>
+    </div>
+</div>
+

@@ -1,0 +1,20 @@
+<div class="rangebox">
+    <button data-target="#collapse521" data-toggle="collapse" class="collapsebtn" type="button">Country</button>
+
+        <div *ngIf="tour?.length && tour?.length>0"  id="collapse521" class="collapse show">
+            <div class="boxins" id="allairlines">
+                <ul class="locationul">
+                    <li>
+                        <div class="squaredThree">
+                            <input type="checkbox" id="country" 
+                            (change)="filterByContinent($event.target.checked)" 
+                [checked]="selectedCountry" >
+                            <label for="country"></label>
+                        </div>
+                        <label for="country" class="lbllbl">{{countryName}}</label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+</div>
+

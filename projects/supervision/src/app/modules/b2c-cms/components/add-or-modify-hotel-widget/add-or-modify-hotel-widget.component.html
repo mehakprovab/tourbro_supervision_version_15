@@ -1,0 +1,176 @@
+<div class="card-header text-uppercase bg-dark text-white">
+    <h5 style="border-bottom: 0;"><i class="fa fa-edit"></i>&nbsp;Home Page Widget In Hotel</h5>
+</div>
+<div class="card">
+    <form [formGroup]="regConfig" autocomplete="off">
+        <div>
+            <div class="form-row">
+                <input type="hidden" name="id" formControlName="id">
+                <div class="col-6 pr-0" style="display: none;">
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <select id="country" class="form-control form-control-sm nrm_input" formControlName="country">
+                            <option *ngFor="let cnt of countryList" [ngValue]="cnt.code | lowercase">
+                                {{cnt.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6 pr-0">
+                    <div class="form-group">
+                        <label for="phone">City*</label>
+                        <input formControlName="city_name" type="text" class="form-control text-capitalize form-control-sm nrm_input"
+                            placeholder="City" id="appReference" (keyup)="getAutoCompleteLocations($event,'from')"
+                            list="dynamicLocationsOrigin" autocomplete="off">
+                        <ul class="droplocations" id="dynmicLocations">
+                            <li *ngFor="let location of locationsOrigin" (click)="selectedCity(location)">
+                                {{location | map: getCityDropDownName}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- <div class="col-6 pr-0">
+                    <div class="form-group">
+                        <label for="email">Check In*</label>
+                        <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
+                        <input formControlName="check_in" type="text" id="fromDate" autocomplete="off"
+                            class="form-control form-control-sm nrm_input" placement="bottom left"
+                            placeholder="dd/mm/yyyy" bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen"
+                            [minDate]="minDate" onkeydown="return false">
+                    </div>
+                </div> -->
+
+                <!-- <div class="col-6 pr-0">
+                    <div class="form-group">
+                        <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
+                        <label for="fromDate">Check Out*</label>
+                        <input formControlName="check_out" type="text" id="fromDate" autocomplete="off"
+                            class="form-control form-control-sm nrm_input" placement="bottom left"
+                            placeholder="dd/mm/yyyy" bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen"
+                            [minDate]="regConfig.get('check_in').value" onkeydown="return false">
+                    </div>
+                </div> -->
+
+                <div class="col-6 pr-0">
+                    <div class="form-group">
+                        <label for="bookedBy">Custom Title</label>
+                        <input formControlName="custom_title" type="text" class="form-control text-capitalize form-control-sm nrm_input"
+                            placeholder="Custom Title" id="email" (keypress)="omitSpecialCharacters($event)">
+                        <div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 pr-0">
+                    <div class="form-group">
+                        <label for="bookedBy">Source</label>
+                        <select formControlName="source" name="source" id="bookedBy"
+                            class="form-control form-control-sm nrm_input" disabled>
+                            <!-- <option selected value="" disabled>--Select--</option> -->
+                            <!-- <option>B2B</option> -->
+                            <option>B2C</option>
+                        </select>
+                        <div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 pr-0">
+                    <div class="form-group">
+                        <label class="" for="image">Image</label>
+                        <input type="file" class="form-control  form-control-sm nrm_input" accept=".png, .jpg, .jpeg"
+                            formControlName="image" id="image" (change)="onFileChange($event.target.files)"
+                            #labelImport>
+                    </div>
+                    <div *ngIf="hotelImage"><img [src]="getImage(hotelImage)" width="100" height="50"></div>
+                    <img *ngIf="imageSrc" height="50" width="100" class="rounded" [src]="imageSrc" alt="logo">
+                    <span class="text-danger">(Maximum upload file size: 1 MB)</span>
+                </div>
+            </div>
+            <div class="btncontainer">
+                <button type="submit" class="btnStyle" (click)="onSearchSubmit()">{{this.btnName}}</button> &nbsp;
+                <button type="button" class="btnStyle" (click)="onReset()">Reset</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="card" style="margin-top: 30px;">
+    <div class="card-body">
+        <p>Total {{respData?.length}} Hotels</p>
+        <div class="mb-3">
+            <form>
+                <div class="table-responsive">
+                    <table class="table table-borderless table-striped table-hover" matSort
+                        (matSortChange)="sortData($event)" id="b2c-flight-widget">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-left text-nowrap" *ngFor="let header of displayColumn;">
+                                    {{header.value }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="noData">
+                                <td colspan="11">
+                                    <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                                </td>
+                            </tr>
+                            <tr *ngIf="!noData && !respData.length">
+                                <td colspan="11">
+                                    <h4 class="text-muted text-center">
+                                        No Data Found!
+                                    </h4>
+                                </td>
+                            </tr>
+                            <tr
+                                *ngFor="let data of respData | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
+                                <td class="text-left text-muted">{{i+1}}.</td>
+                                <td class="text-left">
+                                    <div>
+                                        <ul>
+                                            <li *ngIf="data['status']==1"><a href="javascript:void(0)"
+                                                    (click)="updateStatus(data.id,0)">In Activate</a></li>
+                                            <li *ngIf="data['status']==0"><a href="javascript:void(0)"
+                                                    (click)="updateStatus(data.id,1)">Activate</a></li>
+                                            <li><a href="javascript:void(0)" (click)="editList(data)">Edit</a></li>
+                                            <li><a href="javascript:void(0)" (click)="deleteList(data.id)">Delete</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td class="text-left">
+                                    <span *ngIf="data['status'] == 1" class="badge badge-success">
+                                        {{'Active'}} </span>
+                                    <span *ngIf="data['status'] == 0" class="badge badge-danger">
+                                        {{'In active'}} </span>
+                                </td>
+                                <td class="text-left">{{data['custom_title']}}</td>
+                                <td class="text-left">{{data['city_name']}}</td>
+                                <!-- <td class="text-left">{{data['check_in'] | date: 'dd/MM/yyyy'}}</td>
+                                <td class="text-left">{{data['check_out'] | date: 'dd/MM/yyyy'}}</td> -->
+                                <td class="text-left">{{data['source']}}</td>
+                                <td class="text-left">
+                                    <a href="{{getImage(data.image)}}" target="_blank"><img width="100"
+                                            [src]="getImage(data.image)" alt=""></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer pb-0">
+                    <div class="d-flex w-100 justify-content-between">
+                        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                        </ngb-pagination>
+                        <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                            <option [ngValue]="10">10 items per page</option>
+                            <option [ngValue]="20">20 items per page</option>
+                            <option [ngValue]="50">50 items per page</option>
+                            <option [ngValue]="100">100 items per page</option>
+                            <option [ngValue]="200">200 items per page</option>
+                            <option [ngValue]="500">500 items per page</option>
+                            <option [ngValue]="700">700 items per page</option>
+                            <option [ngValue]="1000">1000 items per page</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="trip-modal-container">
+    <div class="">
+        <div class="trip-modal-title">
+            <p>Please wait! This will take few seconds</p>
+            <p>While we search the best fares for you.</p>
+        </div>
+        <br><br>
+        <img style="width:200px; display:table; margin:0px auto;" src="assets/nosafer/images/l-logo.svg" alt="loader" />
+        <br><br>
+        <ng-container>
+            <div class="destination-section">
+                <div class="dest-from">
+                    <p>Pick Up Location</p>
+                    <p style="font-size:15px;" class="text-capitalize">{{ transferInfo.departureCity}}</p>
+                </div>
+                <div class="dest-to" style="text-align:right;">
+                    <p>Drop Off Location</p>
+                    <p style="font-size:15px;" class="text-capitalize">{{ transferInfo.destinationCity}}</p>
+                </div>
+            </div>
+            <div class="dest-trip">
+                <p>{{ transferInfo.departureDate| date }}</p>
+            </div>
+        </ng-container>
+    </div>
+</div>

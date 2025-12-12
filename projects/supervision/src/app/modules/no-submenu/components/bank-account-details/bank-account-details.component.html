@@ -1,0 +1,20 @@
+<div class="row bg-white py-3">
+    <div class="col-md-12">
+        <!-- <div class="card main-card mb-6">
+            <div class="card-body"> -->
+                <ngb-tabset #tabs>
+                    <ngb-tab id="bankAccountDetails" title="Bank Account Details">
+                        <ng-template ngbTabContent>
+                            <app-list (passedTab)="getTab($event)"></app-list>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab id="addOrUpdateBankAccountDetails" title="Add/Update Bank Account Details">
+                        <ng-template ngbTabContent>
+                            <app-add [getDataToUpdate]="dataToUpdate" (passedTab)="getTab($event)"></app-add>
+                        </ng-template>
+                    </ngb-tab>
+                </ngb-tabset>
+            <!-- </div>
+        </div> -->
+    </div>
+</div>

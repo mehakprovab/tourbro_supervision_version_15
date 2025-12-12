@@ -1,0 +1,28 @@
+<div class="table-responsive">
+  <table class="table table-hover table-striped">
+    <thead>
+      <tr>
+        <th scope="col" colspan="3" *ngFor="let header of displayedColumns"> {{header}} </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let val of data">
+        <td *ngFor="let key of displayedColumns" colspan="3">
+          <span *ngIf="key === 'Status'; else notShow" class="badge badge-success">
+            {{val[key]}}
+          </span>
+          <ng-template #notShow>
+            <span *ngIf="key === 'Action'; else hideMe" class="">
+              <button *ngFor="let btnCaptn of val[key]" class="btn btn-sm btn-primary m-1">
+                {{btnCaptn}}
+              </button>
+            </span>
+            <ng-template #hideMe>
+              <span [innerHTML]="val[key]"></span>
+            </ng-template>
+          </ng-template>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

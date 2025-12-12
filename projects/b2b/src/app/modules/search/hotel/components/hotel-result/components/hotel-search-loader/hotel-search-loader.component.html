@@ -1,0 +1,30 @@
+<div class="trip-modal-container">
+    <div class="">
+        <div class="trip-modal-title">
+            <p>Please wait! This will take few seconds</p>
+            <p>While we search the best fares for you.</p>
+        </div>
+        <img src="assets/nosafer/images/l-logo.svg" alt="loader" />
+        <div class="destination-section">
+            <div class="dash-line"></div>
+            <div class="dest-from">
+                <p>Check In</p>
+                <p>{{ hotelInfo.check_in_date | date: 'dd/MM/yyyy' }}</p>
+            </div>
+            <div class="dest-to">
+                <p>Check Out</p>
+                <p>{{ hotelInfo.check_out_date | date: 'dd/MM/yyyy' }}</p>
+            </div>
+        </div>
+        <div class="dest-trip">
+            <p>{{ hotelInfo.destination_name }}</p>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

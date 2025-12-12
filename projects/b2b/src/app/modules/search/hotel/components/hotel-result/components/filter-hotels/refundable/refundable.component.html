@@ -1,0 +1,31 @@
+<div class="rangebox"  *ngIf="booking_source !== 'TLAPINO00006'">
+    <button data-target="#collapsePref" data-toggle="collapse" class="collapsebtn" type="button">Preferences</button>
+    <a *ngIf="hotelsCopy.length" style="cursor: pointer;font-size: 12px;" class="float-right d-none"
+        (click)="clearPreferencesFilter()">Clear</a>
+    <form *ngIf="hotelsCopy.length" [formGroup]="preferencesForm" style="clear: both;">
+        <div id="collapsePref" class="collapse show">
+            <div class="boxins marret" id="preferencesWrapper">
+                <a class="timone toglefil time-wrapper">
+                    <div class="starin">
+                        <div class="tmxdv">
+                            <input formControlName="refundable"
+                                (click)="filterByPreferences('refundable',$event.target.checked)" type="checkbox"
+                                class="time-category hidecheck" />
+                            <label class="ckboxdv">Refundable</label>
+                        </div>
+                    </div>
+                </a>
+                <a class="timone toglefil time-wrapper">
+                    <div class="starin">
+                        <div class="tmxdv">
+                            <input formControlName="nonRefundable"
+                                (click)="filterByPreferences('nonRefundable',$event.target.checked)" type="checkbox"
+                                class="time-category hidecheck" />
+                            <label class="ckboxdv">Non Refundable</label>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,176 @@
+<div class="topSectionContainer">
+    <button class="btnStyle pull-left">Transaction Logs</button>
+</div>
+<div class="clearfix"></div>
+<br />
+<div class="card" style="background: #022756;padding: 30px;">
+    <form [formGroup]="searchForm">
+        <div class="form-row">
+            <div class="col-3 pr-0">
+                <div class="form-group">
+                    <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
+                    <label for="fromDate">From</label>
+                    <input formControlName="from_date" type="text" id="fromDate"
+                        class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy"
+                        bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen" readonly="true">
+                </div>
+            </div>
+            <div class="col-3 pr-0">
+                <div class="form-group">
+                    <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
+                    <label for="toDate">To</label>
+                    <input formControlName="to_date" type="text" id="toDate"
+                        class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy"
+                        bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen" readonly="true">
+                </div>
+            </div>
+            <div class="col-3 pr-0">
+                <div class="form-group">
+                    <label for="transactionId">Transaction ID</label>
+                    <input formControlName="transaction_id" type="text" class="form-control form-control-sm nrm_input"
+                        placeholder="Enter Id No." id="transactionId">
+                    <div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 pr-0">
+                <div class="form-group">
+                    <label for="bookedBy">Booked By</label>
+                    <select formControlName="bookedBy" name="cars" id="bookedBy"
+                        class="form-control form-control-sm nrm_input">
+                        <option value="">ALL</option>
+                    </select>
+                    <div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-3 pr-0">
+                <div class="form-group">
+                    <label for="Type">Type</label>
+                    <select formControlName="module_type" name="cars" id="Type"
+                        class="form-control form-control-sm nrm_input">
+                        <option value="">All</option>
+                        <option value="flight">Flight Bookings</option>
+                        <option value="hotel">Hotel Bookings</option>
+                        <option value="debit">Debit</option>
+                        <option value="credit">Credit</option>
+                        <option value="transaction">Transaction</option>
+                        <option value="recharge">Instant Recharge</option>
+                        <option value="Credit Limit">Credit Limit</option>
+                    </select>
+                    <div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-3 pr-0" style="margin-top:  27px;">
+                <div class="form-group">
+                    <button type="submit" class="btn w-100 srch_btn" data-toggle="collapse" data-target="#demo">
+                        Timeline<i style="float: right;" class="fa fa-angle-down"></i>
+                    </button>
+                </div>
+            </div> -->
+            <div class="col-3 pr-0" style="margin-top:  27px;">
+                <div class="form-group">
+                    <button type="submit" (click)="onSearchSubmit()" class="btn w-100 srch_btn">
+                        Search
+                    </button>
+                </div>
+            </div>
+            <div class="col-3 pr-0" style="margin-top:  27px;">
+                <div class="form-group">
+                    <button type="submit" (click)="onReset()" class="btn w-100 srch_btn">
+                        Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- <div id="demo" class="collapse">
+            <button class="btn btn-lg btn-light mr-1" (click)="searchByTimeLine('today')">Today Search</button>
+            <button class="btn btn-lg btn-light mr-1" (click)="searchByTimeLine('lastDay')">Last Day Search</button>
+            <button class="btn btn-lg btn-light mr-1" (click)="searchByTimeLine('oneWeek')">One Week Search</button>
+            <button class="btn btn-lg btn-light mr-1" (click)="searchByTimeLine('oneMonth')">One Month Search</button>
+            <button class="btn btn-lg btn-primary mr-1" (click)="onReset()">Clear Filter</button>
+        </div> -->
+    </form>
+</div>
+<div class="exportWrapper">
+    <p *ngIf="respData">Total {{respData.length}} Transaction Found</p>
+
+</div>
+<div class="table-btn-group mb-3 exportWrapper">
+    <div class="col-12 p-0">
+        <button type="button" (click)="download('pdf', 'landscape')">PDF</button>
+        <button type="button" (click)="exportExcel()">Export to Excel</button>
+        <div class="form-group mb-0 col-sm-3 p-0 float-right has-search">
+            <span class="fa fa-search form-control-feedback"></span>
+            <input class="form-control text-capitalize" type="text" name="Search" [(ngModel)]="searchText"
+                autocomplete="off" placeholder="Search Transaction">
+        </div>
+    </div>
+</div>
+
+<div class="card mb-3 d">
+    <form>
+        <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft" #scrollOne>
+            <div class="div1" style="width: 100%;"></div>
+        </div>
+
+        <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
+            <div class="div2 invisible-scrollbar" style="width: 100%;">
+                <div class="table-respons">
+                    <table id="transactions-log" class="table table-borderless table-striped table-hover" matSort
+                        (matSortChange)="sortData($event)">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-left text-nowrap" *ngFor="let header of displayColumn;"
+                                    mat-sort-header="{{header.key}}">
+                                    {{header.value }} </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="!noData && (!respData.length || (respData | filter:searchText).length === 0)">
+                                <td colspan="11">
+                                    <h4 class="text-muted text-center">No Data Found!</h4>
+                                </td>
+                            </tr>
+                            <tr *ngIf="noData">
+                                <td colspan="11">
+                                    <mat-spinner [diameter]="30" style="margin:0 auto;"
+                                        mode="indeterminate"></mat-spinner>
+                                </td>
+                            </tr>
+                            <tr
+                                *ngFor="let data of respData | filter:searchText | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
+                                <td class="text-left text-muted">{{i+1}}.</td>
+                                <td class="text-left text-capitalize"> {{data['transactiontype']}} </td>
+                                <td class="text-left"> {{data['systemtarnsactionid'] || 'N/A'}} </td>
+                                <td class="text-left"> {{ data['transactiondate']!="0000-00-00
+                                    00:00:00"?(data['transactiondate'] | date: 'dd/MM/yyyy HH:MM:SS') : 'N/A'}} </td>
+                                <td class="text-left text-capitalize"> {{data['app_refernce'] || 'N/A'}} </td>
+                                <td class="text-left"> {{data['fare']}} ({{data['currency']}})</td>
+                                <td class="text-left text-capitalize" [innerHTML]="data['remarks']"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer pb-0">
+            <div class="d-flex w-100 justify-content-between">
+                <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                </ngb-pagination>
+                <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                    <option [ngValue]="50">50 items per page</option>
+                    <option [ngValue]="100">100 items per page</option>
+                    <option [ngValue]="150">150 items per page</option>
+                    <option [ngValue]="200">200 items per page</option>
+                    <option [ngValue]="500">500 items per page</option>
+                    <option [ngValue]="700">700 items per page</option>
+                    <option [ngValue]="1000">1000 items per page</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>

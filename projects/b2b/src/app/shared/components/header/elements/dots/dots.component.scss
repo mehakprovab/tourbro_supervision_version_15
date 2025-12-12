@@ -1,0 +1,16 @@
+::ng-deep {
+  .nav-justified .nav-item {
+      display:flex;
+    flex-grow: unset !important;
+  }
+  .nav-justified .nav-item .nav-link   {
+        display: none;
+    }
+}
+
+
+.notification-count {
+    font-size: 15px;
+    margin-top: -17px;
+    margin-left: -7px;
+}

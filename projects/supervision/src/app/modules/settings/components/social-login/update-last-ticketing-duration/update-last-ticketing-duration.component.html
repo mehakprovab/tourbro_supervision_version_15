@@ -1,0 +1,33 @@
+<div class="row mx-0 pt-2">
+    <div class="col-md-12">
+        <div class="card main-card mb-6">
+            <div class="card-body">
+                <ngb-tabset class="tabs-animated tabs-animated-shadow" #tabs>
+                    <ngb-tab id="update">
+                        <ng-template ngbTabTitle>
+                            <span class="">
+                                <i class="fa fa-save" aria-hidden="true"></i>
+                                &nbsp;{{'Update Ticketing Duration'}}
+                            </span>
+                        </ng-template>
+                        <ng-template ngbTabContent>
+                            <app-update-ticketing-duration
+                                (toUpdate)="triggerTab($event)"></app-update-ticketing-duration>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab id="ticketing_list">
+                        <ng-template ngbTabTitle>
+                            <span class="">
+                                <i class="fa fa-list" aria-hidden="true"></i>
+                                &nbsp;{{'Airline List'}}
+                            </span>
+                        </ng-template>
+                        <ng-template ngbTabContent>
+                            <app-updated-listing (someEvent)="triggerTab($event)"></app-updated-listing>
+                        </ng-template>
+                    </ngb-tab>
+                </ngb-tabset>
+            </div>
+        </div>
+    </div>
+</div>

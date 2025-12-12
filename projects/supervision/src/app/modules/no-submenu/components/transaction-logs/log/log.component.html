@@ -1,0 +1,67 @@
+<div class="card" style="margin-top: 30px;">
+    
+    <div class="table-btn-group mb-3 row">
+        <div class="col-12 p-0">
+          <div class="form-group mb-0 col-sm-3 p-0 float-right has-search">
+            <span class="fa fa-search form-control-feedback"></span>
+            <input class="form-control text-capitalize" type="text" name="Search" [(ngModel)]="searchText" autocomplete="off" placeholder="Search">
+          </div>
+          </div>
+    </div>
+    
+    <div class="card-body">
+        <div class="mb-3">
+            <form>
+                <div class="p-2">
+                    <div class="form-group form-inline mb-0">
+                        Search by App Reference:
+                        <input class="form-control ml-2 text-capitalize" type="text" name="searchTerm"
+                            [(ngModel)]="searchText" />
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-borderless table-striped table-hover" matSort
+                        (matSortChange)="sortData($event)">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-left text-nowrap" *ngFor="let header of displayColumn;"
+                                    mat-sort-header="{{header.key}}">
+                                    {{header.value }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="noData || (!respData.length || (respData | filter:searchText).length === 0)">
+                                <td colspan="11">
+                                    <h4 class="text-muted text-center">
+                                        No Data Found!
+                                    </h4>
+                                </td>
+                            </tr>
+                            <tr
+                                *ngFor="let data of respData | filter:searchText | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
+                                <td class="text-left text-muted">{{i+1}}.</td>
+                                <td class="text-left text-capitalize"> {{data['remarks'] || 'N/A'}} ({{data['currency'] || ''}}{{data['credit_amount'] === 0 ? data['debit_amount'] : data['credit_amount'] }}) </td>
+                                <td class="text-left">{{data['AIR_ID'] || 'N/A'}} </td>
+                                <td class="text-left"> {{data['created_at'] |date: 'medium'}} </td>
+                                <!-- <td class="text-left"> {{ data['userIP'] || 'N/A'}} </td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer pb-0">
+                    <div class="d-flex w-100 justify-content-between">
+                        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                        </ngb-pagination>
+                        <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+                            <option [ngValue]="50">50 items per page</option>
+                            <option [ngValue]="100">100 items per page</option>
+                            <option [ngValue]="150">150 items per page</option>
+                            <option [ngValue]="200">200 items per page</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

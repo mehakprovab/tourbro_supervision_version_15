@@ -1,0 +1,636 @@
+<div class="theme_bg" style="background: #F2F2F2;">
+	<div class="container nopad">
+		<h3 _ngcontent-vdt-c225 class="review_txt">Guest details</h3>
+		<div class="mb-2 mt-2" style="border:none;">
+			<div class="card-body pb-3">
+				<!-- <app-booking-flight-detail [flight]="flight" [traveller]="traveller"></app-booking-flight-detail> -->
+				<div class="row mobile_row">
+					<div class="col-md-8 col-lg-8 nopad">
+						
+
+                        <form [formGroup]="travellerForm">
+                    
+                            <div class="col-md-12 col-lg-12 nopad">
+                                                     
+                                <div class="wrappay leftboks">
+                                    <div class="comon_backbg">
+                                        <h5 class="inpagehed p-2">Guest Information</h5>
+                                        <div class="sectionbuk">
+                                            <div id="tdetails">
+                                                <div class="onedept" formArrayName="rooms">
+                                                    <div *ngFor="let room of roomsFormArray.controls; let roomIndex=index" [formGroupName]="roomIndex">
+                                                    <!-- <div *ngFor="let room of travellerForm.get('rooms').controls; let roomIndex=index" [formGroupName]="roomIndex"> -->
+                                                        <div class="whoare">Room ({{roomIndex + 1}})</div>
+                                                        <div class="clearfix"></div>
+                                                        <ng-container formArrayName="travellers">
+                                                
+                                                            <div *ngFor="let traveller of room.get('travellers').controls; let travellerIndex=index" [formGroupName]="travellerIndex">
+                                                             
+                                                                <div class="row" style="margin-bottom: 15px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
+                                                                    <div class="col-md-2 downsrt">
+                                                                        <div class="paylabel">&nbsp;</div>
+                                                                        <div class="lokter">
+                                                                            <span class="whoare text-left"> {{traveller.value.type | titlecase}} </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-2 p-0 mpad">
+                                                                        <div class="paylabel">Title <b class="text-danger">*</b></div>
+                                                                        <div class="selectedwrap">
+                                                                            <select class="flpayinput" name="a_gender290[0]" id="a_gender_0"
+                                                                                aria-required="true" formControlName="Title" required>
+                                                                                <option value="">-Select-</option>
+                                                                                <ng-container *ngFor="let t of titleList">
+                                                                                    <option *ngIf="((traveller.value.type=='adult' && t.paxType == 'ADULT') || (traveller.value.type=='child' && t.paxType == 'CHILD'))" [value]="t.titleName">{{t.titleName}}</option>
+                                                                                </ng-container>
+                                                                            </select>
+                                                                        </div>
+                                                                        <small class="error text-danger" *ngIf="hasError('Title', 'required', 'travellers', travellerIndex,roomIndex);">Please Select Title*</small>
+                                                                    </div>
+                                                                    <div class="col-md-4 pr-0">
+                                                                        <div class="paylabel">First Name <b class="text-danger">*</b> </div>
+                                                                        <input placeholder="First Name" name="first_name290[0]" type="text"
+                                                                        class="payinput mytextbox" value="" id="flight-adult-first-0"
+                                                                        aria-required="true" formControlName="FirstName" required />
+                                                                        <small class="error text-danger" *ngIf="hasError('FirstName', 'required', 'travellers', travellerIndex,roomIndex);">Please Enter First Name*</small>
+                                                                        <small class="error text-danger" *ngIf="hasError('FirstName', 'maxlength', 'travellers', travellerIndex,roomIndex);">Maximum Characters Exceeded*</small>
+                                                                        <small class="error text-danger" *ngIf="hasError('FirstName', 'minlength', 'travellers', travellerIndex,roomIndex);">At Least 1 Characters Required*</small>
+                                                                        <small class="error text-danger" *ngIf="hasError('FirstName', 'pattern', 'travellers', travellerIndex,roomIndex);">Please Enter a Valid Name*</small>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <label>Middle Name <b>(optional)</b></label>
+                                                                        <input formControlName="MiddleName" type="text"
+                                                                            maxlength="50" 
+                                                                            class="form-control form-control-sm payinput"
+                                                                            placeholder="Middle Name" >
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div class="paylabel">Last Name <b class="text-danger">*</b></div>
+                                                                        <input placeholder="Last Name" name="last_name290[0]" type="text"
+                                                                        class="payinput mytextbox" id="flight-adult-last-0" value=""
+                                                                        aria-required="true" formControlName="LastName" />
+                                                                        <small class="error text-danger" *ngIf="hasError('LastName', 'required', 'travellers', travellerIndex,roomIndex);">Please Enter Last Name*</small>
+                                                                        <small class="error text-danger" *ngIf="hasError('LastName', 'maxlength', 'travellers', travellerIndex,roomIndex);">Maximum Characters Exceeded*</small>
+                                                                        <small class="error text-danger" *ngIf="hasError('LastName', 'minlength', 'travellers', travellerIndex,roomIndex);">At Least 1 Characters Required*</small>
+                                                                        <small class="error text-danger" *ngIf="hasError('LastName', 'pattern', 'travellers', travellerIndex,roomIndex);">Please Enter a Valid Name*</small>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div class="paylabel">Date of Birth <b
+                                                                                class="text-danger">*</b>
+                                                                        </div>
+                                                                        <input  type="text"
+                                                                            class="flpayinput date_picker_adult hasDatepicker"
+                                                                             placeholder="dd-mm-yyyy" 
+                                                                            data-id="0"  formControlName="DateOfBirth"
+                                                                            bsDatepicker [bsConfig]="bsConfig"
+                                                                            aria-required="true" [minDate]="minDateAdult" [maxDate]="maxDateAdult"/>
+                                                                            <!-- <small class="error text-danger" 
+                                                                    *ngIf="hasError('Dob', 'required', 'travellers', travellerIndex, roomIndex);">
+                                                                  Please Enter a Valid Date of Birth*
+                                                                  </small> -->
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <label>Gender <b class="text-danger">*</b></label>
+                                                                        <select formControlName="Gender"
+                                                                            class="form-control form-control-sm payinput">
+                                                                            <option selected value="" disabled>Select</option>
+                                                                            <option value="Male"> Male </option>
+                                                                            <option value="Female"> Female </option>
+                                                                        </select>
+                                                                        <!-- <div class="">
+                                                                            <small class="error text-danger"
+                                                                                *ngIf="hasError('Gender', 'required', 'passengers', i);">
+                                                                                Please Select Gender* <br>
+                                                                            </small>
+                                                                        </div> -->
+                                                                    </div>
+
+                                                                    <div class="col-md-4">
+                                                                        <label>Nationality <b class="text-danger">*</b></label>
+                                                                        <select formControlName="Nationality"
+                                                                            class="form-control form-control-sm payinput">
+                                                                            <option *ngFor="let c of countries"
+                                                                                [value]="c.code">
+                                                                                {{c.name}}</option>
+                                                                        </select>
+                                                                    </div>
+    
+                                                                    <div class="col-md-4">
+                                                                        <label>Country of Issue  <b *ngIf="flightType != 'International'">(optional)</b> <b *ngIf="flightType == 'International'" class="text-danger">*</b></label>
+                                                                        <select formControlName="PassportIssuingCountry"
+                                                                            class="form-control form-control-sm payinput">
+                                                                            <option *ngFor="let c of countries"
+                                                                                [value]="c.code">
+                                                                                {{c.name}}</option>
+                                                                        </select>
+                                                                    </div>
+    
+                                                                    <div class="col-md-4">
+                                                                        <label>Passport Number <b *ngIf="flightType != 'International'">(optional)</b> <b *ngIf="flightType == 'International'" class="text-danger">*</b></label>
+                                                                        <input formControlName="PassportNumber" type="text" 
+                                                                            maxlength="20"
+                                                                            class="form-control form-control-sm payinput"
+                                                                            placeholder="Passport Number" (keypress)="alphaNumberOnly($event)" 
+                                                                            [minDate]="maxDate">
+                                                                        <!-- <div class="">
+                                                                            <small class="error text-danger"
+                                                                                *ngIf="hasError('PassportNumber', 'required', 'passengers', i);">
+                                                                                Please Enter Passport Number <br>
+                                                                            </small>
+                                                                        </div> -->
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <label>Expiry Date <b *ngIf="flightType != 'International'">(optional)</b> <b *ngIf="flightType == 'International'" class="text-danger">*</b></label>
+                                                                        <input bsDatepicker 
+                                                                            formControlName="PassportExpiryDate"
+                                                                            placement="bottom left"
+                                                                            [bsConfig]="bsConfig" type="text"
+                                                                            class="form-control form-control-sm payinput"
+                                                                            placeholder="Date of Expire">
+                                                                        <!-- <div class="">
+                                                                            <small class="error text-danger"
+                                                                                *ngIf="hasError('PassportExpiryDate', 'required', 'passengers', i);">
+                                                                                Please Select Passport Expiry Date <br>
+                                                                            </small>
+                                                                            <small class="error text-danger" *ngIf="hasError('PassportExpiryDate', 'bsDate', 'passengers', i);">Enter Valid Passport Expiry</small>
+                                                                        </div> -->
+                                                                    </div>
+                                                             
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+            
+                                                        </ng-container>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                        
+                            
+                            
+                                <ng-container formArrayName="address" >
+                                    <ng-container *ngFor="let item of trevellers('address').controls; index as i" [formGroupName]="i">
+                                      <div class="wrappay leftboks">
+                                        <div class="comon_backbg">
+                                          <h5 class="inpagehed p-2">Contact Details (For E-Ticket/Voucher)</h5>
+                                          <div class="sectionbuk">
+                                            <div id="tdetails">
+                                              <div class="onedept">
+                                                <div class="form-row">
+                            
+                                                    <div class="col-md-4">
+                                                        <div class="paylabel">Country Code <b class="text-danger">*</b></div>
+                                                        <div class="selectedwrap">
+                                                          <select
+                                                            class="newslterinput nputbrd _numeric_only flpayinput"
+                                                            id="before_country_code"
+                                                            formControlName="PhoneCode"
+                                                          >
+                                                            <option [selected]="p.phone_code == 44" *ngFor="let p of phoneCodes">
+                                                              {{ p.name }} ({{ p.phone_code }})
+                                                            </option>
+                                                          </select>
+                                                        </div>
+                                                      </div>
+                                                      <div class="col-md-4">
+                                                        <div class="paylabel">Contact <b class="text-danger">*</b></div>
+                                                        <input
+                                                          type="text"
+                                                          id="mobile"
+                                                          name="mobile"
+                                                          class="payinput"
+                                                          formControlName="Contact"
+                                                          required
+                                                        />
+                                                        <!-- Error message for Contact -->
+                                                        <div
+                                                          *ngIf="
+                                                            trevellers('address').at(i).get('Contact')?.invalid &&
+                                                            trevellers('address').at(i).get('Contact')?.touched
+                                                          "
+                                                        >
+                                                          <small class="text-danger">Phone number must be between 8 and 15 digits.</small>
+                                                        </div>
+                                                      </div>
+                            
+                                                  <div class="col-md-4">
+                                                    <div class="paylabel">Email Address <b class="text-danger">*</b></div>
+                                                    <input
+                                                      type="email"
+                                                      id="email"
+                                                      name="email"
+                                                      class="payinput"
+                                                      aria-required="true"
+                                                      formControlName="Email"
+                                                      required
+                                                    />
+                                                  </div>
+                                                  
+                                                </div>
+                                  
+                                                <div class="row">
+                                                  <div class="col-md-5">
+                                                    <small
+                                                      class="error text-danger"
+                                                      *ngIf="hasError('Email', 'required', 'address', i)"
+                                                    >
+                                                      Please Enter Email Address* <br />
+                                                    </small>
+                                                  </div>
+                                                  <div class="col-md-4"></div>
+                                                  <div class="col-md-3">
+                                                    <small
+                                                      class="error text-danger"
+                                                      *ngIf="hasError('Contact', 'required', 'address', i)"
+                                                    >
+                                                      Please Enter Contact No.* <br />
+                                                    </small>
+                                                  </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </ng-container>
+                                  </ng-container>     
+                            
+                                <ng-container formArrayName="address" >
+                                    <ng-container *ngFor="let item of travellerForm.get('address')['controls']; index as i "
+                                        [formGroupName]="i">
+                                        <div class="comon_backbg d-none">
+                                            <h5 class="inpagehed p-2">Address</h5>
+                                            <div class="sectionbuk billingnob">
+                                                <div class="payrow">
+                                                    <!-- <div class="valign-wrapper row">
+                                                        <div class="col-md-2 ">
+                                                            <div class="paylabel">Salutation <b class="text-danger">*</b> </div>
+                                                            <div class="selectedwrap">
+                                                                <select class="flpayinput capitalize" name="saluation" formControlName="Title"
+                                                                    required>
+                                                                    <option value="" disabled>-Select-</option>
+                                                                    <ng-container *ngFor="let t of titleList">
+                                                                        <option *ngIf="t.paxType == 'ADULT'" value="{{t.titleName}}">
+                                                                            {{t.titleName}}</option>
+                                                                    </ng-container>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-5 ">
+                                                            <div class="paylabel">First Name <b class="text-danger">*</b> </div>
+                                                            <input type="text" id="first_name" name="first_name" class="payinput mytextbox capitalize"
+                                                                value="test" formControlName="FirstName" required />
+                                                        </div>
+                                                        <div class="col-md-5 ">
+                                                            <div class="paylabel">Last Name <b class="text-danger">*</b> </div>
+                                                            <input type="text" id="last_name" name="last_name" class="payinput mytextbox capitalize"
+                                                                value="test" formControlName="LastName" required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="valign-wrapper row">
+                                                        <div class="col-md-2">
+                                                            <small class="error text-danger"
+                                                                *ngIf="hasError('Title', 'required', 'address', i);">
+                                                                Please Select Salutation*
+                                                            </small>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <small class="error text-danger"
+                                                                *ngIf="hasError('FirstName', 'required', 'address', i);">
+                                                                Please Enter First Name* <br>
+                                                            </small>
+                                                            <small class="error text-danger"
+                                                                *ngIf="hasError('FirstName', 'maxlength', 'address', i);">
+                                                                Maximum Characters Exceeded* <br>
+                                                            </small>
+                                                            <small class="error text-danger"
+                                                                *ngIf="hasError('FirstName', 'minlength', 'address', i);">
+                                                                At Least 1 Character Required* <br>
+                                                            </small>
+                                                            <small class="error text-danger"
+                                                                *ngIf="hasError('FirstName', 'pattern', 'address', i);">
+                                                                Please Enter a Valid First Name* <br>
+                                                            </small>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <small class="error text-danger"
+                                                                *ngIf="hasError('LastName', 'required', 'address', i);">
+                                                                Please Enter Last Name* <br>
+                                                            </small>
+                                                            <small class="error text-danger"
+                                                                *ngIf="hasError('LastName', 'pattern', 'address', i);">
+                                                                Please Enter a Valid Last Name* <br>
+                                                            </small>
+                                                            <small class="error text-danger"
+                                                                *ngIf="hasError('LastName', 'maxlength', 'address', i);">
+                                                                Maximum Characters Exceeded* <br>
+                                                            </small>
+                                                            <small class="error text-danger"
+                                                                *ngIf="hasError('LastName', 'minlength', 'address', i);">
+                                                                At Least 1 Character Required* <br>
+                                                            </small>
+                                                        </div>
+                                                    </div> -->
+                                                    <div class="valign-wrapper row">
+                                                        <div class="col-md-4 ">
+                                                            <div class="paylabel">Address <b class="text-danger">*</b> </div>
+                                                            <input type="text" id="street_address" name="street_address"
+                                                                class="payinput" value="bangalore" aria-required="true"
+                                                                formControlName="Address" required />
+                                                        </div>
+                                                        <!-- <div class="col-md-4 ">
+                                                            <div class="paylabel">Address2</div>
+                                                            <input type="text" id="address2" name="address2" class="payinput"
+                                                                value="bangalore" formControlName="Address2" />
+                                                        </div> -->
+                                                        <div class="col-md-4 ">
+                                                            <div class="paylabel">City <b class="text-danger">*</b> </div>
+                                                            <input type="text" id="city" name="city" class="payinput mytextbox"
+                                                                value="bangalore" aria-required="true" formControlName="City"
+                                                                required />
+                                                        </div>
+                                                    </div>
+                            
+                                                    <div class="valign-wrapper row">
+                                                        <div class="col-md-4">
+                                                            <small class="error text-danger"
+                                                                *ngIf="hasError('Address', 'required', 'address', i);">
+                                                                Please Enter Address* <br>
+                                                            </small>
+                                                            <small class="error text-danger"
+                                                                *ngIf="hasError('Address', 'maxlength', 'address', i);">
+                                                                Maximum Characters Exceeded* <br>
+                                                            </small>
+                                                            <small class="error text-danger"
+                                                                *ngIf="hasError('Address', 'minlength', 'address', i);">
+                                                                At Leasr 2 Characters Required* <br>
+                                                            </small>
+                                                        </div>
+                                                        <!-- <div class="col-md-4">
+                                                            <small class="error text-danger"
+                                                                *ngIf="hasError('Address2', 'maxlength', 'address', i);">
+                                                                Maximum Characters Exceeded* <br>
+                                                            </small>
+                                                            <small class="error text-danger"
+                                                                *ngIf="hasError('Address2', 'minlength', 'address', i);">
+                                                                At Least 2 Characters Required* <br>
+                                                            </small>
+                                                        </div> -->
+                                                        <div class="col-md-4">
+                                                            <small class="error text-danger"
+                                                                *ngIf="hasError('City', 'required', 'address', i);">
+                                                                Please Enter City* <br>
+                                                            </small>
+                                                            <small class="error text-danger"
+                                                                *ngIf="hasError('City', 'maxlength', 'address', i);">
+                                                                Maximum Characters Exceeded* <br>
+                                                            </small>
+                                                            <small class="error text-danger"
+                                                                *ngIf="hasError('City', 'minlength', 'address', i);">
+                                                                At Least 2 Characters Required* <br>
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                            
+                                                    <div class="valign-wrapper row">
+                                                        <div class="col-md-4 ">
+                                                            <div class="paylabel">State <b class="text-danger">*</b> </div>
+                                                            <input type="text" id="state" name="state" class="payinput mytextbox"
+                                                                value="karnataka" aria-required="true" formControlName="State"
+                                                                required />
+                                                        </div>
+                                                        <div class="col-md-4 ">
+                                                            <div class="paylabel">Postal Code <b class="text-danger">*</b> </div>
+                                                            <input type="text" id="zip" data-mask="000000000" name="zip"
+                                                                class="payinput" aria-required="true" formControlName="PostalCode"
+                                                                required />
+                                                        </div>
+                                                        <div class="col-md-4 ">
+                                                            <div class="paylabel">Country <b class="text-danger">*</b> </div>
+                                                            <div class="selectedwrap">
+                                                                <select class="flpayinput" id="country" name="country"
+                                                                    aria-required="true" formControlName="Country" required>
+                                                                    <option value="" disabled>-Select-</option>
+                                                                    <option *ngFor="let c of countries" value="{{c.code}}">
+                                                                        {{c.name}}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                            
+                                                    </div>
+                            
+                                                    <div class="valign-wrapper row">
+                                                        <div class="col-md-4">
+                                                            <small class="error text-danger"
+                                                                *ngIf="hasError('State', 'required', 'address', i);">
+                                                                Please Enter State* <br>
+                                                            </small>
+                                                            <small class="error text-danger"
+                                                                *ngIf="hasError('State', 'maxlength', 'address', i);">
+                                                                Maximum Characters Exceeded* <br>
+                                                            </small>
+                                                            <small class="error text-danger"
+                                                                *ngIf="hasError('State', 'minlength', 'address', i);">
+                                                                At Least 2 Characters Required* <br>
+                                                            </small>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <small class="error text-danger"
+                                                                *ngIf="hasError('PostalCode', 'required', 'address', i);">
+                                                                Please Enter Postal Code* <br>
+                                                            </small>
+                                                            <small class="error text-danger"
+                                                                *ngIf="hasError('PostalCode', 'pattern', 'address', i);">
+                                                                Please Enter a Valid Postal Code* <br>
+                                                            </small>
+                                                            <small class="error text-danger"
+                                                                *ngIf="hasError('PostalCode', 'maxlength', 'address', i);">
+                                                                Maximum No.'s Of Digits Exceeded* <br>
+                                                            </small>
+                                                        </div>
+                            
+                                                        <div class="col-md-4 nopad">
+                                                            <small class="error text-danger"
+                                                                *ngIf="hasError('Country', 'required', 'address', i);">
+                                                                Please Select Country*
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+                                
+                            
+                            
+                            <div class="wrappay leftboks"*ngIf="hotel.searchRequest.booking_source ==='TLAPINO00004' && hotel.RoomDetails[0].RateConditions.length ">
+                                <div class="comon_backbg">
+                                    <h5 class="inpagehed p-2">Hotel Norms</h5>
+                                    <div class="sectionbuk">
+                                      <div id="tdetails">
+                                        <div class="onedept">
+                                          <div class="row">
+                                            <!-- Only show up to 5 items unless "showMore" is true -->
+                                            <ul class="col-md-12 bplicy" *ngFor="let rate of (showMore ? hotel.RoomDetails[0].RateConditions : hotel.RoomDetails[0].RateConditions.slice(0, 5)); let i = index">
+                                              <li style="font: 14px;">{{ rate }}</li>
+                                            </ul>
+                                          </div>
+                                          <!-- Toggle "View More" / "View Less" button -->
+                                          <button class="btn btn-link" (click)="toggleShowMore()">
+                                            {{ showMore ? 'View Less' : 'View More' }}
+                                          </button>
+                                          <div class="clearfix"></div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  
+                            </div>
+        
+                            <div class="wrappay leftboks"*ngIf="hotel.searchRequest.booking_source ==='TLAPINO00004' && hotel.RoomDetails[0].roomAmenities.length">
+                                <div class="comon_backbg">
+                                    <h5 class="inpagehed p-2">Room Amenities</h5>
+                                    <div class="sectionbuk">
+                                      <div id="tdetails">
+                                        <div class="onedept">
+                                          <div class="row" >
+                                            <!-- Only show up to 5 items unless "showMore" is true -->
+                                            <ul class="col-3 bplicy" *ngFor="let rate of (showMoreAmenity ? hotel.RoomDetails[0].roomAmenities : hotel.RoomDetails[0].roomAmenities.slice(0, 8)); let i = index">
+                                              <li style="font: 14px;">{{ rate }}</li>
+                                            </ul>
+                                          </div>
+                                          <!-- Toggle "View More" / "View Less" button -->
+                                          <button class="btn btn-link" (click)="toggleShowMoreAmenitity()">
+                                            {{ showMoreAmenity ? 'View Less' : 'View More' }}
+                                          </button>
+                                          <div class="clearfix"></div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  
+                            </div>
+        
+                            <div class="wrappay leftboks">
+                                <div class="comon_backbg">
+                                    <h5 class="inpagehed p-2">Remarks</h5>
+                                    <div class="sectionbuk">
+                                        <div id="tdetails">
+                                            <div class="onedept">
+                                                <div class="row">
+                                                    <div class="col-md-12 ">
+                                                        <p style="font-size: 14px;">Special requests cannot be guaranteed–but the
+                                                            property will do its best to meet your needs.
+                                                            You can always make a special request after your booking is complete!
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-md-12 ">
+                                                        <textarea style="height:120px;" formControlName="remark"class="payinput"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <div class="clearfix"></div>
+                            <div>
+                                <div>
+                                    <div class="checkcontent" style="overflow: inherit;">
+                                        <div class="squaredThree">
+                                            <input type="checkbox" value="0" name="confirm" class="filter_airline"
+                                                id="squaredThree1" aria-required="true" formControlName="Aggreed" required />
+                                            <label for="squaredThree1"></label>
+                                        </div>
+                                        <label for="squaredThree1" style="display: inline; font-size: 14px;color: #082B3A;">
+                                            By booking this item , you agree to our
+                                            <a data-toggle="modal" (click)="openStaticPage('terms-condition')" class="colorbl">Terms and Conditions</a>,
+                                            <a data-toggle="modal" (click)="openStaticPage('privacy-policy')" class="colorbl">Privacy Policy</a>
+                                             and <a data-toggle="modal" (click)="openStaticPage('refund-pollicy')" class="colorbl">Refund Policy</a>.
+                                        </label>
+                                    </div>
+                                    <div class="checkcontent" style="overflow: inherit;">
+                                        <small class="text-danger"
+                                            *ngIf="submitted && travellerForm['controls']['Aggreed'].errors?.required">
+                                            Please Check The Agreement*
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="payrowsubmt">
+                                    <div class="col-md-3 col-sm-12 fulat500 nopad">
+                                        <button type="submit" class="paysubmit" name="continue" id="continue" value="Continue"
+                                            (click)="onSubmit()">
+                                            Continue
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+        
+                        </form>
+
+						
+					</div>
+					<!-- <div class="col-md-4 col-lg-4 mt-0 pr-0">
+						<app-booking-fare-summary [flight]="flight"[convienceFee]="false" [showFlightDetails]="false">
+						</app-booking-fare-summary>
+
+						<div class="add_module_but">
+							<button class="btn btn_add" (click)="addToCartWithMessage('hotel')">
+							  <img src="assets/images/hotel.svg">&nbsp;Add Hotel
+							</button>
+						  
+							<button class="btn btn_add" (click)="addToCartWithMessage('transfer')">
+							  <img src="assets/images/transfer.svg">&nbsp;Add Transfer
+							</button>
+						  </div>
+						  
+						  <div *ngIf="cartMessage" class="cart-message">{{ cartMessage }}</div>
+												
+
+						<div class="bor mar20 coup">
+							<div class="prc-h1 prc-cup"> Have a coupon code </div>
+							<div class="cpn" id="divCouponCodeApply" style="display: block;">
+							  <div class="cpn-l">
+								<input id="txtCouponCode" [(ngModel)]="txtCouponCodeValue" type="text" value="" placeholder="Enter Coupon Code"
+								  [disabled]="disableApplyPromo">
+							  </div>
+							  <div class="cpn-r">
+								<div *ngIf="!disableApplyPromo" class="apl" (click)="applyCoupon()">Apply</div>
+								<div *ngIf="disableApplyPromo" class="apl" (click)="removeSelectedPromo()">Remove</div>
+							  </div>
+							</div>
+							<div class="cpn_dvd" style="display:block"></div>
+							<div class="clearfix"></div>
+							<div class="coupn_inr">
+							  <div class="coupn_scrl">
+								<div class="coupn_col">
+								  <label class="coupn_radio" *ngFor="let promocode of promocodeList;let index=index">
+									<div class="coupn_ttl">{{promocode.promo_code}}</div>
+									<div class="coupn_para" id="cpnTxtEMTNCF">{{promocode.description}}</div>
+									<input type="radio" (click)="setSelectedPromo(promocode,index)" name="cpnRadio">
+									<span class="coupn_checkmark" id="spnRdoEMTNCF"></span>
+									 <span *ngIf="promocode.selected" >
+										<a href="javascript:void(0);" (click)="removeSelectedPromo()" style="color: red;font-size: 11px;">Remove</a>
+									</span>
+								  </label>
+								</div>
+							  </div>
+							</div>
+						  </div>
+					</div> -->
+				</div>
+			</div>
+			<!-- <ngx-loading [show]="loading"
+            [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+            [template]="loadingTemplate"></ngx-loading> -->
+		</div>
+	</div>
+</div>

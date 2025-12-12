@@ -1,0 +1,64 @@
+<ng-container>
+    <div class="p-0">
+        <h3 class="f-600">Conutry</h3>
+        <form [formGroup]="addCountryForm" (ngSubmit)="submitCountry()">
+            <fieldset form="hotelImage">
+                <!-- <div class="col-12 p-0">
+                    <div class="col-4 p-0">
+                        <label class=" control-label">
+                            Country Name
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" placeholder="Enter Country Name" formControlName="Name" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && country.Name.errors }" />
+                        <div *ngIf="submitted && country.Name.errors" class="invalid-feedback">
+                            <div *ngIf="country.Name.errors.required">Name is required</div>
+                        </div>
+                    </div>
+                </div> -->
+                <div>
+                    <label class=" control-label">
+                        Search Location
+                        <span class="text-danger">*</span>
+                    </label>
+                    <input #searchInput type="text" placeholder="Search location..." class="form-control mb-3" />
+                </div>
+                <div #mapContainer id="map" style="height: 500px; width: 100%;"></div>
+
+                <div class="col-sm-6 mb-3 mt-3">
+                        <label class=" control-label">
+                            Latitude
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input id="lat" type="text" formControlName="Latitude" placeholder="Latitude" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && country.Latitude.errors }" />
+                        <div *ngIf="submitted && country.Latitude.errors" class="invalid-feedback">
+                            <div *ngIf="country.Latitude.errors.required">Latitude is required</div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 mb-3">
+                        <label class=" control-label">
+                            Longitude
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input id="lng" type="text" formControlName="Longitude" placeholder="Latitude" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && country.Longitude.errors }" />
+                        <div *ngIf="submitted && country.Longitude.errors" class="invalid-feedback">
+                            <div *ngIf="country.Longitude.errors.required">Longitude is required</div>
+                        </div>
+                    </div>
+            </fieldset>
+
+            <div class="col-12 d-flex justify-content-center align-items-center">
+                <button type="submit" class="orangeButton mr-2">Submit</button>
+                <button type="button" class="btnStyle" (click)="resetForm()">Reset</button>
+            </div>
+        </form>
+    </div>
+</ng-container>
+
+<ngx-loading [show]="loading"
+[config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+[template]="loadingTemplate"></ngx-loading>
+

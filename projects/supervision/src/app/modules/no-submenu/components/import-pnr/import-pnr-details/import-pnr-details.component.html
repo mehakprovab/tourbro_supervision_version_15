@@ -1,0 +1,394 @@
+<div class="text-center" style="margin-bottom: 10px;" *ngIf="importPNRData">
+    <a [routerLink]="['/import-pnr']">
+        <button class="text-white btn btn-sm btn-primary m-1">Back</button>
+    </a>
+    <a (click)="downloadA4('pdf', 'potrait')">
+        <button class="text-white btn btn-sm btn-primary m-1">Download</button>
+    </a>
+    <a (click)="toggle()">
+        <button class="text-white btn btn-sm btn-primary m-1">{{buttonName}}
+        </button>
+    </a>
+</div>
+<div style="background:#ccc; width:100%; position:relative;">
+    <div style="background:#ccc; max-width: 850px; margin: 0px auto; padding:20px; width:100%; position:relative;">
+        <div class="printformClass" style=" -webkit-print-color-adjust: exact;" id="print_voucher" #print_voucher>
+            <table cellpadding="0" border-collapse="" cellspacing="0" width="100%"
+                style="font-size:12px; font-family: 'Open Sans', sans-serif; border-radius: 5px; margin:10px auto;background-color:#fff; padding:20px;border-collapse:separate; color: #000;">
+                <tbody style="-webkit-print-color-adjust: exact">
+                    <tr>
+                        <td style="padding-bottom:10px; vertical-align: top;">
+                            <img style="width:160px; height: 58px;" src="{{loggedInUser.domain_logo ? loggedInUser.domain_logo : ''}}" alt="Domain Logo">
+                            <br>
+                        </td>
+                        <td style="padding-bottom:10px; width: 40%;" align="right">
+                            <table style="width: 100%; display:table; font-weight: 500;">
+                                <tr>
+                                    <td>
+                                        <span>Booking Reference :</span>
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <span [innerHTML]="importPNRData?.booking?.app_reference"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Booked on :</span>
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <span>{{ importPNRData?.CreatedDatetime | date: 'dd/MM/yyyy' }}</span>
+                                    </td>
+                                </tr>
+                                <tr
+                                    *ngIf="importPNRData?.TicketIssueDate && importPNRData?.TicketIssueDate!='' && importPNRData?.TicketIssueDate!=null">
+                                    <td>
+                                        <span>Ticket Issue Date :</span>
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <span>{{ importPNRData?.TicketIssueDate | date: 'dd/MM/yyyy HH:mm:ss' }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Last Date To Ticket :</span>
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <span
+                                            *ngIf="importPNRData?.LastDateToTicket">{{importPNRData?.LastDateToTicket}}</span>
+                                        <span *ngIf="!importPNRData?.LastDateToTicket">RUN RETRIEVE</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Booking Status :</span>
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <span
+                                            [innerHTML]="getFormtedStatus(importPNRData?.booking?.booking_status)"></span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <table
+                                style="width: 100%; border-top: 1px solid #ddd;border-bottom: 1px solid #ddd; margin: 0px 0px; display: table; background-color: #fff; padding: 5px 10px;">
+                                <tr>
+                                    <td style="padding:0px 0;text-align: right; font-weight: bold;">
+                                        <span style="font-size:15px;">
+                                            <span style="color:#004363;padding:5px;"
+                                                *ngIf="flightItineraries?.flightBookingTransactionItineraries[0].airline_pnr && flightItineraries?.flightBookingTransactionItineraries[0].airline_pnr!='' && 	flightItineraries?.flightBookingTransactionItineraries[0].airline_pnr!='undefined'">
+                                                Airline PNR :
+                                                <span style="font-size: 20px; color: #1a9ad3;">
+                                                    {{
+                                                    flightItineraries?.flightBookingTransactionItineraries[0].airline_pnr
+                                                    }}
+                                                </span>
+                                            </span>
+                                            <span style="color:#004363;padding:5px;"
+                                                *ngIf="importPNRData?.GDS_PNR && importPNRData?.GDS_PNR!='' && importPNRData?.GDS_PNR!='undefined'">
+                                                GDS PNR :
+                                                <span style="font-size: 20px; color: #1a9ad3;">
+                                                    {{ importPNRData?.GDS_PNR }}
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="line-height:15px;padding:0;">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"
+                            style="border-bottom:2px solid #004363; padding:0; border-radius: 5px; overflow: hidden;">
+                            <table cellspacing="0" cellpadding="5" width="100%" style="font-size:12px; padding:0;">
+                                <tbody>
+                                    <tr>
+                                        <td
+                                            style="background-color:#012756; width: 50%; color:#fff; padding: 10px; border-right:2px solid #004363;">
+                                            <span style="vertical-align:middle;font-size:17px;font-weight: 600;">
+                                                Travellers
+                                            </span>
+                                        </td>
+                                        <td style="background-color:#012756; width: 50%; color:#fff; padding: 10px;">
+                                            <span style="vertical-align:middle;font-size:17px; font-weight: 600;">
+                                                Ticket No.
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr *ngFor="let p of importPNRData?.ticketNumber; let i = index">
+                                        <td style="padding:4px 10px; font-size: 16px; border-right:2px solid #004363;">
+                                            <span><strong>{{p?.Name?.Prefix | uppercase}}.{{(p?.Name?.First +'
+                                                    '+p?.Name?.Last |
+                                                    uppercase)}}</strong></span>
+                                        </td>
+                                        <td style="padding:4px 10px; font-size: 16px;border-right: 2px solid #004363;">
+                                            <span>{{p.Number}}</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="line-height:15px;padding:0;">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" style="border-radius: 5px; padding:0;">
+                            <table cellspacing="0" cellpadding="5" width="100%" style="font-size:12px; padding:0;">
+                                <tbody>
+                                    <ng-container
+                                        *ngFor="let f of flightItineraries?.flightBookingTransactionItineraries; let i = index">
+                                        <tr>
+                                            <td colspan="4" style="padding:0; border-bottom: 1px solid #ddd;">
+                                                <table cellspacing="0" cellpadding="5" width="100%"
+                                                    style="font-size:12px; padding:0;">
+                                                    <tr>
+                                                        <td><strong style="font-size: 20px; color: #004363;"><span>{{f.from_airport_code}}
+                                                                    - {{f.to_airport_code}}</span></strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td
+                                                            style="color:#004363; padding: 0px; padding-bottom: 10px; font-size: 15px; font-weight: 600;">
+                                                            <img style="max-width: 75px;"
+                                                                [src]="'./assets/airline_logo/'+ f.airline_code + '.png'">
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <span>
+                                                                {{ f.airline_code }} | {{ f.flight_number }}
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td
+                                                            style="width: 35%; padding: 0px; font-size: 14px; vertical-align: top;">
+                                                            <span>
+                                                                <img style="vertical-align:middle; float: left; margin-top: 5px; width: 24px;"
+                                                                    src="./assets/images/departure.png">
+                                                                <strong style="font-size: 15px; padding-left: 10px;
+                                                                      vertical-align: middle;
+                                                                      float: left; width: 88%;">
+                                                                    <span
+                                                                        style="font-weight: 500; padding-right: 10px;">
+                                                                        {{f.from_airport_name}}
+                                                                        ({{f.from_airport_code}})
+                                                                    </span>
+                                                                    <span></span>
+                                                                </strong>
+                                                                <br>
+                                                                <div style="margin-left: 35px;">
+                                                                    {{ f.departure_datetime | date: 'EEE, d MMM y'}}
+                                                                    {{f.departure_datetime | date:'HH:mm'}}
+                                                                    <br>
+                                                                    <span *ngIf="f.departure_terminal">
+                                                                        {{'Terminal : ' + f.departure_terminal }}
+                                                                    </span>
+                                                                </div>
+                                                            </span>
+                                                        </td>
+                                                        <td style="width: 30%; vertical-align: top;">
+                                                            <span
+                                                                style="display:block;font-size: 14px; padding-left:0%; text-align: center;">
+                                                                <span *ngIf="f?.attributes?.Duration">{{
+                                                                    f?.attributes?.Duration }}</span><br>
+                                                                {{ 'Cabin Class : ' +
+                                                                importPNRData?.booking?.cabin_class }}<br>
+                                                                <span *ngIf="f.equipment"> {{'Aircraft : ' +
+                                                                    f.equipment}} </span>
+                                                            </span>
+                                                        </td>
+                                                        <td
+                                                            style="width: 35%;font-size: 14px;  padding: 0px; padding-left: 0%; vertical-align: top;">
+                                                            <span><img
+                                                                    style="vertical-align:middle; float: left; margin-top: 5px; width: 25px;"
+                                                                    src="./assets/images/arrival.png">
+                                                                <strong style="font-size: 15px; padding-left: 10px;
+                                                                      vertical-align: middle;
+                                                                      float: left; width: 88%;">
+
+                                                                    <span
+                                                                        style="font-weight: 500; padding-right: 10px;">
+                                                                        {{f.to_airport_name}} ({{ f.to_airport_code }})
+                                                                    </span>
+                                                                </strong>
+                                                                <br>
+                                                                <div style="margin-left: 35px;">
+                                                                    {{ f.arrival_datetime | date: 'EEE, d MMM y'}}
+                                                                    {{f.arrival_datetime | date: 'HH:mm'}}
+                                                                    <br>
+                                                                    <span *ngIf="f.arrival_terminal">
+                                                                        {{'Terminal : ' + f.arrival_terminal }}
+                                                                    </span>
+                                                                </div>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3" style="padding:6px 0px;">
+                                                            <span style="font-size: 14px;">
+                                                                <img style="vertical-align:top; width: 21px;"
+                                                                    src="./assets/images/baggage.png">
+                                                                Baggage Info -
+                                                                Cabin: {{f.cabin_baggage}},
+                                                                Check-in: {{f.checkin_baggage}}
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="height:12px; line-height:0px">&nbsp;</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="line-height:15px;padding:0;">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"
+                            style="border-bottom:2px solid #004363; padding:0; border-radius: 5px; overflow: hidden;">
+                            <table cellspacing="0" cellpadding="5" width="100%" style="font-size:12px; padding:0;">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="2" style="background-color:#012756; color:#fff; padding: 10px;">
+                                            <span style="vertical-align:middle;font-size:16px; font-weight: 600; ">
+                                                Customer Contact Details
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:5px 10px; width: 50%; font-size: 14px;">
+                                            <span>
+                                                E-mail : {{importPNRData?.booking.email }}
+                                            </span>
+                                        </td>
+                                        <td style="padding:5px 10px; width: 50%; font-size: 14px;">
+                                            <span>
+                                                Contact No : {{importPNRData?.booking?.phone_code }}
+                                                {{importPNRData?.booking?.phone }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="line-height:15px;padding:0;">&nbsp;</td>
+                    </tr>
+
+                    <tr [ngClass]="toggleStyle ? 'show':'hide'">
+                        <td colspan="4" style="padding:0;border-radius: 5px;">
+                            <table cellspacing="0" cellpadding="5" width="100%" style="font-size:13px; padding:0;">
+                                <tbody>
+                                    <tr>
+                                        <td width="100%" style="padding:0;border-radius: 5px;">
+                                            <table cellspacing="0" cellpadding="7" width="100%"
+                                                style="font-size:14px;line-height: 10px; padding:0; border-radius: 5px; overflow: hidden;">
+                                                <tbody>
+                                                    <tr>
+                                                        <td
+                                                            style="background-color: #012756; color: #fff; font-size: 16px; padding: 10px;">
+                                                            <span>Payment Details</span>
+                                                        </td>
+                                                        <td
+                                                            style="background-color: #012756; color: #fff; font-size: 16px; padding: 10px;">
+                                                            <span>Amount (
+                                                                {{ importPNRData?.booking.currency }}
+                                                                {{
+                                                                importPNRData?.TotalDisplayFare
+                                                                |
+                                                                number:'1.0-0' }})
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><span style="padding-left:5px;">Base Fare</span>
+                                                        </td>
+                                                        <td><span style="padding-left:5px;">{{
+                                                                importPNRData?.booking.currency }} {{
+                                                                importPNRData?.BasePrice
+                                                                |
+                                                                number:'1.0-0'
+                                                                }}</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><span style="padding-left:5px;">Taxes &amp; Fees</span>
+                                                        </td>
+                                                        <td><span style="padding-left:5px;">{{
+                                                                importPNRData?.booking.currency }} {{
+                                                                importPNRData?.Tax
+                                                                |
+                                                                number:'1.0-0'
+                                                                }}</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><span style="padding-left:5px;">AIT</span>
+                                                        </td>
+                                                        <td><span style="padding-left:5px;">{{
+                                                                importPNRData?.booking?.currency }} {{
+                                                                importPNRData?.advanceTax
+                                                                }}</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border-top:1px solid #ccc"><span
+                                                                style="font-size:18px; padding-left: 5px;">Grand
+                                                                Total</span>
+                                                        </td>
+                                                        <td style="border-top:1px solid #ccc">
+                                                            <span
+                                                                style="font-size:18px; font-weight: bold; padding-left: 5px;">
+                                                                {{ importPNRData?.booking?.currency }}
+                                                                {{ importPNRData?.TotalDisplayFare
+                                                                |
+                                                                number:'1.0-0' }}
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="line-height:15px;padding:0;">&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="line-height:15px;padding:0;">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" align="middle" style="padding-top:10px; font-size: 12px; font-weight: bold;">
+                            Thanks for booking <span> with Booking 247</span>
+                            <div [ngStyle]="showConfirmButtons ? '' : {'display':'none'}">
+                                <br>
+                                <button type="button" style="background: #012756;color: #fff; " id="save"
+                                    class="btn table-btn lg btn_hover" (click)="directSaveImportPNR()">
+                                    Save </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<ng-template #notShow>
+    <mat-spinner [diameter]="50" style="margin: 0 auto;" mode="indeterminate"></mat-spinner>
+</ng-template>
+<ngx-loading [show]="loading"
+    [config]="{primaryColour: '#fff', secondaryColour: '#ccc', tertiaryColour: '#fff', backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+    [template]="loadingTemplate"></ngx-loading>

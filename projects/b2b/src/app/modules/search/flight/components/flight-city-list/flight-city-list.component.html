@@ -1,0 +1,77 @@
+<form [formGroup]="regConfig" class="airport_complete" *ngIf="hasViewList">
+    <!-- <div class="mn_incld p-2">
+        <span class="in_icon"><i class="far fa-plane-alt"></i></span>
+        <h5 class="include">Include Nearby Airports<small>Expand your search to include airports within 110 km</small>
+        </h5>
+        <div class="ar_rgt">
+            <span class="ar_code">&nbsp;</span>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="customCheck" name="example1">
+                <label class="custom-control-label" for="customCheck"></label>
+            </div>
+        </div>
+    </div> -->
+    <ul class="arpt_list">
+        <div class="p-0" *ngFor="let item of getAirports">
+            <li class="p-2" (click)="onAirportSelect(item, inputFor)">
+                <!-- <span class="in_icon"><img src="./assets/images/airports/airport1.jpg" alt="img"></span> -->
+                <h5 class="include"><span>({{ item.AirportCode }})</span> {{item.AirportCity}}, {{item.CountryName}}, {{ item.AirportName }} </h5>
+                <!-- <h5 class="include">{{item.AirportCity}}<small> {{ item.AirportName }} </small></h5> -->
+
+                <!-- <div class="ar_rgt">
+                    <span class="ar_code"></span>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" [value]="item.Id" name="example1" (change)="onCheckBoxChange($event)">
+                        <label class="custom-control-label" for="{{item.Id}}"> </label>
+                    </div>
+                </div> -->
+
+            </li>
+            <li class="p-2 sub" *ngFor="let val of item['SubAirport']" (click)="onAirportSelect(val, inputFor)">
+                <span class="in_icon"><i class="far fa-plane-alt"></i></span>
+                <h5 class="include"> {{val.AirportCity}}, {{val.CountryName}}<small> {{val.AirportName}}({{ val.AirportCode }})</small></h5>
+
+                <div class="ar_rgt">
+                    <span class="ar_code"></span>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" [value]="val.Id" name="example1" (change)="onCheckBoxChange($event)">
+                        <label class="custom-control-label" for="{{val.Id}}"> </label>
+                    </div>
+                </div>
+            </li>
+        </div>
+        <!-- <li class="p-2">
+            <span class="in_icon"><img src="./assets/images/airports/airport2.jpg" alt="airport"></span>
+            <h5 class="include">Bangkok, All airports<small>&nbsp;</small></h5>
+            <div class="ar_rgt">
+                <span class="ar_code">BKK</span>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck" name="example1">
+                    <label class="custom-control-label" for="customCheck"></label>
+                </div>
+            </div>
+        </li>
+        <li class="p-2 sub">
+            <span class="in_icon"><i class="far fa-plane-alt"></i></span>
+            <h5 class="include">Don Mueang Intl<small>Bangkok, Thailand</small></h5>
+            <div class="ar_rgt">
+                <span class="ar_code">DMK</span>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck" name="example1">
+                    <label class="custom-control-label" for="customCheck"></label>
+                </div>
+            </div>
+        </li>
+        <li class="p-2">
+            <span class="in_icon"><i class="far fa-plane-alt"></i></span>
+            <h5 class="include">Bagdogra, India<small>Bagdogra</small></h5>
+            <div class="ar_rgt">
+                <span class="ar_code">IXB</span>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck" name="example1">
+                    <label class="custom-control-label" for="customCheck"></label>
+                </div>
+            </div>
+        </li> -->
+    </ul>
+</form>

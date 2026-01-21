@@ -596,6 +596,9 @@ export const apiMap = {
 
 
  emailTourDetails: `${B2C_URL}/webservice/tour/emailTourDetails`,
- updateDriverInfo: `${B2C_URL}/webservice/transfer/updateDriverInfo`
+ updateDriverInfo: `${B2C_URL}/webservice/transfer/updateDriverInfo`,
+
+   addAyurvedaCenter: `${baseUrl}/dashboard/report/addAyurvedaCenter`,
+   getAyurvedaCenters: `${baseUrl}/dashboard/report/listAyurvedaCenters`,
 
 };

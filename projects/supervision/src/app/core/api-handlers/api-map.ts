@@ -596,6 +596,14 @@ export const apiMap = {
 
 
  emailTourDetails: `${B2C_URL}/webservice/tour/emailTourDetails`,
- updateDriverInfo: `${B2C_URL}/webservice/transfer/updateDriverInfo`
+ updateDriverInfo: `${B2C_URL}/webservice/transfer/updateDriverInfo`,
 
+ updateAyurvedaCenter: `${baseUrl}/dashboard/report/updateAyurvedaCenter`,
+deleteAyurvedaCenter: `${baseUrl}/dashboard/report/deleteAyurvedaCenter`,
+   addAyurvedaCenter: `${baseUrl}/dashboard/report/addAyurvedaCenter`,
+   getAyurvedaCenters: `${baseUrl}/dashboard/report/listAyurvedaCenters`,
+   addMeditationRetreat: `${baseUrl}/dashboard/report/addMeditationRetreat`,
+   getMeditationRetreat: `${baseUrl}/dashboard/report/listMeditationRetreats`,
+   updateMeditationRetreat: `${baseUrl}/dashboard/report/updateMeditationRetreat`,
+   deleteMeditationRetreat: `${baseUrl}/dashboard/report/deleteMeditationRetreat`,
 };

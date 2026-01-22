@@ -1,0 +1,176 @@
+<div class="card-header text-uppercase bg-dark text-white">
+  <h5 style="border-bottom: 0;">
+    <i class="fa fa-edit"></i>&nbsp;Home Page Widget In Ayurveda
+  </h5>
+</div>
+
+<div class="card">
+  <form [formGroup]="regConfig" autocomplete="off">
+
+    <div class="form-row">
+
+      <!-- Center Name -->
+      <div class="col-6 pr-0">
+        <div class="form-group">
+          <label>Center Name*</label>
+          <input
+            type="text"
+            class="form-control text-capitalize form-control-sm nrm_input"
+            placeholder="Center Name"
+            formControlName="center_name">
+        </div>
+      </div>
+
+      <!-- Location -->
+      <div class="col-6 pr-0">
+        <div class="form-group">
+          <label>Location*</label>
+          <input
+            type="text"
+            class="form-control text-capitalize form-control-sm nrm_input"
+            placeholder="Location"
+            formControlName="location">
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="col-6 pr-0">
+        <div class="form-group">
+          <label>Short Description*</label>
+          <textarea
+            rows="2"
+            class="form-control form-control-sm nrm_input"
+            placeholder="Short Description"
+            formControlName="short_description">
+          </textarea>
+        </div>
+      </div>
+
+      <!-- Image -->
+      <div class="col-6 pr-0">
+        <div class="form-group">
+          <label>Image*</label>
+          <input
+            type="file"
+            class="form-control form-control-sm nrm_input"
+            accept=".png,.jpg,.jpeg"
+            (change)="onFileChange($event.target.files)"
+             #fileInput>
+
+          <div *ngIf="imageSrc" class="mt-1">
+            <img [src]="imageSrc" width="100" height="50" class="rounded">
+          </div>
+
+          <div *ngIf="ayurvedaImage && !imageSrc" class="mt-1">
+            <img [src]="getImage(ayurvedaImage)" width="100" height="50" class="rounded">
+          </div>
+
+          <small class="text-danger">
+            (Maximum upload file size: 1 MB)
+          </small>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Buttons -->
+    <div class="btncontainer">
+      <button type="button" class="btnStyle" (click)="onSearchSubmit()">
+        {{ btnName }}
+      </button>
+      &nbsp;
+      <button type="button" class="btnStyle" (click)="onReset()">
+        Reset
+      </button>
+    </div>
+
+  </form>
+</div>
+
+<div class="card" style="margin-top: 30px;">
+  <div class="card-body">
+
+    <p>Total {{ respData?.length }} Ayurveda Centers</p>
+
+    <div class="table-responsive">
+      <table class="table table-borderless table-striped table-hover">
+
+        <thead>
+          <tr>
+            <th *ngFor="let header of displayColumn">
+              {{ header.value }}
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr *ngIf="noData">
+            <td colspan="10" class="text-center">
+              <mat-spinner diameter="30"></mat-spinner>
+            </td>
+          </tr>
+
+          <tr *ngIf="!noData && !respData.length">
+            <td colspan="10" class="text-center text-muted">
+              No Data Found!
+            </td>
+          </tr>
+
+          <tr *ngFor="let data of respData | slice:(page-1)*pageSize:(page*pageSize); let i=index">
+
+            <td>{{ i + 1 }}</td>
+
+            <td>
+              <a href="javascript:void(0)"
+                 (click)="updateStatus(data.id, data.status === 'active' ? 'inactive' : 'active')">
+                {{ data.status === 'active' ? 'Deactivate' : 'Activate' }}
+              </a>
+            </td>
+
+            <td>
+              <span class="badge"
+                [ngClass]="{
+                  'badge-success': data.status === 'active',
+                  'badge-danger': data.status === 'inactive'
+                }">
+                {{ data.status }}
+              </span>
+            </td>
+
+            <td>{{ data.center_name }}</td>
+            <td>{{ data.location }}</td>
+            <td>{{ data.short_description }}</td>
+
+            <td>
+              <img
+
+
+              
+                *ngIf="data.image_url"
+                [src]="getImage(data.image_url)"
+                width="100"
+                height="50">
+            </td>
+   <td class="text-left">
+                            <!-- <a [routerLink]="['/hotels/view-hotel/', data['id']]" title="View Hotel" class="p-1">
+                                <i class="fas fa-eye"></i>
+                            </a> -->
+                            <a (click)="editList(data)" title="Edit Ayurveda" class="p-1 text-primary">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+                            <button (click)="onDelete(data.id)"  class="p-1 text-primarys">
+                                <a title="Delete">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </button>
+        
+                        </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

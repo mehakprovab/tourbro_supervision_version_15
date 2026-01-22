@@ -31,6 +31,8 @@ export class AddOrModifyMeditationRetreatComponent implements OnInit, OnDestroy,
 
 @ViewChild('labelImport', { static: false })
 labelImport!: ElementRef;
+@ViewChild('fileInput', { static: false })
+fileInput!: ElementRef<HTMLInputElement>;
 
 private destroy$ = new Subject<void>();
 
@@ -253,13 +255,13 @@ onReset() {
   });
 
   // Reset image validator
-  const imageControl = this.regConfig.get('image');
-  imageControl.setValidators([Validators.required]);
-  imageControl.setValue('');
-  imageControl.markAsPristine();
-  imageControl.markAsUntouched();
-  imageControl.updateValueAndValidity();
-
+      const imageControl = this.regConfig.get('image');
+      imageControl.setValidators([Validators.required]);
+      imageControl.updateValueAndValidity();
+if (this.fileInput) {
+  this.fileInput.nativeElement.value = '';
+}
+  this.regConfig.reset();
   // Reset file input DOM element
 //   if (this.labelImport?.nativeElement) {
 //     this.labelImport.nativeElement.value = null;

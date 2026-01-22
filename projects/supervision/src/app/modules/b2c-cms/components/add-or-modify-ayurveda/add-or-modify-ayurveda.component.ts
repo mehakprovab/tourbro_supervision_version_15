@@ -31,6 +31,8 @@ export class AddOrModifyAyurvedaComponent implements OnInit, OnDestroy,AfterView
 
 @ViewChild('labelImport', { static: false })
 labelImport!: ElementRef;
+@ViewChild('fileInput', { static: false })
+fileInput!: ElementRef<HTMLInputElement>;
 
 private destroy$ = new Subject<void>();
 
@@ -114,7 +116,7 @@ private destroy$ = new Subject<void>();
   ngOnInit() {
       this.createForm();
       this.getAyurvedaCentersList();
-      this.getCountryList();
+    
   }
 
   createForm() {
@@ -150,33 +152,6 @@ private destroy$ = new Subject<void>();
       this.cdr.detectChanges();
   }
 
-  getCountryList() {
-      this.subSunk.sink = this.apiHandlerService.apiHandler('phoneCodeList', 'post', {}, {})
-          .subscribe(resp => {
-              if (resp.statusCode == 200 && resp.data) {
-                  this.countryList = resp.data;
-              }
-          })
-  }
-
-  getAutoCompleteLocations(event, type) {
-      let inpValue = event.target.value;
-      this.locationsDestination.length = 0;
-      this.locationsOrigin.length = 0;
-      if (inpValue.length > 0 && (event.timeStamp - this.lastKeyupTstamp) > 10) {
-          this.subSunk.sink = this.apiHandlerService.apiHandler('searchAyurvedaCenters', 'post', {}, {}, {
-              search: `${inpValue}`
-          }).subscribe(resp => {
-              if (resp.statusCode == 201 || resp.statusCode == 200) {
-                  this.locationsOrigin = resp.data || [];
-              } else {
-                  log.error('Something went wrong')
-              }
-              this.cdr.detectChanges();
-          }, err => { log.error(err) });
-          this.lastKeyupTstamp = event.timeStamp;
-      }
-  }
 
   ngAfterViewInit() {
     this.fetchSearchData();
@@ -227,17 +202,6 @@ private destroy$ = new Subject<void>();
       return `${url+img}`;
   }
 
-  updateStatus(id, status) {
-      const newStatus = status === 'active' ? 'inactive' : 'active';
-      this.subSunk.sink = this.apiHandlerService.apiHandler('updateAyurvedaCenterStatus', 'post', {}, {}, { "id": id, "status": newStatus })
-          .subscribe(resp => {
-              if (resp && resp.data) {
-                  this.swalService.alert.success("Status Updated successfully.");
-                  this.getAyurvedaCentersList();
-              }
-          })
-  }
-
   editList(centerData) {
       this.onReset();
       this.editingId = centerData.id;
@@ -284,13 +248,15 @@ private destroy$ = new Subject<void>();
       this.fileToUpload = null;
       this.imageSrc = "";
       this.ayurvedaImage = "";
-      this.regConfig.reset();
-      this.regConfig.patchValue({
-          status:'active'
-      })
+    
+  
       const imageControl = this.regConfig.get('image');
       imageControl.setValidators([Validators.required]);
       imageControl.updateValueAndValidity();
+      if (this.fileInput) {
+  this.fileInput.nativeElement.value = '';
+}
+  this.regConfig.reset();
   }
 
   onSearchSubmit() {

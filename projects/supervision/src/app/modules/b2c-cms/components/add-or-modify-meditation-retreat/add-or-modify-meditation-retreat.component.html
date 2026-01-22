@@ -55,7 +55,7 @@
             class="form-control form-control-sm"
             accept=".png,.jpg,.jpeg"
             (change)="onFileChange($event.target.files)"
-            #labelImport>
+             #fileInput>
 
           <div *ngIf="imageSrc" class="mt-2">
             <img [src]="imageSrc" width="120" height="60" class="rounded">

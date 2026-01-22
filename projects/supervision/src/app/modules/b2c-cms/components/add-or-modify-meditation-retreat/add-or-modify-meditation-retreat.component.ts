@@ -23,11 +23,11 @@ let filterArray: Array<any> = [];
 let respDataCopy: Array<any> = [];
 
 @Component({
-  selector: 'app-add-or-modify-ayurveda',
-  templateUrl: './add-or-modify-ayurveda.component.html',
-  styleUrls: ['./add-or-modify-ayurveda.component.scss']
+  selector: 'app-add-or-modify-meditation-retreat',
+  templateUrl: './add-or-modify-meditation-retreat.component.html',
+  styleUrls: ['./add-or-modify-meditation-retreat.component.scss']
 })
-export class AddOrModifyAyurvedaComponent implements OnInit, OnDestroy,AfterViewInit {
+export class AddOrModifyMeditationRetreatComponent implements OnInit, OnDestroy,AfterViewInit {
 
 @ViewChild('labelImport', { static: false })
 labelImport!: ElementRef;
@@ -83,22 +83,18 @@ private destroy$ = new Subject<void>();
   displayColumn: { key: string, value: string }[] = [
       { key: 'id', value: 'Sl No.' },
       { key: 'action', value: 'Action' },
-      { key: 'status', value: 'Status' },
-      { key: 'center_name', value: 'Center Name' },
-      { key: 'location', value: 'Location' },
-      { key: 'short_description', value: 'Description' },
+      { key: 'retreat_name', value: 'Retreat Name' },
+      { key: 'duration', value: 'duration' },
+      { key: 'description', value: 'Description' },
       { key: 'image', value: 'Image' },
        { key: 'actions', value: 'Actions' }
   ];
   noData: boolean = true;
   respData: Array<any> = [];
-  countryList: Array<any> = [];
   segments: {} = {};
-  locationsOrigin: Array<any> = [];
-  locationsDestination: Array<any> = [];
   lastKeyupTstamp: number = 0;
   btnName: string = "Add";
-  ayurvedaImage: string = "";
+  meditationImage: string = "";
   editingId: string = "";
 
   constructor(
@@ -113,25 +109,24 @@ private destroy$ = new Subject<void>();
 
   ngOnInit() {
       this.createForm();
-      this.getAyurvedaCentersList();
-      this.getCountryList();
+      this.getMeditationRetreatList();
+      
   }
 
   createForm() {
     this.regConfig = this.fb.group({
         id: new FormControl(''),
-        center_name: new FormControl('', [Validators.required]),
-        location: new FormControl('', [Validators.required]),
-        short_description: new FormControl('', [Validators.required]),
-        image: new FormControl('', [Validators.required]),
-        status: new FormControl('active')
+       retreat_name: ['', Validators.required],
+      duration: ['', Validators.required],
+      description: ['', Validators.required],
+      image: ['', Validators.required]
     });
   }
 
-  getAyurvedaCentersList() {
+  getMeditationRetreatList() {
       this.noData=true;
       this.respData=[];
-      this.subSunk.sink = this.apiHandlerService.apiHandler('getAyurvedaCenters', 'post', {}, {}, {})
+      this.subSunk.sink = this.apiHandlerService.apiHandler('getMeditationRetreat', 'post', {}, {}, {})
           .subscribe(resp => {
               if ((resp.statusCode == 200 || resp.statusCode == 201) && resp.data && resp.data.length>0) {
                   this.noData = false;
@@ -150,33 +145,6 @@ private destroy$ = new Subject<void>();
       this.cdr.detectChanges();
   }
 
-  getCountryList() {
-      this.subSunk.sink = this.apiHandlerService.apiHandler('phoneCodeList', 'post', {}, {})
-          .subscribe(resp => {
-              if (resp.statusCode == 200 && resp.data) {
-                  this.countryList = resp.data;
-              }
-          })
-  }
-
-  getAutoCompleteLocations(event, type) {
-      let inpValue = event.target.value;
-      this.locationsDestination.length = 0;
-      this.locationsOrigin.length = 0;
-      if (inpValue.length > 0 && (event.timeStamp - this.lastKeyupTstamp) > 10) {
-          this.subSunk.sink = this.apiHandlerService.apiHandler('searchAyurvedaCenters', 'post', {}, {}, {
-              search: `${inpValue}`
-          }).subscribe(resp => {
-              if (resp.statusCode == 201 || resp.statusCode == 200) {
-                  this.locationsOrigin = resp.data || [];
-              } else {
-                  log.error('Something went wrong')
-              }
-              this.cdr.detectChanges();
-          }, err => { log.error(err) });
-          this.lastKeyupTstamp = event.timeStamp;
-      }
-  }
 
   ngAfterViewInit() {
     this.fetchSearchData();
@@ -193,7 +161,7 @@ private destroy$ = new Subject<void>();
             const searchTerm = value.trim();
             if (!searchTerm) {
                 this.pageSize = 10;
-                this.getAyurvedaCentersList();
+                this.getMeditationRetreatList();
             } else {
                 this.searchValueData(searchTerm);
             }
@@ -204,7 +172,7 @@ private destroy$ = new Subject<void>();
     this.noData = true;
     this.respData = [];
     
-    this.subSunk.sink = this.apiHandlerService.apiHandler('searchAyurvedaCenters', 'post', {}, {}, { search: searchTerm })
+    this.subSunk.sink = this.apiHandlerService.apiHandler('searchMeditationRetreat', 'post', {}, {}, { search: searchTerm })
         .subscribe(resp => {
             if (resp.statusCode === 200 || resp.statusCode === 201) {
                 this.noData = !(resp.data.length > 0);
@@ -227,32 +195,21 @@ private destroy$ = new Subject<void>();
       return `${img}`;
   }
 
-  updateStatus(id, status) {
-      const newStatus = status === 'active' ? 'inactive' : 'active';
-      this.subSunk.sink = this.apiHandlerService.apiHandler('updateAyurvedaCenterStatus', 'post', {}, {}, { "id": id, "status": newStatus })
-          .subscribe(resp => {
-              if (resp && resp.data) {
-                  this.swalService.alert.success("Status Updated successfully.");
-                  this.getAyurvedaCentersList();
-              }
-          })
-  }
 
   editList(centerData) {
       this.onReset();
       this.editingId = centerData.id;
       this.btnName = 'Update';
-      this.ayurvedaImage = centerData.image_url  || "";
+      this.meditationImage = centerData.image_url  || "";
       
       this.regConfig.patchValue({
-          center_name: centerData.center_name || '',
-          location: centerData.location || '',
-          short_description: centerData.short_description || '',
+              retreat_name: centerData.retreat_name,
+      duration: centerData.duration,
+      description: centerData.description,
           id: centerData.id || '',
-          status: centerData.status || 'active',
       });
       
-     if (centerData.image_url) {
+        if (centerData.image_url) {
     const imageControl = this.regConfig.get('image');
     imageControl.clearValidators();
     imageControl.setValue(centerData.image_url);
@@ -261,6 +218,7 @@ private destroy$ = new Subject<void>();
     this.imageSrc = this.getImage(centerData.image_url);
   }
 
+      
       if (this.labelImport && this.labelImport.nativeElement) {
           this.labelImport.nativeElement.innerText = centerData.image || "Upload Image";
       }
@@ -271,7 +229,7 @@ private destroy$ = new Subject<void>();
   deleteList(id) {
       this.swalService.alert.delete(willDelete => {
           if (willDelete) {
-              this.deleteAyurvedaCenter(id);
+              this.deleteMeditationRetreat(id);
           } else {
               console.log("Not delete")
           }
@@ -283,45 +241,39 @@ private destroy$ = new Subject<void>();
       this.editingId = "";
       this.fileToUpload = null;
       this.imageSrc = "";
-      this.ayurvedaImage = "";
+      this.meditationImage = "";
       this.regConfig.reset();
-      this.regConfig.patchValue({
-          status:'active'
-      })
+     
       const imageControl = this.regConfig.get('image');
       imageControl.setValidators([Validators.required]);
       imageControl.updateValueAndValidity();
   }
 
   onSearchSubmit() {
-    if (!this.regConfig || this.regConfig.invalid) {
-        this.swalService.alert.error("Please fill in all required fields.");
-        return;
+  if (this.regConfig.invalid) {
+      this.swalService.alert.error('Please fill all required fields');
+      return;
     }
 
-    try {
-        let req = new FormData();
-        const formValues = this.regConfig.value;
+    const form = this.regConfig.value;
+    const req = new FormData();
 
-        req.append('center_name', formValues.center_name);
-        req.append('location', formValues.location);
-        req.append('short_description', formValues.short_description);
-        req.append('status', formValues.status);
+    req.append('retreat_name', form.retreat_name);
+    req.append('duration', form.duration);
+    req.append('description', form.description);
 
-        if (this.editingId) {
-            req.append('id', this.editingId);
-        }
+    if (this.editingId) req.append('id', this.editingId);
 
-        if (this.fileToUpload) {
-            req.append('image', this.fileToUpload);
-        } else if (this.ayurvedaImage && this.editingId) {
-            req.append('existing_image', this.ayurvedaImage);
-        } else {
-            this.swalService.alert.warning("Please upload an image.");
-            return;
-        }
+    if (this.fileToUpload) {
+      req.append('image', this.fileToUpload);
+    } else if (this.meditationImage && this.editingId) {
+      req.append('existing_image', this.meditationImage);
+    } else {
+      this.swalService.alert.warning('Please upload image');
+      return;
+    }
 
-        const apiEndpoint = this.editingId ? 'updateAyurvedaCenter' : 'addAyurvedaCenter';
+        const apiEndpoint = this.editingId ? 'updateMeditationRetreat' : 'addMeditationRetreat';
         
         this.subSunk.sink = this.apiHandlerService.apiHandler(apiEndpoint, 'post', {}, {}, req)
             .subscribe({
@@ -330,7 +282,7 @@ private destroy$ = new Subject<void>();
                         const message = this.editingId ? "Updated successfully." : "Added successfully.";
                         this.swalService.alert.success(message);
                         this.onReset();
-                        this.getAyurvedaCentersList();
+                        this.getMeditationRetreatList();
                     } else {
                         this.swalService.alert.error("Operation failed. Please try again.");
                     }
@@ -341,18 +293,15 @@ private destroy$ = new Subject<void>();
                 }
             });
 
-    } catch (error) {
-        console.error("Unexpected Error:", error);
-        this.swalService.alert.error("Something went wrong. Please refresh the page and try again.");
-    }
+   
   }
 
-  deleteAyurvedaCenter(id) {
-      this.subSunk.sink = this.apiHandlerService.apiHandler('deleteAyurvedaCenter', 'post', {}, {}, { "id": id })
+  deleteMeditationRetreat(id) {
+      this.subSunk.sink = this.apiHandlerService.apiHandler('deleteMeditationRetreat', 'post', {}, {}, { "id": id })
           .subscribe(resp => {
               if (resp && resp.data) {
                   this.swalService.alert.success("Deleted successfully.");
-                  this.getAyurvedaCentersList();
+                  this.getMeditationRetreatList();
               }
           }, (err) => {
               this.swalService.alert.oops(err.message);
@@ -363,7 +312,7 @@ private destroy$ = new Subject<void>();
       let reqBody = new FormData();
       reqBody.append('image', this.fileToUpload);
       reqBody.append('id', id);
-      this.apiHandlerService.apiHandler('uploadAyurvedaCenterImage', 'post', {}, {}, reqBody)
+      this.apiHandlerService.apiHandler('uploadMeditationImage', 'post', {}, {}, reqBody)
           .subscribe(resp => {
               if (resp) {
                   // Success handling
@@ -384,31 +333,43 @@ private destroy$ = new Subject<void>();
       }
   }
 
-  sortData(sort: Sort) {
-      const data = filterArray.length ? filterArray : [...respDataCopy];
-      if (!sort.active || sort.direction === '') {
-          this.respData = data;
-          return;
-      }
-      
-      this.respData = data.sort((a, b) => {
-          const isAsc = sort.direction === 'asc';
-          switch (sort.active) {
-              case 'center_name': 
-                  const nameA = a.center_name ? a.center_name.toLowerCase() : '';
-                  const nameB = b.center_name ? b.center_name.toLowerCase() : '';
-                  return this.utility.compare(nameA, nameB, isAsc);
-              case 'location': 
-                  const locA = a.location ? a.location.toLowerCase() : '';
-                  const locB = b.location ? b.location.toLowerCase() : '';
-                  return this.utility.compare(locA, locB, isAsc);
-              case 'status': 
-                  return this.utility.compare(a.status || '', b.status || '', isAsc);
-              default: 
-                  return 0;
-          }
-      });
+sortData(sort: Sort) {
+  const data = filterArray.length ? filterArray : [...respDataCopy];
+
+  if (!sort.active || sort.direction === '') {
+    this.respData = data;
+    return;
   }
+
+  const isAsc = sort.direction === 'asc';
+
+  this.respData = data.sort((a, b) => {
+    switch (sort.active) {
+
+      case 'retreat_name': {
+        const nameA = a.retreat_name ? a.retreat_name.toLowerCase() : '';
+        const nameB = b.retreat_name ? b.retreat_name.toLowerCase() : '';
+        return this.utility.compare(nameA, nameB, isAsc);
+      }
+
+      case 'duration': {
+        const durA = a.duration ? a.duration.toLowerCase() : '';
+        const durB = b.duration ? b.duration.toLowerCase() : '';
+        return this.utility.compare(durA, durB, isAsc);
+      }
+
+      case 'description': {
+        const descA = a.description ? a.description.toLowerCase() : '';
+        const descB = b.description ? b.description.toLowerCase() : '';
+        return this.utility.compare(descA, descB, isAsc);
+      }
+
+      default:
+        return 0;
+    }
+  });
+}
+
 
   ngOnDestroy(): void {
       this.destroy$.next();

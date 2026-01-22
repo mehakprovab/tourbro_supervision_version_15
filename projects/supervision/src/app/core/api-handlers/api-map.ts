@@ -600,5 +600,7 @@ export const apiMap = {
 
    addAyurvedaCenter: `${baseUrl}/dashboard/report/addAyurvedaCenter`,
    getAyurvedaCenters: `${baseUrl}/dashboard/report/listAyurvedaCenters`,
+   addMeditationRetreat: `${baseUrl}/dashboard/report/addMeditationRetreat`,
+   getMeditationRetreat: `${baseUrl}/dashboard/report/listMeditationRetreats`,
 
 };

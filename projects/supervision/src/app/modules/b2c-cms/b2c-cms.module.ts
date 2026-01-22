@@ -26,6 +26,7 @@ import { AddOrModifyHolidayWidgetComponent } from './components/add-or-modify-ho
 import { FlightAdvertisementComponent } from './components/flight-advertisement/flight-advertisement.component';
 import { AddOrModifyPartnerAirlinesComponent } from './components/add-partner-airlines/add-partner-airlines/add-partner-airlines.component';
 import { AddOrModifyAyurvedaComponent } from './components/add-or-modify-ayurveda/add-or-modify-ayurveda.component';
+import { AddOrModifyMeditationRetreatComponent } from './components/add-or-modify-meditation-retreat/add-or-modify-meditation-retreat.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { AddOrModifyAyurvedaComponent } from './components/add-or-modify-ayurved
   FlightAdvertisementComponent,
   AddOrModifyPartnerAirlinesComponent,
   AddOrModifyAyurvedaComponent,
+  AddOrModifyMeditationRetreatComponent,
 ],
   imports: [
     CommonModule,

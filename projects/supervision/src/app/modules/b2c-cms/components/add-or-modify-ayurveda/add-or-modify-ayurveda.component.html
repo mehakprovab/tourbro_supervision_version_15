@@ -144,12 +144,28 @@
 
             <td>
               <img
+
+
+              
                 *ngIf="data.image_url"
                 [src]="getImage(data.image_url)"
                 width="100"
                 height="50">
             </td>
-
+   <td class="text-left">
+                            <!-- <a [routerLink]="['/hotels/view-hotel/', data['id']]" title="View Hotel" class="p-1">
+                                <i class="fas fa-eye"></i>
+                            </a> -->
+                            <a (click)="editList(data)" title="Edit Ayurveda" class="p-1 text-primary">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+                            <button (click)="onDelete(data)"  class="p-1 text-primarys">
+                                <a title="Delete">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </button>
+        
+                        </td>
           </tr>
 
         </tbody>

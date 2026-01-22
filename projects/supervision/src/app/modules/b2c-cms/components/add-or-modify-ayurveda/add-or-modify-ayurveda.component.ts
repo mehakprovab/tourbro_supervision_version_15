@@ -224,7 +224,7 @@ private destroy$ = new Subject<void>();
 
   getImage(img) {
     let url='http://54.92.243.81/tourbro/node/dist/apps/supervision/'
-      return `${img}`;
+      return `${url+img}`;
   }
 
   updateStatus(id, status) {
@@ -268,7 +268,7 @@ private destroy$ = new Subject<void>();
       window.scroll(0, 0);
   }
 
-  deleteList(id) {
+  onDelete(id) {
       this.swalService.alert.delete(willDelete => {
           if (willDelete) {
               this.deleteAyurvedaCenter(id);

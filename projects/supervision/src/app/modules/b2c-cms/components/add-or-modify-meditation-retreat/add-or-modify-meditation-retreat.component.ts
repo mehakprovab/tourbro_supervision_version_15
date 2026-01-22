@@ -192,7 +192,7 @@ private destroy$ = new Subject<void>();
 
   getImage(img) {
     let url='http://54.92.243.81/tourbro/node/dist/apps/supervision/'
-      return `${img}`;
+      return `${url+img}`;
   }
 
 
@@ -236,18 +236,40 @@ private destroy$ = new Subject<void>();
       })
   }
 
-  onReset() {
-      this.btnName = 'Add';
-      this.editingId = "";
-      this.fileToUpload = null;
-      this.imageSrc = "";
-      this.meditationImage = "";
-      this.regConfig.reset();
-     
-      const imageControl = this.regConfig.get('image');
-      imageControl.setValidators([Validators.required]);
-      imageControl.updateValueAndValidity();
-  }
+onReset() {
+  this.btnName = 'Add';
+  this.editingId = '';
+  this.fileToUpload = null;
+  this.imageSrc = '';
+  this.meditationImage = '';
+
+  // Reset form with defaults
+  this.regConfig.reset({
+    id: '',
+    retreat_name: '',
+    duration: '',
+    description: '',
+    image: ''
+  });
+
+  // Reset image validator
+  const imageControl = this.regConfig.get('image');
+  imageControl.setValidators([Validators.required]);
+  imageControl.setValue('');
+  imageControl.markAsPristine();
+  imageControl.markAsUntouched();
+  imageControl.updateValueAndValidity();
+
+  // Reset file input DOM element
+//   if (this.labelImport?.nativeElement) {
+//     this.labelImport.nativeElement.value = null;
+//     this.labelImport.nativeElement.innerText = 'Upload Image';
+//   }
+
+  // Force UI refresh
+  this.cdr.detectChanges();
+}
+
 
   onSearchSubmit() {
   if (this.regConfig.invalid) {

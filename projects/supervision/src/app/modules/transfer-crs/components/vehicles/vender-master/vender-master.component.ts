@@ -18,7 +18,7 @@ interface Country {
 
 interface City {
   id: number;
-  name: string;
+  city_name: string;
   country_id?: number;
   // Add other properties if needed
 }
@@ -81,15 +81,7 @@ isSubmitted = false;
   }
 
   ngOnInit(): void {
-     if (typeof (window as any).$ !== 'undefined') {
-    (window as any).$(document).off('.bv');
-    (window as any).$('form').each(function() {
-      const $form = (window as any).$(this);
-      if ($form.data('bootstrapValidator')) {
-        $form.data('bootstrapValidator').destroy();
-      }
-    });
-  }
+
     const currentSupervisionUser = sessionStorage.getItem('currentSupervisionUser');
     if (currentSupervisionUser) {
       const user = JSON.parse(currentSupervisionUser);
@@ -117,7 +109,7 @@ isSubmitted = false;
   createForm() {
     this.addUpdateVendorForm = this.fb.group({
       name: ['', [Validators.required]],
-      phone_code: ['+91', [Validators.required]],
+      phone_code: ['', [Validators.required]],
       mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       email: ['', [Validators.required, Validators.email]],
       country: [null, [Validators.required]],
@@ -161,41 +153,53 @@ isSubmitted = false;
     }
   }
 
-  getCityListByCountry(country: Country) {
-    // Prevent duplicate API calls for the same country
-    if (this.currentCountry && country && 
-        this.currentCountry.name === country.name) {
-      return;
-    }
-    
-    this.currentCountry = country;
-    this.loadingCities = true;
-    
-    // Clear existing city list and reset city selection
-    this.cityList = [];
-    const cityControl = this.addUpdateVendorForm.get('city');
-    if (cityControl) {
-      cityControl.setValue('');
-      cityControl.markAsUntouched(); // Reset validation state
-    }
-    
-    // Use sortname or name based on your API requirement
-    const countryParam = country.sortname || country.name;
-    
-    this.apiHandlerServices
-      .apiHandler('supervisionCityLists', 'post', {}, {}, { country_code: countryParam })
-      .subscribe(
-        (resp: any) => {
-          this.loadingCities = false;
-          if (resp.Status && resp.data) {
-            this.cityList = resp.data;
-          }
-        },
-        () => {
-          this.loadingCities = false;
-        }
-      );
+getCityListByCountry(country: Country, selectedCity?: any) {
+  if (this.currentCountry && country &&
+      this.currentCountry.name === country.name) {
+    return;
   }
+
+  this.currentCountry = country;
+  this.loadingCities = true;
+
+  this.cityList = [];
+  const cityControl = this.addUpdateVendorForm.get('city');
+  if (cityControl) {
+    cityControl.setValue('');
+  }
+
+  const countryParam = country.sortname || country.name;
+console.log(countryParam)
+  this.apiHandlerServices
+    .apiHandler('supervisionCityLists', 'post', {}, {}, { country_code: countryParam })
+    .subscribe(
+      (resp: any) => {
+        this.loadingCities = false;
+
+        if (resp.Status && resp.data) {
+          this.cityList = resp.data;
+
+          if (selectedCity && cityControl) {
+            const cityExists = this.cityList.find(c =>
+              c.id === selectedCity || c.city_name === selectedCity
+            );
+
+            if (cityExists) {
+              if (cityExists.id !== undefined && cityExists.id !== null) {
+                cityControl.setValue(cityExists.id);
+              } else {
+                cityControl.setValue(cityExists.city_name);
+              }
+            }
+          }
+        }
+      },
+      () => {
+        this.loadingCities = false;
+      }
+    );
+}
+
 
 
 
@@ -276,11 +280,13 @@ onVendorSave() {
     next: (res: any) => {
       if (res.Status === true && (res.statusCode === 200 || res.statusCode === 201)) {
         this.loading = false;
+        this.isSubmitted=false
         this.addUpdateVendorForm.reset({ status: 1 });
         this.swalService.alert.success(res.Message);
         this.getVendorList();
       } else {
         this.loading = false;
+            this.isSubmitted=false
         this.swalService.alert.oops(res.Message);
       }
     },
@@ -362,14 +368,15 @@ onEditVendor(data: any) {
     mobile: data.mobile,
     email: data.email,
     country: countryObj, // This should be the country object
-    city: data.city_id || data.city, // Use city_id or city
+    // city: data.city_id || data.city, // Use city_id or city
     address: data.address,
-    status: data.status || 1
+    
+ status: data.status === 1
   });
   
   // Get cities for the selected country
   if (countryObj) {
-    this.getCityListByCountry(countryObj);
+    this.getCityListByCountry(countryObj, data.city_id || data.city);
   }
   
   window.scroll({ top: 0, behavior: 'smooth' });
@@ -491,12 +498,15 @@ updateVendor() {
               control.markAsUntouched();
             }
           });
+          this.isSubmitted=false
         } else {
           this.swalService.alert.oops(res.Message);
+          this.isSubmitted=false
         }
         this.loading = false;
       },
       error: () => {
+        this.isSubmitted=false
         this.loading = false;
       }
     });

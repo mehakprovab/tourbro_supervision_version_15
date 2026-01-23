@@ -214,7 +214,7 @@ export const apiMap = {
     propertyList: `${B2C_URL}/webservice/supplier/find_properties`,
     userTypeList: `${baseUrl}/user/service/UserTypeList`,
     userTitleList: `${baseUrl}/user/service/userTitleList`,
-    phoneCodeList: `${B2B_URL}/b2b/common/phoneCodeList`,
+    phoneCodeList: `${baseUrl}/dashboard/report/phoneCodeList`,
     addUser: `${baseUrl}/user/service/addUser`,
     deleteUser: `${baseUrl}/user/service/deleteUser`,
     updateUserStatus: `${baseUrl}/user/service/updateUserStatus`,
@@ -606,4 +606,12 @@ deleteAyurvedaCenter: `${baseUrl}/dashboard/report/deleteAyurvedaCenter`,
    getMeditationRetreat: `${baseUrl}/dashboard/report/listMeditationRetreats`,
    updateMeditationRetreat: `${baseUrl}/dashboard/report/updateMeditationRetreat`,
    deleteMeditationRetreat: `${baseUrl}/dashboard/report/deleteMeditationRetreat`,
+
+   createVendorMaster: `${baseUrl}/transfer/addVendor`,
+   vendorList: `${baseUrl}/transfer/VendorList`,
+   deleteVendor:`${baseUrl}/transfer/deleteVendor`,
+    updateVendor:`${baseUrl}/transfer/updateVendor`,
+
+      supervisionCityLists: `${baseUrl}/transfer/cityList`,
+      supervisionCountryLists: `${baseUrl}/transfer/countryList`,
 };

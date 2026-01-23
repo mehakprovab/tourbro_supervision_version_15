@@ -84,8 +84,6 @@ private destroy$ = new Subject<void>();
   collectionSize: number;
   displayColumn: { key: string, value: string }[] = [
       { key: 'id', value: 'Sl No.' },
-      { key: 'action', value: 'Action' },
-      { key: 'status', value: 'Status' },
       { key: 'center_name', value: 'Center Name' },
       { key: 'location', value: 'Location' },
       { key: 'short_description', value: 'Description' },

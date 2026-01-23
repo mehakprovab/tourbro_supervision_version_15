@@ -121,22 +121,9 @@
 
             <td>{{ i + 1 }}</td>
 
-            <td>
-              <a href="javascript:void(0)"
-                 (click)="updateStatus(data.id, data.status === 'active' ? 'inactive' : 'active')">
-                {{ data.status === 'active' ? 'Deactivate' : 'Activate' }}
-              </a>
-            </td>
+           
 
-            <td>
-              <span class="badge"
-                [ngClass]="{
-                  'badge-success': data.status === 'active',
-                  'badge-danger': data.status === 'inactive'
-                }">
-                {{ data.status }}
-              </span>
-            </td>
+        
 
             <td>{{ data.center_name }}</td>
             <td>{{ data.location }}</td>

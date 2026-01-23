@@ -6,6 +6,7 @@ import { TransferVehiclesComponent } from './components/vehicles/vehicles.compon
 import { VehicleTypeComponent } from './components/vehicles/vehicle-type/vehicle-master.component';
 import { TermsAndConditionsComponent } from './components/vehicles/termsandconditions/termsandconditions.component';
 import { VehicleMasterComponent } from './components/vehicles/vehicle-master/vehicle-master.component';
+import { VenderMasterComponent } from './components/vehicles/vender-master/vender-master.component';
 
 const routes: Routes = [
     {
@@ -31,6 +32,11 @@ const routes: Routes = [
             {
                 path: 'transfer-vehicle-master',
                 component: VehicleMasterComponent,
+                data: { extraParameter: 'transferCrsMenus' }
+            },
+ {
+                path: 'vender-master',
+                component: VenderMasterComponent,
                 data: { extraParameter: 'transferCrsMenus' }
             },
         ]

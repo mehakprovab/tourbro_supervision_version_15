@@ -614,4 +614,11 @@ deleteAyurvedaCenter: `${baseUrl}/dashboard/report/deleteAyurvedaCenter`,
 
       supervisionCityLists: `${baseUrl}/transfer/cityList`,
       supervisionCountryLists: `${baseUrl}/transfer/countryList`,
+
+      
+   addDriver: `${baseUrl}/transfer/addDriver`,
+   driverList: `${baseUrl}/transfer/DriverList`,
+   deleteDriver:`${baseUrl}/transfer/deleteDriver`,
+    updateDriver:`${baseUrl}/transfer/updateDriver`,
+
 };

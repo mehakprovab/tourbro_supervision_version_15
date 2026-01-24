@@ -8,11 +8,7 @@
 
   <!-- ADD / UPDATE FORM -->
   <div class="card" *ngIf="enabledForm">
-    <form
-      [formGroup]="addUpdateVendorForm"
-      (ngSubmit)="saveTextName === 'Save' ? onVendorSave() : updateVendor()"
-
-    >
+    <form [formGroup]="addUpdateVendorForm" (ngSubmit)="saveTextName === 'Save' ? onSave() : update()">
       <div class="form-group row">
 
         <!-- Vendor Name -->
@@ -21,36 +17,41 @@
             Driver Name <span class="text-danger">*</span>
           </label>
           <div class="col-sm-12">
-            <input
-              type="text"
-              class="form-control"
+            <input type="text" class="form-control"
               [class.is-invalid]="addUpdateVendorForm.get('name').invalid && (addUpdateVendorForm.get('name').touched || isSubmitted)"
-              placeholder="Driver Name"
-              formControlName="name"
-            />
-            <div *ngIf="addUpdateVendorForm.get('name').invalid && (addUpdateVendorForm.get('name').touched || isSubmitted)" class="invalid-feedback">
+              placeholder="Driver Name" formControlName="name" />
+            <div
+              *ngIf="addUpdateVendorForm.get('name').invalid && (addUpdateVendorForm.get('name').touched || isSubmitted)"
+              class="invalid-feedback">
               <span *ngIf="addUpdateVendorForm.get('name').errors?.required">
                 Driver Name is required
               </span>
             </div>
           </div>
         </div>
-<div class="col-4">
-  <label class="px-3 control-label">
-    Age <span class="text-danger">*</span>
-  </label>
-  <input
-    type="number"
-    class="form-control"
-    formControlName="age"
-    placeholder="Age"
-  />
-       <div *ngIf="addUpdateVendorForm.get('age').invalid && (addUpdateVendorForm.get('age').touched || isSubmitted)" class="invalid-feedback">
+        <div class="col-4">
+          <label class="px-3 control-label">
+            Age <span class="text-danger">*</span>
+          </label>
+          <div class="col-sm-12">
+            <input type="number" class="form-control" formControlName="age" placeholder="Age" [class.is-invalid]="
+        addUpdateVendorForm.get('age').invalid &&
+        (addUpdateVendorForm.get('age').touched || isSubmitted)
+      " />
+
+            <div *ngIf="
+        addUpdateVendorForm.get('age').invalid &&
+        (addUpdateVendorForm.get('age').touched || isSubmitted)
+      " class="invalid-feedback">
               <span *ngIf="addUpdateVendorForm.get('age').errors?.required">
                 Driver Age is required
               </span>
+
             </div>
-</div>
+          </div>
+        </div>
+
+
 
         <!-- Phone Code -->
         <div class="col-4">
@@ -58,17 +59,17 @@
             Code <span class="text-danger">*</span>
           </label>
           <div class="col-sm-12">
-            <select 
-              class="form-control" 
+            <select class="form-control"
               [class.is-invalid]="addUpdateVendorForm.get('phone_code').invalid && (addUpdateVendorForm.get('phone_code').touched || isSubmitted)"
-              formControlName="phone_code"
-            >
-              <option value="" >Select Phone Code</option>
+              formControlName="phone_code">
+              <option value="">Select Phone Code</option>
               <option *ngFor="let c of respData" [value]="c.phone_code">
                 {{ c.phone_code }}({{c.code}})
               </option>
             </select>
-            <div *ngIf="addUpdateVendorForm.get('phone_code').invalid && (addUpdateVendorForm.get('phone_code').touched || isSubmitted)" class="invalid-feedback">
+            <div
+              *ngIf="addUpdateVendorForm.get('phone_code').invalid && (addUpdateVendorForm.get('phone_code').touched || isSubmitted)"
+              class="invalid-feedback">
               Phone Code is required
             </div>
           </div>
@@ -80,14 +81,12 @@
             Mobile <span class="text-danger">*</span>
           </label>
           <div class="col-sm-12">
-            <input
-              type="text"
-              class="form-control"
+            <input type="text" class="form-control"
               [class.is-invalid]="addUpdateVendorForm.get('mobile').invalid && (addUpdateVendorForm.get('mobile').touched || isSubmitted)"
-              placeholder="Mobile Number"
-              formControlName="mobile"
-            />
-            <div *ngIf="addUpdateVendorForm.get('mobile').invalid && (addUpdateVendorForm.get('mobile').touched || isSubmitted)" class="invalid-feedback">
+              placeholder="Mobile Number" formControlName="mobile" />
+            <div
+              *ngIf="addUpdateVendorForm.get('mobile').invalid && (addUpdateVendorForm.get('mobile').touched || isSubmitted)"
+              class="invalid-feedback">
               <span *ngIf="addUpdateVendorForm.get('mobile').errors?.required">
                 Mobile number is required
               </span>
@@ -104,14 +103,12 @@
             Email <span class="text-danger">*</span>
           </label>
           <div class="col-sm-12">
-            <input
-              type="email"
-              class="form-control"
+            <input type="email" class="form-control"
               [class.is-invalid]="addUpdateVendorForm.get('email').invalid && (addUpdateVendorForm.get('email').touched || isSubmitted)"
-              placeholder="Email"
-              formControlName="email"
-            />
-            <div *ngIf="addUpdateVendorForm.get('email').invalid && (addUpdateVendorForm.get('email').touched || isSubmitted)" class="invalid-feedback">
+              placeholder="Email" formControlName="email" />
+            <div
+              *ngIf="addUpdateVendorForm.get('email').invalid && (addUpdateVendorForm.get('email').touched || isSubmitted)"
+              class="invalid-feedback">
               <span *ngIf="addUpdateVendorForm.get('email').errors?.required">
                 Email is required
               </span>
@@ -123,29 +120,27 @@
         </div>
 
         <!-- Country -->
-    <!-- Country -->
-<div class="col-4">
-  <label class="px-3 control-label">
-    Country <span class="text-danger">*</span>
-  </label>
-  <div class="col-sm-12">
-    <select 
-      class="form-control" 
-      [class.is-invalid]="addUpdateVendorForm.get('country').invalid && (addUpdateVendorForm.get('country').touched || isSubmitted)"
-      formControlName="country"
-      [compareWith]="compareCountries"
-    >
-      <option [ngValue]="null" disabled>Select Country</option>
-      <option *ngFor="let c of countryList" [ngValue]="c">
-        {{ c.name }}
-      </option>
-    </select>
-    <div *ngIf="addUpdateVendorForm.get('country').invalid && (addUpdateVendorForm.get('country').touched || isSubmitted)" 
-         class="invalid-feedback d-block">
-      Country is required
-    </div>
-  </div>
-</div>
+        <!-- Country -->
+        <div class="col-4">
+          <label class="px-3 control-label">
+            Country <span class="text-danger">*</span>
+          </label>
+          <div class="col-sm-12">
+            <select class="form-control"
+              [class.is-invalid]="addUpdateVendorForm.get('country').invalid && (addUpdateVendorForm.get('country').touched || isSubmitted)"
+              formControlName="country" [compareWith]="compareCountries">
+              <option [ngValue]="null" disabled>Select Country</option>
+              <option *ngFor="let c of countryList" [ngValue]="c">
+                {{ c.name }}
+              </option>
+            </select>
+            <div
+              *ngIf="addUpdateVendorForm.get('country').invalid && (addUpdateVendorForm.get('country').touched || isSubmitted)"
+              class="invalid-feedback d-block">
+              Country is required
+            </div>
+          </div>
+        </div>
 
         <!-- City -->
         <div class="col-4">
@@ -153,18 +148,17 @@
             City <span class="text-danger">*</span>
           </label>
           <div class="col-sm-12">
-            <select 
-              class="form-control" 
+            <select class="form-control"
               [class.is-invalid]="addUpdateVendorForm.get('city').invalid && (addUpdateVendorForm.get('city').touched || isSubmitted)"
-              formControlName="city"
-              [disabled]="loadingCities || !cityList.length"
-            >
+              formControlName="city" [disabled]="loadingCities || !cityList.length">
               <option value="" disabled>Select City</option>
               <option *ngFor="let city of cityList" [value]="city.city_name">
                 {{ city.city_name }}
               </option>
             </select>
-            <div *ngIf="addUpdateVendorForm.get('city').invalid && (addUpdateVendorForm.get('city').touched || isSubmitted)" class="invalid-feedback">
+            <div
+              *ngIf="addUpdateVendorForm.get('city').invalid && (addUpdateVendorForm.get('city').touched || isSubmitted)"
+              class="invalid-feedback">
               City is required
             </div>
             <small *ngIf="loadingCities" class="text-info">
@@ -173,56 +167,63 @@
           </div>
         </div>
 
-   
         <div class="col-4">
-  <label class="px-3 control-label">
-    Vendor <span class="text-danger">*</span>
-  </label>
-  <div class="col-sm-12">
-    <select class="form-control" formControlName="vendor_id">
-      <option value="">Select Vendor</option>
-      <option *ngFor="let v of vendorList" [value]="v.id">
-        {{ v.name }}
-      </option>
-    </select>
-  </div>
-</div>
-<div class="col-4">
-  <label class="px-3 control-label">
-    DL No <span class="text-danger">*</span>
-  </label>
-  <div class="col-sm-12">
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Driving License Number"
-      formControlName="dl_no"
-      [class.is-invalid]="addUpdateVendorForm.get('dl_no').invalid && 
-        (addUpdateVendorForm.get('dl_no').touched || isSubmitted)"
-    />
-    <div *ngIf="addUpdateVendorForm.get('dl_no').invalid && 
-        (addUpdateVendorForm.get('dl_no').touched || isSubmitted)"
-        class="invalid-feedback">
-      DL Number is required
-    </div>
-  </div>
-</div>
+          <label class="px-3 control-label">
+            Select Vendor <span class="text-danger">*</span>
+          </label>
+          <div class="col-sm-12">
+            <select class="form-control" formControlName="vendor_id" [class.is-invalid]="
+        addUpdateVendorForm.get('vendor_id').invalid &&
+        (addUpdateVendorForm.get('vendor_id').touched || isSubmitted)
+      ">
+              <option value="">Select Vendor</option>
+              <option *ngFor="let v of vendorList" [value]="v.id">
+                {{ v.name }}
+              </option>
+            </select>
 
+            <div *ngIf="
+        addUpdateVendorForm.get('vendor_id').invalid &&
+        (addUpdateVendorForm.get('vendor_id').touched || isSubmitted)
+      " class="invalid-feedback">
+              Vendor is required
+            </div>
+          </div>
+        </div>
         <div class="col-4">
-  <label class="px-3 control-label">
-    Driver Image <span class="text-danger">*</span>
-  </label>
-  <div class="col-sm-12">
-    <input
-      type="file"
-      class="form-control"
-      accept="image/*"
-      (change)="onImageChange($event)"
-    />
-  </div>
-</div>
+          <label class="px-3 control-label">
+            DL No <span class="text-danger">*</span>
+          </label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control" placeholder="Driving License Number" formControlName="dl_no"
+              [class.is-invalid]="addUpdateVendorForm.get('dl_no').invalid && 
+        (addUpdateVendorForm.get('dl_no').touched || isSubmitted)" />
+            <div *ngIf="addUpdateVendorForm.get('dl_no').invalid && 
+        (addUpdateVendorForm.get('dl_no').touched || isSubmitted)" class="invalid-feedback">
+              DL Number is required
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <label class="px-3 control-label">
+            Driver Image <span class="text-danger">*</span>
+          </label>
+          <div class="col-sm-12">
+            <input type="file" class="form-control" accept="image/*" formControlName="image"
+              (change)="onImageChange($event)" [class.is-invalid]="
+          addUpdateVendorForm.get('image').invalid &&
+          (addUpdateVendorForm.get('image').touched || isSubmitted)
+        " />
 
-<!-- DL Number -->
+            <div *ngIf="
+          addUpdateVendorForm.get('image').invalid &&
+          (addUpdateVendorForm.get('image').touched || isSubmitted)
+        " class="invalid-feedback">
+              Driver image is required
+            </div>
+          </div>
+        </div>
+        <!-- DL Number -->
 
 
       </div>
@@ -248,12 +249,7 @@
   <div class="form-group mb-0 col-sm-6 col-6 p-0 float-right has-search d-flex justify-content-end">
     <div class="col-6 pt-3">
       <span class="fa fa-search form-control-feedback"></span>
-      <input
-        class="form-control"
-        type="text"
-        [(ngModel)]="searchText"
-        placeholder="Search"
-      />
+      <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Search" />
     </div>
   </div>
 </div>
@@ -270,80 +266,62 @@
             </tr>
           </thead>
 
-         <tbody>
-  <tr *ngIf="searchSpin">
-    <td colspan="9" class="text-center">
-      <mat-spinner [diameter]="30"></mat-spinner>
-    </td>
-  </tr>
+          <tbody>
+            <tr *ngIf="searchSpin">
+              <td colspan="10" class="text-center">
+                <mat-spinner [diameter]="30"></mat-spinner>
+              </td>
+            </tr>
 
-  <tr *ngIf="!searchSpin && !vendorList.length">
-    <td colspan="9" class="text-center text-muted">
-      No Data Found!
-    </td>
-  </tr>
+            <tr *ngIf="!searchSpin && !vendorList.length">
+              <td colspan="10" class="text-center text-muted">
+                No Data Found!
+              </td>
+            </tr>
 
-  <tr
-    *ngFor="
-      let item of vendorList
+            <tr *ngFor="
+      let item of driverList
         | filter: searchText
         | slice:
             (page - 1) * pageSize :
             (page - 1) * pageSize + pageSize;
       let i = index
-    "
-  >
-    <td>{{ i + 1 }}</td>
+    ">
+              <td>{{ i + 1 }}</td>
 
-    <!-- ❌ Status removed -->
+              <!-- ❌ Status removed -->
 
-    <td>{{ item.name }}</td>
-    <td>{{ item.dl_no }}</td>
-    <td>{{ item.mobile }}</td>
-    <td>{{ item.email }}</td>
-    <td>{{ item.country }}</td>
-    <td>{{ item.city }}</td>
-    <td>{{ item.address }}</td>
-     <td>
-            <img *ngIf="item.image_url"
-              [src]="getImage(item.image_url)"
-              width="80"
-              height="40">
-          </td>
-    <td>
-      <button
-        class="btn btn-sm btn-primary mr-1"
-        (click)="onEditVendor(item)"
-      >
-        Edit
-      </button>
-      <button
-        class="btn btn-sm btn-danger"
-        (click)="onDeleteVendor(item.id)"
-      >
-        Delete
-      </button>
-    </td>
-  </tr>
-</tbody>
+              <td>{{ item.name }}</td>
+              <td>{{ item.age }}</td>
+              <td>{{ item.dl_no }}</td>
+              <td>{{ item.mobile }}</td>
+              <td>{{ item.email }}</td>
+              <td>{{ item.country }}</td>
+              <td>{{ item.city }}</td>
+              <td>{{ item.v_id }}</td>
+              <td>
+                <img *ngIf="item.image_url" [src]="getImage(item.image_url)" width="80" height="40">
+              </td>
+              <td>
+                <button class="btn btn-sm btn-primary mr-1" (click)="onEditVendor(item)">
+                  Edit
+                </button>
+                <button class="btn btn-sm btn-danger" (click)="onDelete(item.id)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
 
         </table>
 
         <!-- PAGINATION -->
         <div class="card-footer pb-0">
           <div class="d-flex w-100 justify-content-between">
-            <ngb-pagination
-              [collectionSize]="collectionSize"
-              [(page)]="page"
-              [pageSize]="pageSize"
-              [maxSize]="5"
-            ></ngb-pagination>
+            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
+              [maxSize]="5"></ngb-pagination>
 
-            <select
-              class="custom-select"
-              style="width: auto"
-              [(ngModel)]="pageSize"
-            >
+            <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
               <option [ngValue]="20">20</option>
               <option [ngValue]="50">50</option>
               <option [ngValue]="100">100</option>
@@ -358,12 +336,9 @@
 </div>
 
 <!-- LOADER -->
-<ngx-loading
-  [show]="loading"
-  [config]="{
+<ngx-loading [show]="loading" [config]="{
     primaryColour: primaryColour,
     secondaryColour: secondaryColour,
     backdropBorderRadius: '3px',
     fullScreenBackdrop: true
-  }"
-></ngx-loading>
+  }"></ngx-loading>

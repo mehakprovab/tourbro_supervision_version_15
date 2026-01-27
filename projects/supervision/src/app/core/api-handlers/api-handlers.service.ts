@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { apiMap } from './api-map';
 import { Logger } from '../logger/logger.service';
+import { HttpHeaders } from '@angular/common/http';
 
 const log = new Logger('ApiHandlerService');
 @Injectable({
@@ -20,24 +21,27 @@ export class ApiHandlerService {
    * @param params any parameters to api call
    * @param data is the payload data to be passed
    */
-  apiHandler(topic: string, method: string, query: any = {}, params: any = {}, data: any = {}): Observable<any> {
+  apiHandler(topic: string, method: string, query: any = {}, params: any = {}, data: any = {}, headers: any = {}   ): Observable<any> {
     method = method.toLocaleLowerCase();
     const url: string = this.getUrls(topic, query, params);
     // log.debug(topic, method, query, params, data, url);
     let resp;
+    const httpOptions = {
+  headers: new HttpHeaders(headers)
+};
     switch (method) {
       case 'get':
-        resp = this.httpClient.get<Observable<any>>(url);
+        resp = this.httpClient.get<Observable<any>>(url,httpOptions);
         break;
       case 'post':
-        resp = this.httpClient.post<Observable<any>>(url, data);
+        resp = this.httpClient.post<Observable<any>>(url, data,httpOptions);
         break;
       case 'delete':
-        resp = this.httpClient.delete<Observable<any>>(url, data
+        resp = this.httpClient.delete<Observable<any>>(url, data,
         );
         break;
       case 'put':
-        resp = this.httpClient.put<Observable<any>>(url, data);
+        resp = this.httpClient.put<Observable<any>>(url, data,httpOptions);
         break;
     }
     return resp;

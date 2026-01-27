@@ -683,7 +683,30 @@
                                           </ngb-panel>
                                         </ngb-accordion>
 
-
+   <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" [activeIds]="extraParameter">
+                                          <ngb-panel id="manageB2CMenus" *ngIf="isSubMenuExists('Add price',TRANSFER_CRS)">
+                                            <ng-template ngbPanelHeader>
+                                              <button ngbPanelToggle class="vsm-link pl-1 "
+                                                [ngClass]="{'collapsed' : globals.toggleSidebar}">
+                                                <span class="vsm-title pl-10"> <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                  Pricing</span>
+                                                <i class="vsm-arrow"></i>
+                                              </button>
+                                            </ng-template>
+                                            <ng-template ngbPanelContent>
+                                              <a routerLinkActive="active-item" 
+                                                  [routerLink]="['/transfers/pricing-list']"
+                                                  [queryParams]="{ tab: 'add_pricing' }"
+                                                class="vsm-link pl-1 ">
+                                                <span class="vsm-title pl-10">
+                                                  
+                                                  Add / Edit Pricing
+                                                </span>
+                                              </a>
+                                       
+                                            </ng-template>
+                                          </ngb-panel>
+                                        </ngb-accordion>
 
                                         <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" [activeIds]="extraParameter">
                                           <ngb-panel id="manageB2CMenus" *ngIf="isSubMenuExists('Add Vehicle',TRANSFER_CRS)">
@@ -691,7 +714,7 @@
                                               <button ngbPanelToggle class="vsm-link pl-1 "
                                                 [ngClass]="{'collapsed' : globals.toggleSidebar}">
                                                 <span class="vsm-title pl-10"> <i class="fa fa-circle-o" aria-hidden="true"></i>
-                                                  Route & Pricing Master</span>
+                                                  Route</span>
                                                 <i class="vsm-arrow"></i>
                                               </button>
                                             </ng-template>

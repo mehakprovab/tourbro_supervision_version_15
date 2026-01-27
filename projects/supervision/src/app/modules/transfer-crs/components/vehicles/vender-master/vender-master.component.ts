@@ -375,10 +375,35 @@ onEditVendor(data: any) {
   });
   
   // Get cities for the selected country
-  if (countryObj) {
-    this.getCityListByCountry(countryObj, data.city_id || data.city);
+const selectedCountry = this.countryList.find(
+    c => c.name === data.country
+  );
+
+  if (selectedCountry) {
+    this.addUpdateVendorForm.patchValue({
+      country: selectedCountry
+    });
+ const countryParam = selectedCountry.sortname || selectedCountry.name;
+    // 🚀 LOAD CITIES FIRST
+   this.apiHandlerServices
+  .apiHandler('supervisionCityLists', 'post', {}, {}, { country_code: countryParam })
+  .subscribe((resp: any) => {
+    if (resp.Status && resp.data) {
+      this.cityList = resp.data;
+
+      // Find the city object
+      const selectedCity = this.cityList.find(
+        c => c.city_name === data.city || c.id === data.city
+      );
+
+      if (selectedCity) {
+        this.addUpdateVendorForm.patchValue({
+          city: selectedCity.city_name // match your select [value]
+        });
+      }
+    }
+  });
   }
-  
   window.scroll({ top: 0, behavior: 'smooth' });
 }
 

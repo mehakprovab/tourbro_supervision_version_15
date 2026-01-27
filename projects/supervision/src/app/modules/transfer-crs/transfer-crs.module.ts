@@ -16,6 +16,7 @@ import { VehicleMasterComponent } from './components/vehicles/vehicle-master/veh
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { VenderMasterComponent } from './components/vehicles/vender-master/vender-master.component';
 import { DriverMasterComponent } from './components/vehicles/driver-master/driver-master.component';
+import { PricingMasterComponent } from './components/vehicles/pricing-master/pricing-master.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -36,7 +37,8 @@ import { DriverMasterComponent } from './components/vehicles/driver-master/drive
     TermsAndConditionsComponent,
     VehicleMasterComponent,
     VenderMasterComponent,
-    DriverMasterComponent
+    DriverMasterComponent,
+    PricingMasterComponent
   ],
   exports: [
   ]

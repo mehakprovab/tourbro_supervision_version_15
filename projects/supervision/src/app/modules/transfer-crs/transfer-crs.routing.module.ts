@@ -8,6 +8,7 @@ import { TermsAndConditionsComponent } from './components/vehicles/termsandcondi
 import { VehicleMasterComponent } from './components/vehicles/vehicle-master/vehicle-master.component';
 import { VenderMasterComponent } from './components/vehicles/vender-master/vender-master.component';
 import { DriverMasterComponent } from './components/vehicles/driver-master/driver-master.component';
+import { PricingMasterComponent } from './components/vehicles/pricing-master/pricing-master.component';
 
 const routes: Routes = [
     {
@@ -43,6 +44,11 @@ const routes: Routes = [
              {
                 path: 'driver-master',
                 component: DriverMasterComponent,
+                data: { extraParameter: 'transferCrsMenus' }
+            },
+               {
+                path: 'pricing-list',
+                component: PricingMasterComponent,
                 data: { extraParameter: 'transferCrsMenus' }
             },
         ]

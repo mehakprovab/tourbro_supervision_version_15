@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
@@ -36,8 +36,8 @@ export class DriverMasterComponent implements OnInit, OnDestroy {
   public saveTextName: string = 'Save';
   public id: any;
   public noData: boolean = true;
-  public respData: any[] = [];
-  public vendorList: any[] = [];
+  public respData: any[] = []; public vendorList: any[] = [];
+  public driverList: any[] = [];
   public searchSpin: boolean = true;
   public loading: boolean = false;
   public primaryColour: string = '#1976d2';
@@ -58,12 +58,17 @@ export class DriverMasterComponent implements OnInit, OnDestroy {
     'Action'
   ];
 
+imagePreview: any | null = null;   // new selected image
+existingImage: string | null = null;  // backend image
+isEditMode = false;
+
 
   countryList: Country[] = [];
   cityList: City[] = [];
   private currentCountry: Country = null;
   private destroy$ = new Subject<void>();
-
+@ViewChild('labelImport', { static: false })
+labelImport!: ElementRef;
   public pageSize = 20;
   public page = 1;
   public collectionSize: number = 0;
@@ -84,7 +89,7 @@ export class DriverMasterComponent implements OnInit, OnDestroy {
   }
   getImage(img) {
     let url = 'http://54.92.243.81/tourbro/node/dist/apps/supervision/'
-    return `${url + img}`;
+    return `${ img}`;
   }
 
   ngOnInit(): void {
@@ -96,10 +101,11 @@ export class DriverMasterComponent implements OnInit, OnDestroy {
     }
 
     this.createForm();
+    
+    this.getVendorList()
     this.getDriverList();
     this.getCountryList();
     this.getPhoneList();
-    this.getVendorList()
     this.setupCountryChangeListener();
   }
   getVendorList() {
@@ -153,14 +159,39 @@ export class DriverMasterComponent implements OnInit, OnDestroy {
       }
     });
   }
-  onImageChange(event: any) {
-    if (event.target.files && event.target.files.length) {
-      const file = event.target.files[0];
-      this.addUpdateVendorForm.patchValue({
-        image: file
-      });
-    }
+  
+onImageChange(event: Event) {
+  const input = event.target as HTMLInputElement;
+
+  if (!input.files || input.files.length === 0) {
+    return;
   }
+
+  const file = input.files[0];
+
+  // Size check (1MB)
+  if (file.size > 1048576) {
+    this.swalService.alert.oops('Maximum upload file size: 1 MB');
+    input.value = '';
+    this.imagePreview = null;
+    return;
+  }
+
+  // Store file in form manually
+  this.addUpdateVendorForm.get('image').setValue(file);
+  this.addUpdateVendorForm.get('image').updateValueAndValidity();
+
+  // Preview
+  const reader = new FileReader();
+  reader.onload = () => {
+    this.imagePreview = reader.result as string;
+    this.cdr.detectChanges(); // 🔥 FORCE UI UPDATE
+  };
+  reader.readAsDataURL(file);
+}
+
+
+
 
   setupCountryChangeListener() {
     const countryControl = this.addUpdateVendorForm.get('country');
@@ -262,7 +293,16 @@ export class DriverMasterComponent implements OnInit, OnDestroy {
 
     this.enabledForm = true;
   }
+  getBearerToken(): string | null {
+  const userStr = localStorage.getItem('currentDomainUser');
+  if (!userStr) return null;
+
+  const user = JSON.parse(userStr);
+  return user.access_token || null;
+}
+
   onSave() {
+const token = this.getBearerToken();
     this.isSubmitted = true;
     this.markAllFieldsAsTouched();
 
@@ -286,7 +326,9 @@ export class DriverMasterComponent implements OnInit, OnDestroy {
     fd.append('city', formValue.city);
 
     this.loading = true;
-
+ {
+      Authorization: `Bearer ${token}`
+    }
     this.apiHandlerServices
       .apiHandler('addDriver', 'POST', {}, {}, fd)
       .subscribe({
@@ -323,73 +365,84 @@ export class DriverMasterComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (res: any) => {
           if (res.Status) {
-            this.vendorList = res.data || [];
-            this.collectionSize = this.vendorList.length;
+            this.driverList = res.data || [];
+            this.collectionSize = this.driverList.length;
           } else {
-            this.vendorList = [];
+            this.driverList = [];
             this.collectionSize = 0;
           }
           this.searchSpin = false;
         },
         error: () => {
-          this.vendorList = [];
+          this.driverList = [];
           this.collectionSize = 0;
           this.searchSpin = false;
         }
       });
   }
-
-  onEditVendor(data: any) {
-    this.id = data.id;
-    this.saveTextName = 'Update';
-    this.enabledForm = true;
-
-    // Reset form and validation states first
-    this.addUpdateVendorForm.reset();
-
-    // Mark all controls as untouched to hide validation errors
-    Object.keys(this.addUpdateVendorForm.controls).forEach(key => {
-      const control = this.addUpdateVendorForm.get(key);
-      if (control) {
-        control.markAsUntouched();
-      }
-    });
-
-    // Find the country object from countryList
-    let countryObj: Country = null;
-    if (data.country_name || data.country) {
-      // Find the country object by name
-      countryObj = this.countryList.find(c =>
-        c.name === data.country_name || c.name === data.country
-      );
-
-      // If not found by name, try to find by id
-      if (!countryObj && data.country_id) {
-        countryObj = this.countryList.find(c => c.id === data.country_id);
-      }
-    }
-    this.id = data.id
-    // Patch values - use the country object, not string
-    this.addUpdateVendorForm.patchValue({
-      name: data.name,
-      phone_code: data.phone_code,
-      mobile: data.mobile,
-      email: data.email,
-      country: countryObj, // This should be the country object
-      // city: data.city_id || data.city, // Use city_id or city
-      address: data.address,
-
-      status: data.status === 1
-    });
-
-    // Get cities for the selected country
-    if (countryObj) {
-      this.getCityListByCountry(countryObj, data.city_id || data.city);
-    }
-
-    window.scroll({ top: 0, behavior: 'smooth' });
+getVendorName(vendorId: any): string {
+  if (!vendorId || !this.vendorList.length) {
+    return '-';
   }
 
+  const vendor = this.vendorList.find(v => v.id === vendorId);
+  return vendor ? vendor.name : '-';
+}
+
+
+editDriver(driver: any) {
+  this.saveTextName = 'Update';
+  this.enabledForm = true;
+console.log(driver,"drivertgg")
+  // patch basic fields
+  this.addUpdateVendorForm.patchValue({
+    name: driver.name,
+    age: driver.age,
+    email: driver.email,
+    mobile: driver.mobile,
+    phone_code:driver.phone_code,
+    dl_no: driver.dl_no,
+    vendor_id: driver.vendor_id
+  });
+
+  // country handling
+  const selectedCountry = this.countryList.find(
+    c => c.name === driver.country
+  );
+
+  if (selectedCountry) {
+    this.addUpdateVendorForm.patchValue({
+      country: selectedCountry
+    });
+ const countryParam = selectedCountry.sortname || selectedCountry.name;
+    // 🚀 LOAD CITIES FIRST
+   this.apiHandlerServices
+  .apiHandler('supervisionCityLists', 'post', {}, {}, { country_code: countryParam })
+  .subscribe((resp: any) => {
+    if (resp.Status && resp.data) {
+      this.cityList = resp.data;
+
+      // Find the city object
+      const selectedCity = this.cityList.find(
+        c => c.city_name === driver.city || c.id === driver.city
+      );
+
+      if (selectedCity) {
+        this.addUpdateVendorForm.patchValue({
+          city: selectedCity.city_name // match your select [value]
+        });
+      }
+    }
+  });
+
+  }
+
+  // image
+  this.existingImage = driver.dl_image;
+}
+
+
+  
   getPhoneList() {
     this.apiHandlerServices.apiHandler('phoneCodeList', 'post', {}, {})
       .subscribe((resp: any) => {
@@ -458,9 +511,14 @@ export class DriverMasterComponent implements OnInit, OnDestroy {
     const formValue = this.addUpdateVendorForm.value;
     const fd = new FormData();
 
-    if (formValue.image) {
-      fd.append('image', formValue.image);
-    }
+
+// If user selected new image, use it
+if (formValue.image) {
+  fd.append('image', formValue.image);
+} else if (this.existingImage) {
+  // No new file, send the existing image name or URL
+  fd.append('existing_image', this.existingImage);
+}
 
     fd.append('vendor_id', formValue.vendor_id);
     fd.append('name', formValue.name);
@@ -469,15 +527,25 @@ export class DriverMasterComponent implements OnInit, OnDestroy {
     fd.append('mobile', formValue.mobile);
     fd.append('age', formValue.age);
     fd.append('dl_no', formValue.dl_no);
-    fd.append('country', formValue.country);
+    fd.append('country', formValue.country.name);
     fd.append('city', formValue.city);
     fd.append('id', this.id);
 
     this.apiHandlerServices
       .apiHandler('updateDriver', 'POST', {}, {}, fd)
-      .subscribe(() => {
-        this.getDriverList();
-        this.saveTextName = 'Save';
+      .subscribe((res) => {
+        if (res.Status) {
+            this.swalService.alert.success(res.Message);
+            this.addUpdateVendorForm.reset({ status: 1 });
+            this.getDriverList();
+            this.isSubmitted = false;
+          } else {
+            this.swalService.alert.oops(res.Message);
+          }
+        //    this.swalService.alert.success(res.Message);
+        //     this.addUpdateVendorForm.reset({ status: 1 });
+        // this.getDriverList();
+        // this.saveTextName = 'Save';
       });
   }
 

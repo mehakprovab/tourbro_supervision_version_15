@@ -1,255 +1,413 @@
-<div class="entireScreen  p-0 col-md-12 col-lg-12">
-    <div class="col-12 row">
-        <div class="heading col-6">
-            <p>Vehicle Master</p>
-            <!-- <button *ngIf="!editForm" class="orangeButton" type="submit" (click)="onAddButtonClicked()">Add</button> -->
-        </div>
-        
+<div class="entireScreen p-0 col-md-12 col-lg-12">
 
+  <!-- HEADER -->
+  <!-- <div class="row">
+    <div class="col-6 ">
+      <p>Vehicle Master</p>
+    </div>
+  </div> -->
+
+  <!-- FORM -->
+  <div class="card" *ngIf="enabledForm">
+   <form
+  [formGroup]="addUpdateVehcleForm"
+  (ngSubmit)="saveTextName === 'Save' ? onVehicleMasterSave() : upateVehicleMaster()"
+>
+
+  <div class="form-group row">
+
+    <!-- TRIP TYPE -->
+    <div class="col-md-4 mb-3">
+      <label>Type <span class="text-danger">*</span></label>
+      <select
+        class="form-control"
+        formControlName="trip_type"
+        [class.is-invalid]="f.trip_type.invalid && (isSubmitted || f.trip_type.touched)">
+        <option value="">Select</option>
+        <option value="Airport">Airport</option>
+        <option value="Local">Local</option>
+        <option value="Outstation">Outstation</option>
+      </select>
+      <div class="invalid-feedback">Type is required</div>
     </div>
 
-    <div class="card" *ngIf="enabledForm && !editForm">
-        <form [formGroup]="addUpdateVehcleForm" (ngSubmit)="saveTextName === 'Save' ? onVehicleMasterSave() : upateVehicleMaster()">
-            <div class="form-group row">
-                 <div class="col-4">
-                            <label class="px-3 control-label" for="vehicle_name">
-                                Vehicle Type
-                            <span class="text-danger">*</span>
-                            </label>
-                            <div class="col-sm-12">
-                                <select formControlName="vehicle_type" class="form-control"
-                                placeholder="Select Vehicle Type">
-                                    <option value="" disabled selected>Select Vehicle Type</option>
-                                    <option *ngFor="let vehicle of vehiclesType" [value]="vehicle.id">
-                                        {{vehicle.name}}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-4">
-                            <label class="px-3 control-label" for="vehicle_name">
-                                Vehicle Name
-                            <span class="text-danger">*</span>
-                            </label>
-                            <div class="col-sm-12">
-                                <input value="" formControlName="vehicle_name" type="text" placeholder="Vehicle Name"
-                                    class="form-control ml-0" 
-                                    />
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <label class="px-3 control-label" for="max_capacity">
-                                Capacity
-                            <span class="text-danger">*</span>
-                            </label>
-                            <div class="col-sm-12">
-                                <select formControlName="max_capacity" class="form-control"
-                                    >
-                                    <option value="" disabled selected>Venicle Capacity</option>
-                                    <option *ngFor="let vehicle of seatCapacity" [value]="vehicle">
-                                        {{vehicle}}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-
-                         <div class="col-4">
-                            <label class="px-3 control-label" for="ac_vehicle">
-                                Ac
-                            <span class="text-danger">*</span>
-                            </label>
-                            <div class="col-sm-12">
-                                <select formControlName="ac_vehicle" class="form-control"
-                                    >
-                                    <option value="" disabled selected>Vehicle Type</option>
-                                    <option *ngFor="let vehicle of acType" [value]="vehicle.key">
-                                        {{vehicle.key}}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <label class="px-3 control-label" for="vehicle_name">
-                                Category
-                            <span class="text-danger">*</span>
-                            </label>
-                            <div class="col-sm-12">
-
-                                <select formControlName="ratings" class="form-control"
-                                    >
-                                    <option value="" disabled selected>Select Category</option>
-                                    <option *ngFor="let rating of ratingList" [value]="rating.key">
-                                        {{rating.key}}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-4">
-                            <label class="px-3 control-label">
-                            Ride Type
-                                <span class="text-danger">*</span>
-                            </label>
-                            <div class="col-sm-12">
-                                <select formControlName="ride_type" class="form-control"
-                                    >
-                                    <!-- <option value="" disabled selected>Select Ride Type</option> -->
-                                    <option *ngFor="let ride of rideType" [value]="ride.key">
-                                        {{ride.value}}
-                                    </option>
-                                </select>
-                            </div>
-                            
-                        </div>
-
-
-                         <div class="col-8">
-                            <label class="px-3 control-label">
-                                Luggage Allowances
-                                <span class="text-danger">*</span>
-                            </label>
-                            <div class="col-sm-12">
-                                <textarea value="" cols="24" formControlName="luggage_allowances" type="text" placeholder="Luggage Allowances"
-                                    class="form-control"
-                                     > </textarea>
-                            </div>
-                        </div>
-
-                        <div class="col-4">
-                    <!-- <div class="form-group">
-                        <label class="col-sm-3 control-label" for="status">
-                            Status
-                            <span class="text-danger">*</span>
-                        </label>
-                        <div class="col-4">
-                            <span title="Slide for Active/Deactive">
-                                <mat-slide-toggle class="example-margin" formControlName="status"
-                                   >
-                                </mat-slide-toggle>
-                            </span>
-                        </div>
-                        
-                    </div> -->
-                </div>
-
-                <div class="col-4">
-                    <label class="px-3 control-label">
-                        Image
-                        <span class="text-danger">*</span>
-                    </label>
-                    <div class="col-sm-12">
-                        <input 
-                            type="file" 
-                            accept=".jpeg,.png,.jpg" 
-                            (change)="onFileSelected($event)" 
-                            />
-                            <img *ngIf="vehicleImage" class="rounded imgStyle" [src]="vehicleImage" alt="">
-                    </div>
-                </div>
-                
-            </div>
-            <div class="saveButton">
-                <button type="submit" class="btnStyle save-btn"> {{saveTextName}}</button>
-                <button type="button" class=" btnStyle ml-2" (click)="onCancel()"> Cancel </button>
-            </div>
-        </form>
+    <!-- VEHICLE TYPE -->
+    <div class="col-md-4 mb-3">
+      <label>Vehicle Type <span class="text-danger">*</span></label>
+      <select
+        class="form-control"
+        formControlName="vehicle_type"
+        [class.is-invalid]="f.vehicle_type.invalid && (isSubmitted || f.vehicle_type.touched)">
+        <option value="">Select</option>
+        <option *ngFor="let v of vehiclesType" [value]="v.id">
+          {{ v.name }}
+        </option>
+      </select>
+      <div class="invalid-feedback">Vehicle Type is required</div>
     </div>
+
+    <!-- VEHICLE NAME -->
+    <div class="col-md-4 mb-3">
+      <label>Vehicle Name <span class="text-danger">*</span></label>
+      <input
+        class="form-control"
+        formControlName="vehicle_name"
+        [class.is-invalid]="f.vehicle_name.invalid && (isSubmitted || f.vehicle_name.touched)">
+      <div class="invalid-feedback">Vehicle Name is required</div>
+    </div>
+
+    <!-- AC -->
+    <div class="col-md-4 mb-3">
+      <label>AC <span class="text-danger">*</span></label>
+      <select
+        class="form-control"
+        formControlName="ac_vehicle"
+        [class.is-invalid]="f.ac_vehicle.invalid && (isSubmitted || f.ac_vehicle.touched)">
+        <option value="">Select</option>
+        <option *ngFor="let a of acType" [value]="a.key">{{ a.key }}</option>
+      </select>
+      <div class="invalid-feedback">AC selection required</div>
+    </div>
+
+    <!-- CAPACITY -->
+    <div class="col-md-4 mb-3">
+      <label>Capacity <span class="text-danger">*</span></label>
+      <select
+        class="form-control"
+        formControlName="max_capacity"
+        [class.is-invalid]="f.max_capacity.invalid && (isSubmitted || f.max_capacity.touched)">
+        <option value="">Select</option>
+        <option *ngFor="let s of seatCapacity" [value]="s">{{ s }}</option>
+      </select>
+      <div class="invalid-feedback">Capacity is required</div>
+    </div>
+
+    <!-- RATING -->
+    <div class="col-md-4 mb-3">
+      <label>Rating <span class="text-danger">*</span></label>
+      <select
+        class="form-control"
+        formControlName="ratings"
+        [class.is-invalid]="f.ratings.invalid && (isSubmitted || f.ratings.touched)">
+        <option value="">Select</option>
+        <option *ngFor="let r of ratingList" [value]="r.key">{{ r.key }}</option>
+      </select>
+      <div class="invalid-feedback">Rating is required</div>
+    </div>
+
+    <!-- RIDE TYPE -->
+    <div class="col-md-4 mb-3">
+      <label>Vendor</label>
+      <select class="form-control" formControlName="vendor_id">
+        <option *ngFor="let r of vendorList" [value]="r.id">{{ r.name }}</option>
+      </select>
+    </div>
+
+    <!-- COUNTRY -->
+   <div class="col-4">
+  <label class="px-3 control-label">
+    Country <span class="text-danger">*</span>
+  </label>
+  <div class="col-sm-12">
+    <select 
+      class="form-control" 
+      [class.is-invalid]="f.country.invalid && (isSubmitted || f.country.touched)"
+      formControlName="country"
+      [compareWith]="compareCountries"
+    >
+      <option [ngValue]="null" disabled>Select Country</option>
+      <option *ngFor="let c of countryList" [ngValue]="c">
+        {{ c.name }}
+      </option>
+    </select>
+   
+  </div>
 </div>
 
+        <!-- City -->
+        <div class="col-4">
+          <label class="px-3 control-label">
+            City <span class="text-danger">*</span>
+          </label>
+          <div class="col-sm-12">
+            <select 
+              class="form-control" 
+              [class.is-invalid]="f.city.invalid && (isSubmitted || f.city.touched)"
+              formControlName="city"
+              [disabled]="loadingCities || !cityList.length"
+            >
+              <option value="" disabled>Select City</option>
+              <option *ngFor="let city of cityList" [value]="city.city_name">
+                {{ city.city_name }}
+              </option>
+            </select>
+           
+            <small *ngIf="loadingCities" class="text-info">
+              Loading cities...
+            </small>
+          </div>
+        </div>
 
+    <!-- DURATION -->
+    <div class="col-md-2 mb-3">
+      <label>Hours <span class="text-danger">*</span></label>
+      <input
+        type="number"
+        class="form-control"
+        formControlName="duration_hours"
+        [class.is-invalid]="f.duration_hours.invalid && isSubmitted">
+    </div>
 
+    <div class="col-md-2 mb-3">
+      <label>Minutes <span class="text-danger">*</span></label>
+      <input
+        type="number"
+        max="59"
+        class="form-control"
+        formControlName="duration_minutes"
+        [class.is-invalid]="f.duration_minutes.invalid && isSubmitted">
+    </div>
+
+    <!-- COORDINATES -->
+    <div class="col-md-8 mb-3">
+      <label>Coordinates <span class="text-danger">*</span></label>
+      <textarea
+        rows="2"
+        class="form-control"
+        formControlName="cordinates"
+        [class.is-invalid]="f.cordinates.invalid && isSubmitted">
+      </textarea>
+      <div class="invalid-feedback">Coordinates are required</div>
+    </div>
+
+    <!-- LUGGAGE -->
+    <div class="col-md-8 mb-3">
+      <label>Luggage Allowances</label>
+      <textarea class="form-control" formControlName="luggage_allowances"></textarea>
+    </div>
+
+    <!-- IMAGE -->
+    <div class="col-md-4 mb-3">
+      <label>Image</label>
+      <input type="file" class="form-control-file" (change)="onFileSelected($event)">
+      <img *ngIf="vehicleImage" class="rounded mt-2" width="100" height="50"  [src]="vehicleImage">
+    </div>
+
+    <!-- ROUTES -->
+    <div class="col-12 mt-4">
+      <label class="font-weight-bold">Routes <span class="text-danger">*</span></label>
+
+      <div *ngFor="let r of route.controls; let i = index" class="row align-items-center mb-2">
+        <div class="col-md-5">
+          <input
+            class="form-control"
+            placeholder="Route Coordinates"
+            [formControl]="route.at(i)">
+        </div>
+
+        <div class="col-md-5">
+          <input
+            class="form-control"
+            placeholder="Route Name"
+            [formControl]="routeName.at(i)">
+        </div>
+
+        <div class="col-md-2">
+          <button type="button" class="btn btn-danger btn-sm" (click)="removeRoute(i)">
+            Remove
+          </button>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-outline-primary btn-sm mt-2" (click)="addRoute()">
+        + Add Route
+      </button>
+
+      <div class="text-danger mt-1" *ngIf="(route.invalid || routeName.invalid) && isSubmitted">
+        At least one route is required
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ACTION BUTTONS -->
+  <div class="text-center mt-4">
+    <button type="submit" class="btn btn-primary mr-2">
+      {{ saveTextName }}
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="onCancel()">
+      Cancel
+    </button>
+  </div>
+
+</form>
+
+  </div>
+
+ <!-- VEHICLE LIST HEADER -->
 <div class="col-12 row">
-        <div class="heading col-6">
-            <p>Vehicle List</p>
-        </div>
-        <div class="form-group mb-0 col-sm-6 col-6 p-0 float-right has-search d-flex justify-content-end">
-            <div class="col-6 pt-3">
-                <span class="fa fa-search form-control-feedback"></span>
-                <input class="form-control" type="text" name="Search" [(ngModel)]="searchText"
-                    autocomplete="off" placeholder="Search">
-            </div>
-            
-        </div>
+  <div class="heading col-6">
+    <p>Vehicle List</p>
+  </div>
 
+  <div
+    class="form-group mb-0 col-sm-6 col-6 p-0 float-right has-search d-flex justify-content-end"
+  >
+    <div class="col-6 pt-3">
+      <span class="fa fa-search form-control-feedback"></span>
+      <input
+        class="form-control"
+        type="text"
+        [(ngModel)]="searchText"
+        autocomplete="off"
+        placeholder="Search"
+      />
     </div>
-
-<div class="entireScreen">
-    <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft" #scrollOne >
-        <div class="div1"></div>
-   </div>
-    <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
-        <div *ngIf="!editForm" class="div2 invisible-scrollbar">
-            <div class="table-responsive">
-                <table class="table table-borderless table-striped table-hover" matSort >
-                    <thead>
-                        <tr class="p-2">
-                        <th scope="col" class="text-left text-nowrap" *ngFor="let header of displayColumn" mat-sort-header="{{header}}">
-                            {{ header }}
-                        </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngIf="searchSpin">
-                            <td colspan="12">
-                                <mat-spinner [diameter]="30" style="margin:0 auto;"
-                                    mode="indeterminate"></mat-spinner>
-                            </td>
-                        </tr>
-                        <tr *ngIf="!searchSpin && !vehicleMasterDataList.length">
-                            <td colspan="11">
-                                <h4 class="text-muted text-center">
-                                    No Data Found!
-                                </h4>
-                            </td>
-                        </tr>
-                        <tr *ngFor="let item of vehicleMasterDataList| filter: searchText| slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index">
-                                <td class="text-left text-muted">{{'#' + (i+1) }}</td>
-                                <td class="text-left text-muted">
-                                    <span title="Slide for Active/Deactive">
-                                        <mat-slide-toggle class="example-margin" [(ngModel)]="item.status" (change)="onStatusChange($event, item.id)"
-                                        >
-                                        </mat-slide-toggle>
-                                    </span>
-                                </td>
-                                <td class="text-left">{{ item.vehicle_name }}</td>
-                                <td class="text-left">{{ item.vehicle_type_name }}</td>
-                                <td class="text-left">{{ item.max_capacity }}</td>
-                                <td class="text-left">{{ item.ride_type }}</td>
-                                <td class="text-left">{{ item.ratings }}</td>
-                                <td class="text-left">
-                                    <img class="rounded imgStyle" [src]="getImage(item.image)" alt="">
-                                </td>
-                                
-                                <td class="text-left buttontdsize">
-                                    <button class="btn btn-sm btn-primary mr-1" (click)="onEditVehicleType(item)">{{'Edit'}}
-                                    </button>
-                                    <button class="btn btn-sm btn-primary mr-1" (click)="onDeletedRecord(item.id)"> {{'Delete'}}  </button>
-                                </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="card-footer pb-0">
-                    <div class="d-flex w-100 justify-content-between">
-                        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [pageSize]="pageSize">
-                        </ngb-pagination>
-                        <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
-                            <option [ngValue]="20">20 items per page</option>
-                            <option [ngValue]="50">50 items per page</option>
-                            <option [ngValue]="100">100 items per page</option>
-                            <option [ngValue]="150">150 items per page</option>
-                            <option [ngValue]="200">200 items per page</option>
-                            <option [ngValue]="500">500 items per page</option>
-                            <option [ngValue]="700">700 items per page</option>
-                            <option [ngValue]="1000">1000 items per page</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            </div>
-    </div>
+  </div>
 </div>
 
-  <ngx-loading [show]="loading"
-  [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
-  [template]="loadingTemplate"></ngx-loading>
+<!-- TABLE -->
+<div class="entireScreen">
+  <div class="wrapper2">
+    <div class="div2 invisible-scrollbar">
+      <div class="table-responsive">
+
+        <table class="table table-borderless table-striped table-hover">
+
+          <!-- TABLE HEAD -->
+          <thead>
+            <tr>
+              <th *ngFor="let header of displayColumn">
+                {{ header }}
+              </th>
+            </tr>
+          </thead>
+
+          <!-- TABLE BODY -->
+          <tbody>
+
+            <!-- LOADER -->
+            <tr *ngIf="searchSpin">
+              <td colspan="10" class="text-center">
+                <mat-spinner [diameter]="30"></mat-spinner>
+              </td>
+            </tr>
+
+            <!-- NO DATA -->
+            <tr *ngIf="!searchSpin && !vehicleMasterDataList.length">
+              <td colspan="10" class="text-center text-muted">
+                No Data Found!
+              </td>
+            </tr>
+
+            <!-- DATA ROWS -->
+            <tr
+              *ngFor="
+                let item of vehicleMasterDataList
+                  | filter: searchText
+                  | slice:
+                      (page - 1) * pageSize :
+                      (page - 1) * pageSize + pageSize;
+                let i = index
+              "
+            >
+              <!-- SL NO -->
+              <td>{{ i + 1 }}</td>
+
+              <!-- STATUS -->
+              <td>
+                <mat-slide-toggle
+                  [(ngModel)]="item.status"
+                  (change)="onStatusChange($event, item.id)"
+                >
+                </mat-slide-toggle>
+              </td>
+
+              <!-- VEHICLE NAME -->
+              <td>{{ item.vehicle_name }}</td>
+
+              <!-- VEHICLE TYPE -->
+              <td>{{ item.vehicle_type_name }}</td>
+
+              <!-- CAPACITY -->
+              <td>{{ item.max_capacity }}</td>
+
+              <!-- RIDE TYPE -->
+              <td>{{ item.ride_type }}</td>
+
+              <!-- CATEGORY -->
+              <td>{{ item.ratings }}</td>
+
+              <!-- IMAGE -->
+              <td>
+                <img
+                  class="rounded imgStyle"
+                  [src]="getImage(item.image)"
+                  alt="vehicle"
+                />
+              </td>
+
+              <!-- ACTION -->
+              <td>
+                <button
+                  class="btn btn-sm btn-primary mr-1"
+                  (click)="onEditVehicleType(item)"
+                >
+                  Edit
+                </button>
+
+                <button
+                  class="btn btn-sm btn-danger"
+                  (click)="onDeletedRecord(item.id)"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+        <!-- PAGINATION -->
+        <div class="card-footer pb-0">
+          <div class="d-flex w-100 justify-content-between">
+
+            <ngb-pagination
+              [collectionSize]="collectionSize"
+              [(page)]="page"
+              [pageSize]="pageSize"
+              [maxSize]="5"
+            >
+            </ngb-pagination>
+
+            <select
+              class="custom-select"
+              style="width: auto"
+              [(ngModel)]="pageSize"
+            >
+              <option [ngValue]="20">20</option>
+              <option [ngValue]="50">50</option>
+              <option [ngValue]="100">100</option>
+              <option [ngValue]="200">200</option>
+              <option [ngValue]="500">500</option>
+            </select>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOADER -->
+<ngx-loading
+  [show]="loading"
+  [config]="{
+    primaryColour: primaryColour,
+    secondaryColour: secondaryColour,
+    backdropBorderRadius: '3px',
+    fullScreenBackdrop: true
+  }"
+>
+</ngx-loading>

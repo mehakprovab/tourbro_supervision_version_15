@@ -1,12 +1,25 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { SubSink } from 'subsink';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { MatSlideToggleChange, Sort } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'projects/b2b/src/environments/environment.prod';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 const baseUrl = environment.SA_URL;
+interface Country {
+  id?: number;
+  name: string;
+  sortname?: string;
+}
+
+interface City {
+  id: number;
+  city_name: string;
+  country_id?: number;
+}
 
 @Component({
     selector: 'app-vehicle-master',
@@ -15,337 +28,292 @@ const baseUrl = environment.SA_URL;
 })
 
 export class VehicleMasterComponent implements OnInit {
-    public addUpdateVehcleForm: FormGroup;
-    public editForm: boolean = false;
-    public searchText: string;
-    public enabledForm: boolean = true;
-    public vehiclesType: Array<any>[] = [];
-    public seatCapacity = Array.from({ length: 71 }, (_, index) => index + 1);
-    public ratingList = [
-        { key: 'Standard' },
-        { key: 'Premium' },
-        { key: 'Mid-Luxury' },
-        { key: 'Luxury' },
-        { key: 'Ultra-Luxury' }
-    ];
-    public acType = [{ key: 'Yes' }, { key: 'No' }];
-    public rideType = [
-        { key: 'private', value: 'private' },
-        // { key: 'public', value: 'public' }
-    ];
-    public saveTextName: string = 'Save';
-    public id: number;
-    public vehicleMasterDataList: Array<any>[] = [];
-    public searchSpin: boolean = true;
-    public loading: boolean = false;
-    public primaryColour: any;
-    public loadingTemplate: any;
-    public secondaryColour: any;
-    public displayColumn = ['Sl.No','Status', 'Vehicle Name', 'Vehicel Type', 'Capacity', 'Ride Type', 'Catagoty', 'Image', 'Action']
-    public pageSize = 20;
-    public page = 1;
-    public collectionSize: any;
-    public imageFile: any;
-    public loggedInUserId: any;
-    public vehicleImage: any;
+addUpdateVehcleForm: FormGroup;
+  enabledForm = true;
+  saveTextName = 'Save';
+  id: number;
+searchText: string = '';
+searchSpin = true;
+ countryList: Country[] = [];
+  cityList: City[] = [];
+  currentCountry: Country = null;
+displayColumn = [
+  'Sl.No',
+  'Status',
+  'Vehicle Name',
+  'Vehicle Type',
+  'Capacity',
+  'Ride Type',
+  'Category',
+  'Image',
+  'Action'
+];
 
-    constructor(
-        private fb: FormBuilder,
-        private apiHandlerServices: ApiHandlerService,
-        private swalService: SwalService,
-        private cdr: ChangeDetectorRef
-    ) { }
+page = 1;
+pageSize = 20;
+collectionSize: number;
+  vehiclesType: any[] = [];
+  vehicleMasterDataList: any[] = [];
 
-    ngOnInit(): void {
-        const currentSupervisionUser = sessionStorage.getItem('currentSupervisionUser');
-    this.loggedInUserId = JSON.parse(currentSupervisionUser)['id'];
+  private destroy$ = new Subject<void>();
+  seatCapacity = Array.from({ length: 71 }, (_, i) => i + 1);
+  acType = [{ key: 'Yes' }, { key: 'No' }];
+  rideType = [{ key: 'private', value: 'private' }];
+  ratingList = [
+    { key: 'Standard' },
+    { key: 'Premium' },
+    { key: 'Luxury' }
+  ];
+
+  vehicleImage: any;
+  imageFile: File;
+  loggedInUserId: number;
+vendorList:any=[]
+  constructor(
+    private fb: FormBuilder,
+    private api: ApiHandlerService,
+    private swal: SwalService
+  ) {}
+
+  ngOnInit() {
+    this.loggedInUserId = JSON.parse(sessionStorage.getItem('currentSupervisionUser')).id;
         this.createForm();
-        this.getVehicleTypeList();
-        this.getVehicleMasterList();
-    }
+      this.getCountryList();
+    this.setupCountryChangeListener();
+this.getVendorList()
+    this.getVehicleTypeList();
+    this.getVehicleMasterList();
+  }
+    getVendorList() {
+    this.searchSpin = true;
 
-    getVehicleTypeList() {
-        const currentSupervisionUser = sessionStorage.getItem('currentSupervisionUser');
-        const loggedInAuthUser = JSON.parse(currentSupervisionUser)['auth_role_id'];
-        let created_by_id;
-        // if(loggedInAuthUser !== 7) {
-            created_by_id = 1
-        // } else {
-            // created_by_id = JSON.parse(currentSupervisionUser)['id'];
-        // }
-        const payLoad = {
-            created_by_id: String(created_by_id),
-            
+    this.api
+      .apiHandler('vendorList', 'POST', {}, {}, {})
+      .subscribe({
+        next: (res: any) => {
+          if (res.Status) {
+            this.vendorList = res.data || [];
+          } else {
+            this.vendorList = [];
+          }
+        },
+        error: () => {
+          this.vendorList = [];
         }
-        this.apiHandlerServices.apiHandler('vehicleMasterList', 'POST', {}, {}, payLoad).subscribe({
-            next: (res) => {
-                if (res.Status === true && (res.statusCode === 200 || res.statusCode === 201)) {
-                    this.vehiclesType = res.data;
-                    this.vehicleImage = '';
-                    this.imageFile = '';
-                } else {
-                    this.vehiclesType = [];
-                }
-            }, error: (err) => {
-                this.vehiclesType = [];
-            }
-        })
-    }
+      });
+  }
 
-    createForm() {
-        this.addUpdateVehcleForm = this.fb.group({
-            vehicle_type: ['', Validators.required],
-            vehicle_name: ['', Validators.required],
-            ac_vehicle: ['', Validators.required],
-            max_capacity: ['', Validators.required],
-            ride_type: ['private', Validators.required],
-            ratings: ['', Validators.required],
-            luggage_allowances: ['', Validators.required],
-            image: [''],
-            status: [false]
-        })
-    }
-
-    onAddButtonClicked() {
-        this.saveTextName = 'Save';
-        this.addUpdateVehcleForm.reset();
-        this.enabledForm = true;
-    }
-
-    onVehicleMasterSave() {
-        
-        if (!this.imageFile) {
-            this.swalService.alert.oops('Please Add Image');
-            return;
-        }
-        
-        if (!this.addUpdateVehcleForm.valid) {
-            return;
-        }
-        this.loading = true;
-        const currentSupervisionUser = sessionStorage.getItem('currentSupervisionUser');
-            const loggedInAuthUser = JSON.parse(currentSupervisionUser)['auth_role_id'];
-            let created_by_id;
-            if(loggedInAuthUser !== 7) {
-                created_by_id = 1
-            } else {
-                created_by_id = JSON.parse(currentSupervisionUser)['id'];
-            }
-        const payLoad = {
-            ...this.addUpdateVehcleForm.value,
-            vehicle_type: Number(this.addUpdateVehcleForm.value.vehicle_type),
-            status: this.addUpdateVehcleForm.value.status ? this.addUpdateVehcleForm.value.status : false,
-created_by_id: created_by_id 
-        };
-        this.apiHandlerServices.apiHandler('createVehicleMaster', 'POST', {}, {}, payLoad).subscribe({
-            next: (res) => {
-                if (res.Status === true && (res.statusCode === 200 || res.statusCode === 201)) {
-                    // this.enabledForm = false;
-                    this.uploadImage(res.data.id)
-                    this.vehicleImage = '';
-                    this.imageFile = '';
-                    this.loading = false;
-                    this.addUpdateVehcleForm.reset();
-                    this.swalService.alert.success(res.Message);
-                    this.getVehicleMasterList();
-                } else {
-                    this.loading = false;
-                    this.swalService.alert.oops(res.Message)
-                }
-            }, error: (err) => {
-                this.loading = false;
-                this.swalService.alert.error(err.error.Message)
-            }
-        })
-    }
-
-    getVehicleMasterList() {
-        this.searchSpin = true;
-        
-        const currentSupervisionUser = sessionStorage.getItem('currentSupervisionUser');
-        const loggedInAuthUser = JSON.parse(currentSupervisionUser)['auth_role_id'];
-        let created_by_id;
-        if(loggedInAuthUser !== 7) {
-            created_by_id = 1
-        } else {
-            created_by_id = JSON.parse(currentSupervisionUser)['id'];
-        }
-        const payLoad = {
-            created_by_id: String(created_by_id)
-        }
-        this.apiHandlerServices.apiHandler('vehicleMasterDataList', 'POST', {}, {}, payLoad).subscribe({
-            next: (res) => {
-                if (res.Status === true && (res.statusCode === 200 || res.statusCode === 201)) {
-                    this.vehicleMasterDataList = res.data;
-                    this.collectionSize = this.vehicleMasterDataList.length;
-                    this.searchSpin = false;
-                } else {
-                    this.vehicleMasterDataList = [];
-                }
-            }, error: (err) => {
-                this.vehicleMasterDataList = [];
-            }
-        })
-    }
-    onEditVehicleType(data) {
-        console.log(data);
-        this.addUpdateVehcleForm.patchValue({
-            vehicle_type: data.vehicle_type,
-            vehicle_name: data.vehicle_name,
-            ac_vehicle: data.ac_vehicle,
-            max_capacity: String(data.max_capacity),
-            ride_type: data.ride_type,
-            ratings: data.ratings,
-            luggage_allowances: data.luggage_allowances,
-            image: '',
-            status: data.status ? true : false
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+ setupCountryChangeListener() {
+    const countryControl = this.addUpdateVehcleForm.get('country');
+    if (countryControl) {
+      countryControl.valueChanges
+        .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this.destroy$))
+        .subscribe((country: Country) => {
+          if (country) this.getCityListByCountry(country);
+          else this.cityList = [];
         });
-        this.id = data.id;
-        this.vehicleImage = `${baseUrl + '/sa/transfer/getTransferImage/' + data.image}`;
-        this.enabledForm = true;
-        this.saveTextName = 'Update';
-        window.scroll({top:0, behavior:'smooth'})
     }
+  }
 
-    onDeletedRecord(id) {
-        const req = {
-        id: id
+  getCountryList() {
+    this.api.apiHandler('supervisionCountryLists', 'post', {}, {})
+      .subscribe((resp: any) => { if (resp.Status) this.countryList = resp.data; });
+  }
+
+  getCityListByCountry(country: Country) {
+    this.currentCountry = country;
+    const countryParam = country.sortname || country.name;
+    this.api.apiHandler('supervisionCityLists', 'post', {}, {}, { country_code: countryParam })
+      .subscribe((resp: any) => { if (resp.Status) this.cityList = resp.data; });
+  }
+  get f() { return this.addUpdateVehcleForm.controls; }
+
+  createForm() {
+    this.addUpdateVehcleForm = this.fb.group({
+      trip_type: ['', Validators.required],
+      vehicle_type: ['', Validators.required],
+      vehicle_name: ['', Validators.required],
+      ac_vehicle: ['', Validators.required],
+      max_capacity: ['', Validators.required],
+      vendor_id: ['', Validators.required],
+      ratings: ['', Validators.required],
+      luggage_allowances: ['', Validators.required],
+      country: ['', Validators.required],
+      city: ['', Validators.required],
+      cordinates: ['', Validators.required],
+      duration_hours: ['', Validators.required],
+      duration_minutes: ['', Validators.required],
+     
+      image: [''],
+      status: [true],
+      
+
+    route: this.fb.array([]),
+    route_name: this.fb.array([])
+    });
+  }
+get route(): FormArray {
+  return this.addUpdateVehcleForm.get('route') as FormArray;
+}
+
+get routeName(): FormArray {
+  return this.addUpdateVehcleForm.get('route_name') as FormArray;
+}
+
+addRoute() {
+  this.route.push(this.fb.control('', Validators.required));
+  this.routeName.push(this.fb.control('', Validators.required));
+}
+
+removeRoute(index: number) {
+  this.route.removeAt(index);
+  this.routeName.removeAt(index);
+}
+
+onVehicleMasterSave() {
+  if (this.addUpdateVehcleForm.invalid || !this.vehicleImage) {
+    this.swal.alert.oops('Please fill all required fields');
+    return;
+  }
+
+const payload = {
+  vehicle_id: Number(this.f.vehicle_type.value),
+  vehicle_type: Number(this.f.vehicle_type.value),
+  trip_type: 1,
+  vendor_id: Number(this.f.vendor_id.value),
+  vehicle_name: this.f.vehicle_name.value,
+  ac_vehicle: this.f.ac_vehicle.value,
+  max_capacity: this.f.max_capacity.value,
+  ratings: this.f.ratings.value,
+  duration_hours: String(this.f.duration_hours.value),
+  duration_minutes: String(this.f.duration_minutes.value),
+  status: true,
+  country: this.f.country.value.name,
+  city: this.f.city.value,
+  cordinates: this.f.cordinates.value,
+  luggage_allowances: this.f.luggage_allowances.value || '',
+  route: this.route.value || [],
+  route_name: this.routeName.value || [],
+  created_by_id: this.loggedInUserId,
+  image: this.vehicleImage   // <-- here
+};
+
+
+
+  // Call API
+  this.api.apiHandler('addVehicleMaster', 'POST', {}, {}, payload)
+    .subscribe(res => {
+      if (res.Status) {
+        this.getVehicleMasterList();
+        this.onCancel();
+        this.swal.alert.success(res.Message);
       }
-      this.loading = true;
-        this.swalService.alert.delete((action)=>{
-        if(action){
-             this.apiHandlerServices.apiHandler('deleteVehicleMaster', 'post', {}, {},req)
-            .subscribe(response => {
-                if (response.Status === true && (response.statusCode == 200 || response.statusCode == 201)) {
-                  this.loading = false;
-                    this.swalService.alert.success('Transfer List has been deleted successfully')
-                    this.getVehicleMasterList();
-                } else {
-                  this.swalService.alert.oops(response.Message)
-                  this.loading = false;
-                }
-            },(err: HttpErrorResponse) => {
-              this.loading = false;
-            this.swalService.alert.error(err['error']['Message']);
-            });
-        }
-      })
-    }
+    });
+}
 
-    onCancel() {
-        // this.enabledForm = false;
-        this.vehicleImage = '';
-        this.saveTextName = 'Save';
-        this.addUpdateVehcleForm.reset();
-    }
 
-    upateVehicleMaster() {
-        this.loading = true;
-        const payLoad = { 
-            ...this.addUpdateVehcleForm.value, 
-            id: this.id,
-            vehicle_type: Number(this.addUpdateVehcleForm.value.vehicle_type),
-         }
+  upateVehicleMaster() {
+    const payload = { ...this.addUpdateVehcleForm.value, id: this.id };
+    this.api.apiHandler('editVehicleMaster', 'POST', {}, {}, payload)
+      .subscribe(() => {
+        this.getVehicleMasterList();
+        this.onCancel();
+        this.swal.alert.success('Updated Successfully');
+      });
+  }
 
-            
-        this.apiHandlerServices.apiHandler('updateVehicleMaster', 'POST', {}, {}, payLoad).subscribe({
-            next: (res) => {
-                if (res.Status === true && (res.statusCode === 200 || res.statusCode === 201)) {
-                    
-                    this.swalService.alert.success(res.Message);
-                    // this.enabledForm = false;
-                    this.vehicleImage = '';
-                    this.imageFile = '';
-                    this.getVehicleMasterList();
-                    this.loading = false;
-                } else {
-                    this.loading = false;
-                    this.swalService.alert.oops(res.Message)
-                }
-            }, error: (err) => {
-                this.loading = false;
-                this.swalService.alert.error(err.Message)
-            }
-        })
-    }
+  onEditVehicleType(v) {
+    this.saveTextName = 'Update';
+    this.id = v.id;
+    this.vehicleImage = this.getImage(v.image);
+    this.addUpdateVehcleForm.patchValue(v);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
-     onFileSelected(event: any) {
-    const file: File = event.target.files[0];
-    //  this.vehicleImage = file
-     const reader = new FileReader();
-    reader.readAsDataURL(file);
+  onDeletedRecord(id) {
+    this.swal.alert.delete(ok => {
+      if (ok) {
+        this.api.apiHandler('deleteVehicleMasters', 'POST', {}, {}, { id })
+          .subscribe(() => {
+            this.getVehicleMasterList();
+            this.swal.alert.success('Deleted successfully');
+          });
+      }
+    });
+  }
 
-    reader.onload = () => {
-      this.vehicleImage = reader.result; // base64 URL
+  onStatusChange(e: MatSlideToggleChange, id) {
+    this.api.apiHandler('updateVehicleMasterStatus', 'POST', {}, {}, {
+      id,
+      status: e.checked
+    }).subscribe();
+  }
+              // <-- for preview
+
+onFileSelected(event: any) {
+  const file = event.target.files[0]; // get the first selected file
+  if (file) {
+    this.imageFile = file;           // ✅ store for FormData
+    const reader = new FileReader(); 
+    reader.onload = (e: any) => {
+      this.vehicleImage = e.target.result; // ✅ for preview
     };
-    if (file) {
-      console.log("File selected:", file.name, file.type);
-      // Example validation
-      const allowedTypes = [
-        'image/jpeg',
-        'image/png'
-      ];
-      if (!allowedTypes.includes(file.type)) {
-        alert("Invalid file type!");
-        event.target.value = ''; // reset input
-      } else {
-        this.imageFile = file;
-       
-      }
-
-    }
+    reader.readAsDataURL(file);
   }
-    uploadImage(id) {
-    const formData = new FormData();
-    formData.append('id', id);
-    formData.append('image',this.imageFile);
-    this.loading = true;
-    this.apiHandlerServices.apiHandler('addTransferImage','POST',{},{},formData).subscribe({
-      next: (res) => {
-        if (res.Status === true && res.statusCode === 201 || res.statusCode === 200) {
-            this.loading = false;
-            this.swalService.alert.success(res.Message)
+}
+
+  uploadImage(id) {
+    const fd = new FormData();
+    fd.append('id', id);
+    fd.append('image', this.imageFile);
+    // this.api.apiHandler('addTransferImage', 'POST', {}, {}, fd).subscribe();
+  }
+
+  onCancel() {
+    this.addUpdateVehcleForm.reset({ ride_type: 'private', country: 'India' });
+    this.saveTextName = 'Save';
+    this.vehicleImage = '';
+  }
+
+  getVehicleTypeList() {
+    this.api.apiHandler('getVehicleType', 'POST', {}, {}, { created_by_id: '1' })
+      .subscribe(res => this.vehiclesType = res.data || []);
+  }
+
+getVehicleMasterList() {
+  this.searchSpin = true;
+
+  this.api.apiHandler('listVehicleMaster', 'POST', {}, {}, {})
+    .subscribe(
+      (res: any) => {
+        if (res.Status && Array.isArray(res.data)) {
+          this.vehicleMasterDataList = res.data.map(item => ({
+            ...item
+           
+          }));
         } else {
-            this.loading = false;
-            this.swalService.alert.oops(res.Message)
+          this.vehicleMasterDataList = [];
         }
-      }, error: (err) => {
-        this.loading = false;
-        this.swalService.alert.error(err.error.Message)
-      }
-    })
-  }
-  onStatusChange(event: MatSlideToggleChange, id) {
-    console.log(event.checked);
-    this.id = id
-    this.addUpdateVehcleForm.patchValue({
-        status: event.checked
-    })
-    const req = {
-        id: id,
-        status: event.checked
-    }
-    this.apiHandlerServices.apiHandler('updateVehicleMasterStatus', 'POST', {}, {}, req).subscribe({
-            next: (res) => {
-                if (res.Status === true && (res.statusCode === 200 || res.statusCode === 201)) {
-                    
-                    this.swalService.alert.success("Status Updated Successfully");
-                    // this.enabledForm = false;
-                    this.getVehicleMasterList();
-                    this.loading = false;
-                } else {
-                    this.loading = false;
-                    this.swalService.alert.oops(res.Message)
-                }
-            }, error: (err) => {
-                this.loading = false;
-                this.swalService.alert.error(err.Message)
-            }
-        })
 
+        this.collectionSize = this.vehicleMasterDataList.length;
+        this.searchSpin = false;
+      },
+      () => {
+        this.vehicleMasterDataList = [];
+        this.collectionSize = 0;
+        this.searchSpin = false;
+      }
+    );
+}
+
+
+  getImage(img) {
+    return `${img}`;
   }
 
-   getImage(img){
-        return `${baseUrl + '/sa/transfer/getTransferImage/' + img}`;
-      }
+  
 }

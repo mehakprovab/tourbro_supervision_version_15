@@ -85,7 +85,7 @@ import { MapPipe } from './pipes/map.pipe';
         AngularFontAwesomeModule,
         RoundProgressModule,
         TrendModule,
-        NgBootstrapFormValidationModule,
+        // NgBootstrapFormValidationModule,
         NgxLoadingModule,
         RangeSliderModule,
         MatCheckboxModule,
@@ -182,7 +182,7 @@ import { MapPipe } from './pipes/map.pipe';
         AngularFontAwesomeModule,
         RoundProgressModule,
         TrendModule,
-        NgBootstrapFormValidationModule,
+        // NgBootstrapFormValidationModule,
         NgxLoadingModule,
         RangeSliderModule,
         SlickCarouselModule

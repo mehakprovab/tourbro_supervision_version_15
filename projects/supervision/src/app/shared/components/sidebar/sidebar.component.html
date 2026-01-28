@@ -593,14 +593,73 @@
                               <ng-template ngbPanelHeader>
                                   <button ngbPanelToggle class="vsm-link pl-2">
                                       <i class="fa fa-taxi  pr-2 fs-19"></i>
-                                      <span class="vsm-title pl-10">Transfer CRS</span>
+                                      <span class="vsm-title pl-10">Car CRS</span>
                                       <i class="vsm-arrow"></i>
                                   </button>
                               </ng-template>
                               <ng-template ngbPanelContent>
                                   <div class="vsm-dropdown">
                                       <div class="vsm-list">
+                                          <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" [activeIds]="extraParameter">
+                                          <ngb-panel id="manageB2CMenus" *ngIf="isSubMenuExists('Add Driver',TRANSFER_CRS)">
+                                            <ng-template ngbPanelHeader>
+                                              <button ngbPanelToggle class="vsm-link pl-1 "
+                                                [ngClass]="{'collapsed' : globals.toggleSidebar}">
+                                                <span class="vsm-title pl-10"> <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                  Driver Master</span>
+                                                <i class="vsm-arrow"></i>
+                                              </button>
+                                            </ng-template>
+                                            <ng-template ngbPanelContent>
 
+                                              <!-- <div class="vsm-item" >
+                                                <a routerLinkActive="active-item" [routerLink]="['/transfers/transfer-vehicle']"
+                                                    class="vsm-link pl-1"><span class="vsm-title pl-10">
+                                                        Vehicle Type
+                                                  </span></a>
+                                              </div> -->
+
+                                              <a routerLinkActive="active-item" 
+                                                  [routerLink]="['/transfers/driver-master']"
+                                                class="vsm-link pl-1 ">
+                                                <span class="vsm-title pl-10">
+                                                  
+                                                  Add / Edit Driver List
+                                                </span>
+                                              </a>
+                                            </ng-template>
+                                          </ngb-panel>
+                                        </ngb-accordion>
+    <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" [activeIds]="extraParameter">
+                                          <ngb-panel id="manageB2CMenus" *ngIf="isSubMenuExists('Add Vender',TRANSFER_CRS)">
+                                            <ng-template ngbPanelHeader>
+                                              <button ngbPanelToggle class="vsm-link pl-1 "
+                                                [ngClass]="{'collapsed' : globals.toggleSidebar}">
+                                                <span class="vsm-title pl-10"> <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                  Vender Master</span>
+                                                <i class="vsm-arrow"></i>
+                                              </button>
+                                            </ng-template>
+                                            <ng-template ngbPanelContent>
+
+                                              <!-- <div class="vsm-item" >
+                                                <a routerLinkActive="active-item" [routerLink]="['/transfers/transfer-vehicle']"
+                                                    class="vsm-link pl-1"><span class="vsm-title pl-10">
+                                                        Vehicle Type
+                                                  </span></a>
+                                              </div> -->
+
+                                              <a routerLinkActive="active-item" 
+                                                  [routerLink]="['/transfers/vender-master']"
+                                                class="vsm-link pl-1 ">
+                                                <span class="vsm-title pl-10">
+                                                  
+                                                  Add / Edit Vender List
+                                                </span>
+                                              </a>
+                                            </ng-template>
+                                          </ngb-panel>
+                                        </ngb-accordion>
                                         <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" [activeIds]="extraParameter">
                                           <ngb-panel id="manageB2CMenus" *ngIf="isSubMenuExists('Add Vehicle',TRANSFER_CRS)">
                                             <ng-template ngbPanelHeader>
@@ -613,12 +672,12 @@
                                             </ng-template>
                                             <ng-template ngbPanelContent>
 
-                                              <div class="vsm-item" >
+                                              <!-- <div class="vsm-item" >
                                                 <a routerLinkActive="active-item" [routerLink]="['/transfers/transfer-vehicle']"
                                                     class="vsm-link pl-1"><span class="vsm-title pl-10">
                                                         Vehicle Type
                                                   </span></a>
-                                              </div>
+                                              </div> -->
 
                                               <a routerLinkActive="active-item" 
                                                   [routerLink]="['/transfers/transfer-vehicle-master']"
@@ -632,15 +691,38 @@
                                           </ngb-panel>
                                         </ngb-accordion>
 
+   <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" [activeIds]="extraParameter">
+                                          <ngb-panel id="manageB2CMenus" *ngIf="isSubMenuExists('Add price',TRANSFER_CRS)">
+                                            <ng-template ngbPanelHeader>
+                                              <button ngbPanelToggle class="vsm-link pl-1 "
+                                                [ngClass]="{'collapsed' : globals.toggleSidebar}">
+                                                <span class="vsm-title pl-10"> <i class="fa fa-circle-o" aria-hidden="true"></i>
+                                                  Pricing</span>
+                                                <i class="vsm-arrow"></i>
+                                              </button>
+                                            </ng-template>
+                                            <ng-template ngbPanelContent>
+                                              <a routerLinkActive="active-item" 
+                                                  [routerLink]="['/transfers/pricing-list']"
+                                                  [queryParams]="{ tab: 'add_pricing' }"
+                                                class="vsm-link pl-1 ">
+                                                <span class="vsm-title pl-10">
+                                                  
+                                                  Add / Edit Pricing
+                                                </span>
+                                              </a>
+                                       
+                                            </ng-template>
+                                          </ngb-panel>
+                                        </ngb-accordion>
 
-
-                                        <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" [activeIds]="extraParameter">
+                                        <!-- <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" [activeIds]="extraParameter">
                                           <ngb-panel id="manageB2CMenus" *ngIf="isSubMenuExists('Add Vehicle',TRANSFER_CRS)">
                                             <ng-template ngbPanelHeader>
                                               <button ngbPanelToggle class="vsm-link pl-1 "
                                                 [ngClass]="{'collapsed' : globals.toggleSidebar}">
                                                 <span class="vsm-title pl-10"> <i class="fa fa-circle-o" aria-hidden="true"></i>
-                                                  Route & Pricing Master</span>
+                                                  Route</span>
                                                 <i class="vsm-arrow"></i>
                                               </button>
                                             </ng-template>
@@ -665,7 +747,7 @@
                                               </a>
                                             </ng-template>
                                           </ngb-panel>
-                                        </ngb-accordion>
+                                        </ngb-accordion> -->
 
 
 

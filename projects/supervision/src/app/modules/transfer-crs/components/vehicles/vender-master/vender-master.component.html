@@ -1,0 +1,328 @@
+<div class="entireScreen p-0 col-md-12 col-lg-12">
+  <div class="col-12 row">
+    <div class="heading col-6">
+      <p>Vendor Master</p>
+    </div>
+  </div>
+
+  <!-- ADD / UPDATE FORM -->
+  <div class="card" *ngIf="enabledForm">
+    <form
+      [formGroup]="addUpdateVendorForm"
+      (ngSubmit)="saveTextName === 'Save' ? onVendorSave() : updateVendor()"
+
+    >
+      <div class="form-group row">
+
+        <!-- Vendor Name -->
+        <div class="col-4">
+          <label class="px-3 control-label">
+            Vendor Name <span class="text-danger">*</span>
+          </label>
+          <div class="col-sm-12">
+            <input
+              type="text"
+              class="form-control"
+              [class.is-invalid]="addUpdateVendorForm.get('name').invalid && (addUpdateVendorForm.get('name').touched || isSubmitted)"
+              placeholder="Vendor Name"
+              formControlName="name"
+            />
+            <div *ngIf="addUpdateVendorForm.get('name').invalid && (addUpdateVendorForm.get('name').touched || isSubmitted)" class="invalid-feedback">
+              <span *ngIf="addUpdateVendorForm.get('name').errors?.required">
+                Vendor Name is required
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phone Code -->
+        <div class="col-2">
+          <label class="px-3 control-label">
+            Code <span class="text-danger">*</span>
+          </label>
+          <div class="col-sm-12">
+            <select 
+              class="form-control" 
+              [class.is-invalid]="addUpdateVendorForm.get('phone_code').invalid && (addUpdateVendorForm.get('phone_code').touched || isSubmitted)"
+              formControlName="phone_code"
+            >
+              <option value="" >Select Phone Code</option>
+              <option *ngFor="let c of respData" [value]="c.phone_code">
+                {{ c.phone_code }}({{c.code}})
+              </option>
+            </select>
+            <div *ngIf="addUpdateVendorForm.get('phone_code').invalid && (addUpdateVendorForm.get('phone_code').touched || isSubmitted)" class="invalid-feedback">
+              Phone Code is required
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile -->
+        <div class="col-3">
+          <label class="px-3 control-label">
+            Mobile <span class="text-danger">*</span>
+          </label>
+          <div class="col-sm-12">
+            <input
+              type="text"
+              class="form-control"
+              [class.is-invalid]="addUpdateVendorForm.get('mobile').invalid && (addUpdateVendorForm.get('mobile').touched || isSubmitted)"
+              placeholder="Mobile Number"
+              formControlName="mobile"
+            />
+            <div *ngIf="addUpdateVendorForm.get('mobile').invalid && (addUpdateVendorForm.get('mobile').touched || isSubmitted)" class="invalid-feedback">
+              <span *ngIf="addUpdateVendorForm.get('mobile').errors?.required">
+                Mobile number is required
+              </span>
+              <span *ngIf="addUpdateVendorForm.get('mobile').errors?.pattern">
+                Mobile must be 10 digits
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="col-3">
+          <label class="px-3 control-label">
+            Email <span class="text-danger">*</span>
+          </label>
+          <div class="col-sm-12">
+            <input
+              type="email"
+              class="form-control"
+              [class.is-invalid]="addUpdateVendorForm.get('email').invalid && (addUpdateVendorForm.get('email').touched || isSubmitted)"
+              placeholder="Email"
+              formControlName="email"
+            />
+            <div *ngIf="addUpdateVendorForm.get('email').invalid && (addUpdateVendorForm.get('email').touched || isSubmitted)" class="invalid-feedback">
+              <span *ngIf="addUpdateVendorForm.get('email').errors?.required">
+                Email is required
+              </span>
+              <span *ngIf="addUpdateVendorForm.get('email').errors?.email">
+                Please enter a valid email
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Country -->
+    <!-- Country -->
+<div class="col-4">
+  <label class="px-3 control-label">
+    Country <span class="text-danger">*</span>
+  </label>
+  <div class="col-sm-12">
+    <select 
+      class="form-control" 
+      [class.is-invalid]="addUpdateVendorForm.get('country').invalid && (addUpdateVendorForm.get('country').touched || isSubmitted)"
+      formControlName="country"
+      [compareWith]="compareCountries"
+    >
+      <option [ngValue]="null" disabled>Select Country</option>
+      <option *ngFor="let c of countryList" [ngValue]="c">
+        {{ c.name }}
+      </option>
+    </select>
+    <div *ngIf="addUpdateVendorForm.get('country').invalid && (addUpdateVendorForm.get('country').touched || isSubmitted)" 
+         class="invalid-feedback d-block">
+      Country is required
+    </div>
+  </div>
+</div>
+
+        <!-- City -->
+        <div class="col-4">
+          <label class="px-3 control-label">
+            City <span class="text-danger">*</span>
+          </label>
+          <div class="col-sm-12">
+            <select 
+              class="form-control" 
+              [class.is-invalid]="addUpdateVendorForm.get('city').invalid && (addUpdateVendorForm.get('city').touched || isSubmitted)"
+              formControlName="city"
+              [disabled]="loadingCities || !cityList.length"
+            >
+              <option value="" disabled>Select City</option>
+              <option *ngFor="let city of cityList" [value]="city.city_name">
+                {{ city.city_name }}
+              </option>
+            </select>
+            <div *ngIf="addUpdateVendorForm.get('city').invalid && (addUpdateVendorForm.get('city').touched || isSubmitted)" class="invalid-feedback">
+              City is required
+            </div>
+            <small *ngIf="loadingCities" class="text-info">
+              Loading cities...
+            </small>
+          </div>
+        </div>
+
+        <!-- Address -->
+        <div class="col-4">
+          <label class="px-3 control-label">
+            Address <span class="text-danger">*</span>
+          </label>
+          <div class="col-sm-12">
+            <textarea
+              rows="2"
+              class="form-control"
+              [class.is-invalid]="addUpdateVendorForm.get('address').invalid && (addUpdateVendorForm.get('address').touched || isSubmitted)"
+              placeholder="Address"
+              formControlName="address"
+            ></textarea>
+            <div *ngIf="addUpdateVendorForm.get('address').invalid && (addUpdateVendorForm.get('address').touched || isSubmitted)" class="invalid-feedback">
+              Address is required
+            </div>
+          </div>
+        </div>
+<div class="col-4">
+  <label class="px-3 control-label">Status</label>
+  <div class="col-sm-12 d-flex align-items-center">
+    <mat-slide-toggle
+      color="primary"
+      formControlName="status"
+    >
+      {{ addUpdateVendorForm.get('status')?.value ? 'Active' : 'Inactive' }}
+    </mat-slide-toggle>
+  </div>
+</div>
+
+      </div>
+
+      <!-- BUTTONS -->
+      <div class="saveButton">
+        <button type="submit" class="btnStyle save-btn">
+          {{ saveTextName }}
+        </button>
+        <button type="button" class="btnStyle ml-2" (click)="onCancel()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- LIST HEADER -->
+<div class="col-12 row">
+  <div class="heading col-6">
+    <p>Vendor List</p>
+  </div>
+
+  <div class="form-group mb-0 col-sm-6 col-6 p-0 float-right has-search d-flex justify-content-end">
+    <div class="col-6 pt-3">
+      <span class="fa fa-search form-control-feedback"></span>
+      <input
+        class="form-control"
+        type="text"
+        [(ngModel)]="searchText"
+        placeholder="Search"
+      />
+    </div>
+  </div>
+</div>
+
+<!-- TABLE -->
+<div class="entireScreen">
+  <div class="wrapper2">
+    <div class="div2 invisible-scrollbar">
+      <div class="table-responsive">
+        <table class="table table-borderless table-striped table-hover">
+          <thead>
+            <tr>
+              <th *ngFor="let header of displayColumn">{{ header }}</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngIf="searchSpin">
+              <td colspan="10" class="text-center">
+                <mat-spinner [diameter]="30"></mat-spinner>
+              </td>
+            </tr>
+
+            <tr *ngIf="!searchSpin && !vendorList.length">
+              <td colspan="10" class="text-center text-muted">
+                No Data Found!
+              </td>
+            </tr>
+
+            <tr
+              *ngFor="
+                let item of vendorList
+                  | filter: searchText
+                  | slice:
+                      (page - 1) * pageSize :
+                      (page - 1) * pageSize + pageSize;
+                let i = index
+              "
+            >
+              <td>{{ i + 1 }}</td>
+
+              <td>
+                <mat-slide-toggle
+                  [(ngModel)]="item.status"
+                  (change)="onStatusChange($event, item.id)"
+                ></mat-slide-toggle>
+              </td>
+
+              <td>{{ item.name }}</td>
+              <td>{{ item.mobile }}</td>
+              <td>{{ item.email }}</td>
+              <td>{{ item.country }}</td>
+              <td>{{ item.city }}</td>
+              <td>{{ item.address }}</td>
+
+              <td>
+                <button
+                  class="btn btn-sm btn-primary mr-1"
+                  (click)="onEditVendor(item)"
+                >
+                  Edit
+                </button>
+                <button
+                  class="btn btn-sm btn-danger"
+                  (click)="onDeleteVendor(item.id)"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- PAGINATION -->
+        <div class="card-footer pb-0">
+          <div class="d-flex w-100 justify-content-between">
+            <ngb-pagination
+              [collectionSize]="collectionSize"
+              [(page)]="page"
+              [pageSize]="pageSize"
+              [maxSize]="5"
+            ></ngb-pagination>
+
+            <select
+              class="custom-select"
+              style="width: auto"
+              [(ngModel)]="pageSize"
+            >
+              <option [ngValue]="20">20</option>
+              <option [ngValue]="50">50</option>
+              <option [ngValue]="100">100</option>
+              <option [ngValue]="200">200</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOADER -->
+<ngx-loading
+  [show]="loading"
+  [config]="{
+    primaryColour: primaryColour,
+    secondaryColour: secondaryColour,
+    backdropBorderRadius: '3px',
+    fullScreenBackdrop: true
+  }"
+></ngx-loading>

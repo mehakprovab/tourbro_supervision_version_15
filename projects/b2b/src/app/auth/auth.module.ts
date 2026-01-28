@@ -53,7 +53,7 @@ import { RegisterInfoComponent } from './components/register-info/register-info.
     FormsModule,
     ReactiveFormsModule,
     SlickCarouselModule,
-    NgBootstrapFormValidationModule,
+    // NgBootstrapFormValidationModule,
     LayoutsModule,
     BsDropdownModule,
     NgxIntlTelInputModule,

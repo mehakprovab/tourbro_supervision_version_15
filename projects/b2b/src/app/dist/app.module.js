@@ -55,7 +55,7 @@ var AppModule = /** @class */ (function () {
                 http_1.HttpClientModule,
                 store_1.NgReduxModule,
                 ngx_loading_1.NgxLoadingModule.forRoot({}),
-                ng_bootstrap_form_validation_1.NgBootstrapFormValidationModule.forRoot(),
+                // ng_bootstrap_form_validation_1.NgBootstrapFormValidationModule.forRoot(),
                 router_1.LoadingBarRouterModule,
                 ngx_slick_carousel_1.SlickCarouselModule,
                 core_module_1.CoreModule,

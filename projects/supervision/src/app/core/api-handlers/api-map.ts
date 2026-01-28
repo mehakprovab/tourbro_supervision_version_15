@@ -114,8 +114,8 @@ export const apiMap = {
     getRoomPrice:`${baseUrl}/hotel/room-prices/getRoomPrice`,
     deleteRoomPrice:`${baseUrl}/hotel/room-prices/deleteRoomPrice`,
     seasonList: `${baseUrl}/hotel/room-seasons/roomSeasonList`,
-    addPrice: `${baseUrl}/hotel/room-prices/addRoomPrice`,
-    editPrice: `${baseUrl}/hotel/room-prices/editRoomPrice`,
+    // addPrice: `${baseUrl}/hotel/room-prices/addRoomPrice`,
+    // editPrice: `${baseUrl}/hotel/room-prices/editRoomPrice`,
     updateRoomPrice: `${baseUrl}/hotel/room-prices/updateRoomPrice`,
     updatePrice: `${baseUrl}/hotel/room-seasons/updateRoomPrice`,
     priceList: `${baseUrl}/hotel/room-seasons/roomPriceList`,
@@ -214,7 +214,7 @@ export const apiMap = {
     propertyList: `${B2C_URL}/webservice/supplier/find_properties`,
     userTypeList: `${baseUrl}/user/service/UserTypeList`,
     userTitleList: `${baseUrl}/user/service/userTitleList`,
-    phoneCodeList: `${B2B_URL}/b2b/common/phoneCodeList`,
+    phoneCodeList: `${baseUrl}/dashboard/report/phoneCodeList`,
     addUser: `${baseUrl}/user/service/addUser`,
     deleteUser: `${baseUrl}/user/service/deleteUser`,
     updateUserStatus: `${baseUrl}/user/service/updateUserStatus`,
@@ -609,4 +609,28 @@ deleteAyurvedaCenter: `${baseUrl}/dashboard/report/deleteAyurvedaCenter`,
 
    //bus apis
        busReport:`${baseUrl}/dashboard/report/AgentBusReport`,
+   createVendorMaster: `${baseUrl}/car/addVendor`,
+   vendorList: `${baseUrl}/car/VendorList`,
+   deleteVendor:`${baseUrl}/car/deleteVendor`,
+    updateVendor:`${baseUrl}/car/updateVendor`,
+
+      supervisionCityLists: `${baseUrl}/car/cityList`,
+      supervisionCountryLists: `${baseUrl}/car/countryList`,
+
+      
+   addDriver: `${baseUrl}/car/addDriver`,
+   driverList: `${baseUrl}/car/DriverList`,
+   deleteDriver:`${baseUrl}/car/deleteDriver`,
+    updateDriver:`${baseUrl}/car/updateDriver`,
+addPrice: `${baseUrl}/car/addPrice`,
+   editPrice: `${baseUrl}/car/editPrice`,
+   listPrice:`${baseUrl}/car/listPrice`,
+    deletePrice:`${baseUrl}/car/deletePrice`,
+
+    addVehicleMaster: `${baseUrl}/car/addVehicle`,
+    deleteVehicleMasters: `${baseUrl}/car/deleteVehicle`,
+editVehicleMaster: `${baseUrl}/car/editVehicle`,
+    listVehicleMaster: `${baseUrl}/car/listVehicle`,
+
+     getVehicleType: `${baseUrl}/car/vehicleType`,
 };

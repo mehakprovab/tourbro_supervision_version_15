@@ -1,0 +1,295 @@
+<div class="card p-3" *ngIf="enabledForm">
+  <form [formGroup]="addUpdateVendorForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+
+      <!-- TYPE -->
+      <div class="col-3 mb-2">
+        <label>Type <span class="text-danger">*</span></label>
+        <select class="form-control"
+                formControlName="type"
+                [class.is-invalid]="addUpdateVendorForm.get('type').invalid && (isSubmitted || addUpdateVendorForm.get('type').touched)">
+          <option value="Airport">Airport</option>
+          <option value="Local">Local</option>
+          <option value="Outstation">Outstation</option>
+        </select>
+        <div class="invalid-feedback">Type is required</div>
+      </div>
+
+      <!-- TRIP TYPE -->
+      <div class="col-3 mb-2">
+        <label>Trip Type <span class="text-danger">*</span></label>
+        <select class="form-control"
+                formControlName="trip_type"
+                [class.is-invalid]="addUpdateVendorForm.get('trip_type').invalid && (isSubmitted || addUpdateVendorForm.get('trip_type').touched)">
+          <option value="Pickup">Pickup</option>
+          <option value="Dropoff">Dropoff</option>
+          <option value="Both Same">Both Same</option>
+        </select>
+        <div class="invalid-feedback">Trip type is required</div>
+      </div>
+
+      <!-- VEHICLE -->
+      <div class="col-3 mb-2">
+        <label>Vehicle ID <span class="text-danger">*</span></label>
+           <select class="form-control"
+                formControlName="commute_supplier_vehicle_id"
+                [class.is-invalid]="addUpdateVendorForm.get('commute_supplier_vehicle_id').invalid && (isSubmitted || addUpdateVendorForm.get('commute_supplier_vehicle_id').touched)">
+          <option [ngValue]="null">Select Vehicle Id</option>
+          <option *ngFor="let c of vehicleMasterDataList" [ngValue]="c.vehicle_id">{{ c.vehicle_name }}</option>
+        </select>
+        <!-- <input type="number" class="form-control"
+               formControlName="commute_supplier_vehicle_id"
+               [class.is-invalid]="addUpdateVendorForm.get('commute_supplier_vehicle_id').invalid && (isSubmitted || addUpdateVendorForm.get('commute_supplier_vehicle_id').touched)"> -->
+        <div class="invalid-feedback">Vehicle ID is required</div>
+      </div>
+
+      <!-- COUNTRY -->
+      <div class="col-3 mb-2">
+        <label>Country <span class="text-danger">*</span></label>
+        <select class="form-control"
+                formControlName="country"
+                [class.is-invalid]="addUpdateVendorForm.get('country').invalid && (isSubmitted || addUpdateVendorForm.get('country').touched)">
+          <option [ngValue]="null">Select Country</option>
+          <option *ngFor="let c of countryList" [ngValue]="c">{{ c.name }}</option>
+        </select>
+        <div class="invalid-feedback">Country is required</div>
+      </div>
+
+      <!-- CITY -->
+      <div class="col-3 mb-2">
+        <label>City <span class="text-danger">*</span></label>
+        <select class="form-control"
+                formControlName="city"
+                [class.is-invalid]="addUpdateVendorForm.get('city').invalid && (isSubmitted || addUpdateVendorForm.get('city').touched)">
+          <option value="">Select City</option>
+          <option *ngFor="let city of cityList" [value]="city.city_name">
+            {{ city.city_name }}
+          </option>
+        </select>
+        <div class="invalid-feedback">City is required</div>
+      </div>
+
+      <!-- BUFFER KM -->
+      <div class="col-3 mb-2">
+        <label>Buffer KM</label>
+        <input type="number" class="form-control"
+               formControlName="buffer_km"
+               [class.is-invalid]="addUpdateVendorForm.get('buffer_km').invalid && (isSubmitted || addUpdateVendorForm.get('buffer_km').touched)">
+        <div class="invalid-feedback">Must be 0 or greater</div>
+      </div>
+
+      <!-- EXTRA KM PRICE -->
+      <div class="col-3 mb-2">
+        <label>Extra KM Price</label>
+        <input type="number" class="form-control"
+               formControlName="extra_km_price"
+               [class.is-invalid]="addUpdateVendorForm.get('extra_km_price').invalid && (isSubmitted || addUpdateVendorForm.get('extra_km_price').touched)">
+        <div class="invalid-feedback">Must be 0 or greater</div>
+      </div>
+
+      <!-- LOCAL ONLY -->
+      <div class="col-3 mb-2" *ngIf="addUpdateVendorForm.value.type === 'Local'">
+        <label>Buffer Minutes</label>
+        <input type="number" class="form-control"
+               formControlName="buffer_minutes"
+               [class.is-invalid]="addUpdateVendorForm.get('buffer_minutes').invalid && (isSubmitted || addUpdateVendorForm.get('buffer_minutes').touched)">
+        <div class="invalid-feedback">Required & must be ≥ 0</div>
+      </div>
+
+      <div class="col-3 mb-2" *ngIf="addUpdateVendorForm.value.type === 'Local'">
+        <label>Extra Hours Price</label>
+        <input type="number" class="form-control"
+               formControlName="extra_hours_price"
+               [class.is-invalid]="addUpdateVendorForm.get('extra_hours_price').invalid && (isSubmitted || addUpdateVendorForm.get('extra_hours_price').touched)">
+        <div class="invalid-feedback">Required & must be ≥ 0</div>
+      </div>
+
+      <!-- OUTSTATION ONLY -->
+      <div class="col-3 mb-2" *ngIf="addUpdateVendorForm.value.type === 'Outstation'">
+        <label>Buffer Hours</label>
+        <input type="number" class="form-control"
+               formControlName="buffer_hours"
+               [class.is-invalid]="addUpdateVendorForm.get('buffer_hours').invalid && (isSubmitted || addUpdateVendorForm.get('buffer_hours').touched)">
+        <div class="invalid-feedback">Required & must be ≥ 0</div>
+      </div>
+
+      <div class="col-3 mb-2" *ngIf="addUpdateVendorForm.value.type === 'Outstation'">
+        <label>Extra Days Price</label>
+        <input type="number" class="form-control"
+               formControlName="extra_days_price"
+               [class.is-invalid]="addUpdateVendorForm.get('extra_days_price').invalid && (isSubmitted || addUpdateVendorForm.get('extra_days_price').touched)">
+        <div class="invalid-feedback">Required & must be ≥ 0</div>
+      </div>
+
+      <div class="col-3 mb-2" *ngIf="addUpdateVendorForm.value.type === 'Outstation'">
+        <label>Day Bata</label>
+        <input type="number" class="form-control"
+               formControlName="day_bata"
+               [class.is-invalid]="addUpdateVendorForm.get('day_bata').invalid && (isSubmitted || addUpdateVendorForm.get('day_bata').touched)">
+        <div class="invalid-feedback">Required & must be ≥ 0</div>
+      </div>
+
+      <div class="col-3 mb-2" *ngIf="addUpdateVendorForm.value.type === 'Outstation'">
+        <label>Night Bata</label>
+        <input type="number" class="form-control"
+               formControlName="night_bata"
+               [class.is-invalid]="addUpdateVendorForm.get('night_bata').invalid && (isSubmitted || addUpdateVendorForm.get('night_bata').touched)">
+        <div class="invalid-feedback">Required & must be ≥ 0</div>
+      </div>
+
+      <!-- PRICE DETAILS -->
+      <div class="col-12 mt-3" formArrayName="price_details">
+        <table class="table table-bordered table-sm">
+          <thead>
+            <tr>
+              <th *ngIf="addUpdateVendorForm.value.type === 'Airport'">Start KM *</th>
+              <th *ngIf="addUpdateVendorForm.value.type === 'Local'">Hours *</th>
+              <th>End KM *</th>
+              <th>Base Price *</th>
+              <th width="80">Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let row of priceDetailsArray.controls; let i = index"
+                [formGroupName]="i">
+
+              <td *ngIf="addUpdateVendorForm.value.type === 'Airport'">
+                <input type="number" class="form-control"
+                       formControlName="start_km"
+                       [class.is-invalid]="row.get('start_km').invalid && isSubmitted">
+              </td>
+
+              <td *ngIf="addUpdateVendorForm.value.type === 'Local'">
+                <input type="number" class="form-control"
+                       formControlName="hours"
+                       [class.is-invalid]="row.get('hours').invalid && isSubmitted">
+              </td>
+
+              <td>
+                <input type="number" class="form-control"
+                       formControlName="end_km"
+                       [class.is-invalid]="row.get('end_km').invalid && isSubmitted">
+              </td>
+
+              <td>
+                <input type="number" class="form-control"
+                       formControlName="base_price"
+                       [class.is-invalid]="row.get('base_price').invalid && isSubmitted">
+              </td>
+
+              <td>
+                <button type="button"
+                        class="btn btn-danger btn-sm"
+                        (click)="removePriceDetail(i)">
+                  Remove
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <button type="button" class="btn btn-primary btn-sm" (click)="addPriceDetail()">
+          + Add Row
+        </button>
+      </div>
+
+      <!-- ACTIONS -->
+      <div class="col-12 mt-3">
+        <button type="submit" class="btn btn-success">
+          {{ saveTextName }}
+        </button>
+        <button type="button" class="btn btn-secondary ml-2" (click)="resetForm()">
+          Cancel
+        </button>
+      </div>
+
+    </div>
+  </form>
+</div>
+
+<!-- ---------- LIST ---------- -->
+<div class="card mt-4 p-3">
+  <div class="row mb-2">
+    <div class="col-6"><h5>Price List</h5></div>
+    <div class="col-2"></div>
+    <div class="col-4"><input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText"></div>
+  </div>
+<div class="table-responsive price-scroll">
+  <table class="table table-striped table-hover">
+    <thead>
+  <tr>
+    <th>Sl</th>
+    <th>Type</th>
+    <th>Trip</th>
+    <th>Vehicle</th>
+    <th>Country</th>
+    <th>City</th>
+    <th>Currency</th>
+    <th>Buffer KM</th>
+    <th>Extra KM Price</th>
+    <th>Price Slabs</th>
+    <th>Action</th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr *ngFor="let item of priceList | filter:searchText; let i = index">
+    <td>{{ i + 1 }}</td>
+    <td>{{ item.type }}</td>
+    <td>{{ item.trip_type }}</td>
+    <td>{{ item.commute_supplier_vehicle_id }}</td>
+    <td>{{ item.country }}</td>
+    <td>{{ item.city }}</td>
+    <td>{{ item.currency }}</td>
+
+    <td>{{ item.price_details_obj.buffer_km }}</td>
+    <td>{{ item.price_details_obj.extra_km_price }}</td>
+
+    <!-- PRICE SLABS -->
+    <td>
+      <div *ngIf="item.price_details_obj.slabs.length">
+        <div *ngFor="let s of item.price_details_obj.slabs" class="mb-1">
+          <small class="badge badge-info">
+  {{ s.start_km !== undefined && s.start_km !== null ? s.start_km : s.hours }}
+  →
+  {{ s.end_km }} :
+  {{ s.base_price }}
+</small>
+
+        </div>
+      </div>
+    </td>
+
+    <td>
+      <button class="btn btn-primary btn-sm" (click)="onEdit(item)">Edit</button>
+      <button class="btn btn-danger btn-sm ml-1" (click)="onDelete(item.id)">Delete</button>
+    </td>
+  </tr>
+</tbody>
+
+  </table>
+  </div>
+   <!-- PAGINATION -->
+        <div class="card-footer pb-0">
+          <div class="d-flex w-100 justify-content-between">
+            <ngb-pagination
+              [collectionSize]="collectionSize"
+              [(page)]="page"
+              [pageSize]="pageSize"
+              [maxSize]="5"
+            ></ngb-pagination>
+
+            <select
+              class="custom-select"
+              style="width: auto"
+              [(ngModel)]="pageSize"
+            >
+              <option [ngValue]="20">20</option>
+              <option [ngValue]="50">50</option>
+              <option [ngValue]="100">100</option>
+              <option [ngValue]="200">200</option>
+            </select>
+          </div>
+        </div>
+</div>

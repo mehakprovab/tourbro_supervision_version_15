@@ -44,6 +44,7 @@ import { B2cBundleBookingReportComponent } from './B2C/b2c/b2c-bundle-booking-re
 import { B2bBundleBookingReportComponent } from './B2B/b2b/b2b-bundle-booking-report/b2b-bundle-booking-report.component';
 import { B2cHotelEnquiryComponent } from './B2C/b2c/b2c-hotel-enquiry/b2c-hotel-enquiry.component';
 import { B2bHotelEnquiryComponent } from './B2B/b2b/b2b-hotel-enquiry/b2b-hotel-enquiry.component';
+import { B2cBusComponent } from './B2C/b2c/b2c-bus/b2c-bus.component';
 
 
 const routes: Routes = [
@@ -108,6 +109,12 @@ const routes: Routes = [
         path: 'b2c-hotel',
         canActivate: [AuthGuard],
         component: B2cHotelComponent,
+        data: {extraParameter: 'b2c-reports-Menus'}
+      },
+            {
+        path: 'b2c-bus',
+        canActivate: [AuthGuard],
+        component: B2cBusComponent,
         data: {extraParameter: 'b2c-reports-Menus'}
       },
       {

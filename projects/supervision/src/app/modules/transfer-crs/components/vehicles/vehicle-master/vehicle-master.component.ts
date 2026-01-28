@@ -39,7 +39,6 @@ searchSpin = true;
   currentCountry: Country = null;
 displayColumn = [
   'Sl.No',
-  'Status',
   'Vehicle Name',
   'Vehicle Type',
   'Capacity',
@@ -144,7 +143,7 @@ this.getVendorList()
       luggage_allowances: ['', Validators.required],
       country: ['', Validators.required],
       city: ['', Validators.required],
-      cordinates: ['', Validators.required],
+      // cordinates: ['', Validators.required],
       duration_hours: ['', Validators.required],
       duration_minutes: ['', Validators.required],
      
@@ -152,27 +151,27 @@ this.getVendorList()
       status: [true],
       
 
-    route: this.fb.array([]),
-    route_name: this.fb.array([])
+    // route: this.fb.array([]),
+    // route_name: this.fb.array([])
     });
   }
-get route(): FormArray {
-  return this.addUpdateVehcleForm.get('route') as FormArray;
-}
+// get route(): FormArray {
+//   return this.addUpdateVehcleForm.get('route') as FormArray;
+// }
 
-get routeName(): FormArray {
-  return this.addUpdateVehcleForm.get('route_name') as FormArray;
-}
+// get routeName(): FormArray {
+//   return this.addUpdateVehcleForm.get('route_name') as FormArray;
+// }
 
-addRoute() {
-  this.route.push(this.fb.control('', Validators.required));
-  this.routeName.push(this.fb.control('', Validators.required));
-}
+// addRoute() {
+//   this.route.push(this.fb.control('', Validators.required));
+//   this.routeName.push(this.fb.control('', Validators.required));
+// }
 
-removeRoute(index: number) {
-  this.route.removeAt(index);
-  this.routeName.removeAt(index);
-}
+// removeRoute(index: number) {
+//   this.route.removeAt(index);
+//   this.routeName.removeAt(index);
+// }
 
 onVehicleMasterSave() {
   if (this.addUpdateVehcleForm.invalid || !this.vehicleImage) {
@@ -194,10 +193,10 @@ const payload = {
   status: true,
   country: this.f.country.value.name,
   city: this.f.city.value,
-  cordinates: this.f.cordinates.value,
+  // cordinates: this.f.cordinates.value,
   luggage_allowances: this.f.luggage_allowances.value || '',
-  route: this.route.value || [],
-  route_name: this.routeName.value || [],
+  // route: this.route.value || [],
+  // route_name: this.routeName.value || [],
   created_by_id: this.loggedInUserId,
   image: this.vehicleImage   // <-- here
 };
@@ -217,7 +216,29 @@ const payload = {
 
 
   upateVehicleMaster() {
-    const payload = { ...this.addUpdateVehcleForm.value, id: this.id };
+    const payload = {
+  vehicle_id: Number(this.f.vehicle_type.value),
+  vehicle_type: Number(this.f.vehicle_type.value),
+  trip_type: 1,
+  vendor_id: Number(this.f.vendor_id.value),
+  vehicle_name: this.f.vehicle_name.value,
+  ac_vehicle: this.f.ac_vehicle.value,
+  max_capacity: this.f.max_capacity.value,
+  ratings: this.f.ratings.value,
+  duration_hours: String(this.f.duration_hours.value),
+  duration_minutes: String(this.f.duration_minutes.value),
+  status: true,
+  country: this.f.country.value.name,
+  city: this.f.city.value,
+  // cordinates: this.f.cordinates.value,
+  luggage_allowances: this.f.luggage_allowances.value || '',
+  // route: this.route.value || [],
+  // route_name: this.routeName.value || [],
+  created_by_id: this.loggedInUserId,
+  image: this.vehicleImage,   // <-- here
+  id:this.id
+};
+
     this.api.apiHandler('editVehicleMaster', 'POST', {}, {}, payload)
       .subscribe(() => {
         this.getVehicleMasterList();
@@ -226,13 +247,57 @@ const payload = {
       });
   }
 
-  onEditVehicleType(v) {
-    this.saveTextName = 'Update';
-    this.id = v.id;
-    this.vehicleImage = this.getImage(v.image);
-    this.addUpdateVehcleForm.patchValue(v);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+ onEditVehicleType(v: any) {
+  this.saveTextName = 'Update';
+  this.id = v.id;
+
+  // set image preview (URL string)
+  this.vehicleImage = this.getImage(v.image);
+
+  // 🔹 find country object by name or id
+  const selectedCountry = this.countryList.find(
+    c => c.name === v.country_name 
+  );
+
+  // patch form (NO direct patch of country string)
+  this.addUpdateVehcleForm.patchValue({
+    trip_type: v.trip_type,
+    vehicle_type: v.vehicle_type,
+    vehicle_name: v.vehicle_name,
+    ac_vehicle: v.ac_vehicle,
+    max_capacity: v.max_capacity,
+    vendor_id: v.vendor_id,
+    ratings: v.ratings,
+    luggage_allowances: v.luggage_allowances,
+    country: selectedCountry || null,
+    city: v.city,
+    // cordinates: v.cordinates,
+    duration_hours: v.duration_hours,
+    duration_minutes: v.duration_minutes,
+    status: v.status
+  });
+
+  // 🔹 load cities AFTER country patch
+  if (selectedCountry) {
+    this.getCityListByCountry(selectedCountry);
   }
+
+  // 🔹 patch routes
+  // this.route.clear();
+  // this.routeName.clear();
+
+  // if (v.route.length) {
+  //   v.route.forEach((r: string, i: number) => {
+  //     this.route.push(this.fb.control(r, Validators.required));
+  //     this.routeName.push(
+  //       this.fb.control(v.route_name[i], Validators.required)
+  //     );
+  //   });
+  // }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 
   onDeletedRecord(id) {
     this.swal.alert.delete(ok => {

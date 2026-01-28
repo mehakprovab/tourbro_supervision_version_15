@@ -40,7 +40,7 @@ addUpdateVendorForm: FormGroup;
 
   priceList: any[] = []; // List for table
   searchText = '';
-
+vehicleMasterDataList:any
   searchSpin = true;
 
   private destroy$ = new Subject<void>();
@@ -56,6 +56,7 @@ addUpdateVendorForm: FormGroup;
     this.getCountryList();
     this.setupCountryChangeListener();
     this.getPriceList();
+    this.getVehicleMasterList()
   }
 
   ngOnDestroy(): void {
@@ -216,7 +217,25 @@ addOutstationPriceRow() {
     this.apiHandlerServices.apiHandler('supervisionCityLists', 'post', {}, {}, { country_code: countryParam })
       .subscribe((resp: any) => { if (resp.Status) this.cityList = resp.data; });
   }
-
+getVehicleMasterList() {
+  this.apiHandlerServices.apiHandler('listVehicleMaster', 'POST', {}, {}, {})
+    .subscribe(
+      (res: any) => {
+        if (res.Status && Array.isArray(res.data)) {
+          this.vehicleMasterDataList = res.data.map(item => ({
+            ...item
+           
+          }));
+        } else {
+          this.vehicleMasterDataList = [];
+        }
+      },
+      () => {
+        this.vehicleMasterDataList = [];
+       
+      }
+    );
+}
   markAllFieldsAsTouched() {
     Object.keys(this.addUpdateVendorForm.controls).forEach(key => {
       const control = this.addUpdateVendorForm.get(key);

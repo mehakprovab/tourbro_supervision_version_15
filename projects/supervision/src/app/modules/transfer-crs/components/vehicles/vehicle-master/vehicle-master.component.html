@@ -169,7 +169,7 @@
     </div>
 
     <!-- COORDINATES -->
-    <div class="col-md-8 mb-3">
+    <!-- <div class="col-md-8 mb-3">
       <label>Coordinates <span class="text-danger">*</span></label>
       <textarea
         rows="2"
@@ -178,7 +178,7 @@
         [class.is-invalid]="f.cordinates.invalid && isSubmitted">
       </textarea>
       <div class="invalid-feedback">Coordinates are required</div>
-    </div>
+    </div> -->
 
     <!-- LUGGAGE -->
     <div class="col-md-8 mb-3">
@@ -194,7 +194,7 @@
     </div>
 
     <!-- ROUTES -->
-    <div class="col-12 mt-4">
+    <!-- <div class="col-12 mt-4">
       <label class="font-weight-bold">Routes <span class="text-danger">*</span></label>
 
       <div *ngFor="let r of route.controls; let i = index" class="row align-items-center mb-2">
@@ -226,7 +226,7 @@
       <div class="text-danger mt-1" *ngIf="(route.invalid || routeName.invalid) && isSubmitted">
         At least one route is required
       </div>
-    </div>
+    </div> -->
 
   </div>
 
@@ -315,13 +315,13 @@
               <td>{{ i + 1 }}</td>
 
               <!-- STATUS -->
-              <td>
+              <!-- <td>
                 <mat-slide-toggle
                   [(ngModel)]="item.status"
                   (change)="onStatusChange($event, item.id)"
                 >
                 </mat-slide-toggle>
-              </td>
+              </td> -->
 
               <!-- VEHICLE NAME -->
               <td>{{ item.vehicle_name }}</td>

@@ -31,9 +31,15 @@
       <!-- VEHICLE -->
       <div class="col-3 mb-2">
         <label>Vehicle ID <span class="text-danger">*</span></label>
-        <input type="number" class="form-control"
+           <select class="form-control"
+                formControlName="commute_supplier_vehicle_id"
+                [class.is-invalid]="addUpdateVendorForm.get('commute_supplier_vehicle_id').invalid && (isSubmitted || addUpdateVendorForm.get('commute_supplier_vehicle_id').touched)">
+          <option [ngValue]="null">Select Vehicle Id</option>
+          <option *ngFor="let c of vehicleMasterDataList" [ngValue]="c.vehicle_id">{{ c.vehicle_name }}</option>
+        </select>
+        <!-- <input type="number" class="form-control"
                formControlName="commute_supplier_vehicle_id"
-               [class.is-invalid]="addUpdateVendorForm.get('commute_supplier_vehicle_id').invalid && (isSubmitted || addUpdateVendorForm.get('commute_supplier_vehicle_id').touched)">
+               [class.is-invalid]="addUpdateVendorForm.get('commute_supplier_vehicle_id').invalid && (isSubmitted || addUpdateVendorForm.get('commute_supplier_vehicle_id').touched)"> -->
         <div class="invalid-feedback">Vehicle ID is required</div>
       </div>
 

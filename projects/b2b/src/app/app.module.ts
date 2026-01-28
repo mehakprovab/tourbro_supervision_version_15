@@ -58,7 +58,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         CartModule,
         NgReduxModule,
         NgxLoadingModule.forRoot({}),
-        NgBootstrapFormValidationModule.forRoot(),
+        // NgBootstrapFormValidationModule.forRoot(),
         LoadingBarRouterModule,
         SlickCarouselModule,
         MatProgressSpinnerModule,

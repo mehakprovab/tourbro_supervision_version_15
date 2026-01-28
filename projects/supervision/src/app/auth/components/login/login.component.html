@@ -14,7 +14,7 @@
                 </div>
                 <div>
                     <form autocomplete="off" *ngIf="!showOtpComponent"class="needs-validation" [formGroup]="loginForm"novalidate
-                        (validSubmit)="onLogin()">
+                        (ngSubmit)="onLogin()">
                         <div class="row">
                             <div class="col-md-6">
                                 <fieldset class="form-group">

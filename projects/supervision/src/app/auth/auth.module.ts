@@ -28,7 +28,7 @@ import { DmcLoginComponent } from './components/dmc-login/dmc-login.component';
     FormsModule,
     ReactiveFormsModule,
     SlickCarouselModule,
-    NgBootstrapFormValidationModule,
+    // NgBootstrapFormValidationModule,
     MatFormFieldModule,
     MatInputModule,
     NgxIntlTelInputModule,

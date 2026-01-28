@@ -606,4 +606,7 @@ deleteAyurvedaCenter: `${baseUrl}/dashboard/report/deleteAyurvedaCenter`,
    getMeditationRetreat: `${baseUrl}/dashboard/report/listMeditationRetreats`,
    updateMeditationRetreat: `${baseUrl}/dashboard/report/updateMeditationRetreat`,
    deleteMeditationRetreat: `${baseUrl}/dashboard/report/deleteMeditationRetreat`,
+
+   //bus apis
+       busReport:`${baseUrl}/dashboard/report/AgentBusReport`,
 };

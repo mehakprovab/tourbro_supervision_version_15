@@ -34,9 +34,11 @@ addUpdateVehcleForm: FormGroup;
   id: number;
 searchText: string = '';
 searchSpin = true;
+isSubmitted
  countryList: Country[] = [];
   cityList: City[] = [];
   currentCountry: Country = null;
+   public loadingCities: boolean = false;
 displayColumn = [
   'Sl.No',
   'Vehicle Name',
@@ -49,6 +51,8 @@ displayColumn = [
 ];
 
 page = 1;
+ public secondaryColour: string = '#f44336';
+ public primaryColour: string = '#1976d2';
 pageSize = 20;
 collectionSize: number;
   vehiclesType: any[] = [];
@@ -62,8 +66,7 @@ collectionSize: number;
     { key: 'Standard' },
     { key: 'Premium' },
     { key: 'Luxury' }
-  ];
-
+  ];    public loading: boolean = false;
   vehicleImage: any;
   imageFile: File;
   loggedInUserId: number;
@@ -85,19 +88,22 @@ this.getVendorList()
   }
     getVendorList() {
     this.searchSpin = true;
-
+  this.loading = true;
     this.api
       .apiHandler('vendorList', 'POST', {}, {}, {})
       .subscribe({
         next: (res: any) => {
           if (res.Status) {
             this.vendorList = res.data || [];
+              this.loading = false;
           } else {
             this.vendorList = [];
+             this.loading = false;
           }
         },
         error: () => {
           this.vendorList = [];
+           this.loading = false;
         }
       });
   }
@@ -125,9 +131,11 @@ this.getVendorList()
 
   getCityListByCountry(country: Country) {
     this.currentCountry = country;
+     this.loadingCities = true;
+
     const countryParam = country.sortname || country.name;
     this.api.apiHandler('supervisionCityLists', 'post', {}, {}, { country_code: countryParam })
-      .subscribe((resp: any) => { if (resp.Status) this.cityList = resp.data; });
+      .subscribe((resp: any) => { if (resp.Status) this.cityList = resp.data; this.loadingCities = false;});
   }
   get f() { return this.addUpdateVehcleForm.controls; }
 
@@ -174,37 +182,35 @@ this.getVendorList()
 // }
 
 onVehicleMasterSave() {
-  if (this.addUpdateVehcleForm.invalid || !this.vehicleImage) {
+  if (this.addUpdateVehcleForm.invalid) {
     this.swal.alert.oops('Please fill all required fields');
     return;
   }
 
-const payload = {
-  vehicle_id: Number(this.f.vehicle_type.value),
-  vehicle_type: Number(this.f.vehicle_type.value),
-  trip_type: 1,
-  vendor_id: Number(this.f.vendor_id.value),
-  vehicle_name: this.f.vehicle_name.value,
-  ac_vehicle: this.f.ac_vehicle.value,
-  max_capacity: this.f.max_capacity.value,
-  ratings: this.f.ratings.value,
-  duration_hours: String(this.f.duration_hours.value),
-  duration_minutes: String(this.f.duration_minutes.value),
-  status: true,
-  country: this.f.country.value.name,
-  city: this.f.city.value,
-  // cordinates: this.f.cordinates.value,
-  luggage_allowances: this.f.luggage_allowances.value || '',
-  // route: this.route.value || [],
-  // route_name: this.routeName.value || [],
-  created_by_id: this.loggedInUserId,
-  image: this.vehicleImage   // <-- here
-};
+  const formData = new FormData();
+  formData.append('vehicle_id', this.f.vehicle_type.value);
+  formData.append('vehicle_type', this.f.vehicle_type.value);
+  formData.append('trip_type', '1');
+  formData.append('vendor_id', this.f.vendor_id.value);
+  formData.append('vehicle_name', this.f.vehicle_name.value);
+  formData.append('ac_vehicle', this.f.ac_vehicle.value);
+  formData.append('max_capacity', this.f.max_capacity.value);
+  formData.append('ratings', this.f.ratings.value);
+  formData.append('duration_hours', String(this.f.duration_hours.value));
+  formData.append('duration_minutes', String(this.f.duration_minutes.value));
+  formData.append('status', 'true');
+  formData.append('country', this.f.country.value.name);
+  formData.append('city', this.f.city.value);
+  formData.append('luggage_allowances', this.f.luggage_allowances.value || '');
+  formData.append('created_by_id', String(this.loggedInUserId));
 
-
+  // only append image if file is selected
+  if (this.imageFile) {
+    formData.append('image', this.imageFile);
+  }
 
   // Call API
-  this.api.apiHandler('addVehicleMaster', 'POST', {}, {}, payload)
+  this.api.apiHandler('addVehicleMaster', 'POST', {}, {}, formData)
     .subscribe(res => {
       if (res.Status) {
         this.getVehicleMasterList();
@@ -215,37 +221,36 @@ const payload = {
 }
 
 
-  upateVehicleMaster() {
-    const payload = {
-  vehicle_id: Number(this.f.vehicle_type.value),
-  vehicle_type: Number(this.f.vehicle_type.value),
-  trip_type: 1,
-  vendor_id: Number(this.f.vendor_id.value),
-  vehicle_name: this.f.vehicle_name.value,
-  ac_vehicle: this.f.ac_vehicle.value,
-  max_capacity: this.f.max_capacity.value,
-  ratings: this.f.ratings.value,
-  duration_hours: String(this.f.duration_hours.value),
-  duration_minutes: String(this.f.duration_minutes.value),
-  status: true,
-  country: this.f.country.value.name,
-  city: this.f.city.value,
-  // cordinates: this.f.cordinates.value,
-  luggage_allowances: this.f.luggage_allowances.value || '',
-  // route: this.route.value || [],
-  // route_name: this.routeName.value || [],
-  created_by_id: this.loggedInUserId,
-  image: this.vehicleImage,   // <-- here
-  id:this.id
-};
+upateVehicleMaster() {
+  const formData = new FormData();
+  formData.append('vehicle_id', this.f.vehicle_type.value);
+  formData.append('vehicle_type', this.f.vehicle_type.value);
+  formData.append('trip_type', '1');
+  formData.append('vendor_id', this.f.vendor_id.value);
+  formData.append('vehicle_name', this.f.vehicle_name.value);
+  formData.append('ac_vehicle', this.f.ac_vehicle.value);
+  formData.append('max_capacity', this.f.max_capacity.value);
+  formData.append('ratings', this.f.ratings.value);
+  formData.append('duration_hours', String(this.f.duration_hours.value));
+  formData.append('duration_minutes', String(this.f.duration_minutes.value));
+  formData.append('status', 'true');
+  formData.append('country', this.f.country.value.name);
+  formData.append('city', this.f.city.value);
+  formData.append('luggage_allowances', this.f.luggage_allowances.value || '');
+  formData.append('created_by_id', String(this.loggedInUserId));
+  formData.append('id', String(this.id));
 
-    this.api.apiHandler('editVehicleMaster', 'POST', {}, {}, payload)
-      .subscribe(() => {
-        this.getVehicleMasterList();
-        this.onCancel();
-        this.swal.alert.success('Updated Successfully');
-      });
+  if (this.imageFile) {
+    formData.append('image', this.imageFile);
   }
+
+  this.api.apiHandler('editVehicleMaster', 'POST', {}, {}, formData)
+    .subscribe(() => {
+      this.getVehicleMasterList();
+      this.onCancel();
+      this.swal.alert.success('Updated Successfully');
+    });
+}
 
  onEditVehicleType(v: any) {
   this.saveTextName = 'Update';

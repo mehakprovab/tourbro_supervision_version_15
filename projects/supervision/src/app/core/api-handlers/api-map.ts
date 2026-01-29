@@ -493,7 +493,7 @@ export const apiMap = {
   updateAgentFaqStatus: `${baseUrl}/core/core-agent-login-alert/UpdateAgentFaqStatus`,
 
 
-  registerCountry: `${B2B_URL}/b2b/common/getCountryLists`,
+  registerCountry: `${baseUrl}/dashboard/report/getCountryLists`,
   registerCity: `${B2B_URL}/b2b/common/getCityLists`,
   registerState: `${B2B_URL}/b2b/common/getStatesLists`,
   
@@ -608,7 +608,7 @@ deleteAyurvedaCenter: `${baseUrl}/dashboard/report/deleteAyurvedaCenter`,
    deleteMeditationRetreat: `${baseUrl}/dashboard/report/deleteMeditationRetreat`,
 
    //bus apis
-       busReport:`${baseUrl}/dashboard/report/AgentBusReport`,
+       busReport:`${baseUrl}/dashboard/report/b2cBusReport`,
    createVendorMaster: `${baseUrl}/car/addVendor`,
    vendorList: `${baseUrl}/car/VendorList`,
    deleteVendor:`${baseUrl}/car/deleteVendor`,

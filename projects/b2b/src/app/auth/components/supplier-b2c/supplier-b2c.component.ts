@@ -529,7 +529,7 @@ onSubmitHotelDetail() {
                                            account and login details to be validated in 5 working days - If not, please contact us at 
                                            support@booking247.com.
                                        
-                                           Thanks for your interest in working with Booking247.com.
+                                           Thanks for your interest in working with TourBro.com.
                                          `,
                                          timer: 95000,            // Time in milliseconds
                                          showConfirmButton: true, // Keep the OK button

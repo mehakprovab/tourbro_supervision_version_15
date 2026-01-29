@@ -34,9 +34,11 @@ addUpdateVehcleForm: FormGroup;
   id: number;
 searchText: string = '';
 searchSpin = true;
+isSubmitted
  countryList: Country[] = [];
   cityList: City[] = [];
   currentCountry: Country = null;
+   public loadingCities: boolean = false;
 displayColumn = [
   'Sl.No',
   'Vehicle Name',
@@ -49,6 +51,8 @@ displayColumn = [
 ];
 
 page = 1;
+ public secondaryColour: string = '#f44336';
+ public primaryColour: string = '#1976d2';
 pageSize = 20;
 collectionSize: number;
   vehiclesType: any[] = [];
@@ -62,8 +66,7 @@ collectionSize: number;
     { key: 'Standard' },
     { key: 'Premium' },
     { key: 'Luxury' }
-  ];
-
+  ];    public loading: boolean = false;
   vehicleImage: any;
   imageFile: File;
   loggedInUserId: number;
@@ -85,19 +88,22 @@ this.getVendorList()
   }
     getVendorList() {
     this.searchSpin = true;
-
+  this.loading = true;
     this.api
       .apiHandler('vendorList', 'POST', {}, {}, {})
       .subscribe({
         next: (res: any) => {
           if (res.Status) {
             this.vendorList = res.data || [];
+              this.loading = false;
           } else {
             this.vendorList = [];
+             this.loading = false;
           }
         },
         error: () => {
           this.vendorList = [];
+           this.loading = false;
         }
       });
   }
@@ -125,9 +131,11 @@ this.getVendorList()
 
   getCityListByCountry(country: Country) {
     this.currentCountry = country;
+     this.loadingCities = true;
+
     const countryParam = country.sortname || country.name;
     this.api.apiHandler('supervisionCityLists', 'post', {}, {}, { country_code: countryParam })
-      .subscribe((resp: any) => { if (resp.Status) this.cityList = resp.data; });
+      .subscribe((resp: any) => { if (resp.Status) this.cityList = resp.data; this.loadingCities = false;});
   }
   get f() { return this.addUpdateVehcleForm.controls; }
 

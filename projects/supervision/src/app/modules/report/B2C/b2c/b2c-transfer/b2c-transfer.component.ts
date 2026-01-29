@@ -54,32 +54,32 @@ export class B2cTransferComponent implements OnInit {
         { key: 'Action', value: 'Action' },
         { key: 'status', value: 'Status' },
         { key: 'app_reference', value: 'Application Reference' },
-        { key: 'domain_origin', value: 'Supplier Name' },
+        // { key: 'car_supplier_name', value: 'Supplier Name' },
         { key: 'booking_reference', value: 'Confirmation Reference' },
         { key: 'departure_point', value:'Start Point'},
         { key: 'destination_point', value:'End Point'},
         { key: 'FirstName', value: 'Lead Passenger Name' },
         { key: 'Email', value: 'Lead Passenger Email' },
-        { key: 'total_pax', value: 'Total Pax' },
+        // { key: 'total_pax', value: 'Total Pax' },
         { key: 'Phone', value: 'Phone' },
-        { key: 'ProductName', value: 'Vehicle' },
-        { key: 'TravelDatetime', value: 'Travel Date/Time' },
-        { key: 'ReturnDatetime', value: 'Return Date/Time' },
-        { key: 'PromoCode', value: 'Promocode' },//remove for DMC
+        // { key: 'ProductName', value: 'Vehicle' },
+        // { key: 'TravelDatetime', value: 'Travel Date/Time' },
+        // { key: 'ReturnDatetime', value: 'Return Date/Time' },
+        // { key: 'PromoCode', value: 'Promocode' },//remove for DMC
         { key: 'BaseFare', value: 'Base Fare' },
         { key: 'admin_markup', value: 'Admin Markup' },//remove for DMC
         { key: 'Discount', value: 'Discount' },//remove for DMC
         { key: 'ConvienceFee', value: 'Convenience Fee' },//remove for DMC
-        { key: 'driver_details', value: 'Driver Details' },
+        // { key: 'driver_details', value: 'Driver Details' },
         { key: 'Currency', value: 'Currency' },
         { key: 'CustomerPaidAmount', value: 'Customer Price' },//remove for DMC
         { key: 'BookedOn', value: 'BookedOn' },
         { key: 'paymentStatus', value: 'Payment Status' },
         { key: 'paymentMode', value: 'Payment Mode' },//remove for DMC
         { key: 'PaidOn', value: 'Paid On' },//remove for DMC
-        { key: 'cancellationDeadline', value: 'Cancellation Deadline' },
-        { key: 'cancelledOn', value: 'Cancelled On' },
-        { key: 'cancellationFee', value: 'Cancellation Fee' },
+        // { key: 'cancellationDeadline', value: 'Cancellation Deadline' },
+        // { key: 'cancelledOn', value: 'Cancelled On' },
+        // { key: 'cancellationFee', value: 'Cancellation Fee' },
     ];
     noData: boolean = true;
     respData: Array<any> = [];
@@ -147,35 +147,53 @@ export class B2cTransferComponent implements OnInit {
     onInvoiceClick(){
 
     }
-    getDeparture(value) {
-        // console.log('Original value:', value);
-        if (value) {
-                let values = value.replace(/[\n\r\t]/g, ' ').replace(/'/g, '"'); 
-            try {
-                let attributes = JSON.parse(values);
-                return attributes.body.From.name;
-            } catch (error) {
-                console.error('Error parsing JSON:', error, 'Input:', values);
-                return null;
-            }
-        }   
-        
+ getDeparture(value: string): string {
+  if (!value) return 'N/A';
+
+  try {
+    const parsed = JSON.parse(
+      value.replace(/[\n\r\t]/g, ' ').replace(/'/g, '"')
+    );
+
+    if (
+      parsed &&
+      parsed.searchRequest &&
+      parsed.searchRequest.source &&
+      parsed.searchRequest.source.LocationName
+    ) {
+      return parsed.searchRequest.source.LocationName;
     }
+
+    return 'N/A';
+  } catch (e) {
+    return 'N/A';
+  }
+}
+
+
     
-        getDestination(value) {
-            // console.log('Original value:', value);
-            if (value) {
-                let values = value.replace(/[\n\r\t]/g, ' ').replace(/'/g, '"'); 
-                try {
-                    let attributes = JSON.parse(values);
-                    return attributes.body.To.name;
-                } catch (error) {
-                    console.error('Error parsing JSON:', error, 'Input:', values);
-                    return null;
-                }
-            }
-            
-        }
+     getDestination(value: string): string {
+  if (!value) return 'N/A';
+
+  try {
+    const parsed = JSON.parse(
+      value.replace(/[\n\r\t]/g, ' ').replace(/'/g, '"')
+    );
+
+    if (
+      parsed &&
+      parsed.searchRequest &&
+      parsed.searchRequest.destination &&
+      parsed.searchRequest.destination.LocationName
+    ) {
+      return parsed.searchRequest.destination.LocationName;
+    }
+
+    return 'N/A';
+  } catch (e) {
+    return 'N/A';
+  }
+}
 
         getRouteLocation(value) {
             // console.log('Original value:', value);

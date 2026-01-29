@@ -9,6 +9,7 @@ import { SubSink } from 'subsink/dist/subsink';
 import { Location } from '@angular/common';
 import { environment } from 'projects/supervision/src/environments/environment.prod';
 import { ReportService } from '../../../../../report.service';
+import { finalize } from 'rxjs/operators';
 const baseUrl = environment.baseUrl;
 @Component({
   selector: 'app-b2c-transfer-voucher',
@@ -32,7 +33,10 @@ export class B2cTransferVoucherComponent implements OnInit {
   showAgentDetails: boolean = false;
   displayColumn: any[] =[];
   maxRoutesCount: any;
-
+attributes:any
+itinerary:any
+pax:any
+BookingItineraryDetails
   constructor(
     private activatedRoute: ActivatedRoute,
     private apiHandlerService: ApiHandlerService,
@@ -58,47 +62,151 @@ export class B2cTransferVoucherComponent implements OnInit {
     const currentDomainUser = localStorage.getItem('currentDomainUser');
     this.loggedInUser = JSON.parse(currentDomainUser)['auth_role_id'];
   }
+  getVoucher(): void {
+  // this.loading = true;
 
-  getVoucher() {
-    this.loading=true;
-    this.subSunk.sink = this.apiHandlerService.apiHandler('transferVoucher', 'post', {}, {},
-      {
-        "AppReference": this.app_reference,
+  this.subSunk.sink = this.apiHandlerService
+    .apiHandler('WebTransferVoucher', 'post', {}, {}, {
+      AppReference: this.app_reference
+    })
+     .pipe(
+      finalize(() => {
+        this.loading = false; // 🔥 always closes loader
+        this.cdr.detectChanges();
       })
-      .subscribe(resp => {
-        if (resp.statusCode == 200 || resp.statusCode == 201) {
-          this.voucherData = resp.data;
-          this.loading=false;
-          let bookingData = this.voucherData.BookingDetails.attributes.replace(/[\n\r\t]/g, ' ').replace(/'/g, '"');
-          let paxDetails = this.voucherData.BookingPaxDetails[0].attributes.replace(/'/g, '"');
-          this.bookingDetails = { ...JSON.parse(paxDetails), ...JSON.parse(bookingData) };
-          
-              try {
-                  this.bookingDetails.route_name_list = this.bookingDetails.data.route_name || [];
-              } catch(err) {
-                  this.bookingDetails.route_name_list = [];
-              }
-              this.maxRoutesCount = Math.max(
-              this.bookingDetails.route_name_list.length || 0
-              );
-            for (let i = 1; i <= this.maxRoutesCount; i++) {
-              this.displayColumn.splice(7 + (i - 1), 0, {
-                  key: "location_" + i,
-                  value: "Location " + i
-              });
-            }
-          console.log(this.bookingDetails)     
-          
-          this.cdr.detectChanges();
+    )
+    .subscribe(
+      (resp: any) => {
+        this.loading = false;
+
+        if (resp.statusCode !== 200 && resp.statusCode !== 201) {
+          this.swalService.alert.error(resp.msg || 'Unable to fetch voucher');
+          return;
         }
-        else {
-          this.loading=false;
-          this.swalService.alert.error(resp.msg || '');
+
+        this.voucherData = resp.data;
+this.attributes = JSON.parse(this.voucherData.BookingDetails.attributes);
+this.bookingDetails = this.voucherData.BookingDetails;
+console.log(this.bookingDetails,this.bookingDetails)
+this.itinerary = this.voucherData.BookingItineraryDetails;
+this.pax = this.voucherData.BookingPaxDetails;
+this.attributes = JSON.parse(this.voucherData.BookingDetails.attributes);
+
+        /* ---------------- Booking Details ---------------- */
+        let bookingAttributes = {};
+        if (this.voucherData.BookingDetails.attributes) {
+          try {
+            bookingAttributes = JSON.parse(
+              this.voucherData.BookingDetails.attributes
+                .replace(/[\n\r\t]/g, ' ')
+                .replace(/'/g, '"')
+            );
+          } catch (e) {
+            console.error('BookingDetails parse error', e);
+          }
         }
-      }, err => {
-        this.loading=false;
-      });
+
+        /* ---------------- Pax Details (NO attributes parsing) ---------------- */
+        const paxDetails =
+          this.voucherData.BookingPaxDetails.length > 0
+            ? this.voucherData.BookingPaxDetails[0]
+            : {};
+
+        /* ---------------- Itinerary Details ---------------- */
+        let itineraryAttributes = {};
+        if (this.voucherData.BookingItineraryDetails.attributes) {
+          try {
+            itineraryAttributes = JSON.parse(
+              this.voucherData.BookingItineraryDetails.attributes
+                .replace(/[\n\r\t]/g, ' ')
+                .replace(/'/g, '"')
+            );
+          } catch (e) {
+            console.error('ItineraryDetails parse error', e);
+          }
+        }
+
+        /* ---------------- Final Merged Objects ---------------- */
+      this.bookingDetails = {
+  ...this.voucherData.BookingDetails,
+  ...bookingAttributes
+};
+
+
+        this.BookingItineraryDetails = itineraryAttributes;
+
+        /* ---------------- Route Name Handling ---------------- */
+        try {
+          this.bookingDetails.route_name_list =
+            this.bookingDetails.data.route_name || [];
+        } catch {
+          this.bookingDetails.route_name_list = [];
+        }
+
+        this.maxRoutesCount = this.bookingDetails.route_name_list.length || 0;
+
+        this.cdr.detectChanges();
+      },
+      (error) => {
+        this.loading = false;
+        console.error(error);
+        this.swalService.alert.error('Something went wrong');
+      }
+    );
+}
+parseAttributes(value: any): any {
+  if (!value) {
+    return null;
   }
+  try {
+    return JSON.parse(
+      value.replace(/[\n\r\t]/g, ' ').replace(/'/g, '"')
+    );
+  } catch (e) {
+    return null;
+  }
+}
+
+  // getVoucher() {
+  //   this.loading=true;
+  //   this.subSunk.sink = this.apiHandlerService.apiHandler('WebTransferVoucher', 'post', {}, {},
+  //     {
+  //       "AppReference": this.app_reference,
+  //     })
+  //     .subscribe(resp => {
+  //       if (resp.statusCode == 200 || resp.statusCode == 201) {
+  //         this.voucherData = resp.data;
+  //         this.loading=false;
+  //         let bookingData = this.voucherData.BookingDetails.attributes.replace(/[\n\r\t]/g, ' ').replace(/'/g, '"');
+  //         let paxDetails = this.voucherData.BookingPaxDetails[0].attributes.replace(/'/g, '"');
+  //         this.bookingDetails = { ...JSON.parse(paxDetails), ...JSON.parse(bookingData) };
+          
+  //             try {
+  //                 this.bookingDetails.route_name_list = this.bookingDetails.data.route_name || [];
+  //             } catch(err) {
+  //                 this.bookingDetails.route_name_list = [];
+  //             }
+  //             this.maxRoutesCount = Math.max(
+  //             this.bookingDetails.route_name_list.length || 0
+  //             );
+  //           for (let i = 1; i <= this.maxRoutesCount; i++) {
+  //             this.displayColumn.splice(7 + (i - 1), 0, {
+  //                 key: "location_" + i,
+  //                 value: "Location " + i
+  //             });
+  //           }
+  //         console.log(this.bookingDetails)     
+          
+  //         this.cdr.detectChanges();
+  //       }
+  //       else {
+  //         this.loading=false;
+  //         this.swalService.alert.error(resp.msg || '');
+  //       }
+  //     }, err => {
+  //       this.loading=false;
+  //     });
+  // }
 
   getFormtedStatus(status: string) {
     if (status != null) {
@@ -187,17 +295,33 @@ export class B2cTransferVoucherComponent implements OnInit {
         return 'NA';
     }
   }
-  getDeparture(value) {
-    // console.log('Original value:', value);
-    let values = value.replace(/'/g, '"'); 
-    try {
-        let attributes = JSON.parse(values);
-        return attributes.body.From.name;
-    } catch (error) {
-        // console.error('Error parsing JSON:', error, 'Input:', values);
-        return null;
+getDeparture(item: any): string {
+  if (!item || !item.BookingDetails || !item.BookingDetails.attributes) {
+    return 'N/A';
+  }
+
+  try {
+    const parsed = JSON.parse(
+      item.BookingDetails.attributes
+        .replace(/[\n\r\t]/g, ' ')
+        .replace(/'/g, '"')
+    );
+
+    if (
+      parsed.searchRequest &&
+      parsed.searchRequest.source &&
+      parsed.searchRequest.source.LocationName
+    ) {
+      return parsed.searchRequest.source.LocationName;
     }
+  } catch (e) {
+    console.error('Departure parse error', e);
+  }
+
+  return 'N/A';
 }
+
+
 getSupplierPhoneNumber(value) {
   // console.log('Original value:', value);
   let values = value.replace(/'/g, '"'); 
@@ -210,18 +334,32 @@ getSupplierPhoneNumber(value) {
       return null;
   }
 }
-    getDestination(value) {
-        // console.log('Original value:', value);
-        let values = value.replace(/'/g, '"'); 
-        try {
-            let attributes = JSON.parse(values);
-            // console.log("attributes",attributes)
-            return attributes.body.To.name;
-        } catch (error) {
-            // console.error('Error parsing JSON:', error, 'Input:', values);
-            return null;
-        }
+ getDestination(item: any): string {
+  if (!item || !item.BookingDetails || !item.BookingDetails.attributes) {
+    return 'N/A';
+  }
+
+  try {
+    const parsed = JSON.parse(
+      item.BookingDetails.attributes
+        .replace(/[\n\r\t]/g, ' ')
+        .replace(/'/g, '"')
+    );
+
+    if (
+      parsed.searchRequest &&
+      parsed.searchRequest.destination &&
+      parsed.searchRequest.destination.LocationName
+    ) {
+      return parsed.searchRequest.destination.LocationName;
     }
+  } catch (e) {
+    console.error('Destination parse error', e);
+  }
+
+  return 'N/A';
+}
+
 
     getTripType(value) {
       // console.log('Original value:', value);

@@ -496,7 +496,7 @@ export const apiMap = {
   registerCountry: `${baseUrl}/dashboard/report/getCountryLists`,
   registerCity: `${B2B_URL}/b2b/common/getCityLists`,
   registerState: `${B2B_URL}/b2b/common/getStatesLists`,
-  
+   WebTransferVoucher: `${B2C_URL}/webservice/transfer/voucher`,
   viewUser: `${baseUrl}/user/service/viewUser`,
   updateAgentGroup: `${baseUrl}/user/service/updateAgentGroup`,
   sendVerfication:`${baseUrl}/user/service/sendVerfication`,

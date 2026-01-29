@@ -34,7 +34,9 @@
 
                   <tr>
                   <td style="border:none; padding:0px 0px 15px; line-height: 25px; font-size: 15px; width: 50%;">
-                  <span><b>{{voucherData?.BookingPaxDetails[0].title}}. {{voucherData?.BookingPaxDetails[0].first_name}} {{voucherData?.BookingPaxDetails[0].last_name}}</b></span><br>
+                  <span><b>{{voucherData.BookingPaxDetails[0].title | uppercase}}.
+                        {{(voucherData.BookingPaxDetails[0].first_name +' '+voucherData.BookingPaxDetails[0].last_name |
+                        uppercase)}}</b></span><br>
                   <span><img src="assets/images/telephone-ic.png">&nbsp;{{voucherData?.BookingPaxDetails[0]?.phone}}</span>
                   <br>
                   <span><img src="assets/images/envelope-ic.png">&nbsp;{{voucherData?.BookingPaxDetails[0]?.email}}</span>
@@ -86,13 +88,13 @@
                Product Type: {{voucherData?.BookingDetails?.product_name}}
               </span><br/>
               <span style="display: inline-block; line-height: 22px; font-size: 14px; vertical-align: middle;">
-                Pick Up Location: {{getDeparture(voucherData?.BookingDetails?.attributes)}}
+                Pick Up Location: {{getDeparture(voucherData)}}
               </span><br/>
-              <span *ngFor="let i of [].constructor(maxRoutesCount); let idx = index"  style="display: inline-block; line-height: 22px; font-size: 14px; vertical-align: middle;">
+              <!-- <span *ngFor="let i of [].constructor(maxRoutesCount); let idx = index"  style="display: inline-block; line-height: 22px; font-size: 14px; vertical-align: middle;">
                 Location {{idx+1}}:  {{ bookingDetails.route_name_list[idx] || '-' }}<br/>
-              </span>
+              </span> -->
               <span style="display: inline-block; line-height: 22px; font-size: 14px; vertical-align: middle;">
-                Drop Off Location: {{getDestination(voucherData?.BookingDetails?.attributes)}}
+                Drop Off Location: {{getDestination(voucherData)}}
                </span>
               <ng-container *ngIf="bookingDetails?.Duration!='0 Minutes'">
                 <br />
@@ -383,31 +385,9 @@
                           </tr>
                   </tbody>
                 </table>
-                        <table
+                        <!-- <table
                         style="width: 100%; margin-top: 15px;box-shadow: 0 0 2px 0 rgba(0,0,0,.08), 0 2px 8px 0 rgba(0,0,0,.16);">
-                        <!-- <tbody>
-                            <section style="background-color: #092e53;color: white;">
-                                <h5 style="font-size: 17px;" class="p-2 m-0">Departure Details</h5>
-                            </section>
-                                <tr>
-                                  <td colspan="7" style="line-height:1px; font-size:14px; background: #fff; padding: 15px; color:#555"
-                                    >
-                                    Airport: {{bookingDetails?.DeparturePoint}}
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td colspan="7" style="line-height:1px; font-size:14px; background: #fff; padding: 15px; color:#555"
-                                   >
-                                   Flight Number: {{bookingDetails?.DepInfo}}
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td colspan="7" style="line-height:1px; font-size:14px; background: #fff; padding: 15px; color:#555"
-                                   >
-                                   Airline Name: {{bookingDetails?.DepExtraInfo}}
-                                  </td>
-                                </tr>
-                        </tbody> -->
+                    
                         
                         <tbody *ngIf="bookingDetails?.RetPoint!=''">
                           <section style="background-color: #092e53;color: white;">
@@ -432,7 +412,7 @@
                                 </td>
                               </tr>
                       </tbody>
-                    </table>
+                    </table> -->
                         <table
                             style="width: 100%; margin-top: 15px;box-shadow: 0 0 2px 0 rgba(0,0,0,.08), 0 2px 8px 0 rgba(0,0,0,.16);">
                             <tbody>
@@ -453,7 +433,7 @@
                                     </tr>
                             </tbody>
                         </table>
-                        <table *ngIf="bookingDetails?.BooKingInfo.Extras && bookingDetails?.BooKingInfo.Extras.length>0"
+                        <!-- <table *ngIf="bookingDetails?.BooKingInfo.Extras && bookingDetails?.BooKingInfo.Extras.length>0"
                             style="width: 100%; margin-top: 15px;box-shadow: 0 0 2px 0 rgba(0,0,0,.08), 0 2px 8px 0 rgba(0,0,0,.16);">
                             <tbody>
                                 <section style="background-color: #092e53;color: white;">
@@ -484,7 +464,7 @@
                                         </td>
                                     </tr>
                             </tbody>
-                        </table>
+                        </table> -->
 
                         <table cellpadding="5" cellspacing="0" style="font-size:12px; padding:0;" width="100%">
                           <tbody>

@@ -37,7 +37,7 @@
       <select
         class="form-control"
         formControlName="vehicle_type"
-        [class.is-invalid]="f.vehicle_type.invalid && (isSubmitted || f.vehicle_type.touched)">
+        [class.is-invalid]="f.vehicle_type.invalid && (f.vehicle_type.touched)">
         <option value="">Select</option>
         <option *ngFor="let v of vehiclesType" [value]="v.id">
           {{ v.name }}
@@ -52,7 +52,7 @@
       <input
         class="form-control"
         formControlName="vehicle_name"
-        [class.is-invalid]="f.vehicle_name.invalid && (isSubmitted || f.vehicle_name.touched)">
+        [class.is-invalid]="f.vehicle_name.invalid && (f.vehicle_name.touched)">
       <div class="invalid-feedback">Vehicle Name is required</div>
     </div>
 
@@ -62,7 +62,7 @@
       <select
         class="form-control"
         formControlName="ac_vehicle"
-        [class.is-invalid]="f.ac_vehicle.invalid && (isSubmitted || f.ac_vehicle.touched)">
+        [class.is-invalid]="f.ac_vehicle.invalid && (f.ac_vehicle.touched)">
         <option value="">Select</option>
         <option *ngFor="let a of acType" [value]="a.key">{{ a.key }}</option>
       </select>
@@ -75,7 +75,7 @@
       <select
         class="form-control"
         formControlName="max_capacity"
-        [class.is-invalid]="f.max_capacity.invalid && (isSubmitted || f.max_capacity.touched)">
+        [class.is-invalid]="f.max_capacity.invalid && (f.max_capacity.touched)">
         <option value="">Select</option>
         <option *ngFor="let s of seatCapacity" [value]="s">{{ s }}</option>
       </select>
@@ -88,7 +88,7 @@
       <select
         class="form-control"
         formControlName="ratings"
-        [class.is-invalid]="f.ratings.invalid && (isSubmitted || f.ratings.touched)">
+        [class.is-invalid]="f.ratings.invalid && (f.ratings.touched)">
         <option value="">Select</option>
         <option *ngFor="let r of ratingList" [value]="r.key">{{ r.key }}</option>
       </select>
@@ -111,9 +111,8 @@
   <div class="col-sm-12">
     <select 
       class="form-control" 
-      [class.is-invalid]="f.country.invalid && (isSubmitted || f.country.touched)"
+      [class.is-invalid]="f.country.invalid && (f.country.touched)"
       formControlName="country"
-      [compareWith]="compareCountries"
     >
       <option [ngValue]="null" disabled>Select Country</option>
       <option *ngFor="let c of countryList" [ngValue]="c">
@@ -132,7 +131,7 @@
           <div class="col-sm-12">
             <select 
               class="form-control" 
-              [class.is-invalid]="f.city.invalid && (isSubmitted || f.city.touched)"
+              [class.is-invalid]="f.city.invalid && (f.city.touched)"
               formControlName="city"
               [disabled]="loadingCities || !cityList.length"
             >
@@ -154,8 +153,7 @@
       <input
         type="number"
         class="form-control"
-        formControlName="duration_hours"
-        [class.is-invalid]="f.duration_hours.invalid && isSubmitted">
+        formControlName="duration_hours">
     </div>
 
     <div class="col-md-2 mb-3">
@@ -164,8 +162,7 @@
         type="number"
         max="59"
         class="form-control"
-        formControlName="duration_minutes"
-        [class.is-invalid]="f.duration_minutes.invalid && isSubmitted">
+        formControlName="duration_minutes">
     </div>
 
     <!-- COORDINATES -->

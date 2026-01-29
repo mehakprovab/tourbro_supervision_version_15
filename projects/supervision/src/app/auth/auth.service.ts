@@ -234,6 +234,7 @@ private tokenRefreshInterval: any;
         // remove user from local storage to log user out
         sessionStorage.removeItem('currentSupervisionUser');
         sessionStorage.removeItem('userPrevilige');
+        localStorage.removeItem('currentDomainUser')
         this.currentUserSubject.next(null);
         this.router.navigate(['/']);
     }

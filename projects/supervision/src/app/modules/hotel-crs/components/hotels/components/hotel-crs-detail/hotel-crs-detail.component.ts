@@ -229,7 +229,7 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
         currency: ['',Validators.required],
       });
       this.userTypeForm = this.fb.group({
-        user_type: ['',Validators.required],
+        user_type: [''],
       });
     this.hotelCrsService.updateData.subscribe((data => {
       this.loading = true;
@@ -373,7 +373,7 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
       // channel:this.hotelData.local_timezone,
 
     });
-    this.filteredOptions = this.filteredOptions.filter(data => data.value !== this.hotelData.user_type);
+    // this.filteredOptions = this.filteredOptions.filter(data => data.value !== this.hotelData.user_type);
     if (this.hotelData.paid_children_from_age != 0 && this.hotelData.meal_price != 0) {
       this.isChilderns = true;
       this.mealPrice = true;
@@ -709,7 +709,7 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
       paid_children_to_age: [''],
       meal_price: [''],
       channel: ['Extranet', Validators.required],
-      user_type: ['', Validators.required],
+      user_type: ['B2C', Validators.required],
       currency: [{ value: '', disabled: false }, Validators.required],
       status: [true],
       hotel_description: [''],

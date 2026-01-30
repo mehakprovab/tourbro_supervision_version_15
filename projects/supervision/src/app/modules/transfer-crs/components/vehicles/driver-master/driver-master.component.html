@@ -299,6 +299,12 @@
       let i = index
     ">
               <td>{{ i + 1 }}</td>
+   <td>
+                <mat-slide-toggle
+                  [(ngModel)]="item.status"
+                  (change)="onStatusChange($event, item.id)"
+                ></mat-slide-toggle>
+              </td>
 
               <!-- ❌ Status removed -->
 

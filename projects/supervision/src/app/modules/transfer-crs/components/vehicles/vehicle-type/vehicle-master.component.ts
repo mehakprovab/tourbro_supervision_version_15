@@ -60,7 +60,7 @@ export class VehicleTypeComponent implements OnInit {
         
         if (this.updateVehicle && this.vehicleId) {
             this.loading = true;
-            const req ={ ...this.vehicleMasterForm.value,id: this.vehicleId };
+            const req ={ ...this.vehicleMasterForm.value,id: this.vehicleId,status:true };
              this.apiHandlerService.apiHandler('vehicleMasterUpdate', 'POST', {}, {}, req).subscribe({
                 next: (res) => {
                     console.log(res);
@@ -94,7 +94,7 @@ export class VehicleTypeComponent implements OnInit {
             } else {
                 created_by_id = JSON.parse(currentDomainUser)['id'];
             }
-            const req = {...this.vehicleMasterForm.value, created_by_id: created_by_id };
+            const req = {...this.vehicleMasterForm.value, created_by_id: created_by_id,status:true  };
             this.apiHandlerService.apiHandler('addVehicleType', 'POST', {}, {}, req).subscribe({
                 next: (res) => {
                     console.log(res);

@@ -41,11 +41,14 @@ isSubmitted
    public loadingCities: boolean = false;
 displayColumn = [
   'Sl.No',
+  'Status',
   'Vehicle Name',
   'Vehicle Type',
   'Capacity',
   'Ride Type',
   'Category',
+  'Combustion Type',
+  'Cancellation Rule',
   'Image',
   'Action'
 ];
@@ -154,7 +157,8 @@ this.getVendorList()
       // cordinates: ['', Validators.required],
       duration_hours: ['', Validators.required],
       duration_minutes: ['', Validators.required],
-     
+     cancellation_rule:['',Validators.required],
+      combustion_type:['',Validators.required],
       image: [''],
       status: [true],
       
@@ -201,6 +205,8 @@ onVehicleMasterSave() {
   formData.append('status', 'true');
   formData.append('country', this.f.country.value.name);
   formData.append('city', this.f.city.value);
+  formData.append('combustion_type', this.f.combustion_type.value);
+  formData.append('cancellation_rule', this.f.cancellation_rule.value);
   formData.append('luggage_allowances', this.f.luggage_allowances.value || '');
   formData.append('created_by_id', String(this.loggedInUserId));
 
@@ -236,6 +242,8 @@ upateVehicleMaster() {
   formData.append('status', 'true');
   formData.append('country', this.f.country.value.name);
   formData.append('city', this.f.city.value);
+    formData.append('cancellation_rule', this.f.cancellation_rule.value);
+     formData.append('combustion_type', this.f.combustion_type.value);
   formData.append('luggage_allowances', this.f.luggage_allowances.value || '');
   formData.append('created_by_id', String(this.loggedInUserId));
   formData.append('id', String(this.id));
@@ -276,6 +284,8 @@ upateVehicleMaster() {
     luggage_allowances: v.luggage_allowances,
     country: selectedCountry || null,
     city: v.city,
+    cancellation_rule:v.cancellation_rule,
+    combustion_type:v.combustion_type,
     // cordinates: v.cordinates,
     duration_hours: v.duration_hours,
     duration_minutes: v.duration_minutes,
@@ -316,12 +326,20 @@ upateVehicleMaster() {
     });
   }
 
-  onStatusChange(e: MatSlideToggleChange, id) {
-    this.api.apiHandler('updateVehicleMasterStatus', 'POST', {}, {}, {
+
+   onStatusChange(event: MatSlideToggleChange, id: number) {
+    const payload = {
       id,
-      status: e.checked
-    }).subscribe();
+      status: event.checked ? true : false
+    };
+
+    this.api
+      .apiHandler('updateVehicleMasterStatus', 'POST', {}, {}, payload)
+      .subscribe(() => {
+        this.getVehicleMasterList();
+      });
   }
+
               // <-- for preview
 
 onFileSelected(event: any) {

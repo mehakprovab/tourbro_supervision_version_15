@@ -315,7 +315,7 @@ onSubmit() {
     payload.id = this.editId;
   }
 
-  const api = this.editId ? 'editPrice' : 'addPrice';
+  const api = this.editId ? 'carEditPrice' : 'carAddPrice';
 
   this.apiHandlerServices.apiHandler(api, 'POST', {}, {}, payload)
     .subscribe({

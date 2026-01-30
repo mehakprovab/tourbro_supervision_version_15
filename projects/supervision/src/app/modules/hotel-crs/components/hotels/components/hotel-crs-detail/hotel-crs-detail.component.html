@@ -314,27 +314,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-4 mb-3" *ngIf="showUserType(hotelOne?.auth_role_id)">
-                        <label class="required col-sm-12 col-form-label pl-0">
-                          Distribution Channel <span class="text-danger">*</span>
-                        </label>
-                        <div class="d-flex align-items-center">
-                          <select formControlName="user_type" class="form-control mr-2" [disabled]="isB2BDefault">
-                            <option value="" disabled>Select User Type</option>
-                            <option value="B2C">B2C</option>
-                            <option value="B2B">B2B</option>
-                            <option value="Both">Both</option>
-                          </select>
-                          <button
-                          *ngIf="disableUserType && loggedInUser?.auth_role_id !== 7"
-                          class="btn btn-sm btn-secondary btnStyle"
-                          (click)="supplierUserRequest()"
-                        >
-                          Request
-                        </button>                        
-                        </div>
-                        <div class="invalid-feedback"></div>
-                      </div>
+              
                       
                   
                 </div>

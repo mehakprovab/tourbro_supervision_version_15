@@ -7,13 +7,13 @@
 }
 .link:hover {
     color: darken($color: #3c8dbc, $amount: 10) ;
-
 }
 .booking_li strong { color: #3c8dbc;}
 .customCenter{
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 8px;
 }
 .m-2 {
     margin: 0.3rem !important;
@@ -35,7 +35,7 @@ line-height: 16px;
 }
 
 .dashboard-repors-section {
-    overflow-x: auto;
+    // overflow-x: auto;
     width: 100%;
 }
 

@@ -182,7 +182,57 @@
       <label>Luggage Allowances</label>
       <textarea class="form-control" formControlName="luggage_allowances"></textarea>
     </div>
-
+    <div class="col-4">
+          <label class="px-3 control-label">
+            Cancellation Rules <span class="text-danger">*</span>
+          </label>
+          <div class="col-sm-12">
+            <select 
+              class="form-control" 
+              [class.is-invalid]="f.cancellation_rule.invalid && (f.cancellation_rule.touched)"
+              formControlName="cancellation_rule"
+            >
+           <option value="" disabled>Select Cancellation Rules</option>
+              <option  value="SUPER_FLEXI">
+                SUPER_FLEXI
+              </option>
+              <option  value="FLEXI">
+                FLEXI
+              </option>
+              <option  value="NON_FLEXI">
+               NON_FLEXI
+              </option>
+            </select>
+         
+          </div>
+        </div>
+            <div class="col-4">
+          <label class="px-3 control-label">
+            Combustion Type <span class="text-danger">*</span>
+          </label>
+          <div class="col-sm-12">
+            <select 
+              class="form-control" 
+              [class.is-invalid]="f.combustion_type.invalid && (f.combustion_type.touched)"
+              formControlName="combustion_type"
+            >
+           <option value="" disabled>Select  Combustion Type</option>
+              <option  value="Petrol">
+           Petrol
+              </option>
+              <option  value="Ev">
+                Ev
+              </option>
+              <option  value="Diesel">
+           Diesel
+              </option>
+                <option  value="Diesel">
+           CNG
+              </option>
+            </select>
+         
+          </div>
+        </div>
     <!-- IMAGE -->
     <div class="col-md-4 mb-3">
       <label>Image</label>
@@ -312,13 +362,13 @@
               <td>{{ i + 1 }}</td>
 
               <!-- STATUS -->
-              <!-- <td>
+              <td>
                 <mat-slide-toggle
                   [(ngModel)]="item.status"
                   (change)="onStatusChange($event, item.id)"
                 >
                 </mat-slide-toggle>
-              </td> -->
+              </td>
 
               <!-- VEHICLE NAME -->
               <td>{{ item.vehicle_name }}</td>
@@ -334,6 +384,8 @@
 
               <!-- CATEGORY -->
               <td>{{ item.ratings }}</td>
+              <td>{{ item.combustion_type }}</td>
+              <td>{{ item.cancellation_rule }}</td>
 
               <!-- IMAGE -->
               <td>

@@ -45,6 +45,7 @@ export class DriverMasterComponent implements OnInit, OnDestroy {
   public loadingCities: boolean = false;
   displayColumn = [
     'Sl.No',
+    'Status',
     'Name',
 
     'Age',
@@ -91,6 +92,9 @@ labelImport!: ElementRef;
     let url = 'http://54.92.243.81/tourbro/node/dist/apps/supervision/'
     return `${ img}`;
   }
+
+
+
 
   ngOnInit(): void {
 
@@ -324,6 +328,7 @@ const token = this.getBearerToken();
     fd.append('dl_no', formValue.dl_no);
     fd.append('country', formValue.country.name);
     fd.append('city', formValue.city);
+    fd.append('status', 'true');
 
     this.loading = true;
  {
@@ -394,6 +399,7 @@ editDriver(driver: any) {
   this.saveTextName = 'Update';
   this.enabledForm = true;
 console.log(driver,"drivertgg")
+this.id=driver.id
   // patch basic fields
   this.addUpdateVendorForm.patchValue({
     name: driver.name,
@@ -490,7 +496,7 @@ console.log(driver,"drivertgg")
   onCancel() {
     this.saveTextName = 'Save';
     this.isSubmitted = false; // Reset the submission flag
-    this.addUpdateVendorForm.reset({ status: 1 });
+    this.addUpdateVendorForm.reset({ status: true });
 
     // Reset validation states
     Object.keys(this.addUpdateVendorForm.controls).forEach(key => {
@@ -530,7 +536,7 @@ if (formValue.image) {
     fd.append('country', formValue.country.name);
     fd.append('city', formValue.city);
     fd.append('id', this.id);
-
+fd.append('status', 'true');
     this.apiHandlerServices
       .apiHandler('updateDriver', 'POST', {}, {}, fd)
       .subscribe((res) => {
@@ -554,11 +560,11 @@ if (formValue.image) {
   onStatusChange(event: MatSlideToggleChange, id: number) {
     const payload = {
       id,
-      status: event.checked ? 1 : 0
+      status: event.checked ? true : false
     };
 
     this.apiHandlerServices
-      .apiHandler('updateVendor', 'POST', {}, {}, payload)
+      .apiHandler('updateDriver', 'POST', {}, {}, payload)
       .subscribe(() => {
         this.getDriverList();
       });

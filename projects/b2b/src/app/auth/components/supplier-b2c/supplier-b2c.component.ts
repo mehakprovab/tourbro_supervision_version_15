@@ -524,10 +524,10 @@ onSubmitHotelDetail() {
                                          icon: 'success',
                                          title: 'Success',
                                          html: `
-                                           Your request has been successfully submitted. Booking247.com's team will check your request 
+                                           Your request has been successfully submitted. TourBro.com's team will check your request 
                                            and may contact you by email if any other verifications are required. You should expect your 
                                            account and login details to be validated in 5 working days - If not, please contact us at 
-                                           support@booking247.com.
+                                           support@tourbro.com.
                                        
                                            Thanks for your interest in working with TourBro.com.
                                          `,

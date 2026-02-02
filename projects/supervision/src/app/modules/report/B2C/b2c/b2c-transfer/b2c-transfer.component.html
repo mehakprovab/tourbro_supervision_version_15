@@ -133,11 +133,11 @@
                                                     <button ngbDropdownItem
                                                         (click)="onVoucherRedirect(data?.app_reference,'voucher')">View
                                                         Voucher</button>
-                                                    <button ngbDropdownItem
+                                                    <!-- <button ngbDropdownItem
                                                         (click)="onVoucherRedirect(data?.app_reference,'invoice')">View
                                                         Invoice</button>
                                                     <button ngbDropdownItem (click)="showPaxProfile(data)">Pax
-                                                        Profile</button>
+                                                        Profile</button> -->
                                                     <button
                                                         *ngIf="data?.booking_reference && (data?.status == 'BOOKING_CONFIRMED'|| data?.status == 'BOOKING_FAILED'|| data?.status == 'BOOKING_VOIDED' || data?.status =='BOOKING_HOLD') && loggedAuthId !== 7"
                                                         ngbDropdownItem (click)="cancelTicketPopup(data)"> Cancel
@@ -173,7 +173,7 @@
                                             {{data.status ? '' : 'N/A'}}
                                         </td>
                                         <td class="text-left"> {{data?.app_reference}} </td>
-                                        <td class="text-left">{{data?.supplier_business_name}} </td>
+                                        <!-- <td class="text-left">{{data?.supplier_business_name}} </td> -->
                                         <td class="text-left">{{data?.booking_reference || 'N/A'}} </td>
                                         <td class="text-left">{{getDeparture(data.attributes)|| 'N/A'}} </td>
                                         <td *ngFor="let i of [].constructor(maxRoutesCount); let idx = index" class="text-left">
@@ -183,19 +183,19 @@
                                         <td class="text-left">{{data.pax[0]?.title}} {{data.pax[0]?.first_name}}
                                             {{data.pax[0]?.last_name}} </td>
                                         <td class="text-left">{{data.pax[0]?.email || 'N/A'}} </td>
-                                        <td class="text-left">{{data.pax[0]?.adult_count !== '0' ? data.pax[0]?.adult_count+'Adu' : '-'}} {{data.pax[0]?.child_count  !== '0' ? data.pax[0]?.child_count+'Chi' : '-'}} </td>
+                                        <!-- <td class="text-left">{{data.pax[0]?.adult_count !== '0' ? data.pax[0]?.adult_count+'Adu' : '-'}} {{data.pax[0]?.child_count  !== '0' ? data.pax[0]?.child_count+'Chi' : '-'}} </td> -->
 
                                         <td class="text-left">{{data.pax[0]?.phone || 'N/A'}} </td>
-                                        <td class="text-left">{{data?.product_name}} </td>
+                                        <!-- <td class="text-left">{{data?.product_name}} </td>
                                         <td class="text-left">{{(data.itinerary[0]?.travel_date  | date: 'dd/MM/yyyy  h:mm a') || 'N/A' }} </td>
                                         <td class="text-left">{{(data.itinerary[0]?.return_date  | date: 'dd/MM/yyyy  h:mm a') || 'N/A' }} </td>
-                                        <td class="text-left"  *ngIf="loggedAuthId !== 7">{{data && data?.promo_code || 'N/A'}}</td>
+                                        <td class="text-left"  *ngIf="loggedAuthId !== 7">{{data && data?.promo_code || 'N/A'}}</td> -->
                                         <td class="text-left" > {{data?.itinerary[0]?.base_fare || 0 }} </td>
                                         <td class="text-left" *ngIf="loggedAuthId !== 7" > {{data?.itinerary[0]?.admin_markup || 0 }} </td>
                                         <td class="text-left"  *ngIf="loggedAuthId !== 7"> {{data?.discount || 0 }} </td>
                                         <!-- <td class="text-left"> {{data?.itinerary[0]?.agent_markup || 0 }} </td> -->
                                         <td class="text-left" *ngIf="loggedAuthId !== 7" > {{data?.itinerary[0]?.convinence_amount  || '0' }} </td>
-                                        <td class="text-left">{{data?.driver_name}} {{data?.driver_contact}}</td>
+                                        <!-- <td class="text-left">{{data?.driver_name}} {{data?.driver_contact}}</td> -->
                                         <td class="text-left" > {{data?.currency}} </td>
                                        
                                         <td class="text-left" *ngIf="loggedAuthId !== 7" >{{data?.itinerary[0]?.total_fare }} </td>
@@ -203,13 +203,13 @@
                                         <td class="text-left">{{data?.payment_status }} </td>
                                         <td class="text-left" *ngIf="loggedAuthId !== 7">{{data?.payment_mode }} </td>
                                         <td class="text-left" *ngIf="loggedAuthId !== 7">{{data?.paid_on }} </td>
-                                        <td class="text-left"> {{ data?.cancel_deadline ? ( data?.cancel_deadline | date: 'dd/MM/yyyy' ) : 'NA' }} </td>
+                                        <!-- <td class="text-left"> {{ data?.cancel_deadline ? ( data?.cancel_deadline | date: 'dd/MM/yyyy' ) : 'NA' }} </td>
                                         <td class="text-left">
                                             <ng-container *ngIf="data?.status === 'BOOKING_CANCELLED'; else naTemplate">
                                               {{ data?.cancelled_datetime | date: 'dd/MM/yyyy' }}
                                             </ng-container>
                                             <ng-template #naTemplate>NA</ng-template>
-                                          </td>
+                                          </td> -->
                                           <td class="text-left" >{{ data['status'] == 'BOOKING_CANCELLED' ? data?.cancelAmount : ''}} </td>
                                     </tr>
                                 </tbody>

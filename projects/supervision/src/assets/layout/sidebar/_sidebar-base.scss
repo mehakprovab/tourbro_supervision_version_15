@@ -108,7 +108,7 @@ $sidebar-box-shadow: 7px 0 60px rgba(0, 0, 0, 0.05);
 
   %side-link-hover {
     /*background: #e0f3ff; */
-    color: #fff;
+    color: #4D1AC4;
   }
 
   & .vsm-link {
@@ -118,7 +118,7 @@ $sidebar-box-shadow: 7px 0 60px rgba(0, 0, 0, 0.05);
     padding: 13px 10px 13px 45px;
     position: relative;
     border-radius: .25rem;
-    color: #fff;
+    color: #4D1AC4;
     white-space: nowrap;
     transition: all .2s;
     text-decoration: none;
@@ -202,7 +202,7 @@ $sidebar-box-shadow: 7px 0 60px rgba(0, 0, 0, 0.05);
       height: 100%;
       opacity: 1;
       width: 3px;
-      background: $dropdown-link-hover-bg;
+      // background: $dropdown-link-hover-bg;
       position: absolute;
       left: 20px;
       top: 0;

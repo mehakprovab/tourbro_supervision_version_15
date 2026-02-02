@@ -1,6 +1,6 @@
 <div class="row bg-white">
-    <div class="col-md-06 d-flex flex-row m-2 dashboard-repors-section">
-        <div class="col-md-06 d-flex flex-row m-2" *ngIf="!moduleBookingCountFound; else dnotShow">
+    <div class="col-md-12 d-flex flex-row m-2 dashboard-repors-section">
+        <div class="col-md-6 d-flex flex-row m-2" *ngIf="!moduleBookingCountFound; else dnotShow">
             <div class="text-center">
                 No data found
             </div>
@@ -8,7 +8,7 @@
         <ng-template #dnotShow>
             <div class="col-md-3 d-flex flex-row m-2" *ngFor="let item of moduleBookingCount; let i = index">
                 <ng-container *ngIf="item.module == 'Car Booking' ? false : true">
-                    <div class="w-35 {{item.class}} customCenter text-white rounded">
+                    <div class="w-35 {{item.class}} customCenter text-white">
                         <i class="{{item.icon}} fa-3x p-3"></i>
                     </div>
                     <div class="pl-2">

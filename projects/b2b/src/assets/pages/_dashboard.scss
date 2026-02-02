@@ -285,7 +285,7 @@
                 // margin-bottom: 2px;
                 &.active{
               
-                    color: #FBC108;border-bottom: 5px solid #FBC108;
+                    color: #FE4865;border-bottom: 5px solid #FE4865;
                 }
             }
             &:first-child{
@@ -352,8 +352,8 @@
                 // cursor: pointer;
                 // border: 1px solid #333;
                 &.active{
-                    // background: #FBC108;
-                    // border: 1px solid #FBC108;
+                    // background: #FE4865;
+                    // border: 1px solid #FE4865;
                     color: #fff;
                 }
                 &::before, &::after{
@@ -431,7 +431,7 @@
 }
 
 .srch_btn{
-    background: #FBC108;
+    background: #FE4865;
     border-radius: 5px;
     padding: 10px 15px;
     width: 100%;
@@ -461,7 +461,7 @@
     }
     &:hover{
         color: #fff;
-        background: #fbc108;
+        background: #FE4865;
         transition: 0.3s;
     }
 }

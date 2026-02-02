@@ -101,7 +101,11 @@ perfect-scrollbar { max-height: 650px !important;}
 }
 
 .btnStyle, .btn-primary {
-    background: #022756 !important;     padding: 6px 12px !important; border:1px solid #022756!important;
+    background: #FE4865 !important;
+    padding: 10px 16px !important;
+    border: 1px solid #FE4865 !important;
+    border-radius: 8px !important;
+    height: 44px;
 }
 .btncontainer .btnStyle:first-child{ background: #FE4865 !important;
     padding: 6px 12px !important;
@@ -113,10 +117,12 @@ perfect-scrollbar { max-height: 650px !important;}
 .customCenter .p-1:nth-child(2) .btn-primary{ background: #022756 !important;
         padding: 6px 12px !important;
         border: 1px solid #022756 !important; }   
-        .form-control {
+.form-control {
             transition: all 0.2s;
             height: 45px;
             margin-top: 0px;
+            border-radius: 8px !important;
+            border:1px solid #C4B3EB!important;
         }
 .btn-primary:first-child{ background: #FE4865 !important;
         padding: 6px 12px !important;
@@ -129,7 +135,7 @@ perfect-scrollbar { max-height: 650px !important;}
 .bg-primary, .badge-primary{ background: #012756 !important; }
 .fc-button-primary { background: #012756 !important;   border:1px solid #012756 !important; }
 .btn-primary:hover {background: #012756;   border:1px solid #012756 !important;}
-.tabs-animated > .nav-tabs .nav-link::before { background: #012756; }
+.tabs-animated > .nav-tabs .nav-link::before { background: none!important; }
 .form-group .nrm_input {
     line-height: normal !important;
     height: 45px !important;
@@ -207,3 +213,19 @@ span.dropdown-multiselect__caret {height: 45px !important;}
 .cke_notification_warning {
     display: none;
 }
+.custom_tab .nav-tabs .nav-link {
+       
+    padding: 10px 20px;
+    margin: 10px 10px 20px 0px;
+    border: 2px solid #D7CCF2;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+}
+.custom_tab .nav-tabs .nav-link.active {
+    background-color: #3901BE !important;
+    border-color: #3901BE !important;
+    color: #ffffff!important;
+}
+.title h3{background: #F5F2FC;font-size: 20px;font-weight: 600;color: #282828;padding: 10px 16px;border-radius: 8px;}
+.btn-secondary{background: #FFF5F6;color: #FE4865;border:1px solid #FFF5F6;border-radius: 8px !important;height: 44px;}

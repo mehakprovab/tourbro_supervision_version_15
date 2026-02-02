@@ -1,8 +1,8 @@
 
 <div style=" width:90%; padding:40px 0px 0px; position:relative;margin: 0px auto;" *ngIf="voucherData">
-   <div class="">
+   <!-- <div class="">
     <a class="text-center d-block" (click)="backtoReports()"><button class="btnStyle">Back</button></a>&nbsp;&nbsp;
-   <div >
+   <div > -->
     <div class="printformClass" style=" -webkit-print-color-adjust: exact;" id="print_voucher" #print_voucher>
        <table id="print_voucher" class="table" cellpadding="0" cellspacing="0" width="75%"
            style="font-size:13px; width: 100%; overflow: hidden; border-radius: 10px; box-shadow: 0 0 2px 0 rgba(0, 0, 0, .08), 0 2px 8px 0 rgba(0, 0, 0, .16); background: #fff; margin:0px auto; -webkit-print-color-adjust: exact; padding:50px 45px;">
@@ -18,13 +18,16 @@
                                            src="assets/images/login-images/l-logo.png">
                                    </td>
                                   
-                                   <td style="padding: 0px; width: 25%; border-top: 1px solid transparent; ">
+                                   <!-- <td style="padding: 0px; width: 25%; border-top: 1px solid transparent; ">
                                        <div class="trapezoid">Voucher</div>
-                                   </td>
+                                   </td> -->
                                    
                                </tr>
                                <tr style="border-bottom: 1px solid #082E53;border-top: 1px solid transparent;"> 
-                                <td colspan="2" style="text-align: center; font-size:25px;color: #000;font-weight:500;border-top: 1px solid transparent;">Hotel Booking</td>
+                               <button type="button" (click)="downloadA4('pdf', 'potrait')" id="download" style="background: #FE4865;color: #fff; float:right;"
+                                    class="btn table-btn lg btn_hover">
+                                    Download Booking
+                                </button>
                             </tr>
                                
                            </tbody>
@@ -35,10 +38,7 @@
                                <tr>
                                    <td colspan="2" style="padding: 0px; border: none;">
                                        <table style="width: 100%;">
-                                           <tr><td style="height: 5px; border: none; padding: 0px;"></td></tr>
                                            
-
-                                           <tr><td style="height: 5px; border: none; padding: 0px;"></td></tr>
 
                                                <tr>
                                                <td style="border:none; padding:0px 0px 15px; line-height: 25px; font-size: 15px; width: 50%;">
@@ -618,32 +618,13 @@
                    </td>
                </tr>
 
-               <tr>
-                   <td style="padding: 0px; border: none;">
-                       <table style="width: 100%;">
-                       <tr>
-                        <td style="width: 50%;
-                        background: #092e53;
-                        border: none;
-                        color: #fff;
-                        padding: 14px 30px;
-                        line-height: 22px;
-                        font-size: 14px;">
-                           41, Victoria Street<br>
-Blackburn, Lancashire, United Kingdom - BB1 6DN<br>
-care.uk@booking247.com | + 44 1254 66 22 22
-                        </td>
-                        <td style="width: 50%; border: none; padding: 0px;"><img style="width: 100%;" src="assets/images/voucher_foot.jpg"></td>
-                        </tr>
-                        </table>
-                        </td>
-                   </tr>
+              
            </tbody>
        </table>
        </div>
    </div>
 
-   <div>
+   <!-- <div>
        <table class="table" cellpadding="0" cellspacing="0" width="100%"
            style="font-size:13px; width:100%; margin:0px auto; margin-bottom:10px;  -webkit-print-color-adjust: exact; ">
            <tr>
@@ -652,17 +633,14 @@ care.uk@booking247.com | + 44 1254 66 22 22
               <br>
               <div style="display: table;">
                 <br>
-                <button type="button" (click)="downloadA4('pdf', 'potrait')" id="download" style="background: #FBC108;color: #fff; float:right;"
-                    class="btn table-btn lg btn_hover">
-                    Download Booking
-                </button>
+                
             </div>
             </td>
           </tr>
 
            
        </table>
-   </div>
+   </div> -->
 </div>
 </div>
 <ngx-loading [show]="loading"

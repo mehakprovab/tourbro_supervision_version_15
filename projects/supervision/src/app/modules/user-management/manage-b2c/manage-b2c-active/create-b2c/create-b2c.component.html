@@ -68,7 +68,7 @@
                     <label for="country" class="col-sm-2 col-form-label">Country</label>
                         <div class="col-sm-4">
                             <select id="country" class="form-control text-capitalize" formControlName="country">
-                                <option *ngFor="let code of registerCountry" [ngValue]="code.id">
+                                <option *ngFor="let code of registerCountry" [value]="code.id">
                                     {{code.name}}</option>
                             </select>
                         </div>

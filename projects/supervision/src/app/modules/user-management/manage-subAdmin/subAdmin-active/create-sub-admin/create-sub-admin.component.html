@@ -64,7 +64,7 @@
                     <div class="col-sm-4">
                         <select id="country" class="form-control text-capitalize" formControlName="country">
                             <option selected disabled>Select Country</option>
-                            <option *ngFor="let c of countriesList" value="{{c.id}}">{{c.name}}</option>
+                            <option *ngFor="let c of countriesList" [value]="c.id">{{c.name}}</option>
                         </select>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                     <label for="phone" class="col-sm-2 col-form-label">Phone Code</label>
                     <div class="col-sm-4 m-0">
                         <select id="phoneCode" class="form-control text-capitalize" formControlName="phone_code">
-                            <option value="{{code.id}}" *ngFor="let code of phoneCodeList">
+                            <option [value]="code.phone_code" *ngFor="let code of phoneCodeList">
                                 {{code.name}} ({{code.phone_code}}) </option>
                         </select>
                     </div>

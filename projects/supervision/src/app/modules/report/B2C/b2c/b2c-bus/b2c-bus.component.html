@@ -1,12 +1,10 @@
-<div class="card-header text-uppercase bg-dark text-white">
-    <h5 style="border-bottom: 0;">
-        <i class="fa fa-edit"></i>
-        Bus Booking Report
-    </h5>
+
+<div class="card adminInner">
+    <div class="card-header mb-3">
+    <h5>Bus Booking Report</h5>
 </div>
-<div class="card">
     <form [formGroup]="regConfig">
-        <div class="row">
+        <div class="form-row">
     
             <div class="col-4 pr-0">
                 <div class="form-group">
@@ -23,7 +21,7 @@
                         class="form-control form-control-sm nrm_input" placeholder="Phone" id="phone">
                 </div>
             </div>
-            <div class="col-4 p-0">
+            <div class="col-4 pr-0">
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input formControlName="bus_email" type="email" class="form-control form-control-sm nrm_input"
@@ -57,7 +55,7 @@
                         bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen"  onkeydown="return false" [maxDate]="maxDate">
                 </div>
             </div>
-            <div class="col-4 p-0">
+            <div class="col-4 pr-0">
                 <div class="form-group">
                     <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
                     <label for="toDate">Booked To Date</label>
@@ -74,7 +72,7 @@
         </div>
     </form>
 </div>
-<div class="card" style="margin-top: 30px;">
+<div class="card adminInner" style="margin-top: 30px;">
 <div class="card-body p-0">
     <p>Total {{respData?.length}} Bookings</p>
     <div style="padding-bottom:15px;">

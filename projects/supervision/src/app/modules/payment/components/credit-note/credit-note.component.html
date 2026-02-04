@@ -1,5 +1,5 @@
 <div class="col-lg-12 col-md-12 py-3 m-0 card">
-    <ngb-tabset class="tabs-animated tabs-animated-shadow">
+    <ngb-tabset class="tabs-animated custom_tab">
         <ngb-tab *ngFor="let link of navLinks; let i=index;">
             <ng-template ngbTabTitle>
                 <span (click)="onSelect()"> <i class="{{link.icon}}"></i> &nbsp; {{link.label}} </span>

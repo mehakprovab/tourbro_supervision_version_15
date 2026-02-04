@@ -29,7 +29,7 @@
     // }
 }
 
-
+body{font-family: "Inter", sans-serif;}
 .bbottom {
     border-bottom: 1px solid rgba(26, 54, 126, 0.125);
 }
@@ -94,18 +94,29 @@ perfect-scrollbar { max-height: 650px !important;}
 .bs-datepicker-container {
     padding: 0px !important;
 }
-.card { padding: 15px;}
-.card-header h5 { padding-bottom: 0px !important; margin-bottom: 0px !important;}
-.bg-dark {
-    background-color: #012756 !important;
+.adminInner .card { padding: 15px;}
+.card-header h5 { padding-bottom: 0px !important; margin-bottom: 0px !important;font-weight: 600!important;}
+// .bg-dark {
+//     background-color: #012756 !important;
+// }
+.adminInner .card-header{background-color: #F5F2FC!important; height: 54px; border-radius: 8px!important;font-size: 20px!important;font-weight: 600!important;color: #282828!important;border-bottom:none!important}
+.form-group label{color: #4B4B4B;
+    font-weight: 500;
+    font-size: 14px;display: block;
+    // position: absolute;
+    // background: #fff;
+    // top: -12px;
+    // left: 15px;
+    // padding: 0px 5px;
+    // margin-bottom: 0px;
 }
-
+.card-header h5{margin-bottom: 0px;}
 .btnStyle, .btn-primary {
     background: #FE4865 !important;
     padding: 10px 16px !important;
     border: 1px solid #FE4865 !important;
     border-radius: 8px !important;
-    height: 44px;
+    height: 45px;
 }
 .btncontainer .btnStyle:first-child{ background: #FE4865 !important;
     padding: 6px 12px !important;
@@ -124,13 +135,13 @@ perfect-scrollbar { max-height: 650px !important;}
             border-radius: 8px !important;
             border:1px solid #C4B3EB!important;
         }
-.btn-primary:first-child{ background: #FE4865 !important;
+.btn-primary{ background: #FE4865 !important;
         padding: 6px 12px !important;
         border: 1px solid #FE4865 !important; }
 
-.btn-primary:nth-child(2){ background: #022756 !important;
-            padding: 6px 12px !important;
-            border: 1px solid #022756 !important; }       
+// .btn-primary:nth-child(2){ background: #022756 !important;
+//             padding: 6px 12px !important;
+//             border: 1px solid #022756 !important; }       
 
 .bg-primary, .badge-primary{ background: #012756 !important; }
 .fc-button-primary { background: #012756 !important;   border:1px solid #012756 !important; }
@@ -142,7 +153,7 @@ perfect-scrollbar { max-height: 650px !important;}
     margin: 0px;
 }
 .v-sidebar-menu .vsm-dropdown::before { left:10px !important;}
-.nrm_input { padding: 0.5rem 0.75rem 0.5rem 0.5rem !important;}
+.nrm_input { padding: 10px 15px !important;}
 .table-striped tbody tr { white-space: nowrap;}
 .capitalize{
     text-transform: uppercase;
@@ -229,3 +240,8 @@ span.dropdown-multiselect__caret {height: 45px !important;}
 }
 .title h3{background: #F5F2FC;font-size: 20px;font-weight: 600;color: #282828;padding: 10px 16px;border-radius: 8px;}
 .btn-secondary{background: #FFF5F6;color: #FE4865;border:1px solid #FFF5F6;border-radius: 8px !important;height: 44px;}
+.adminInner{
+    border-radius: 16px!important;
+    border: 1px solid #ddd!important;
+    box-shadow: 0 4px 15px 0 rgba(0, 0, 0, .10196078431372549)!important;}
+    .card-title{padding: 10px 16px;}

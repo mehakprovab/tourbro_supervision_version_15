@@ -1,9 +1,9 @@
 <div class="">
     <div class="">
-        <ngb-tabset class="tabs-animated tabs-animated-shadow" (tabChange)="beforeChange($event)" #tabs>
+        <ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange($event)" #tabs>
             <ngb-tab id="agent_list">
                 <ng-template ngbTabTitle>
-                    <span><i class="fa fa-bank"></i> &nbsp; GDS COMMISSION LIST</span>
+                    <span> GDS COMMISSION LIST</span>
                 </ng-template>
                 <ng-template ngbTabContent>
                     <app-gds-commission-list (toUpdate)="triggerTab($event)"></app-gds-commission-list>
@@ -11,7 +11,7 @@
             </ngb-tab>
             <ngb-tab id="default_commission">
                 <ng-template ngbTabTitle>
-                    <span><i class="fa fa-edit"></i> &nbsp; ADD/UPDATE COMMISSION </span>
+                    <span> ADD/UPDATE COMMISSION </span>
                 </ng-template>
                 <ng-template ngbTabContent>
                     <app-add-update-commission (toList)="triggerTab($event)" [getDataToUpdate]="userData">

@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-body">
-        <ngb-tabset class="tabs-animated tabs-animated-shadow">
+        <ngb-tabset class="tabs-animated custom_tab">
             <ngb-tab *ngFor="let tab of tabLinks; let i=index;">
                 <ng-template ngbTabTitle>
                     <span (click)="onSelect(tab, i)"> <i class="{{tab.icon}}"></i> &nbsp; {{tab.label}} </span>

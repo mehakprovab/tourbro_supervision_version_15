@@ -1,9 +1,9 @@
 <div class="">
     <div class="">
-        <ngb-tabset class="tabs-animated tabs-animated-shadow" (tabChange)="beforeChange(false)" #tabs [activeId]="activeIdString">
+        <ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange(false)" #tabs [activeId]="activeIdString">
             <ngb-tab id="add_update_staff">
                 <ng-template ngbTabTitle>
-                    <span><i class="fa fa-edit"></i> &nbsp; Create Sub Admin/ Staff</span>
+                    <span> Create Sub Admin/ Staff</span>
                 </ng-template>
                 <ng-template ngbTabContent>
                     <app-create-sub-admin (staffUpdate)="triggerTab($event)"></app-create-sub-admin>
@@ -11,7 +11,7 @@
             </ngb-tab>
             <ngb-tab id="staff_list">
                 <ng-template ngbTabTitle>
-                    <span><i class="fa fa-users"></i> &nbsp;Staff List</span>
+                    <span>Staff List</span>
                 </ng-template>
                 <ng-template ngbTabContent>
                     <app-sub-admin-active-list (staffUpdate)="triggerTab($event)"></app-sub-admin-active-list>

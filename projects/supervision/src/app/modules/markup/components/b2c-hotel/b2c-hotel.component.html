@@ -1,13 +1,14 @@
-<hr>
-<div class="card">
+
+<div class="card adminInner">
+    <div class="card-header-tab card-header mb-3">
+      <h5>Stays Markup</h5>
+    </div>
     <form [formGroup]="supplierConfig"  class="form">
-        <div class="card-header">
-            <h5 class="card-title">Supplier Markup</h5>
-        </div>
-        <div class="card-body">
-            <table>
-                <tr>
-            <td>
+        
+        <h4 class="card-title">Supplier Markup</h4>
+        
+        <div class="card-body p-0">
+           
                 <div class="d-flex flex-row pt-3">
           
                     <div class="form-group col-sm-4">
@@ -27,55 +28,31 @@
                             Supplier is required.
                           </div>
                     </div>
-                    <div class="form-group col-sm-2">
+                    <div class="form-group col-sm-4">
                       
                         <input type="radio" value="percentage" formControlName="supplier_value_type" class="mb-3" />
                         Percentage(%)
                         <input type="text" onkeypress='return ( event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45 && this.value.indexOf("-") === -1 && this.selectionStart == 0)' formControlName="supplier_value" class="form-control"
                             />
                     </div>
+                    <div class="form-group col-sm-4">
+                        <label>&nbsp;</label>
+                         <button type="submit" class="btn btn-primary"(click)="addGeneralMarkup()">Submit</button>
+                            &nbsp; &nbsp;
+                            <button type="reset" class="btn btn-secondary">Reset</button>
+
+                    </div>
              
                 </div>
-            </td>
-            </tr>
-            </table>
+            
         </div>
-        <div class="card-footer customCenter">
-            <button type="submit" class="btn btn-primary"(click)="addGeneralMarkup()">Submit</button>
-            &nbsp; &nbsp;
-            <button type="reset" class="btn btn-primary">Reset</button>
-        </div>
+       
     </form>
     <form [formGroup]="regConfig"  class="form">
 
-        <div class="card-body">
-            <!-- <table>
-                <tr>
-            <td>
-                <div class="d-flex flex-row pt-3">
-               
-                    <div class="col-sm-4 mb-3">
-                        <label class=" control-label">
-                            Suppliers
-                            <span class="text-danger">*</span>
-                        </label>
-                        <ng-multiselect-dropdown  formControlName="suppliers"
-                            [placeholder]="'Select Supplier'" [data]="supplierList"
-                            [settings]="dropdownSettingsForSupplier" class="form-control"(click)="selectedLocation(suppliers)">
-                        </ng-multiselect-dropdown>
-                        <div *ngIf="submittedHotel && hotel.suppliers.errors" class="invalid-feedback">
-                            <div *ngIf="hotel.suppliers.errors.required">Meal Plans are required</div>
-                        </div>
-                    </div>
-             
-
-                </div>
-            </td>
-            </tr>
-            </table> -->
-            <table>
-                <tr>
-            <td>
+        <div class="card-body p-0">
+           
+           
                 <div class="d-flex flex-row pt-3">
                     <div class="form-group col-sm-4">
                         <label for="airlines">Suppliers &nbsp;</label>
@@ -110,7 +87,7 @@
                             <div *ngIf="hotel.core_country_id.errors.required">Country is required</div>
                         </div> -->
                     </div>
-                    <div class="form-group col-sm-3">
+                    <div class="form-group col-sm-4">
                        
                         <input type="radio" value="percentage" formControlName="country_type" />
                         Percentage(%)
@@ -119,12 +96,8 @@
                     </div>
 
                 </div>
-            </td>
-            </tr>
-            </table>
-            <table>
-                <tr>
-            <td>
+           
+           
                 <div *ngIf="!cities.controls.length"class="d-flex flex-row pt-3">
                     <div class="form-group col-sm-4 mb-3">
                         <label class="control-label">
@@ -142,7 +115,7 @@
                             <div *ngIf="hotel.city_name.errors.required">City is required</div>
                         </div> -->
                     </div>
-                    <div class="form-group col-sm-6">
+                    <div class="form-group col-sm-4">
                         <div class="row mb-2 ml-2">
                             <input type="radio" value="percentage" formControlName="city_value_type" />
                             Percentage(%)
@@ -150,6 +123,15 @@
                        
                         <input type="text" onkeypress='return ( event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45 && this.value.indexOf("-") === -1 && this.selectionStart == 0)' formControlName="city_value" class="form-control"
                             />
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                          <label>&nbsp;</label>
+                        <button type="submit" class="btn btn-primary"(click)="onSubmit()">Submit</button>
+            &nbsp; &nbsp;
+            <button type="reset" class="btn btn-secondary">Reset</button>
+
+
                     </div>
 
                 </div>
@@ -172,25 +154,18 @@
                     </div>
                   </div>
                   </div>
-            </td>
-            </tr>
-            </table>
+           
         
         </div>
-        <div class="card-footer customCenter">
-            <button type="submit" class="btn btn-primary"(click)="onSubmit()">Submit</button>
-            &nbsp; &nbsp;
-            <button type="reset" class="btn btn-primary">Reset</button>
-        </div>
+       
     </form>
 </div>
-<hr>
-<div class="card mt-3" *ngIf="!noData">
-    <div class="card-header">
-        <h5 class="card-title">Hotel Markup List</h5>
-    </div>
-    <br>
-    <table class="card-table table" matSort>
+
+<div class="card adminInner mt-3" *ngIf="!noData">
+    
+        <h4 class="card-title">Stay Markup List</h4>
+    
+    <table class="table table-borderless table-striped table-hover" matSort>
         <thead>
             <tr>
                 <th scope="col" class="text-center" *ngFor="let header of displayColumn;">
@@ -259,15 +234,16 @@
                   
         
                 <td class="align-middle text-center">
+                    <label>&nbsp;</label>
                     <button class="btn btn-sm btn-primary" (click)="updateMarkup(data)">
-                        <i class="fa fa-edit text-nowrap">
+                      
                             {{'Update'}}
-                        </i>
+                     
                     </button>&nbsp;
-                    <button class="btn btn-sm btn-primary" (click)="deleteMarkup(data)">
-                        <i class="fa fa-edit text-nowrap">
+                    <button class="btn btn-sm btn-secondary" (click)="deleteMarkup(data)">
+                        
                             {{'Delete'}}
-                        </i>
+                      
                     </button>
                 </td>
             </tr>

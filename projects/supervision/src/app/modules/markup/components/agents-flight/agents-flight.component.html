@@ -1,10 +1,10 @@
 <hr>
 <div class="">
     <div class="">
-        <ngb-tabset class="tabs-animated tabs-animated-shadow"  #tabs>
+        <ngb-tabset class="tabs-animated custom_tab"  #tabs>
             <ngb-tab id="markup_list">
                 <ng-template ngbTabTitle>
-                    <span><i class="fa fa-bank"></i> &nbsp; AGENT MARKUP LIST</span>
+                    <span> AGENT MARKUP LIST</span>
                 </ng-template>
                 <ng-template ngbTabContent>
                     <app-agent-mark-up-list (toUpdate)="triggerTab($event)"></app-agent-mark-up-list>
@@ -20,7 +20,7 @@
             </ngb-tab> -->
             <ngb-tab id="default_markup">
                 <ng-template ngbTabTitle>
-                    <span><i class="fa fa-edit"></i> &nbsp; ADD/UPDATE MARKUP </span>
+                    <span>ADD/UPDATE MARKUP </span>
                 </ng-template>
                 <ng-template ngbTabContent>
                    <app-agent-markup-add-update (toList)="triggerTab($event)" [getDataToUpdate]="userData" ></app-agent-markup-add-update>

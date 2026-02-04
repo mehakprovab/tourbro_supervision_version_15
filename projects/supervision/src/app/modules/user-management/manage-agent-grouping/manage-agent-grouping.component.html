@@ -1,10 +1,10 @@
 <div class="">
     <div class="">
-        <ngb-tabset class="tabs-animated tabs-animated-shadow" (tabChange)="beforeChange(false)" #tabs
+        <ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange(false)" #tabs
             [activeId]="activeIdString">
             <ngb-tab id="add_update_b2bUser">
                 <ng-template ngbTabTitle>
-                    <span><i class="fa fa-edit"></i> &nbsp; Create Agent Group </span>
+                    <span> Create Agent Group </span>
                 </ng-template>
                 <ng-template ngbTabContent>
                     <app-create-agent-grouping (b2cUserUpdate)="triggerTab($event)"></app-create-agent-grouping>
@@ -12,7 +12,7 @@
             </ngb-tab>
             <ngb-tab id="supplier_list">
                 <ng-template ngbTabTitle>
-                    <span><i class="fa fa-users"></i> &nbsp; Agent Group List</span>
+                    <span> Agent Group List</span>
                 </ng-template>
                 <ng-template ngbTabContent>
                     <app-agent-grouping-list (b2cUserUpdate)="triggerTab($event)"></app-agent-grouping-list>

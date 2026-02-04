@@ -1,9 +1,9 @@
 <div class="">
     <div class="">
-        <ngb-tabset class="tabs-animated tabs-animated-shadow" (tabChange)="beforeChange(false)" #tabs [activeId]="activeIdString">
+        <ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange(false)" #tabs [activeId]="activeIdString">
             <ngb-tab id="newsletter">
                 <ng-template ngbTabTitle>
-                    <span><i class="fa fa-list"></i> &nbsp; NewsLetter Subscriptions</span>
+                    <span> NewsLetter Subscriptions</span>
                 </ng-template>
                 <ng-template ngbTabContent>
                     <app-newsletter-subscription (updateSubscription)="triggerTab($event)"></app-newsletter-subscription>

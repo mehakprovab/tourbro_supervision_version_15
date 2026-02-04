@@ -1,11 +1,11 @@
 <div class="">
     <div class="">
-        <ngb-tabset class="tabs-animated tabs-animated-shadow" (tabChange)="beforeChange(false)" #tabs
+        <ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange(false)" #tabs
             [activeId]="activeIdString">
             <ngb-tab id="add_update_b2bUser">
                 <ng-template ngbTabTitle>
-                    <span *ngIf="supplier_type != 'DMC'"><i class="fa fa-edit"></i> &nbsp; Create B2B</span>
-                    <span *ngIf="supplier_type == 'DMC'"><i class="fa fa-edit"></i> &nbsp; Create DMC</span>
+                    <span *ngIf="supplier_type != 'DMC'"> Create B2B</span>
+                    <span *ngIf="supplier_type == 'DMC'"> Create DMC</span>
                 </ng-template>
                 <ng-template ngbTabContent>
                     <app-manage-active-create-b2-b (b2bUserUpdate)="triggerTab($event)"></app-manage-active-create-b2-b>
@@ -13,8 +13,8 @@
             </ngb-tab>
             <ngb-tab id="b2cUsers_list">
                 <ng-template ngbTabTitle>
-                    <span *ngIf="supplier_type != 'DMC'"><i class="fa fa-users"></i> &nbsp; Agents List</span>
-                    <span *ngIf="supplier_type == 'DMC'"><i class="fa fa-users"></i> &nbsp; DMC List</span>
+                    <span *ngIf="supplier_type != 'DMC'"> Agents List</span>
+                    <span *ngIf="supplier_type == 'DMC'"> DMC List</span>
                 </ng-template>
                 <ng-template ngbTabContent>
                     <app-b2b-active-list (b2bUserUpdate)="triggerTab($event)"></app-b2b-active-list>

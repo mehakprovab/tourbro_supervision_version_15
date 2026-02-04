@@ -1,5 +1,5 @@
 <div class="row col-lg-12 col-md-12 pt-3 m-0 custom-font">
-    <ngb-tabset class="tabs-animated tabs-animated-shadow w-100">
+    <ngb-tabset class="tabs-animated custom_tab w-100">
         <ngb-tab *ngFor="let link of navLinks; let i=index;">
             <ng-template ngbTabTitle>
                 <span class="text-uppercase" (click)="onSelect(link.component)"> <i class="{{link.icon}}"></i> &nbsp; {{link.label}} </span>

@@ -1,7 +1,7 @@
-<!-- <p>sub-admin-active-list works!</p> -->
-<div class="create-sub-agent-container">
-    <div class="custom-table-layout mt-3">
-        <div class="table-btn-group mb-3">
+
+<div class="card adminInner">
+ 
+            <div class="table-btn-group mb-3">
             <div class="col-12 p-0">
                 <button class="btnStyle" (click)="download('pdf', 'landscape')">Export to PDF</button>&nbsp;
                 <button class="btnStyle" (click)="exportExcel()">Export to Excel</button>
@@ -11,9 +11,7 @@
                         autocomplete="off" placeholder="Search">
                 </div>
             </div>
-        </div>
-        <!--  -->
-        <div class="row card">
+            </div>
             <div class="col-md-12 col-lg-12">
                 <form class="clearfix">
                     <div class="row col-md-12 col-lg-12 m-0 p-0">
@@ -90,7 +88,7 @@
                                                             <td class="text-left text-nowrap"> <button
                                                                     class="btn btn-sm btn-primary"
                                                                     (click)="updatePrivileges(user)">
-                                                                    <i class="fas fa-edit"></i>&nbsp;{{'Update'}}
+                                                                    {{'Update'}}
                                                                 </button>
                                                                 <!-- <i class="fas fa-edit"></i> -->
                                                             </td>
@@ -156,6 +154,6 @@
                     </div>
                 </form>
             </div>
-        </div>
-    </div>
+
+    
 </div>

@@ -1,10 +1,9 @@
-<div class="">
-    <div class="">
+
         <ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange(false)" #tabs
             [activeId]="activeIdString">
             <ngb-tab id="add_update_staticPage">
                 <ng-template ngbTabTitle>
-                    <span><i class="fa fa-edit"></i> &nbsp; Static Page Content</span>
+                    <span> Static Page Content</span>
                 </ng-template>
                 <ng-template ngbTabContent>
                     <app-add-update-content (staticContentTab)="triggerTab($event)"></app-add-update-content>
@@ -12,7 +11,7 @@
             </ngb-tab>
             <ngb-tab id="staticpage_list">
                 <ng-template ngbTabTitle>
-                    <span><i class="fa fa-users"></i> &nbsp; Page List</span>
+                    <span> Page List</span>
                 </ng-template>
                 <ng-template ngbTabContent>
                     <app-list-content (staticContentTab)="triggerTab($event)"></app-list-content>
@@ -20,5 +19,4 @@
             </ngb-tab>
           
         </ngb-tabset>
-    </div>
-</div>
+   

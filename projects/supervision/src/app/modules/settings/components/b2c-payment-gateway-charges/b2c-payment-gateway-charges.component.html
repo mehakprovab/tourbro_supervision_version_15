@@ -1,11 +1,11 @@
-  <div class="card" style="margin-top: 30px;">
-    <div class="card-header bg-dark text-white">
-      <i class="fa fa-credit-card"></i>&nbsp;<h5 class="text-uppercase">{{' Payment Gateway Charges'}}</h5>
+  <div class="card adminInner" style="margin-top: 30px;">
+    <div class="card-header mb-3">
+      <h5>Payment Gateway Charges</h5>
     </div>
-    <div class="card-body">
+    <div class="card-body p-0">
         <p>Total {{respData?.length}} Records</p>
        <div class="mb-3">
-          <form [formGroup]="regConfig" class="m-4">
+          <form [formGroup]="regConfig" class="">
              <div class="table-responsive">
                 <table class="table table-borderless table-striped table-hover" matSort
                    (matSortChange)="sortData($event)" id="payment">
@@ -72,10 +72,10 @@
                    </tbody>
                 </table>
              </div>
-             <div class="card-footer pb-0">
+             <div class="pb-0">
               <button class="btn btn-sm btn-primary" (click)="updatePaymentCharges()">Update</button>
               &nbsp; &nbsp;
-              <button class="btn btn-sm btn-danger" type="reset" (click)="resetData()">Reset</button>
+              <button class="btn btn-sm btn-secondary" type="reset" (click)="resetData()">Reset</button>
              </div>
           </form>
        </div>

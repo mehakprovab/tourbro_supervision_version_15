@@ -1,35 +1,38 @@
 <ng-container>
-    <div class="p-0">
+    <div class="card adminInner">
         <form [formGroup]="hotelForm">
             <fieldset form="hotelImage">
-                <h4 class="form_legend">Add Hotel Details</h4>
+                <div class="card-header mb-3">
+                     <h5>Add Stay Details</h5>
+                </div>
+               
                 <div class="row">
                     <div class="col-sm-4 mb-3">
                         <label class=" control-label">
-                            Hotel Type
+                            Stay Type
                             <span class="text-danger">*</span>
                         </label>
                         <select formControlName="hotel_hotel_type_id" class="form-control"
                             [ngClass]="{ 'is-invalid': submittedHotel && hotel?.hotel_hotel_type_id.errors }">
-                            <option value="" disabled selected>Select Hotel Type</option>
+                            <option value="" disabled selected>Select Stay Type</option>
                             <option *ngFor="let hotelType of hotelTypeList" [value]="hotelType.hotel_type_name">
                                 {{hotelType.hotel_type_name}}
                             </option>
                         </select>
                         <div *ngIf="submittedHotel && hotel?.hotel_hotel_type_id.errors" class="invalid-feedback">
-                            <div *ngIf="hotel.hotel_hotel_type_id.errors.required">Hotel Type is required</div>
+                            <div *ngIf="hotel.hotel_hotel_type_id.errors.required">Stay Type is required</div>
                         </div>
                     </div>
 
                     <div class="col-sm-4 mb-3">
                         <label class=" control-label">
-                            Hotel Name
+                            Stay Name
                             <span class="text-danger">*</span>
                         </label>
                         <input type="text" formControlName="hotel_name" class="form-control"
                             [ngClass]="{ 'is-invalid': submittedHotel && hotel.hotel_name.errors }" />
                         <div *ngIf="submittedHotel && hotel.hotel_name.errors" class="invalid-feedback">
-                            <div *ngIf="hotel.hotel_name.errors.required">Hotel Name is required</div>
+                            <div *ngIf="hotel.hotel_name.errors.required">Stay Name is required</div>
                         </div>
                     </div>
 
@@ -140,7 +143,7 @@
                     </div> -->
                     <div class="col-sm-12 mb-3">
                         <label class="control-label">
-                            Hotel Map
+                            Stay Map
                             <span class="text-danger">*</span>
                         </label>
                         <div>
@@ -151,13 +154,13 @@
                     </div>
                     <div class="col-sm-12 mb-3">
                         <label class=" control-label">
-                            Hotel Address
+                            Stay Address
                             <span class="text-danger">*</span>
                         </label>
                         <textarea type="text" formControlName="address" class="form-control"
                             [ngClass]="{ 'is-invalid': submittedHotel && hotel.address.errors }"></textarea>
                         <div *ngIf="submittedHotel && hotel.address.errors" class="invalid-feedback">
-                            <div *ngIf="hotel.address.errors.required">Hotel Address is required</div>
+                            <div *ngIf="hotel.address.errors.required">Stay Address is required</div>
                         </div>
                     </div>
 
@@ -223,7 +226,7 @@
                         </div>
                     </div>
                     <div class="col-sm-6 mb-3">
-                        <label for="checkInTime" class="control-label">checkInTime
+                        <label for="checkInTime" class="control-label">CheckInTime
                             <span class="text-danger">*</span>
                         </label>
                         <!-- <div class="col-sm-12"> -->
@@ -236,7 +239,7 @@
                         <!-- </div> -->
                     </div>
                     <div class="col-sm-6 mb-3">
-                        <label for="checkin_time" class="control-label">checkOutTime
+                        <label for="checkin_time" class="control-label">CheckOutTime
                             <span class="text-danger">*</span>
                         </label>
                         <!-- <div class="col-sm-12"> -->
@@ -250,7 +253,7 @@
                     </div>
                     <div class="col-12 mb-3">
                         <label class=" control-label">
-                            Hotel policy
+                            Stay policy
                            
                         </label>
                         <ckeditor type="text" formControlName="hotel_policy" style="height: auto;"
@@ -319,15 +322,13 @@
                   
                 </div>
                 <div class="text-center mt-3 mb-3 btncontainer p-0">
-                    <button class="btn btn-sm btn-primary btnStyle mr-3" (click)="onSubmitHotelDetail()">Continue</button>
+                    <button class="btn btn-sm btn-primary mr-3" (click)="onSubmitHotelDetail()">Continue</button>
+                     <button class="btn btn-sm btn-secondary mr-3" (click)="backToHotel()">Back</button>
                   
                 </div>
             </fieldset>
         </form>
-        <div class="text-center mt-3 mb-3 btncontainer p-0">
-           
-            <button class="btn btn-sm btn-secondary btnStyle mr-3" (click)="backToHotel()">Back</button>
-        </div>
+    
     </div>
 </ng-container>
 

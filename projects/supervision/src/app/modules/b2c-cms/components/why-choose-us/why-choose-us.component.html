@@ -1,32 +1,69 @@
-<div class="row card">
-    <div class=" p-0 col-md-12 col-lg-12">
-        <div class="card-header-tab card-header">
-            <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
-                <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
-                <span> {{'Why Choose Us'}} </span>
-            </div>
-        </div>
+<div class="card adminInner">
+    <div class="card-header mb-3">
+       <h5 class="text-center"> {{'Why Choose Us'}} </h5>
     </div>
-    <div class="sub-agent-container custom-table-layout card row" style="padding: 20px;">
-        <div class="add-traveller">
-            <div class="custom-inline-form">
-                <form class="" [formGroup]="regConfig" autocomplete="off">
-                 
-                    <div class="form-row">
+   <div class="custom-inline-form">
+        <form class="" [formGroup]="regConfig" autocomplete="off">
+            
+            <div class="form-row">
+            <div class="col-4 pr-0">
+                <div class="form-group">
+                    <label for="bookedBy">Title</label>
+                    <input  formControlName="header1" type="text" id="page_title" autocomplete="off"
+                    class="form-control form-control-sm nrm_input"
+                    placeholder="Add Title" >
+                    <div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-8 pr-0">
+                <div class="form-group">
+                    <label for="bookedBy">Description</label>
+                    <input  formControlName="description1" type="text" id="page_seo_description" autocomplete="off"
+                    class="form-control form-control-sm nrm_input"
+                    placeholder="Add Description" >
+                    <div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="form-row">
+                <div class="col-4 pr-0">
+                    <div class="form-group">
+                        <label for="bookedBy">Title</label>
+                        <input  formControlName="header2" type="text" id="page_title" autocomplete="off"
+                        class="form-control form-control-sm nrm_input"
+                        placeholder="Add Title" >
+                        <div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8 pr-0">
+                    <div class="form-group">
+                        <label for="bookedBy">Description</label>
+                        <input  formControlName="description2" type="text" id="page_seo_description" autocomplete="off"
+                        class="form-control form-control-sm nrm_input"
+                        placeholder="Add Description" >
+                        <div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="form-row">
                     <div class="col-4 pr-0">
                         <div class="form-group">
                             <label for="bookedBy">Title</label>
-                            <input  formControlName="header1" type="text" id="page_title" autocomplete="off"
+                            <input  formControlName="header3" type="text" id="page_title" autocomplete="off"
                             class="form-control form-control-sm nrm_input"
                             placeholder="Add Title" >
                             <div>
                             </div>
-                        </div>
+                        </div> 
                     </div>
                     <div class="col-8 pr-0">
                         <div class="form-group">
                             <label for="bookedBy">Description</label>
-                            <input  formControlName="description1" type="text" id="page_seo_description" autocomplete="off"
+                            <input  formControlName="description3" type="text" id="page_seo_description" autocomplete="off"
                             class="form-control form-control-sm nrm_input"
                             placeholder="Add Description" >
                             <div>
@@ -34,11 +71,12 @@
                         </div>
                     </div>
                     </div>
+
                     <div class="form-row">
                         <div class="col-4 pr-0">
                             <div class="form-group">
                                 <label for="bookedBy">Title</label>
-                                <input  formControlName="header2" type="text" id="page_title" autocomplete="off"
+                                <input  formControlName="header4" type="text" id="page_title" autocomplete="off"
                                 class="form-control form-control-sm nrm_input"
                                 placeholder="Add Title" >
                                 <div>
@@ -48,7 +86,7 @@
                         <div class="col-8 pr-0">
                             <div class="form-group">
                                 <label for="bookedBy">Description</label>
-                                <input  formControlName="description2" type="text" id="page_seo_description" autocomplete="off"
+                                <input  formControlName="description4" type="text" id="page_seo_description" autocomplete="off"
                                 class="form-control form-control-sm nrm_input"
                                 placeholder="Add Description" >
                                 <div>
@@ -60,7 +98,7 @@
                             <div class="col-4 pr-0">
                                 <div class="form-group">
                                     <label for="bookedBy">Title</label>
-                                    <input  formControlName="header3" type="text" id="page_title" autocomplete="off"
+                                    <input  formControlName="header5" type="text" id="page_title" autocomplete="off"
                                     class="form-control form-control-sm nrm_input"
                                     placeholder="Add Title" >
                                     <div>
@@ -70,7 +108,7 @@
                             <div class="col-8 pr-0">
                                 <div class="form-group">
                                     <label for="bookedBy">Description</label>
-                                    <input  formControlName="description3" type="text" id="page_seo_description" autocomplete="off"
+                                    <input  formControlName="description5" type="text" id="page_seo_description" autocomplete="off"
                                     class="form-control form-control-sm nrm_input"
                                     placeholder="Add Description" >
                                     <div>
@@ -78,12 +116,11 @@
                                 </div>
                             </div>
                             </div>
-
                             <div class="form-row">
                                 <div class="col-4 pr-0">
                                     <div class="form-group">
                                         <label for="bookedBy">Title</label>
-                                        <input  formControlName="header4" type="text" id="page_title" autocomplete="off"
+                                        <input  formControlName="header6" type="text" id="page_title" autocomplete="off"
                                         class="form-control form-control-sm nrm_input"
                                         placeholder="Add Title" >
                                         <div>
@@ -93,7 +130,7 @@
                                 <div class="col-8 pr-0">
                                     <div class="form-group">
                                         <label for="bookedBy">Description</label>
-                                        <input  formControlName="description4" type="text" id="page_seo_description" autocomplete="off"
+                                        <input  formControlName="description6" type="text" id="page_seo_description" autocomplete="off"
                                         class="form-control form-control-sm nrm_input"
                                         placeholder="Add Description" >
                                         <div>
@@ -101,58 +138,13 @@
                                     </div>
                                 </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="col-4 pr-0">
-                                        <div class="form-group">
-                                            <label for="bookedBy">Title</label>
-                                            <input  formControlName="header5" type="text" id="page_title" autocomplete="off"
-                                            class="form-control form-control-sm nrm_input"
-                                            placeholder="Add Title" >
-                                            <div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-8 pr-0">
-                                        <div class="form-group">
-                                            <label for="bookedBy">Description</label>
-                                            <input  formControlName="description5" type="text" id="page_seo_description" autocomplete="off"
-                                            class="form-control form-control-sm nrm_input"
-                                            placeholder="Add Description" >
-                                            <div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="col-4 pr-0">
-                                            <div class="form-group">
-                                                <label for="bookedBy">Title</label>
-                                                <input  formControlName="header6" type="text" id="page_title" autocomplete="off"
-                                                class="form-control form-control-sm nrm_input"
-                                                placeholder="Add Title" >
-                                                <div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-8 pr-0">
-                                            <div class="form-group">
-                                                <label for="bookedBy">Description</label>
-                                                <input  formControlName="description6" type="text" id="page_seo_description" autocomplete="off"
-                                                class="form-control form-control-sm nrm_input"
-                                                placeholder="Add Description" >
-                                                <div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        </div>
-                    <div class="form-group row mb-n2">
-                        <div class="col-sm-12 customCenter">
-                            <button type="submit" class="btn btn-sm btn-primary mr-1" (click)="onSubmit()">Submit</button>
-                            <button type="reset" class="btn btn-sm btn-primary" (click)="onReset()">Reset</button>
-                        </div>
-                    </div>
-                </form>
+            <div class="form-group row mb-n2">
+                <div class="col-sm-12 customCenter">
+                    <button type="submit" class="btn btn-sm btn-primary mr-1" (click)="onSubmit()">Submit</button>
+                    <button type="reset" class="btn btn-sm btn-secondary" (click)="onReset()">Reset</button>
+                </div>
             </div>
-        </div>
-    </div>    
+        </form>
+    </div>
+            
 </div>

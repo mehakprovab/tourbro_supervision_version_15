@@ -1,11 +1,8 @@
-<div class="card mb-3">
-    <div class="card-header-tab card-header bg-dark text-white">
-        <div class="card-header-title font-size-lg text-uppercase font-weight-normal">
-            <i class="header-icon fa fa-credit-card"></i>
-            <h5>{{' Currency Converter '}}</h5>
-        </div>
-    </div>
-    <form class="m-4">
+<div class="card adminInner">
+    <div class="card-header mb-3">
+       <h5>{{' Currency Converter '}}</h5>
+     </div>
+    <form class="">
         <div class="table-btn-group mb-3 exportWrapper" style="margin-top: 30px;">
             <div class="col-12 p-0">
                <h5><strong> Note: Currency conversion is from GBP to Other.</strong></h5>
@@ -74,9 +71,9 @@
                         <td class="text-left">
                             <button class="btn btn-sm btn-primary"  [disabled]="data.value==null" (click)="onUpdate(data)"> {{'Update'}} </button> &nbsp;
                             <button *ngIf="data.currency != 'GBP'" class="btn btn-sm btn-primary" (click)="confirmDelete(data?.id)">
-                                <i class="fa fa-trash text-nowrap">&nbsp;
+                               
                                     {{'Delete'}}
-                                </i>
+                              
                             </button>
                         </td>
                     </tr>

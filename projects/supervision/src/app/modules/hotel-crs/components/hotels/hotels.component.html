@@ -1,47 +1,40 @@
-<div class="row mx-0 pt-2">
-    <div class="col-md-12">
-        <div class="card main-card mb-6">
-            <div class="card-body p-0">
-                <ngb-tabset class="tabs-animated custom_tab" (tabChange)="onTabSelected($event)" #tabs
-                [activeId]="activeIdString">
-                    <ngb-tab id="list_hotels">
-                        <ng-template ngbTabTitle>
-                            <span class="">{{'List Hotel'}}</span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <app-hotel-list (toUpdate)="triggerTab($event)"></app-hotel-list>
-                        </ng-template>
-                    </ngb-tab>
-                    <ngb-tab id="add_hotel">
-                    
-                        <ng-template ngbTabTitle>
-                            <span *ngIf="activeIdString && !selected && !eventData && !priceEvent && !priceManagementEvent"class="">{{'Add/Edit Hotel'}}</span>
-                            <span *ngIf="selected == 'isHotelData'"class="">{{'Add/Edit Hotel'}}</span>
-                            <span *ngIf="selected == 'isHotelImage'">{{'Add/Edit Hotel Image'}}</span>
-                            <span *ngIf="selected == 'isRoomDetail'">{{'Add/Edit Room Detail'}}</span>
-                            <span *ngIf="eventData == true">{{'Add/Edit Room Image'}}</span>
-                            <span *ngIf="priceEvent == true">{{'Add/Edit Price Detail'}}</span>
-                            <span *ngIf="priceManagementEvent == true">{{'Update Price Management Detail'}}</span>
-                            <span *ngIf="selected == 'istax'">{{'Update Hotel Tax'}}</span>
-                            <span *ngIf="selected == 'isChildren'">{{'Update Children Policy'}}</span>
+<ngb-tabset class="tabs-animated custom_tab" (tabChange)="onTabSelected($event)" #tabs
+[activeId]="activeIdString">
+<ngb-tab id="list_hotels">
+    <ng-template ngbTabTitle>
+        <span class="">{{'List Stay'}}</span>
+    </ng-template>
+    <ng-template ngbTabContent>
+        <app-hotel-list (toUpdate)="triggerTab($event)"></app-hotel-list>
+    </ng-template>
+</ngb-tab>
+<ngb-tab id="add_hotel">
 
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <app-add-update-hotel (someEvent)="triggerTab($event)" [selected]="selected" [hotelOne]="hotelData"[isPricedetail]="priceDirectData"></app-add-update-hotel>
-    
-                        </ng-template>
-                    </ngb-tab>
-                    <!-- <ngb-tab id="add_hotel_image">
-                        <ng-template ngbTabTitle>
-                            <span class="">{{'Add/Edit Hotel'}}</span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                           
-                            <app-hotel-image (someEvent)="triggerTab($event)" [hotelOne]="hotelData"></app-hotel-image>
-                        </ng-template>
-                    </ngb-tab> -->
-                </ngb-tabset>
-            </div>
-        </div>
-    </div>
-</div>
+    <ng-template ngbTabTitle>
+        <span *ngIf="activeIdString && !selected && !eventData && !priceEvent && !priceManagementEvent"class="">{{'Add/Edit Stay'}}</span>
+        <span *ngIf="selected == 'isHotelData'"class="">{{'Add/Edit Stay'}}</span>
+        <span *ngIf="selected == 'isHotelImage'">{{'Add/Edit Stay Image'}}</span>
+        <span *ngIf="selected == 'isRoomDetail'">{{'Add/Edit Room Detail'}}</span>
+        <span *ngIf="eventData == true">{{'Add/Edit Room Image'}}</span>
+        <span *ngIf="priceEvent == true">{{'Add/Edit Price Detail'}}</span>
+        <span *ngIf="priceManagementEvent == true">{{'Update Price Management Detail'}}</span>
+        <span *ngIf="selected == 'istax'">{{'Update Stay Tax'}}</span>
+        <span *ngIf="selected == 'isChildren'">{{'Update Children Policy'}}</span>
+
+    </ng-template>
+    <ng-template ngbTabContent>
+        <app-add-update-hotel (someEvent)="triggerTab($event)" [selected]="selected" [hotelOne]="hotelData"[isPricedetail]="priceDirectData"></app-add-update-hotel>
+
+    </ng-template>
+</ngb-tab>
+<!-- <ngb-tab id="add_hotel_image">
+    <ng-template ngbTabTitle>
+        <span class="">{{'Add/Edit Hotel'}}</span>
+    </ng-template>
+    <ng-template ngbTabContent>
+        
+        <app-hotel-image (someEvent)="triggerTab($event)" [hotelOne]="hotelData"></app-hotel-image>
+    </ng-template>
+</ngb-tab> -->
+</ngb-tabset>
+            

@@ -79,8 +79,8 @@
             </div>
 
             <div class="btncontainer">
-                <button type="submit" class="btnStyle" (click)="onSearchSubmit()">Search</button> &nbsp;
-                <button type="button" class="btnStyle" (click)="onReset()">Reset</button>
+                <button type="submit" class="btn btn-primary" (click)="onSearchSubmit()">Search</button> &nbsp;
+                <button type="button" class="btn btn-secondary" (click)="onReset()">Reset</button>
             </div>
         </div>
     </form>
@@ -89,8 +89,8 @@
     <div class="card-body">
         <p>Total {{respData?.length}} Bookings</p>
         <div style="padding-bottom: 15px;">
-            <button class="btnStyle" (click)="downloadPdf()">PDF</button>&nbsp;
-            <button class="btnStyle" (click)="download('xlsx', 'portrait')">Export to Excel</button>
+            <button class="btn btn-primary" (click)="downloadPdf()">PDF</button>&nbsp;
+            <button class="btn btn-secondary" (click)="download('xlsx', 'portrait')">Export to Excel</button>
             <div class="form-group mb-0 col-sm-3 p-0 float-right has-search">
                 <span class="fa fa-search form-control-feedback"></span>
                 <input class="form-control" type="text" name="Search" [(ngModel)]="searchText" autocomplete="off"

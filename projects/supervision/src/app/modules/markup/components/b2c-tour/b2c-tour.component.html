@@ -1,18 +1,14 @@
-<hr>
-<div class="card">
-    <div class="card-header-tab card-header bg-dark text-white">
-        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
-            <i class="header-icon fa fa-edit"></i>
-            <span class="text-uppercase">{{ 'Tour Markup' }} </span>
-        </div>
+
+<div class="card adminInner">
+     <div class="card-header-tab card-header mb-3">
+      <h5>Yatra Packages Markup</h5>
     </div>
+    
     <form [formGroup]="regConfig" (ngSubmit)="onSubmit(regConfig.value)" class="form">
-        <div class="card-body">
-            <table>
-                <tr>
-                    
-                    <td>
-                        <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
+        <div class="card-body p-0">
+            <div class="d-flex flex-row pt-3">
+          
+                    <div class="form-group col-sm-4">
                         <label for="airlines">Suppliers &nbsp;</label>
                         <mat-form-field class="col-sm-12"  appearance="fill" style="padding-left: 0;">
                             <mat-label>Supplier List</mat-label>
@@ -28,52 +24,32 @@
                         <div *ngIf="regConfig?.get('supplierType')?.touched && regConfig?.get('supplierType')?.invalid" class="text-danger">
                             Supplier is required.
                           </div>
-                    </div>
 
-                        <!-- <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-                            <label for="airlines" class="mr-sm-2">Markup Type</label>
-                            <div style="display: flex;">
-                                <div class="position-relative form-check">
-                                    <label class="form-check-label">
-                                        <input value="percentage" formControlName="markupType" checked type="radio"
-                                            class="form-check-input" />
-                                        Percentage(%)
-                                    </label>
-                                </div>
-                            </div>
-                        </div> -->
-                    </td>
-                    <!-- <td>
-                        <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-                            <label for="airlines" class="mr-sm-2">Markup Type</label>
-                            <div class="position-relative form-check">
-                                <label class="form-check-label">
-                                    <input value="percentage" formControlName="markupType" checked type="radio"
-                                        class="form-check-input" />
-                                    Percentage(%)
-                                </label>
-                            </div>
-                        </div>
-                    </td> -->
-                    <td>
-                        <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-                            <label for="markupValue" class="mr-sm-2">Markup Value(%)</label>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label for="markupValue" class="mr-sm-2">Markup Value(%)</label>
                             <input formControlName="markupValue" placeholder="" type="text" onkeypress='return ( event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45 && this.value.indexOf("-") === -1 && this.selectionStart == 0)' class="form-control">
-                        </div>
-                    </td>
-                </tr>
-            </table>
+                        
+                        
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label>&nbsp;</label>
+                         <button type="submit" class="btn btn-primary">Submit</button>
+                        &nbsp; &nbsp;
+                        <button type="reset"  (click)="resetForm()" class="btn btn-secondary">Reset</button>
+                        
+                    </div>
+            </div>
+           
         </div>
-        <div class="card-footer customCenter">
-            <button type="submit" class="btn btn-primary">Submit</button>
-            &nbsp; &nbsp;
-            <button type="reset"  (click)="resetForm()" class="btn btn-primary">Reset</button>
-        </div>
+       
     </form>
 </div>
 
+<div class="card adminInner mt-3">
+    <h4 class="card-title">Yatra packages Markup List</h4>
 
-<table class="card-table table" matSort>
+<table class="table table-borderless table-striped table-hover" matSort>
         <thead>
             <tr>
                 <th scope="col" class="text-center" *ngFor="let header of displayColumn;">
@@ -107,19 +83,20 @@
         
                 <td class="align-middle text-center">
                     <button class="btn btn-sm btn-primary" (click)="updateMarkup(data)">
-                        <i class="fa fa-edit text-nowrap">
+                      
                             {{'Update'}}
-                        </i>
+                      
                     </button>&nbsp;
-                    <button class="btn btn-sm btn-primary" (click)="deleteMarkup(data)">
-                        <i class="fa fa-edit text-nowrap">
+                    <button class="btn btn-sm btn-secondary" (click)="deleteMarkup(data)">
+                    
                             {{'Delete'}}
-                        </i>
+                      
                     </button>
                 </td>
             </tr>
         </tbody>
-    </table>
+</table>
+    </div>
 
 
 

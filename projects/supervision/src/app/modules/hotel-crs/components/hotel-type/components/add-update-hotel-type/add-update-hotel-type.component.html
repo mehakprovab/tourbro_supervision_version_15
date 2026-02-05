@@ -1,45 +1,48 @@
-<div class="p-0">
-    <form [formGroup]="hotelTypeForm" (ngSubmit)="handleValidSubmit()" class="needs-validation btop pt-0" novalidate>
-        <div class="card border-light p-0">
-            <div class="card-header">
-                Hotel Type
-            </div>
-            <div class="card-body pl-0">
-                <fieldset form="user">
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" for="hotel_type_name">
-                            Hotel Type Name
+<div class="card adminInner">
+    <div class="card-header">
+        <h5>{{'Stay Type'}}</h5>
+    </div>
+    <form [formGroup]="hotelTypeForm" (ngSubmit)="handleValidSubmit()" class="needs-validation pt-3" novalidate>
+        <div class="card-body p-0">
+            <fieldset form="user">
+                <div class="form-row">
+                    <div class="col-md-4">
+                        <label class=" control-label" for="hotel_type_name">
+                            Stay Type Name
                             <span class="text-danger">*</span>
                         </label>
-                        <div class="col-sm-6">
-                            <input value="" formControlName="hotel_type_name" type="text" placeholder="Hotel Type Name"
-                                class="form-control" [ngClass]="{ 'is-invalid': submitted && f.hotel_type_name.errors }"
-                                required />
-                        </div>
+
+                        <input value="" formControlName="hotel_type_name" type="text" placeholder="Hotel Type Name"
+                            class="form-control" [ngClass]="{ 'is-invalid': submitted && f.hotel_type_name.errors }"
+                            required />
+
                         <div *ngIf="submitted && f.hotel_type_name.errors" class="invalid-feedback">
                             <div *ngIf="f.hotel_type_name.errors.required">Hotel Type Name is required</div>
                         </div>
+
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" for="hotel_type_name">
+                    <div class="col-md-4">
+                        <label class="control-label" for="hotel_type_name">
                             Status
                             <span class="text-danger">*</span>
                         </label>
                         <span title="Slide for Active/Deactive">
-                            <mat-slide-toggle class="example-margin" formControlName="status"
-                                [color]="''">
+                            <mat-slide-toggle class="example-margin" formControlName="status" [color]="''">
                             </mat-slide-toggle>
                         </span>
+
                     </div>
-                </fieldset>
-                <div class="form-group">
-                    <div class="col-sm-8 col-sm-offset-4 btncontainer">
-                        <button type="submit" id="user_submit" class=" btn btn-success btnStyle">Save</button> &nbsp; &nbsp;
-                        <button type="reset" id="user_reset" class=" btn btn-secondary btnStyle"
+                    <div class="col-md-4">
+                        <button type="submit" id="user_submit" class=" btn btn-primary">Save</button> &nbsp; &nbsp;
+                        <button type="reset" id="user_reset" class=" btn btn-secondary"
                             (click)="resetFrom()">Reset</button>
+
                     </div>
+
                 </div>
-            </div>
+
+            </fieldset>
+
         </div>
     </form>
 </div>

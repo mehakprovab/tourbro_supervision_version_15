@@ -1,10 +1,9 @@
-<div class="card-header text-uppercase bg-dark text-white">
-  <h5 style="border-bottom: 0;">
-    <i class="fa fa-edit"></i>&nbsp;Home Page Widget In Ayurveda
-  </h5>
+
+<div class="card adminInner">
+  <div class="card-header mb-3">
+  <h5>Home Page Widget In Ayurveda</h5>
 </div>
 
-<div class="card">
   <form [formGroup]="regConfig" autocomplete="off">
 
     <div class="form-row">
@@ -75,11 +74,11 @@
 
     <!-- Buttons -->
     <div class="btncontainer">
-      <button type="button" class="btnStyle" (click)="onSearchSubmit()">
+      <button type="button" class="btn btn-primary" (click)="onSearchSubmit()">
         {{ btnName }}
       </button>
       &nbsp;
-      <button type="button" class="btnStyle" (click)="onReset()">
+      <button type="button" class="btn btn-secondary" (click)="onReset()">
         Reset
       </button>
     </div>
@@ -87,8 +86,8 @@
   </form>
 </div>
 
-<div class="card" style="margin-top: 30px;">
-  <div class="card-body">
+<div class="card adminInner" style="margin-top: 30px;">
+  <div class="card-body p-0">
 
     <p>Total {{ respData?.length }} Ayurveda Centers</p>
 
@@ -143,14 +142,8 @@
                             <!-- <a [routerLink]="['/hotels/view-hotel/', data['id']]" title="View Hotel" class="p-1">
                                 <i class="fas fa-eye"></i>
                             </a> -->
-                            <a (click)="editList(data)" title="Edit Ayurveda" class="p-1 text-primary">
-                                <i class="fas fa-pencil-alt"></i>
-                            </a>
-                            <button (click)="onDelete(data.id)"  class="p-1 text-primarys">
-                                <a title="Delete">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-                            </button>
+                            <button (click)="editList(data)" title="Edit Ayurveda" class="btnStyle mr-2">Edit</button>
+                            <button (click)="onDelete(data.id)"  class="btnStyle">Delete</button>
         
                         </td>
           </tr>

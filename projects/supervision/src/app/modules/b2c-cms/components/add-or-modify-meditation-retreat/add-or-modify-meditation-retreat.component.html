@@ -1,10 +1,9 @@
-<div class="card-header text-uppercase bg-dark text-white">
-  <h5 style="border-bottom:0">
-    <i class="fa fa-edit"></i>&nbsp;Meditation Retreat
-  </h5>
-</div>
 
-<div class="card">
+
+<div class="card adminInner">
+  <div class="card-header mb-3">
+  <h5>Meditation Retreat</h5>
+</div>
   <form [formGroup]="regConfig" autocomplete="off">
 
     <div class="form-row">
@@ -84,12 +83,12 @@
 </div>
 
 <!-- LIST -->
-<div class="card mt-4">
-  <div class="card-body">
+<div class="card adminInner mt-3">
+  <div class="card-body p-0">
 
     <p>Total {{ respData?.length }} Retreats</p>
 
-    <table class="table table-striped table-bordered">
+    <table class="table table-borderless table-striped table-hover">
       <thead>
         <tr>
           <th>#</th>
@@ -118,12 +117,12 @@
               height="40">
           </td>
           <td>
-            <a (click)="editList(item)" class="text-primary mr-2">
-              <i class="fa fa-edit"></i>
-            </a>
-            <a (click)="deleteList(item.id)" class="text-danger">
-              <i class="fa fa-trash"></i>
-            </a>
+            <button (click)="editList(item)" class="btnStyle mr-2">
+              Edit
+            </button>
+            <button (click)="deleteList(item.id)" class="btnStyle">
+              Delete
+            </button>
           </td>
         </tr>
       </tbody>

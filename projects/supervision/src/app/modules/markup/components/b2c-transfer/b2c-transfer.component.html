@@ -5,7 +5,7 @@
     </div>
     
     <form [formGroup]="regConfig" (ngSubmit)="onSubmit(regConfig.value)" class="form">
-        <div class="card-body">
+        <div class="card-body p-0">
             <div class="d-flex flex-row pt-3">
           
                     <div class="form-group col-sm-4">
@@ -33,7 +33,7 @@
                         <label>&nbsp;</label>
                         <button type="submit" class="btn btn-primary">Submit</button>
                         &nbsp; &nbsp;
-                        <button type="button" (click)="resetForm()" class="btn btn-primary">Reset</button>
+                        <button type="button" (click)="resetForm()" class="btn btn-secondary">Reset</button>
 
                     </div>
             </div>
@@ -46,6 +46,7 @@
 
 
 <div class="card adminInner mt-3">
+    <h4 class="card-title">Cabs Markup List</h4>
     <table class="table table-borderless table-striped table-hover" matSort>
             <thead>
                 <tr>
@@ -80,14 +81,14 @@
             
                     <td class="align-middle text-center">
                         <button class="btn btn-sm btn-primary" (click)="updateMarkup(data)">
-                            <i class="fa fa-edit text-nowrap">
+                           
                                 {{'Update'}}
-                            </i>
+                           
                         </button>&nbsp;
-                        <button class="btn btn-sm btn-primary" (click)="deleteMarkup(data)">
-                            <i class="fa fa-edit text-nowrap">
+                        <button class="btn btn-sm btn-secondary" (click)="deleteMarkup(data)">
+                            
                                 {{'Delete'}}
-                            </i>
+                           
                         </button>
                     </td>
                 </tr>

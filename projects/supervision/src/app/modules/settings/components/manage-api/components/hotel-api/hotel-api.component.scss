@@ -47,11 +47,11 @@
 }
 
 input:checked+.slider {
-    background-color: #0683c2;
+    background-color: #FE4865;
 }
 
 input:focus+.slider {
-    box-shadow: 0 0 1px #0683c2;
+    box-shadow: 0 0 1px #FE4865;
 }
 
 input:checked+.slider:before {
@@ -91,3 +91,7 @@ input:checked+.slider:before {
 .invisible-scrollbar::-webkit-scrollbar {
     display: none;
   }
+  .card {
+    padding: 16px;
+    font-family: 'inter', sans-serif;
+}

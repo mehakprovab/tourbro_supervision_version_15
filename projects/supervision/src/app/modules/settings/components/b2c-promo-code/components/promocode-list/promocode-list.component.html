@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card adminInner">
     <form [formGroup]="regConfig">
        <div class="form-row">
           <div class="col-4 pr-0">
@@ -26,16 +26,20 @@
                 </div>
              </div>
           </div>
+          <div class="col-4 pr-0">
+            <label>&nbsp;</label>
+            
+            <button type="submit" class="btn btn-primary" (click)="onSearchSubmit()">Search</button> &nbsp;
+           <button type="button" class="btn btn-secondary" (click)="onReset()">Reset</button>
+
+          </div>
 
        </div>
-       <div class="btncontainer">
-          <button type="submit" class="btnStyle" (click)="onSearchSubmit()">Search</button> &nbsp;
-          <button type="button" class="btnStyle" (click)="onReset()">Reset</button>
-       </div>
+       
     </form>
  </div>
-<div class="create-sub-agent-container">
-    <div class="custom-table-layout mt-3">
+
+    <div class="card adminInner mt-3">
         <div class="table-btn-group mb-3">
             <button class="btnStyle" (click)="download('pdf', 'landscape')">PDF</button>&nbsp;
           <button class="btnStyle" (click)="exportExcel()">Export to Excel</button>
@@ -96,16 +100,16 @@
                                                     <td class="text-left" style="display:flex; float:right;"> 
                                                         <button class="btn btn-sm btn-primary"
                                                             (click)="updatePromo(user)">
-                                                            <i class="fa fa-edit text-nowrap">&nbsp;
+                                                           
                                                                 {{'Update'}}
-                                                            </i>
+                                                            
                                                         </button>
                                                         
                                                         &nbsp; &nbsp;
-                                                        <button class="btn btn-sm btn-primary pull-right" (click)="confirmDelete(user?.id)">
-                                                            <i class="fa fa-trash text-nowrap">&nbsp;
+                                                        <button class="btn btn-sm btn-secondary pull-right" (click)="confirmDelete(user?.id)">
+                                                           
                                                                 {{'Delete'}}
-                                                            </i>
+                                                          
                                                         </button>
                                                     </td>
 
@@ -127,5 +131,5 @@
             </div>
         </div>
     </div>
-</div>
+
 

@@ -1,7 +1,8 @@
-<div class="card-header text-uppercase bg-dark text-white">
-    <h5 style="border-bottom: 0;">B2C Contact Enquiry</h5>
+
+<div class="card adminInner">
+    <div class="card-header mb-3">
+    <h5>B2C Contact Enquiry</h5>
 </div>
-<div class="card">
     <form [formGroup]="regConfig">
       <div class="row">
           <div class="col-4 pr-0">
@@ -47,23 +48,25 @@
                 bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen">
              </div>
           </div> -->
+          <div class="col-4 pr-0">
+            <label>&nbsp;</label>
+          <button type="submit" class="btn btn-primary" (click)="onSearchSubmit()">Search</button> &nbsp;
+          <button type="button" class="btn btn-secondary" (click)="onReset()">Reset</button>
        </div>
-       <div class="btncontainer">
-          <button type="submit" class="btnStyle" (click)="onSearchSubmit()">Search</button> &nbsp;
-          <button type="button" class="btnStyle" (click)="onReset()">Reset</button>
        </div>
+       
     </form>
  </div>
- <div class="card" style="margin-top: 30px;">
-    <div class="card-body">
+ <div class="card adminInner" style="margin-top: 30px;">
+    <div class="card-body p-0">
         <p>Total {{respData?.length}} Enquiry</p>
-        <button class="btnStyle" (click)="download('pdf', 'landscape')">PDF</button>&nbsp;
-        <button class="btnStyle" (click)="download('xlsx', 'portrait')">Export to excel</button>
+        <button class="btn btn-primary" (click)="download('pdf', 'landscape')">PDF</button>&nbsp;
+        <button class="btn btn-secondary" (click)="download('xlsx', 'portrait')">Export to excel</button>
         <div class="form-group mb-0 col-sm-3 p-0 float-right">
             <input class="form-control" type="text" name="Search" [(ngModel)]="searchText" autocomplete="off"
                 placeholder="Search">
         </div>
-       <div class="mb-3">
+       <div class="mb-3 mt-3">
           <form>
             <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft" #scrollOne >
                 <div class="div1"></div>

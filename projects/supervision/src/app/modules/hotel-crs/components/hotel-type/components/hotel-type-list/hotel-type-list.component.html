@@ -1,12 +1,11 @@
-<div class="mb-3 btop">
-    <div class="card-header-tab card-header">
-        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
-            <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i> {{'Hotel Type List'}}
-        </div>
+<div class="card adminInner">
+    <div class="card-header mb-3"> 
+       <h5>{{'Stay Type List'}}</h5> 
     </div>
+    
     <form>
         <div class="p-2">
-            <div class="form-group form-inline mb-0">
+            <div class="form-group float-right form-inline mb-0">
                 Full text search:
                 <input class="form-control ml-2" type="text" name="searchTerm"
                     (keyup)="applyFilter($event.target.value)" />
@@ -41,10 +40,8 @@
                             </span>
                         </td>
                         <td class="text-left btncontainer">
-                            <button mat-raised-button color="primary" class="btnStyle" (click)="updateHotelType(data)"
-                                style="line-height: unset; padding: 0 10px;">{{'Update'}}</button>&nbsp;
-                                <button mat-raised-button color="primary" class="btnStyle" (click)="deleteHotelType(data)"
-                                style="line-height: unset; padding: 0 10px;">{{'Delete'}}</button>
+                            <button class="btn btn-primary" (click)="updateHotelType(data)">{{'Update'}}</button>&nbsp;
+                                <button  class="btn btn-secondary" (click)="deleteHotelType(data)">{{'Delete'}}</button>
                         </td>
 
                     </tr>

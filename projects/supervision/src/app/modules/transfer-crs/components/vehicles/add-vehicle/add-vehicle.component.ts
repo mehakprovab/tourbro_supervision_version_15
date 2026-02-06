@@ -97,7 +97,9 @@ export class TransferVehicleAddComponent implements OnInit {
     private transferCrsService: TransferCrsService,
     private swalService: SwalService,
     private router: Router
-  ) { }
+  ) { 
+
+  }
 
   ngOnInit(): void {
     // this.transferCrsService.updatTransferData.subscribe((data) => {
@@ -147,6 +149,8 @@ onVehicleSelect(event) {
   this.getVehicleMasterList(vehicle_type);
 
 }
+
+
   getVehicleMasterList(vehicle_type) {
     const payLoad = {
       vehicle_type: Number(vehicle_type)

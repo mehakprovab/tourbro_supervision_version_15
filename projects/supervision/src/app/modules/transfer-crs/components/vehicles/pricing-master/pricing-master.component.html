@@ -35,7 +35,7 @@
                 formControlName="commute_supplier_vehicle_id"
                 [class.is-invalid]="addUpdateVendorForm.get('commute_supplier_vehicle_id').invalid && (isSubmitted || addUpdateVendorForm.get('commute_supplier_vehicle_id').touched)">
           <option [ngValue]="null">Select Vehicle Id</option>
-          <option *ngFor="let c of vehicleMasterDataList" [ngValue]="c.vehicle_id">{{ c.vehicle_name }}</option>
+          <option *ngFor="let c of vehicleMasterDataList" [ngValue]="c.Id">{{ c.vehicle_name }}</option>
         </select>
         <!-- <input type="number" class="form-control"
                formControlName="commute_supplier_vehicle_id"
@@ -144,9 +144,9 @@
             <tr>
               <th *ngIf="addUpdateVendorForm.value.type === 'Airport'">Start KM *</th>
               <th *ngIf="addUpdateVendorForm.value.type === 'Local'">Hours *</th>
-              <th>End KM *</th>
+              <th *ngIf="addUpdateVendorForm.value.type !== 'Local'">End KM *</th>
               <th>Base Price *</th>
-              <th width="80">Action</th>
+              <th *ngIf="priceDetailsArray.length !== 1"width="80">Action</th>
             </tr>
           </thead>
 
@@ -166,7 +166,7 @@
                        [class.is-invalid]="row.get('hours').invalid && isSubmitted">
               </td>
 
-              <td>
+              <td *ngIf="addUpdateVendorForm.value.type !== 'Local'">
                 <input type="number" class="form-control"
                        formControlName="end_km"
                        [class.is-invalid]="row.get('end_km').invalid && isSubmitted">
@@ -178,7 +178,7 @@
                        [class.is-invalid]="row.get('base_price').invalid && isSubmitted">
               </td>
 
-              <td>
+              <td *ngIf="i !== 0">
                 <button type="button"
                         class="btn btn-danger btn-sm"
                         (click)="removePriceDetail(i)">

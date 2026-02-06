@@ -235,7 +235,7 @@ export class AddActivityCRSComponent implements OnInit {
       activity_duration_type: ['', Validators.required],
       languages: ['', Validators.required],
       timing: ['', Validators.required],
-      country: ['', Validators.required],
+      country: [229, Validators.required],
       city: ['', Validators.required],
       pick_up_location: ['', Validators.required],
       drop_off_location: ['', Validators.required],
@@ -281,7 +281,7 @@ export class AddActivityCRSComponent implements OnInit {
       activity_duration: ['', Validators.required],
       operated_lang: ['', Validators.required],
       timing: ['', Validators.required],
-      country: ['', Validators.required],
+      country: [229, Validators.required],
       city: ['', Validators.required],
       pick_up_location: ['', Validators.required],
       drop_off_location: ['', Validators.required]
@@ -735,6 +735,7 @@ export class AddActivityCRSComponent implements OnInit {
       next: (res) => {
         if (res.Status === true && (res.statusCode === 201 || res.statusCode === 200)) {
           this.countryList = res.data;
+          this.getActivityCityList(229)
           if (this.showUpdateForm) {
             const event = {
               target: {
@@ -755,7 +756,7 @@ export class AddActivityCRSComponent implements OnInit {
 
   getActivityCityList(event) {
     console.log(event)
-    const selectedId = event.target.value;
+    const selectedId = event;
     const selectedCountry = this.countryList.find(c => c.id == selectedId);
     const req = {
       CountryId: selectedCountry.id

@@ -88,7 +88,7 @@
                                 Country
                                 <span class="text-danger">*</span>
                             </label>
-                            <select formControlName="country" class="form-control" (change)="getActivityCityList($event)"
+                            <select formControlName="country" class="form-control" (change)="getActivityCityList(229)"
                                 >
                                 <option value="" disabled selected>Select Country</option>
                                 <option id="autocomplete" *ngFor="let coreCity of countryList" [value]="coreCity.id">
@@ -419,7 +419,7 @@
                                     <div class="col-6">
                                         <div class="col-12 p-0 ">
                                             <label class="control-label px-3">
-                                            Price / Adult ({{loggedInUser.currency ? loggedInUser.currency : 'GBP'}})
+                                            Price / Adult ({{loggedInUser.currency ? loggedInUser.currency : 'INR'}})
                                             <span class="text-danger">*</span>
                                         </label>
                                         <div class="col-12 ">

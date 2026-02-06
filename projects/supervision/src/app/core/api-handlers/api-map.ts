@@ -635,4 +635,10 @@ editVehicleMaster: `${baseUrl}/car/editVehicle`,
     listVehicleMaster: `${baseUrl}/car/listVehicle`,
 
      getVehicleType: `${baseUrl}/car/vehicleType`,
+
+     addCarAmenities: `${baseUrl}/car/addCarAmenities`,
+      updateCarAmenities: `${baseUrl}/car/updateCarAmenities`,
+       deleteCarAmenities: `${baseUrl}/car/deleteCarAmenities`,
+        listCarAmenities: `${baseUrl}/car/listCarAmenities`,
+          editCarAmenitiesStatus: `${baseUrl}/car/editCarAmenitiesStatus`,
 };

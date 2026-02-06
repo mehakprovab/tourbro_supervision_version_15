@@ -90,6 +90,8 @@ createForm() {
    if (this.addUpdateVendorForm.get('type').value === 'Airport') {
     this.addAirportPriceRow();
   }
+
+  
 }
 
 
@@ -159,7 +161,7 @@ enableFields(fields: string[]) {
 addAirportPriceRow() {
   this.priceDetailsArray.push(this.fb.group({
     start_km: [0, Validators.required],
-    end_km: [0, Validators.required],
+    end_km: [0],
     base_price: [0, Validators.required]
   }));
 }
@@ -167,7 +169,6 @@ addAirportPriceRow() {
 addLocalPriceRow() {
   this.priceDetailsArray.push(this.fb.group({
     hours: [0, Validators.required],
-    end_km: [0, Validators.required],
     base_price: [0, Validators.required]
   }));
 }

@@ -17,6 +17,9 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { VenderMasterComponent } from './components/vehicles/vender-master/vender-master.component';
 import { DriverMasterComponent } from './components/vehicles/driver-master/driver-master.component';
 import { PricingMasterComponent } from './components/vehicles/pricing-master/pricing-master.component';
+import { CarAminitiesComponent } from './components/car-aminities/car-aminities.component';
+import { CarAminitiesListComponent } from './components/car-aminities/car-aminities-list/car-aminities-list.component';
+import { AddAminitiesComponent } from './components/car-aminities/add-aminities/add-aminities.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -26,7 +29,7 @@ import { PricingMasterComponent } from './components/vehicles/pricing-master/pri
     CollapseModule.forRoot(),
     NgMultiSelectDropDownModule,
     CKEditorModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
   ],
   declarations: [
     TransferVehicleAddComponent,
@@ -38,7 +41,10 @@ import { PricingMasterComponent } from './components/vehicles/pricing-master/pri
     VehicleMasterComponent,
     VenderMasterComponent,
     DriverMasterComponent,
-    PricingMasterComponent
+    PricingMasterComponent,
+    CarAminitiesComponent,
+    CarAminitiesListComponent,
+    AddAminitiesComponent
   ],
   exports: [
   ]

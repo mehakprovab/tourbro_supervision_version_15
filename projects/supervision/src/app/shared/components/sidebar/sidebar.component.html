@@ -603,12 +603,25 @@
                                       <div class="vsm-list">
                                   
     <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" [activeIds]="extraParameter">
+                 <ngb-panel id="manageB2CMenus" *ngIf="isMenuExists('Car Amenities')">
+                            <ng-template ngbPanelHeader>
+                              <a routerLinkActive="active-item" [routerLink]="['/transfers/car-aminities']"
+                                 class="vsm-link pl-1">
+                                <span class="vsm-title pl-10">
+                                    <i class="fa fa-circle-o" aria-hidden="true"></i>&nbsp;
+                                  Car Amenities
+                                </span>
+                              </a>
+                              
+                            </ng-template>
+                            
+                          </ngb-panel>
                                           <ngb-panel id="manageB2CMenus" *ngIf="isSubMenuExists('Add Vender',TRANSFER_CRS)">
                                             <ng-template ngbPanelHeader>
                                               <button ngbPanelToggle class="vsm-link pl-1 "
                                                 [ngClass]="{'collapsed' : globals.toggleSidebar}">
                                                 <span class="vsm-title pl-10"> <i class="fa fa-circle-o" aria-hidden="true"></i>
-                                                  Vender Master</span>
+                                                  Vendor Master</span>
                                                 <i class="vsm-arrow"></i>
                                               </button>
                                             </ng-template>
@@ -626,7 +639,7 @@
                                                 class="vsm-link pl-1 ">
                                                 <span class="vsm-title pl-10">
                                                   
-                                                  Add / Edit Vender List
+                                                  Add / Edit Vendor List
                                                 </span>
                                               </a>
                                             </ng-template>

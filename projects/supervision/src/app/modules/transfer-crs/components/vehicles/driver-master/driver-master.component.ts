@@ -76,13 +76,17 @@ labelImport!: ElementRef;
 
   public loggedInUserId: any;
   isSubmitted = false;
+carAmenityList:any;
 
   constructor(
     private fb: FormBuilder,
     private apiHandlerServices: ApiHandlerService,
     private swalService: SwalService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) { 
+  }
+
+
 
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -142,7 +146,7 @@ labelImport!: ElementRef;
   createForm() {
     this.addUpdateVendorForm = this.fb.group({
       image: [null, Validators.required],
-
+      amenities: [null],
       vendor_id: ['', Validators.required],
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -317,7 +321,6 @@ const token = this.getBearerToken();
 
     const formValue = this.addUpdateVendorForm.value;
     const fd = new FormData();
-
     fd.append('image', formValue.image);
     fd.append('vendor_id', formValue.vendor_id);
     fd.append('name', formValue.name);

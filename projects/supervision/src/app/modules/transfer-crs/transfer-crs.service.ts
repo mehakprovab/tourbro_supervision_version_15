@@ -37,6 +37,18 @@ export class TransferCrsService {
             )
     }
     
+     update(data): Observable<any> {
+        return this.apiHandlerService.apiHandler(data.topic || '', 'post', {}, {}, data.topic=='uploadHotelLogo' ? data[0].data : data[0])
+            .pipe(
+                map(resp => {
+                    return resp
+                }),
+                shareReplay(1),
+                untilDestroyed(this),
+            )
+    }
+
+  
     ngOnDestroy() { }
 
 

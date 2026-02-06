@@ -206,6 +206,21 @@
          
           </div>
         </div>
+          <div class="col-6 mb-3">
+                        <label class=" control-label">
+                            Cab Amenities
+                            <span class="text-danger">*</span>
+                        </label>
+                        <ng-multiselect-dropdown #multiSelect formControlName="amenities"
+                            [placeholder]="'Select Amenities'" [data]="carAmenityList"[settings]="dropdownSettingsForRoom"
+                            
+                            [settings]="dropdownSettingsForRoom" class="form-control meal-plan-dropdown">
+                        </ng-multiselect-dropdown>
+                        <!-- <div *ngIf="addUpdateVendorForm.get('amenities').errors" class="invalid-feedback">
+                            <div *ngIf="addUpdateVendorForm.get('amenities').errors.required">Car Amenities are required
+                            </div>
+                        </div> -->
+                    </div>
             <div class="col-4">
           <label class="px-3 control-label">
             Combustion Type <span class="text-danger">*</span>

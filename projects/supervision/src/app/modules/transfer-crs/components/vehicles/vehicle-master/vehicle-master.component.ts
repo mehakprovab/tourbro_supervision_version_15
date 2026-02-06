@@ -74,11 +74,22 @@ collectionSize: number;
   imageFile: File;
   loggedInUserId: number;
 vendorList:any=[]
+  carAmenityList:any;
+      dropdownSettingsForRoom = {};
   constructor(
     private fb: FormBuilder,
     private api: ApiHandlerService,
     private swal: SwalService
-  ) {}
+  ) {
+
+         this.dropdownSettingsForRoom = {
+        singleSelection: false,
+        idField: 'id',
+        textField: 'amenties',
+        maxHeight: 197,
+        itemsShowLimit: 2,
+    };
+  }
 
   ngOnInit() {
     this.loggedInUserId = JSON.parse(sessionStorage.getItem('currentSupervisionUser')).id;
@@ -88,6 +99,7 @@ vendorList:any=[]
 this.getVendorList()
     this.getVehicleTypeList();
     this.getVehicleMasterList();
+    this.getAminities();
   }
     getVendorList() {
     this.searchSpin = true;
@@ -161,6 +173,7 @@ this.getVendorList()
       combustion_type:['',Validators.required],
       image: [''],
       status: [true],
+      amenities:[null],
       
 
     // route: this.fb.array([]),
@@ -190,11 +203,16 @@ onVehicleMasterSave() {
     this.swal.alert.oops('Please fill all required fields');
     return;
   }
-
+ const features = {
+  vehicle:this.f.amenities.value.map(v => v.amenties),
+  driver: [],
+  services: []
+};
   const formData = new FormData();
+    formData.append('features', JSON.stringify(features));
   formData.append('vehicle_id', this.f.vehicle_type.value);
   formData.append('vehicle_type', this.f.vehicle_type.value);
-  formData.append('trip_type', '1');
+  formData.append('trip_type', this.f.trip_type.value);
   formData.append('vendor_id', this.f.vendor_id.value);
   formData.append('vehicle_name', this.f.vehicle_name.value);
   formData.append('ac_vehicle', this.f.ac_vehicle.value);
@@ -226,12 +244,19 @@ onVehicleMasterSave() {
     });
 }
 
-
+  getAminities() {
+    this.api.apiHandler('listCarAmenities', 'post', {}, {})
+      .subscribe((resp: any) => {
+        if (resp.Status && resp.data) {
+          this.carAmenityList = resp.data;
+        }
+      });
+  }
 upateVehicleMaster() {
   const formData = new FormData();
   formData.append('vehicle_id', this.f.vehicle_type.value);
   formData.append('vehicle_type', this.f.vehicle_type.value);
-  formData.append('trip_type', '1');
+  formData.append('trip_type', this.f.trip_type.value);
   formData.append('vendor_id', this.f.vendor_id.value);
   formData.append('vehicle_name', this.f.vehicle_name.value);
   formData.append('ac_vehicle', this.f.ac_vehicle.value);

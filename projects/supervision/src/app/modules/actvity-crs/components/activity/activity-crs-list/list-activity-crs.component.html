@@ -60,12 +60,12 @@
                                 <span class="checkbox-text ml-2">Enable</span>
                             </label> 
                         </td>
-                         <td class="text-left" *ngIf="loggedInUser.auth_role_id !== 7" >
+                         <!-- <td class="text-left" *ngIf="loggedInUser.auth_role_id !== 7" >
                             <label class="checkbox-label">
                                 <input type="checkbox" class="checkbox-input" [checked]="data.book_now_status === 1" (change)="enableBookNow($event.target.checked,data)">
                                 <span class="checkbox-text ml-2">Enable</span>
                             </label> 
-                        </td>
+                        </td> -->
                         <td class="text-left">
                             <div ngbDropdown container="body"><button
                                     class="btnStyle" ngbDropdownToggle>

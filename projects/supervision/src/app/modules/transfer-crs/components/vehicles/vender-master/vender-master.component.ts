@@ -109,7 +109,7 @@ isSubmitted = false;
   createForm() {
     this.addUpdateVendorForm = this.fb.group({
       name: ['', [Validators.required]],
-      phone_code: ['', [Validators.required]],
+      phone_code: ['91', [Validators.required]],
       mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       email: ['', [Validators.required, Validators.email]],
       country: [null, [Validators.required]],

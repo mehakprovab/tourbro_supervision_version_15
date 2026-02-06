@@ -56,11 +56,11 @@ export class ActivityCRSListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const currentDomainUser = localStorage.getItem('currentDomainUser');
-    this.loggedInUser = JSON.parse(currentDomainUser);
-    if (this.loggedInUser.auth_role_id === 7) {
-      this.displayColumn.splice(this.displayColumn.length - 2, 1);
-    }
+    // const currentDomainUser = localStorage.getItem('currentDomainUser');
+    // this.loggedInUser = JSON.parse(currentDomainUser);
+    // if (this.loggedInUser.auth_role_id === 7) {
+    //   this.displayColumn.splice(this.displayColumn.length - 2, 1);
+    // }
     this.getActivityCrsList();
   }
 

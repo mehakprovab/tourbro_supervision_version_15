@@ -560,11 +560,11 @@ fd.append('status', 'true');
   onStatusChange(event: MatSlideToggleChange, id: number) {
     const payload = {
       id,
-      status: event.checked ? true : false
+      status: event.checked ? 1 : 0
     };
 
     this.apiHandlerServices
-      .apiHandler('updateDriver', 'POST', {}, {}, payload)
+      .apiHandler('editDriverStatus', 'POST', {}, {}, payload)
       .subscribe(() => {
         this.getDriverList();
       });

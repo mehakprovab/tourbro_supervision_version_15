@@ -118,7 +118,7 @@
       formControlName="country"
       [compareWith]="compareCountries"
     >
-      <option [ngValue]="null" disabled>Select Country</option>
+      <option  disabled>Select Country</option>
       <option *ngFor="let c of countryList" [ngValue]="c">
         {{ c.name }}
       </option>

@@ -155,8 +155,8 @@ this.getVendorList()
       country: ['', Validators.required],
       city: ['', Validators.required],
       // cordinates: ['', Validators.required],
-      duration_hours: ['', Validators.required],
-      duration_minutes: ['', Validators.required],
+      duration_hours: [''],
+      duration_minutes: [''],
      cancellation_rule:['',Validators.required],
       combustion_type:['',Validators.required],
       image: [''],
@@ -334,7 +334,7 @@ upateVehicleMaster() {
     };
 
     this.api
-      .apiHandler('updateVehicleMasterStatus', 'POST', {}, {}, payload)
+      .apiHandler('updateVehicle', 'POST', {}, {}, payload)
       .subscribe(() => {
         this.getVehicleMasterList();
       });

@@ -1,5 +1,8 @@
-<div class="card-header text-uppercase bg-dark text-white"><h5 style="border-bottom: 0;"><i class="fa fa-tag fa-lg"></i>&nbsp;B2C Discounts/Offers</h5></div>
-<div class="card">
+
+<div class="card adminInner">
+      <div class="card-header mb-3">
+          <h5>B2C Discounts/Offers</h5>
+     </div>
     <form [formGroup]="regConfig" autocomplete="off">
       <div >
        <div class="form-row">
@@ -27,21 +30,29 @@
             </div>
          </div>
          <div class="col-6 pr-0">
-            <div class="form-group">
-                <label for="discount_type">Discount Type*</label>
-                <br>
-               &nbsp;<label>
-               <input formControlName="discount_type" type="radio" class=" nrm_input"  
-                   id="discount_type" value="Plus">
+            <div class="form-group radio-inline-group">
+               <label for="discount_type">Discount Type*</label>
+
+               <div class="radio-options">
+                  <label class="radio-item">
+                  <input formControlName="discount_type"
+                           type="radio"
+                           class="nrm_input"
+                           value="Plus">
                   <span>Plus</span>
-                  </label> &nbsp;
-                <label>
-                <input formControlName="discount_type" type="radio" class=" nrm_input"  
-                    id="discount_type" value="Percentage">
-                    <span>Percentage</span>
-                </label>                      
+                  </label>
+
+                  <label class="radio-item">
+                  <input formControlName="discount_type"
+                           type="radio"
+                           class="nrm_input"
+                           value="Percentage">
+                  <span>Percentage</span>
+                  </label>
+               </div>
             </div>
-         </div>
+            </div>
+
           <div class="col-6 pr-0">
              <div class="form-group">
                 <label for="email">Image</label>
@@ -56,14 +67,14 @@
           </div>
        </div>
        <div class="btncontainer">
-          <button type="submit" class="btnStyle" (click)="onSearchSubmit()">{{this.btnName}}</button> &nbsp;
-          <button type="button" class="btnStyle" (click)="onReset()">Reset</button>
+          <button type="submit" class="btn btn-primary" (click)="onSearchSubmit()">{{this.btnName}}</button> &nbsp;
+          <button type="button" class="btn btn-secondary" (click)="onReset()">Reset</button>
        </div>
      </div>
     </form>
  </div>
- <div class="card" style="margin-top: 30px;">
-    <div class="card-body">
+ <div class="card adminInner" style="margin-top: 30px;">
+    <div class="card-body p-0">
         <p>Total {{respData?.length}} Records</p>
        <div class="mb-3">
           <form>

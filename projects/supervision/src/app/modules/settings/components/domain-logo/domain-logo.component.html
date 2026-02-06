@@ -1,14 +1,9 @@
-<div class="row card">
-  <div class=" p-0 col-md-12 col-lg-12">
-    <div class="card-header-tab card-header bg-dark text-white">
-      <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
-        <i class="header-icon fa fa-edit"> </i>
-        <span class="text-uppercase">Domain Logo</span>
-      </div>
-    </div>
-  </div>
-  <form class="m-4" [formGroup]="logoConfig">
-    <div class="orm-group row my-5 offset-lg-2 offset-md-2 col-md-8 col-lg-8 ">
+<div class="card adminInner">
+    <div class="card-header mb-3">
+     <h5>Domain Logo</h5>
+     </div>
+  <form class="" [formGroup]="logoConfig">
+    <div class="form-group row my-5 offset-lg-2 offset-md-2 col-md-8 col-lg-8 ">
       <label for="domain_logo" class="col-sm-3 col-form-label font-weight-bold"> Domain Logo <sup
           class="text-danger f-14"> * </sup> <br>
         <p *ngIf="!imageSrc && submitted" class="text-danger" style="font-weight: 400;font-size: 80%;">Image

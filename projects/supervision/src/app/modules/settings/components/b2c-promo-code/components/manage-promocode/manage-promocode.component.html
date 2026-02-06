@@ -1,7 +1,8 @@
-<div class="sub-agent-container custom-table-layout">
-    <div class="add-traveller bg-white rounded px-4 pt-4">
-        <div class="title">
-            <h3>Add/Update Promo Code</h3>
+<div class="sub-agent-container card adminInner">
+    <div class="add-traveller">
+        
+        <div class="card-header-tab card-header mb-3">
+            <h5>Add/Update Promo Code</h5>
         </div>
         <div class="custom-inline-form">
             <form class="" [formGroup]="regConfig" autocomplete="off">
@@ -16,7 +17,7 @@
                     <label for="promo_code"class="required" class="col-sm-2 col-form-label">Image</label>
                     <div class="col-sm-4">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" accept=".png, .jpg, .jpeg" formControlName="promo_image" id="promo_image"
+                            <input type="file" class="custom-file-input form-control " accept=".png, .jpg, .jpeg" formControlName="promo_image" id="promo_image"
                                 (change)="onFileChange($event.target.files)">
                     <label class="custom-file-label" #labelImport for="promo_image">Upload Image</label>
                     <span class="text-danger">(Maximum upload file size: 1 MB)</span>
@@ -118,7 +119,7 @@
                     </div>
                 </div>
                 <div class="form-group row cust-radio-group">
-                    <label class="col-sm-2 col-form-label">Status</label>
+                    <label class="col-sm-2 col-form-label">Status</label> 
                     <div class="col-sm-4 d-flex align-items-center">
                     <div class="col-auto">
                         <label>
@@ -139,8 +140,8 @@
                 <div class="btn-group">
                     <div class="form-group required row">
                         <div class="col-12 d-flex">
-                            <button class="btnStyle" type="submit" class="btn btn-primary icon-btn lg mr-4" (click)="onSubmit()">Save</button>
-                            <button class="btnStyle" type="reset" class="btn btn-danger icon-btn lg" (click)="onReset()">Reset</button>
+                            <button class="btnStyle" type="submit" class="btn btn-primary icon-btn lg mr-3" (click)="onSubmit()">Save</button>
+                            <button class="btnStyle" type="reset" class="btn btn-secondary icon-btn lg" (click)="onReset()">Reset</button>
                         </div>
                     </div>
                 </div>

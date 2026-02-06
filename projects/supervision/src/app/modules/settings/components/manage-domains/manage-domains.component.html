@@ -1,11 +1,9 @@
-<div class="card mb-3">
-    <div class="card-header-tab card-header bg-dark text-white">
-        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
-            <i class="header-icon fa fa-edit"></i>
-            {{ 'MANAGE DOMAIN' }}
-        </div>
+<div class="card adminInner">
+    <div class="card-header mb-3">
+           <h5>{{ 'MANAGE DOMAIN' }}</h5>
     </div>
-    <form class="m-4" [formGroup]="regConfig" (ngSubmit)="onSubmit()">
+    
+    <form class="" [formGroup]="regConfig" (ngSubmit)="onSubmit()">
         <div class="form-group row">
             <label for="domainname" class="col-sm-3  col-form-label col-form-label-sm"> Domain Name <sup
                     class="text-danger">*</sup> </label>
@@ -27,7 +25,7 @@
         <div class="form-group row">
             <div class="offset-sm-3">
                 <button type="submit" class="btn btn-md btn-primary"> Save </button> &nbsp;
-                <button type="reset" class="btn btn-md btn-danger">Reset</button>
+                <button type="reset" class="btn btn-md btn-secondary">Reset</button> 
             </div>
         </div>
     </form>

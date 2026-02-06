@@ -1,31 +1,26 @@
-<div class="mb-3 btop">
-    <div class="card-header-tab card-header">
-        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
-            <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i> {{'Hotel List'}}
-            
-        </div>
+<div class="card adminInner">
+    <div class="card-header mb-3">
+        <h5>{{'Stay List'}}</h5>
     </div>
-    <div class="btncontainer mt-3">
-        <button type="button" class="btnStyle" (click)="exportExcel()">Export</button> &nbsp;
-        <button type="button" class="btnStyle"  (click)="isCollapsed = !isCollapsed">Filter</button>
-    </div>
+    
+    
     <div class="card Queues mt-2 mb-2" [collapse]="!isCollapsed">
         <form [formGroup]="regConfig">
             <div class="row">
                 <div class="col-4 pr-0">
                     <div class="form-group">
-                        <label for="appReference">Hotel Name
+                        <label for="appReference">Stay Name
                         </label>
                         <input formControlName="hotel_name" type="text"
                             class="form-control form-control-sm nrm_input"
-                            placeholder="Hotel Name" id="appReference">
+                            placeholder="Stay Name" id="appReference">
                     </div>
                 </div>
                 <div class="col-4 pr-0">
                     <div class="form-group">
-                        <label for="phone">Hotel Code</label>
+                        <label for="phone">Stay Code</label>
                         <input formControlName="hotel_code" type="text"
-                            class="form-control form-control-sm nrm_input" placeholder="Hotel Code" id="phone">
+                            class="form-control form-control-sm nrm_input" placeholder="Stay Code" id="phone">
                     </div>
                 </div>
                 <div class="col-4 pr-0">
@@ -52,20 +47,32 @@
                 
             </div>
             <div class="btncontainer">
-                <button type="submit" class="btnStyle" (click)="onSearchSubmit('filter')">Search</button> &nbsp;
-                <button type="button" class="btnStyle" (click)="onReset()">Reset</button>
+                <button type="submit" class="btn btn-primary" (click)="onSearchSubmit('filter')">Search</button> &nbsp;
+                <button type="button" class="btn btn-secondary" (click)="onReset()">Reset</button>
             </div>
         </form>
     </div>
+
+    
+</div>
+<div class="card adminInner mt-3">
     <form>
-        <div class="p-2">
-            <div class="form-group form-inline mb-0">
-                Full text search:
-                <input class="form-control ml-2" type="text"  name="searchTerm"
-                [formControl]="searchValue" 
-                    />
-            </div>
+        <div class="d-flex align-items-center justify-content-between pb-3">
+            <div class="padding-bottom: 15px;">
+            <button type="button" class="btn btn-primary" (click)="exportExcel()">Export</button> &nbsp;
+            <button type="button" class="btn btn-secondary"  (click)="isCollapsed = !isCollapsed">Filter</button>
         </div>
+            
+        <div class="form-group mb-0 col-sm-3 p-0 float-right has-search">
+            Full text search:
+            <input class="form-control ml-2" type="text"  name="searchTerm"
+            [formControl]="searchValue" 
+                />
+        </div>
+
+        </div>
+        
+       
 
         <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft"
         #scrollOne>
@@ -197,6 +204,7 @@
             </div>
             </div>
     </form>
+
 </div>
 
 <div class="modal" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true"

@@ -145,7 +145,7 @@ perfect-scrollbar { max-height: 650px !important;}
 
 .bg-primary, .badge-primary{ background: #012756 !important; }
 .fc-button-primary { background: #012756 !important;   border:1px solid #012756 !important; }
-.btn-primary:hover {background: #012756;   border:1px solid #012756 !important;}
+.btn-primary:hover {background: #FE4865;   border:1px solid #FE4865!important;}
 .tabs-animated > .nav-tabs .nav-link::before { background: none!important; }
 .form-group .nrm_input {
     line-height: normal !important;
@@ -239,7 +239,8 @@ span.dropdown-multiselect__caret {height: 45px !important;}
     color: #ffffff!important;
 }
 .title h3{background: #F5F2FC;font-size: 20px;font-weight: 600;color: #282828;padding: 10px 16px;border-radius: 8px;}
-.btn-secondary{background: #FFF5F6;color: #FE4865;border:1px solid #FFF5F6;border-radius: 8px !important;height: 44px;}
+.btn-secondary{background: #FFF5F6;color: #FE4865;border:1px solid #FFF5F6;border-radius: 8px !important;height: 45px;}
+.btn-secondary:hover{background: #FE4865;color: #fff;border:1px solid #FE4865;border-radius: 8px !important;height: 45px;}
 .adminInner{
     border-radius: 16px!important;
     border: 1px solid #ddd!important;

@@ -1,4 +1,6 @@
-.card{
-    padding: 0px!important;
+ .card {
+    padding: 16px;
+    font-family: 'inter', sans-serif;
 }
-.input-group-sm > .form-control:not(textarea), .input-group-sm > .custom-select{height: 35px;}
+
+.input-group-sm > .form-control:not(textarea), .input-group-sm > .custom-select{height: 45px;margin-right: 8px;}

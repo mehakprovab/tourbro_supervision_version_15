@@ -4,7 +4,7 @@
     </div>
     
     
-    <div class="card Queues mt-2 mb-2" [collapse]="!isCollapsed">
+    <div class="Queues mt-2 mb-2" [collapse]="!isCollapsed">
         <form [formGroup]="regConfig">
             <div class="row">
                 <div class="col-4 pr-0">
@@ -16,14 +16,14 @@
                             placeholder="Stay Name" id="appReference">
                     </div>
                 </div>
-                <div class="col-4 pr-0">
+                <div class="col-4">
                     <div class="form-group">
                         <label for="phone">Stay Code</label>
                         <input formControlName="hotel_code" type="text"
                             class="form-control form-control-sm nrm_input" placeholder="Stay Code" id="phone">
                     </div>
                 </div>
-                <div class="col-4 pr-0">
+                <div class="col-4 pl-0">
                     <div class="form-group">
                         <label for="phone">City Name</label>
                         <input formControlName="city_name" type="text"
@@ -37,7 +37,7 @@
                             class="form-control form-control-sm nrm_input" placeholder="Supplier Name" id="phone">
                     </div>
                 </div>
-                <div class="col-4 pr-0" *ngIf="loggedInUser.auth_role_id != 6 && loggedInUser.auth_role_id != 7">
+                <div class="col-4" *ngIf="loggedInUser.auth_role_id != 6 && loggedInUser.auth_role_id != 7">
                     <div class="form-group">
                         <label for="phone">Supplier Email</label>
                         <input formControlName="supplier_email" type="text"

@@ -1,17 +1,17 @@
-<div class="mb-3 btop">
-    <div class="card-header-tab card-header p-0">
-        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
-            <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i> {{'Room Type List'}}
+<div class="card adminInner">
+       <div class="card-header mb-3">
+            <h5>{{'Room Type List'}}</h5>
         </div>
-    </div>
+    
     <form>
-        <div class="p-2">
-            <div class="form-group form-inline mb-0">
-                Full text search:
-                <input class="form-control ml-2" type="text" name="searchTerm"
+        <div class="d-flex align-items-center justify-content-between pb-3">
+            <div class="form-group mb-0 col-sm-3 float-right has-search">
+                <label>Full text search:</label> 
+                <input class="form-control" type="text" name="searchTerm"
                     (keyup)="applyFilter($event.target.value)" />
             </div>
         </div>
+        
         <div class="table-responsive">
             <table class="table table-borderless table-striped table-hover" matSort (matSortChange)="sortData($event)">
                 <thead>

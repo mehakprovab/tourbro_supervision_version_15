@@ -7,7 +7,7 @@
                 </div>
                
                 <div class="row">
-                    <div class="col-sm-4 mb-3">
+                    <div class="col-sm-4 mb-3 pr-0">
                         <label class=" control-label">
                             Stay Type
                             <span class="text-danger">*</span>
@@ -37,7 +37,7 @@
                     </div>
 
 
-                    <div class="col-sm-4 mb-3">
+                    <div class="col-sm-4 mb-3 pl-0">
                         <label class=" control-label">
                             Star Rating
                             <span class="text-danger">*</span>
@@ -83,13 +83,13 @@
                             <div *ngIf="hotel.hotel_description.errors.required">Hotel Description is required</div>
                         </div>
                     </div> -->
-                    <div class="col-sm-4 mb-3">
+                    <div class="col-sm-4 mb-3 pr-0">
                         <label class="control-label">
                             Currency <span *ngIf="disableCurrency" style="font-size: small;">(Contact Admin for Currency Update)</span>
                             <span class="text-danger">*</span>
                         </label>
                         <div class="d-flex align-items-center">
-                            <select formControlName="currency" class="form-control mr-2">
+                            <select formControlName="currency" class="form-control">
                                 <option value="" disabled selected>Select Currency</option>
                                 <option *ngFor="let coreCountry of currencyList" [ngValue]="coreCountry.currency">
                                     {{ coreCountry.currency }}
@@ -116,7 +116,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-4 mb-3">
+                    <div class="col-sm-4 mb-3 pl-0">
                         <label class="control-label">
                             City
                             <span class="text-danger">*</span>
@@ -355,7 +355,7 @@
                                     <span class="text-danger">*</span>
                                 </label>
                                 <div class="d-flex align-items-center">
-                                    <select formControlName="currency" class="form-control mr-2">
+                                    <select formControlName="currency" class="form-control">
                                         <option value="" disabled selected>Select Currency</option>
                                         <option *ngFor="let coreCountry of filteredCurrencyList" [ngValue]="coreCountry.currency">
                                             {{ coreCountry.currency }}

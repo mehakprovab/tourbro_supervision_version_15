@@ -599,6 +599,7 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
     this.hotelCrsService.fetch(data).subscribe(
       resp => {
         this.coreCountryList = resp.data.countries;
+        this.getCityListAuto('India')
       }
     )
   }
@@ -662,7 +663,13 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
     )
   }
   getCityListAuto(event): void {
-    let state_id = event.target.value;
+    console.log("event", event)
+    if (!event || !event.target) {
+    var state_id = event;
+    }else{
+          var state_id = event.target.value;
+   
+    }
     const selectedCountry = this.coreCountryList.find(country => country.name == state_id);
     const countryCode = selectedCountry ? selectedCountry.two_code : '';
     const data = [{
@@ -683,7 +690,7 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
       hotel_name: ['', Validators.required],
       star_rating: ['', [Validators.required]],
       hotel_hotel_type_id: ['', Validators.required],
-      core_country_id: ['', Validators.required],
+      core_country_id: ['India', Validators.required],
       // core_state_id: ['', Validators.required],
       city_name: ['', Validators.required],
       address: ['', Validators.required],
@@ -692,7 +699,7 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
       meal_plans: [[], Validators.required],
       weekend_days: [[], Validators.required],
       room_view_ids: [[], Validators.required],
-      local_timezone: ['', Validators.required],
+      local_timezone: ['UTC+05:30', Validators.required],
       check_in_time: ['', Validators.required],
       check_out_time: ['', Validators.required],
       hotel_policy: [`<ol>
@@ -710,7 +717,7 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
       meal_price: [''],
       channel: ['Extranet', Validators.required],
       user_type: ['B2C', Validators.required],
-      currency: [{ value: '', disabled: false }, Validators.required],
+      currency: [{ value: 'INR', disabled: false }, Validators.required],
       status: [true],
       hotel_description: [''],
       hotel_hotel_amenities: [],

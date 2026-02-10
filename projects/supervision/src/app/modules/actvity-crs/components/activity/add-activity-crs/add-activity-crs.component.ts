@@ -694,7 +694,7 @@ export class AddActivityCRSComponent implements OnInit {
       }
 
       if (validFiles.length === 0) {
-        this.swalService.alert.oops("Only JPG, JPEG, PNG, SVG, and WEBP formats are allowed.");
+        this.swalService.alert.oops("Only JPG, JPEG and PNG formats are allowed.");
         event.target.value = ''; // Reset file input
         return;
       }

@@ -11,7 +11,8 @@
                     <div class="col-6">
                         <div class="left-txt-sec">
                             <figure>
-                                <img src="assets/images/suppli-logo.svg">
+                                <img src="assets/images/tour-bro.png"style="   
+    height: 110px;">
                             </figure>
                             <h1>Supplier Login</h1>
                         </div>
@@ -24,7 +25,7 @@
                                 </div>
                                 <div class="login-content">
                                     <form autocomplete="off" *ngIf="!showOtpComponent"class="needs-validation" [formGroup]="loginForm"novalidate
-                                    (validSubmit)="onLogin()">
+                                    (ngSubmit)="onLogin()">
                                         
                                         <div class="form-field">
                                             <label>Username</label>
@@ -49,7 +50,7 @@
                                         </div>
                                         <div class="login-footer">
                                             <div class="register-here">
-                                                <a class="c-pointer"  href="https://.com/b2b/#/auth/supplier-b2b" target="_blank" rel="noopener noreferrer">New User? Register here</a>
+                                                <a class="c-pointer" href="http://54.92.243.81/tourbro/supplier/general/register_supplier" target="_blank" rel="noopener noreferrer">New User? Register here</a>
                                             </div>
                                         </div>
                                     </form>

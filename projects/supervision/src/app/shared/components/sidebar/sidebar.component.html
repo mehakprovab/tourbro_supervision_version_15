@@ -136,7 +136,7 @@
 
 
                     <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" [activeIds]="extraParameter">
-                      <ngb-panel id="UserManagement" *ngIf="isMenuExists('Report')">
+                      <ngb-panel id="UserManagement" *ngIf="isMenuExists('B2C Hotel Report')">
                         <ng-template ngbPanelHeader>
                           <button ngbPanelToggle routerLinkActive="active-item"
                             [routerLinkActiveOptions]="{exact: true}" class="vsm-link">
@@ -402,7 +402,7 @@
 
 
 
-               <ngb-panel id="dashboardsMenus3" *ngIf="isMenuExists('CRS')">
+               <ngb-panel id="dashboardsMenus3" *ngIf="isMenuExists('Hotel CRS')">
                 <ng-template ngbPanelHeader>
                   <button ngbPanelToggle routerLinkActive="active-item"
                     [routerLinkActiveOptions]="{exact: true}" class="vsm-link">
@@ -415,6 +415,7 @@
                   <div class="vsm-dropdown">
                     <div class="vsm-list">
                       <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" [activeIds]="extraParameter">
+                      
                          <ngb-panel id="hotelCrsMenus" *ngIf="isMenuExists('Hotel CRS')"
                           >
                               <ng-template ngbPanelHeader>

@@ -109,7 +109,7 @@ previewHotelImage($event) {
         let file = files[i];
 
         if (!allowedTypes.includes(file.type)) {
-            this.swalService.alert.oops("Only JPG, JPEG, PNG, SVG, and WEBP formats are allowed.");
+            this.swalService.alert.oops("Only JPG, JPEG and PNG formats are allowed.");
             this.selactedFlies = []; // Clear previous selection
             this.imageSrc = []; 
             this.imageUrl = '';

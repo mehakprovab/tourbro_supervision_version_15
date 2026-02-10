@@ -537,7 +537,7 @@ export class UpdateTourPackageComponent implements OnInit {
         const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp'];
         
         if (!allowedTypes.includes(file.type)) {
-          this.swalService.alert.oops("Only JPG, JPEG, PNG, SVG, and WEBP formats are allowed.");
+          this.swalService.alert.oops("Only JPG, JPEG and PNG formats are allowed.");
             event.target.value = ''; // Reset file input
             return;
         }
@@ -562,7 +562,7 @@ onGallerySelect(event: any) {
       }
 
       if (validFiles.length === 0) {
-        this.swalService.alert.oops("Only JPG, JPEG, PNG, SVG, and WEBP formats are allowed.");
+        this.swalService.alert.oops("Only JPG, JPEG and PNG formats are allowed.");
           event.target.value = ''; // Reset file input
           return;
       }

@@ -132,7 +132,7 @@ console.log("this.returnUrl",this.returnUrl)
     if (this.loginForm.invalid) {
       return;
     }
-    if(this.returnUrl == '/' || this.returnUrl == '/supplier'){
+    if(this.returnUrl == '/#/' || this.returnUrl == '/supplier'){
       this.user_type = "supplier"
     }
     this.authService.onLogin(this.loginForm.get('email').value, this.loginForm.get('password').value,this.user_type)

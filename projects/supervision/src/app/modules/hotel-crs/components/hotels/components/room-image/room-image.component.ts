@@ -140,7 +140,7 @@ console.log("files",files)
                 this.loading = false;
             }
         },(err =>{
-            this.swalService.alert.oops("Kindly upload in the accepted formats of jpg and jpeg");
+            this.swalService.alert.oops("Kindly upload in the accepted formats of JPG, JPEG and PNG only.");
             this.loading = false;
         }))
     } else { return; }

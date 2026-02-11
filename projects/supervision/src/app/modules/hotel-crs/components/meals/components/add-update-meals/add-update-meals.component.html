@@ -1,45 +1,57 @@
-<div class="p-0">
+<div class="card adminInner">
+    <div class="card-header mb-3">
+       <h5>Meal type</h5> 
+    </div>
     <form [formGroup]="mealTypeForm" (ngSubmit)="handleValidSubmit()" class="needs-validation btop pt-0" novalidate>
-        <div class="card border-light p-0">
-            <div class="card-header">
-                Meal type
-            </div>
-            <div class="card-body pl-0">
+       
+            
+            <div class="card-body">
                 <fieldset form="user">
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label" for="hotel_type_name">
-                            Meals
-                            <span class="text-danger">*</span>
-                        </label>
-                        <div class="col-sm-6">
-                            <input value="" formControlName="meals" type="text" placeholder="Meal Type Name"
-                                class="form-control" [ngClass]="{ 'is-invalid': submitted && f.meals.errors }"
-                                required />
+                    <div class="row">
+                        <div class="col-sm-3 pr-0">
+                            <div class="form-group">
+                                <label class="control-label" for="hotel_type_name">
+                                    Meals
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <div class="">
+                                    <input value="" formControlName="meals" type="text" placeholder="Meal Type Name"
+                                        class="form-control" [ngClass]="{ 'is-invalid': submitted && f.meals.errors }"
+                                        required />
+                                </div>
+                                <div *ngIf="submitted && f.meals.errors" class="invalid-feedback">
+                                    <div *ngIf="f.meals.errors.required">Meal Type Name is required</div>
+                                </div>
+                            </div>
                         </div>
-                        <div *ngIf="submitted && f.meals.errors" class="invalid-feedback">
-                            <div *ngIf="f.meals.errors.required">Meal Type Name is required</div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label" for="hotel_type_name">
+                                    Status
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <span title="Slide for Active/Deactive">
+                                    <mat-slide-toggle class="example-margin" formControlName="status"
+                                        [color]="''">
+                                    </mat-slide-toggle>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 pl-0">
+                            <div class="form-group">
+                            <div class="btncontainer">
+                                <button type="submit" id="user_submit" class=" btn btn-primary">Save</button> &nbsp; &nbsp;
+                                <button type="reset" id="user_reset" class=" btn btn-secondary" (click)="resetFrom()">Reset</button>
+                            </div>
+                        </div>
+
                         </div>
                     </div>
-                    <!-- <div class="form-group">
-                        <label class="col-sm-3 control-label" for="hotel_type_name">
-                            Status
-                            <span class="text-danger">*</span>
-                        </label>
-                        <span title="Slide for Active/Deactive">
-                            <mat-slide-toggle class="example-margin" formControlName="status"
-                                [color]="''">
-                            </mat-slide-toggle>
-                        </span>
-                    </div> -->
+                    
+                    
                 </fieldset>
-                <div class="form-group">
-                    <div class="col-sm-8 col-sm-offset-4 btncontainer">
-                        <button type="submit" id="user_submit" class=" btn btn-success btnStyle">Save</button> &nbsp; &nbsp;
-                        <button type="reset" id="user_reset" class=" btn btn-secondary btnStyle"
-                            (click)="resetFrom()">Reset</button>
-                    </div>
-                </div>
+                
             </div>
-        </div>
+       
     </form>
 </div>

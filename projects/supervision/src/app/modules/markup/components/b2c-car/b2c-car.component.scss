@@ -1,3 +1,23 @@
 table {
     width: 100%;
 }
+// .card-body{
+//     margin-bottom: 1px solid rgba(0, 0, 0, 0.1);
+// }
+.card{
+    padding: 16px;
+    font-family: "Inter", sans-serif;
+}
+
+// label{
+//     padding: 0px 5px;
+// }
+::ng-deep .multiselect-dropdown .dropdown-btn{ border: none !important; padding:0px !important;}
+span.dropdown-multiselect__caret {
+    height: 45px !important;
+    right: -12px !important;
+    top: -7px !important;
+}
+span.dropdown-multiselect__caret::before {
+    top: 50%;
+}

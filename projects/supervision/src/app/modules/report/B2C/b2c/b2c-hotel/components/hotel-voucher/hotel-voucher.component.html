@@ -62,10 +62,7 @@
                                                 <img src="assets/images/finish-flag.png" class="flag-icon" >
                                                 {{ voucherData?.BookingDetails?.CancellationReason?.hotelBody?.searchRequest?.Nationality }}
                                             </span>
-                                            <span *ngIf="voucherData?.BookingDetails?.DomainOrigin !== 'CRS'" class="titlecase">
-                                                <img src="assets/images/finish-flag.png" class="flag-icon" >
-                                                {{ getParsedCancellationReason()?.searchRequest?.Nationality }}
-                                            </span>
+                                       
                                             
                                             
                                                </td>
@@ -103,11 +100,7 @@
                                    <td style="padding:0px;" colspan="1">
                                        <table style="width: 100%;">
                                            <tr>
-                                   <td *ngIf="voucherData['BookingDetails']['DomainOrigin'] !== 'CRS'"style="padding:10px 0px; width: 25%;"><img
-                                       style="width:100%; object-fit:cover; height:125px; border-radius: 10px;"
-                                       src="{{voucherData['BookingDetails']['HotelPhoto'] | map: getHotelPhoto}}" alt=""> 
-                                    
-                               </td>
+                             
                                <td *ngIf="voucherData['BookingDetails']['DomainOrigin'] == 'CRS'"style="padding:10px 0px; width: 25%;"><img
                                 style="width:100%; object-fit:cover; height:125px; border-radius: 10px;"
                                 src="{{voucherData['BookingDetails']['HotelPhoto']}}" alt=""> 
@@ -165,37 +158,24 @@
                                                       
                                                   </ng-container>
                                                   </td>
-                                                  <td style="width: 27%;"  *ngIf="voucherData.BookingDetails.DomainOrigin == 'tboHotels'">
-                                                  <ng-container
-                                                  *ngFor="let r of parsedData.RoomDetails; index as i">
-                                                  <ng-container *ngIf="parsedData.searchRequest.RoomGuests[i] as roomData">
-                                                        {{(r.Description)}}{{i < parsedData.RoomDetails.length -1 ? ", " : "" }}<span style="color: #d92550;">({{roomData.NoOfAdults ? roomData.NoOfAdults + ' Ad' : ''}} {{roomData.NoOfChild ? ' + '+ roomData.NoOfChild + ' Ch' : ''}})</span><br>
+                                                       <td style="width: 27%;" *ngIf="voucherData.BookingDetails.DomainOrigin !== 'CRS'">
+                                                      <ng-container 
+                                                      *ngFor="let r of voucherData.BookingDetails.CancellationReason.hotelBody.RoomDetails; index as i">
+                                                      <ng-container *ngIf="voucherData.BookingDetails.CancellationReason.hotelBody.searchRequest.RoomGuests[i] as roomData">
+                                                        {{(r.Description)}}
+                                                      </ng-container>
+                                                      
                                                   </ng-container>
-                                                  
-                                              </ng-container>
-                                                   </td>
-                                                   <td style="width: 27%;"  *ngIf="voucherData.BookingDetails.DomainOrigin == 'hotelbeds'">
-                                                    <ng-container
-                                                    *ngFor="let r of parsedData.RoomDetails; index as i">
-                                                    <ng-container *ngIf="parsedData.searchRequest.RoomGuests[i] as roomData">
-                                                         {{(r.roomName)}}{{i < parsedData.RoomDetails.length -1 ? ", " : "" }}<span style="color: #d92550;">({{roomData.NoOfAdults ? roomData.NoOfAdults + ' Ad' : ''}} {{roomData.NoOfChild ? ' + '+ roomData.NoOfChild + ' Ch' : ''}})</span><br>
-                                                    </ng-container>
+                                                  </td>
+                                          
                                                    
-                                                </ng-container>
-                                                     </td>
-                                                   
-                                                   <td *ngIf="voucherData.BookingDetails.DomainOrigin == 'CRS'">
+                                                   <td>
                                                     <span
                                                    
                                                     [innerHTML]="voucherData.BookingDetails.CancellationReason.hotelBody.searchRequest.NoOfRooms"
                                                     style="display: block; font-size: 14px; color: #333; margin-top: 1px;">
                                                 </span></td>
-                                                <td *ngIf="voucherData.BookingDetails.DomainOrigin !== 'CRS'">
-                                                    <span
-                                                   
-                                                    [innerHTML]="parsedData.searchRequest.NoOfRooms"
-                                                    style="display: block; font-size: 14px; color: #333; margin-top: 1px;">
-                                                </span></td>
+                                            
 
                                                    <!-- <td *ngFor="let r of voucherData?.BookingItineraryDetails; index as i">555</td> -->
 
@@ -516,7 +496,7 @@
                                             </tbody>
                                         </table> -->
 
-                                        <table *ngIf="voucherData?.BookingDetails.DomainOrigin == 'CRS'"
+                                        <table
                                         style="width: 100%; margin-top: 15px; ">
                                      <tbody >
                                         <tr>
@@ -530,7 +510,7 @@
                                                  
                                                  <ng-container *ngIf="voucherData?.BookingDetails?.CancellationReason?.hotelBody?.HotelPolicy as policies;else defaultPolicies">
                                                     <ng-container *ngIf="policies && policies[0] != null && policies.length > 0 && policies[0]?.trim() !== ''; else defaultPolicies">
-                                                        <span [innerHTML]="hotelPolicy.join('<br>')"></span>
+                                                        <span [innerHTML]="hotelPolicy"></span>
                                                     </ng-container>
                                                   </ng-container>
                                                   
@@ -570,7 +550,7 @@
                                                         </ng-container>
                                                       </ng-container> -->
                                                         <ng-container *ngIf="voucherData?.BookingDetails?.CancellationReason?.hotelBody?.RoomDetails[0]?.childrenPolicyDetails as policies; else defaultChildrenPolicies">
-                                                            <ng-container *ngIf="policies && policies[0].description ; else defaultChildrenPolicies">
+                                                            <ng-container *ngIf="policies && policies.length > 0 &&policies[0].description ; else defaultChildrenPolicies">
                                                                 <span [innerHTML]="childPolicy"></span> 
                                                                 <!-- <span *ngFor="let policy of policies" [innerHTML]="policy.description"></span> -->
                                                             </ng-container>

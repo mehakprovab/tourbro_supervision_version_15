@@ -187,6 +187,7 @@ console.log('SIDE BAR')
     
     if (this.loggedInUser && this.loggedInUser['auth_role_id'] == 6 || this.loggedInUser['auth_role_id'] == 7) {
       this.extraParameter = 'hotelCrsMenus';
+
     } else {
       // You can set it to another value or leave it undefined if no panel should be active
       this.extraParameter = this.activatedRoute.snapshot.firstChild && this.activatedRoute.snapshot.firstChild.data.extraParameter 

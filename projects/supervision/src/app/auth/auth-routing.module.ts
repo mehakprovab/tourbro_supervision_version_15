@@ -11,9 +11,9 @@ const routes: Routes = [
         path: 'auth',
         component: PagesLayoutComponent,
         children: [
-             { path: 'login', component: LoginComponent, data: { extraParameter: '' } },
+            //   { path: 'login', component: LoginComponent, data: { extraParameter: '' } },
             // { path: 'login', component: DmcLoginComponent, data: { extraParameter: '' } },
-            // { path: 'login', component:  SupplierLoginComponent, data: { extraParameter: '' } },
+             { path: 'login', component:  SupplierLoginComponent, data: { extraParameter: '' } },
             { path: 'forgot-password', component: ForgotPasswordComponent, data: { extraParameter: '' } },
             { path: 'recovery-password', component: RecoveryPasswordComponent, data: { extraParameter: '' } },
         ]

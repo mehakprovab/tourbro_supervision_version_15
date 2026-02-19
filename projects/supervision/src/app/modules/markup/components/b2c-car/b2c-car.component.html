@@ -1,44 +1,259 @@
-<hr>
-<div class="card">
-    <form [formGroup]="regConfig" (ngSubmit)="onSubmit(regConfig.value)" class="form">
-        <div class="card-header">
-            <h5 class="card-title">Car Markup</h5>
+
+<div class="card adminInner">
+    <div class="card-header-tab card-header mb-3">
+      <h5>Bus Markup</h5>
+    </div>
+    <form [formGroup]="supplierConfig"  class="form">
+        
+        <h4 class="card-title">Supplier Markup</h4>
+        
+        <div class="card-body p-0">
+           
+                <div class="d-flex flex-row pt-3">
+          
+                    <div class="form-group col-sm-4">
+                        <label for="airlines">Suppliers &nbsp;</label>
+                        <mat-form-field class="col-sm-12"  appearance="fill" style="padding-left: 0;">
+                            <mat-label>Supplier List</mat-label>
+                            <input type="text" placeholder="Choose..."  class="text-capitalize" matInput formControlName="suppliers"
+                                [matAutocomplete]="supplier">
+                            <mat-autocomplete #supplier="matAutocomplete">
+                                <mat-option *ngFor="let suppliers of supplierList"
+                                [value]="suppliers.name"  (click)="selectedLocation(suppliers)">
+                                    {{suppliers.name}} 
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                        <div *ngIf="supplierConfig?.get('suppliers')?.touched && supplierConfig?.get('suppliers')?.invalid" class="text-danger">
+                            Supplier is required.
+                          </div>
+                    </div>
+                    <div class="form-group col-sm-4">
+                      
+                        <input type="radio" value="percentage" formControlName="supplier_value_type" class="mb-3" />
+                        Percentage(%)
+                        <input type="text" onkeypress='return ( event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45 && this.value.indexOf("-") === -1 && this.selectionStart == 0)' formControlName="supplier_value" class="form-control"
+                            />
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label>&nbsp;</label>
+                         <button type="submit" class="btn btn-primary"(click)="addGeneralMarkup()">Submit</button>
+                            &nbsp; &nbsp;
+                            <button type="reset" class="btn btn-secondary">Reset</button>
+
+                    </div>
+             
+                </div>
+            
         </div>
-        <div class="card-body">
-            <table>
-                <tr>
-                    <td>
-                        <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-                            <label for="airlines" class="mr-sm-2">Markup Type</label>
-                            <div class="position-relative form-check">
-                                <label class="form-check-label">
-                                    <input value="plus" name="markupType" formControlName="markupType" type="radio"
-                                        class="form-check-input" />
-                                    Plus(+ {{defaultCurrency}})
-                                </label>
-                            </div>
-                            <div class="position-relative form-check">
-                                <label class="form-check-label">
-                                    <input value="percentage" formControlName="markupType" type="radio"
-                                        class="form-check-input" />
-                                    Percentage(%)
-                                </label>
-                            </div>
+       
+    </form>
+    <form [formGroup]="regConfig"  class="form">
+
+        <div class="card-body p-0">
+           
+           
+                <div class="d-flex flex-row pt-3">
+                    <div class="form-group col-sm-4">
+                        <label for="airlines">Suppliers &nbsp;</label>
+                        <mat-form-field class="col-sm-12"  appearance="fill" style="padding-left: 0;">
+                            <mat-label>Supplier List</mat-label>
+                            <input type="text" placeholder="Choose..."  class="text-capitalize" matInput formControlName="suppliers"
+                                [matAutocomplete]="supplier">
+                            <mat-autocomplete #supplier="matAutocomplete">
+                                <mat-option *ngFor="let suppliers of supplierList"
+                                [value]="suppliers.name"  (click)="selectedLocation(suppliers)">
+                                    {{suppliers.name}} 
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                        <div *ngIf="regConfig?.get('suppliers')?.touched && regConfig?.get('suppliers')?.invalid" class="text-danger">
+                            Supplier is required.
+                          </div>
+                    </div>
+                    <!-- <div class="form-group col-sm-4 mb-3">
+                        <label class=" control-label">
+                            Country
+             
+                        </label>
+                        <select formControlName="core_country_id" class="form-control" (change)="getCityListAuto($event)"
+                            >
+                            <option value="" disabled selected>Select Country</option>
+                            <option *ngFor="let coreCountry of coreCountryList" [value]="coreCountry.countryCode">
+                                {{coreCountry.countryName}}
+                            </option>
+                        </select>
+              
+                    </div>
+                    <div class="form-group col-sm-4">
+                       
+                        <input type="radio" value="percentage" formControlName="country_type" />
+                        Percentage(%)
+                        <input type="text" onkeypress='return ( event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45 && this.value.indexOf("-") === -1 && this.selectionStart == 0)' formControlName="country_value" class="form-control"
+                            />
+                    </div> -->
+
+                </div>
+           
+           
+                <div *ngIf="!cities.controls.length"class="d-flex flex-row pt-3">
+                    <div class="form-group col-sm-4 mb-3">
+                        <label class="control-label">
+                            City
+                            <!-- <span class="text-danger">*</span> -->
+                        </label>
+                        <select formControlName="city_name" class="form-control"(ngModelChange)="onCityChange($event)"
+                           >
+                            <option value="" disabled selected>Select City</option>
+                            <option *ngFor="let coreCity of coreCityList" [value]="coreCity.Id">
+                                {{coreCity.cityName}}
+                            </option>
+                        </select>
+                        <!-- <div *ngIf="submittedHotel && hotel.city_name.errors" class="invalid-feedback">
+                            <div *ngIf="hotel.city_name.errors.required">City is required</div>
+                        </div> -->
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <div class="row mb-2 ml-2">
+                            <input type="radio" value="percentage" formControlName="city_value_type" />
+                            Percentage(%)
                         </div>
-                    </td>
-                    <td>
-                        <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-                            <label for="markupValue" class="mr-sm-2">Markup Value</label>
-                            <input formControlName="markupValue" placeholder="" type="number" class="form-control">
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="card-footer customCenter">
-            <button type="reset" class="btn btn-primary">Reset</button>
+                       
+                        <input type="text" onkeypress='return ( event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45 && this.value.indexOf("-") === -1 && this.selectionStart == 0)' formControlName="city_value" class="form-control"
+                            />
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                          <label>&nbsp;</label>
+                        <button type="submit" class="btn btn-primary"(click)="onSubmit()">Submit</button>
             &nbsp; &nbsp;
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-secondary">Reset</button>
+
+
+                    </div>
+
+                </div>
+           
+                <div *ngIf="cities.controls.length" >
+                <div formArrayName="cities" *ngFor="let city of cities.controls; let i = index">
+                    <div [formGroupName]="i" class="d-flex flex-row pt-3">
+                      <div class="form-group col-sm-4 mb-3">
+                        <label class="control-label">City <span class="text-danger">*</span></label>
+                        <select formControlName="city_name" class="form-control">
+                          <option value="" disabled selected>Select City</option>
+                          <option *ngFor="let coreCity of coreCityList" [value]="coreCity.Id">
+                            {{coreCity.cityName}}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="form-group col-sm-4">
+                        <input type="radio" value="percentage" formControlName="city_value_type" /> Percentage(%)
+                        <input type="text" onkeypress='return ( event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45 && this.value.indexOf("-") === -1 && this.selectionStart == 0)' formControlName="city_value" class="form-control" />
+                      </div>
+                                   <div class="form-group col-sm-4">
+                          <label>&nbsp;</label>
+                        <button type="submit" class="btn btn-primary"(click)="onSubmit()">Submit</button>
+            &nbsp; &nbsp;
+            <button type="reset" class="btn btn-secondary">Reset</button>
+
+
+                    </div>
+                    </div>
+                  </div>
+                  </div>
+           
+        
         </div>
+       
     </form>
 </div>
+
+<div class="card adminInner mt-3" *ngIf="!noData">
+    
+        <h4 class="card-title">Stay Markup List</h4>
+    
+    <table class="table table-borderless table-striped table-hover" matSort>
+        <thead>
+            <tr>
+                <th scope="col" class="text-center" *ngFor="let header of displayColumn;">
+                    {{header.value }}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf="noData">
+                <td colspan="11">
+                    <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                </td>
+            </tr>
+            <tr *ngIf="!noData && (respData == null || !respData.length) ">
+                <td colspan="11">
+                    <h4 class="text-muted text-center">
+                        No Data Found!
+                    </h4>
+                </td>
+            </tr>
+            <tr *ngFor="let data of respData; let i = index">
+                <td class="align-middle text-center">{{i+1}}.</td>
+             
+                <td class="align-middle text-center">
+                    
+                    {{selectedSupplierList(data)}}
+                </td>
+         
+                <td class="align-middle text-center">
+                    {{ data?.value}}-{{ data?.value_type}}
+                </td>
+          
+                <!-- <td class="align-middle text-center">
+                    <ng-container *ngIf="data?.supplier">
+                      <ng-container *ngFor="let item of getFormattedSegment(data.supplier)">
+                
+                        <ng-container *ngIf="item?.country">
+                          <ng-container *ngFor="let countryEntry of item.country | keyvalue">
+                            <div>
+                              Country: {{ countryEntry.value.name }} |
+                              Value: {{ countryEntry.value.value }} -
+                              {{ countryEntry.value.value_type || '--'}}
+                            </div>
+                          </ng-container>
+                        </ng-container>
+                      </ng-container>
+                    </ng-container>
+                  </td> -->
+                  
+                  <td class="align-middle text-center">
+                    <ng-container *ngIf="data?.supplier">
+                      <ng-container *ngFor="let item of getFormattedSegment(data.supplier)">
+                        <!-- City Details -->
+                        <ng-container *ngIf="item?.city">
+                          <ng-container *ngFor="let cityEntry of item.city | keyvalue">
+                            <div>
+                              City: {{ cityEntry.value.name }} |
+                              Value: {{ cityEntry.value.value }} -
+                              {{ cityEntry.value.value_type }}
+                            </div>
+                          </ng-container>
+                        </ng-container>
+                      </ng-container>
+                    </ng-container>
+                  </td>
+                  
+        
+                <td class="align-middle text-center">
+                    <label>&nbsp;</label>
+                    <button class="btn btn-sm btn-primary" (click)="updateMarkup(data)">
+                      
+                            {{'Update'}}
+                     
+                    </button>&nbsp;
+                    <button class="btn btn-sm btn-secondary" (click)="deleteMarkup(data)">
+                        
+                            {{'Delete'}}
+                      
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>

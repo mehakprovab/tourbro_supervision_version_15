@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class AppService {
     
-    defaultCurrency = "GBP"
+    defaultCurrency = "INR"
     countryCode = "91"; // USA phone_code
     countryId = "91,"; // USA 
 

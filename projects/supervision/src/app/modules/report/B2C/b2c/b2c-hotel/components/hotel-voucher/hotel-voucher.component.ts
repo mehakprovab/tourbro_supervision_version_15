@@ -93,24 +93,24 @@ export class HotelVoucherComponent implements OnInit, OnDestroy {
                   //     this.updatedDateFrom = dateFrom.toISOString().split('T')[0];  // Format as "YYYY-MM-DD"
                   // }
                   if (typeof(resp.data[0].BookingDetails.CancellationReason) === 'object' ) {
-                      const hotelPolicy = resp.data[0].BookingDetails.CancellationReason.hotelBody.HotelPolicy.length > 0 ? resp.data[0].BookingDetails.CancellationReason.hotelBody.HotelPolicy[0]: '';
-                      
+                    if(this.voucherData.BookingDetails.DomainOrigin == 'CRS') {
+                      var hotelPolicy = resp.data[0].BookingDetails.CancellationReason.hotelBody.HotelPolicy.length > 0 ? resp.data[0].BookingDetails.CancellationReason.hotelBody.HotelPolicy[0]: '';
+                    }else{
+                        var hotelPolicy = resp.data[0].BookingDetails.CancellationReason.hotelBody.HotelPolicy;
+                    }
+                      if(this.voucherData.BookingDetails.DomainOrigin == 'CRS'){
                         this.hotelPolicy = hotelPolicy ? hotelPolicy.replace(/<ol>/g, '<ul>').replace(/<\/ol>/g, '</ul>') : '';
+                      }else{
+                         this.hotelPolicy = hotelPolicy.length > 0 ? hotelPolicy.map((p, i) => `${i + 1}. ${p}`).join('<br><br>') : '';
+                      }
                   
-                     
+                     if(this.voucherData.BookingDetails.DomainOrigin == 'CRS'){
                     const childPolicy = resp.data[0].BookingDetails.CancellationReason.hotelBody.RoomDetails[0].childrenPolicyDetails.length > 0 ? resp.data[0].BookingDetails.CancellationReason.hotelBody.RoomDetails[0].childrenPolicyDetails[0].description : '';
                     this.childPolicy = childPolicy ? childPolicy.replace(/<ol>/g, '<ul>').replace(/<\/ol>/g, '</ul>') : '';
+                     }
                     }
                     
 
-                    if( this.voucherData.BookingDetails.DomainOrigin !== 'CRS'){
-                      const validJsonString = this.voucherData.BookingDetails.CancellationReason.replace(/'/g, '"');
-                      const parsedString = validJsonString.replace(/\\n/g, "\\\\n").replace(/\n/g, "\\n");
-                     this.parsedData = JSON.parse(parsedString);
-                     this.remarksData = this.voucherData.BookingDetails.remarks;
-                     console.log("parsedData",this.parsedData)
-                     this.cdr.detectChanges();
-                      }
                       // this.parsedData = JSON.parse(this.voucherData.BookingDetails.CancellationReason)
                       if(this.voucherData.BookingDetails.DomainOrigin == 'CRS' && this.voucherData.BookingDetails.CancellationPolicy.$t.length){
                         const dateFrom = new Date(this.voucherData.BookingDetails.CancellationPolicy.$t[0].date_from); // Convert to Date object

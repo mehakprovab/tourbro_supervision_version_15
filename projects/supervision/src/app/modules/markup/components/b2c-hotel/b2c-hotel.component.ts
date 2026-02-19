@@ -23,7 +23,7 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
     respData: Array<any> = [];
     supplierRespData:Array<any> = [];
     respAgentData:Array<any> = [];
-    defaultCurrency: string = 'USD';
+    defaultCurrency: string = 'INR';
     generalMarkupId: number;
     currentUser: any;
     supplierList :any;
@@ -39,6 +39,9 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
     cityName:any;
     supplierValue:any;
     supplierValueType:any
+    city:any;
+    cityValue:any;
+    cityValueType:any;
     displayColumn: { key: string, value: string }[] = [
         { key: 'id', value: 'Sl No.' },
        
@@ -48,7 +51,7 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
         // { key: 'value_type', value: 'Value Type' },
 
 
-       { key: 'Country', value: 'Country' },
+    //    { key: 'Country', value: 'Country' },
     
        { key: 'City', value: 'City' },
       
@@ -79,12 +82,12 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
         this.defaultCurrency = this.appService.defaultCurrency;
         this.createSupplierForm();
         this.createForm();
-        
         this.getMarkupData() 
         // this.formValueChanges();
         this.getUsersList();
         this.getSuppliers();
-        this.getCoreCountryList();
+        // this.getCoreCountryList();
+              this.getCityListAuto()
     }
     createSupplierForm() {
         this.supplierConfig = this.fb.group({
@@ -97,10 +100,10 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
         this.regConfig = this.fb.group({
         //   agent_id: [null, Validators.required],
         suppliers: ['', Validators.required],
-          core_country_id: [''], // Country selection
+        //   core_country_id: [''], // Country selection
           city_name: [''], // City selection
-          country_type:[''],
-          country_value:[''],
+        //   country_type:[''],
+        //   country_value:[''],
           city_value_type:['percentage'],
           city_value:[''],
           cities: this.fb.array([])
@@ -236,26 +239,26 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
     
                 const formValues = this.regConfig.value;
     
-                // Find existing data for the selected country
-                const existingCountryData = this.supplierRespData.find(
-                    item => item.countryCode === formValues.core_country_id
-                );
-                console.log("existingCountryData", existingCountryData);
+                // // Find existing data for the selected country
+                // const existingCountryData = this.supplierRespData.find(
+                //     item => item.countryCode === formValues.core_country_id
+                // );
+                // console.log("existingCountryData", existingCountryData);
     
-                // Parse the supplier field if existing country data is present
-                let supplier = { country: {}, city: {} };
-                if (existingCountryData && existingCountryData.supplier) {
-                    supplier = JSON.parse(existingCountryData.supplier);
-                }
+                // // Parse the supplier field if existing country data is present
+                let supplier = { city: {} };
+                // if (existingCountryData && existingCountryData.supplier) {
+                //     supplier = JSON.parse(existingCountryData.supplier);
+                // }
     
                 // Add or update country data
-                if (formValues.core_country_id) {
-                    supplier.country[formValues.core_country_id] = {
-                        value: formValues.country_value ? formValues.country_value : existingCountryData.value,
-                        value_type: formValues.country_type? formValues.country_type : existingCountryData.value_type ,
-                        name: this.getCountryName(formValues.core_country_id),
-                    };
-                }
+                // if (formValues.core_country_id) {
+                //     supplier.country[formValues.core_country_id] = {
+                //         value: formValues.country_value ? formValues.country_value : existingCountryData.value,
+                //         value_type: formValues.country_type? formValues.country_type : existingCountryData.value_type ,
+                //         name: this.getCountryName(formValues.core_country_id),
+                //     };
+                // }
     
                 // Add or update city data
                 const mergedCityData = { ...supplier.city };
@@ -283,14 +286,15 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
                     type: 'supplier',
                     fare_type: 'Public',
                     module_type: 'b2c_hotel',
+                   cityId:parseInt(formValues.city_name),
                     flight_airline_id: 0,
                     value: parseInt(formValues.country_value) || 0,
                     value_type: formValues.country_type || 'percentage',
                     domain_list_fk: 1,
-                    markup_currency: 'GBP',
+                    markup_currency: 'INR',
                     auth_user_id: 1,
                     supplier_id: supplierId.supplier_id,
-                    countryCode: formValues.core_country_id || 'IN',
+                    countryCode:'IN',
                     supplier: (supplier), // Convert back to string
                     group_id: '0',
                 };
@@ -385,7 +389,8 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
             markup_currency: this.defaultCurrency, // Assuming this is GBP
             auth_user_id: this.util.readStorage('currentSupervisionUser', sessionStorage).id,
             supplier_id: supplierId,
-            countryCode: '',
+            countryCode: 'IN',
+            cityId:0,
             supplier: {},
             group_id:"0"
         };
@@ -408,17 +413,17 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
         const supplierId = this.booking_source;
         // Construct dynamic supplier object
         const supplier = {
-          country: {},
+        //   country: {},
           city: {}
         };
       
-        if (formValues.core_country_id) {
-          supplier.country[formValues.core_country_id] = {
-            value: parseInt(formValues.country_value),
-            value_type: formValues.country_type,
-            name: this.getCountryName(formValues.core_country_id), // Replace with a method to get the country name
-          };
-        }
+        // if (formValues.core_country_id) {
+        //   supplier.country[formValues.core_country_id] = {
+        //     value: parseInt(formValues.country_value),
+        //     value_type: formValues.country_type,
+        //     name: this.getCountryName(formValues.core_country_id), // Replace with a method to get the country name
+        //   };
+        // }
       
         if (formValues.cities.length > 0) {
           formValues.cities.forEach((city: any) => {
@@ -442,10 +447,11 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
           fare_type: 'Public',
           module_type: 'b2c_hotel',
           flight_airline_id: 0,
-          value: parseInt(formValues.country_value) || 0, // Default to 0 if no value
-          value_type: formValues.country_type || 'percentage',
+          cityId:parseInt(formValues.city_name),
+          value: parseInt(formValues.city_value) || 0, // Default to 0 if no value
+          value_type: formValues.city_value_type || 'percentage',
           domain_list_fk: 1,
-          markup_currency: 'GBP',
+          markup_currency: 'INR',
           auth_user_id: 1,
           supplier_id: supplierId, // Replace with dynamic value if needed
           countryCode: formValues.core_country_id || 'IN', // Default to 'IN' if no value
@@ -478,18 +484,22 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
         // const SupplierName = Supplier ? Supplier.name : '';
         // const supplierValueType = formValue.supplier_value_type;
         // const supplierValue = formValue.supplier_value;
-        this.countryCode = formValue.core_country_id;
+        // this.countryCode = formValue.core_country_id;
+
         
-        if (this.countryCode) {
-            const country = this.coreCountryList.find(c => c.countryCode === this.countryCode);
-            this.countryName = country ? country.countryName : '';
-        }
+        // if (this.countryCode) {
+        //     const country = this.coreCountryList.find(c => c.countryCode === this.countryCode);
+        //     this.countryName = country ? country.countryName : '';
+        // }
     
-        const countryValueType = formValue.country_type;
-        const countryValue = formValue.country_value;
+        // const countryValueType = formValue.country_type;
+        // const countryValue = formValue.country_value;
     
         const citiesArray = this.regConfig.get('cities') as FormArray;
         const citiesData = citiesArray.controls.map((cityControl) => {
+            this.city= cityControl.value.city_name
+             this.cityValue=cityControl.value.city_value
+             this.cityValueType=cityControl.value.city_value_type
             const cityId = cityControl.value.city_name;
             const cityValue = cityControl.value.city_value;
             const cityValueType = cityControl.value.city_value_type;
@@ -516,22 +526,23 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
             fare_type: "Public",
             module_type: "b2c_hotel",
             flight_airline_id: 0,
-            value: parseInt(countryValue),
-            value_type: countryValueType,
+            cityId:parseInt(this.city),
+             countryCode:'IN',
+            value: parseInt(this.cityValue),
+            value_type: this.cityValueType,
             domain_list_fk: 1,
             markup_currency: this.defaultCurrency,
             auth_user_id: this.util.readStorage('currentSupervisionUser', sessionStorage).id,
             supplier_id: supplierId,
-            countryCode: this.countryCode,
             supplier: {
              
-                    country: {
-                        [this.countryCode]: {
-                            value: parseInt(countryValue),
-                            value_type: countryValueType,
-                            name: this.countryName
-                        }
-                    },
+                    // country: {
+                    //     [this.countryCode]: {
+                    //         value: parseInt(countryValue),
+                    //         value_type: countryValueType,
+                    //         name: this.countryName
+                    //     }
+                    // },
                     city: citiesData.reduce((acc, city) => ({ ...acc, ...city }), {}),
                     // value: parseInt(supplierValue),
                     // value_type: supplierValueType,
@@ -547,6 +558,7 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
                 console.log(resp);
                 if (resp.statusCode == 200 || resp.statusCode == 201) {
                     this.getMarkupData();
+                          this.supplierData='';
                     this.swalService.alert.success();
                     this.regConfig.reset();
                 }
@@ -592,10 +604,9 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
             }
         });
     }
-    getCityListAuto(event): void {
-        console.log("event",event.target.value)
+    getCityListAuto(): void {
             this.subSunk.sink = this.apiHandlerService.apiHandler('markupCityList', 'post', {}, {}, {
-                "country_code":event.target.value,   
+                "country_code":'IN',   
             }).subscribe(resp => {
                   this.coreCityList = resp.data;
               }
@@ -680,10 +691,9 @@ patchFormData(data: any) {
       // ... existing code ...
       const selectedAgent = this.respAgentData.find(agent => agent.id === parseInt(data.group_id));
       const supplierData = JSON.parse(data.supplier);
-      console.log("supplierData",supplierData)
        this.supplierData = JSON.parse(data.supplier);
   
-      if(data.countryCode == ""){
+      if(!data.cityId){
         this.supplierConfig.patchValue({
             supplier_value:data.value,
             supplier_value_type:data.value_type,
@@ -695,23 +705,22 @@ patchFormData(data: any) {
         this.cities.clear();
   
         // Handle country data
-        const countryKey = Object.keys(supplierData.country)[0];
-        const countryValue = supplierData.country[countryKey];
-        
+        // const countryKey = Object.keys(supplierData.country)[0];
+        // const countryValue = supplierData.country[countryKey];
+              console.log("supplierList",this.supplierList)
         this.regConfig.patchValue({
-          core_country_id: countryKey,
-          country_value: countryValue.value,
-          country_type: countryValue.value_type,
+        //   core_country_id: countryKey,
+        //   country_value: countryValue.value,
+        //   country_type: countryValue.value_type,
+  
           suppliers: this.supplierList.find(supplier => supplier.source_key === data.supplier_id).name,
 
        
         });
-        this.getCityListAuto({ target: { value: countryKey } });
+        this.getCityListAuto();
         // Handle city data (repeat for the number of cities you have)
         for (const cityId in supplierData.city) {
-            console.log("cityId",cityId)
           const cityData = supplierData.city[cityId];
-          console.log("cityData",cityData)
           this.cities.push(this.createCityFormGroup(cityId, cityData.value, cityData.value_type));
         }
       }

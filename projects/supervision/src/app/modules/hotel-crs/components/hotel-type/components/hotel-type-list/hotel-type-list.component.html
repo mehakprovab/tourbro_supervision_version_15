@@ -4,13 +4,14 @@
     </div>
     
     <form>
-        <div class="p-2">
-            <div class="form-group float-right form-inline mb-0">
-                Full text search:
-                <input class="form-control ml-2" type="text" name="searchTerm"
-                    (keyup)="applyFilter($event.target.value)" />
-            </div>
+         <div class="d-flex align-items-center justify-content-end pb-3">
+            <div class="form-group mb-0 col-sm-3 float-right has-search">
+            <label>Full text search:</label>
+            <input class="form-control ml-2" type="text" name="searchTerm" (keyup)="applyFilter($event.target.value)" />
+           </div>
         </div>
+        
+       
         <div class="table-responsive">
             <table class="table table-borderless table-striped table-hover" matSort (matSortChange)="sortData($event)">
                 <thead>
@@ -40,8 +41,8 @@
                             </span>
                         </td>
                         <td class="text-left btncontainer">
-                            <button class="btn btn-primary" (click)="updateHotelType(data)">{{'Update'}}</button>&nbsp;
-                                <button  class="btn btn-secondary" (click)="deleteHotelType(data)">{{'Delete'}}</button>
+                            <button class="btn btnStyle" (click)="updateHotelType(data)">{{'Update'}}</button>&nbsp;
+                            <button  class="btn btnStyle" (click)="deleteHotelType(data)">{{'Delete'}}</button>
                         </td>
 
                     </tr>

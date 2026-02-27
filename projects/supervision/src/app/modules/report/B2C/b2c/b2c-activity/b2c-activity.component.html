@@ -1,7 +1,8 @@
-<div class="card-header text-uppercase bg-dark text-white">
-    <h5 style="border-bottom: 0;">B2C Activity report</h5>
-</div>
-<div class="card">
+
+<div class="card adminInner">
+    <div class="card-header mb-3">
+       <h5>B2C Experiences report</h5>
+    </div>
     <form [formGroup]="regConfig">
         <div>
             <div class="form-row">
@@ -68,18 +69,18 @@
                 </div>
             </div>
             <div class="btncontainer">
-                <button type="submit" class="btnStyle" (click)="onSearchSubmit()">Search</button> &nbsp;
-                <button type="button" class="btnStyle" (click)="onReset()">Reset</button>
+                <button type="submit" class="btn btn-primary" (click)="onSearchSubmit()">Search</button> &nbsp;
+                <button type="button" class="btn btn-secondary" (click)="onReset()">Reset</button>
             </div>
         </div>
     </form>
 </div>
-<div class="card" style="margin-top: 30px;">
-    <div class="card-body">
+<div class="card adminInner" style="margin-top: 30px;">
+    <div class="card-body p-0">
         <div style="padding-bottom: 15px;">
             <p>Total {{respData?.length}} Bookings</p>
-            <button class="btnStyle" (click)="downloadPdf()">PDF</button>&nbsp;
-            <button class="btnStyle" (click)="download('xlsx', 'portrait')">Export to excel</button>
+            <button class="btn btn-primary" (click)="downloadPdf()">PDF</button>&nbsp;
+            <button class="btn btn-secondary" (click)="download('xlsx', 'portrait')">Export to excel</button>
             <div class="form-group mb-0 col-sm-3 p-0 float-right has-search">
                 <span class="fa fa-search form-control-feedback"></span>
                 <input class="form-control" type="text" name="Search" [(ngModel)]="searchText"

@@ -35,7 +35,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.forgotPasswordForm = this.fb.group({
-            email: ['', [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
+            email: ['', [Validators.required,Validators.pattern]],
            // phone: ['', [Validators.required]],
             user_type: 1
         });

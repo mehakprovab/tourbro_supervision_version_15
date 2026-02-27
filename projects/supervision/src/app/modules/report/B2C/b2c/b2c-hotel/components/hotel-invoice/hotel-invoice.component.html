@@ -1,4 +1,4 @@
-<div class="card" style="width: auto;height: auto; overflow-y: scroll;" *ngIf="voucherData">
+<div class="card" style="width: auto;height: auto; background-color:#f8f8f8;border-radius: 16px;padding: 0px;" *ngIf="voucherData">
     <div class="text-center" style="margin-top: 20px;">
         <a [routerLink]="['/report/b2c-hotel']"><button class="btnStyle">Back</button></a>
         <a id="download" (click)="downloadA4('pdf', 'potrait')" style="margin-left:15px;"><button
@@ -14,11 +14,11 @@
                         <tbody>
                         
                             <tr>
-                                <td style="padding: 0px; border-top: 1px solid transparent; border-bottom: 1px solid #082E53;"><img
+                                <td style="padding: 0px; border-top: 1px solid transparent;"><img
                                         style="width:190px; padding: 10px 0px; -webkit-print-color-adjust: exact;"
                                         src="assets/images/login-images/l-logo.png">
                                 </td>
-                                <td style="padding: 0px; width: 30%; border-top: 1px solid transparent; border-bottom: 1px solid #082E53;">
+                                <td style="padding: 12px 0px; width: 25%; margin: 10px 0px; border-top: 1px solid transparent; ">
                                     <div class="trapezoid">Stay Invoice</div>
                                 </td>
                                 
@@ -94,29 +94,29 @@
                     style="width: 100%; margin-top: 15px;">
                     <tbody>
 
-                        <tr><td colspan="2" style="padding:12px 0px 0px; font-size: 18px; border: none;"><img src="assets/images/users-ic.png">&nbsp;<span style="font-weight: 500;">Guest(s) Details </span></td></tr>
+                        <tr><td colspan="2" style="padding:12px 0px 0px; font-size: 18px; border: none;"><span style="font-weight: 500;">Guest(s) Details </span></td></tr>
                         <tr>
                             <td colspan="2" width="100%" style="padding:0px; width:100%; ">
                                 <table width="100%" cellpadding="5" cellspacing="2"
-                                    style="font-size: 13px; border-collapse: separate;  box-shadow: 0 0 2px 0 rgba(0,0,0,.08), 0 2px 8px 0 rgba(0,0,0,.16); background: #fff;">
+                                    style="font-size: 13px;box-shadow: 0 0 2px 0 rgba(0,0,0,.08), 0 2px 8px 0 rgba(0,0,0,.16); background: #fff;">
                                     <tbody>
-                                        <tr style="white-space:nowrap; background: #092e53; color: #fff;">
+                                        <tr style="white-space:nowrap; background:#f5f2fc; color: #282828">
                                             <td
-                                                style=" -webkit-print-color-adjust: exact;padding:10px 15px;color: #fff; width: 5%; font-weight: 700;">
+                                                style=" -webkit-print-color-adjust: exact;padding:10px 15px;width: 5%; font-weight: 700;">
                                                 Sl.No</td>
                                             <td
-                                                style="-webkit-print-color-adjust: exact; width:30%; padding:10px 15px;color: #fff; font-weight: 700;">
+                                                style="-webkit-print-color-adjust: exact; width:30%; padding:10px 15px;font-weight: 700;">
                                                 Guest's&nbsp;Name</td>
                                             <td
-                                                style="-webkit-print-color-adjust: exact; width:20%; padding:10px 15px;color: #fff; font-weight: 700; text-align: center;">
+                                                style="-webkit-print-color-adjust: exact; width:20%; padding:10px 15px; font-weight: 700; text-align: center;">
                                                 Type</td>
                                             
                                         </tr>
                                         <tr style="border-bottom: 1px solid #eee;" *ngFor="let t of voucherData['BookingPaxDetails']; index as i">
-                                            <td style="padding:10px 15px; background: #e7f2fd; font-weight: 600;">
+                                            <td style="padding:10px 15px; background: #ffffff; font-weight: 600;">
                                                 {{i + 1}}
                                             </td>
-                                            <td style="padding:10px 15px; background: #e7f2fd; font-weight: 600;">
+                                            <td style="padding:10px 15px; background: #ffffff; font-weight: 600;">
                                               
                                                
                                                <span class="text-uppercase"
@@ -125,7 +125,7 @@
                                                </span>
                                             </td>
                                             <td
-                                            style="padding:10px 15px; background: #e7f2fd; font-weight: 600; text-align: center;">
+                                            style="padding:10px 15px; background: #ffffff; font-weight: 600; text-align: center;">
                                             {{ t?.PaxType }}<span *ngIf="t?.PaxType == 'Child'"> ({{t.Age}} Yrs)</span>
                                         </td>
                                        
@@ -143,17 +143,17 @@
                     <tbody>
                         
 
-                        <tr style="background: #e7f2fd; height: 250px;">
+                        <tr style="background: #ffffff; height: 250px;">
                             <td colspan="5" style="padding: 0px; border: none;">
                             <table style="width: 100%;">
 
-                                <tr style="white-space:nowrap; background: #092e53; color: #fff; font-weight: 500;">
+                                <tr style="white-space:nowrap; background:#f5f2fc; color: #282828; font-weight: 500;">
                             
                                     <th>#</th>
-                                     <th>Description</th>
+                                    <th>Description</th>
                                     <th>Check In</th>
                                     <th>Check Out</th>
-                                    <th style="border-left: 1px solid #fff;">Room Price</th>
+                                    <th>Room Price</th>
                                     
                                 </tr>
 
@@ -174,7 +174,7 @@
                                 {{voucherData['BookingDetails']['HotelCheckOut']  | date: 'dd/MM/yyyy'}}
                             </span></td>
 
-                            <td style="border-left: 1px solid #fff;height: 250px; "><span
+                            <td style="height: 250px; "><span
                                 style="display: block; font-size: 14px; color: #333; margin-top: 1px;">
                                 {{voucherData['BookingItineraryDetails'][0]['Currency']+ '
                                     '+voucherData['BookingDetails']['TotalAmount']}}
@@ -220,7 +220,7 @@
                     <table style="width: 100%;">
                     <tr>
                      <td style="width: 55%;
-                     background: #092e53;
+                     background:#f5f2fc;
                      border: none;
                      color: #fff;
                      padding: 14px 30px;

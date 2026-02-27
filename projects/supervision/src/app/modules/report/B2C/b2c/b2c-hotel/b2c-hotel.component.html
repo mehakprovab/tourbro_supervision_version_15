@@ -238,7 +238,7 @@
 
                                             <td class="text-left"
                                                 *ngIf="data.BookingDetails.DomainOrigin !== 'CRS' && loggedInUser['auth_role_id'] !== 6  && loggedInUser['auth_role_id'] !== 7">
-                                                {{data['BookingDetails']['AdminMarkup'] || 0}} </td>
+                                                {{data['BookingDetails']['AdminMarkup'] || 0}}</td>
                                             <td class="text-left"
                                                 *ngIf="data.BookingDetails.DomainOrigin == 'CRS' && loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7">
                                                 {{data.BookingDetails.CancellationReason.hotelBody?.RoomDetails[0]?.markupDetails.AdminMarkup
@@ -253,7 +253,7 @@
                                             </td>
                                             <td *ngIf="loggedInUser['auth_role_id'] !== 6" class="text-left"> {{data['BookingDetails']['durationOfStayValue'] || 0
                                                 }} </td>
-                                            <td class="text-left"> {{data.BookingDetails?.Netfare_In_API_Currency || 0
+                                            <td class="text-left"> {{data.BookingDetails?.CancellationReason.hotelBody.SupplierPrice || 0
                                                 }} {{data.BookingDetails?.API_Currency}}</td>
                                             <!-- <td class="text-left"> {{data.BookingDetails?.API_Payable_Price || 0 }}
                                                 {{data.BookingDetails?.API_Currency}}</td> -->

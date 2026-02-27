@@ -35,7 +35,7 @@
                 formControlName="commute_supplier_vehicle_id"
                 [class.is-invalid]="addUpdateVendorForm.get('commute_supplier_vehicle_id').invalid && (isSubmitted || addUpdateVendorForm.get('commute_supplier_vehicle_id').touched)">
           <option [ngValue]="null">Select Vehicle Id</option>
-          <option *ngFor="let c of vehicleMasterDataList" [ngValue]="c.Id">{{ c.vehicle_name }}</option>
+          <option *ngFor="let c of vehicleMasterDataList" [ngValue]="c.id">{{ c.vehicle_name }}</option>
         </select>
         <!-- <input type="number" class="form-control"
                formControlName="commute_supplier_vehicle_id"

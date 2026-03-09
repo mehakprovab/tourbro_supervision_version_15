@@ -103,7 +103,7 @@ export class AddTourListComponent implements OnInit {
       cityDropdownSettings = {
         singleSelection: false,
         idField: 'id',
-        textField: 'CityName',
+        textField: 'cityName',
         selectAllText: 'Select All',
         unSelectAllText: 'Unselect All',
         itemsShowLimit: 4,
@@ -271,7 +271,7 @@ export class AddTourListComponent implements OnInit {
 
     sortCity(){
         this.cityList.sort((a, b) => 
-            a.CityName.localeCompare(b.CityName)
+            a.cityName.localeCompare(b.cityName)
         );
     }
 

@@ -48,7 +48,7 @@ export class CarApiComponent implements OnInit {
 
     getFlightApiList(): void {
         this.subSunk.sink = this.apiHandlerService.apiHandler('manageApiList', 'post', {}, {}, {
-            module_type: 'Car'
+            module_type: 'bus'
         }).subscribe(resp => {
             if (resp.statusCode == 200 || resp.statusCode == 201) {
                 this.noData = false;

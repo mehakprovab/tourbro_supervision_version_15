@@ -90,7 +90,9 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
         // { key: 'SupplierName', value: 'Supplier Name' },
         // { key: 'SupplierType', value: 'Supplier Type' },
         { key: 'SupplierReference', value: 'Supplier Reference' },
-        { key: 'HCN', value: 'HCN' },
+               { key: 'payment', value: 'Payment Status' },
+           { key: 'HCN', value: 'HCN' },
+ 
         { key: 'HotelName', value: 'Hotel Name' },
         { key: 'HotelAddress', value: 'Hotel Location' },
         { key: 'PhoneNumber', value: 'Phone' },
@@ -144,6 +146,11 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
     cancelData: any;
     load: boolean = false;
     hotelApiList: any;
+        public showBookSource: any;
+    public isUpdate: any;
+    showConfirmHCN: boolean = false;
+    hcnData: any;
+        hotelTypeForm: FormGroup;
     constructor(
         private apiHandlerService: ApiHandlerService,
         private fb: FormBuilder,
@@ -174,6 +181,9 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
         });
         this.getB2cHotelReport();
         this.getHotelApiList();
+              this.hotelTypeForm = this.fb.group({
+            hcnNumber: new FormControl('', [Validators.maxLength(50)]),
+        })
     }
 
     onSearchSubmit() {
@@ -423,6 +433,9 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
     hide() {
         this.showConfirm = false;
         this.showModal = false;
+        //    this.supplierSettlementModal = false;
+        this.showConfirmHCN = false;
+        this.hotelTypeForm.reset();
     }
     formatDateString(dateString: string): string {
         const [day, month, year] = dateString.split(' ')[0].split('-');
@@ -489,6 +502,58 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
         return { amount: totalAmount, currency };
     }
 
+        showAddHCN(data,status) {
+        this.hcnData = data
+        this.showConfirmHCN = true;
+        this.showBookSource = data.BookingDetails.booking_source;
+        this.isUpdate = status;
+        if(status)
+        this.hotelTypeForm.patchValue({
+            hcnNumber: data.BookingDetails.hcn_number,
+        });
+    }
+    
+      addHCN() {
+
+        let hotelData = this.hcnData;
+        console.log("hotelData", hotelData,)
+        let reqBody = {
+            "app_reference": hotelData.BookingDetails.AppReference,
+            "hcnNumber": this.hotelTypeForm.value.hcnNumber
+        }
+        this.subSunk.sink = this.apiHandlerService.apiHandler('adHcnNumber', 'post', '', '', reqBody).subscribe(res => {
+            if (res) {
+                this.swalService.alert.success("HCN added sucessfully");
+                this.showConfirmHCN = false;
+                this.hotelTypeForm.reset();
+                this.getB2cHotelReport();
+                this.hotelHCNEmail(hotelData.BookingDetails.AppReference);
+            }
+        }, err => {
+            if (err.status == 400)
+                this.swalService.alert.oops(err.error.Message);
+            this.showConfirmHCN = false;
+        });
+    }
+        hotelHCNEmail(appReference) {
+        let payLoad;
+        if(this.isUpdate) {
+            payLoad = {
+                booking_source: this.showBookSource,
+                AppReference: appReference,
+                amend: 1   
+            }
+        } else {
+            payLoad = {
+                booking_source: this.showBookSource,
+                AppReference: appReference
+            }
+        }
+        
+        this.apiHandlerService.apiHandler('hotelHCNEmail','POST','','',payLoad).subscribe((resp)=>{
+
+        })
+    }
     ngOnDestroy(): void {
         this.subSunk.unsubscribe();
     }

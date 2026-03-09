@@ -1,9 +1,7 @@
-<div class="mb-3 btop">
-    <div class="card-header-tab card-header">
-        <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
-            <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i> {{'API List'}}
-        </div>
-    </div>
+<div class="card adminInner">
+    <div class="card-header mb-3">
+        <h5> {{'API List'}}</h5>
+      </div>
     <form>
         <div class="table-responsive">
             <table class="table table-borderless table-striped table-hover" matSort (matSortChange)="sortData($event)">
@@ -25,13 +23,28 @@
                         <td class="text-left text-muted">{{i+1}}.</td>
                         <td class="text-left"> {{data['name']}} </td>
                         <td class="text-left"> {{data['description']}} </td>
-                        <td class="text-left"> {{data['booking_engine_status'] == true ? 'Active' : 'In-Active'}}
+                        <td class="text-left"> {{data['b2c_status'] == "1" ? 'Active' : 'In-Active'}}
                         </td>
+                        <!-- <td class="text-left">
+                            <label class="switch">
+                                <input type="checkbox" [checked]="data?.b2b_status==='1'"
+                                    (change)="isB2BActive(data,$event)">
+                                <span class="slider round"></span>
+                            </label>
+                        </td> -->
                         <td class="text-left">
-                            <button class="btn btn-sm btn-primary" (click)="onStatusUpdate(data)">
-                                {{data['booking_engine_status'] == true ? 'Deactivate' : 'Activate'}}
-                            </button>
+                            <label class="switch">
+                                <input type="checkbox" [checked]="data?.b2c_status==='1'"
+                                    (change)="isB2CActive(data,$event)">
+                                <span class="slider round"></span>
+                            </label>
                         </td>
+                        <!-- <td class="text-left">
+                            <button class="btn btn-sm btn-primary" (click)="onStatusUpdate(data)">
+                                {{data['status'] == true ? 'Deactivate' : 'Activate'}}
+                            </button>
+                        </td> -->
+                     
                     </tr>
                 </tbody>
             </table>

@@ -158,6 +158,24 @@
                                                             Invoice</button>
                                                         <button ngbDropdownItem (click)="showPaxProfile(data)">Pax
                                                             Profile</button>
+                                                                     <button
+                                                        *ngIf="data.BookingDetails.Status === 'BOOKING_CONFIRMED' && 
+                                                               
+                                                               (data.BookingDetails.hcn_number === '' || data.BookingDetails.hcn_number === null)
+                                                               && loggedInUser['auth_role_id'] == 6"
+                                                        ngbDropdownItem
+                                                        (click)="showAddHCN(data,0)">
+                                                        Add HCN
+                                                    </button>     
+                                                    <button
+                                                    *ngIf="data.BookingDetails.Status === 'BOOKING_CONFIRMED' && 
+                                                           
+                                                           (data.BookingDetails.hcn_number != '' && data.BookingDetails.hcn_number != null)
+                                                           && loggedInUser['auth_role_id'] == 6"
+                                                    ngbDropdownItem
+                                                    (click)="showAddHCN(data,1)">
+                                                    Update HCN
+                                                </button> 
                                                         <button
                                                             *ngIf="(data['BookingDetails']['ConfirmationReference'] !== 'undefined') && (data['BookingDetails']['Status'] == 'BOOKING_CONFIRMED'|| data['BookingDetails']['Status'] == 'BOOKING_FAILED'|| data['BookingDetails']['Status'] == 'BOOKING_VOIDED' || data['BookingDetails']['Status'] =='BOOKING_HOLD') && loggedInUser['auth_role_id'] !== 6"
                                                             ngbDropdownItem (click)="cancelTicketPopup(data)"> Cancel
@@ -203,7 +221,7 @@
                                                     {{ data.BookingDetails.DomainOrigin }}
                                                 </ng-template>
                                             </td>
-
+                                            <!-- <td class="text-left" > {{ data['BookingDetails']['hcn_number'] ? data['BookingDetails']['hcn_number'] : 'N/A'}}</td> -->
                                             <td class="text-left" *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7">
                                                 {{ data.BookingDetails.DomainOrigin === 'CRS' ? 'CRS' : 'API' }}
                                             </td>
@@ -214,7 +232,8 @@
                                             <ng-template #emptyValue>
                                                 <td class="text-left">N/A</td>
                                             </ng-template>
-                                            <td class="text-left" *ngIf="loggedInUser['auth_role_id'] === 6 " > {{ data['BookingDetails']['hcn'] ? data['BookingDetails']['hcn'] : 'NA'}}</td>
+                                            <td class="text-left" *ngIf="loggedInUser['auth_role_id'] === 6 " > {{ data['BookingDetails']['PaymentStatus'] ? data['BookingDetails']['PaymentStatus'] : 'NA'}}</td>
+                                            <td class="text-left" *ngIf="loggedInUser['auth_role_id'] === 6 " > {{ data['BookingDetails']['hcn_number'] ? data['BookingDetails']['hcn_number'] : 'NA'}}</td>
                                             <td class="text-left"> {{data['BookingDetails']['HotelName']}} </td>
                                             <td class="text-left"> {{data['BookingDetails']['HotelAddress']}} </td>
                                             <td class="text-left"> {{ data['BookingDetails']['PhoneNumber']!="undefined"
@@ -437,7 +456,52 @@
         </div>
     </div>
 </div>
-
+<div class="modal" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true"
+  [style.display]="showConfirmHCN ? 'block' : 'none'">
+  <div class="modal-dialog  modal-sm" role="document">
+    <div class="modal-content"style="min-width: 500px;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="paymentModalLabel">{{isUpdate ? 'Update HCN' : 'Add HCN'}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="hotelTypeForm"  class="needs-validation  pt-0" novalidate>
+            <div class="border-light p-0">
+          
+                <div class="card-body pl-0">
+                    <fieldset form="user">
+                 
+                
+                <div class="form-group">
+                    <label class=" control-label">
+                         HCN Number
+        
+                    </label>
+                    <div class="">
+                    <input type="text" formControlName="hcnNumber" style="height: 50px !important;" class="form-control"
+                        >
+                        </div>
+                  
+                </div>
+    
+                     
+                    
+                    </fieldset>
+              
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer" style="justify-content: space-between;">
+        <button type="button" class="btn btn-success" 
+          (click)="addHCN()">Submit</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="hide()">No</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <ngx-loading [show]="loading"
 [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"

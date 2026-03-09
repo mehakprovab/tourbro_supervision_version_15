@@ -548,8 +548,8 @@ export const apiMap = {
 
   transferCityList: `${B2C_URL}/webservice/transfer/crsCityList`,
 
-  addTermsAndConditions: `${baseUrl}/transfer/updateTermsConditions`,
-  getTermsConditions: `${baseUrl}/transfer/getTermsConditions`,
+  addTermsAndConditions: `${baseUrl}/car/updateTermsConditions`,
+  getTermsConditions: `${baseUrl}/car/getTermsConditions`,
   addTransferImage: `${baseUrl}/transfer/uploadImage`,
 
   //Activity CRS

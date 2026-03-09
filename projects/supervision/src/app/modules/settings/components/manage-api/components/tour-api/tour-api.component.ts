@@ -47,7 +47,7 @@ export class TourApiComponent implements OnInit {
 
   getFlightApiList(): void {
       this.subSunk.sink = this.apiHandlerService.apiHandler('manageApiList', 'post', {}, {}, {
-          module_type: 'Sightseeing'
+          module_type: 'tour'
       }).subscribe(resp => {
           if (resp.statusCode == 200 || resp.statusCode == 201) {
               this.noData = false;

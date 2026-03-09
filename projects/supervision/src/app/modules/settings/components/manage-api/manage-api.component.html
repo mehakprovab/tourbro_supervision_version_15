@@ -26,17 +26,7 @@
                             <app-hotel-api (someEvent)="triggerTab($event)"></app-hotel-api>
                         </ng-template>
                     </ngb-tab>
-                    <!-- <ngb-tab id="activity_api_list">
-                        <ng-template ngbTabTitle>
-                            <span class="">
-                                <i class="fa fa-binoculars" aria-hidden="true"></i>
-                                &nbsp;{{'Activity'}}
-                            </span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <app-activity-api (someEvent)="triggerTab($event)"></app-activity-api>
-                        </ng-template>
-                    </ngb-tab> -->
+            
                     <ngb-tab id="transfer_api_list">
                         <ng-template ngbTabTitle>
                             <span class="">
@@ -59,17 +49,28 @@
                             <app-tour-api (someEvent)="triggerTab($event)"></app-tour-api>
                         </ng-template>
                     </ngb-tab>
-                   <!--  <ngb-tab id="car_api_list">
+                            <ngb-tab id="activity_api_list">
                         <ng-template ngbTabTitle>
                             <span class="">
-                                <i class="fa fa-car" aria-hidden="true"></i>
-                                &nbsp;{{'Car'}}
+                            
+                                {{'Experiences'}}
+                            </span>
+                        </ng-template>
+                        <ng-template ngbTabContent>
+                            <app-activity-api (someEvent)="triggerTab($event)"></app-activity-api>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab id="car_api_list">
+                        <ng-template ngbTabTitle>
+                            <span class="">
+                               
+                                &nbsp;{{'Bus'}}
                             </span>
                         </ng-template>
                         <ng-template ngbTabContent>
                             <app-car-api (someEvent)="triggerTab($event)"></app-car-api>
                         </ng-template>
-                    </ngb-tab> -->
+                    </ngb-tab>
                 </ngb-tabset>
             <!-- </div>
         </div>

@@ -280,4 +280,10 @@ getPaymentCharges: `${API_URL}/webservice/common/getpaymentCharges`,
 removePaymentCharges: `${API_URL}/webservice/common/removePaymentCharges`,
 updateDriverInfo: `${API_URL}/webservice/transfer/updateDriverInfo`,
 cancelTour:  `${API_URL}/webservice/tour/cancelBooking`,
+
+
+//hcn
+
+hotelHCNEmail: `${API_URL}/webservice/hotel/hotel/hotelHCNEmail`,
+adHcnNumber: `${baseUrl}/sa/dashboard/report/hcnNumberChange`,  
 };

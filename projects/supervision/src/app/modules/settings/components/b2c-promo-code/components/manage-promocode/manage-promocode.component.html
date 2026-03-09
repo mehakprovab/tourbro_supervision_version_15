@@ -30,21 +30,84 @@
                         <textarea type="text" class="form-control text-capitalize" id="description" maxlength="120" formControlName="description" rows="4"></textarea>
                     </div>
                 </div>
-                <div class="form-group required row">
-                    <label for="category" class="col-sm-2 col-form-label">Category</label>
-                    <div class="col-sm-4">
-                        <select id="inputState" class="form-control" formControlName="category">
-                            <option selected value="" disabled>Choose...</option>
-                           <option value="Stay" >Stay</option>
-                           <!-- <option value="Car">Car</option> -->
-                           <option value="Wellness">Wellness</option>
-                           <option value="Yatra">Yatra</option>
-                           <option value="Cab">Cab</option>
-                           <option value="Bus">Bus</option>
-                           <option value="Heli">Heli Service</option>
-                        </select>
-                    </div>
-                </div>
+ <div class="form-group required row">
+  <label class="col-sm-2 col-form-label">Category</label>
+
+  <div class="col-sm-6">
+    <div class="d-flex flex-wrap">
+      <div *ngFor="let cat of categoryList" class="mr-3">
+        <label class="checkbox-inline">
+          <input
+            type="checkbox"
+            [value]="cat"
+            [checked]="isCategorySelected(cat)"
+            (change)="onCategoryChange($event)"
+          />
+          {{ cat }}
+        </label>
+      </div>
+    </div>
+    <div *ngIf="regConfig.get('category').invalid && regConfig.get('category').touched" class="text-danger">
+      Category is required
+    </div>
+  </div>
+</div>
+<div class="form-group row cust-radio-group">
+  <label class="col-sm-2 col-form-label">Promo Code Type</label>
+
+  <div class="col-sm-6 d-flex align-items-center">
+    
+    <div class="col-auto">
+      <label>
+        <input type="radio" value="normal" formControlName="promo_type">
+        <span class="design"></span>
+        <span class="text">Normal</span>
+      </label>
+    </div>
+
+    <div class="col-auto">
+      <label>
+        <input type="radio" value="newuser" formControlName="promo_type">
+        <span class="design"></span>
+        <span class="text">New User</span>
+      </label>
+    </div>
+
+    <div class="col-auto">
+      <label>
+        <input type="radio" value="range" formControlName="promo_type">
+        <span class="design"></span>
+        <span class="text">Range</span>
+      </label>
+    </div>
+
+  </div>
+</div>
+<div class="form-group row" *ngIf="regConfig.get('promo_type')?.value === 'range'">
+  
+  <label class="col-sm-2 col-form-label">Range</label>
+
+  <div class="col-sm-2">
+    <input
+      type="number"
+      class="form-control"
+      placeholder="Min Value"
+      min="0"
+      formControlName="min_value"
+    />
+  </div>
+
+  <div class="col-sm-2">
+    <input
+      type="number"
+      class="form-control"
+      placeholder="Max Value"
+      min="0"
+      formControlName="max_value"
+    />
+  </div>
+
+</div>
                 <div class="form-group required row cust-radio-group">
                     <label class="col-sm-2 col-form-label">Discount Type</label>
                     <div class="col-sm-4 d-flex align-items-center">
@@ -90,14 +153,14 @@
                     </div>
                     </div>
                 </div> -->
-                <div class="form-group  row" *ngIf="regConfig?.get('use_type').value=='Multiple'">
+                <!-- <div class="form-group  row" *ngIf="regConfig?.get('useType').value=='Multiple'">
                     <label for="promo_code"class="required" class="col-sm-2 col-form-label">Limitation</label>
                     <div class="col-sm-4">
                         <input type="text" class="form-control" id="promo_code"  
                         formControlName="limitation" minlength="1">
     
                     </div>
-                </div>
+                </div> -->
                 <div class="form-group required row">
                     <label for="start_date" class="col-sm-2 col-form-label">Start Date</label>
                     <div class="col-sm-4">
@@ -118,6 +181,20 @@
                         [isOpen]="isExpDateOpen" onkeydown="return false">
                     </div>
                 </div>
+               <div class="form-group required row">
+  <label for="userType" class="col-sm-2 col-form-label">User Type</label>
+  <div class="col-sm-4">
+    <select id="inputState" class="form-control" formControlName="userType">
+      <option value="" disabled>Choose...</option>
+      <option value="New">New</option>
+      <option value="Existing">Existing</option>
+      <option value="All">All</option>
+    </select>
+    <div *ngIf="regConfig.get('userType').invalid && regConfig.get('userType').touched" class="text-danger">
+      User Type is required
+    </div>
+  </div>
+</div>
                 <div class="form-group row cust-radio-group">
                     <label class="col-sm-2 col-form-label">Status</label> 
                     <div class="col-sm-4 d-flex align-items-center">

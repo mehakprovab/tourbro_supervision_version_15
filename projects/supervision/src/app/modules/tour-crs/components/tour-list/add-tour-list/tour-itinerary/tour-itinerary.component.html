@@ -1,79 +1,131 @@
-<div class="entireScreen  p-0 col-md-12 col-lg-12">
-    <div class="heading">
-        <p>{{'Visited City List : [ Tour Name :' + tourName + ']'}}</p>
-    </div>      
-    <div style="padding: 20px;">
-        <div class="add-traveller">
-            <div class="custom-inline-form">
-                <div class="bottomBorderIndividual">
-                    <div class="form-group required row">
-                        <label for="tourDuration"  class="col-sm-2 col-form-label font-weight-bold">Tour Duration </label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" id="cityName" maxlength="50"
-                                [ngModel]="tourDuration" disabled="true">
+<div class="entireScreen container-fluid p-0">
+  <div class="heading py-3 text-center bg-primary text-white rounded">
+    <p>{{'Visited City List : [ Tour Name :' + tourName + ']'}}</p>
+  </div>
 
-                        </div>
-                    </div>
-                    <div class="form-group required row" *ngFor="let city of cityDataList">
-                        <label for="cityVisitedDuration" class="col-sm-2 col-form-label font-weight-bold">City Visited </label>
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control" id="cityDataList" maxlength="50"
-                            [ngModel]="city.CityName + ' [ ' + city.no_of_nights + ']'" disabled="true">
+  <div class="p-4">
+    <div class="add-traveller">
+      <div class="custom-inline-form">
 
-                        </div>
-                    </div>
-                </div>
-                <form class="" [formGroup]="tourItinerayForm" autocomplete="off" (ngSubmit)="submitItineryForm()">
-                    <div formArrayName="inputFields">
-                        <div *ngFor="let inputField of inputFields.controls; let i = index;">
-                            <div [formGroupName]="i" class="bottomBorderIndividual">
-                                <div class="form-group required row">
-                                    <label for="chooseTheme"  class="col-sm-2 col-form-label font-weight-bold">{{'Day '+(i+1)+' in'}} </label>
-                                    <div class="col-sm-4">
-                                        <select formControlName="visitedCity"
-                                            class="form-control" id="chooseRegion">
-                                            <option [value]="''" selected>Select City</option>
-                                            <option *ngFor="let city of cityDataList"  [value]="city.CityName">
-                                                {{city.CityName}}
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group required row">
-                                    <label for="program"  class="col-sm-2 col-form-label font-weight-bold"> Day Program Title  <sup
-                                        class="text-danger f-16"> * </sup> </label>
-                                    <div class="col-sm-4">
-                                        <input class="programTitle" type="text" class="form-control" id="program" maxlength="200"
-                                            formControlName="programTitle" >
-
-                                    </div>
-                                </div>
-                                <div class="form-group required row">
-                                    <label for="description" class="col-sm-2 col-form-label font-weight-bold">Program Description</label>
-                                    <div class="col-sm-10">
-                                        <ckeditor formControlName="programDes"></ckeditor>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="inclusionsCheckBox">
-                        <div>
-                            <label for="inclusionsCheckBox" class="col-sm-2 col-form-label font-weight-bold">Inclusions</label>
-                        </div>
-                        <div class="checkboxList">
-                            <div *ngFor="let item of inclusions">
-                                <input type="checkbox" id="inclusions" (change)="inclusionSelection($event.target.checked,item)"
-                                [checked]="selectedCheckboxes.includes(item)">{{item}}
-                            </div>
-                        </div>  
-                    </div>
-                    <div class="saveButton">
-                        <button  type="submit" class="orangeButton"> Save</button>
-                        <button *ngIf="isUpdateTourIternary" type="button" class="orangeButton" routerLink="/tour-crs/tour-list/">Go to Tour List</button>
-                    </div>
-                </form>
-            </div>
+        <!-- Tour Duration -->
+        <div class="form-group row mb-4">
+          <label class="col-sm-2 col-form-label font-weight-bold">Tour Duration</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control shadow-sm" [ngModel]="tourDuration" disabled>
+          </div>
         </div>
+
+        <!-- Visited Cities -->
+        <div *ngFor="let city of cityDataList" class="form-group row mb-3">
+          <label class="col-sm-2 col-form-label font-weight-bold">City Visited</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control shadow-sm" [ngModel]="city.CityName + ' [ ' + city.no_of_nights + ' ]'" disabled>
+          </div>
+        </div>
+
+        <!-- Itinerary Form -->
+        <form [formGroup]="tourItinerayForm" (ngSubmit)="submitItineryForm()" autocomplete="off">
+          <div formArrayName="inputFields">
+
+            <div *ngFor="let day of inputFields.controls; let i=index;" [formGroupName]="i" class="dayCard mb-4 p-3 rounded shadow-sm bg-light">
+
+              <!-- Day Header -->
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="text-primary">Day {{i+1}}</h5>
+                <select formControlName="visitedCity" class="form-control w-50">
+                  <option value="">Select City</option>
+                  <option *ngFor="let city of cityDataList" [value]="city.CityName">{{city.CityName}}</option>
+                </select>
+                <div class="text-danger"
+ *ngIf="day.get('visitedCity').touched && day.get('visitedCity').invalid">
+  City is required
+</div>
+              </div>
+
+              <!-- Program Title -->
+              <div class="form-group mb-3">
+                <input type="text" formControlName="programTitle" class="form-control shadow-sm" placeholder="Program Title for the Day">
+              <div class="text-danger"
+ *ngIf="day.get('programTitle').touched && day.get('programTitle').invalid">
+  Program title is required
+</div>
+              </div>
+
+              <!-- Activities -->
+              <div formArrayName="activities">
+                <div *ngFor="let activity of day.get('activities').controls; let j=index;" [formGroupName]="j" class="activityCard mb-3 p-3 border rounded shadow-sm bg-white">
+
+                  <div class="row mb-2 align-items-center">
+                    <div class="col-md-3">
+                      <input type="time" formControlName="time" class="form-control" placeholder="Time">
+                    <div class="text-danger"
+ *ngIf="activity.get('time').touched && activity.get('time').invalid">
+  Time is required
+</div>
+                    </div>
+                    <div class="col-md-5">
+                      <input type="text" formControlName="title" class="form-control" placeholder="Activity Title">
+                    <div class="text-danger"
+ *ngIf="activity.get('title').touched && activity.get('title').invalid">
+  Activity title is required
+</div>
+                    </div>
+                    <div class="col-md-3">
+                      <input type="file" (change)="onImageUpload($event,i,j)" class="form-control form-control-sm" accept="image/*">
+                    
+<div class="text-danger"
+ *ngIf="activity.get('image').touched && activity.get('image').invalid">
+  Activity image is required
+</div>
+                    </div>
+                    <div class="col-md-1
+                     text-right">
+                      <button type="button" class="btn btn-danger btn-sm" (click)="removeActivity(i,j)">Remove</button>
+                    </div>
+                  </div>
+
+                  <div class="form-group mb-2">
+                    <textarea formControlName="description" class="form-control" rows="2" placeholder="Activity Description"></textarea>
+                 <div class="text-danger"
+ *ngIf="activity.get('description').touched && activity.get('description').invalid">
+  Activity description is required
+</div>
+                  </div>
+
+                  <!-- Display uploaded image preview -->
+                  <div *ngIf="activity.get('image').value">
+                    <img [src]="activity.get('image').value" class="img-thumbnail" style="max-height:120px;">
+                  </div>
+
+                </div>
+
+                <button type="button" class="btn btn-success btn-sm mb-2" (click)="addActivity(i)">Add Activity</button>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Inclusions -->
+          <div class="inclusionsCheckBox mb-4">
+            <h5 class="text-primary mb-2">Inclusions</h5>
+            <div class="d-flex flex-wrap">
+              <div *ngFor="let item of inclusions" class="custom-control custom-checkbox mr-3 mb-2">
+                <input type="checkbox" class="custom-control-input" id="{{item}}" (change)="inclusionSelection($event.target.checked,item)" [checked]="selectedCheckboxes.includes(item)">
+                <label class="custom-control-label" for="{{item}}">{{item}}</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Buttons -->
+          <div class="saveButton d-flex gap-2">
+            <button type="submit" class="btn btn-warning">Save</button>
+            <button *ngIf="isUpdateTourIternary" type="button" class="btn btn-secondary" routerLink="/tour-crs/tour-list/">Go to Tour List</button>
+          </div>
+
+        </form>
+
+      </div>
     </div>
+  </div>
 </div>

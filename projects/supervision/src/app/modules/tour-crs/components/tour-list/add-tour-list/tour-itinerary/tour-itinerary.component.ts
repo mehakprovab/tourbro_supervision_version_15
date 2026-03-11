@@ -144,13 +144,13 @@ inclusionSelection(checked: boolean, inclusion: string) {
     // mark nested FormArray controls
     const inputFields = this.tourItinerayForm.get('inputFields') as FormArray;
 
-    inputFields.controls.forEach((dayGroup: FormGroup) => {
+    inputFields.controls.forEach((dayGroup: any) => {
 
       dayGroup.markAllAsTouched();
 
       const activities = dayGroup.get('activities') as FormArray;
 
-      activities.controls.forEach((activity: FormGroup) => {
+      activities.controls.forEach((activity: any) => {
         activity.markAllAsTouched();
       });
 

@@ -492,19 +492,19 @@
                             <ng-template ngbPanelContent>
                               <div class="vsm-dropdown">
                                 <div class="vsm-list">
-                                  <div class="vsm-item" *ngIf="isSubMenuExists('Continent',TOUR_CRS)">
+                                  <!-- <div class="vsm-item" *ngIf="isSubMenuExists('Continent',TOUR_CRS)">
                                     <a routerLinkActive="active-item" routerLink="/tour-crs/continent"
                                       class="vsm-link pl-1"><span class="vsm-title pl-10">Continent</span></a>
-                                  </div>
-                                  <div class="vsm-item" *ngIf="isSubMenuExists('Country',TOUR_CRS)">
+                                  </div> -->
+                                  <!-- <div class="vsm-item" *ngIf="isSubMenuExists('Country',TOUR_CRS)">
                                     <a routerLinkActive="active-item" routerLink="/tour-crs/country"
                                     [queryParams]="{ tab: 'list_activity_country' }"
                                       class="vsm-link pl-1"><span class="vsm-title pl-10">Country</span></a>
-                                  </div>
-                                  <div class="vsm-item" *ngIf="isSubMenuExists('City',TOUR_CRS)">
+                                  </div> -->
+                                  <!-- <div class="vsm-item" *ngIf="isSubMenuExists('City',TOUR_CRS)">
                                     <a routerLinkActive="active-item" routerLink="/tour-crs/city"
                                       class="vsm-link pl-1"><span class="vsm-title pl-10">City</span></a>
-                                  </div>
+                                  </div> -->
                                   <div class="vsm-item" *ngIf="isSubMenuExists('Activities',TOUR_CRS)">
                                     <a routerLinkActive="active-item" routerLink="/tour-crs/activities" class="vsm-link pl-1"><span
                                         class="vsm-title pl-10">Activities</span></a>
@@ -564,19 +564,19 @@
                                                       Activity Types
                                                   </span></a>
                                           </div>
-                                          <div class="vsm-item" *ngIf="isSubMenuExists('Cities',ACTIVITY_CRS) && loggedInUser['auth_role_id'] != 6 || loggedInUser['auth_role_id'] != 7">
+                                          <!-- <div class="vsm-item" *ngIf="isSubMenuExists('Cities',ACTIVITY_CRS) && loggedInUser['auth_role_id'] != 6 || loggedInUser['auth_role_id'] != 7">
                                               <a routerLinkActive="active-item" [routerLink]="['/activity/activity-city']"
                                                   class="vsm-link pl-1"><span class="vsm-title pl-10">
                                                       Cities
                                                   </span></a>
-                                          </div>
-                                          <div class="vsm-item" *ngIf="isSubMenuExists('Countries',ACTIVITY_CRS) && loggedInUser['auth_role_id'] != 6 || loggedInUser['auth_role_id'] != 7">
+                                          </div> -->
+                                          <!-- <div class="vsm-item" *ngIf="isSubMenuExists('Countries',ACTIVITY_CRS) && loggedInUser['auth_role_id'] != 6 || loggedInUser['auth_role_id'] != 7">
                                               <a routerLinkActive="active-item"
                                                   [routerLink]="['/activity/activity-country']"
                                                   class="vsm-link pl-1"><span class="vsm-title pl-10">
                                                       Countries
                                                   </span></a>
-                                          </div>
+                                          </div> -->
                                           <div class="vsm-item" *ngIf="isSubMenuExists('Activity Language',ACTIVITY_CRS) && loggedInUser['auth_role_id'] != 6 || loggedInUser['auth_role_id'] != 7">
                                               <a routerLinkActive="active-item"
                                                   [routerLink]="['/activity/activity-language']"
@@ -839,6 +839,49 @@
                                   </div>
                               </ng-template>
                           </ngb-panel>
+                          <ngb-panel id="locationMenus"> <ng-template ngbPanelHeader> <button ngbPanelToggle class="vsm-link pl-2"> <i class="fa fa-map-marker pr-2 fs-19"></i> <span class="vsm-title pl-10">Locations</span> <i class="vsm-arrow"></i> </button> </ng-template>
+
+  <ng-template ngbPanelContent>
+    <div class="vsm-dropdown">
+      <div class="vsm-list">
+
+   
+
+    <div class="vsm-item" *ngIf="isSubMenuExists('Country','LOCATION_CRS')">
+      <a routerLinkActive="active-item"
+        routerLink="/tour-crs/country"
+         class="vsm-link pl-1">
+        <span class="vsm-title pl-10">
+          Country
+        </span>
+      </a>
+    </div>
+ <div class="vsm-item">
+      <a routerLinkActive="active-item"
+        routerLink="/tour-crs/state"
+         class="vsm-link pl-1">
+        <span class="vsm-title pl-10">
+          State
+        </span>
+      </a>
+    </div>
+    <div class="vsm-item" *ngIf="isSubMenuExists('City','LOCATION_CRS')">
+      <a routerLinkActive="active-item"
+        routerLink="/tour-crs/city"
+         class="vsm-link pl-1">
+        <span class="vsm-title pl-10">
+          City
+        </span>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+
+  </ng-template>
+</ngb-panel>
+
                       </ngb-accordion>
                     </div>
                   </div>

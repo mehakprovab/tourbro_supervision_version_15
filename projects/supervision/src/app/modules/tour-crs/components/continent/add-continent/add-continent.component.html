@@ -1,13 +1,13 @@
 <div>
     <form [formGroup]="continentForm" (ngSubmit)="onContinentSave()">
         <div class="continentInput">
-            <label for="continet" class="font-weight-bold" > Tour Region</label>
+            <label for="continet" class="font-weight-bold" > Region</label>
             <input type="text" placeholder="Enter Package Region"  formControlName="continentName" maxlength="150"
             (input)="validateInput()">
         </div>
         <div *ngIf="continentForm.controls.continentName.errors && continentForm.controls.continentName.touched">
             <div *ngIf="continentForm.controls.continentName.errors.required" class="errorMessage" class="errorMessage">
-              *Please enter tour continent name.
+              *Please enter continent name.
             </div>
             <div *ngIf="continentForm.controls.continentName.errors.invalidString" class="errorMessage">
                 *Number(s) are not allowed.

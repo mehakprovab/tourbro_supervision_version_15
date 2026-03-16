@@ -49,6 +49,9 @@ import { IncludeMasterListComponent } from './components/includes-master/compone
 import { CityPackageMasterComponent } from './components/city-package-master/city-package-master.component';
 import { AddUpdateCityPackageMasterComponent } from './components/city-package-master/components/add-update-city-package-master/add-update-city-package-master.component';
 import { CityPackageMasterListComponent } from './components/city-package-master/components/city-package-master-list/city-package-master-list.component';
+import { StateComponent } from './components/state/state.component';
+import { AddStateComponent } from './components/state/add-state/add-state.component';
+import { UpdateStateComponent } from './components/state/update-state/update-state.component';
 
 
 @NgModule({
@@ -94,6 +97,9 @@ import { CityPackageMasterListComponent } from './components/city-package-master
     CityPackageMasterComponent,
     AddUpdateCityPackageMasterComponent,
     CityPackageMasterListComponent,
+    StateComponent,
+    AddStateComponent,
+    UpdateStateComponent,
   ],
   imports: [
     CommonModule,

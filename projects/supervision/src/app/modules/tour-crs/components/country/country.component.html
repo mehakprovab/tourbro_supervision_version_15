@@ -1,6 +1,6 @@
 <div class="entireScreen  p-0 col-md-12 col-lg-12">
     <div class="heading">
-        <p>Tour Country</p>
+        <p>Country</p>
         <button class="orangeButton" type="submit" (click)="onAddButtonClicked()">Add</button>
     </div>
     <app-add-country *ngIf="enabledForm && !editForm" (insertedRecord)="insertedRecordReceived($event)"> </app-add-country>

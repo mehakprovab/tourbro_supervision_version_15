@@ -45,7 +45,7 @@ export class ContinentComponent implements OnInit {
   }
 
   getTourRegionData(){
-    this.subSunk.sink = this.apiHandlerService.apiHandler('getTourContinet', 'post', {}, {},{})
+    this.subSunk.sink = this.apiHandlerService.apiHandler('getMasterContinet', 'post', {}, {},{})
               .subscribe(response => {
                   if (response.statusCode == 200 || response.statusCode == 201 && response.data) {
                     this.tourRegionDataList = response.data || [];
@@ -58,13 +58,13 @@ export class ContinentComponent implements OnInit {
 
   onStateChange(inputRecordStateChange:any){
     //api call to change current status 
-    this.subSunk.sink = this.apiHandlerService.apiHandler('statusChangeTourContinent', 'post', {}, {},
+    this.subSunk.sink = this.apiHandlerService.apiHandler('statusChangeMasterContinent', 'post', {}, {},
               {
                 "Id":inputRecordStateChange.id,
                 "Status":Number(inputRecordStateChange.status) == 1 ? 0 : 1
               }).subscribe(response => {
                 if (response.statusCode == 200 || response.statusCode == 201 && response.Status) {
-                  this.swalService.alert.success("Tour Region data status has been changed successfully");
+                  this.swalService.alert.success("Region data status has been changed successfully");
                   this.getTourRegionData();
                 }
               },(err: HttpErrorResponse) => {
@@ -76,11 +76,11 @@ export class ContinentComponent implements OnInit {
     this.swalService.alert.delete((action)=>{
         if(action){
             //api call to delete the record 
-            this.subSunk.sink = this.apiHandlerService.apiHandler('deleteTourContinent', 'post', {}, {},
+            this.subSunk.sink = this.apiHandlerService.apiHandler('deleteMasterContinent', 'post', {}, {},
                     {"Id":inputRecordToDeleted.id})
                     .subscribe(response => {
                         if (response.statusCode == 200 || response.statusCode == 201 && response.data) {
-                        this.swalService.alert.success("Tour Region data has been deleted successfully");
+                        this.swalService.alert.success("Region data has been deleted successfully");
                         this.getTourRegionData();
                         }
                     },(err: HttpErrorResponse) => {
@@ -110,7 +110,7 @@ export class ContinentComponent implements OnInit {
         const isAsc = sort.direction === 'asc';
         switch (sort.active) {
             case 'Sl. No.': return this.compare(+a.id, +b.id, isAsc);
-            case 'Tour Region': return this.compare(a.name.toLowerCase(), b.name.toLowerCase(), isAsc);
+            case 'Region': return this.compare(a.name.toLowerCase(), b.name.toLowerCase(), isAsc);
             case 'Current State': return this.compare(a.status, b.status, isAsc);
             case 'State Change': return this.compare(a.status, b.status, isAsc);
             default: return 0;

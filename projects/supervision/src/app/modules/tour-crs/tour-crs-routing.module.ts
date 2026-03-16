@@ -29,6 +29,7 @@ import { UpdateBestTimeToTravelComponent } from "./components/best-time-to-trave
 import { UpdateGalleryComponent } from "./components/gallery/update-gallery/update-gallery.component";
 import { IncludesMasterComponent } from "./components/includes-master/includes-master.component";
 import { CityPackageMasterComponent } from "./components/city-package-master/city-package-master.component";
+import { StateComponent } from "./components/state/state.component";
 
 const routes: Routes = [
   {
@@ -58,6 +59,12 @@ const routes: Routes = [
         path: "country",
         // canActivate: [AuthGuard],
         component: CountryComponent,
+        data: { extraParameter: "tourCRS" },
+      },
+        {
+        path: "state",
+        // canActivate: [AuthGuard],
+        component: StateComponent,
         data: { extraParameter: "tourCRS" },
       },
       {

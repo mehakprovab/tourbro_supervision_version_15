@@ -32,12 +32,12 @@ export class AddContinentComponent implements OnInit {
     //api to save data in db
     let continetName=this.continentForm.get('continentName').value 
     if(this.continentForm.valid){
-      this.subSunk.sink = this.apiHandlerService.apiHandler('addTourContinent', 'post', {}, {},
+      this.subSunk.sink = this.apiHandlerService.apiHandler('addMasterContinent', 'post', {}, {},
               {"Name":continetName})
               .subscribe(response => {
                 console.log(response);
                 if (response.statusCode === 200 || response.statusCode === 201 && response.data) {
-                  this.swalService.alert.success("Tour Region  data has been saved successfully");
+                  this.swalService.alert.success("Region  data has been saved successfully");
                   this.insertedRecord.emit(response.data);
                   this.continentForm.reset();
                 }

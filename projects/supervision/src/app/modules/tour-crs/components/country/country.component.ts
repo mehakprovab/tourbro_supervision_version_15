@@ -19,7 +19,7 @@ export class CountryComponent implements OnInit {
   enabledForm:boolean=false;
   editForm:boolean=false;
   tourRegionCounrtyDataList:any[]=[];
-  displayColumn:string[]=['Sl. No.','Tour Region','Tour Country','Current State'];
+  displayColumn:string[]=['Sl. No.','Region','Country','Current State'];
   pageSize = 100;
   page = 1;
   collectionSize: number;    
@@ -48,9 +48,11 @@ export class CountryComponent implements OnInit {
 
   getTourCountryData(){
     //api to fetch data from DB getTourCountryList
-    this.subSunk.sink=this.apiHandlerService.apiHandler('getTourCountryList','post',{},{},{}).subscribe(response=>{
-      if(response.Status==200 || response.statusCode==201 && response.data){
-          this.tourRegionCounrtyDataList=response['data'];
+    this.subSunk.sink=this.apiHandlerService.apiHandler('getMasterCountryList','post',{},{},{}).subscribe(response=>{
+      console.log(response,"response")
+      if(response.Status==200 || response.statusCode==201){
+          this.tourRegionCounrtyDataList=response.data.data.countries;
+          console.log(response.data.data.countries,"this.tourRegionCounrtyDataList")
           this.tourRegionCounrtyDataListForSort=this.tourRegionCounrtyDataList;
           this.collectionSize=this.tourRegionCounrtyDataList.length;
           this.searchSpin=false;
@@ -60,13 +62,13 @@ export class CountryComponent implements OnInit {
 
   onStateChange(inputRecordStateChange:any){
     //api call to change current status 
-    this.subSunk.sink = this.apiHandlerService.apiHandler('statusChangeTourCountry', 'post', {}, {},
+    this.subSunk.sink = this.apiHandlerService.apiHandler('statusChangeMasterCountry', 'post', {}, {},
               {
                 "Id":inputRecordStateChange.id,
                 "Status":Number(inputRecordStateChange.status) == 1 ? 0 : 1
               }).subscribe(response => {
                 if (response.statusCode == 200 || response.statusCode == 201 && response.Status) {
-                  this.swalService.alert.success("Tour Country data status has been changed successfully");
+                  this.swalService.alert.success(" Country data status has been changed successfully");
                   this.getTourCountryData();
                 }
               },(err: HttpErrorResponse) => {
@@ -78,11 +80,11 @@ export class CountryComponent implements OnInit {
     //api call to delete the record
     this.swalService.alert.delete((action)=>{
         if(action){
-            this.subSunk.sink = this.apiHandlerService.apiHandler('deleteTourCountry', 'post', {}, {},
+            this.subSunk.sink = this.apiHandlerService.apiHandler('deleteMasterCountry', 'post', {}, {},
                 {"Id":inputRecordToDeleted.id})
                 .subscribe(response => {
                 if (response.statusCode == 200 || response.statusCode == 201 && response.data) {
-                    this.swalService.alert.success("Tour Country data has been deleted successfully");
+                    this.swalService.alert.success(" Country data has been deleted successfully");
                     this.getTourCountryData();
                 }
                 },(err: HttpErrorResponse) => {
@@ -107,8 +109,8 @@ export class CountryComponent implements OnInit {
         const isAsc = sort.direction === 'asc';
         switch (sort.active) {
             case 'Sl. No.': return this.compare(+a.id, +b.id, isAsc);
-            case 'Tour Region': return this.compare(a.continent_name ? a.continent_name.toLowerCase():a.continent_name, b.continent_name ? b.continent_name.toLowerCase():b.continent_name, isAsc);
-            case 'Tour Country': return this.compare(a.name ? a.name.toLowerCase():a.name, b.name ? b.name.toLowerCase(): b.name, isAsc);
+            case ' Region': return this.compare(a.continent_name ? a.continent_name.toLowerCase():a.continent_name, b.continent_name ? b.continent_name.toLowerCase():b.continent_name, isAsc);
+            case ' Country': return this.compare(a.name ? a.name.toLowerCase():a.name, b.name ? b.name.toLowerCase(): b.name, isAsc);
             case 'Current State': return this.compare(a.status, b.status, isAsc);
             case 'State Change': return this.compare(a.status, b.status, isAsc);
             default: return 0;

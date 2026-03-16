@@ -324,13 +324,25 @@ export const apiMap = {
     // updateProfile: `${baseUrl}/auth/service/updateUser`,
     // countryList: `${baseUrl}/common/CountryList`,
     // updateMarkupList:`${baseUrl}/core/core-markup/updateMarkupList`
-
+//Master -> Continent
+  getMasterContinet:`${baseUrl}/common/continentList`,
+  addMasterContinent:`${baseUrl}/common/addContinent`,
+  updateMasterContinent:`${baseUrl}/common/updateContinent`,
+  deleteMasterContinent:`${baseUrl}/common/deleteContinent`,
+  statusChangeMasterContinent:`${baseUrl}/common/continentList`,
 //TourCRS -> Continent
   getTourContinet:`${baseUrl}/tour/tourContinent/tourContinentList`,
   addTourContinent:`${baseUrl}/tour/tourContinent/addTourContinent`,
   updateTourContinent:`${baseUrl}/tour/tourContinent/editTourContinent`,
   deleteTourContinent:`${baseUrl}/tour/tourContinent/deleteTourContinent`,
   statusChangeTourContinent:`${baseUrl}/tour/tourContinent/statusChangeTourContinent`,
+// Master -> Country
+getMasterCountryList: `${baseUrl}/common/countryMasterList`,
+addMasterCountry: `${baseUrl}/common/addMasterCountry`,
+editMasterCountry: `${baseUrl}/common/updateMasterCountry`,
+statusChangeMasterCountry: `${baseUrl}/common/countryMasterList`,
+deleteMasterCountry: `${baseUrl}/common/deleteMasterCountry`,
+
 
   //TourCRS -> Country
   getTourCountryList:`${baseUrl}/tour/tourCountry/tourCountryList`,

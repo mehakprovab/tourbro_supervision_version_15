@@ -39,13 +39,13 @@ export class UpdateContinentComponent implements OnInit {
     // get updated name from form
     let updatedName=this.continentForm.get('continentName').value; 
     if(this.continentForm.valid){
-      this.subSunk.sink = this.apiHandlerService.apiHandler('updateTourContinent', 'post', {}, {},
+      this.subSunk.sink = this.apiHandlerService.apiHandler('updateMasterContinent', 'post', {}, {},
               {
                 "ContinentId":this.continetId,
                 "Name":updatedName
               }).subscribe(response => {
                 if (response.statusCode == 200 || response.statusCode == 201 && response.Status) {
-                  this.swalService.alert.success("Tour Region  data has been updated successfully");
+                  this.swalService.alert.success("Region  data has been updated successfully");
                   this.router.navigate(["tour-crs/continent"]);
                 }
               },(err: HttpErrorResponse) => {

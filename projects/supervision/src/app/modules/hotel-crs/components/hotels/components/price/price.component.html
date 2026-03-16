@@ -165,7 +165,7 @@
                     class="form-check-input" [ngClass]="{ 'is-invalid': submittedRoomPrice && hotelRoomSeasonPrice.rate_type.errors }"(change)="onRateChange($event)" [checked]="roomPriceForm?.get('rate_type')?.value === 'night_rate'"  />
                    Night Rate
                 </label>
-                <label class="form-check-label pl-4">
+                <!-- <label class="form-check-label pl-4">
                     <input value="package_rate" name="rate_type"formControlName="rate_type" type="radio"
                         class="form-check-input"(change)="onRateChange($event)" [checked]="roomPriceForm?.get('rate_type')?.value === 'package_rate'"  />
                       Package Rate
@@ -173,7 +173,7 @@
                       class="invalid-feedback">
                       <div *ngIf="hotelRoomSeasonPrice.rate_type.errors.required">Rate type is required</div>
                   </div>
-                </label>
+                </label> -->
                 </div>
 
                 <div class="col-sm-4 mb-3">

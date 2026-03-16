@@ -54,6 +54,7 @@ export class SupplierLoginComponent implements OnInit {
   otpVerifide:boolean = false;
   @ViewChild('ngOtpInput', { static: false }) ngOtpInput: any;
   user_type:any;
+  pageTitle: string = 'Supervision Login';
   constructor(
     private fb: FormBuilder,
     private apiHandlerService: ApiHandlerService,
@@ -63,7 +64,13 @@ export class SupplierLoginComponent implements OnInit {
     private router: Router,
     private swalService: SwalService
   ) {
-    let currentURL = window.location.href; 
+const currentURL = window.location.href;
+
+  if (currentURL.includes('supervision')) {
+    this.pageTitle = 'Supervision Login';
+  } else {
+    this.pageTitle = 'Supplier Login';
+  }
     if (sessionStorage.getItem('currentSupervisionUser') && this.otpVerifide ) 
     {
          this.router.navigate(['/']);

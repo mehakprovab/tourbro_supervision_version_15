@@ -12,7 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./tour-itinerary.component.scss']
 })
 export class TourItineraryComponent implements OnInit {
-
+imageBaseUrl = 'http://54.92.243.81:2001/sa/tour/tours/getItineraryImages/';
   tourItinerayForm;
   inputFields: FormArray;
   tourDuration:string=''
@@ -110,19 +110,46 @@ removeActivity(dayIndex: number, activityIndex: number) {
   }
 }
 onImageUpload(event: any, dayIndex: number, activityIndex: number) {
+
   const file = event.target.files[0];
 
   if (file) {
+
     const reader = new FileReader();
 
+    // 1️⃣ Show preview immediately
     reader.onload = () => {
       const activities = (this.inputFields.at(dayIndex).get('activities') as FormArray);
 
       activities.at(activityIndex).get('image').patchValue(reader.result);
-      activities.at(activityIndex).get('image').markAsTouched();
     };
 
     reader.readAsDataURL(file);
+
+    // 2️⃣ Upload to API
+    const formData = new FormData();
+    formData.append('Gallery', file);
+    formData.append('id', String(this.tourId));
+
+    this.subSunk.sink = this.apiHandlerService
+      .apiHandler('tourUploadImage', 'post', {}, {}, formData)
+      .subscribe((response: any) => {
+
+        if (response.statusCode === 200 || response.statusCode === 201) {
+
+          const imageUrl = response.data.url; // filename or path from API
+
+          const activities = (this.inputFields.at(dayIndex).get('activities') as FormArray);
+
+          // 3️⃣ Replace preview with server image
+          activities.at(activityIndex).get('image').patchValue(imageUrl);
+
+          this.swalService.alert.success('Image Uploaded Successfully.');
+        }
+
+      }, (err: HttpErrorResponse) => {
+        this.swalService.alert.error(err.error.Message);
+      });
   }
 }
 inclusionSelection(checked: boolean, inclusion: string) {

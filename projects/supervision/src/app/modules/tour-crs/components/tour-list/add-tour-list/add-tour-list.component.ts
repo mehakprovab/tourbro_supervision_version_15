@@ -156,16 +156,79 @@ export class AddTourListComponent implements OnInit {
     
 
     getRegionData(){
-        this.subSunk.sink = this.apiHandlerService.apiHandler('getTourContinet', 'post', {}, {},{})
-              .subscribe(response => {
-                  if (response.statusCode == 200 || response.statusCode == 201) {
-                      this.regionData = response.data.filter(data => (data.status === '1' || data.status === 1))  || [];
-                      this.regionData.sort();
-                  }
-              },(err: HttpErrorResponse) => {
-                this.swalService.alert.error(err['error']['Message']);
-            });
+  this.subSunk.sink = this.apiHandlerService.apiHandler('getMasterContinet', 'post', {}, {},{})
+    .subscribe(response => {
+      if (response.statusCode == 200 || response.statusCode == 201) {
+
+        this.regionData = response.data.data.filter(data => (data.status === '1' || data.status === 1)) || [];
+        this.regionData.sort();
+
+        // ✅ Set Asia as default
+        const asia = this.regionData.find(r => r.name.toLowerCase() === 'asia');
+
+        if (asia) {
+          this.finalSelectedContinent = {
+            id: asia.id,
+            name: asia.name,
+            status: Number(asia.status)
+          };
+
+          // call country API automatically
+          this.loadCountries(asia.id);
+        }
+      }
+    },(err: HttpErrorResponse) => {
+      this.swalService.alert.error(err['error']['Message']);
+  });
+}
+
+loadCountries(continentId:number){
+
+  this.subSunk.sink = this.apiHandlerService.apiHandler('getMasterCountryList', 'post', {}, {},{
+    id: Number(continentId),
+  })
+  .subscribe(response => {
+
+    if (response.statusCode == 200 || response.statusCode == 201 ) {
+
+      this.filteredCounrtyList = response.data.data.countries;
+
+      this.countryList = response.data.data.countries.filter(data => (data.status === '1' || data.status === 1)) || [];
+      this.sortcountry();
+
+      // ✅ Set India as default
+      const india = this.countryList.find(c => c.name.toLowerCase() === 'india');
+
+      if(india){
+        this.finalSelectedCountry = india;
+
+        // Load cities of India automatically
+        this.loadCities(india.id);
+      }
     }
+
+  },(err: HttpErrorResponse) => {
+    this.swalService.alert.error(err['error']['Message']);
+  });
+}
+loadCities(countryId:number){
+
+  const selectedCountryData = {
+    id: countryId
+  };
+
+  this.subSunk.sink = this.apiHandlerService.apiHandler('getMasterCityList', 'post', {}, {}, selectedCountryData)
+    .subscribe(response => {
+
+      if ((response.statusCode === 200 || response.statusCode === 201) && response.data.data) {
+        this.cityList = response.data.data || [];
+        this.sortCity();
+      }
+
+    }, (err: HttpErrorResponse) => {
+      this.swalService.alert.error(err.error.Message);
+    });
+}
     getThemeListData(){
         this.subSunk.sink = this.apiHandlerService.apiHandler('getTourThemeList', 'post', {}, {},{})
               .subscribe(response => {
@@ -221,29 +284,29 @@ export class AddTourListComponent implements OnInit {
     }
 
     onRegionChange(regionInput){
-        let selectedContinentName;
-        this.regionData.forEach(item=>{
-        if(item.id==regionInput){
-            selectedContinentName=item.name;
-            this.finalSelectedContinent.id=item.id;
-            this.finalSelectedContinent.name=item.name;
-            this.finalSelectedContinent.status=Number(item.status);
-        }
-        })
-        this.subSunk.sink = this.apiHandlerService.apiHandler('countryListByContinentId', 'post', {}, {},{
-            "id": Number(regionInput),
-            "name": selectedContinentName,
-            "status": "0"
-        }).subscribe(response => {
-            if (response.statusCode == 200 || response.statusCode == 201 && response.data) {
-                this.filteredCounrtyList = response.data;
-                console.log(this.filteredCounrtyList)
-                this.countryList = response.data.filter(data => (data.status === '1' || data.status === 1))  || [];
-                this.sortcountry();
-            }
-        },(err: HttpErrorResponse) => {
-                this.swalService.alert.error(err['error']['Message']);
-        });
+         this.loadCountries(regionInput);
+        // let selectedContinentName;
+        // this.regionData.forEach(item=>{
+        // if(item.id==regionInput){
+        //     selectedContinentName=item.name;
+        //     this.finalSelectedContinent.id=item.id;
+        //     this.finalSelectedContinent.name=item.name;
+        //     this.finalSelectedContinent.status=Number(item.status);
+        // }
+        // })
+        // this.subSunk.sink = this.apiHandlerService.apiHandler('getMasterCountryList', 'post', {}, {},{
+        //     "id": Number(regionInput),
+        
+        // }).subscribe(response => {
+        //     if (response.statusCode == 200 || response.statusCode == 201 ) {
+        //         this.filteredCounrtyList = response.data.data.countries;
+        //         console.log(this.filteredCounrtyList)
+        //         this.countryList = response.data.data.countries.filter(data => (data.status === '1' || data.status === 1))  || [];
+        //         this.sortcountry();
+        //     }
+        // },(err: HttpErrorResponse) => {
+        //         this.swalService.alert.error(err['error']['Message']);
+        // });
     }
 
     sortcountry(){
@@ -350,17 +413,17 @@ export class AddTourListComponent implements OnInit {
             
             const selectedCountryData = {
                 id: selectedCountry[0].id,
-                name: selectedCountry[0].name,
-                isocode: selectedCountry[0].isocode,
-                continent: selectedCountry[0].continent,
-                status: selectedCountry[0].status,
-                created_at: selectedCountry[0].created_at
+                // name: selectedCountry[0].name,
+                // isocode: selectedCountry[0].isocode,
+                // continent: selectedCountry[0].continent,
+                // status: selectedCountry[0].status,
+                // created_at: selectedCountry[0].created_at
             };
     
-            this.subSunk.sink = this.apiHandlerService.apiHandler('cityListByCountryId', 'post', {}, {}, selectedCountryData)
+            this.subSunk.sink = this.apiHandlerService.apiHandler('getMasterCityList', 'post', {}, {}, selectedCountryData)
                 .subscribe(response => {
-                    if ((response.statusCode === 200 || response.statusCode === 201) && response.data) {
-                        this.cityList = response.data || [];
+                    if ((response.statusCode === 200 || response.statusCode === 201) && response.data.data) {
+                        this.cityList = response.data.data || [];
                         this.sortCity();
                     }
                 }, (err: HttpErrorResponse) => {

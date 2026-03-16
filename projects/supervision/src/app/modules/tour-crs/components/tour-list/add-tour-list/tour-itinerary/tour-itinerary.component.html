@@ -93,9 +93,15 @@
                   </div>
 
                   <!-- Display uploaded image preview -->
+                  
                   <div *ngIf="activity.get('image').value">
-                    <img [src]="activity.get('image').value" class="img-thumbnail" style="max-height:120px;">
-                  </div>
+  <img 
+    [src]="activity.get('image').value.startsWith('data:') 
+      ? activity.get('image').value 
+      : imageBaseUrl + activity.get('image').value"
+    class="img-thumbnail"
+    style="max-height:120px;">
+</div>
 
                 </div>
 

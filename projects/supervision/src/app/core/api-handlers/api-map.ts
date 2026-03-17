@@ -342,7 +342,12 @@ addMasterCountry: `${baseUrl}/common/addMasterCountry`,
 editMasterCountry: `${baseUrl}/common/updateMasterCountry`,
 statusChangeMasterCountry: `${baseUrl}/common/countryMasterList`,
 deleteMasterCountry: `${baseUrl}/common/deleteMasterCountry`,
-
+// Master -> City
+getMasterCityList: `${baseUrl}/common/MasterCityList`,
+// addMasterCountry: `${baseUrl}/common/addMasterCountry`,
+// editMasterCountry: `${baseUrl}/common/updateMasterCountry`,
+// statusChangeMasterCountry: `${baseUrl}/common/countryMasterList`,
+// deleteMasterCountry: `${baseUrl}/common/deleteMasterCountry`,
 
   //TourCRS -> Country
   getTourCountryList:`${baseUrl}/tour/tourCountry/tourCountryList`,
@@ -653,4 +658,8 @@ editVehicleMaster: `${baseUrl}/car/editVehicle`,
        deleteCarAmenities: `${baseUrl}/car/deleteCarAmenities`,
         listCarAmenities: `${baseUrl}/car/listCarAmenities`,
           editCarAmenitiesStatus: `${baseUrl}/car/editCarAmenitiesStatus`,
+
+          tourUploadImage: `${baseUrl}/tour/tours/uploadItineraryimages`,
+          saveDay: `${baseUrl}/tour/tours/addTourItineraries`,
+            addItineraryActivities: `${baseUrl}/tour/tours/addItineraryActivities`,
 };

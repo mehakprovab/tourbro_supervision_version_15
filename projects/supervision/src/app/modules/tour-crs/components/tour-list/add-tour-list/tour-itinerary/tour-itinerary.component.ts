@@ -12,7 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./tour-itinerary.component.scss']
 })
 export class TourItineraryComponent implements OnInit {
-
+imageBaseUrl = 'http://54.92.243.81:2001/sa/tour/tours/getItineraryImages/';
   tourItinerayForm;
   inputFields: FormArray;
   tourDuration:string=''
@@ -85,6 +85,7 @@ addInputField() {
     this.inputFields.push(this.fb.group({
       visitedCity: ['', Validators.required],
       programTitle: ['', Validators.required],
+       itineraryDayId: [''],
       activities: this.fb.array([this.createActivityGroup()]) // start with 1 activity
     }));
   }
@@ -95,7 +96,8 @@ createActivityGroup() {
     time: ['', Validators.required],
     title: ['', Validators.required],
     description: ['', Validators.required],
-    image: ['', Validators.required]
+    image: ['', Validators.required],
+    activityId: ['']
   });
 }
  addActivity(dayIndex: number) {
@@ -109,20 +111,80 @@ removeActivity(dayIndex: number, activityIndex: number) {
     activities.removeAt(activityIndex);
   }
 }
+saveActivity(dayIndex: number, activityIndex: number) {
+
+ const dayGroup = this.inputFields.at(dayIndex);
+  const activitiesArray = dayGroup.get('activities') as FormArray;
+
+  const itineraryId = dayGroup.get('itineraryDayId').value;
+
+  if (!itineraryId) {
+    this.swalService.alert.error('Please save day first');
+    return;
+  }
+
+  const activitiesPayload: any[] = [];
+  const formData = new FormData();
+
+  formData.append('itineraryId', itineraryId);
+
+  let isInvalid = false;
+
+  activitiesArray.controls.forEach((activity: any) => {
+
+    const time = activity.get('time').value;
+    const title = activity.get('title').value;
+    const description = activity.get('description').value;
+    const image = activity.get('image').value;
+
+    // ✅ validation
+    if (!time || !title || !description || !image) {
+      activity.markAllAsTouched();
+      isInvalid = true;
+      return;
+    }
+
+    // ✅ push activity data (NO image here)
+    activitiesPayload.push({
+      time,
+      title,
+      description
+    });
+
+    // ✅ append image separately (same key multiple times)
+    formData.append('Gallery', image);
+  });
+
+  if (isInvalid) {
+    this.swalService.alert.error('Please fill all activity fields');
+    return;
+  }
+
+  // ✅ IMPORTANT: stringify activities
+  formData.append('activities', JSON.stringify(activitiesPayload));
+
+  console.log('Payload:', activitiesPayload);
+
+  this.apiHandlerService.apiHandler('addItineraryActivities', 'post', {}, {}, formData)
+    .subscribe((res: any) => {
+
+      if (res.statusCode === 200 || res.statusCode === 201) {
+        this.swalService.alert.success('All activities saved successfully');
+      }
+
+    });
+}
 onImageUpload(event: any, dayIndex: number, activityIndex: number) {
+
   const file = event.target.files[0];
 
   if (file) {
-    const reader = new FileReader();
+    const activity = (this.inputFields.at(dayIndex).get('activities') as FormArray).at(activityIndex);
 
-    reader.onload = () => {
-      const activities = (this.inputFields.at(dayIndex).get('activities') as FormArray);
-
-      activities.at(activityIndex).get('image').patchValue(reader.result);
-      activities.at(activityIndex).get('image').markAsTouched();
-    };
-
-    reader.readAsDataURL(file);
+    activity.get('image').setValue(file); // ✅ use setValue
+    activity.get('image').markAsDirty();
+    activity.get('image').markAsTouched();
+    activity.get('image').updateValueAndValidity();
   }
 }
 inclusionSelection(checked: boolean, inclusion: string) {
@@ -245,5 +307,61 @@ preFillFormWithUpdateData(updateData: any) {
   }
 
   this.isUpdateTourIternary = true;
+}
+
+saveDay(dayIndex: number) {
+  const dayGroup = this.inputFields.at(dayIndex);
+
+
+  // ✅ Only mark required DAY fields
+  dayGroup.get('visitedCity').markAsTouched();
+  dayGroup.get('programTitle').markAsTouched();
+
+  // ✅ Validate ONLY these fields
+  if (
+    dayGroup.get('visitedCity').invalid ||
+    dayGroup.get('programTitle').invalid
+  ) {
+    return;
+  }
+
+
+  const payload = {
+    tourId: this.tourId,
+    visitedCity: dayGroup.get('visitedCity').value,
+    programTitle: dayGroup.get('programTitle').value,
+    visitedCityDay: 'Day '+ dayIndex + 1
+  };
+
+  this.apiHandlerService.apiHandler('saveDay', 'post', {}, {}, payload)
+    .subscribe((res: any) => {
+      if (res.statusCode === 200 || res.statusCode === 201) {
+       
+        const dayId = res.data.itineraryDayId;
+
+        // ✅ STORE ID
+        dayGroup.get('itineraryDayId').patchValue(dayId);
+
+        this.swalService.alert.success('Day saved successfully');
+      }
+    });
+}
+
+imagePreviewMap = {};
+
+getImageSrc(value: any, key?: string): string {
+
+  if (value instanceof File) {
+    if (!this.imagePreviewMap[key]) {
+      this.imagePreviewMap[key] = URL.createObjectURL(value);
+    }
+    return this.imagePreviewMap[key];
+  }
+
+  if (typeof value === 'string' && value.startsWith('data:')) {
+    return value;
+  }
+
+  return this.imageBaseUrl + value;
 }
 }

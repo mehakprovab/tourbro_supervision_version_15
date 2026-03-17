@@ -50,7 +50,10 @@
   Program title is required
 </div>
               </div>
-
+<button type="button" class="btn btn-primary btn-sm mt-2 mb-2"
+  (click)="saveDay(i)">
+  Save Day
+</button>
               <!-- Activities -->
               <div formArrayName="activities">
                 <div *ngFor="let activity of day.get('activities').controls; let j=index;" [formGroupName]="j" class="activityCard mb-3 p-3 border rounded shadow-sm bg-white">
@@ -93,13 +96,22 @@
                   </div>
 
                   <!-- Display uploaded image preview -->
-                  <div *ngIf="activity.get('image').value">
-                    <img [src]="activity.get('image').value" class="img-thumbnail" style="max-height:120px;">
-                  </div>
+                  
+                  <!-- <div *ngIf="activity.get('image').value">
+<img 
+  *ngIf="activity.get('image').value"
+  [src]="getImageSrc(activity.get('image').value)"
+  class="img-thumbnail"
+  style="max-height:120px;">
+</div>
 
-                </div>
+                </div> -->
 
                 <button type="button" class="btn btn-success btn-sm mb-2" (click)="addActivity(i)">Add Activity</button>
+              <button type="button" class="btn btn-info btn-sm mb-2" style="margin-left: 4px;"
+  (click)="saveActivity(i, j)">
+  Save Activity
+</button>
               </div>
 
             </div>
@@ -119,8 +131,8 @@
 
           <!-- Buttons -->
           <div class="saveButton d-flex gap-2">
-            <button type="submit" class="btn btn-warning">Save</button>
-            <button *ngIf="isUpdateTourIternary" type="button" class="btn btn-secondary" routerLink="/tour-crs/tour-list/">Go to Tour List</button>
+            <button type="submit" class="btn btn-warning">Next</button>
+            <button type="button" class="btn btn-secondary" style="margin-left: 4px;" routerLink="/tour-crs/tour-list/">Go to Tour List</button>
           </div>
 
         </form>

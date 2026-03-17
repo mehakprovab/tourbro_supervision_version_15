@@ -312,33 +312,57 @@
         </td>
       </tr>
 
-     
-      <tr>
-        <td colspan="4" style="padding:0;border-top:none;" *ngIf="voucherData.BookingDetails?.itinerary">
+<tr>
+<td colspan="4" style="padding:0;border-top:none;" *ngIf="voucherData.BookingDetails?.itinerary">
 
-          <table style="width: 100%;">
-                <tbody>
-                    <tr>
-                        <td style="font-size: 20px; font-weight: 600; color: #282828;border-top:none;">Tours Itinerary</td>
-                    </tr>
-                        <tr>
-                            <td colspan="7" style="line-height: 20px; font-size: 14px; padding: 15px; color: #282828; font-weight: 400;border-top:none;">
-        
-                                <div>
-                                    <span *ngFor="let item of voucherData.BookingDetails?.itinerary; let i = index">
-                                    <span>{{ item?.program_title }}:</span>
-                                    <p [innerHTML]="item?.program_des"></p>
-                                    </span>
-                                </div>
-                                
-                        
-                            </td>
-                        </tr>
-                </tbody>
-            </table>
-        </td>
-      </tr>
-      
+  <div id="Itinerarytab" class="iternry tabs_parent">
+
+    <!-- Header -->
+    <div class="d-flex bgtab align-items-center justify-content-between">
+      <h3>Tours Itinerary</h3>
+    </div>
+
+    <!-- All Days Open -->
+    <div class="px-3">
+
+      <div *ngFor="let item of voucherData.BookingDetails?.itinerary; let i = index" class="day_block">
+
+        <!-- Day Title -->
+        <h4 class="day_title">
+          Day {{i + 1}} - {{item?.program_title}}
+        </h4>
+
+        <!-- Activities -->
+        <div *ngFor="let activity of getItenary(item?.program_des)" class="itinerary_days d-flex">
+
+          <!-- Timeline -->
+          <div class="timeline">
+            <span class="dot"></span>
+          </div>
+
+          <!-- Content -->
+          <div class="content pl-3">
+
+            <p class="time">{{activity.time}}</p>
+
+            <h5 class="title">{{activity.title}}</h5>
+
+            <div class="desc">
+              {{activity.description}}
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</td>
+</tr>
      
 
       <tr *ngIf="voucherData.BookingDetails.inclusions">

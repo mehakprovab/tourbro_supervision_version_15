@@ -115,7 +115,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="form-group required row">
+                    <!-- <div class="form-group required row">
                         <label for="chooseTheme  " class="required" class="col-sm-2 col-form-label font-weight-bold">Choose Region <sup
                             class="text-danger f-16"> * </sup> </label>
                         <div class="col-sm-4">
@@ -127,7 +127,7 @@
                                 </option>
                             </select>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- <div class="form-group required row">
                         <label for="chooseCountry" class="required" class="col-sm-2 col-form-label font-weight-bold">Choose Country <sup
                             class="text-danger f-16"> * </sup> </label> -->
@@ -166,12 +166,15 @@
                             Select Country <sup class="text-danger f-16"> * </sup>
                         </label>
                         <div class="col-sm-4">
-                            <select (change)="onCountryChange($event)" class="form-control" id="chooseCountry">
-                                <option [ngValue]="null" selected>Choose Country</option>
-                                <option *ngFor="let country of countryList" [value]="country.id">
-                                    {{country.name}}
-                                </option>
-                            </select>
+                            <select formControlName="countryId" (change)="onCountryChange($event)" class="form-control" id="chooseCountry">
+
+  <option [ngValue]="null">Choose Country</option>
+
+  <option *ngFor="let country of countryList" [value]="country.id">
+    {{country.name}}
+  </option>
+
+</select>
                         </div>
                     </div>                                      
                     <div class="form-group required row">
@@ -183,8 +186,7 @@
                             [settings]="cityDropdownSettings"
                             [data]="cityList"
                             [(ngModel)]="selectedCity"
-                            (onSelect)="onCitySelect($event)"
-                            (onDeSelect)="onCityDeSelect($event)"
+                           
                             [ngModelOptions]="{standalone: true}">
                         </ng-multiselect-dropdown>
                         </div>

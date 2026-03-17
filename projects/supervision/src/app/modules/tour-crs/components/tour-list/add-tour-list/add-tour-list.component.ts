@@ -150,22 +150,93 @@ export class AddTourListComponent implements OnInit {
           chooseDuration:new FormControl('',[Validators.required]),
           price:new FormControl(''),
           isRefundable: new FormControl(false),
+          countryId: new FormControl('',[Validators.required]),
         });
     }
 
     
 
     getRegionData(){
-        this.subSunk.sink = this.apiHandlerService.apiHandler('getTourContinet', 'post', {}, {},{})
-              .subscribe(response => {
-                  if (response.statusCode == 200 || response.statusCode == 201) {
-                      this.regionData = response.data.filter(data => (data.status === '1' || data.status === 1))  || [];
-                      this.regionData.sort();
-                  }
-              },(err: HttpErrorResponse) => {
-                this.swalService.alert.error(err['error']['Message']);
-            });
+  this.subSunk.sink = this.apiHandlerService.apiHandler('getMasterContinet', 'post', {}, {},{})
+    .subscribe(response => {
+      if (response.statusCode == 200 || response.statusCode == 201) {
+
+        this.regionData = response.data.data.filter(data => (data.status === '1' || data.status === 1)) || [];
+        this.regionData.sort();
+
+        // ✅ Set Asia as default
+        const asia = this.regionData.find(r => r.name.toLowerCase() === 'asia');
+
+        if (asia) {
+          this.finalSelectedContinent = {
+            id: asia.id,
+            name: asia.name,
+            status: Number(asia.status)
+          };
+
+          // call country API automatically
+          this.loadCountries(asia.id);
+        }
+      }
+    },(err: HttpErrorResponse) => {
+      this.swalService.alert.error(err['error']['Message']);
+  });
+}
+
+loadCountries(continentId:number){
+
+  this.subSunk.sink = this.apiHandlerService.apiHandler('getMasterCountryList', 'post', {}, {},{
+    
+  })
+  .subscribe(response => {
+
+    if (response.statusCode == 200 || response.statusCode == 201 ) {
+
+      this.filteredCounrtyList = response.data.data.countries;
+
+      this.countryList = response.data.data.countries.filter(data => (data.status === '1' || data.status === 1)) || [];
+      this.sortcountry();
+
+      // ✅ Set India as default
+      const india = this.countryList.find(c => c.name.toLowerCase() === 'india');
+
+      if(india){
+        this.finalSelectedCountry = india;
+  // ✅ THIS LINE IS IMPORTANT
+  this.tourForm.patchValue({
+    countryId: india.id
+  });
+
+        // Load cities of India automatically
+        this.loadCities(india.id);
+      }
     }
+
+  },(err: HttpErrorResponse) => {
+    this.swalService.alert.error(err['error']['Message']);
+  });
+}
+loadCities(countryId:number){
+
+  const selectedCountryData = {
+    id: countryId
+  };
+
+  this.subSunk.sink = this.apiHandlerService.apiHandler('getMasterCityList', 'post', {}, {}, selectedCountryData)
+    .subscribe(response => {
+
+      if ((response.statusCode === 200 || response.statusCode === 201) && response.data.data) {
+  this.cityList = response.data.data.map(city => ({
+  id: city.cityId,            // 🔥 FIX HERE
+  cityName: city.cityName
+}));
+        this.sortCity();
+      }
+
+    }, (err: HttpErrorResponse) => {
+      this.swalService.alert.error(err.error.Message);
+    });
+}
     getThemeListData(){
         this.subSunk.sink = this.apiHandlerService.apiHandler('getTourThemeList', 'post', {}, {},{})
               .subscribe(response => {
@@ -221,29 +292,29 @@ export class AddTourListComponent implements OnInit {
     }
 
     onRegionChange(regionInput){
-        let selectedContinentName;
-        this.regionData.forEach(item=>{
-        if(item.id==regionInput){
-            selectedContinentName=item.name;
-            this.finalSelectedContinent.id=item.id;
-            this.finalSelectedContinent.name=item.name;
-            this.finalSelectedContinent.status=Number(item.status);
-        }
-        })
-        this.subSunk.sink = this.apiHandlerService.apiHandler('countryListByContinentId', 'post', {}, {},{
-            "id": Number(regionInput),
-            "name": selectedContinentName,
-            "status": "0"
-        }).subscribe(response => {
-            if (response.statusCode == 200 || response.statusCode == 201 && response.data) {
-                this.filteredCounrtyList = response.data;
-                console.log(this.filteredCounrtyList)
-                this.countryList = response.data.filter(data => (data.status === '1' || data.status === 1))  || [];
-                this.sortcountry();
-            }
-        },(err: HttpErrorResponse) => {
-                this.swalService.alert.error(err['error']['Message']);
-        });
+         this.loadCountries(regionInput);
+        // let selectedContinentName;
+        // this.regionData.forEach(item=>{
+        // if(item.id==regionInput){
+        //     selectedContinentName=item.name;
+        //     this.finalSelectedContinent.id=item.id;
+        //     this.finalSelectedContinent.name=item.name;
+        //     this.finalSelectedContinent.status=Number(item.status);
+        // }
+        // })
+        // this.subSunk.sink = this.apiHandlerService.apiHandler('getMasterCountryList', 'post', {}, {},{
+        //     "id": Number(regionInput),
+        
+        // }).subscribe(response => {
+        //     if (response.statusCode == 200 || response.statusCode == 201 ) {
+        //         this.filteredCounrtyList = response.data.data.countries;
+        //         console.log(this.filteredCounrtyList)
+        //         this.countryList = response.data.data.countries.filter(data => (data.status === '1' || data.status === 1))  || [];
+        //         this.sortcountry();
+        //     }
+        // },(err: HttpErrorResponse) => {
+        //         this.swalService.alert.error(err['error']['Message']);
+        // });
     }
 
     sortcountry(){
@@ -275,22 +346,42 @@ export class AddTourListComponent implements OnInit {
         );
     }
 
-    onCitySelect(selectedCity: any) {
-        const index = this.selectedCity.findIndex(item => item.id === selectedCity.id);
-        if (index === -1) {
-            this.selectedCity.push(selectedCity);
-            this.cityList = this.cityList.filter(item => item.id !== selectedCity.id);
-        }
+onCitySelect(item: any) {
+  console.log("Dropdown item:", item);
+
+  // 🔥 IMPORTANT: match using cityName (because id may be missing)
+  const cityObj = this.cityList.find(
+    c => c.cityName === (item.cityName || item.CityName)
+  );
+
+  if (cityObj) {
+    const exists = this.selectedCity.find(c => c.id === cityObj.id);
+
+    if (!exists) {
+      this.selectedCity.push({
+        id: cityObj.id,
+        cityName: cityObj.cityName
+      });
+
+      // remove from list (like country)
+      this.cityList = this.cityList.filter(c => c.id !== cityObj.id);
     }
+  } else {
+    console.error("City not found in list", item);
+  }
+}
     
     // Deselect city and move it back to cityList
-    onCityDeSelect(deselectedCity: any) {
-        const index = this.selectedCity.findIndex(item => item.id === deselectedCity.id);
-        if (index > -1) {
-            this.cityList.push(deselectedCity);
-            this.selectedCity = this.selectedCity.filter(item => item.id !== deselectedCity.id);
-        }
-    }
+onCityDeSelect(item: any) {
+  const cityObj = this.selectedCity.find(
+    c => c.cityName === (item.cityName || item.CityName)
+  );
+
+  if (cityObj) {
+    this.cityList.push(cityObj);
+    this.selectedCity = this.selectedCity.filter(c => c.id !== cityObj.id);
+  }
+}
      
       
 
@@ -335,41 +426,22 @@ export class AddTourListComponent implements OnInit {
         this.deSelectCountry(item);
       }
 
-    onCountryChange(event) {
-        console.log(event.target.value)
-        const selectedCountry = this.filteredCounrtyList.filter(data => data.id === Number(event.target.value));
-        console.log(selectedCountry)
-        const selectElement = event.target as HTMLSelectElement;
-        // const selectedCountry = this.selectedCountries.find(country => country.name === selectElement.value);
-    
-        if (selectedCountry) {
-            selectedCountry[0].id = parseInt(selectedCountry[0].id);
-            selectedCountry[0].continent = parseInt(selectedCountry[0].continent);
-            selectedCountry[0].status = parseInt(selectedCountry[0].status);
-            this.finalSelectedCountry = selectedCountry[0];
-            
-            const selectedCountryData = {
-                id: selectedCountry[0].id,
-                name: selectedCountry[0].name,
-                isocode: selectedCountry[0].isocode,
-                continent: selectedCountry[0].continent,
-                status: selectedCountry[0].status,
-                created_at: selectedCountry[0].created_at
-            };
-    
-            this.subSunk.sink = this.apiHandlerService.apiHandler('cityListByCountryId', 'post', {}, {}, selectedCountryData)
-                .subscribe(response => {
-                    if ((response.statusCode === 200 || response.statusCode === 201) && response.data) {
-                        this.cityList = response.data || [];
-                        this.sortCity();
-                    }
-                }, (err: HttpErrorResponse) => {
-                    this.swalService.alert.error(err.error.Message);
-                });
-        }
-    }    
+  onCountryChange(countryId: number) {
+
+  const selectedCountry = this.filteredCounrtyList.find(
+    data => Number(data.id) === Number(countryId)
+  );
+
+  if (selectedCountry) {
+    this.finalSelectedCountry = selectedCountry;
+
+    // ✅ Load cities
+    this.loadCities(selectedCountry.id);
+  }
+}   
 
     onCreateTour(){
+      console.log(this.selectedCity,"jhjk")
         const currentDomainUser = localStorage.getItem('currentDomainUser');
         const businessName = JSON.parse(currentDomainUser);
        if(this.tourForm.valid){
@@ -386,7 +458,10 @@ export class AddTourListComponent implements OnInit {
             "Activity": this.selectedtActivity,
             "Continent":this.finalSelectedContinent ,
             "Country":this.finalSelectedCountry,
-            "City":this.selectedCity,
+            "City":this.selectedCity.map(city => ({
+  id: city.id,
+  cityName: city.cityName
+})),
             "Duration":this.tourForm.get('chooseDuration').value,
             "sim_price":this.tourForm.get('price').value,
             created_by_id: this.loggedInUserId

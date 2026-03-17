@@ -111,7 +111,7 @@ removeActivity(dayIndex: number, activityIndex: number) {
     activities.removeAt(activityIndex);
   }
 }
-saveActivity(dayIndex: number, activityIndex: number) {
+saveActivity(dayIndex: number) {
 
  const dayGroup = this.inputFields.at(dayIndex);
   const activitiesArray = dayGroup.get('activities') as FormArray;

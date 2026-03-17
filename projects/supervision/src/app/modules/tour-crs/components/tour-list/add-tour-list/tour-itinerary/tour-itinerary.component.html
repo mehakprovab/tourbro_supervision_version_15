@@ -189,16 +189,6 @@
                       Activity description is required
                     </div>
                   </div>
-
-                  <!-- Display uploaded image preview -->
-
-                  <!-- <div *ngIf="activity.get('image').value">
-<img 
-  *ngIf="activity.get('image').value"
-  [src]="getImageSrc(activity.get('image').value)"
-  class="img-thumbnail"
-  style="max-height:120px;">
-</div>-->
                 </div>
                 <button
                   type="button"
@@ -211,7 +201,7 @@
                   type="button"
                   class="btn btn-info btn-sm mb-2"
                   style="margin-left: 4px"
-                  (click)="saveActivity(i, j)"
+                  (click)="saveActivity(i)"
                 >
                   Save Activity
                 </button>

@@ -660,4 +660,6 @@ editVehicleMaster: `${baseUrl}/car/editVehicle`,
           editCarAmenitiesStatus: `${baseUrl}/car/editCarAmenitiesStatus`,
 
           tourUploadImage: `${baseUrl}/tour/tours/uploadItineraryimages`,
+          saveDay: `${baseUrl}/tour/tours/addTourItineraries`,
+            addItineraryActivities: `${baseUrl}/tour/tours/addItineraryActivities`,
 };

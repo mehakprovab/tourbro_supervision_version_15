@@ -12,3 +12,61 @@
     text-transform: uppercase;
     font-weight: 600;
   }
+
+  .day_block {
+  margin-bottom: 25px;
+}
+
+.day_title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 15px 0;
+  color: #333;
+}
+
+/* Timeline */
+.itinerary_days {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.timeline {
+  position: relative;
+  width: 20px;
+}
+
+.timeline .dot {
+  width: 10px;
+  height: 10px;
+  background: #7c4dff;
+  border-radius: 50%;
+  display: block;
+  margin-top: 6px;
+}
+
+.timeline::after {
+  content: '';
+  position: absolute;
+  top: 16px;
+  left: 4px;
+  width: 2px;
+  height: 100%;
+  background: #ddd;
+}
+
+.content .time {
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 5px;
+}
+
+.content .title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.content .desc {
+  font-size: 14px;
+  color: #555;
+}

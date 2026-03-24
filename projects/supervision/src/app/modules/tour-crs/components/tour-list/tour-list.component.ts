@@ -29,7 +29,7 @@ export class TourListComponent implements OnInit {
   scrollPosition=0;
   searchSpin:boolean=true;
   loggedInUserId: any;
-  displayColumn:string[]=['Sl. No.','Tour Name','Tour Type','Country','City','Duration','Supplier Name','Start Date','Expiry Date','Publish Status','Trending','Book Now','Action']
+  displayColumn:string[]=['Sl. No.','Yatra Name','Yatra Type','Country','City','Duration','Supplier Name','Start Date','Expiry Date','Publish Status','Book Now','Action']
   loggedInAuthId: any;
   showBookNow: boolean = false;
 

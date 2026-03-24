@@ -1,6 +1,6 @@
 <div class="entireScreen  p-0 col-md-12 col-lg-12">
     <div class="heading">
-        <p>Tour List</p>
+        <p>Yatra List</p>
         <button *ngIf="!editForm" class="orangeButton" type="submit" (click)="onAddButtonClicked()" >Add</button>
     </div>
 </div>
@@ -68,12 +68,12 @@
                                     <span class="checkbox-text">Home Publish</span>
                                 </label> 
                               </td> -->
-                              <td class="text-left" *ngIf="loggedInAuthId !== 7">
+                              <!-- <td class="text-left" *ngIf="loggedInAuthId !== 7">
                                 <label class="checkbox-label">
                                     <input type="checkbox" class="checkbox-input" [checked]="item.trending==1" (change)="enableTrending($event.target.checked,item)">
                                     <span class="checkbox-text">Enable</span>
                                 </label> 
-                              </td>
+                              </td> -->
                               <!-- <td class="text-left" *ngIf="loggedInAuthId !== 7">
                                 <label class="checkbox-label">
                                     <input type="checkbox" class="checkbox-input" [checked]="item.enquiry_status==1" (change)="enableEnquiryForm($event.target.checked,item)">

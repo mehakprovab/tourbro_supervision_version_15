@@ -199,7 +199,15 @@ export class AddPriceComponent implements OnInit {
       this.swalService.alert.error("Please fill all required fields correctly.");
       return;
     }
+  // Get the dates from the form
+  const fromDate = this.priceManagementForm.get('fromDate').value;
+  const toDate = this.priceManagementForm.get('toDate').value;
 
+  // Check for date overlap with existing records
+  if (this.checkDateOverlap(fromDate, toDate)) {
+    this.swalService.alert.error("The selected date range overlaps with an existing price record. Please choose a different date range.");
+    return;
+  }
     let priceData = {
       toursId: this.tourId,
       adultAirlinerPrice: this.priceManagementForm.get('adultPrice').value,
@@ -234,4 +242,42 @@ export class AddPriceComponent implements OnInit {
         }
       );
   }
+
+  // Add this method to check for date overlaps
+checkDateOverlap(fromDate: Date, toDate: Date): boolean {
+  if (!this.priceManagementDataList || this.priceManagementDataList.length === 0) {
+    return false; // No existing records, so no overlap
+  }
+
+  const newFromDate = new Date(fromDate);
+  const newToDate = new Date(toDate);
+
+  // Reset time part for accurate date comparison
+  newFromDate.setHours(0, 0, 0, 0);
+  newToDate.setHours(0, 0, 0, 0);
+
+  for (let record of this.priceManagementDataList) {
+    const existingFromDate = new Date(record.from_date);
+    const existingToDate = new Date(record.to_date);
+    
+    // Reset time part
+    existingFromDate.setHours(0, 0, 0, 0);
+    existingToDate.setHours(0, 0, 0, 0);
+
+    // Check for overlap conditions:
+    // 1. New date range starts within existing range
+    // 2. New date range ends within existing range
+    // 3. New date range encompasses existing range
+    if (
+      (newFromDate >= existingFromDate && newFromDate <= existingToDate) ||
+      (newToDate >= existingFromDate && newToDate <= existingToDate) ||
+      (newFromDate <= existingFromDate && newToDate >= existingToDate)
+    ) {
+      return true; // Overlap found
+    }
+  }
+  
+  return false; // No overlap
+}
+
 }

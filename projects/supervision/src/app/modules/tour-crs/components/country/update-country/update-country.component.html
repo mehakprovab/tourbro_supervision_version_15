@@ -1,30 +1,93 @@
-<div class="entireScreen  p-0 col-md-12 col-lg-12">
-    <div class="heading">
-        <p>Edit Package Country</p>
+<div class="entireScreen p-0 col-md-12 col-lg-12">
+  <div class="heading">
+    <p>Edit Package Country</p>
+  </div>
+
+  <form [formGroup]="countryForm" (ngSubmit)="onCountySave()">
+
+    <!-- Continent -->
+    <div class="continentInput">
+      <label>Choose Continent</label>
+      <select formControlName="continentName" (change)="selectedContinent($event.target.value)">
+        <option value="" disabled>Choose Continent</option>
+        <option *ngFor="let option of continentDataList" [value]="option.id">
+          {{ option.name }}
+        </option>
+      </select>
     </div>
-    <div >
-        <form [formGroup]="countryForm" (ngSubmit)="onCountySave()">
-            <div class="countryInput">
-                <label for="country" class="font-weight-bold" > Tour Country</label>
-                <input type="text" placeholder="Enter Package Country"  formControlName="countryName" maxlength="150"
-                (input)="validateInput()">
-            </div>
-            <div *ngIf="countryForm.controls.countryName.errors && countryForm.controls.countryName.touched">
-                <div *ngIf="countryForm.controls.countryName.errors.required" class="errorMessage">
-                  *Please enter package country name.
-                </div>
-                <div *ngIf="countryForm.controls.countryName.errors.invalidString" class="errorMessage">
-                    *Number(s) are not allowed.
-                </div>
-                <div *ngIf="countryForm.controls.countryName.errors.startOrEndSpace"  class="errorMessage">
-                    *Empty space(s) in start and end are not allowed.
-                </div>
-            </div>
-            <div class="saveButton">
-                <button  class="btn btn-sm btn-primary mr-1 orangeButton">{{'Save'}}
-                </button>
-                <button class="btn btn-sm btn-primary mr-1 orangeButton packageBtn" routerLink="/tour-crs/country"> {{'Package Country'}}  </button>
-            </div>
-        </form>
+    <div *ngIf="f.continentName.touched && f.continentName.errors">
+      <small class="errorMessage">*Please select continent</small>
     </div>
+
+    <!-- Country Name -->
+    <div class="countryInput">
+      <label>Country Name</label>
+      <input type="text" formControlName="countryName" (input)="validateInput()">
+    </div>
+    <div *ngIf="f.countryName.touched && f.countryName.errors">
+      <small *ngIf="f.countryName.errors.required" class="errorMessage">*Required</small>
+      <small *ngIf="f.countryName.errors.invalidString" class="errorMessage">*Numbers not allowed</small>
+      <small *ngIf="f.countryName.errors.startOrEndSpace" class="errorMessage">*No space at start/end</small>
+    </div>
+
+    <!-- ISO2 -->
+    <div class="countryInput">
+      <label>ISO2</label>
+      <input type="text" formControlName="iso2">
+    </div>
+    <div *ngIf="f.iso2.touched && f.iso2.errors">
+      <small class="errorMessage">*2 uppercase letters</small>
+    </div>
+
+    <!-- ISO3 -->
+    <div class="countryInput">
+      <label>ISO3</label>
+      <input type="text" formControlName="iso3">
+    </div>
+    <div *ngIf="f.iso3.touched && f.iso3.errors">
+      <small class="errorMessage">*3 uppercase letters</small>
+    </div>
+
+    <!-- Phone -->
+    <div class="countryInput">
+      <label>Phone Code</label>
+      <input type="text" formControlName="phonecode">
+    </div>
+
+    <!-- Currency -->
+    <div class="countryInput">
+      <label>Currency Name</label>
+      <input type="text" formControlName="currency_name">
+    </div>
+
+    <div class="countryInput">
+      <label>Currency Code</label>
+      <input type="text" formControlName="currency">
+    </div>
+
+    <div class="countryInput">
+      <label>Currency Symbol</label>
+      <input type="text" formControlName="currency_symbol">
+    </div>
+
+    <!-- Lat Long -->
+    <div class="countryInput">
+      <label>Latitude</label>
+      <input type="text" formControlName="latitude">
+    </div>
+
+    <div class="countryInput">
+      <label>Longitude</label>
+      <input type="text" formControlName="longitude">
+    </div>
+
+    <!-- Buttons -->
+    <div class="saveButton">
+      <button type="submit" class="orangeButton">Save</button>
+      <button type="button" class="orangeButton packageBtn" routerLink="/tour-crs/country">
+        Package Country
+      </button>
+    </div>
+
+  </form>
 </div>

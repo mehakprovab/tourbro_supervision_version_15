@@ -11,94 +11,122 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./add-country.component.scss']
 })
 export class AddCountryComponent implements OnInit {
+ countryForm: FormGroup;
+  selectedContinentId: string;
+  subSunk = new SubSink();
+  continentDataList: any[] = [];
 
-  countryForm:FormGroup;
-  selectedContinentId:string;
-  subSunk=new SubSink();
-  continentDataList:Array<any>=[];
+  @Output() insertedRecord = new EventEmitter<any>();
 
-  @Output() insertedRecord=new EventEmitter<any>();
-
-  constructor(private fb:FormBuilder, 
-              private swalService:SwalService, 
-              private apiHandlerService:ApiHandlerService
-    ) { }    
+  constructor(
+    private fb: FormBuilder,
+    private swalService: SwalService,
+    private apiHandlerService: ApiHandlerService
+  ) { }
 
   ngOnInit() {
     this.createCountryForm();
     this.getContinentData();
   }
-  createCountryForm(){
-    this.countryForm=this.fb.group({
-      continentName:new FormControl('',[Validators.required]),
-      countryName:new FormControl('',[Validators.required,this.inputValidator])
-    })
+
+  get f() {
+    return this.countryForm.controls;
   }
 
-  oncountrySave(){
-    // to get continent name on the basis of id
-    let selectedContinentName;
-    this.continentDataList.forEach(item=>{
-      if(item.id==this.selectedContinentId){
-        selectedContinentName=item.name;
-      }
-     })
-     
-    let countrySaveData={
-        'name':this.countryForm.get('countryName').value,
-        
-        'continent_name':selectedContinentName,
-         'status':1
+  createCountryForm() {
+    this.countryForm = this.fb.group({
+      continentName: ['', Validators.required],
+      countryName: ['', [Validators.required, this.inputValidator]],
+
+      iso2: ['', [ Validators.pattern(/^[A-Z]{2}$/)]],
+      iso3: ['', [Validators.required, Validators.pattern(/^[A-Z]{3}$/)]],
+      phonecode: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
+
+      currency_name: ['', Validators.required],
+      currency: ['', [Validators.required, Validators.pattern(/^[A-Z]{3}$/)]],
+      currency_symbol: [''],
+
+      latitude: ['', [ Validators.pattern(/^-?\d+(\.\d+)?$/)]],
+      longitude: ['', [ Validators.pattern(/^-?\d+(\.\d+)?$/)]]
+    });
+
+    this.autoUppercase();
+  }
+
+  autoUppercase() {
+    ['iso2', 'iso3', 'currency'].forEach(field => {
+      this.countryForm.get(field).valueChanges.subscribe(val => {
+        if (val) {
+          this.countryForm.get(field).setValue(val.toUpperCase(), { emitEvent: false });
+        }
+      });
+    });
+  }
+
+  selectedContinent(id: string) {
+    this.selectedContinentId = id;
+  }
+
+  oncountrySave() {
+    if (this.countryForm.invalid) {
+      this.countryForm.markAllAsTouched();
+      return;
     }
-    if(this.countryForm.valid){
-          this.subSunk.sink=this.apiHandlerService.apiHandler('addTourCountry','post',{},{},{
-              "Name":countrySaveData.name,
-              "IsoCode": "",
-              "Continent":this.selectedContinentId  
-            }).subscribe(respose=>{
-              if(respose.statusCode==200 || respose.statusCode==201 && respose.Status){
-                this.swalService.alert.success("Country has been saved successfully")
-                this.insertedRecord.emit(countrySaveData);
-                this.countryForm.reset();
-              }
-            },(err: HttpErrorResponse) => {
-              this.swalService.alert.error(err['error']['Message'].replace("400 ", ""));
-          });
-    }
+
+    const form = this.countryForm.value;
+
+    const payload = {
+      name: form.countryName,
+      iso2: form.iso2,
+      iso3: form.iso3,
+      phonecode: form.phonecode,
+      currency_name: form.currency_name,
+      currency: form.currency,
+      currency_symbol: form.currency_symbol,
+      region_id: this.selectedContinentId,
+      latitude: form.latitude,
+      longitude: form.longitude
+    };
+
+    this.subSunk.sink = this.apiHandlerService
+      .apiHandler('addMasterCountry', 'post', {}, {}, payload)
+      .subscribe(response => {
+        if ((response.statusCode === 200 || response.statusCode === 201) && response.Status) {
+          this.swalService.alert.success("Country saved successfully");
+          this.insertedRecord.emit(payload);
+          this.countryForm.reset();
+        }
+      }, (err: HttpErrorResponse) => {
+        this.swalService.alert.error(err.error.Message || "Error occurred");
+      });
   }
 
-  getContinentData(){
-    this.subSunk.sink = this.apiHandlerService.apiHandler('getTourContinet', 'post', {}, {},{})
-              .subscribe(response => {
-                  if (response.statusCode == 200 || response.statusCode == 201 && response.data) {
-                      this.continentDataList = response.data || [];
-                      this.sortContinent()
-                  }
-              });
-  }
-
-  sortContinent(){
-    this.continentDataList.sort((a, b) => 
-        a.name.localeCompare(b.name)
-    );
-  }
-  selectedContinent(countryId){
-    this.selectedContinentId=countryId;
+  getContinentData() {
+    this.subSunk.sink = this.apiHandlerService
+      .apiHandler('getTourContinet', 'post', {}, {}, {})
+      .subscribe(response => {
+        if ((response.statusCode === 200 || response.statusCode === 201) && response.data) {
+          this.continentDataList = response.data;
+          this.continentDataList.sort((a, b) => a.name.localeCompare(b.name));
+        }
+      });
   }
 
   inputValidator(control: FormControl) {
     const value = control.value;
+
     if (value && (value.startsWith(' ') || value.endsWith(' '))) {
       return { startOrEndSpace: true };
     }
+
     if (value && /\d+/.test(value)) {
       return { invalidString: true };
     }
-     return null;
+
+    return null;
   }
 
   validateInput() {
     this.countryForm.get('countryName').markAsTouched();
   }
-
 }

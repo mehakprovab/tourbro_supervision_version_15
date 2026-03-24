@@ -19,7 +19,7 @@ export class DotsComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.getLatestEventNotfications();
+        // this.getLatestEventNotfications();
 
     }
 

@@ -86,7 +86,7 @@ const routes: Routes = [
         data: { extraParameter: "tourCRS" },
       },
       {
-        path: "country/update",
+        path: "country/update/:id",
         // canActivate: [AuthGuard],
         component: UpdateCountryComponent,
         data: { extraParameter: "tourCRS" },

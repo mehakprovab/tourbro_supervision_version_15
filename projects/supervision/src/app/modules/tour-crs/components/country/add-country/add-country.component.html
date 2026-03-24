@@ -1,37 +1,123 @@
-<div>
-    <form [formGroup]="countryForm" (ngSubmit)="oncountrySave()">
-       <div class="continentInput">
-            <label for="continet" class="font-weight-bold" > Choose Continent</label>
-            <select formControlName="continentName" (change)="selectedContinent($event.target.value)">
-                <option value="" disabled selected>Choose Continent</option>
-                <option *ngFor="let option of continentDataList" [value]="option.id">
-                  {{ option.name }}
-                </option>
-              </select>
-        </div>
-        <div *ngIf="countryForm?.get('continentName').errors && countryForm?.get('continentName').touched">
-          <div *ngIf="countryForm?.get('continentName').errors.required" class="errorMessage">
-            *Please Choose tour continent name.
-            </div>
-       </div>
-        <div class="countryInput">
-            <label for="country" class="font-weight-bold" > Tour Country Name</label>
-            <input type="text" placeholder="Enter Package Country"  formControlName="countryName" maxlength="150"
-            (input)="validateInput()">
-        </div>
-        <div *ngIf="countryForm.controls.countryName.errors && countryForm.controls.countryName.touched">
-            <div *ngIf="countryForm.controls.countryName.errors.required" class="errorMessage">
-              *Please enter package country name.
-            </div>
-            <div *ngIf="countryForm.controls.countryName.errors.invalidString" class="errorMessage">
-              *Number(s) are not allowed.
-            </div>
-            <div *ngIf="countryForm.controls.countryName.errors.startOrEndSpace"  class="errorMessage">
-                *Empty space(s) in start and end are not allowed.
-            </div>
-         </div>
-        <div class="saveButton">
-            <button type="submit" class="orangeButton"> Save</button>
-        </div>
-    </form>
+<div class="col-6">
+  <form [formGroup]="countryForm" (ngSubmit)="oncountrySave()">
+
+    <!-- Continent -->
+    <div class="continentInput">
+      <label class="font-weight-bold">Choose Continent</label>
+      <select formControlName="continentName" (change)="selectedContinent($event.target.value)">
+        <option value="" disabled selected>Choose Continent</option>
+        <option *ngFor="let option of continentDataList" [value]="option.id">
+          {{ option.name }}
+        </option>
+      </select>
+    </div>
+
+    <div *ngIf="f.continentName.touched && f.continentName.errors">
+      <small class="errorMessage">*Please select continent</small>
+    </div>
+
+    <!-- Country Name -->
+    <div class="countryInput">
+      <label class="font-weight-bold">Country Name</label>
+      <input type="text" formControlName="countryName" maxlength="150" (input)="validateInput()">
+    </div>
+
+    <div *ngIf="f.countryName.touched && f.countryName.errors">
+      <small *ngIf="f.countryName.errors.required" class="errorMessage">*Country name required</small>
+      <small *ngIf="f.countryName.errors.invalidString" class="errorMessage">*Numbers not allowed</small>
+      <small *ngIf="f.countryName.errors.startOrEndSpace" class="errorMessage">*No space at start/end</small>
+    </div>
+
+    <!-- ISO2 -->
+    <div class="countryInput">
+      <label>ISO2 Code</label>
+      <input type="text" formControlName="iso2" maxlength="2">
+    </div>
+
+    <div *ngIf="f.iso2.touched && f.iso2.errors">
+      <!-- <small *ngIf="f.iso2.errors.required" class="errorMessage">*ISO2 required</small> -->
+      <small *ngIf="f.iso2.errors.pattern" class="errorMessage">*Must be 2 uppercase letters (e.g. IN)</small>
+    </div>
+
+    <!-- ISO3 -->
+    <div class="countryInput">
+      <label>ISO3 Code</label>
+      <input type="text" formControlName="iso3" maxlength="3">
+    </div>
+
+    <div *ngIf="f.iso3.touched && f.iso3.errors">
+      <small *ngIf="f.iso3.errors.required" class="errorMessage">*ISO3 required</small>
+      <small *ngIf="f.iso3.errors.pattern" class="errorMessage">*Must be 3 uppercase letters (e.g. IND)</small>
+    </div>
+
+    <!-- Phone Code -->
+    <div class="countryInput">
+      <label>Phone Code</label>
+      <input type="text" formControlName="phonecode">
+    </div>
+
+    <div *ngIf="f.phonecode.touched && f.phonecode.errors">
+      <small *ngIf="f.phonecode.errors.required" class="errorMessage">*Phone code required</small>
+      <small *ngIf="f.phonecode.errors.pattern" class="errorMessage">*Numbers only</small>
+    </div>
+
+    <!-- Currency Name -->
+    <div class="countryInput">
+      <label>Currency Name</label>
+      <input type="text" formControlName="currency_name">
+    </div>
+
+    <div *ngIf="f.currency_name.touched && f.currency_name.errors">
+      <small class="errorMessage">*Currency name required</small>
+    </div>
+
+    <!-- Currency Code -->
+    <div class="countryInput">
+      <label>Currency Code</label>
+      <input type="text" formControlName="currency">
+    </div>
+
+    <div *ngIf="f.currency.touched && f.currency.errors">
+      <small *ngIf="f.currency.errors.required" class="errorMessage">*Currency code required</small>
+      <small *ngIf="f.currency.errors.pattern" class="errorMessage">*Must be 3 uppercase letters (INR)</small>
+    </div>
+
+    <!-- Currency Symbol -->
+    <div class="countryInput">
+      <label>Currency Symbol</label>
+      <input type="text" formControlName="currency_symbol">
+    </div>
+
+    <!-- <div *ngIf="f.currency_symbol.touched && f.currency_symbol.errors">
+      <small class="errorMessage">*Currency symbol required</small>
+    </div> -->
+
+    <!-- Latitude -->
+    <div class="countryInput">
+      <label>Latitude</label>
+      <input type="text" formControlName="latitude">
+    </div>
+
+    <div *ngIf="f.latitude.touched && f.latitude.errors">
+      <!-- <small *ngIf="f.latitude.errors.required" class="errorMessage">*Latitude required</small> -->
+      <small *ngIf="f.latitude.errors.pattern" class="errorMessage">*Invalid latitude</small>
+    </div>
+
+    <!-- Longitude -->
+    <div class="countryInput">
+      <label>Longitude</label>
+      <input type="text" formControlName="longitude">
+    </div>
+
+    <div *ngIf="f.longitude.touched && f.longitude.errors">
+      <!-- <small *ngIf="f.longitude.errors.required" class="errorMessage">*Longitude required</small> -->
+      <small *ngIf="f.longitude.errors.pattern" class="errorMessage">*Invalid longitude</small>
+    </div>
+
+    <!-- Submit -->
+    <div class="saveButton">
+      <button type="submit" class="orangeButton">Save</button>
+    </div>
+
+  </form>
 </div>

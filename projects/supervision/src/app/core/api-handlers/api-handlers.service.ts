@@ -33,9 +33,14 @@ export class ApiHandlerService {
       case 'get':
         resp = this.httpClient.get<Observable<any>>(url,httpOptions);
         break;
-      case 'post':
-        resp = this.httpClient.post<Observable<any>>(url, data,httpOptions);
-        break;
+     case 'post':
+  if (data instanceof FormData) {
+    // 🔥 DO NOT attach headers for FormData
+    resp = this.httpClient.post<Observable<any>>(url, data);
+  } else {
+    resp = this.httpClient.post<Observable<any>>(url, data, httpOptions);
+  }
+  break;
       case 'delete':
         resp = this.httpClient.delete<Observable<any>>(url, data,
         );
@@ -47,15 +52,35 @@ export class ApiHandlerService {
     return resp;
   }
 
-  getUrls(topic, query, params): string {
-    try {
-      let url = apiMap[topic];
-      if (!url)
-        return '';
-      return `${url}`; // convert to string;
-    } catch (error) {
-      log.debug(error);
-      return '';
+ getUrls(topic: string, pathParams?: any, queryParams?: any): string {
+  try {
+    let url = apiMap[topic];
+
+    if (!url) return '';
+
+    // ✅ Replace path params (e.g. /country/:id)
+    if (pathParams) {
+      Object.keys(pathParams).forEach(key => {
+        url = url.replace(`:${key}`, pathParams[key]);
+      });
     }
+
+    // ✅ Append query params (?id=1&name=test)
+    if (queryParams) {
+      const queryString = Object.keys(queryParams)
+        .map(key => `${key}=${encodeURIComponent(queryParams[key])}`)
+        .join('&');
+
+      if (queryString) {
+        url += `${queryString}`;
+      }
+    }
+
+    return url;
+
+  } catch (error) {
+    console.error(error);
+    return '';
   }
+}
 }

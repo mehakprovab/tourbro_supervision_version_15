@@ -1,6 +1,6 @@
 <div class="entireScreen  p-0 col-md-12 col-lg-12">
     <div class="heading">
-        <p>Tour Manager</p>
+        <p>Yatra Manager</p>
         <button *ngIf="!editForm" class="orangeButton" type="submit">Add</button>
     </div>
     <div style="padding: 20px;">
@@ -9,7 +9,7 @@
             <div class="custom-inline-form">
                 <form class="" [formGroup]="tourForm" autocomplete="off">
                     <div class="form-group required row">
-                        <label for="tourName " class="required" class="col-sm-2 col-form-label font-weight-bold">Tour Name <sup
+                        <label for="tourName " class="required" class="col-sm-2 col-form-label font-weight-bold">Yatra Name <sup
                             class="text-danger f-16"> * </sup> </label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" id="tourName" maxlength="100"
@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <div class="form-group required row">
-                        <label for="tourDescription " class="required" class="col-sm-2 col-form-label font-weight-bold">Tour Description <sup
+                        <label for="tourDescription " class="required" class="col-sm-2 col-form-label font-weight-bold">Yatra Description <sup
                             class="text-danger f-16"> * </sup></label>
                         <div class="col-sm-4">
                             <textarea type="text" class="form-control" id="tourDescription"
@@ -195,9 +195,10 @@
                             <div>{{'<<'}}</div>
                         </div>
                         <div class="col-sm-4 boxInputList">
+                         
                             <ul>
                                 <li *ngFor="let city of selectedCity">
-                                    {{city.CityName}}
+                                    {{city.cityName}}
                                      <!-- - <b>({{city.country_name}})</b> -->
                                 </li>
                             </ul>
@@ -276,8 +277,8 @@
                     </div> -->
                     <div class="form-group row mb-n2">
                         <div class="col-sm-12 buttonAllign">
-                            <button type="submit" class="btn btn-sm btn-primary mr-1 orangeButton" (click)="onCreateTour()">Create Tour</button>
-                            <button type="reset" class="btn btn-sm btn-primary orangeButton" routerLink="/tour-crs/tour-list">Go Back to Tour list</button>
+                            <button type="submit" class="btn btn-sm btn-primary mr-1 orangeButton" (click)="onCreateTour()">Create Yatra</button>
+                            <button type="reset" class="btn btn-sm btn-primary orangeButton" routerLink="/tour-crs/tour-list">Go Back to Yatra list</button>
                         </div>
                     </div>
 

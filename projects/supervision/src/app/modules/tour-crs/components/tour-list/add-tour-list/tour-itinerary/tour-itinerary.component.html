@@ -1,142 +1,263 @@
 <div class="entireScreen container-fluid p-0">
   <div class="heading py-3 text-center bg-primary text-white rounded">
-    <p>{{'Visited City List : [ Tour Name :' + tourName + ']'}}</p>
+    <p>{{ "Visited City List : [ Tour Name :" + tourName + "]" }}</p>
   </div>
 
   <div class="p-4">
     <div class="add-traveller">
       <div class="custom-inline-form">
-
         <!-- Tour Duration -->
         <div class="form-group row mb-4">
-          <label class="col-sm-2 col-form-label font-weight-bold">Tour Duration</label>
+          <label class="col-sm-2 col-form-label font-weight-bold"
+            >Tour Duration</label
+          >
           <div class="col-sm-4">
-            <input type="text" class="form-control shadow-sm" [ngModel]="tourDuration" disabled>
+            <input
+              type="text"
+              class="form-control shadow-sm"
+              [ngModel]="tourDuration"
+              disabled
+            />
           </div>
         </div>
 
         <!-- Visited Cities -->
         <div *ngFor="let city of cityDataList" class="form-group row mb-3">
-          <label class="col-sm-2 col-form-label font-weight-bold">City Visited</label>
+          <label class="col-sm-2 col-form-label font-weight-bold"
+            >City Visited</label
+          >
           <div class="col-sm-4">
-            <input type="text" class="form-control shadow-sm" [ngModel]="city.CityName + ' [ ' + city.no_of_nights + ' ]'" disabled>
+            <input
+              type="text"
+              class="form-control shadow-sm"
+              [ngModel]="city.CityName + ' [ ' + city.no_of_nights + ' ]'"
+              disabled
+            />
           </div>
         </div>
 
         <!-- Itinerary Form -->
-        <form [formGroup]="tourItinerayForm" (ngSubmit)="submitItineryForm()" autocomplete="off">
+        <form
+          [formGroup]="tourItinerayForm"
+          (ngSubmit)="submitItineryForm()"
+          autocomplete="off"
+        >
           <div formArrayName="inputFields">
-
-            <div *ngFor="let day of inputFields.controls; let i=index;" [formGroupName]="i" class="dayCard mb-4 p-3 rounded shadow-sm bg-light">
-
+            <div
+              *ngFor="let day of inputFields.controls; let i = index"
+              [formGroupName]="i"
+              class="dayCard mb-4 p-3 rounded shadow-sm bg-light"
+            >
               <!-- Day Header -->
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <h5 class="text-primary">Day {{i+1}}</h5>
+              <div
+                class="d-flex justify-content-between align-items-center mb-2"
+              >
+                <h5 class="text-primary">Day {{ i + 1 }}</h5>
                 <select formControlName="visitedCity" class="form-control w-50">
                   <option value="">Select City</option>
-                  <option *ngFor="let city of cityDataList" [value]="city.CityName">{{city.CityName}}</option>
+                  <option
+                    *ngFor="let city of cityDataList"
+                    [value]="city.CityName"
+                  >
+                    {{ city.CityName }}
+                  </option>
                 </select>
-                <div class="text-danger"
- *ngIf="day.get('visitedCity').touched && day.get('visitedCity').invalid">
-  City is required
-</div>
+                <div
+                  class="text-danger"
+                  *ngIf="
+                    day.get('visitedCity').touched &&
+                    day.get('visitedCity').invalid
+                  "
+                >
+                  City is required
+                </div>
               </div>
 
               <!-- Program Title -->
               <div class="form-group mb-3">
-                <input type="text" formControlName="programTitle" class="form-control shadow-sm" placeholder="Program Title for the Day">
-              <div class="text-danger"
- *ngIf="day.get('programTitle').touched && day.get('programTitle').invalid">
-  Program title is required
+                <input
+                  type="text"
+                  formControlName="programTitle"
+                
+                  class="form-control shadow-sm"
+                  placeholder="Program Title for the Day"
+                />
+<div
+  class="text-danger"
+  *ngIf="
+    day.get('programTitle').touched &&
+    day.get('programTitle').errors
+  "
+>
+  <div *ngIf="day.get('programTitle').errors?.required">
+    Program title is required
+  </div>
+
+  <div *ngIf="day.get('programTitle').errors?.maxlength">
+    Maximum 1000 characters allowed
+  </div>
 </div>
               </div>
-<button type="button" class="btn btn-primary btn-sm mt-2 mb-2"
-  (click)="saveDay(i)">
-  Save Day
-</button>
+              <button
+                type="button"
+                class="btn btn-primary btn-sm mt-2 mb-2"
+                (click)="saveDay(i)"
+              >
+                Save Day
+              </button>
               <!-- Activities -->
               <div formArrayName="activities">
-                <div *ngFor="let activity of day.get('activities').controls; let j=index;" [formGroupName]="j" class="activityCard mb-3 p-3 border rounded shadow-sm bg-white">
-
+                <div
+                  *ngFor="
+                    let activity of day.get('activities').controls;
+                    let j = index
+                  "
+                  [formGroupName]="j"
+                  class="activityCard mb-3 p-3 border rounded shadow-sm bg-white"
+                >
                   <div class="row mb-2 align-items-center">
                     <div class="col-md-3">
-                      <input type="time" formControlName="time" class="form-control" placeholder="Time">
-                    <div class="text-danger"
- *ngIf="activity.get('time').touched && activity.get('time').invalid">
-  Time is required
-</div>
+                      <select formControlName="time" class="form-control">
+  <option value="">Select Time</option>
+  <option *ngFor="let time of timeSlots" [value]="time">
+    {{ time }}
+  </option>
+</select>
+                      <!-- <input
+                        type="time"
+                        formControlName="time"
+                        class="form-control"
+                        step="900"
+                        placeholder="Time"
+                      /> -->
+                      <div
+                        class="text-danger"
+                        *ngIf="
+                          activity.get('time').touched &&
+                          activity.get('time').invalid
+                        "
+                      >
+                        Time is required
+                      </div>
                     </div>
                     <div class="col-md-5">
-                      <input type="text" formControlName="title" class="form-control" placeholder="Activity Title">
-                    <div class="text-danger"
- *ngIf="activity.get('title').touched && activity.get('title').invalid">
-  Activity title is required
-</div>
+                      <input
+                        type="text"
+                        formControlName="title"
+                        class="form-control"
+                        placeholder="Activity Title"
+                      />
+                      <div
+                        class="text-danger"
+                        *ngIf="
+                          activity.get('title').touched &&
+                          activity.get('title').invalid
+                        "
+                      >
+                        Activity title is required
+                      </div>
                     </div>
                     <div class="col-md-3">
-                      <input type="file" (change)="onImageUpload($event,i,j)" class="form-control form-control-sm" accept="image/*">
-                    
-<div class="text-danger"
- *ngIf="activity.get('image').touched && activity.get('image').invalid">
-  Activity image is required
-</div>
+                      <input
+                        type="file"
+                        (change)="onImageUpload($event, i, j)"
+                        class="form-control form-control-sm"
+                        accept="image/*"
+                      />
+
+                      <div
+                        class="text-danger"
+                        *ngIf="
+                          activity.get('image').touched &&
+                          activity.get('image').invalid
+                        "
+                      >
+                        Activity image is required
+                      </div>
                     </div>
-                    <div class="col-md-1
-                     text-right">
-                      <button type="button" class="btn btn-danger btn-sm" (click)="removeActivity(i,j)">Remove</button>
+                    <div class="col-md-1 text-right">
+                      <button
+                        type="button"
+                        class="btn btn-danger btn-sm"
+                        (click)="removeActivity(i, j)"
+                      >
+                        Remove
+                      </button>
                     </div>
                   </div>
 
                   <div class="form-group mb-2">
-                    <textarea formControlName="description" class="form-control" rows="2" placeholder="Activity Description"></textarea>
-                 <div class="text-danger"
- *ngIf="activity.get('description').touched && activity.get('description').invalid">
-  Activity description is required
-</div>
+                    <textarea
+                      formControlName="description"
+                      class="form-control"
+                      rows="2"
+                      placeholder="Activity Description"
+                    ></textarea>
+                    <div
+                      class="text-danger"
+                      *ngIf="
+                        activity.get('description').touched &&
+                        activity.get('description').invalid
+                      "
+                    >
+                      Activity description is required
+                    </div>
                   </div>
-
-                  <!-- Display uploaded image preview -->
-                  
-                  <!-- <div *ngIf="activity.get('image').value">
-<img 
-  *ngIf="activity.get('image').value"
-  [src]="getImageSrc(activity.get('image').value)"
-  class="img-thumbnail"
-  style="max-height:120px;">
-</div>
-
-                </div> -->
-
-                <button type="button" class="btn btn-success btn-sm mb-2" (click)="addActivity(i)">Add Activity</button>
-              <button type="button" class="btn btn-info btn-sm mb-2" style="margin-left: 4px;"
-  (click)="saveActivity(i, j)">
-  Save Activity
-</button>
+                </div>
+                <button
+                  type="button"
+                  class="btn btn-success btn-sm mb-2"
+                  (click)="addActivity(i)"
+                >
+                  Add Activity
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-info btn-sm mb-2"
+                  style="margin-left: 4px"
+                  (click)="saveActivity(i)"
+                >
+                  Save Activity
+                </button>
               </div>
-
             </div>
-
           </div>
 
           <!-- Inclusions -->
-          <div class="inclusionsCheckBox mb-4">
+          <!-- <div class="inclusionsCheckBox mb-4">
             <h5 class="text-primary mb-2">Inclusions</h5>
             <div class="d-flex flex-wrap">
-              <div *ngFor="let item of inclusions" class="custom-control custom-checkbox mr-3 mb-2">
-                <input type="checkbox" class="custom-control-input" id="{{item}}" (change)="inclusionSelection($event.target.checked,item)" [checked]="selectedCheckboxes.includes(item)">
-                <label class="custom-control-label" for="{{item}}">{{item}}</label>
+              <div
+                *ngFor="let item of inclusions"
+                class="custom-control custom-checkbox mr-3 mb-2"
+              >
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="{{ item }}"
+                  (change)="inclusionSelection($event.target.checked, item)"
+                  [checked]="selectedCheckboxes.includes(item)"
+                />
+                <label class="custom-control-label" for="{{ item }}">{{
+                  item
+                }}</label>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <!-- Buttons -->
           <div class="saveButton d-flex gap-2">
             <button type="submit" class="btn btn-warning">Next</button>
-            <button type="button" class="btn btn-secondary" style="margin-left: 4px;" routerLink="/tour-crs/tour-list/">Go to Tour List</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              style="margin-left: 4px"
+              routerLink="/tour-crs/tour-list/"
+            >
+              Go to Tour List
+            </button>
           </div>
-
         </form>
-
       </div>
     </div>
   </div>

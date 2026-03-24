@@ -1,163 +1,118 @@
-
-p{background-color: #edeff1 !important;
-    color: #022756 !important;
-    width: 30rem !important;
-    height: 3rem !important;
-    padding-top: .8rem !important;
-    text-align: center !important;
-    font-weight: 500 !important;
-    border-radius: .3rem !important;
-    margin: 1rem !important;
-    border: 1px solid #022756;
-}
-button.orangeButton{
-    background-color: #fbc10a !important;
-    color: #fff !important;
-    border: none !important;
-    padding: 10px 20px !important;
-    font-weight: 500 !important;
-    border-radius: 0.3rem 0.3rem !important;
-    margin-top: 1rem !important;
-    height: 3rem !important;
-    // width: 4rem !important
-}
-.heading{
-    display: flex !important ;
+/* Global spacing */
+div {
+  margin: 10px;
 }
 
-.entireScreen{
-    background-color: #fff !important;
+/* Heading */
+p {
+  background-color: #edeff1;
+  color: #022756;
+  width: 100%;
+  max-width: 30rem;
+  height: 3rem;
+  padding-top: 0.8rem;
+  text-align: center;
+  font-weight: 500;
+  border-radius: 0.3rem;
+  margin: 1rem auto;
+  border: 1px solid #022756;
 }
-.countryInput{
-    width: 300px;
-    margin-left: 16rem;
-    @media  (max-width: 767px) {
-        margin-left: 1rem !important;
-    }
+
+/* Container */
+.entireScreen {
+  background-color: #fff;
 }
-.saveButton{
-    margin-left: 21.5rem !important;
-    margin-bottom: 1rem;
-    @media  (max-width: 767px) {
-        margin-left: 8.5rem !important;
-    }
+
+/* Flex heading */
+.heading {
+  display: flex;
+  justify-content: center;
 }
-input{
-    height: calc(2.25rem + 2px) ;
-    padding: 0.375rem 0.75rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    margin-left: 10px;
+
+/* Form fields container */
+.countryInput,
+.continentInput {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 10px auto;
+  display: flex;
+  flex-direction: column;
 }
+
+/* Labels */
+label {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+/* Inputs & Select */
+input,
+select {
+  height: 38px;
+  padding: 6px 10px;
+  font-size: 14px;
+  color: #495057;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  width: 100%;
+}
+
+/* Remove extra left margin */
+select {
+  margin-left: 0;
+}
+
+/* Error message */
+.errorMessage {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* Save button container */
+.saveButton {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+/* Button */
+button.orangeButton {
+  background-color: #fbc10a;
+  color: #fff;
+  border: none;
+  padding: 10px 25px;
+  font-weight: 500;
+  border-radius: 4px;
+  height: 40px;
+  cursor: pointer;
+}
+
+/* Button hover */
+button.orangeButton:hover {
+  background-color: #e0aa08;
+}
+
+/* Table (if used) */
 table {
-    border: 1px solid lightgray;
-    border-collapse: collapse;
-}
-  
-td, th {
-    border: 1px solid lightgray;
-    padding: 8px;
-}
-.packageBtn{
-    width: none !important;
+  border: 1px solid lightgray;
+  border-collapse: collapse;
 }
 
-.errorMessage{
-    color: red;
-    margin-left: 351px;
-    @media(max-width: 767px){
-        margin-left: 119px;
-    }
+td,
+th {
+  border: 1px solid lightgray;
+  padding: 8px;
 }
 
-div{
-    margin: 10px;
-}
-p{background-color: #edeff1 !important;
-    color: #022756 !important;
-    width: 30rem !important;
-    height: 3rem !important;
-    padding-top: .8rem !important;
-    text-align: center !important;
-    font-weight: 500 !important;
-    border-radius: .3rem !important;
-    margin: 1rem !important;
-    border: 1px solid #022756;
-}
-button.orangeButton{
-    background-color: #fbc10a !important;
-    color: #fff !important;
-    border: none !important;
-    padding: 10px 20px !important;
-    font-weight: 500 !important;
-    border-radius: 0.3rem 0.3rem !important;
-    margin-top: 1rem !important;
-    height: 40px;
-    margin-bottom: 15px;
-}
-.heading{
-    display: flex !important ;
-}
+/* Mobile responsive */
+@media (max-width: 767px) {
+  .countryInput,
+  .continentInput {
+    max-width: 90%;
+  }
 
-.entireScreen{
-    background-color: #fff !important;
-}
-.countryInput, .continentInput{
-    width: 400px;
-    margin-left: 16rem;
-    @media  (max-width: 767px) {
-        margin-left: 1rem !important;
-    }
-}
-.saveButton{
-    margin-left: 24.5rem !important;
-    margin-bottom: 1rem;
-    @media  (max-width: 767px) {
-        margin-left: 9.5rem !important;
-    }
-}
-input,select{
-    height: calc(2.25rem + 2px) ;
-    padding: 0.375rem 0.75rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    margin-left: 20px;
-    width: 266px;
-    @media  (max-width: 767px) {
-        width: 223px !important;
-    }
-}
-table {
-    border: 1px solid lightgray;
-    border-collapse: collapse;
-}
-  
-td, th {
-    border: 1px solid lightgray;
-    padding: 8px;
-}
-.packageBtn{
-    width: none !important;
-}
-
-select{
-    margin-left: 20px !important;
-}
-
-.errorMessage{
-    color: red;
-    margin-left: 377px;
-    @media(max-width: 767px){
-        margin-left: 119px;
-    }
+  p {
+    width: 90%;
+  }
 }

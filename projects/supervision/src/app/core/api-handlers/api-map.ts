@@ -329,7 +329,12 @@ export const apiMap = {
   addMasterContinent:`${baseUrl}/common/addContinent`,
   updateMasterContinent:`${baseUrl}/common/updateContinent`,
   deleteMasterContinent:`${baseUrl}/common/deleteContinent`,
+  getMasterCountryById:`${baseUrl}/common/getMasterCountryListbyid/`,
   statusChangeMasterContinent:`${baseUrl}/common/continentList`,
+  getMasterState: `${baseUrl}/common/MasterStateList`,
+addMasterState: `${baseUrl}/common/addMasterState`,
+updateMasterState: `${baseUrl}/common/updateMasterState`,
+deleteMasterState: `${baseUrl}/common/deleteMasterState`,
 //TourCRS -> Continent
   getTourContinet:`${baseUrl}/tour/tourContinent/tourContinentList`,
   addTourContinent:`${baseUrl}/tour/tourContinent/addTourContinent`,
@@ -662,4 +667,5 @@ editVehicleMaster: `${baseUrl}/car/editVehicle`,
           tourUploadImage: `${baseUrl}/tour/tours/uploadItineraryimages`,
           saveDay: `${baseUrl}/tour/tours/addTourItineraries`,
             addItineraryActivities: `${baseUrl}/tour/tours/addItineraryActivities`,
+            uploadVideo:`${baseUrl}/tour/tours/uploadBannerVideo`,
 };

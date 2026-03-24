@@ -25,12 +25,12 @@
                       </tr>
                   </thead>
                   <tbody>
-                    <tr *ngIf="searchSpin">
+                    <!-- <tr *ngIf="searchSpin">
                         <td colspan="12">
                             <mat-spinner [diameter]="30" style="margin:0 auto;"
                                 mode="indeterminate"></mat-spinner>
                         </td>
-                    </tr>
+                    </tr> -->
                     <tr *ngIf="!searchSpin && !tourRegionCounrtyDataList.length">
                         <td colspan="11">
                             <h4 class="text-muted text-center">
@@ -40,17 +40,17 @@
                     </tr>
                       <tr *ngFor="let item of tourRegionCounrtyDataList | filter:searchText | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index">
                               <td class="text-left text-muted">{{(i+1) }}</td>
-                              <td class="text-left">{{ item.continent_name }}</td>
+                              <!-- <td class="text-left">{{ item.continent_name }}</td> -->
                               <td class="text-left">{{ item.name }}</td>
                               <td [ngStyle]="{ 'color': item.status==1 ? 'green' : 'red' }" class="text-left">{{ item.status==1 ? 'Active' : 'In-Active' }}</td>
-                              <td class="text-left">
+                              <!-- <td class="text-left">
                                 <button *ngIf="item.status==1" class="btn btn-sm btn-primary mr-1" (click)="onStateChange(item)" >{{'De-Active'}}
                                 </button>
                                 <button *ngIf="item.status!=1" class="btn btn-sm btn-primary mr-1" (click)="onStateChange(item)" > {{'Active'}}
                                 </button>
-                              </td>
+                              </td> -->
                               <td class="text-left buttontdsize" >
-                                  <button  class="btn btn-sm btn-primary mr-1" routerLink="/tour-crs/country/update" [queryParams]="item" >{{'Edit'}}
+                                  <button  class="btn btn-sm btn-primary mr-1" [routerLink]="['/tour-crs/country/update', item.id]" >{{'Edit'}}
                                   </button>
                                   <button class="btn btn-sm btn-primary mr-1" (click)="onDeletedRecord(item)"> {{'Delete'}}  </button>
                               </td>

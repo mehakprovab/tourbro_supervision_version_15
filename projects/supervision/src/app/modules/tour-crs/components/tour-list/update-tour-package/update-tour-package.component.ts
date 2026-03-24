@@ -7,6 +7,8 @@ import { SubSink } from 'subsink';
 import { environment } from '../../../../../../environments/environment.prod';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { timeout } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 environment
 
 const baseUrl = environment.baseUrl;
@@ -17,7 +19,9 @@ const baseUrl = environment.baseUrl;
   styleUrls: ['./update-tour-package.component.scss']
 })
 export class UpdateTourPackageComponent implements OnInit {
-
+videoType: string = ''; // 'upload' or 'youtube'
+youtubeLink: string = '';
+videoFile: File | null = null;
   @Output() staticContentTab = new EventEmitter<any>();
   activitiesList: Array<any> = [];
   selectedtActivity: Array<any> = [];
@@ -120,7 +124,8 @@ export class UpdateTourPackageComponent implements OnInit {
       exclusions: new FormControl(''),
       termsConditions: new FormControl(''),
       OptionalTours: this.fb.array([]),
-      MeetingPoint: new FormControl('')
+      MeetingPoint: new FormControl(''),
+      endCity: new FormControl('')
       // cancellationPolicy: this.fb.array([]),
       // tripNotes: new FormControl(''),
     });
@@ -256,6 +261,7 @@ export class UpdateTourPackageComponent implements OnInit {
       this.tourUpdateForm.get('termsConditions').patchValue(data['terms']);
       // this.tourUpdateForm.get('optionalTours').patchValue(data['optional_tours']);
       this.tourUpdateForm.get('MeetingPoint').patchValue(data['meeting_point']);
+      this.tourUpdateForm.get('endCity').patchValue(data['endCity']);
       // this.tourUpdateForm.get('cancellationPolicy').patchValue(data['canc_policy']);
       // this.tourUpdateForm.get('tripNotes').patchValue(data['trip_notes']);
       this.selectedCheckboxes = data['inclusions_checks'] ? data['inclusions_checks'].split(',') : [];
@@ -410,79 +416,164 @@ export class UpdateTourPackageComponent implements OnInit {
     }
   }
 
-  onUpdateTour() {
-    if (this.tourUpdateForm.valid) {
-      //api call to save bannerImage
-      if (this.logoConfig.get('banner_logo').value) {
-        this.addImageApiCall();
-      }
+onUpdateTour() {
+  if (!this.tourUpdateForm.valid) return;
 
-      //api call to save gallery
-      // if (this.logoConfig.get('gallery_image').value) {
-      //   this.addGalleryImageApiCall();
-      // }
-      const startDate = new Date(this.tourUpdateForm.get('startDate').value);
-      const expiryDate = new Date(this.tourUpdateForm.get('expirayDate').value);
-      
-      // Adjust for local timezone
-      const formattedStartDate = startDate.getFullYear() + '-' +
-        String(startDate.getMonth() + 1).padStart(2, '0') + '-' +
-        String(startDate.getDate()).padStart(2, '0');
-      
-      const formattedExpiryDate = expiryDate.getFullYear() + '-' +
-        String(expiryDate.getMonth() + 1).padStart(2, '0') + '-' +
-        String(expiryDate.getDate()).padStart(2, '0');
-      const updateTourData = {
-        "Id": Number(this.tourId),
-        "TourName": this.tourUpdateForm.get('tourName').value,
-        "TourDescription": this.tourUpdateForm.get('tourDescription').value,
-        "TourType": this.tourUpdateForm.get('tourType').value,
-        "StartDate": formattedStartDate,
-        "ExpiryDate": formattedExpiryDate,
-        "SupplierName": this.tourUpdateForm.get('supplierName').value,
-        "Theme": this.selectedTheme,
-        "Activity": this.selectedtActivity,
-        "Highlights": this.tourUpdateForm.get('highlights').value ? this.tourUpdateForm.get('highlights').value.replace(/\n$/, '') : '',
-        "Inclusions": this.tourUpdateForm.get('inclusions').value ? this.tourUpdateForm.get('inclusions').value.replace(/\n$/, '').replace(/\n$/, '') : '',
-        "Exclusions": this.tourUpdateForm.get('exclusions').value ? this.tourUpdateForm.get('exclusions').value.replace(/\n$/, '') : '',
-        "Terms": this.tourUpdateForm.get('termsConditions').value ? this.tourUpdateForm.get('termsConditions').value.replace(/\n$/, '') : '',
-        "OptionalTours": this.tourUpdateForm.get('OptionalTours').value.map((item, index) => ({
-        ...item,id: index+1
-      })),
-        "MeetingPoint": this.tourUpdateForm.get('MeetingPoint').value,
-        // "CancPolicy": this.tourUpdateForm.get('cancellationPolicy').value,
-        // "TripNotes": this.tourUpdateForm.get('tripNotes').value ? this.tourUpdateForm.get('tripNotes').value.replace(/\n$/, '') : '',
-        "inclusionsChecks": this.selectedCheckboxes
-      }
+  const updateTourData = this.prepareTourData();
 
-      setTimeout(()=>{
-        this.subSunk.sink = this.apiHandlerService.apiHandler('updateTour', 'post', {}, {},
-        updateTourData
-      ).subscribe(response => {
-        if ((response.statusCode == 200 || response.statusCode == 201) && response.Status) {
-          this.swalService.alert.success("Tour has been updated successfully");
-          this.router.navigate(['/tour-crs/tour-list']);
-        }
-      }, (err: HttpErrorResponse) => {
-        this.swalService.alert.error(err['error']['Message']);
-      });
-      },1000);
-    }
-  }
+  // CASE 1: Video exists → wait for upload
+  if (this.videoFile || this.youtubeLink) {
 
-  addImageApiCall() {
-    const formData = new FormData();
-    formData.append('Id', this.tourId.toString());
-    formData.append('BannerImage', this.logoConfig.get('banner_logo').value);
-    // formData.append('Video', 'video.mp4');
-    this.subSunk.sink = this.apiHandlerService.apiHandler('uploadBannerImage', 'post', {}, {},
-      formData
-    ).subscribe(response => {
-      if (response.statusCode == 200 || response.statusCode == 201) {
+    this.isUploading = true;
 
+    this.uploadVideoApiCall().subscribe({
+      next: () => {
+        this.isUploading = false;
+
+        // ✅ Now call updateTour AFTER video upload
+        this.callUpdateTour(updateTourData);
+      },
+      error: (err) => {
+        this.isUploading = false;
+        this.swalService.alert.oops("Video upload failed ❌");
+        console.error(err);
       }
     });
+
+  } else {
+    // CASE 2: No video → direct update
+    this.callUpdateTour(updateTourData);
   }
+}
+callUpdateTour(data) {
+  this.subSunk.sink = this.apiHandlerService.apiHandler(
+    'updateTour',
+    'post',
+    {},
+    {},
+    data
+  ).subscribe({
+    next: (response) => {
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        this.swalService.alert.success("Tour updated successfully ✅");
+        this.router.navigate(['/tour-crs/tour-list']);
+      }
+    },
+    error: (err) => {
+      this.swalService.alert.error(err['error']['Message']);
+    }
+  });
+}
+prepareTourData() {
+  const startDate = new Date(this.tourUpdateForm.get('startDate').value);
+  const expiryDate = new Date(this.tourUpdateForm.get('expirayDate').value);
+
+  const formattedStartDate =
+    startDate.getFullYear() + '-' +
+    String(startDate.getMonth() + 1).padStart(2, '0') + '-' +
+    String(startDate.getDate()).padStart(2, '0');
+
+  const formattedExpiryDate =
+    expiryDate.getFullYear() + '-' +
+    String(expiryDate.getMonth() + 1).padStart(2, '0') + '-' +
+    String(expiryDate.getDate()).padStart(2, '0');
+
+  return {
+    Id: Number(this.tourId),
+    TourName: this.tourUpdateForm.get('tourName').value,
+    TourDescription: this.tourUpdateForm.get('tourDescription').value,
+    TourType: this.tourUpdateForm.get('tourType').value,
+    StartDate: formattedStartDate,
+    ExpiryDate: formattedExpiryDate,
+    SupplierName: this.tourUpdateForm.get('supplierName').value,
+    Theme: this.selectedTheme,
+    Activity: this.selectedtActivity,
+    Highlights: this.tourUpdateForm.get('highlights').value
+      ? this.tourUpdateForm.get('highlights').value.replace(/\n$/, '')
+      : '',
+    Inclusions: this.tourUpdateForm.get('inclusions').value
+      ? this.tourUpdateForm.get('inclusions').value.replace(/\n$/, '')
+      : '',
+    Exclusions: this.tourUpdateForm.get('exclusions').value
+      ? this.tourUpdateForm.get('exclusions').value.replace(/\n$/, '')
+      : '',
+    Terms: this.tourUpdateForm.get('termsConditions').value
+      ? this.tourUpdateForm.get('termsConditions').value.replace(/\n$/, '')
+      : '',
+    OptionalTours: this.tourUpdateForm.get('OptionalTours').value.map((item, index) => ({
+      ...item,
+      id: index + 1
+    })),
+    MeetingPoint: this.tourUpdateForm.get('MeetingPoint').value,
+    endCity: this.tourUpdateForm.get('endCity').value,
+    // inclusionsChecks: this.selectedCheckboxes
+  };
+}
+addImageApiCall() {
+  const formData = new FormData();
+
+  formData.append('Id', this.tourId.toString());
+  console.log(this.bannerImage, "this.bannerImage");
+
+  // ✅ Always send banner image if present
+  if (this.bannerImage) {
+    formData.append('BannerImage', this.bannerImage);
+  }
+
+  // ✅ Handle based on radio selection
+  // if (this.videoType === 'upload') {
+  //   // User selected video file upload
+  //   if (this.videoFile) {
+  //     console.log('Uploading video file:', this.videoFile.name);
+  //     formData.append('Video', this.videoFile);
+  //   }
+  // } else if (this.videoType === 'youtube') {
+  //   // User selected YouTube link
+  //   if (this.youtubeLink) {
+  //     console.log('Uploading YouTube link:', this.youtubeLink);
+      
+  //     // IMPORTANT: Send YouTube link as a text file to match Postman's behavior
+  //     const youtubeBlob = new Blob([this.youtubeLink], { type: 'text/plain' });
+  //     const youtubeFile = new File([youtubeBlob], 'youtube-link.txt', { type: 'text/plain' });
+  //     formData.append('Video', youtubeFile);
+  //   }
+  // }
+
+  // 🔍 Debug
+  console.log('=== FormData Contents ===');
+  formData.forEach((value, key) => {
+    if (value instanceof File) {
+      console.log(key, '-> File:', value.name, 'size:', value.size, 'type:', value.type);
+    } else {
+      console.log(key, '->', value);
+    }
+  });
+
+  this.subSunk.sink = this.apiHandlerService.apiHandler(
+    'uploadBannerImage',
+    'post',
+    {},
+    {},
+    formData
+  ).subscribe({
+    next: (response) => {
+      console.log('Upload response:', response);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        if (response.data === false) {
+          console.warn('Upload returned false:', response.Message);
+        } else {
+          console.log('Upload success');
+        }
+      }
+    },
+    error: (error) => {
+      console.error('Upload error:', error);
+      if (error.error) {
+        console.error('Error details:', error.error);
+      }
+    }
+  });
+}
 
   addGalleryImageApiCall() {
     let galleryImage = this.logoConfig.get('gallery_image').value
@@ -574,10 +665,49 @@ onGallerySelect(event: any) {
 }
 
 
-  onVideoSelect($event) {
-    this.video = $event.target.files[0].file;
+onVideoSelect(event: any) {
+  const file = event.target.files[0];
+
+  if (file) {
+    const allowedTypes = ['video/mp4', 'video/mpeg', 'video/quicktime'];
+    const maxSize = 50 * 1024 * 1024; // 50MB
+
+    if (!allowedTypes.includes(file.type)) {
+      this.swalService.alert.oops("Only MP4/MPEG/MOV videos are allowed.");
+      event.target.value = '';
+      return;
+    }
+
+    if (file.size > maxSize) {
+      this.swalService.alert.oops("Video size must be less than 50MB.");
+      event.target.value = '';
+      return;
+    }
+
+    this.videoFile = file;
+  }
+}
+isUploading=false
+uploadVideoApiCall(): Observable<any> {
+  const formData = new FormData();
+  formData.append('Id', this.tourId.toString());
+
+  if (this.videoType === 'upload' && this.videoFile) {
+    formData.append('Video', this.videoFile);
   }
 
+  if (this.videoType === 'youtube' && this.youtubeLink) {
+    formData.append('Video', this.youtubeLink);
+  }
+
+  return this.apiHandlerService.apiHandler(
+    'uploadVideo',
+    'post',
+    {},
+    {},
+    formData
+  ).pipe(timeout(300000));
+}
   ngOnDestroy() {
     this.subSunk.unsubscribe();
   }

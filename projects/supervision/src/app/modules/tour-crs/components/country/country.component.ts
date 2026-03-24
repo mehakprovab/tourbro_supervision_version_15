@@ -19,7 +19,7 @@ export class CountryComponent implements OnInit {
   enabledForm:boolean=false;
   editForm:boolean=false;
   tourRegionCounrtyDataList:any[]=[];
-  displayColumn:string[]=['Sl. No.','Region','Country','Current State'];
+  displayColumn:string[]=['Sl. No.','Country','Current State','Actions'];
   pageSize = 100;
   page = 1;
   collectionSize: number;    
@@ -37,28 +37,45 @@ export class CountryComponent implements OnInit {
   ngOnInit() {
     const cuurentUser = localStorage.getItem('currentDomainUser');
     this.loggedInUserData = JSON.parse(cuurentUser);
-    if (this.loggedInUserData.auth_role_id !== 7) {
-      this.displayColumn.push( 'State Change','Action')
-    }
+    // if (this.loggedInUserData.auth_role_id !== 7) {
+    //   this.displayColumn.push( 'State Change','Action')
+    // }
     this.getTourCountryData()
   }
   onAddButtonClicked(){
     this.enabledForm=!this.enabledForm;
   }
 
-  getTourCountryData(){
-    //api to fetch data from DB getTourCountryList
-    this.subSunk.sink=this.apiHandlerService.apiHandler('getMasterCountryList','post',{},{},{}).subscribe(response=>{
-      console.log(response,"response")
-      if(response.Status==200 || response.statusCode==201){
-          this.tourRegionCounrtyDataList=response.data.data.countries;
-          console.log(response.data.data.countries,"this.tourRegionCounrtyDataList")
-          this.tourRegionCounrtyDataListForSort=this.tourRegionCounrtyDataList;
-          this.collectionSize=this.tourRegionCounrtyDataList.length;
-          this.searchSpin=false;
-        }
-    })
-  }
+ getTourCountryData(){
+    this.subSunk.sink = this.apiHandlerService.apiHandler('getMasterCountryList','post',{},{},{}).subscribe(response => {
+      console.log("Full response:", response); // Log full response for debugging
+      
+      // Check if response and data exist
+      if (response && (response.statusCode === 200 || response.statusCode === 201)) {
+          
+          // Safe navigation to handle nested data
+          const countriesData = response.data.data.countries;
+          
+          if (countriesData && Array.isArray(countriesData)) {
+              this.tourRegionCounrtyDataList = countriesData;
+              
+              this.tourRegionCounrtyDataListForSort = [...this.tourRegionCounrtyDataList];
+              this.collectionSize = this.tourRegionCounrtyDataList.length;
+          } else {
+              this.tourRegionCounrtyDataList = [];
+              this.collectionSize = 0;
+          }
+          
+          this.searchSpin = false;
+      } else {
+          this.swalService.alert.error(response.Message || 'Failed to load countries');
+          this.searchSpin = false;
+      }
+    }, error => {
+      this.swalService.alert.error('Failed to connect to server');
+      this.searchSpin = false;
+    });
+}
 
   onStateChange(inputRecordStateChange:any){
     //api call to change current status 
@@ -81,7 +98,7 @@ export class CountryComponent implements OnInit {
     this.swalService.alert.delete((action)=>{
         if(action){
             this.subSunk.sink = this.apiHandlerService.apiHandler('deleteMasterCountry', 'post', {}, {},
-                {"Id":inputRecordToDeleted.id})
+                {"id":inputRecordToDeleted.id})
                 .subscribe(response => {
                 if (response.statusCode == 200 || response.statusCode == 201 && response.data) {
                     this.swalService.alert.success(" Country data has been deleted successfully");

@@ -31,7 +31,7 @@
                             <ckeditor formControlName="termsConditions"></ckeditor>
                         </div>
                     </div>
-                    <div class="form-group required row">
+                    <!-- <div class="form-group required row">
                         <label for="optionalTours" class="col-sm-2 col-form-label font-weight-bold">Optional Tours</label>
                         <div class="col-sm-10">
                             <div class="col-sm-12">
@@ -78,7 +78,7 @@
 
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="form-group required row">
                         <label for="MeetingPoint" class="col-sm-2 col-form-label font-weight-bold">Meeting Point<sup
                             class="text-danger f-16"> * </sup></label>
@@ -87,6 +87,52 @@
                                 formControlName="MeetingPoint" placeholder="MeetingPoint"></textarea>
                         </div>
                     </div>
+                    <div class="faq-section mt-4">
+  <h4>FAQs</h4>
+
+  <div formArrayName="faqs">
+
+    <div *ngFor="let faq of faqs.controls; let i = index" [formGroupName]="i" class="row mb-3">
+
+      <div class="col-5">
+        <input type="text" class="form-control"
+          formControlName="question" placeholder="Enter Question">
+
+        <small class="text-danger" *ngIf="faq.get('question').touched && faq.get('question').invalid">
+          Question is required
+        </small>
+      </div>
+
+      <div class="col-5">
+        <textarea class="form-control"
+          formControlName="answer" placeholder="Enter Answer"></textarea>
+
+        <small class="text-danger" *ngIf="faq.get('answer').touched && faq.get('answer').invalid">
+          Answer is required
+        </small>
+      </div>
+
+      <div class="col-2 d-flex align-items-center">
+        <button type="button" class="btnStyle mr-2" (click)="addFaq()" *ngIf="i === 0">Add</button>
+        <button type="button" class="btnStyle remove-btn" (click)="removeFaq(i)">Remove</button>
+      </div>
+
+    </div>
+
+    <button type="button" class="btnStyle" (click)="addFaq()" *ngIf="faqs.length === 0">
+      Add FAQ
+    </button>
+
+  </div>
+
+  <!-- ✅ SEPARATE SAVE BUTTON -->
+  <div class="mt-3">
+    <button type="button" class="orangeButton" (click)="saveFaqs()">
+      Save FAQs
+    </button>
+  </div>
+
+</div>
                     <!-- <div class="form-group required row">
                         <label for="cancellationPolicy" class="col-sm-2 col-form-label font-weight-bold">Cancellation Policy</label>
                         <div class="col-sm-10">

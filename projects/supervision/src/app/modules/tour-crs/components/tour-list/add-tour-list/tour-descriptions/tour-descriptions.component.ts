@@ -44,7 +44,8 @@ export class TourDescriptionsComponent implements OnInit {
       inclusions:['',Validators.required],
       exclusions:[''],
       termsConditions:[''],
-      optionalTours: this.fb.array([]),
+      // optionalTours: this.fb.array([]),
+       faqs: this.fb.array([]),
       cancellationPolicy:[`<ol>
         <li>If Cancelled on or before 7 days 100% Refundable.</li>
         <li>If Cancelled on or before 5 days 50% Refundable.</li>
@@ -56,6 +57,10 @@ export class TourDescriptionsComponent implements OnInit {
     });
     
   }
+
+  get faqs(): FormArray {
+  return this.tourDescriptionsForm.get('faqs') as FormArray;
+}
 optionalToursSelection(checked) {
   if (checked) {
     this.addOptionalTour();
@@ -68,7 +73,17 @@ optionalToursSelection(checked) {
   addOptionalTour() {
     this.addOptionalTours();
   }
+addFaq() {
+  const faqGroup = this.fb.group({
+    question: ['', Validators.required],
+    answer: ['', Validators.required]
+  });
+  this.faqs.push(faqGroup);
+}
 
+removeFaq(index: number) {
+  this.faqs.removeAt(index);
+}
   get optionalToursPrices(): FormArray {
     return this.tourDescriptionsForm.get('optionalTours') as FormArray;
   }
@@ -93,10 +108,11 @@ optionalToursSelection(checked) {
       "Inclusions":this.tourDescriptionsForm.get('inclusions').value.replace(/\n$/, ''),
       "Exclusions":this.tourDescriptionsForm.get('exclusions').value.replace(/\n$/, ''),
       "Terms":this.tourDescriptionsForm.get('termsConditions').value.replace(/\n$/, ''),
-      "OptionalTours":this.tourDescriptionsForm.get('optionalTours').value.map((item, index) => ({
-        ...item,id: index+1
-      })),
-      "MeetingPoint": this.tourDescriptionsForm.get('MeetingPoint').value
+      // "OptionalTours":this.tourDescriptionsForm.get('optionalTours').value.map((item, index) => ({
+      //   ...item,id: index+1
+      // })),
+      "MeetingPoint": this.tourDescriptionsForm.get('MeetingPoint').value,
+   
       // "CancPolicy":this.tourDescriptionsForm.get('cancellationPolicy').value,
       // "TripNotes":this.tourDescriptionsForm.get('tripNotes').value.replace(/\n$/, ''),
       };
@@ -131,7 +147,57 @@ optionalToursSelection(checked) {
         }
         }
   }
+saveFaqs() {
 
+  if (this.faqs.length === 0) {
+    this.swalService.alert.oops("Please add at least one FAQ");
+    return;
+  }
+
+  let hasError = false;
+
+  this.faqs.controls.forEach(faq => {
+    faq.markAllAsTouched();
+    if (faq.invalid) {
+      hasError = true;
+    }
+  });
+
+  if (hasError) {
+    this.swalService.alert.oops("Please fill all FAQ fields");
+    return;
+  }
+
+  // ✅ CALL API FOR EACH FAQ
+  this.faqs.value.forEach((faq, index) => {
+
+    const payload = {
+      tour_id: this.tourId,
+      question: faq.question,
+      answer: faq.answer,
+    };
+
+    this.subSunk.sink = this.apiHandlerService.apiHandler(
+      'addTourFaq',   // <-- your API key
+      'post',
+      {},
+      {},
+      payload
+    ).subscribe(
+      (response) => {
+        if (response.statusCode === 200 || response.statusCode === 201) {
+          if (index === this.faqs.length - 1) {
+            this.swalService.alert.success("FAQs saved successfully");
+          }
+        }
+      },
+      (err: HttpErrorResponse) => {
+        this.swalService.alert.error(err.error.Message || "FAQ save failed");
+      }
+    );
+
+  });
+}
   addImageApiCall(){
       const formData = new FormData();
       formData.append('Id', this.tourId.toString());

@@ -383,6 +383,7 @@
                           "
                         >
                           <td
+                          colspan="1"
                             style="
                               -webkit-print-color-adjust: exact;
                               padding: 10px 15px;
@@ -393,6 +394,7 @@
                             Sl.No
                           </td>
                           <td
+                          colspan="1"
                             style="
                               -webkit-print-color-adjust: exact;
                               width: 30%;
@@ -403,6 +405,7 @@
                             Guest's&nbsp;Name
                           </td>
                           <td
+                          colspan="1"
                             style="
                               -webkit-print-color-adjust: exact;
                               width: 20%;
@@ -735,56 +738,7 @@
             </table>
           </div>
 
-          <tr *ngIf="voucherData.BookingDetails?.optional_tour">
-            <td colspan="4" style="padding: 0; border-top: none">
-              <table style="width: 100%">
-                <thead>
-                  <tr>
-                    <td
-                      colspan="7"
-                      style="
-                        font-size: 20px;
-                        font-weight: 600;
-                        color: #282828;
-                        border-top: none;
-                      "
-                    >
-                      Optional Tours
-                    </td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td
-                      colspan="7"
-                      style="
-                        line-height: 20px;
-                        font-size: 14px;
-                        padding: 15px;
-                        color: #282828;
-                        font-weight: 400;
-                        border-top: none;
-                      "
-                    >
-                      <div
-                        *ngFor="
-                          let data of getOptionalTours(
-                            voucherData.BookingDetails?.optional_tour
-                          );
-                          let i = index
-                        "
-                      >
-                        <span>
-                          {{ i + 1 }}. {{ data.name }} ({{ data.duration }}) -
-                          {{ data.noOfPax }} Person
-                        </span>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </td>
-          </tr>
+     
 
           <tr *ngIf="voucherData.BookingDetails?.itinerary">
             <td colspan="4" style="padding: 0; border-top: none">
@@ -820,7 +774,7 @@
                     let item of voucherData.BookingDetails?.itinerary;
                     let i = index
                   "
-                  style="margin-bottom: 20px"
+                  style="margin-bottom: 20px;    padding-left: 21px;"
                 >
                   <!-- Day Title -->
                   <div

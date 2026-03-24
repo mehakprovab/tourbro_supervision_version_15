@@ -36,12 +36,12 @@
                             class="form-control form-control-sm nrm_input">
                             <option value="ALL">ALL</option>
                             <option value="BOOKING_CONFIRMED">CONFIRMED</option>
-                            <option value="ticked">TICKED</option>
-                            <option value="BOOKING_HOLD">BOOKING HOLD</option>
+                            <!-- <option value="ticked">TICKED</option> -->
+                            <!-- <option value="BOOKING_HOLD">BOOKING HOLD</option> -->
                             <option value="BOOKING_CANCELLED">CANCELLED</option>
-                            <option value="cancelInProgress">CANCELLATION IN PROGRESS</option>
-                            <option value="failed">FAILED</option>
-                            <option value="BOOKING_INPROGRESS">IN PROGRESS</option>
+                            <!-- <option value="cancelInProgress">CANCELLATION IN PROGRESS</option> -->
+                            <!-- <option value="failed">FAILED</option> -->
+                            <option value="PROCESSING">IN PROGRESS</option>
                         </select>
                         <div>
                         </div>
@@ -50,7 +50,7 @@
                 <div class="col-4 pr-0">
                     <div class="form-group">
                         <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
-                        <label for="fromDate">Booked From Date</label>
+                        <label for="fromDate">Booked On (From Date)</label>
                         <input formControlName="booked_from_date" type="text" id="fromDate" autocomplete="off"
                             class="form-control form-control-sm nrm_input" placement="bottom left"
                             placeholder="dd/mm/yyyy" bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen"
@@ -60,7 +60,7 @@
                 <div class="col-4 pr-0">
                     <div class="form-group">
                         <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
-                        <label for="toDate">Booked To Date</label>
+                        <label for="toDate">Booked On (To Date)</label>
                         <input formControlName="booked_to_date" type="text" id="toDate" autocomplete="off"
                             class="form-control form-control-sm nrm_input" placement="bottom left"
                             placeholder="dd/mm/yyyy" bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen"

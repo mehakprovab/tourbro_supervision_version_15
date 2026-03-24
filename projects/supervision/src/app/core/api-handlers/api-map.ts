@@ -668,4 +668,5 @@ editVehicleMaster: `${baseUrl}/car/editVehicle`,
           saveDay: `${baseUrl}/tour/tours/addTourItineraries`,
             addItineraryActivities: `${baseUrl}/tour/tours/addItineraryActivities`,
             uploadVideo:`${baseUrl}/tour/tours/uploadBannerVideo`,
+            addTourFaq:`${baseUrl}/tour/tours/addtourfaq`,
 };

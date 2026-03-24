@@ -156,14 +156,27 @@ export class B2cTourReportComponent implements OnInit {
       this.getB2cTransferReport();
   }
 
-  onReset() {
-      this.regConfig.reset();
-      this.regConfig.patchValue({
-          status: 'ALL',
-      });
-      this.searchText = "";
-      this.getB2cTransferReport();
-  }
+onReset() {
+  this.regConfig.reset();
+
+  // 🔹 Recalculate default dates (same as ngOnInit)
+  let date = new Date();
+  let fromDate = new Date(date.valueOf() - (30 * 24 * 60 * 60 * 1000));
+
+  let tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  // 🔹 Patch values
+  this.regConfig.patchValue({
+    booked_from_date: fromDate,
+    booked_to_date: tomorrow,
+    status: 'ALL'
+  });
+
+  this.searchText = "";
+
+  this.getB2cTransferReport();
+}
 
   getB2cTransferReport() {
       this.noData = true;

@@ -221,16 +221,26 @@ export class B2cTourVoucherComponent implements OnInit {
     }
   }
 
-    getOptionalTours(data) {
-    if(data) {
-      return JSON.parse(data);
-    }
-  }
+ getOptionalTours(data) {
+  if (!data) return [];
 
-  getItenary(data) {
-     if(data) {
-      return JSON.parse(data);
-    }
+  try {
+    return typeof data === 'string' ? JSON.parse(data) : data;
+  } catch (e) {
+    console.error('OptionalTours parse error:', e);
+    return [];
   }
+}
+
+getItenary(data) {
+  if (!data) return [];
+
+  try {
+    return typeof data === 'string' ? JSON.parse(data) : data;
+  } catch (e) {
+    console.error('Itinerary parse error:', e);
+    return [];
+  }
+}
 }
 

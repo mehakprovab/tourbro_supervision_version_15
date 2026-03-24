@@ -44,7 +44,7 @@ export class B2bTourComponent implements OnInit {
       { key: 'status', value: 'Status' },
       { key: 'app_reference', value: 'Application Reference' },
       { key: 'booking_reference', value: 'Confirmation Reference' },
-      { key: 'dmc_supplier_name', value: 'DMC Supplier Name'},
+      { key: 'dmc_supplier_name', value: 'Supplier Name'},
       { key: 'buyer_ta_name', value: 'Buyer TA Name'},
       { key: 'FirstName', value: 'Lead Passenger Name' },
       { key: 'Email', value: 'Lead Passenger Email' },

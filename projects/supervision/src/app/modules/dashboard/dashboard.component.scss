@@ -36,7 +36,9 @@ line-height: 16px;
 
 .dashboard-repors-section {
     // overflow-x: auto;
-    width: 100%;
+    width: 100%;flex-wrap: wrap;
+    gap: 20px;
+
 }
 
 .dashboard-repors-section::-webkit-scrollbar {

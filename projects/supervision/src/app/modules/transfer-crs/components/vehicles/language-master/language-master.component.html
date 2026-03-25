@@ -1,22 +1,12 @@
-<div class="entireScreen  p-0 col-md-12 col-lg-12">
-    <div class="col-12 row">
-        <div class="heading">
-            <p>Language</p>
+<div class="card adminInner">
+   
+    <div class="card-header mb-3">
+            <h5>Language</h5>
             <!-- <button *ngIf="!editForm" class="orangeButton" type="button" (click)="onAddButtonClicked()">Add</button> -->
-        </div>
-        <div class="form-group mb-0 col-sm-6 col-6 p-0 float-right has-search d-flex justify-content-end">
-            <div class="col-6 pt-3">
-                <span class="fa fa-search form-control-feedback"></span>
-                <input class="form-control" type="text" name="Search" [(ngModel)]="searchText"
-                    autocomplete="off" placeholder="Search">
-            </div>
-            
-        </div>
-
     </div>
-    
+       
 
-    <div class="card" *ngIf="enabledForm">
+    <div class="" *ngIf="enabledForm">
         <form [formGroup]="languageForm" (ngSubmit)="onLanguageMasterSave()">
             <div class="form-row">
                 <div class="col-4 pr-0">
@@ -42,16 +32,28 @@
                         
                     </div>
                 </div> -->
-                <div class="saveButton ml-2 mb-0 mt-2">
-                    <button type="submit" class="orangeButton"> {{saveTextName}}</button>
+                <div class="saveButton ml-2 mb-0 form-group">
+                    <label>&nbsp;</label>
+                    <button type="submit" class="btn btn-primary"> {{saveTextName}}</button>
                 </div>
             </div>
             
         </form>
     </div>
-</div>
 
-<div class="entireScreen">
+    <div class="form-group mb-0 col-sm-12 pb-3 float-right">
+        <div class="d-flex justify-content-end align-items-center">
+
+            <div>
+                Full text search:
+               <input class="form-control ml-0" type="text" name="Search" [(ngModel)]="searchText"
+                    autocomplete="off" placeholder="Search">
+            </div>
+
+        </div>
+
+    </div>
+    <div class="entireScreen">
     <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft" #scrollOne >
         <div class="div1"></div>
    </div>
@@ -120,6 +122,9 @@
             </div>
     </div>
 </div>
+</div>
+
+
 
   <ngx-loading [show]="loading"
   [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"

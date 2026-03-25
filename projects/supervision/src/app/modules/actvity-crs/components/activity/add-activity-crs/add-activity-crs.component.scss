@@ -31,10 +31,10 @@
     bottom: 125px;
 }
 
-.remove-reset-btn {
-        background: #dc3545 !important;
-    border: #dc3545 !important;
-}
+// .remove-reset-btn {
+//         background: #dc3545 !important;
+//     border: #dc3545 !important;
+// }
 
 ::ng-deep.invalid-feedback{
     display: none !important;
@@ -45,7 +45,7 @@
 // }
 
 .season-pricing-block {
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border:1px solid #ddd;
     border-radius: 15px;
 }
 
@@ -125,4 +125,14 @@
 
 ::ng-deep .multiselect-dropdown .dropdown-btn .dropdown-multiselect__caret {
   right: -10px !important;
+}
+::ng-deep .multiselect-dropdown .dropdown-btn{  
+     border: 1px solid #c4b3eb !important;
+     top: -21px;
+     border-radius: 8px !important;
+     position: absolute;
+}
+.mat-error-msg .errormsg{
+    position: absolute;
+   bottom:0px!important;
 }

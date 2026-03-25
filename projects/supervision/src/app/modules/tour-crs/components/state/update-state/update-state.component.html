@@ -1,1 +1,66 @@
-<p>update-state works!</p>
+<div class="entireScreen p-0 col-md-6 col-lg-6">
+  <div class="heading">
+    <p>Edit State</p>
+  </div>
+
+  <form [formGroup]="stateForm" (ngSubmit)="onStateUpdate()">
+
+    <!-- Country Dropdown -->
+    <div class="form-group">
+      <label>Choose Country</label>
+      <select class="form-control" formControlName="country_id">
+        <option value="" disabled>Select Country</option>
+        <option *ngFor="let country of countryList" [value]="country.id">
+          {{ country.name }}
+        </option>
+      </select>
+    </div>
+
+    <div *ngIf="f.country_id.touched && f.country_id.errors">
+      <small class="errorMessage">*Please select country</small>
+    </div>
+
+    <!-- State Name -->
+    <div class="form-group">
+      <label>State Name</label>
+      <input type="text" class="form-control" formControlName="name">
+    </div>
+
+    <div *ngIf="f.name.touched && f.name.errors">
+      <small *ngIf="f.name.errors.required" class="errorMessage">*Required</small>
+      <small *ngIf="f.name.errors.invalidString" class="errorMessage">*Numbers not allowed</small>
+      <small *ngIf="f.name.errors.startOrEndSpace" class="errorMessage">*No space at start/end</small>
+    </div>
+
+    <!-- ISO -->
+    <div class="form-group">
+      <label>ISO Code</label>
+      <input type="text" class="form-control" formControlName="iso2">
+    </div>
+
+    <div *ngIf="f.iso2.touched && f.iso2.errors">
+      <small class="errorMessage">*2–3 uppercase letters</small>
+    </div>
+
+    <!-- Latitude -->
+    <div class="form-group">
+      <label>Latitude</label>
+      <input type="text" class="form-control" formControlName="latitude">
+    </div>
+
+    <!-- Longitude -->
+    <div class="form-group">
+      <label>Longitude</label>
+      <input type="text" class="form-control" formControlName="longitude">
+    </div>
+
+    <!-- Buttons -->
+    <div class="saveButton mt-3">
+      <button type="submit" class="orangeButton mr-2">Update</button>
+      <button type="button" class="orangeButton packageBtn" routerLink="/tour-crs/state">
+        State List
+      </button>
+    </div>
+
+  </form>
+</div>

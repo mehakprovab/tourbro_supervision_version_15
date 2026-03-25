@@ -84,16 +84,16 @@ export class UpdateCountryComponent implements OnInit {
   // ✅ Get country by ID
   getCountryById() {
     this.isLoading = true;
-
+let id=this.countryId
     this.subSunk.sink = this.apiHandlerService
-      .apiHandler('getMasterCountryById', 'post', {}, {id: this.countryId}, {})
+      .apiHandler('getMasterCountryById', 'get', {id}, {}, {})
       .subscribe(response => {
 
         this.isLoading = false;
 
-        if ((response.statusCode === 200 || response.statusCode === 201) && response.data) {
+        if ((response.statusCode === 200 || response.statusCode === 201) && response.data.data) {
 
-          const data = response.data;
+          const data = response.data.data;
 
           this.countryForm.patchValue({
             countryName: data.name,
@@ -148,7 +148,7 @@ export class UpdateCountryComponent implements OnInit {
     };
 
     this.subSunk.sink = this.apiHandlerService
-      .apiHandler('updateMasterCountry', 'post', {}, {}, payload)
+      .apiHandler('editMasterCountry', 'post', {}, {}, payload)
       .subscribe(response => {
 
         if ((response.statusCode === 200 || response.statusCode === 201) && response.Status) {
@@ -167,7 +167,7 @@ export class UpdateCountryComponent implements OnInit {
       .apiHandler('getMasterContinet', 'post', {}, {}, {})
       .subscribe(response => {
         if ((response.statusCode === 200 || response.statusCode === 201) && response.data) {
-          this.continentDataList = response.data;
+          this.continentDataList = response.data.data;
         }
       });
   }

@@ -1,38 +1,81 @@
-<div>
-    <form [formGroup]="cityForm" (ngSubmit)="onCitySave()">
-       <div class="countryInput">
-            <label for="city" class="font-weight-bold" > Choose Country</label>
-            <select formControlName="countryName" (change)="selectedCountry($event.target.value)">
-                <option value="" disabled selected>Choose Country</option>
-                <option *ngFor="let option of countryDataList" [value]="option.id">
-                  {{option.name}}
-                </option>
-              </select>
-              
-        </div>
-        <div *ngIf="cityForm?.get('countryName').errors && cityForm?.get('countryName').touched">
-            <div *ngIf="cityForm?.get('countryName').errors.required" class="errorMessage">
-              *Please Choose tour country name.
-              </div>
-        </div>
-        <div class="cityInput">
-            <label for="city" class="font-weight-bold" > Tour City Name</label>
-            <input type="text" placeholder="Enter Package City"  formControlName="cityName" maxlength="150" (input)="validateInput()">
-            <span class="note row">Note:To add multiple city separete with coma(,).</span>
-        </div>
-        <div *ngIf="cityForm.controls.cityName.errors && cityForm.controls.cityName.touched">
-            <div *ngIf="cityForm.controls.cityName.errors.required"  class="errorMessage">
-              *Please enter tour city name.
-            </div>
-            <div *ngIf="cityForm.controls.cityName.errors.invalidString" class="errorMessage">
-                *Number(s) are not allowed.
-            </div>
-            <div *ngIf="cityForm.controls.cityName.errors.startOrEndSpace"  class="errorMessage">
-                *Empty space(s) in start and end are not allowed.
-            </div>
-        </div>
-        <div class="saveButton">
-            <button type="submit" class="orangeButton"> Save</button>
-        </div>
-    </form>
+<div class="entireScreen">
+  <form [formGroup]="cityForm" (ngSubmit)="onCitySave()">
+
+    <!-- Country / State -->
+    <div class="countryInput">
+      <label class="font-weight-bold">Choose State</label>
+      <select formControlName="stateId">
+        <option value="" disabled selected>Choose State</option>
+        <option *ngFor="let option of stateDataList" [value]="option.id">
+          {{ option.name }}
+        </option>
+      </select>
+    </div>
+
+    <div *ngIf="cityForm.get('stateId').touched && cityForm.get('stateId').errors">
+      <div class="errorMessage">*Please choose state.</div>
+    </div>
+
+    <!-- City Name -->
+    <div class="cityInput">
+      <label class="font-weight-bold">City Name</label>
+      <input
+        type="text"
+        placeholder="Enter City Name"
+        formControlName="cityName"
+        maxlength="150"
+        (input)="validateInput()"
+      />
+      <!-- <span class="note">Note: Add multiple cities separated by comma (,)</span> -->
+    </div>
+
+    <div *ngIf="cityForm.get('cityName').touched && cityForm.get('cityName').errors">
+      <div *ngIf="cityForm.get('cityName').errors.required" class="errorMessage">
+        *Please enter city name.
+      </div>
+      <div *ngIf="cityForm.get('cityName').errors.invalidString" class="errorMessage">
+        *Numbers are not allowed.
+      </div>
+      <div *ngIf="cityForm.get('cityName').errors.startOrEndSpace" class="errorMessage">
+        *No space at start or end.
+      </div>
+    </div>
+
+    <!-- Latitude -->
+    <div class="cityInput">
+      <label class="font-weight-bold">Latitude</label>
+      <input type="text" formControlName="latitude" placeholder="Enter Latitude">
+    </div>
+
+    <!-- Longitude -->
+    <div class="cityInput">
+      <label class="font-weight-bold">Longitude</label>
+      <input type="text" formControlName="longitude" placeholder="Enter Longitude">
+    </div>
+<!-- Status Toggle -->
+<!-- Status Toggle -->
+<div class="cityInput">
+  <label class="font-weight-bold">Status</label>
+
+  <div class="toggleSwitch">
+    <label class="switch">
+      <input
+        type="checkbox"
+        [checked]="cityForm.get('status').value === 1"
+        (change)="onStatusChange($event)"
+      >
+      <span class="slider round"></span>
+    </label>
+
+    <span class="ml-2">
+      {{ cityForm.get('status').value === 1 ? 'Active' : 'Inactive' }}
+    </span>
+  </div>
+</div>
+    <!-- Submit -->
+    <div class="saveButton">
+      <button type="submit" class="orangeButton">Save</button>
+    </div>
+
+  </form>
 </div>

@@ -11,88 +11,113 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./add-city.component.scss']
 })
 export class AddCityComponent implements OnInit {
+ cityForm: FormGroup;
+  stateDataList: Array<any> = [];
+  subSunk = new SubSink();
 
-  selectedCountryId:number;
-  countryDataList:Array<any>=[];
-  subSunk=new SubSink();
-  @Output() insertedRecord=new EventEmitter<any>();
-  cityForm:FormGroup;
+  @Output() insertedRecord = new EventEmitter<any>();
 
-  constructor(private fb:FormBuilder, private swalService:SwalService,private apiHandlerService:ApiHandlerService) { }
+  constructor(
+    private fb: FormBuilder,
+    private swalService: SwalService,
+    private apiHandlerService: ApiHandlerService
+  ) {}
 
   ngOnInit() {
-    this.createCityForm()
-    this.getCountryList()
-  }
-  
-  createCityForm(){
-    this.cityForm=this.fb.group({
-      countryName:new FormControl('',[Validators.required]),
-      cityName:new FormControl('',[Validators.required,this.inputValidator])
-    })
+    this.createCityForm();
+    this.getStateList();
   }
 
-  getCountryList(){
-    this.subSunk.sink=this.apiHandlerService.apiHandler('getTourCountryList','post',{},{},{}).subscribe(response=>{
-      if(response.Status==200 || response.statusCode==201 && response.data){
-          this.countryDataList=response['data'];
-          console.log(" this.countryDataList", response)
-          this.sortCountry()
+  // ✅ Create Form
+  createCityForm() {
+    this.cityForm = this.fb.group({
+      stateId: ['', Validators.required],
+      cityName: ['', [Validators.required, this.inputValidator]],
+      latitude: ['', Validators.required],
+      longitude: ['', Validators.required],
+      status: [1, Validators.required]
+    });
+  }
+onStatusChange(event: any) {
+  const isChecked = event.target.checked;
+  this.cityForm.get('status').setValue(isChecked ? 1 : 0);
+}
+  // ✅ Get State List (Update API if needed)
+  getStateList() {
+    this.subSunk.sink = this.apiHandlerService
+      .apiHandler('getMasterState', 'post', {}, {}, {})
+      .subscribe((response: any) => {
+        if ((response.statusCode === 200 || response.statusCode === 201) && response.data) {
+          this.stateDataList = response.data.data;
+          this.sortState();
         }
-    })
+      });
   }
 
-  sortCountry(){
-    this.countryDataList.sort((a, b) => 
-        a.name.localeCompare(b.name)
-    );
-    console.log("this.countryDataList......",this.countryDataList)
+  // ✅ Sort State
+  sortState() {
+    this.stateDataList.sort((a, b) => a.name.localeCompare(b.name));
   }
 
-  onCitySave(){
-    let selectedCountryName;
-    this.countryDataList.forEach(item=>{
-      if(item.id==this.selectedCountryId){
-        selectedCountryName=item.name;
-      }
-     })
-    
-    let citySaveData={
-        'CityName':this.cityForm.get('cityName').value,
-        'CountryName':selectedCountryName,
-    }
-    //api to save data in db
-    if(this.cityForm.valid){
-        this.subSunk.sink=this.apiHandlerService.apiHandler('addTourCity','post',{},{},{
-          "CityName":citySaveData.CityName.split(','),  // name of the cities you want to add
-          "CountryId": this.selectedCountryId   
-          }).subscribe(respose=>{
-            if(respose.statusCode==200 || respose.statusCode==201 && respose.Status){
-              this.swalService.alert.success("City has been saved successfully")
-              this.insertedRecord.emit(citySaveData);
+  // ✅ Save City
+  onCitySave() {
+    if (this.cityForm.valid) {
+
+      const cityNames = this.cityForm.get('cityName').value.split(',');
+      const stateId = this.cityForm.get('stateId').value;
+      const latitude = this.cityForm.get('latitude').value;
+      const longitude = this.cityForm.get('longitude').value;
+      const status = this.cityForm.get('status').value;
+
+      cityNames.forEach(city => {
+
+        const payload = {
+          city_name: city.trim(),
+          state_id: stateId,
+          latitude: latitude,
+          longitude: longitude,
+          status:status,
+          type: "City"
+        };
+
+        this.subSunk.sink = this.apiHandlerService.apiHandler(
+          'addMasterCity',
+          'post',
+          {},
+          {},
+          payload
+        ).subscribe(
+          (response: any) => {
+            if (response.statusCode === 200 || response.statusCode === 201) {
+              this.swalService.alert.success(`City "${city.trim()}" saved successfully`);
+              this.insertedRecord.emit(payload);
               this.cityForm.reset();
             }
-          },(err: HttpErrorResponse) => {
-            this.swalService.alert.error(err['error']['Message'].replace("400 ", ""));
-        })
+          },
+          (err: HttpErrorResponse) => {
+            this.swalService.alert.error(err.error.Message || 'Error occurred');
+          }
+        );
+
+      });
     }
   }
 
-  selectedCountry(countryId){
-    this.selectedCountryId=countryId;
-  }
-
+  // ✅ Custom Validator
   inputValidator(control: FormControl) {
     const value = control.value;
+
     if (value && (value.startsWith(' ') || value.endsWith(' '))) {
       return { startOrEndSpace: true };
     }
+
     if (value && /\d+/.test(value)) {
       return { invalidString: true };
     }
-     return null;
+
+    return null;
   }
-  
+
   validateInput() {
     this.cityForm.get('cityName').markAsTouched();
   }

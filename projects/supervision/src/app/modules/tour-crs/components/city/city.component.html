@@ -1,6 +1,6 @@
 <div class="entireScreen  p-0 col-md-12 col-lg-12">
     <div class="heading">
-        <p class="headername">Tour City</p>
+        <p class="headername">City</p>
         <button class="orangeButton" type="submit" (click)="onAddButtonClicked()">Add</button>
     </div>
     <app-add-city *ngIf="enabledForm && !editForm" (insertedRecord)="insertedRecordReceived($event)"> </app-add-city>
@@ -41,8 +41,8 @@
                         </tr>
                         <tr *ngFor="let item of tourCounrtyCityDataList | filter:searchText | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index">
                                 <td class="text-left text-muted">{{(i+1) }}</td>
-                                <td class="text-left">{{ item.CountryName }}</td>
-                                <td class="text-left">{{ item.CityName }}</td><td class="text-left buttontdsize">
+                                <td class="text-left">{{ item.countryName }}</td>
+                                <td class="text-left">{{ item.cityName }}</td><td class="text-left buttontdsize">
                                     <button class="btn btn-sm btn-primary mr-1" routerLink="/tour-crs/city/update" [queryParams]="item">{{'Edit'}}
                                     </button>
                                     <button class="btn btn-sm btn-primary mr-1" (click)="onDeletedRecord(item)"> {{'Delete'}}  </button>

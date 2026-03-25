@@ -1,29 +1,73 @@
-<div class="entireScreen  p-0 col-md-12 col-lg-12">
-    <div class="heading">
-        <p>Edit Package City</p>
+<div class="entireScreen p-0 col-md-6 col-lg-6">
+  <div class="heading">
+    <p>Edit City</p>
+  </div>
+
+  <form [formGroup]="cityForm" (ngSubmit)="onCityUpdate()">
+
+    <!-- State Dropdown -->
+    <div class="form-group">
+      <label>Choose State</label>
+      <select class="form-control" formControlName="state_id">
+        <option value="" disabled>Select State</option>
+        <option *ngFor="let state of stateList" [value]="state.id">
+          {{ state.name }}
+        </option>
+      </select>
     </div>
-    <div >
-        <form [formGroup]="cityForm" (ngSubmit)="onCitySave()">
-            <div class="cityInput">
-                <label for="city" class="font-weight-bold" > Tour City</label>
-                <input type="text" placeholder="Enter Package City"  formControlName="cityName" maxlength="150" (input)="validateInput()">
-            </div>
-            <div *ngIf="cityForm.controls.cityName.errors && cityForm.controls.cityName.touched">
-                <div  *ngIf="cityForm.controls.cityName.errors.required" class="errorMessage">
-                  *Please enter updated tour city name.
-                </div>
-                <div *ngIf="cityForm.controls.cityName.errors.invalidString" class="errorMessage">
-                    *Number(s) are not allowed.
-                </div>
-                <div *ngIf="cityForm.controls.cityName.errors.startOrEndSpace"  class="errorMessage">
-                    *Empty space(s) in start and end are not allowed.
-                </div>
-            </div>
-            <div class="saveButton">
-                <button  class="btn btn-sm btn-primary mr-1 orangeButton">{{'Save'}}
-                </button>
-                <button class="btn btn-sm btn-primary mr-1 orangeButton packageBtn" routerLink="/tour-crs/city"> {{'Package City'}}  </button>
-            </div>
-        </form>
+
+    <div *ngIf="f.state_id.touched && f.state_id.errors">
+      <small class="errorMessage">*Please select state</small>
     </div>
+
+    <!-- City Name -->
+    <div class="form-group">
+      <label>City Name</label>
+      <input type="text" class="form-control" formControlName="city_name">
+    </div>
+
+    <div *ngIf="f.city_name.touched && f.city_name.errors">
+      <small *ngIf="f.city_name.errors.required" class="errorMessage">*Required</small>
+      <small *ngIf="f.city_name.errors.invalidString" class="errorMessage">*Numbers not allowed</small>
+      <small *ngIf="f.city_name.errors.startOrEndSpace" class="errorMessage">*No space at start/end</small>
+    </div>
+
+    <!-- Latitude -->
+    <div class="form-group">
+      <label>Latitude</label>
+      <input type="text" class="form-control" formControlName="latitude">
+    </div>
+
+    <!-- Longitude -->
+    <div class="form-group">
+      <label>Longitude</label>
+      <input type="text" class="form-control" formControlName="longitude">
+    </div>
+<div class="cityInput">
+  <label class="font-weight-bold">Status</label>
+
+  <div class="toggleSwitch">
+    <label class="switch">
+      <input
+        type="checkbox"
+        [checked]="cityForm.get('status').value === 1"
+        (change)="onStatusChange($event)"
+      >
+      <span class="slider round"></span>
+    </label>
+
+    <span class="ml-2">
+      {{ cityForm.get('status').value === 1 ? 'Active' : 'Inactive' }}
+    </span>
+  </div>
+</div>
+    <!-- Buttons -->
+    <div class="saveButton mt-3">
+      <button type="submit" class="orangeButton mr-2">Update</button>
+      <button type="button" class="orangeButton packageBtn" routerLink="/tour-crs/city">
+        City List
+      </button>
+    </div>
+
+  </form>
 </div>

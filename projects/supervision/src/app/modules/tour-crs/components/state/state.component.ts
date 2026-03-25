@@ -57,7 +57,7 @@ enabledForm: boolean = false;
 
         if (response && (response.statusCode === 200 || response.statusCode === 201)) {
 
-          const states = response.data.data.states || [];
+          const states = response.data.data || [];
 
           this.stateDataList = states;
           this.stateDataListForSort = [...states];

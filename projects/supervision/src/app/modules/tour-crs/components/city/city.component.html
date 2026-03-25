@@ -1,23 +1,25 @@
-<div class="entireScreen  p-0 col-md-12 col-lg-12">
-    <div class="heading">
-        <p class="headername">Tour City</p>
-        <button class="orangeButton" type="submit" (click)="onAddButtonClicked()">Add</button>
+<div class="card adminInner">
+    <div class="card-header mb-3">
+        <h5>Tour City</h5>
+        <!-- <button class="orangeButton" type="submit" (click)="onAddButtonClicked()">Add</button> -->
     </div>
-    <app-add-city *ngIf="enabledForm && !editForm" (insertedRecord)="insertedRecordReceived($event)"> </app-add-city>
-</div>
+    <!-- *ngIf="enabledForm && !editForm" -->
+    <app-add-city  (insertedRecord)="insertedRecordReceived($event)"> </app-add-city>
+
 <div class="entireScreen">
-    <div class="form-group mb-0 col-sm-3 p-0 float-right search">
-        <input class="form-control" type="text" name="Search" [(ngModel)]="searchText" autocomplete="off"
+    <div class="form-group col-sm-3 p-0 mb-3 float-right has-search">
+            Full text search:
+            <input class="form-control ml-0" type="text" name="Search" [(ngModel)]="searchText" autocomplete="off"
             placeholder="Search">
     </div>
+    
     <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft" #scrollOne >
         <div class="div1"></div>
    </div>
     <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
         <div *ngIf="!editForm" class="div2 invisible-scrollbar">
             <div class="table-responsive">
-                <table class="table table-borderless table-striped table-hover" matSort (matSortChange)="sortData($event)"
-                >
+                <table class="table table-borderless table-striped table-hover" matSort (matSortChange)="sortData($event)">
                     <thead>
                         <tr class="p-2">
                         <th scope="col" class="text-left text-nowrap" *ngFor="let header of displayColumn" mat-sort-header="{{header}}">
@@ -45,7 +47,7 @@
                                 <td class="text-left">{{ item.CityName }}</td><td class="text-left buttontdsize">
                                     <button class="btn btn-sm btn-primary mr-1" routerLink="/tour-crs/city/update" [queryParams]="item">{{'Edit'}}
                                     </button>
-                                    <button class="btn btn-sm btn-primary mr-1" (click)="onDeletedRecord(item)"> {{'Delete'}}  </button>
+                                    <button class="btn btn-sm btn-secondary" (click)="onDeletedRecord(item)"> {{'Delete'}}  </button>
                                 </td>
                         </tr>
                     </tbody>
@@ -67,6 +69,7 @@
             </div>
             </div>
     </div>
+</div>
 </div>
 
   

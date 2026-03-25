@@ -1,17 +1,19 @@
-<div class="entireScreen ">
-    <div class="heading">
-        <p>Regions</p>
-        <button *ngIf="!editForm" class="orangeButton" type="submit" (click)="onAddButtonClicked()">Add</button>
+<div class="card adminInner">
+    <div class="card-header mb-3">
+        <h5>Tour Regions</h5>
     </div>
-    <!-- <div> -->
-        <app-add-continent *ngIf="enabledForm && !editForm" (insertedRecord)="insertedRecordReceived($event)"> </app-add-continent>
-    <!-- </div> -->
-</div>
+   
+
+ <!-- <button *ngIf="!editForm" class="orangeButton" type="submit" (click)="onAddButtonClicked()">Add</button> -->
+  <!-- *ngIf="enabledForm && !editForm"  -->
+        <app-add-continent (insertedRecord)="insertedRecordReceived($event)"> </app-add-continent>
 <div class="entireScreen">
-    <div class="form-group mb-0 col-sm-3 p-0 float-right search">
-        <input class="form-control" type="text" name="Search" [(ngModel)]="searchText" autocomplete="off"
-            placeholder="Search">
-    </div>
+        <div class="form-group mb-0 col-sm-3 p-0 float-right has-search">
+            Full text search:
+            <input class="form-control ml-0" type="text"  name="searchTerm"
+            [formControl]="searchValue" 
+                />
+        </div>
     <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft" #scrollOne >
         <div class="div1"></div>
    </div>
@@ -53,7 +55,7 @@
                                 <td class="text-left buttontdsize">
                                     <button  class="btn btn-sm btn-primary mr-1" routerLink="/tour-crs/continent/update" [queryParams]="item">{{'Edit'}}
                                     </button>
-                                    <button class="btn btn-sm btn-primary mr-1" (click)="onDeletedRecord(item)"> {{'Delete'}}  </button>
+                                    <button class="btn btn-sm btn-secondary" (click)="onDeletedRecord(item)"> {{'Delete'}}  </button>
                                 </td>
                         </tr>
                     </tbody>
@@ -76,5 +78,7 @@
             </div>
             </div>
     </div>
+
+</div>
 
 </div>

@@ -1,13 +1,15 @@
-<div class="entireScreen  p-0 col-md-12 col-lg-12">
-    <div class="heading">
-        <p>Country</p>
-        <button class="orangeButton" type="submit" (click)="onAddButtonClicked()">Add</button>
+<div class="card adminInner">
+    <div class="card-header mb-3">
+        <h5>Country</h5>
+        <!-- <button class="orangeButton" type="submit" (click)="onAddButtonClicked()">Add</button> -->
     </div>
-    <app-add-country *ngIf="enabledForm && !editForm" (insertedRecord)="insertedRecordReceived($event)"> </app-add-country>
-</div>
+    <!-- *ngIf="enabledForm && !editForm" -->
+    <app-add-country  (insertedRecord)="insertedRecordReceived($event)"> </app-add-country>
+
 <div class="entireScreen">
-    <div class="form-group mb-0 col-sm-3 p-0 float-right search">
-        <input class="form-control" type="text" name="Search" [(ngModel)]="searchText" autocomplete="off"
+    <div class="form-group col-sm-3 p-0 mb-3 float-right has-search">
+            Full text search:
+            <input class="form-control ml-0" type="text" name="Search" [(ngModel)]="searchText" autocomplete="off"
             placeholder="Search">
     </div>
     <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft" #scrollOne >
@@ -52,10 +54,9 @@
                               <td class="text-left buttontdsize" >
                                   <button  class="btn btn-sm btn-primary mr-1" [routerLink]="['/tour-crs/country/update', item.id]" >{{'Edit'}}
                                   </button>
-                                  <button class="btn btn-sm btn-primary mr-1" (click)="onDeletedRecord(item)"> {{'Delete'}}  </button>
+                                  <button class="btn btn-sm btn-secondary" (click)="onDeletedRecord(item)"> {{'Delete'}}  </button>
                               </td>
-                      </tr>
-                  </tbody>
+                      </tr>                  </tbody>
               </table>
               <div class="card-footer pb-0">
                 <div class="d-flex w-100 justify-content-between">
@@ -73,6 +74,8 @@
               </div>
           </div>
     </div>
+</div>
+</div>
 </div>
 
   

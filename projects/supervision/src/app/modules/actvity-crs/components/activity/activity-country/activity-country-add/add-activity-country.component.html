@@ -1,6 +1,12 @@
+<div class="card adminInner">
+    <div class="card-header mb-3">
+        <h5>{{'Add Country'}}</h5>
+    </div>
+
+
 <ng-container>
     <div class="p-0">
-        <h3 class="f-600">Conutry</h3>
+     
         <form [formGroup]="addCountryForm" (ngSubmit)="submitCountry()">
             <fieldset form="hotelImage">
                 <!-- <div class="col-12 p-0">
@@ -51,13 +57,13 @@
             </fieldset>
 
             <div class="col-12 d-flex justify-content-center align-items-center">
-                <button type="submit" class="orangeButton mr-2">Submit</button>
-                <button type="button" class="btnStyle" (click)="resetForm()">Reset</button>
+                <button type="submit" class="btn btn-primary mr-1">Submit</button>
+                <button type="button" class="btn btn-secondary" (click)="resetForm()">Reset</button>
             </div>
         </form>
     </div>
 </ng-container>
-
+</div>
 <ngx-loading [show]="loading"
 [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
 [template]="loadingTemplate"></ngx-loading>

@@ -1,169 +1,166 @@
-<div class="p-0">
+<div class="card adminInner">
 
     <form *ngIf="showUpdateForm" [formGroup]="updateBasicInformationForm" class="needs-validation btop pt-0" novalidate>
-        <div class="card border-light p-0">
-            <div class="card-body pl-0">
-                <fieldset form="user">
-                    <div class="form-group row">
-                        <div class="col-12">
-                            <label class="cancellation-lable px-3">Update Activity</label>
-                        </div>
+        <!-- <div class="card border-light p-0">
+            <div class="card-body pl-0"> -->
+        <fieldset form="user">
+            <div class="form-group row">
+                <div class="col-12">
+                    <label class="cancellation-lable px-3">Update Activity</label>
+                </div>
 
-                        <div class="col-3">
-                            <label class="px-3 control-label" for="activity_name">
-                                Activity Name
-                                <span class="text-danger">*</span>
-                            </label>
-                            <div class="col-sm-12">
-                                <input value="" formControlName="activity_name" type="text" placeholder="Activity Name"
-                                    class="form-control" />
-                                <small class="text-danger" *ngIf="
+                <div class="col-3">
+                    <label class="px-3 control-label" for="activity_name">
+                        Activity Name
+                        <span class="text-danger">*</span>
+                    </label>
+                    <div class="col-sm-12">
+                        <input value="" formControlName="activity_name" type="text" placeholder="Activity Name"
+                            class="form-control" />
+                        <small class="text-danger"
+                            *ngIf="
                                  submitBasicInfo &&(updateBasicInformationForm?.get('activity_name')?.invalid ||updateBasicInformationForm.get('activity_name')?.touched)">
-                                Activity Name is Required</small>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <label class=" control-label">
-                                Type
-                                <span class="text-danger">*</span>
-                            </label>
-                            <ng-multiselect-dropdown formControlName="activity_type" [placeholder]="'Select Type'"
-                                [data]="activityTypeListData" [settings]="dropdownSettingsForview"
-                                class="pl-3 col-12 pr-0  ">
-                            </ng-multiselect-dropdown>
-                            <small class="text-danger" *ngIf="
-                                 submitBasicInfo &&(updateBasicInformationForm?.get('type')?.invalid ||updateBasicInformationForm?.get('type')?.touched)">
-                                Activity Name is Required</small>
-                        </div>
-
-
-                        <div class="col-6 pr-1">
-                            <label class="px-0 control-label" for="activity_duration">
-                                Activity Duration
-                                <span class="text-danger">*</span>
-                            </label>
-                            <div class="col-sm-12 row pr-0">
-                                <div class="col-sm-6 pl-0">
-                                    <select formControlName="activity_duration_type" class="form-control"
-                                        >
-                                        <option value="" disabled selected>Select Duration Type</option>
-                                        <option id="autocomplete" *ngFor="let coreCity of activityDurationType" [value]="coreCity.type">
-                                            {{coreCity.type}}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-6 pl-4 pr-0">
-                                    <input value="" formControlName="activity_duration" type="text"
-                                    placeholder="Activity Duration" class="form-control" (keypress)="telephoneNumberValidation($event)"/>
-                                   
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <div class="col-3 px-4">
-                            <label class="control-label">
-                                Operated in (Languages)
-                                <span class="text-danger">*</span>
-                            </label>
-                            <ng-multiselect-dropdown formControlName="languages" [placeholder]="'Select Languages'"
-                                [data]="languageMasterDataList" [settings]="dropdownSettingsForviewLang"
-                                class="pl-3 col-12 pr-0  ">
-                            </ng-multiselect-dropdown>
-                        </div>
-                        <div class="col-3 px-0">
-                            <label class="control-label px-3">
-                                Timing
-                                <span class="text-danger">*</span>
-                            </label>
-                            <div class="col-12 row pr-0">
-                                <ng-multiselect-dropdown formControlName="timing" [placeholder]="'Select Timing'"
-                                    [data]="timingList" [settings]="dropdownSettingsForviewTiming"
-                                    class="pl-3 col-12 pr-0 ">
-                                </ng-multiselect-dropdown>
-                            </div>
-
-                        </div>
-                        <div class="col-3">
-                            <label class="control-label">
-                                Country
-                                <span class="text-danger">*</span>
-                            </label>
-                            <select formControlName="country" class="form-control" (change)="getActivityCityList(229)"
-                                >
-                                <option value="" disabled selected>Select Country</option>
-                                <option id="autocomplete" *ngFor="let coreCity of countryList" [value]="coreCity.id">
-                                    {{coreCity.CountryName}}
-                                </option>
-                            </select>
-                        </div>
-                        <div class="col-3">
-                            <label class="control-label">
-                                City
-                                <span class="text-danger">*</span>
-                            </label>
-                            <select formControlName="city" class="form-control">
-                                <option value="" disabled selected>Select City</option>
-                                <option id="autocomplete" *ngFor="let coreCity of cityList" [value]="coreCity.origin">
-                                    {{coreCity.CityName}}
-                                </option>
-                            </select>
-                        </div>
-                        <div class="col-3 px-4">
-                            <label class="px-3 control-label" for="pick_up_location">
-                                Pick Up Location
-                                <span class="text-danger">*</span>
-                            </label>
-                            <div class="col-sm-12 p-0">
-                                <input value="" formControlName="pick_up_location" type="text"
-                                    placeholder="Pick Up Location" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="col-3 px-0">
-                            <label class="px-3 control-label" for="drop_off_location">
-                                Drop Off Location
-                                <span class="text-danger">*</span>
-                            </label>
-                            <div class="col-sm-12">
-                                <input value="" formControlName="drop_off_location" type="text"
-                                    placeholder="Drop Off Location" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-12 p-3">
-                                    <label class="control-label px-3 col-12">
-                                    Includes
-                                    <span class="text-danger">*</span>
-                                        <ckeditor type="text" formControlName="includes" style="height: auto;"
-                                            ></ckeditor>
-                                </label>
-                            </div>
-
-                            <div class="col-12 p-3">
-                                    <label class="control-label px-3 col-12">
-                                    Excludes
-                                    <span class="text-danger">*</span>
-                                        <ckeditor type="text" formControlName="excludes" style="height: auto;"
-                                            ></ckeditor>
-                                </label>
-                            </div>
-                            <div class="col-12 p-3">
-                                 <label class="control-label px-3 col-12">
-                                Terms & Conditions
-                                <span class="text-danger">*</span>
-                                <ckeditor type="text" formControlName="terms_conditions" style="height: auto;"
-                                    ></ckeditor>
-                            </label>
-                        </div>
-                        </div>
+                            Activity Name is Required</small>
                     </div>
-                    
-                </fieldset>
+                </div>
+                <div class="col-3">
+                    <label class=" control-label">
+                        Type
+                        <span class="text-danger">*</span>
+                    </label>
+                    <ng-multiselect-dropdown formControlName="activity_type" [placeholder]="'Select Type'"
+                        [data]="activityTypeListData" [settings]="dropdownSettingsForview" class="pl-3 col-12 pr-0  ">
+                    </ng-multiselect-dropdown>
+                    <small class="text-danger"
+                        *ngIf="
+                                 submitBasicInfo &&(updateBasicInformationForm?.get('type')?.invalid ||updateBasicInformationForm?.get('type')?.touched)">
+                        Activity Name is Required</small>
+                </div>
+
+
+                <div class="col-6 pr-1">
+                    <label class="px-0 control-label" for="activity_duration">
+                        Activity Duration
+                        <span class="text-danger">*</span>
+                    </label>
+                    <div class="col-sm-12 row pr-0">
+                        <div class="col-sm-6 pl-0">
+                            <select formControlName="activity_duration_type" class="form-control">
+                                <option value="" disabled selected>Select Duration Type</option>
+                                <option id="autocomplete" *ngFor="let coreCity of activityDurationType"
+                                    [value]="coreCity.type">
+                                    {{coreCity.type}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6 pl-4 pr-0">
+                            <input value="" formControlName="activity_duration" type="text"
+                                placeholder="Activity Duration" class="form-control"
+                                (keypress)="telephoneNumberValidation($event)" />
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-3 px-4">
+                    <label class="control-label">
+                        Operated in (Languages)
+                        <span class="text-danger">*</span>
+                    </label>
+                    <ng-multiselect-dropdown formControlName="languages" [placeholder]="'Select Languages'"
+                        [data]="languageMasterDataList" [settings]="dropdownSettingsForviewLang"
+                        class="pl-3 col-12 pr-0  ">
+                    </ng-multiselect-dropdown>
+                </div>
+                <div class="col-3 px-0">
+                    <label class="control-label px-3">
+                        Timing
+                        <span class="text-danger">*</span>
+                    </label>
+                    <div class="col-12 row pr-0">
+                        <ng-multiselect-dropdown formControlName="timing" [placeholder]="'Select Timing'"
+                            [data]="timingList" [settings]="dropdownSettingsForviewTiming" class="pl-3 col-12 pr-0 ">
+                        </ng-multiselect-dropdown>
+                    </div>
+
+                </div>
+                <div class="col-3">
+                    <label class="control-label">
+                        Country
+                        <span class="text-danger">*</span>
+                    </label>
+                    <select formControlName="country" class="form-control" (change)="getActivityCityList(229)">
+                        <option value="" disabled selected>Select Country</option>
+                        <option id="autocomplete" *ngFor="let coreCity of countryList" [value]="coreCity.id">
+                            {{coreCity.CountryName}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-3">
+                    <label class="control-label">
+                        City
+                        <span class="text-danger">*</span>
+                    </label>
+                    <select formControlName="city" class="form-control">
+                        <option value="" disabled selected>Select City</option>
+                        <option id="autocomplete" *ngFor="let coreCity of cityList" [value]="coreCity.origin">
+                            {{coreCity.CityName}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-3 px-4">
+                    <label class="px-3 control-label" for="pick_up_location">
+                        Pick Up Location
+                        <span class="text-danger">*</span>
+                    </label>
+                    <div class="col-sm-12 p-0">
+                        <input value="" formControlName="pick_up_location" type="text" placeholder="Pick Up Location"
+                            class="form-control" />
+                    </div>
+                </div>
+                <div class="col-3 px-0">
+                    <label class="px-3 control-label" for="drop_off_location">
+                        Drop Off Location
+                        <span class="text-danger">*</span>
+                    </label>
+                    <div class="col-sm-12">
+                        <input value="" formControlName="drop_off_location" type="text" placeholder="Drop Off Location"
+                            class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-12 p-3">
+                        <label class="control-label px-3 col-12">
+                            Includes
+                            <span class="text-danger">*</span>
+                            <ckeditor type="text" formControlName="includes" style="height: auto;"></ckeditor>
+                        </label>
+                    </div>
+
+                    <div class="col-12 p-3">
+                        <label class="control-label px-3 col-12">
+                            Excludes
+                            <span class="text-danger">*</span>
+                            <ckeditor type="text" formControlName="excludes" style="height: auto;"></ckeditor>
+                        </label>
+                    </div>
+                    <div class="col-12 p-3">
+                        <label class="control-label px-3 col-12">
+                            Terms & Conditions
+                            <span class="text-danger">*</span>
+                            <ckeditor type="text" formControlName="terms_conditions" style="height: auto;"></ckeditor>
+                        </label>
+                    </div>
+                </div>
             </div>
-        </div>
+
+        </fieldset>
+        <!-- </div>
+        </div> -->
 
         <div class="col-12 d-flex justify-content-end mb-2 mt-2 align-items-center" *ngIf="showUpdateForm">
-            <button type="button" class="btnStyle mr-2 remove-reset-btn" (click)="resetBasicInfoForm()">Cancel</button>
-            <button type="button" class="btnStyle" (click)="onSubmitUpdateBasicInfo()">Update</button>
+            <button type="button" class="btn btn-primary mr-2" (click)="resetBasicInfoForm()">Cancel</button>
+            <button type="button" class="btn btn-secondary" (click)="onSubmitUpdateBasicInfo()">Update</button>
         </div>
     </form>
 
@@ -173,380 +170,375 @@
 
 
 
-    <form *ngIf="!showUpdateForm"  [formGroup]="basicInfoForm" (ngSubmit)="onSubmitBasicInfo()" class="needs-validation btop pt-0" novalidate>
-        <div class="card border-light p-0">
-            <div class="card-body pl-0">
-                <fieldset form="user">
-                    <div class="form-group row">
-                        <div class="col-12">
-                            <label class="cancellation-lable px-3">Basic Information</label>
-                        </div>
+    <form *ngIf="!showUpdateForm" [formGroup]="basicInfoForm" (ngSubmit)="onSubmitBasicInfo()"
+        class="needs-validation pt-0 mb-3" novalidate>
+        <!-- <div class="card border-light p-0">
+            <div class="card-body pl-0"> -->
+        <div class="card-header mb-3">
+            <h5>Basic Information</h5>
+        </div>
+        <fieldset form="user">
+            <div class="form-group form-row">
 
-                        <div class="col-3">
-                            <label class="px-3 control-label" for="activity_name">
-                                Activity Name
-                                <span class="text-danger">*</span>
-                            </label>
-                            <div class="col-sm-12">
-                                <input value="" formControlName="activity_name" type="text" placeholder="Activity Name"
-                                    class="form-control" />
-                                    <small class="text-danger" 
-                                    *ngIf="
+
+                <div class="col-3 pr-0">
+                    <label class="px-3 control-label" for="activity_name">
+                        Activity Name
+                        <span class="text-danger">*</span>
+                    </label>
+                   
+                        <input value="" formControlName="activity_name" type="text" placeholder="Activity Name"
+                            class="form-control" />
+                        <small class="text-danger" *ngIf="
         basicInfoForm?.get('activity_name')?.invalid &&
         (basicInfoForm?.get('activity_name')?.touched ||  submitBasicInfo)
       ">
-                                Activity Name is Required</small>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <label class=" control-label">
-                                Type
-                                <span class="text-danger">*</span>
-                            </label>
-                            <ng-multiselect-dropdown formControlName="type" [placeholder]="'Select Type'"
-                                [data]="activityTypeListData" [settings]="dropdownSettingsForview"
-                                class="pl-3 col-12 pr-0  ">
-                            </ng-multiselect-dropdown>
-                            <small class="text-danger" 
-                                    *ngIf="
+                            Activity Name is Required</small>
+                    
+                </div>
+                <div class="col-3 pr-0 mat-error-msg">
+                    <label class=" control-label">
+                        Type
+                        <span class="text-danger">*</span>
+                    </label>
+                    <ng-multiselect-dropdown formControlName="type" [placeholder]="'Select Type'"
+                        [data]="activityTypeListData" [settings]="dropdownSettingsForview" class="pl-3 col-12 pr-0  ">
+                    </ng-multiselect-dropdown>
+                    <small class="text-danger errormsg" *ngIf="
         basicInfoForm?.get('type')?.invalid &&
         (basicInfoForm?.get('type')?.touched ||  submitBasicInfo)
       ">
-                                Activity Type is Required</small>
-                        </div>
-                        <div class="col-6 pr-1">
-                            <label class="px-0 control-label" for="activity_duration">
-                                Activity Duration
-                                <span class="text-danger">*</span>
-                            </label>
-                            <div class="col-sm-12 row pr-0">
-                                <div class="col-sm-6 pl-0">
-                                    <select formControlName="activity_duration_type" class="form-control"
-                                        >
-                                        <option value="" disabled selected>Select Duration Type</option>
-                                        <option id="autocomplete" *ngFor="let coreCity of activityDurationType" [value]="coreCity.type">
-                                            {{coreCity.type}}
-                                        </option>
-                                    </select>
-                                    <small class="text-danger" 
-                                    *ngIf="
+                        Activity Type is Required</small>
+                </div>
+                <div class="col-6 pr-0">
+                    <label class="px-0 control-label" for="activity_duration">
+                        Activity Duration
+                        <span class="text-danger">*</span>
+                    </label>
+                    <div class="col-sm-12 form-row p-0">
+                        <div class="col-sm-6 pr-0">
+                            <select formControlName="activity_duration_type" class="form-control">
+                                <option value="" disabled selected>Select Duration Type</option>
+                                <option id="autocomplete" *ngFor="let coreCity of activityDurationType"
+                                    [value]="coreCity.type">
+                                    {{coreCity.type}}
+                                </option>
+                            </select>
+                            <small class="text-danger" *ngIf="
         basicInfoForm?.get('activity_duration_type')?.invalid &&
         (basicInfoForm?.get('activity_duration_type')?.touched ||  submitBasicInfo)
       ">
                                 Activity Duration Type is Required</small>
-                                </div>
-                                <div class="col-sm-6 pl-4 pr-0">
-                                    <input value="" formControlName="activity_duration" type="text"
-                                    placeholder="Activity Duration" class="form-control" (keypress)="telephoneNumberValidation($event)"/>
-                                    <small class="text-danger" 
-                                    *ngIf="
+                        </div>
+                        <div class="col-sm-6 pr-0">
+                            <input value="" formControlName="activity_duration" type="text"
+                                placeholder="Activity Duration" class="form-control"
+                                (keypress)="telephoneNumberValidation($event)" />
+                            <small class="text-danger" *ngIf="
         basicInfoForm?.get('activity_duration')?.invalid &&
         (basicInfoForm?.get('activity_duration')?.touched ||  submitBasicInfo)
       ">
                                 Activity Duration is Required</small>
-                                </div>
-                                
-                            </div>
                         </div>
-                        <div class="col-3 px-4">
-                            <label class="control-label">
-                                Operated in (Languages)
-                                <span class="text-danger">*</span>
-                            </label>
-                            <ng-multiselect-dropdown formControlName="operated_lang" [placeholder]="'Select Languages'"
-                                [data]="languageMasterDataList" [settings]="dropdownSettingsForviewLang"
-                                class="pl-3 col-12 pr-0  ">
-                            </ng-multiselect-dropdown>
-                            <small class="text-danger" 
-                                    *ngIf="
+
+                    </div>
+                </div>
+                <div class="col-3 pr-0 mat-error-msg">
+                    <label class="control-label">
+                        Operated in (Languages)
+                        <span class="text-danger">*</span>
+                    </label>
+                    <ng-multiselect-dropdown formControlName="operated_lang" [placeholder]="'Select Languages'"
+                        [data]="languageMasterDataList" [settings]="dropdownSettingsForviewLang"
+                        class="pl-3 col-12 pr-0  ">
+                    </ng-multiselect-dropdown>
+                    <small class="text-danger errormsg" *ngIf="
         basicInfoForm?.get('operated_lang')?.invalid &&
         (basicInfoForm?.get('operated_lang')?.touched ||  submitBasicInfo)
       ">
-                                Operated Language is Required</small>
-                        </div>
-                        <div class="col-3 px-0">
-                            <label class="control-label px-3">
-                                Timing
-                                <span class="text-danger">*</span>
-                            </label>
-                            <div class="col-12 row pr-0">
-                                <ng-multiselect-dropdown formControlName="timing" [placeholder]="'Select Timing'"
-                                    [data]="timingList" [settings]="dropdownSettingsForviewTiming"
-                                    class="pl-3 col-12 pr-0 ">
-                                </ng-multiselect-dropdown>
-                                <small class="text-danger" 
-                                    *ngIf="
+                        Operated Language is Required</small>
+                </div>
+                <div class="col-3 pr-0 mat-error-msg">
+                    <label class="control-label">
+                        Timing
+                        <span class="text-danger">*</span>
+                    </label>
+                   
+                        <ng-multiselect-dropdown formControlName="timing" [placeholder]="'Select Timing'"
+                            [data]="timingList" [settings]="dropdownSettingsForviewTiming" class="pl-3 col-12 pr-0 ">
+                        </ng-multiselect-dropdown>
+                        <small class="text-danger errormsg" *ngIf="
         basicInfoForm?.get('timing')?.invalid &&
         (basicInfoForm?.get('timing')?.touched ||  submitBasicInfo)
       ">
-                                Timing is Required</small>
-                            </div>
+                            Timing is Required</small>
+                    
 
-                        </div>
-                        <div class="col-3">
-                            <label class="control-label">
-                                Country
-                                <span class="text-danger">*</span>
-                            </label>
-                            <select formControlName="country" class="form-control" (change)="getActivityCityList($event)"
-                                >
-                                <option value="" disabled selected>Select Country</option>
-                                <option id="autocomplete" *ngFor="let coreCity of countryList" [value]="coreCity.id">
-                                    {{coreCity.CountryName}}
-                                </option>
-                            </select>
+                </div>
+                <div class="col-3 pr-0">
+                    <label class="control-label">
+                        Country
+                        <span class="text-danger">*</span>
+                    </label>
+                    <select formControlName="country" class="form-control" (change)="getActivityCityList($event)">
+                        <option value="" disabled selected>Select Country</option>
+                        <option id="autocomplete" *ngFor="let coreCity of countryList" [value]="coreCity.id">
+                            {{coreCity.CountryName}}
+                        </option>
+                    </select>
 
-                            <small class="text-danger" 
-                                    *ngIf="
+                    <small class="text-danger" *ngIf="
         basicInfoForm?.get('country')?.invalid &&
         (basicInfoForm?.get('country')?.touched ||  submitBasicInfo)
       ">
-                                Country is Required</small>
-                        </div>
-                        <div class="col-3">
-                            <label class="control-label">
-                                City
-                                <span class="text-danger">*</span>
-                            </label>
-                            <select formControlName="city" class="form-control"
-                                >
-                                <option value="" disabled selected>Select City</option>
-                                <option id="autocomplete" *ngFor="let coreCity of cityList" [value]="coreCity.origin">
-                                    {{coreCity.CityName}}
-                                </option>
-                            </select>
-                            <small class="text-danger" 
-                                    *ngIf="
+                        Country is Required</small>
+                </div>
+                <div class="col-3 pr-0">
+                    <label class="control-label">
+                        City
+                        <span class="text-danger">*</span>
+                    </label>
+                    <select formControlName="city" class="form-control">
+                        <option value="" disabled selected>Select City</option>
+                        <option id="autocomplete" *ngFor="let coreCity of cityList" [value]="coreCity.origin">
+                            {{coreCity.CityName}}
+                        </option>
+                    </select>
+                    <small class="text-danger" *ngIf="
         basicInfoForm?.get('city')?.invalid &&
         (basicInfoForm?.get('city')?.touched ||  submitBasicInfo)
       ">
-                                City is Required</small>
-                        </div>
-                        <div class="col-3 px-4">
-                            <label class="px-3 control-label" for="pick_up_location">
-                                Pick Up Location
-                                <span class="text-danger">*</span>
-                            </label>
-                            <div class="col-sm-12 p-0">
-                                <input value="" formControlName="pick_up_location" type="text"
-                                    placeholder="Pick Up Location" class="form-control"
-                                     />
-                                     <small class="text-danger" 
-                                    *ngIf="
+                        City is Required</small>
+                </div>
+                <div class="col-3 pr-0">
+                    <label class="px-3 control-label" for="pick_up_location">
+                        Pick Up Location
+                        <span class="text-danger">*</span>
+                    </label>
+                    <div class="col-sm-12 p-0">
+                        <input value="" formControlName="pick_up_location" type="text" placeholder="Pick Up Location"
+                            class="form-control" />
+                        <small class="text-danger" *ngIf="
         basicInfoForm?.get('pick_up_location')?.invalid &&
         (basicInfoForm?.get('pick_up_location')?.touched ||  submitBasicInfo)
       ">
-                                PickUp location is Required</small>
-                            </div>
-                        </div>
-                        <div class="col-3 px-0">
-                            <label class="px-3 control-label" for="drop_off_location">
-                                Drop Off Location
-                                <span class="text-danger">*</span>
-                            </label>
-                            <div class="col-sm-12">
-                                <input value="" formControlName="drop_off_location" type="text"
-                                    placeholder="Drop Off Location" class="form-control"
-                                    />
-                                    <small class="text-danger" 
-                                    *ngIf="
+                            PickUp location is Required</small>
+                    </div>
+                </div>
+                <div class="col-3 pr-0">
+                    <label class="px-3 control-label" for="drop_off_location">
+                        Drop Off Location
+                        <span class="text-danger">*</span>
+                    </label>
+                   
+                        <input value="" formControlName="drop_off_location" type="text" placeholder="Drop Off Location"
+                            class="form-control" />
+                        <small class="text-danger" *ngIf="
         basicInfoForm?.get('drop_off_location')?.invalid &&
         (basicInfoForm?.get('drop_off_location')?.touched ||  submitBasicInfo)
       ">
-                                Dropoff is Required</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 d-flex justify-content-end align-items-center">
-                        <button type="button" class="btnStyle mr-2 remove-reset-btn" (click)="resetBasicInfoForm()">Reset</button>
-                        <button type="submit" class="btnStyle">Save</button>
-                    </div>
-                </fieldset>
+                            Dropoff is Required</small>
+                   
+                </div>
             </div>
-        </div>
+            <div class="col-12 d-flex justify-content-end align-items-center">
+                <button type="button" class="btn btn-primary mr-2" (click)="resetBasicInfoForm()">Reset</button>
+                <button type="submit" class="btn btn-secondary">Save</button>
+            </div>
+        </fieldset>
+        <!-- </div>
+        </div> -->
     </form>
 
-    <form [formGroup]="seasonPricingForm" (ngSubmit)=" showUpdateForm ? onUpdateSeasonPricing() : onSubmitSeasonPricing()" class="needs-validation btop pt-0"
-        novalidate>
-        <div class="card border-light p-0">
-            <div class="card-body pl-0">
-                <fieldset form="user">
-                    <div class="form-group row">
-                        <div class="col-12">
-                            <label class="cancellation-lable px-3">Seasons, Pricing & Cancellation</label>
-                        </div>
+    <form [formGroup]="seasonPricingForm"
+        (ngSubmit)=" showUpdateForm ? onUpdateSeasonPricing() : onSubmitSeasonPricing()"
+        class="needs-validation pt-0 mb-3" novalidate>
+        <!-- <div class="card border-light p-0">
+            <div class="card-body pl-0"> -->
+        <div class="card-header mb-3">
+            <h5>Seasons, Pricing & Cancellation</h5>
+        </div>
+        <fieldset form="user">
+            <div class="form-group row">
 
-                        <div formArrayName="seasonPricing" class=" col-12 pr-0 mt-4">
-                            <div *ngFor="let season of seasonsPricingForm.controls; let k = index" [formGroupName]="k"
-                            class="policy-block p-3 row col-12 mb-3 mt-2 ">
-                            <label class="px-4 season-index">Season {{k+1}}</label>
-                                <div class="season-pricing-block col-12 ml-3">
-                                    <div class=" col-12 row price-details-div p-2 ml-2">
-                                    <div class="col-6">
-                                        <div class="col-12 ">
-                                            <label class="px-0 control-label">
-                                                Start Date
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <div class="input-group col-sm-12 px-0">
-                                                <input type="text" id="start_date" formControlName="StartDate" placeholder="DD/MM/YYYY"
-                                                    autocomplete="off" [minDate]="seasonMinDates[k]" class="form-control"
-                                                    (bsValueChange)="onStartDateChange($event, k)" bsDatepicker
-                                                    [bsConfig]="bsDateConf" [isOpen]="isOpen" >
-                                                <div class="input-group-append">
-                                                </div>
-                                            </div>
+
+                <div formArrayName="seasonPricing" class="col-12 pr-0">
+                    <div *ngFor="let season of seasonsPricingForm.controls; let k = index" [formGroupName]="k"
+                        class="policy-block p-3 row col-12 mb-3">
+                        <label class="px-4 season-index">Season {{k+1}}</label>
+                        <div class="season-pricing-block col-12 p-3">
+                            <div class=" col-12 form-row p-0 price-details-div">
+                                <div class="col-3 pr-0">
+
+                                    <label class="px-0 control-label">
+                                        Start Date
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="input-group col-sm-12 px-0">
+                                        <input type="text" id="start_date" formControlName="StartDate"
+                                            placeholder="DD/MM/YYYY" autocomplete="off" [minDate]="seasonMinDates[k]"
+                                            class="form-control" (bsValueChange)="onStartDateChange($event, k)"
+                                            bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen">
+                                        <div class="input-group-append">
                                         </div>
                                     </div>
-                                    <div class="col-6">
-                                        <div class="col-12 ">
-                                            <label class="px-0 control-label">
-                                                End Date
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <div class="input-group col-sm-12 px-0">
-                                                <input type="text" id="end_date" formControlName="EndDate" placeholder="DD/MM/YYYY"
-                                                    autocomplete="off" [minDate]="endMinDates[k]" class="form-control" bsDatepicker
-                                                    [bsConfig]="bsDateConf" [isOpen]="isOpen"
-                                                     (bsValueChange)="onEndDateChange($event, k)">
-                                                <div class="input-group-append">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+
                                 </div>
-                                <div class=" col-12 row price-details-div p-2 ml-2">
-                                    <div class="col-6">
-                                        <div class="col-12 p-0 ">
-                                            <label class="control-label px-3">
-                                            Price / Adult ({{loggedInUser.currency ? loggedInUser.currency : 'INR'}})
-                                            <span class="text-danger">*</span>
-                                        </label>
-                                        <div class="col-12 ">
-                                            <input value="" formControlName="Adultprice" min="1" type="number"
-                                                placeholder="Adult Price " class="form-control" />
-                                        </div>
-                                        </div>
-                                    </div>  
-                                    <div class="col-6 d-flex justify-content-center align-items-center">
-                                        <div class="col-12 row">
-                                            <label class="control-label px-3">
-                                                Add Children to this activity?
-                                            </label>
-                                            <label class="mr-2">
-                                                <input type="radio" [value]="true"
-                                                    formControlName="is_child_included" (change)="onCheckboxChange($event,'true',k)">
-                                                <span class="text" style="margin-left: 4px;" >Yes</span>
-                                            </label>
+                                <div class="col-3 pr-0">
 
-                                            <label>
-                                                <input type="radio" [value]="false"
-                                                    formControlName="is_child_included" (change)="onCheckboxChange($event,'false',k)">
-                                                <span class="text" style="margin-left: 4px;">No</span>
-                                            </label>
+                                    <label class="px-0 control-label">
+                                        End Date
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="input-group col-sm-12 px-0">
+                                        <input type="text" id="end_date" formControlName="EndDate"
+                                            placeholder="DD/MM/YYYY" autocomplete="off" [minDate]="endMinDates[k]"
+                                            class="form-control" bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen"
+                                            (bsValueChange)="onEndDateChange($event, k)">
+                                        <div class="input-group-append">
                                         </div>
                                     </div>
-                                </div>
 
-                                <div *ngIf="season?.get('is_child_included')?.value" class=" col-12 row price-details-div p-2 ml-2">
-                                    <div formArrayName="pricing" class=" col-12 pr-0 mt-4">
-                                        <div *ngFor="let policy of getChildPolicies(k).controls; let i = index" [formGroupName]="i"
-                                            class="policy-block p-3 row col-12 mb-3 mt-2 ">
-                                            <div class=" col-12 row price-details-div p-2 ml-2">
-                                                <div class="col-3 pl-0">
-                                                    <div class="col-sm-12 p-0">
-                                                        <label class="mr-2">
-                                                            Child From Age
-                                                        </label>
-                                                        <select formControlName="childFromAge" class="form-control"
-                                                            >
-                                                            <option value="" disabled selected>Select Child From Age</option>
-                                                            <option id="autocomplete" *ngFor="let age of fromChildAgeRange" [value]="age"
-                                                            [disabled]="i > 0 && age <  getChildPolicies(k).at(i-1)?.get('ChildbeforeAge')?.value"
-                                                            >
-                                                                {{age}}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-3" >
+                                </div>
+                                <div class="col-3 pr-0">
+
+                                    <label class="control-label px-3">
+                                        Price / Adult ({{loggedInUser.currency ? loggedInUser.currency : 'INR'}})
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col-12 p-0">
+                                        <input value="" formControlName="Adultprice" min="1" type="number"
+                                            placeholder="Adult Price " class="form-control" />
+                                    </div>
+
+                                </div>
+                                <div class="col-3 pr-0 d-flex justify-content-center align-items-center">
+
+                                    <label class="control-label px-3">
+                                        Add Children to this activity?
+                                    </label>
+                                    <label class="mr-2">
+                                        <input type="radio" [value]="true" formControlName="is_child_included"
+                                            (change)="onCheckboxChange($event,'true',k)">
+                                        <span class="text" style="margin-left: 4px;">Yes</span>
+                                    </label>
+
+                                    <label>
+                                        <input type="radio" [value]="false" formControlName="is_child_included"
+                                            (change)="onCheckboxChange($event,'false',k)">
+                                        <span class="text" style="margin-left: 4px;">No</span>
+                                    </label>
+
+                                </div>
+                            </div>
+                            <!-- <div class=" col-12 row price-details-div">
+                                    
+                                </div> -->
+
+                            <div *ngIf="season?.get('is_child_included')?.value"
+                                class=" col-12 row price-details-div pt-3">
+                                <div formArrayName="pricing" class=" col-12 pr-0">
+                                    <div *ngFor="let policy of getChildPolicies(k).controls; let i = index"
+                                        [formGroupName]="i" class="policy-block p-3 row col-12 mb-3 mt-2 ">
+                                        <div class=" col-12 row price-details-div">
+                                            <div class="col-3 pl-0">
+                                                <div class="col-sm-12 p-0">
                                                     <label class="mr-2">
-                                                            Child Before Age
-                                                        </label>
-                                                        <select formControlName="ChildbeforeAge" class="form-control"
-                                                            >
-                                                            <option value="" disabled selected>Select Child Before Age</option>
-                                                            <option id="autocomplete" *ngFor="let age of fromChildAgeRange" [value]="age"
-                                                            [disabled]="age <= policy?.get('childFromAge')?.value">
-                                                                {{age}}
-                                                            </option>
-                                                        </select>
-                                                </div>
-                                                <div class="col-3" >
-                                                    <label class="px-3 control-label">
-                                                        Charge Price ({{loggedInUser?.currency ? loggedInUser?.currency : 'GBP'}})
-                                                        
+                                                        Child From Age
                                                     </label>
-                                                    <div class="col-sm-12">
-                                                        <input value="" formControlName="ChildPrice" min="1"  type="number"
-                                                            placeholder="Child Fee" class="form-control"
-                                                            />
-                                                    </div>
-                                                </div>
-                                                <div class="col-3 d-flex justify-content-center align-items-end">
-                                                    <button class="btnStyle" type="button" (click)="addChildPolicies(k)" *ngIf="i===0">Add</button>
-                                                    <button class="btnStyle remove-reset-btn" type="button" *ngIf="i>0" (click)="removeChildPolicies(k,i)" >Remove</button>
-
+                                                    <select formControlName="childFromAge" class="form-control">
+                                                        <option value="" disabled selected>Select Child From Age
+                                                        </option>
+                                                        <option id="autocomplete" *ngFor="let age of fromChildAgeRange"
+                                                            [value]="age"
+                                                            [disabled]="i > 0 && age <  getChildPolicies(k).at(i-1)?.get('ChildbeforeAge')?.value">
+                                                            {{age}}
+                                                        </option>
+                                                    </select>
                                                 </div>
                                             </div>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                                
-                                <div class=" col-12 row price-details-div p-2 ml-2">
-                                    <div class="col-12">
-                                        <label class="cancellation-lable px-3">Cancellation Terms</label>
-                                    </div>
-                                    <div formArrayName="cancellationPolicies" class=" col-12 pr-0 mt-4">
-                                        <div *ngFor="let policy of  getRefundPolicies(k).controls; let j = index" [formGroupName]="j"
-                                            class="policy-block p-3 row col-12 mb-3 mt-2 ">
-                                            <div class=" col-12 row price-details-div p-2 ml-2">
-                                                <div class="col-2 p-0 d-flex justify-content-center align-items-center">
-                                                    <div class="col-sm-12 p-0">
-                                                        <label class="mr-2">
-                                                            <input type="radio" [value]="true"
-                                                                formControlName="is_refundable" (change)="onRefundableChange($event,true,k,j)">
-                                                            <span class="text" style="margin-left: 4px;" >RF</span>
-                                                        </label>
+                                            <div class="col-3">
+                                                <label class="mr-2">
+                                                    Child Before Age
+                                                </label>
+                                                <select formControlName="ChildbeforeAge" class="form-control">
+                                                    <option value="" disabled selected>Select Child Before Age</option>
+                                                    <option id="autocomplete" *ngFor="let age of fromChildAgeRange"
+                                                        [value]="age"
+                                                        [disabled]="age <= policy?.get('childFromAge')?.value">
+                                                        {{age}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-3">
+                                                <label class="px-3 control-label">
+                                                    Charge Price ({{loggedInUser?.currency ? loggedInUser?.currency :
+                                                    'GBP'}})
 
-                                                        <label>
-                                                            <input type="radio" [value]="false"
-                                                                formControlName="is_refundable" (change)="onRefundableChange($event,false,k,j)">
-                                                            <span class="text" style="margin-left: 4px;">NRF</span>
-                                                        </label>
-                                                    </div>
+                                                </label>
+                                                <div class="col-sm-12">
+                                                    <input value="" formControlName="ChildPrice" min="1" type="number"
+                                                        placeholder="Child Fee" class="form-control" />
                                                 </div>
+                                            </div>
+                                            <div class="col-3 d-flex justify-content-center align-items-end">
+                                                <button class="btn btn-primary" type="button"
+                                                    (click)="addChildPolicies(k)" *ngIf="i===0">Add</button>
+                                                <button class="btn btn-secondary" type="button" *ngIf="i>0"
+                                                    (click)="removeChildPolicies(k,i)">Remove</button>
 
-                                                <ng-container *ngIf="policy?.get('is_refundable')?.value === true">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class=" col-12 row price-details-div pt-3">
+                              
+                                    <label class="cancellation-lable">Cancellation Terms</label>
+                               
+                                <div formArrayName="cancellationPolicies" class=" col-12 p-0 ">
+                                    <div *ngFor="let policy of  getRefundPolicies(k).controls; let j = index"
+                                        [formGroupName]="j" class="policy-block p-3 row col-12 mt-2 ">
+                                        <div class=" col-12 row price-details-div">
+                                            <div class="col-2 p-0 d-flex justify-content-center align-items-center">
+                                                <div class="col-sm-12 p-0">
+                                                    <label class="mr-2">
+                                                        <input type="radio" [value]="true"
+                                                            formControlName="is_refundable"
+                                                            (change)="onRefundableChange($event,true,k,j)">
+                                                        <span class="text" style="margin-left: 4px;">RF</span>
+                                                    </label>
+
+                                                    <label>
+                                                        <input type="radio" [value]="false"
+                                                            formControlName="is_refundable"
+                                                            (change)="onRefundableChange($event,false,k,j)">
+                                                        <span class="text" style="margin-left: 4px;">NRF</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <ng-container *ngIf="policy?.get('is_refundable')?.value === true">
                                                 <div class="col-2 p-0 mr-2">
                                                     <label class="p-0 control-label">
                                                         RF Before Days
                                                     </label>
                                                     <div class="col-sm-12 p-0">
-                                                        <input value="" formControlName="refundablebeforedays" min="1" type="number"
-                                                            placeholder="Refundable Before Days" class="form-control"
-                                                            />
+                                                        <input value="" formControlName="refundablebeforedays" min="1"
+                                                            type="number" placeholder="Refundable Before Days"
+                                                            class="form-control" />
                                                     </div>
                                                 </div>
-                                                <div class="col-2 p-0" >
+                                                <div class="col-2 p-0">
                                                     <label class="px-3 control-label">
                                                         Charge Fee (%)
                                                     </label>
                                                     <div class="col-sm-12 p-0">
-                                                        <input value="" formControlName="chargeAmount" min="1" type="number"
-                                                            placeholder="Change Fee" class="form-control"
-                                                            />
+                                                        <input value="" formControlName="chargeAmount" min="1"
+                                                            type="number" placeholder="Change Fee"
+                                                            class="form-control" />
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-2 pl-0" >
@@ -563,166 +555,170 @@
                                                         </label>
                                                     </div>
                                                 </div> -->
-                                                <div class="col-2 d-flex justify-content-center align-items-end" >
-                                                    <button class="btnStyle" type="button" (click)="addRefundPolicies(k)" *ngIf="j===0">Add</button>
-                                                    <button class="btnStyle remove-reset-btn" type="button" *ngIf="j>0" (click)="removeRefundPolicies(k,j)">Remove</button>
+                                                <div class="col-2 d-flex justify-content-center align-items-end">
+                                                    <button class="btn btn-primary" type="button"
+                                                        (click)="addRefundPolicies(k)" *ngIf="j===0">Add</button>
+                                                    <button class="btn btn-secondary" type="button" *ngIf="j>0"
+                                                        (click)="removeRefundPolicies(k,j)">Remove</button>
 
                                                 </div>
-                                                </ng-container>
-                                            </div>
+                                            </ng-container>
                                         </div>
-                                        
                                     </div>
-                                </div>
 
-                                 <div class="col-12 d-flex justify-content-end align-items-center mb-2">
-                                    <button type="button" class="btnStyle mr-2"  (click)="addSeasonPricing()" *ngIf="k===0">Add Season</button>
-                                    <button type="button" class="btnStyle remove-reset-btn" (click)="removeSeasonPricing(k)" *ngIf="k>0" >Remove Season</button>
-                                </div>
                                 </div>
                             </div>
-                        </div>
-                       
-                        
-                        <div class="col-12 d-flex justify-content-end align-items-center">
-                            <button type="button" class="btnStyle mr-2 remove-reset-btn"  (click)="resetChildPolicyForm()">Reset</button>
-                            <button type="submit" class="btnStyle">Save</button>
+
+                            <div class="col-12 d-flex justify-content-end align-items-center mb-2">
+                                <button type="button" class="btn btn-primary mr-2" (click)="addSeasonPricing()"
+                                    *ngIf="k===0">Add Season</button>
+                                <button type="button" class="btn btn-secondary" (click)="removeSeasonPricing(k)"
+                                    *ngIf="k>0">Remove Season</button>
+                            </div>
                         </div>
                     </div>
-                </fieldset>
+                </div>
+
+
+                <div class="col-12 d-flex justify-content-end align-items-center">
+                    <button type="button" class="btn btn-primary mr-2" (click)="resetChildPolicyForm()">Reset</button>
+                    <button type="submit" class="btn btn-secondary">Save</button>
+                </div>
             </div>
-        </div>
+        </fieldset>
+        <!-- </div>
+        </div> -->
     </form>
 
-    <form *ngIf="!showUpdateForm" [formGroup]="inclusionExclusionForm" (ngSubmit)="onSubmitIncluExclu()" class="needs-validation btop pt-0"
-        novalidate>
-        <div class="card border-light p-0">
-            <div class="card-body pl-0">
-                <fieldset form="user">
-                    <div class="form-group row">
-                        <div class="col-12">
-                            <label class="cancellation-lable px-3">Includes & Excludes</label>
-                        </div>
-                        <div class="col-12 p-3">
-                                 <label class="control-label px-3 col-12">
-                                Includes
-                                <span class="text-danger">*</span>
-                                    <ckeditor type="text" formControlName="includes" style="height: auto;"
-                                        ></ckeditor>
-                                <small class="text-danger" 
-                                    *ngIf="
+    <form *ngIf="!showUpdateForm" [formGroup]="inclusionExclusionForm" (ngSubmit)="onSubmitIncluExclu()"
+        class="needs-validation pt-0 mb-3" novalidate>
+        <div class="card-header mb-3">
+            <h5>Includes & Excludes</h5>
+        </div>
+        <!-- <div class="card border-light p-0">
+            <div class="card-body pl-0"> -->
+        <fieldset form="user">
+
+            <div class="col-12 p-0">
+                <label class="control-label col-12">
+                    Includes
+                    <span class="text-danger">*</span>
+                    <ckeditor type="text" formControlName="includes" style="height: auto;"></ckeditor>
+                    <small class="text-danger" *ngIf="
         inclusionExclusionForm?.get('includes')?.invalid &&
         (inclusionExclusionForm?.get('includes')?.touched ||  submitIncludesExcludes)
       ">
-                                Inclusions is Required</small>
-                            </label>
-                        </div>
+                        Inclusions is Required</small>
+                </label>
+            </div>
 
-                        <div class="col-12 p-3">
-                                 <label class="control-label px-3 col-12">
-                                Excludes
-                                <span class="text-danger">*</span>
-                                    <ckeditor type="text" formControlName="excludes" style="height: auto;"
-                                        ></ckeditor>
-                                <small class="text-danger" 
-                                    *ngIf="
+            <div class="col-12 p-0">
+                <label class="control-label col-12">
+                    Excludes
+                    <span class="text-danger">*</span>
+                    <ckeditor type="text" formControlName="excludes" style="height: auto;"></ckeditor>
+                    <small class="text-danger" *ngIf="
         inclusionExclusionForm?.get('excludes')?.invalid &&
         (inclusionExclusionForm?.get('excludes')?.touched ||  submitIncludesExcludes)
       ">
-                                Exclusions is Required</small>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-12 d-flex justify-content-end align-items-center">
-                        <button type="button" class="btnStyle mr-2 remove-reset-btn" (click)="resetExcludeIncludeForm()">Reset</button>
-                        <button type="submit" class="btnStyle">Save</button>
-                    </div>
-                </fieldset>
+                        Exclusions is Required</small>
+                </label>
             </div>
-        </div>
+
+            <div class="col-12 d-flex justify-content-end align-items-center">
+                <button type="button" class="btn btn-primary mr-2" (click)="resetExcludeIncludeForm()">Reset</button>
+                <button type="submit" class="btn btn-secondary">Save</button>
+            </div>
+        </fieldset>
+        <!-- </div>
+            </div> -->
+
     </form>
 
 
-    <form *ngIf="!showUpdateForm"  [formGroup]="termsConditionForm" (ngSubmit)="onSubmitTremCondition()" class="needs-validation btop pt-0"
-        novalidate>
-        <div class="card border-light p-0">
-            <div class="card-body pl-0">
-                <fieldset form="user">
-                    <div class="form-group row">
-                        <div class="col-12">
-                            <label class="cancellation-lable px-3">Terms & Conditions</label>
-                        </div>
-                        <div class="col-12 p-3">
-                                 <label class="control-label px-3 col-12">
-                                Terms & Conditions
-                                <span class="text-danger">*</span>
-                                <ckeditor type="text" formControlName="terms_conditions" style="height: auto;"
-                                    ></ckeditor>
-                                <small class="text-danger" 
-                                    *ngIf="
+    <form *ngIf="!showUpdateForm" [formGroup]="termsConditionForm" (ngSubmit)="onSubmitTremCondition()"
+        class="needs-validation pt-0 mb-3" novalidate>
+        <div class="card-header mb-3">
+            <h5>Terms & Conditions</h5>
+        </div>
+        <!-- <div class="card border-light p-0">
+            <div class="card-body pl-0"> -->
+        <fieldset form="user">
+            <div class="form-group row">
+
+                <div class="col-12 p-3">
+                    <label class="control-label px-3 col-12">
+                        Terms & Conditions
+                        <span class="text-danger">*</span>
+                        <ckeditor type="text" formControlName="terms_conditions" style="height: auto;"></ckeditor>
+                        <small class="text-danger" *ngIf="
         termsConditionForm?.get('terms_conditions')?.invalid &&
         (termsConditionForm?.get('terms_conditions')?.touched ||  submitTermsCondition)
       ">
-                                Terms and Conditions is Required</small>
-                            </label>
-                        </div>
+                            Terms and Conditions is Required</small>
+                    </label>
+                </div>
 
-                    </div>
-                    <div class="col-12 d-flex justify-content-end align-items-center">
-                        <button type="button" class="btnStyle mr-2 remove-reset-btn" (click)="resetTermsConditionForm()">Reset</button>
-                        <button type="submit" class="btnStyle">Save</button>
-                    </div>
-                </fieldset>
             </div>
-        </div>
+            <div class="col-12 d-flex justify-content-end align-items-center">
+                <button type="button" class="btn btn-primary mr-2" (click)="resetTermsConditionForm()">Reset</button>
+                <button type="submit" class="btn btn-secondary">Save</button>
+            </div>
+        </fieldset>
+        <!-- </div>
+        </div> -->
     </form>
     <form>
-        
+
 
         <div class="imageGallery col-sm-10 pt-3 mt-3" *ngIf="showUpdateForm">
             <div class="col-sm-6">
-                <a  class="bannerImage" href="{{bannerImagename}}" target="_blank"><img class="bannerImage" width="200"
-                    [src]="bannerImagename" alt=""></a>
+                <a class="bannerImage" href="{{bannerImagename}}" target="_blank"><img class="bannerImage" width="200"
+                        [src]="bannerImagename" alt=""></a>
             </div>
         </div>
 
         <div class="col-12 py-3">
-            <label for="uploadBanner" class="col-sm-2 col-form-label font-weight-bold smLabelAlign">Upload Banner <span class="text-danger">*</span></label>
-            <input class="col-sm-4" type="file" id="uploadGallery" multiple (change)="onImageSelect($event)" accept=".png,.jpg,.jpeg,.svg,.webp"><br>
-            <span><b>Note:</b> Only JPG, JPEG & PNG formats are allowed.</span><br>
+            <label for="uploadBanner" class="col-sm-2 col-form-label font-weight-bold smLabelAlign">Upload Banner <span
+                    class="text-danger">*</span></label>
+            <input class="col-sm-4" type="file" id="uploadGallery" multiple (change)="onImageSelect($event)"
+                accept=".png,.jpg,.jpeg,.svg,.webp"><br>
+            <span class="pl-3"><b>Note:</b> Only JPG, JPEG & PNG formats are allowed.</span><br>
         </div>
 
 
         <div class="imageGallery col-sm-10 mt-2" *ngIf="showUpdateForm">
             <ul class="imageList">
-            <li *ngFor="let imageName of galleryImages">
-                <div class="image-container">
-                <img class="galleryImageItem" width="250" [src]="imageName" alt="Gallery Image">
-                <!-- <button class="delete-btn" (click)="deleteGalleryImage(imageName)">❌</button> -->
-                </div>
-            </li>
+                <li *ngFor="let imageName of galleryImages">
+                    <div class="image-container">
+                        <img class="galleryImageItem" width="250" [src]="imageName" alt="Gallery Image">
+                        <!-- <button class="delete-btn" (click)="deleteGalleryImage(imageName)">❌</button> -->
+                    </div>
+                </li>
             </ul>
         </div>
 
         <div class="col-12">
-            <label for="uploadGallery" class="col-sm-2 col-form-label font-weight-bold smLabelAlign">Upload Gallery <span class="text-danger">*</span></label>
-            <input class="col-sm-4" type="file" id="uploadGallery" multiple (change)="onGallerySelect($event)" accept=".png,.jpg,.jpeg,.svg,.webp"><br>
-            <span><b>Note:</b> Only JPG, JPEG &PNG formats are allowed.</span><br>
+            <label for="uploadGallery" class="col-sm-2 col-form-label font-weight-bold smLabelAlign">Upload Gallery
+                <span class="text-danger">*</span></label>
+            <input class="col-sm-4" type="file" id="uploadGallery" multiple (change)="onGallerySelect($event)"
+                accept=".png,.jpg,.jpeg,.svg,.webp"><br>
+            <span class="pl-3"><b>Note:</b> Only JPG, JPEG &PNG formats are allowed.</span><br>
         </div>
     </form>
 
     <div class="col-12 d-flex justify-content-center align-items-center" *ngIf="showUpdateForm">
-        <button type="button" (click)="backToListPage()" class="btnStyle remove-reset-btn mr-2">Back</button>
-        <button type="button" (click)="backToListPage()" class="btnStyle ">List Activity</button>
+        <button type="button" (click)="backToListPage()" class="btn btn-primary mr-2">Back</button>
+        <button type="button" (click)="backToListPage()" class="btn btn-secondary">List Activity</button>
     </div>
 
     <div class="col-12 d-flex justify-content-center align-items-center" *ngIf="!showUpdateForm">
-        <button type="button" (click)="backToListPage()" class="btnStyle remove-reset-btn mr-2">Back</button>
-        <button type="button" (click)="backToList()" class="btnStyle">List Activity</button>
+        <button type="button" (click)="backToListPage()" class="btn btn-primary mr-2">Back</button>
+        <button type="button" (click)="backToList()" class="btn btn-secondary">List Activity</button>
     </div>
 </div>
 
 
-  <ngx-loading [show]="loading"
-  [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
-  [template]="loadingTemplate"></ngx-loading>
+<ngx-loading [show]="loading"
+    [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+    [template]="loadingTemplate"></ngx-loading>

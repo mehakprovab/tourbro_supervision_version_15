@@ -1,29 +1,36 @@
-<div class="entireScreen  p-0 col-md-12 col-lg-12">
-    <div class="heading">
-        <p>Tour Activities</p>
+<div class="card adminInner">
+     <div class="card-header mb-3">
+        <h5>Tour Activities</h5>
     </div>
-    <div >
+    <div>
         <form [formGroup]="activitiesForm" (ngSubmit)="onActivitiesSave()">
-            <div class="activitiesInput">
-                <label for="activities" class="font-weight-bold" > Tour Activities</label>
-                <input type="text" placeholder="Enter Package Activities"  formControlName="activitiesName" maxlength="150"
-                (input)="validateInput()">
-            </div>
-            <div *ngIf="activitiesForm.controls.activitiesName.errors">
-                <div *ngIf="activitiesForm.controls.activitiesName.errors.required" class="errorMessage">
-                  *Please enter updated package activities name.
+            <div class="form-row">
+                <div class="col-md-4">
+                    <div class="activitiesInput">
+                        <label for="activities" class="" > Tour Activities</label>
+                        <input type="text" class="form-control ml-0" placeholder="Enter Package Activities"  formControlName="activitiesName" maxlength="150"
+                        (input)="validateInput()">
+                    </div>
+                    <div *ngIf="activitiesForm.controls.activitiesName.errors">
+                        <div *ngIf="activitiesForm.controls.activitiesName.errors.required" class="errorMessage">
+                        *Please enter updated package activities name.
+                        </div>
+                        <div *ngIf="activitiesForm.controls.activitiesName.errors.invalidString" class="errorMessage">
+                            *Including number(s) are not allowed.
+                        </div>
+                        <div *ngIf="activitiesForm.controls.activitiesName.errors.startOrEndSpace" class="errorMessage">
+                            *Empty space(s) in start and end are not allowed.
+                        </div>
+                    </div>
+
                 </div>
-                <div *ngIf="activitiesForm.controls.activitiesName.errors.invalidString" class="errorMessage">
-                    *Including number(s) are not allowed.
+                 <div class="col-md-4">
+                    <label style="display: block;">&nbsp;</label>
+                     <div class="d-flex align-items-center">
+                          <button  class="btn btn-sm btn-primary mr-1">{{'Save'}}</button>
+                          <button class="btn btn-sm btn-secondary packageBtn" routerLink="/tour-crs/activities"> {{'Package Activities'}}  </button>
+                    </div>
                 </div>
-                <div *ngIf="activitiesForm.controls.activitiesName.errors.startOrEndSpace" class="errorMessage">
-                    *Empty space(s) in start and end are not allowed.
-                </div>
-            </div>
-            <div class="saveButton">
-                <button  class="btn btn-sm btn-primary mr-1 orangeButton">{{'Save'}}
-                </button>
-                <button class="btn btn-sm btn-primary mr-1 orangeButton packageBtn" routerLink="/tour-crs/activities"> {{'Package Activities'}}  </button>
             </div>
         </form>
     </div>

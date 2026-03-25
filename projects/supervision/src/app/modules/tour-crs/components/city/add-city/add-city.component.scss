@@ -1,6 +1,6 @@
-div{
-    margin: 10px;
-}
+// div{
+//     margin: 10px;
+// }
 p{background-color: #edeff1 !important;
     color: #022756 !important;
     width: 30rem !important;
@@ -12,17 +12,17 @@ p{background-color: #edeff1 !important;
     margin: 1rem !important;
     border: 1px solid #022756;
 }
-button.orangeButton{
-    background-color: #fbc10a !important;
-    color: #fff !important;
-    border: none !important;
-    padding: 10px 20px !important;
-    font-weight: 500 !important;
-    border-radius: 0.3rem 0.3rem !important;
-    margin-top: 1rem !important;
-    height: 40px;
-    margin-bottom: 15px;
-}
+// button.orangeButton{
+//     background-color: #fbc10a !important;
+//     color: #fff !important;
+//     border: none !important;
+//     padding: 10px 20px !important;
+//     font-weight: 500 !important;
+//     border-radius: 0.3rem 0.3rem !important;
+//     margin-top: 1rem !important;
+//     height: 40px;
+//     margin-bottom: 15px;
+// }
 .heading{
     display: flex !important ;
 }
@@ -30,22 +30,22 @@ button.orangeButton{
 .entireScreen{
     background-color: #fff !important;
 }
-.countryInput, .cityInput{
-    width: 400px;
-    margin-left: 16rem;
-    @media  (max-width: 767px) {
-        margin-left: 1rem !important;
-    }
-}
+// .countryInput, .continentInput{
+//     width: 400px;
+//     margin-left: 16rem;
+//     @media  (max-width: 767px) {
+//         margin-left: 1rem !important;
+//     }
+// }
 .saveButton{
     margin-left: 24.5rem !important;
     margin-bottom: 1rem;
     @media  (max-width: 767px) {
-        margin-left: 7.5rem !important;
+        margin-left: 9.5rem !important;
     }
 }
 input,select{
-    height: calc(2.25rem + 2px) ;
+    height: 45px ;
     padding: 0.375rem 0.75rem;
     font-weight: 400;
     line-height: 1.5;
@@ -54,8 +54,11 @@ input,select{
     background-clip: padding-box;
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
-    margin-left: 24px;
-    width: 266px;
+    margin-left: 20px;
+    // width: 266px;
+    @media  (max-width: 767px) {
+        // width: 223px !important;
+    }
 }
 table {
     border: 1px solid lightgray;
@@ -66,33 +69,18 @@ td, th {
     border: 1px solid lightgray;
     padding: 8px;
 }
-.packageBtn{
-    width: none !important;
-}
+// .packageBtn{
+//     width: none !important;
+// }
 
-select{
-    margin-left: 20px !important;
-}
-p,.note{
-    background-color: #fff !important;
-    color: black !important;
-    width: 19rem !important;
-    height: 2rem !important;
-    padding-top: 0.8rem !important;
-    text-align: center !important;
-    font-weight: 300 !important;
-    border-radius: 0.3rem !important;
-    margin: 0 0 !important;
-    margin-left: 8rem !important;
-    @media  (max-width: 767px) {
-        width: 16rem !important;
-    }
-}
+// select{
+//     margin-left: 20px !important;
+// }
 
 .errorMessage{
     color: red;
-    margin-left: 367px;
+    margin-left: 377px;
     @media(max-width: 767px){
-        margin-left: 103px;
+        margin-left: 119px;
     }
 }

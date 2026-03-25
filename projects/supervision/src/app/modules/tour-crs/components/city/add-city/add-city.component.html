@@ -1,38 +1,48 @@
 <div>
     <form [formGroup]="cityForm" (ngSubmit)="onCitySave()">
-       <div class="countryInput">
-            <label for="city" class="font-weight-bold" > Choose Country</label>
-            <select formControlName="countryName" (change)="selectedCountry($event.target.value)">
-                <option value="" disabled selected>Choose Country</option>
-                <option *ngFor="let option of countryDataList" [value]="option.id">
-                  {{option.name}}
-                </option>
-              </select>
-              
-        </div>
-        <div *ngIf="cityForm?.get('countryName').errors && cityForm?.get('countryName').touched">
-            <div *ngIf="cityForm?.get('countryName').errors.required" class="errorMessage">
-              *Please Choose tour country name.
-              </div>
-        </div>
-        <div class="cityInput">
-            <label for="city" class="font-weight-bold" > Tour City Name</label>
-            <input type="text" placeholder="Enter Package City"  formControlName="cityName" maxlength="150" (input)="validateInput()">
-            <span class="note row">Note:To add multiple city separete with coma(,).</span>
-        </div>
-        <div *ngIf="cityForm.controls.cityName.errors && cityForm.controls.cityName.touched">
-            <div *ngIf="cityForm.controls.cityName.errors.required"  class="errorMessage">
-              *Please enter tour city name.
+        <div class="form-row">
+            <div class="col-md-4">
+                <div class="countryInput">
+                    <label for="city" class="" > Choose Country</label>
+                    <select formControlName="countryName" class="form-control ml-0" (change)="selectedCountry($event.target.value)">
+                        <option value="" disabled selected>Choose Country</option>
+                        <option *ngFor="let option of countryDataList" [value]="option.id">
+                        {{option.name}}
+                        </option>
+                    </select>
+                    
+                </div>
+                <div *ngIf="cityForm?.get('countryName').errors && cityForm?.get('countryName').touched">
+                    <div *ngIf="cityForm?.get('countryName').errors.required" class="errorMessage">
+                    *Please Choose tour country name.
+                    </div>
+                </div>
+
             </div>
-            <div *ngIf="cityForm.controls.cityName.errors.invalidString" class="errorMessage">
-                *Number(s) are not allowed.
+            <div class="col-md-4">
+                <div class="cityInput">
+                    <label for="city" class="" > Tour City Name</label>
+                    <input type="text" placeholder="Enter Package City" class="form-control ml-0"  formControlName="cityName" maxlength="150" (input)="validateInput()">
+                    <span class="note row pl-3">Note:To add multiple city separete with coma(,).</span>
+                </div>
+                <div *ngIf="cityForm.controls.cityName.errors && cityForm.controls.cityName.touched">
+                    <div *ngIf="cityForm.controls.cityName.errors.required"  class="errorMessage">
+                    *Please enter tour city name.
+                    </div>
+                    <div *ngIf="cityForm.controls.cityName.errors.invalidString" class="errorMessage">
+                        *Number(s) are not allowed.
+                    </div>
+                    <div *ngIf="cityForm.controls.cityName.errors.startOrEndSpace"  class="errorMessage">
+                        *Empty space(s) in start and end are not allowed.
+                    </div>
+                </div>
+
             </div>
-            <div *ngIf="cityForm.controls.cityName.errors.startOrEndSpace"  class="errorMessage">
-                *Empty space(s) in start and end are not allowed.
+             <div class="col-md-4 pr-0">
+                <label style="display: block;">&nbsp;</label>
+                <button type="submit" class="btn btn-primary"> Save</button>
             </div>
         </div>
-        <div class="saveButton">
-            <button type="submit" class="orangeButton"> Save</button>
-        </div>
+       
     </form>
 </div>

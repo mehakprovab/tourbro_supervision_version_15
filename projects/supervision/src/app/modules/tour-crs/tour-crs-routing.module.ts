@@ -30,6 +30,7 @@ import { UpdateGalleryComponent } from "./components/gallery/update-gallery/upda
 import { IncludesMasterComponent } from "./components/includes-master/includes-master.component";
 import { CityPackageMasterComponent } from "./components/city-package-master/city-package-master.component";
 import { StateComponent } from "./components/state/state.component";
+import { UpdateStateComponent } from "./components/state/update-state/update-state.component";
 
 const routes: Routes = [
   {
@@ -89,6 +90,12 @@ const routes: Routes = [
         path: "country/update/:id",
         // canActivate: [AuthGuard],
         component: UpdateCountryComponent,
+        data: { extraParameter: "tourCRS" },
+      },
+       {
+        path: "state/update/:id",
+        // canActivate: [AuthGuard],
+        component: UpdateStateComponent,
         data: { extraParameter: "tourCRS" },
       },
       {

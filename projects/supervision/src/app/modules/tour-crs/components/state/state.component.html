@@ -50,13 +50,13 @@
           </td>
 
           <td>
-            <button class="btn btn-sm btn-primary"
-              routerLink="/tour-crs/state/update"
-              [queryParams]="item">
+            <button class="btn btn-sm btn-primary mr-1"
+              [routerLink]="['/tour-crs/state/update', item.id]"
+          >
               Edit
             </button>
 
-            <button class="btn btn-sm btn-danger"
+            <button class="btn btn-sm btn-primary mr-1"
               (click)="onDeletedRecord(item)">
               Delete
             </button>

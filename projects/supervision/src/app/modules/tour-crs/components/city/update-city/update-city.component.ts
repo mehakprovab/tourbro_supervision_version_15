@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder,FormGroup,FormControl, Validators } from '@angular/forms';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,94 +12,141 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './update-city.component.html',
   styleUrls: ['./update-city.component.scss']
 })
-export class UpdateCityComponent implements OnInit {
+export class UpdateCityComponent implements OnInit, OnDestroy {
 
-  subSunk=new SubSink();
-  cityId:number;
-  cityForm:FormGroup
-  countryDataList:Array<any>=[];
-  selectedCountryId:number;
+  cityForm: FormGroup;
+  cityId: number;
+  stateList: any[] = [];
+  subSunk = new SubSink();
 
-  constructor(private fb:FormBuilder, private swalService:SwalService,private route:ActivatedRoute,
-              private apiHandlerService:ApiHandlerService, private router:Router) { }
+  constructor(
+    private fb: FormBuilder,
+    private swalService: SwalService,
+    private route: ActivatedRoute,
+    private apiHandlerService: ApiHandlerService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.createCityForm();
-    this.getCountryList();
-    this.route.queryParams.subscribe(data=>{
-      this.cityForm.get('cityName').patchValue(data['CityName']);
-      this.cityForm.get('countryName').patchValue(data['country_id']);
-      this.cityId=data['id'];
-    })
+    this.createForm();
+    this.getStates();
+
+     
+  this.route.queryParams.subscribe(params => {
+    this.cityId = params['cityId'];
+      console.log(this.cityId,"this.cityId")
+      if (this.cityId) {
+        this.getCityById();
+      }
+    });
   }
 
-    getCountryList(){
-    this.subSunk.sink=this.apiHandlerService.apiHandler('getTourCountryList','post',{},{},{}).subscribe(response=>{
-      if(response.Status==200 || response.statusCode==201 && response.data){
-          this.countryDataList=response['data'];
-          console.log(" this.countryDataList", response)
-          this.sortCountry()
+  get f() {
+    return this.cityForm.controls;
+  }
+
+  // ✅ Create Form
+  createForm() {
+    this.cityForm = this.fb.group({
+      state_id: ['', Validators.required],
+      city_name: ['', [Validators.required, this.inputValidator]],
+      latitude: ['', [Validators.pattern(/^-?\d+(\.\d+)?$/)]],
+      longitude: ['', [Validators.pattern(/^-?\d+(\.\d+)?$/)]],
+      status: [1, Validators.required],
+    });
+  }
+
+  // ✅ Get State List
+  getStates() {
+    this.subSunk.sink = this.apiHandlerService
+      .apiHandler('getMasterState', 'post', {}, {}, {})
+      .subscribe((response: any) => {
+        if ((response.statusCode === 200 || response.statusCode === 201) && response.data) {
+          this.stateList =  response.data.data;
         }
-    })
+      });
   }
 
-    selectedCountry(countryId){
-    this.selectedCountryId=countryId;
-  }
+  // ✅ Get City By ID
+  getCityById() {
+    let id = this.cityId;
 
-  sortCountry(){
-    this.countryDataList.sort((a, b) => 
-        a.name.localeCompare(b.name)
-    );
-    console.log("this.countryDataList......",this.countryDataList)
-  }
+    this.subSunk.sink = this.apiHandlerService
+      .apiHandler('getMasterCityById', 'get', { id }, {}, {})
+      .subscribe(
+        (response: any) => {
+          if ((response.statusCode === 200 || response.statusCode === 201)) {
 
-  createCityForm(){
-    this.cityForm=this.fb.group({
-      countryName: new FormControl('',[Validators.required]),
-      cityName:new FormControl('',[Validators.required,this.inputValidator])
-    })
-  }
-  
-  onCitySave(){
-    let selectedCountryName;
-    this.countryDataList.forEach(item=>{
-      if(item.id==this.selectedCountryId){
-        selectedCountryName=item.name;
-      }
-     })
-    //api to save data in db
-    let updatedCityName=this.cityForm.get('cityName').value
-    if(this.cityForm.valid){
-      this.subSunk.sink = this.apiHandlerService.apiHandler('editTourCity', 'post', {}, {},
-              {
-                "Name":updatedCityName,   
-                "CityId":Number(this.cityId) 
-              }).subscribe(response => {
-                if (response.statusCode == 200 || response.statusCode == 201 && response.Status) {
-                  this.swalService.alert.success("Tour City data has been updated successfully");
-                  this.router.navigate(["tour-crs/city"]);
-                }
-              },(err: HttpErrorResponse) => {
-                this.swalService.alert.error(err['error']['Message'].replace("400 ", ""));
+            const data = response.data.data;
+
+            this.cityForm.patchValue({
+              city_name: data.city_name,
+              state_id: data.state_id,
+              latitude: data.latitude,
+              longitude: data.longitude,
+              status:data.status
             });
-      }
+          }
+        },
+        (err: HttpErrorResponse) => {
+          this.swalService.alert.error(err.error.Message || 'Failed to load city');
+        }
+      );
+  }
+onStatusChange(event: any) {
+  const isChecked = event.target.checked;
+  this.cityForm.get('status').setValue(isChecked ? 1 : 0);
+}
+  // ✅ Update City
+  onCityUpdate() {
+    if (this.cityForm.invalid) {
+      this.cityForm.markAllAsTouched();
+      return;
+    }
 
+    const form = this.cityForm.value;
+
+    const payload = {
+      id: this.cityId,   // ✅ REQUIRED
+      city_name: form.city_name,
+      state_id: form.state_id,
+      latitude: form.latitude,
+      longitude: form.longitude,
+      status:form.status,
+      type: "City"
+    };
+
+    this.subSunk.sink = this.apiHandlerService
+      .apiHandler('editMasterCity', 'post', {}, {}, payload)
+      .subscribe(
+        (response: any) => {
+          if ((response.statusCode === 200 || response.statusCode === 201) && response.Status) {
+            this.swalService.alert.success('City updated successfully');
+            this.router.navigate(['/tour-crs/city']);
+          }
+        },
+        (err: HttpErrorResponse) => {
+          this.swalService.alert.error(err.error.Message || 'Update failed');
+        }
+      );
   }
 
+  // ✅ Validator
   inputValidator(control: FormControl) {
     const value = control.value;
+
     if (value && (value.startsWith(' ') || value.endsWith(' '))) {
       return { startOrEndSpace: true };
     }
+
     if (value && /\d+/.test(value)) {
       return { invalidString: true };
     }
-     return null;
+
+    return null;
   }
 
-  validateInput() {
-    this.cityForm.get('cityName').markAsTouched();
+  ngOnDestroy() {
+    this.subSunk.unsubscribe();
   }
-
 }

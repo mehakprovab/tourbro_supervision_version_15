@@ -19,7 +19,7 @@ export class CityComponent implements OnInit {
   enabledForm:boolean=false;
   editForm:boolean=false;
   tourCounrtyCityDataList:any[]=[];
-  displayColumn:string[]=['Sl. No.','Tour Country','Tour City',]
+  displayColumn:string[]=['Sl. No.','Country','City',]
   pageSize = 100;
   page = 1;
   collectionSize: number; 
@@ -54,10 +54,10 @@ export class CityComponent implements OnInit {
 
   getTourCityData(){
     //api to fetch data from DB
-    this.subSunk.sink = this.apiHandlerService.apiHandler('getTourCityList', 'post', {}, {},{})
+    this.subSunk.sink = this.apiHandlerService.apiHandler('getMasterCityList', 'post', {}, {},{})
               .subscribe(response => {
                   if (response.statusCode == 200 || response.statusCode == 201 && response.data) {
-                      this.tourCounrtyCityDataList = response.data || [];
+                      this.tourCounrtyCityDataList = response.data.data || [];
                       this.tourCounrtyCityDataListForSort=this.tourCounrtyCityDataList;
                       this.collectionSize = this.tourCounrtyCityDataList.length;
                       this.searchSpin=false;
@@ -65,15 +65,16 @@ export class CityComponent implements OnInit {
               });
   }
 
+
   onDeletedRecord(inputRecordToDeleted:any){
     //api call to delete the record
     this.swalService.alert.delete((action)=>{
         if(action){
-            this.subSunk.sink = this.apiHandlerService.apiHandler('deleteTourCity', 'post', {}, {},
-                {"Id":inputRecordToDeleted.id})
+            this.subSunk.sink = this.apiHandlerService.apiHandler('deleteMasterCity', 'post', {}, {},
+                {"id":inputRecordToDeleted.cityId})
                 .subscribe(response => {
                 if (response.statusCode == 200 || response.statusCode == 201 && response.data) {
-                    this.swalService.alert.success("Tour City data has been deleted successfully");
+                    this.swalService.alert.success(" City data has been deleted successfully");
                     this.getTourCityData();
                 }
                 },(err: HttpErrorResponse) => {

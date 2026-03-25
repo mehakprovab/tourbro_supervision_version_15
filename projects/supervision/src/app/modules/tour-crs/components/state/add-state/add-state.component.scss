@@ -1,0 +1,118 @@
+/* Global spacing */
+div {
+  margin: 10px;
+}
+
+/* Heading */
+p {
+  background-color: #edeff1;
+  color: #022756;
+  width: 100%;
+  max-width: 30rem;
+  height: 3rem;
+  padding-top: 0.8rem;
+  text-align: center;
+  font-weight: 500;
+  border-radius: 0.3rem;
+  margin: 1rem auto;
+  border: 1px solid #022756;
+}
+
+/* Container */
+.entireScreen {
+  background-color: #fff;
+}
+
+/* Flex heading */
+.heading {
+  display: flex;
+  justify-content: center;
+}
+
+/* Form fields container */
+.countryInput,
+.continentInput {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 10px auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Labels */
+label {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+/* Inputs & Select */
+input,
+select {
+  height: 38px;
+  padding: 6px 10px;
+  font-size: 14px;
+  color: #495057;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  width: 100%;
+}
+
+/* Remove extra left margin */
+select {
+  margin-left: 0;
+}
+
+/* Error message */
+.errorMessage {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* Save button container */
+.saveButton {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+/* Button */
+button.orangeButton {
+  background-color: #fbc10a;
+  color: #fff;
+  border: none;
+  padding: 10px 25px;
+  font-weight: 500;
+  border-radius: 4px;
+  height: 40px;
+  cursor: pointer;
+}
+
+/* Button hover */
+button.orangeButton:hover {
+  background-color: #e0aa08;
+}
+
+/* Table (if used) */
+table {
+  border: 1px solid lightgray;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  border: 1px solid lightgray;
+  padding: 8px;
+}
+
+/* Mobile responsive */
+@media (max-width: 767px) {
+  .countryInput,
+  .continentInput {
+    max-width: 90%;
+  }
+
+  p {
+    width: 90%;
+  }
+}

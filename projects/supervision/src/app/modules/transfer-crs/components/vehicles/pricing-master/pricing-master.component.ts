@@ -192,7 +192,19 @@ addOutstationPriceRow() {
     return this.addUpdateVendorForm.get('price_details') as FormArray;
   }
 
-  addPriceDetail() { this.priceDetailsArray.push(this.createPriceDetailGroup()); }
+addPriceDetail() {
+  const type = this.addUpdateVendorForm.get('type').value;
+
+  if (type === 'Airport') {
+    this.addAirportPriceRow();
+  } 
+  else if (type === 'Local') {
+    this.addLocalPriceRow();
+  } 
+  else if (type === 'Outstation') {
+    this.addOutstationPriceRow();
+  }
+}
   removePriceDetail(i: number) { if (this.priceDetailsArray.length > 1) this.priceDetailsArray.removeAt(i); }
 
   setupCountryChangeListener() {

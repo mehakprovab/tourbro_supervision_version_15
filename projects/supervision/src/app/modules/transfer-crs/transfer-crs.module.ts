@@ -21,6 +21,8 @@ import { CarAminitiesComponent } from './components/car-aminities/car-aminities.
 import { CarAminitiesListComponent } from './components/car-aminities/car-aminities-list/car-aminities-list.component';
 import { AddAminitiesComponent } from './components/car-aminities/add-aminities/add-aminities.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CarTypeComponent } from './components/vehicles/car-type/car-type.component';
+import { CombustionMasterComponent } from './components/vehicles/combustion-master/combustion-master.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -46,7 +48,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     PricingMasterComponent,
     CarAminitiesComponent,
     CarAminitiesListComponent,
-    AddAminitiesComponent
+    AddAminitiesComponent,
+    CarTypeComponent,
+    CombustionMasterComponent
   ],
   exports: [
   ]

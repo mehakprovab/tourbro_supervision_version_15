@@ -139,23 +139,43 @@
             City <span class="text-danger">*</span>
           </label>
           <div class="col-sm-12">
-            <select 
-              class="form-control" 
-              [class.is-invalid]="addUpdateVendorForm.get('city').invalid && (addUpdateVendorForm.get('city').dirty  || isSubmitted)"
-              formControlName="city"
-              [disabled]="loadingCities || !cityList.length"
-            >
-              <option value="" disabled>Select City</option>
-              <option *ngFor="let city of cityList" [value]="city.city_name">
-                {{ city.city_name }}
-              </option>
-            </select>
-            <div *ngIf="addUpdateVendorForm.get('city').invalid && (addUpdateVendorForm.get('city').dirty  || isSubmitted)" class="invalid-feedback">
-              City is required
-            </div>
-            <small *ngIf="loadingCities" class="text-info">
-              Loading cities...
-            </small>
+           <mat-form-field  appearance="fill" class="w-100">
+  <mat-label>City</mat-label>
+
+  <mat-select
+    formControlName="city"
+    required
+    (openedChange)="onCityDropdownOpen($event)"
+    #citySelect panelClass="city-panel"
+  >
+
+    <!-- 🔍 SEARCH BOX -->
+    <mat-option>
+      <input
+        matInput
+        placeholder="Search city"
+        (keyup)="onCitySearch($event.target.value)"
+        (click)="$event.stopPropagation()"
+      />
+    </mat-option>
+
+    <!-- OPTIONS -->
+    <mat-option *ngFor="let city of cityList" [value]="city.city_name">
+      {{ city.city_name }}
+    </mat-option>
+
+    <!-- LOADER -->
+    <mat-option *ngIf="loadingCities" disabled>
+      Loading...
+    </mat-option>
+
+  </mat-select>
+</mat-form-field>
+            <div *ngIf="addUpdateVendorForm.get('city').invalid && (addUpdateVendorForm.get('city').dirty  || isSubmitted)" 
+     class="invalid-feedback d-block">
+  City is required
+</div>
+      
           </div>
         </div>
 

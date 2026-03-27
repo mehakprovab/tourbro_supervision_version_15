@@ -49,3 +49,75 @@
 .dropdown-item:hover {
   background: #f1f1f1;
 }
+
+/* Make mat-form-field full width */
+.mat-form-field {
+  width: 100%;
+}
+
+/* Match bootstrap input height */
+.mat-form-field-appearance-fill .mat-form-field-flex {
+  height: 38px;
+  align-items: center;
+  background: white;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  padding: 0 10px;
+}
+
+/* Remove underline */
+.mat-form-field-underline {
+  display: none;
+}
+
+/* Remove ripple line */
+.mat-form-field-ripple {
+  display: none;
+}
+
+/* Match label spacing */
+.mat-form-field-label {
+  top: -6px !important;
+}
+
+/* Fix select text alignment */
+.mat-select-trigger {
+  height: 38px;
+  display: flex;
+  align-items: center;
+}
+
+/* Invalid state like bootstrap */
+.mat-form-field.mat-form-field-invalid .mat-form-field-flex {
+  border-color: #dc3545;
+}
+
+/* Placeholder color */
+.mat-select-placeholder {
+  color: #6c757d;
+}
+/* Change focus border color */
+.mat-form-field.mat-focused .mat-form-field-flex {
+  border-color: #ced4da !important; /* same as bootstrap */
+}
+
+/* Change label color when focused */
+.mat-form-field.mat-focused .mat-form-field-label {
+  color: #495057 !important;
+}
+
+/* Change dropdown arrow color */
+.mat-select-arrow {
+  color: #495057;
+}
+
+/* Change selected option highlight */
+.mat-option.mat-selected {
+  background-color: #e9ecef !important;
+  color: #000 !important;
+}
+
+/* Hover color */
+.mat-option:hover {
+  background-color: #f8f9fa !important;
+}

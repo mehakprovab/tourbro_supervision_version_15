@@ -10,6 +10,8 @@ import { VenderMasterComponent } from './components/vehicles/vender-master/vende
 import { DriverMasterComponent } from './components/vehicles/driver-master/driver-master.component';
 import { PricingMasterComponent } from './components/vehicles/pricing-master/pricing-master.component';
 import { CarAminitiesComponent } from './components/car-aminities/car-aminities.component';
+import { CombustionMasterComponent } from './components/vehicles/combustion-master/combustion-master.component';
+import { CarTypeComponent } from './components/vehicles/car-type/car-type.component';
 
 const routes: Routes = [
     {
@@ -30,6 +32,16 @@ const routes: Routes = [
                   {
                 path: 'car-aminities',
                 component: CarAminitiesComponent,
+                data: { extraParameter: 'transferCrsMenus' }
+            },
+                      {
+                path: 'combustion-master',
+                component: CombustionMasterComponent,
+                data: { extraParameter: 'transferCrsMenus' }
+            },
+                      {
+                path: 'car-type',
+                component: CarTypeComponent,
                 data: { extraParameter: 'transferCrsMenus' }
             },
             {

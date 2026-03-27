@@ -2,10 +2,12 @@ import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
-import { MatSlideToggleChange } from '@angular/material';
 import { environment } from 'projects/b2b/src/environments/environment.prod';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { MatSelect } from '@angular/material/select';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { ViewChild, AfterViewInit } from '@angular/core';
 
 const baseUrl = environment.SA_URL;
 interface Country {
@@ -30,6 +32,7 @@ interface City {
 })
 
 export class VenderMasterComponent implements OnInit, OnDestroy {
+   @ViewChild('citySelect', { static: false }) citySelect: MatSelect;
    public addUpdateVendorForm: FormGroup;
   public editForm: boolean = false;
   public searchText: string;
@@ -94,8 +97,21 @@ isSubmitted = false;
     this.getPhoneList();
     
     this.setupCountryChangeListener();
-  }
+     this.searchSubject.pipe(
+    debounceTime(300),
+    distinctUntilChanged()
+  ).subscribe(search => {
+    this.citySkip = 1;
+    this.hasMoreCities = true;
+    this.cityList = [];
+    this.citySearchText = search;
 
+    this.getCityListByCountry(this.currentCountry, search);
+  });
+  }
+onCitySearch(value: string) {
+  this.searchSubject.next(value);
+}
   // Compare function for country objects
   compareCountries(c1: Country, c2: Country): boolean {
     return c1 && c2 ? c1.name === c2.name : c1 === c2;
@@ -113,7 +129,7 @@ isSubmitted = false;
       mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       email: ['', [Validators.required, Validators.email]],
       country: [null, [Validators.required]],
-      city: ['', [Validators.required]],
+      city: [null, [Validators.required]],
       address: ['', [Validators.required]],
       status: [1]
     });
@@ -127,77 +143,61 @@ isSubmitted = false;
     });
   }
 
-  setupCountryChangeListener() {
-    const countryControl = this.addUpdateVendorForm.get('country');
-    if (countryControl) {
-      countryControl.valueChanges
-        .pipe(
-          debounceTime(300),
-          distinctUntilChanged(),
-          takeUntil(this.destroy$)
-        )
-        .subscribe((country: Country) => {
-          console.log('Selected country:', country);
-          
-          if (country && country.name) {
-            this.getCityListByCountry(country);
-          } else {
-            // Clear city list if no country selected
-            this.cityList = [];
-            const cityControl = this.addUpdateVendorForm.get('city');
-            if (cityControl) {
-              cityControl.setValue('');
-            }
-          }
-        });
-    }
-  }
+setupCountryChangeListener() {
+  this.addUpdateVendorForm.get('country').valueChanges
+    .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this.destroy$))
+    .subscribe((country: Country) => {
 
-getCityListByCountry(country: Country, selectedCity?: any) {
-  if (this.currentCountry && country &&
-      this.currentCountry.name === country.name) {
-    return;
-  }
+      this.currentCountry = country; // ✅ ADD THIS
 
-  this.currentCountry = country;
+      this.citySkip = 1;
+      this.cityList = [];
+      this.hasMoreCities = true;
+
+      if (country) {
+        this.getCityListByCountry(country);
+      } else {
+        this.cityList = [];
+      }
+    });
+}
+
+getCityListByCountry(country: Country, search: string = '') {
+
+  if (!country) return;
+
   this.loadingCities = true;
 
-  this.cityList = [];
-  const cityControl = this.addUpdateVendorForm.get('city');
-  if (cityControl) {
-    cityControl.setValue('');
-  }
-
   const countryParam = country.sortname || country.name;
-console.log(countryParam)
-  this.apiHandlerServices
-    .apiHandler('supervisionCityLists', 'post', {}, {}, { country_code: countryParam })
-    .subscribe(
-      (resp: any) => {
-        this.loadingCities = false;
 
-        if (resp.Status && resp.data) {
-          this.cityList = resp.data;
+  this.apiHandlerServices.apiHandler(
+    'supervisionCityLists',
+    'post',
+    {},
+    {},
+    {
+      country_code: countryParam,
+      skipLimit: this.citySkip,
+      limit: this.cityLimit,
+      search: search
+    }
+  ).subscribe((resp: any) => {
 
-          if (selectedCity && cityControl) {
-            const cityExists = this.cityList.find(c =>
-              c.id === selectedCity || c.city_name === selectedCity
-            );
+    this.loadingCities = false;
 
-            if (cityExists) {
-              if (cityExists.id !== undefined && cityExists.id !== null) {
-                cityControl.setValue(cityExists.id);
-              } else {
-                cityControl.setValue(cityExists.city_name);
-              }
-            }
-          }
-        }
-      },
-      () => {
-        this.loadingCities = false;
+    if (resp.Status && resp.data) {
+
+      if (this.citySkip === 0) {
+        this.cityList = resp.data;
+      } else {
+        this.cityList = [...this.cityList, ...resp.data];
       }
-    );
+
+      if (resp.data.length < this.cityLimit) {
+        this.hasMoreCities = false;
+      }
+    }
+  });
 }
 
 
@@ -576,4 +576,52 @@ updateVendor() {
     }
     return false;
   }
+
+
+private searchSubject = new Subject<string>();
+citySearchText = '';
+ngAfterViewInit() {
+  this.citySelect.openedChange
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(open => {
+      if (open) {
+        setTimeout(() => {
+          const panel = document.querySelector('.city-panel .mat-select-panel');
+
+          if (panel) {
+            panel.addEventListener('scroll', this.onCityScroll.bind(this));
+          }
+        });
+      }
+    });
+}
+
+citySkip = 1;
+cityLimit = 20;
+hasMoreCities = true;
+
+onCityScroll(event: any) {
+  const panel = event.target;
+
+  const atBottom =
+    panel.scrollHeight - panel.scrollTop <= panel.clientHeight + 10;
+
+  if (atBottom && this.hasMoreCities && !this.loadingCities) {
+    this.citySkip += 1;   // ✅ 1 → 2 → 3 → 4
+    this.getCityListByCountry(this.currentCountry, this.citySearchText);
+  }
+}
+onCityDropdownOpen(open: boolean) {
+  if (open) {
+    setTimeout(() => {
+      const panel = this.citySelect.panel.nativeElement;
+
+      console.log(panel, 'panel');
+
+      if (panel) {
+        panel.addEventListener('scroll', this.onCityScroll.bind(this));
+      }
+    });
+  }
+}
 }

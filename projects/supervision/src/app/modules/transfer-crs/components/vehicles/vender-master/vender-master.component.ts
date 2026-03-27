@@ -108,7 +108,7 @@ isSubmitted = false;
 
   createForm() {
     this.addUpdateVendorForm = this.fb.group({
-      name: ['', [Validators.required]],
+      name: ['', [Validators.required,Validators.pattern('^[a-zA-Z ]+$')]],
       phone_code: ['91', [Validators.required]],
       mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       email: ['', [Validators.required, Validators.email]],
@@ -416,14 +416,28 @@ const selectedCountry = this.countryList.find(
       });
   }
 
-  getCountryList() {
-    this.apiHandlerServices.apiHandler('supervisionCountryLists', 'post', {}, {})
-      .subscribe((resp: any) => {
-        if (resp.Status && resp.data) {
-          this.countryList = resp.data;
+ getCountryList() {
+  this.apiHandlerServices.apiHandler('supervisionCountryLists', 'post', {}, {})
+    .subscribe((resp: any) => {
+      if (resp.Status && resp.data) {
+        this.countryList = resp.data;
+
+        // ✅ Set India as default
+        const india = this.countryList.find(c => 
+          c.name.toLowerCase() === 'india'
+        );
+
+        if (india) {
+          this.addUpdateVendorForm.patchValue({
+            country: india
+          });
+
+          // Optional: load cities for India automatically
+          this.getCityListByCountry(india);
         }
-      });
-  }
+      }
+    });
+}
 
   onDeleteVendor(id: number) {
     this.swalService.alert.delete((action: boolean) => {

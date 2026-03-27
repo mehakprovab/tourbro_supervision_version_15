@@ -43,7 +43,10 @@ export class UpdateCountryComponent implements OnInit {
       }
     });
   }
-
+onStatusChange(event: any) {
+  const isChecked = event.target.checked;
+  this.countryForm.get('status').setValue(isChecked ? 1 : 0);
+}
   // ✅ Getter for easy access
   get f() {
     return this.countryForm.controls;
@@ -64,7 +67,8 @@ export class UpdateCountryComponent implements OnInit {
       currency_symbol: [''],
 
       latitude: ['', [ Validators.pattern(/^-?\d+(\.\d+)?$/)]],
-      longitude: ['', [ Validators.pattern(/^-?\d+(\.\d+)?$/)]]
+      longitude: ['', [ Validators.pattern(/^-?\d+(\.\d+)?$/)]],
+       status: [1, Validators.required],
     });
 
     this.autoUppercase();
@@ -105,7 +109,8 @@ let id=this.countryId
             currency: data.currency,
             currency_symbol: data.currency_symbol,
             latitude: data.latitude,
-            longitude: data.longitude
+            longitude: data.longitude,
+              status:data.status
           });
 
           this.selectedContinentId = data.region_id;
@@ -144,7 +149,8 @@ let id=this.countryId
       currency_symbol: form.currency_symbol,
       region_id: this.selectedContinentId,
       latitude: form.latitude,
-      longitude: form.longitude
+      longitude: form.longitude,
+        status:form.status
     };
 
     this.subSunk.sink = this.apiHandlerService

@@ -23,13 +23,16 @@
             <input
               type="text"
               class="form-control"
-              [class.is-invalid]="addUpdateVendorForm.get('name').invalid && (addUpdateVendorForm.get('name').touched || isSubmitted)"
+              [class.is-invalid]="addUpdateVendorForm.get('name').invalid && (addUpdateVendorForm.get('name').dirty  || isSubmitted)"
               placeholder="Vendor Name"
               formControlName="name"
             />
-            <div *ngIf="addUpdateVendorForm.get('name').invalid && (addUpdateVendorForm.get('name').touched || isSubmitted)" class="invalid-feedback">
+            <div *ngIf="addUpdateVendorForm.get('name').invalid && (addUpdateVendorForm.get('name').dirty  || isSubmitted)" class="invalid-feedback">
               <span *ngIf="addUpdateVendorForm.get('name').errors?.required">
                 Vendor Name is required
+              </span>
+              <span *ngIf="addUpdateVendorForm.get('name').errors?.pattern">
+                Only characters are allowed
               </span>
             </div>
           </div>
@@ -43,7 +46,7 @@
           <div class="col-sm-12">
             <select 
               class="form-control" 
-              [class.is-invalid]="addUpdateVendorForm.get('phone_code').invalid && (addUpdateVendorForm.get('phone_code').touched || isSubmitted)"
+              [class.is-invalid]="addUpdateVendorForm.get('phone_code').invalid && (addUpdateVendorForm.get('phone_code').dirty  || isSubmitted)"
               formControlName="phone_code"
             >
               <option value="" >Select Phone Code</option>
@@ -51,7 +54,7 @@
                 {{ c.phone_code }}({{c.code}})
               </option>
             </select>
-            <div *ngIf="addUpdateVendorForm.get('phone_code').invalid && (addUpdateVendorForm.get('phone_code').touched || isSubmitted)" class="invalid-feedback">
+            <div *ngIf="addUpdateVendorForm.get('phone_code').invalid && (addUpdateVendorForm.get('phone_code').dirty  || isSubmitted)" class="invalid-feedback">
               Phone Code is required
             </div>
           </div>
@@ -66,11 +69,11 @@
             <input
               type="text"
               class="form-control"
-              [class.is-invalid]="addUpdateVendorForm.get('mobile').invalid && (addUpdateVendorForm.get('mobile').touched || isSubmitted)"
+              [class.is-invalid]="addUpdateVendorForm.get('mobile').invalid && (addUpdateVendorForm.get('mobile').dirty  || isSubmitted)"
               placeholder="Mobile Number"
               formControlName="mobile"
             />
-            <div *ngIf="addUpdateVendorForm.get('mobile').invalid && (addUpdateVendorForm.get('mobile').touched || isSubmitted)" class="invalid-feedback">
+            <div *ngIf="addUpdateVendorForm.get('mobile').invalid && (addUpdateVendorForm.get('mobile').dirty  || isSubmitted)" class="invalid-feedback">
               <span *ngIf="addUpdateVendorForm.get('mobile').errors?.required">
                 Mobile number is required
               </span>
@@ -90,11 +93,11 @@
             <input
               type="email"
               class="form-control"
-              [class.is-invalid]="addUpdateVendorForm.get('email').invalid && (addUpdateVendorForm.get('email').touched || isSubmitted)"
+              [class.is-invalid]="addUpdateVendorForm.get('email').invalid && (addUpdateVendorForm.get('email').dirty  || isSubmitted)"
               placeholder="Email"
               formControlName="email"
             />
-            <div *ngIf="addUpdateVendorForm.get('email').invalid && (addUpdateVendorForm.get('email').touched || isSubmitted)" class="invalid-feedback">
+            <div *ngIf="addUpdateVendorForm.get('email').invalid && (addUpdateVendorForm.get('email').dirty  || isSubmitted)" class="invalid-feedback">
               <span *ngIf="addUpdateVendorForm.get('email').errors?.required">
                 Email is required
               </span>
@@ -114,7 +117,7 @@
   <div class="col-sm-12">
     <select 
       class="form-control" 
-      [class.is-invalid]="addUpdateVendorForm.get('country').invalid && (addUpdateVendorForm.get('country').touched || isSubmitted)"
+      [class.is-invalid]="addUpdateVendorForm.get('country').invalid && (addUpdateVendorForm.get('country').dirty  || isSubmitted)"
       formControlName="country"
       [compareWith]="compareCountries"
     >
@@ -123,7 +126,7 @@
         {{ c.name }}
       </option>
     </select>
-    <div *ngIf="addUpdateVendorForm.get('country').invalid && (addUpdateVendorForm.get('country').touched || isSubmitted)" 
+    <div *ngIf="addUpdateVendorForm.get('country').invalid && (addUpdateVendorForm.get('country').dirty  || isSubmitted)" 
          class="invalid-feedback d-block">
       Country is required
     </div>
@@ -138,7 +141,7 @@
           <div class="col-sm-12">
             <select 
               class="form-control" 
-              [class.is-invalid]="addUpdateVendorForm.get('city').invalid && (addUpdateVendorForm.get('city').touched || isSubmitted)"
+              [class.is-invalid]="addUpdateVendorForm.get('city').invalid && (addUpdateVendorForm.get('city').dirty  || isSubmitted)"
               formControlName="city"
               [disabled]="loadingCities || !cityList.length"
             >
@@ -147,7 +150,7 @@
                 {{ city.city_name }}
               </option>
             </select>
-            <div *ngIf="addUpdateVendorForm.get('city').invalid && (addUpdateVendorForm.get('city').touched || isSubmitted)" class="invalid-feedback">
+            <div *ngIf="addUpdateVendorForm.get('city').invalid && (addUpdateVendorForm.get('city').dirty  || isSubmitted)" class="invalid-feedback">
               City is required
             </div>
             <small *ngIf="loadingCities" class="text-info">
@@ -165,11 +168,11 @@
             <textarea
               rows="2"
               class="form-control"
-              [class.is-invalid]="addUpdateVendorForm.get('address').invalid && (addUpdateVendorForm.get('address').touched || isSubmitted)"
+              [class.is-invalid]="addUpdateVendorForm.get('address').invalid && (addUpdateVendorForm.get('address').dirty  || isSubmitted)"
               placeholder="Address"
               formControlName="address"
             ></textarea>
-            <div *ngIf="addUpdateVendorForm.get('address').invalid && (addUpdateVendorForm.get('address').touched || isSubmitted)" class="invalid-feedback">
+            <div *ngIf="addUpdateVendorForm.get('address').invalid && (addUpdateVendorForm.get('address').dirty  || isSubmitted)" class="invalid-feedback">
               Address is required
             </div>
           </div>
@@ -278,7 +281,7 @@
                   Edit
                 </button>
                 <button
-                  class="btn btn-sm btn-danger"
+                  class="btn btn-sm btn-primary"
                   (click)="onDeleteVendor(item.id)"
                 >
                   Delete

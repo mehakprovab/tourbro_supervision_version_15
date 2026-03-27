@@ -45,7 +45,7 @@ export class AddCountryComponent implements OnInit {
       currency_name: ['', Validators.required],
       currency: ['', [Validators.required, Validators.pattern(/^[A-Z]{3}$/)]],
       currency_symbol: [''],
-
+status: [1, Validators.required],
       latitude: ['', [ Validators.pattern(/^-?\d+(\.\d+)?$/)]],
       longitude: ['', [ Validators.pattern(/^-?\d+(\.\d+)?$/)]]
     });
@@ -85,14 +85,15 @@ export class AddCountryComponent implements OnInit {
       currency_symbol: form.currency_symbol,
       region_id: this.selectedContinentId,
       latitude: form.latitude,
-      longitude: form.longitude
+      longitude: form.longitude,
+      status:form.status
     };
 
     this.subSunk.sink = this.apiHandlerService
       .apiHandler('addMasterCountry', 'post', {}, {}, payload)
       .subscribe(response => {
         if ((response.statusCode === 200 || response.statusCode === 201) && response.Status) {
-          this.swalService.alert.success("Country saved successfully");
+          this.swalService.alert.success(response.Message);
           this.insertedRecord.emit(payload);
           this.countryForm.reset();
         }
@@ -100,7 +101,10 @@ export class AddCountryComponent implements OnInit {
         this.swalService.alert.error(err.error.Message || "Error occurred");
       });
   }
-
+onStatusChange(event: any) {
+  const isChecked = event.target.checked;
+  this.countryForm.get('status').setValue(isChecked ? 1 : 0);
+}
   getContinentData() {
     this.subSunk.sink = this.apiHandlerService
       .apiHandler('getTourContinet', 'post', {}, {}, {})

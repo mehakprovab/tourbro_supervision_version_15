@@ -30,7 +30,7 @@
             <input
               type="text"
               class="form-control shadow-sm"
-              [ngModel]="city.CityName + ' [ ' + city.no_of_nights + ' ]'"
+              [ngModel]="city.city_name + ' [ ' + city.no_of_nights + ' ]'"
               disabled
             />
           </div>
@@ -56,10 +56,10 @@
                 <select formControlName="visitedCity" class="form-control w-50">
                   <option value="">Select City</option>
                   <option
-                    *ngFor="let city of cityDataList"
-                    [value]="city.CityName"
+                    *ngFor="let city of mainCityDataList"
+                    [value]="city"
                   >
-                    {{ city.CityName }}
+                    {{ city }}
                   </option>
                 </select>
                 <div

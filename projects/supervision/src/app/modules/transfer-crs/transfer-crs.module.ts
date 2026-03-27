@@ -20,6 +20,7 @@ import { PricingMasterComponent } from './components/vehicles/pricing-master/pri
 import { CarAminitiesComponent } from './components/car-aminities/car-aminities.component';
 import { CarAminitiesListComponent } from './components/car-aminities/car-aminities-list/car-aminities-list.component';
 import { AddAminitiesComponent } from './components/car-aminities/add-aminities/add-aminities.component';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   imports: [
     CommonModule,
@@ -30,6 +31,7 @@ import { AddAminitiesComponent } from './components/car-aminities/add-aminities/
     NgMultiSelectDropDownModule,
     CKEditorModule,
     Ng2SearchPipeModule,
+    ReactiveFormsModule
   ],
   declarations: [
     TransferVehicleAddComponent,

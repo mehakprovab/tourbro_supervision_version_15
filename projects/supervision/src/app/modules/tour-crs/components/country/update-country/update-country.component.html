@@ -80,7 +80,24 @@
       <label>Longitude</label>
       <input type="text" formControlName="longitude">
     </div>
+<div class="cityInput">
+  <label class="font-weight-bold">Status</label>
 
+  <div class="toggleSwitch">
+    <label class="switch">
+      <input
+        type="checkbox"
+        [checked]="countryForm.get('status').value === 1"
+        (change)="onStatusChange($event)"
+      >
+      <span class="slider round"></span>
+    </label>
+
+    <span class="ml-2">
+      {{ countryForm.get('status').value === 1 ? 'Active' : 'Inactive' }}
+    </span>
+  </div>
+</div>
     <!-- Buttons -->
     <div class="saveButton">
       <button type="submit" class="orangeButton">Save</button>

@@ -22,6 +22,7 @@ imageBaseUrl = 'http://54.92.243.81:2001/sa/tour/tours/getItineraryImages/';
   tourName:string='';
   subSunk=new SubSink();
   cityVisited:any=[];
+  mainCityDataList:any=[]
   inclusions=['Hotel','Meals','Sightseeing','Transfer']
   cityDataList=[];
   updateTourItenary:string='';
@@ -77,7 +78,8 @@ generateTimeSlots() {
              })
               .subscribe(response => {
                   if (response.statusCode == 200 || response.statusCode == 201) {
-                      this.cityDataList = response.data || [];
+                      this.cityDataList = response.data[0] || [];
+                      this.mainCityDataList = response.data[1].cities || [];
                   }else{
                     this.swalService.alert.oops(response.Message);
                   }
@@ -184,7 +186,9 @@ saveActivity(dayIndex: number) {
         this.swalService.alert.success('All activities saved successfully');
       }
 
-    });
+    },(err: HttpErrorResponse) => {
+        this.swalService.alert.error(err.error.Message);
+      });
 }
 onImageUpload(event: any, dayIndex: number, activityIndex: number) {
   const file = event.target.files[0];
@@ -375,7 +379,9 @@ saveDay(dayIndex: number) {
 
         this.swalService.alert.success('Day saved successfully');
       }
-    });
+    },(err: HttpErrorResponse) => {
+        this.swalService.alert.error(err.error.Message);
+      });
 }
 
 imagePreviewMap = {};

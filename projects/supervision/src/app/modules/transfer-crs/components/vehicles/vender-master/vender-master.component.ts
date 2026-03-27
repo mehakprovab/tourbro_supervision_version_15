@@ -2,10 +2,12 @@ import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
-import { MatSlideToggleChange } from '@angular/material';
 import { environment } from 'projects/b2b/src/environments/environment.prod';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { MatSelect } from '@angular/material/select';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { ViewChild, AfterViewInit } from '@angular/core';
 
 const baseUrl = environment.SA_URL;
 interface Country {
@@ -30,7 +32,9 @@ interface City {
 })
 
 export class VenderMasterComponent implements OnInit, OnDestroy {
+   @ViewChild('citySelect', { static: false }) citySelect: MatSelect;
    public addUpdateVendorForm: FormGroup;
+   isEditMode = false;
   public editForm: boolean = false;
   public searchText: string;
   public enabledForm: boolean = true;
@@ -94,8 +98,21 @@ isSubmitted = false;
     this.getPhoneList();
     
     this.setupCountryChangeListener();
-  }
+     this.searchSubject.pipe(
+    debounceTime(300),
+    distinctUntilChanged()
+  ).subscribe(search => {
+    this.citySkip = 1;
+    this.hasMoreCities = true;
+    this.cityList = [];
+    this.citySearchText = search;
 
+    this.getCityListByCountry(this.currentCountry, search);
+  });
+  }
+onCitySearch(value: string) {
+  this.searchSubject.next(value);
+}
   // Compare function for country objects
   compareCountries(c1: Country, c2: Country): boolean {
     return c1 && c2 ? c1.name === c2.name : c1 === c2;
@@ -108,12 +125,12 @@ isSubmitted = false;
 
   createForm() {
     this.addUpdateVendorForm = this.fb.group({
-      name: ['', [Validators.required]],
+      name: ['', [Validators.required,Validators.pattern('^[a-zA-Z ]+$')]],
       phone_code: ['91', [Validators.required]],
       mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       email: ['', [Validators.required, Validators.email]],
       country: [null, [Validators.required]],
-      city: ['', [Validators.required]],
+      city: [null, [Validators.required]],
       address: ['', [Validators.required]],
       status: [1]
     });
@@ -127,79 +144,91 @@ isSubmitted = false;
     });
   }
 
-  setupCountryChangeListener() {
-    const countryControl = this.addUpdateVendorForm.get('country');
-    if (countryControl) {
-      countryControl.valueChanges
-        .pipe(
-          debounceTime(300),
-          distinctUntilChanged(),
-          takeUntil(this.destroy$)
-        )
-        .subscribe((country: Country) => {
-          console.log('Selected country:', country);
-          
-          if (country && country.name) {
-            this.getCityListByCountry(country);
-          } else {
-            // Clear city list if no country selected
-            this.cityList = [];
-            const cityControl = this.addUpdateVendorForm.get('city');
-            if (cityControl) {
-              cityControl.setValue('');
-            }
-          }
-        });
-    }
-  }
+selectedCityForEdit: string | null = null;
 
-getCityListByCountry(country: Country, selectedCity?: any) {
-  if (this.currentCountry && country &&
-      this.currentCountry.name === country.name) {
-    return;
-  }
+setupCountryChangeListener() {
+  this.addUpdateVendorForm.get('country').valueChanges
+    .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this.destroy$))
+    .subscribe((country: Country) => {
 
-  this.currentCountry = country;
-  this.loadingCities = true;
+      this.currentCountry = country;
 
-  this.cityList = [];
-  const cityControl = this.addUpdateVendorForm.get('city');
-  if (cityControl) {
-    cityControl.setValue('');
-  }
+      this.citySkip = 1;
+      this.cityList = [];
+      this.hasMoreCities = true;
 
-  const countryParam = country.sortname || country.name;
-console.log(countryParam)
-  this.apiHandlerServices
-    .apiHandler('supervisionCityLists', 'post', {}, {}, { country_code: countryParam })
-    .subscribe(
-      (resp: any) => {
-        this.loadingCities = false;
+      if (country) {
+        this.getCityListByCountry(
+          country,
+          '',
+          this.isEditMode ? this.selectedCityForEdit : null
+        );
 
-        if (resp.Status && resp.data) {
-          this.cityList = resp.data;
-
-          if (selectedCity && cityControl) {
-            const cityExists = this.cityList.find(c =>
-              c.id === selectedCity || c.city_name === selectedCity
-            );
-
-            if (cityExists) {
-              if (cityExists.id !== undefined && cityExists.id !== null) {
-                cityControl.setValue(cityExists.id);
-              } else {
-                cityControl.setValue(cityExists.city_name);
-              }
-            }
-          }
-        }
-      },
-      () => {
-        this.loadingCities = false;
+        // reset after use
+        this.isEditMode = false;
+        this.selectedCityForEdit = null;
+      } else {
+        this.cityList = [];
       }
-    );
+    });
 }
 
+getCityListByCountry(
+  country: Country,
+  search: string = '',
+  selectedCity?: any
+) {
+  if (!country) return;
+
+  this.loadingCities = true;
+
+  const countryParam = country.sortname || country.name;
+
+  this.apiHandlerServices.apiHandler(
+    'supervisionCityLists',
+    'post',
+    {},
+    {},
+    {
+      country_code: countryParam,
+      skipLimit: this.citySkip,      // ✅ correct param
+      // limit: this.cityLimit,
+      // type:'limit',
+      search: search,
+      city_id:selectedCity
+    }
+  ).subscribe((resp: any) => {
+
+    this.loadingCities = false;
+
+    if (resp.Status && resp.data) {
+
+      if (this.citySkip === 1) {
+        this.cityList = resp.data;
+      } else {
+        this.cityList = [...this.cityList, ...resp.data];
+      }
+
+      // ✅ check more data
+      if (resp.data.length < this.cityLimit) {
+        this.hasMoreCities = false;
+      }
+
+      // ✅ AUTO SELECT CITY (edit case)
+      if (selectedCity) {
+        const found = this.cityList.find(
+          c => c.city_name === selectedCity
+        );
+
+        if (found) {
+          this.addUpdateVendorForm.patchValue({
+            city: found.city_name
+          });
+        }
+      }
+    }
+  });
+}
 
 
 
@@ -332,79 +361,37 @@ onVendorSave() {
   }
 
 onEditVendor(data: any) {
+  this.isEditMode = true; // 🚀 enable edit mode
+
   this.id = data.id;
   this.saveTextName = 'Update';
   this.enabledForm = true;
-  
-  // Reset form and validation states first
+
   this.addUpdateVendorForm.reset();
-  
-  // Mark all controls as untouched to hide validation errors
+
   Object.keys(this.addUpdateVendorForm.controls).forEach(key => {
-    const control = this.addUpdateVendorForm.get(key);
-    if (control) {
-      control.markAsUntouched();
-    }
+    this.addUpdateVendorForm.get(key).markAsUntouched();
   });
-  
-  // Find the country object from countryList
-  let countryObj: Country = null;
-  if (data.country_name || data.country) {
-    // Find the country object by name
-    countryObj = this.countryList.find(c => 
-      c.name === data.country_name || c.name === data.country
-    );
-    
-    // If not found by name, try to find by id
-    if (!countryObj && data.country_id) {
-      countryObj = this.countryList.find(c => c.id === data.country_id);
-    }
-  }
-  
-  // Patch values - use the country object, not string
+
+  const selectedCountry = this.countryList.find(
+    c => c.name === data.country
+  );
+
   this.addUpdateVendorForm.patchValue({
     name: data.name,
     phone_code: data.phone_code,
     mobile: data.mobile,
     email: data.email,
-    country: countryObj, // This should be the country object
-    // city: data.city_id || data.city, // Use city_id or city
+    country: selectedCountry,
     address: data.address,
-    
- status: data.status === 1
+    status: data.status === 1
   });
-  
-  // Get cities for the selected country
-const selectedCountry = this.countryList.find(
-    c => c.name === data.country
-  );
 
-  if (selectedCountry) {
-    this.addUpdateVendorForm.patchValue({
-      country: selectedCountry
-    });
- const countryParam = selectedCountry.sortname || selectedCountry.name;
-    // 🚀 LOAD CITIES FIRST
-   this.apiHandlerServices
-  .apiHandler('supervisionCityLists', 'post', {}, {}, { country_code: countryParam })
-  .subscribe((resp: any) => {
-    if (resp.Status && resp.data) {
-      this.cityList = resp.data;
+  // ❌ REMOVE direct API call here
+  // this.getCityListByCountry(...)
 
-      // Find the city object
-      const selectedCity = this.cityList.find(
-        c => c.city_name === data.city || c.id === data.city
-      );
-
-      if (selectedCity) {
-        this.addUpdateVendorForm.patchValue({
-          city: selectedCity.city_name // match your select [value]
-        });
-      }
-    }
-  });
-  }
-  window.scroll({ top: 0, behavior: 'smooth' });
+  // Instead store selected city
+  this.selectedCityForEdit = data.city;
 }
 
   getPhoneList() {
@@ -416,14 +403,28 @@ const selectedCountry = this.countryList.find(
       });
   }
 
-  getCountryList() {
-    this.apiHandlerServices.apiHandler('supervisionCountryLists', 'post', {}, {})
-      .subscribe((resp: any) => {
-        if (resp.Status && resp.data) {
-          this.countryList = resp.data;
+ getCountryList() {
+  this.apiHandlerServices.apiHandler('supervisionCountryLists', 'post', {}, {})
+    .subscribe((resp: any) => {
+      if (resp.Status && resp.data) {
+        this.countryList = resp.data;
+
+        // ✅ Set India as default
+        const india = this.countryList.find(c => 
+          c.name.toLowerCase() === 'india'
+        );
+
+        if (india) {
+          this.addUpdateVendorForm.patchValue({
+            country: india
+          });
+
+          // Optional: load cities for India automatically
+          this.getCityListByCountry(india);
         }
-      });
-  }
+      }
+    });
+}
 
   onDeleteVendor(id: number) {
     this.swalService.alert.delete((action: boolean) => {
@@ -562,4 +563,52 @@ updateVendor() {
     }
     return false;
   }
+
+
+private searchSubject = new Subject<string>();
+citySearchText = '';
+ngAfterViewInit() {
+  this.citySelect.openedChange
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(open => {
+      if (open) {
+        setTimeout(() => {
+          const panel = document.querySelector('.city-panel .mat-select-panel');
+
+          if (panel) {
+            panel.addEventListener('scroll', this.onCityScroll.bind(this));
+          }
+        });
+      }
+    });
+}
+
+citySkip = 1;
+cityLimit = 20;
+hasMoreCities = true;
+
+onCityScroll(event: any) {
+  const panel = event.target;
+
+  const atBottom =
+    panel.scrollHeight - panel.scrollTop <= panel.clientHeight + 10;
+
+  if (atBottom && this.hasMoreCities && !this.loadingCities) {
+    this.citySkip += 1;   // ✅ 1 → 2 → 3 → 4
+    this.getCityListByCountry(this.currentCountry, this.citySearchText);
+  }
+}
+onCityDropdownOpen(open: boolean) {
+  if (open) {
+    setTimeout(() => {
+      const panel = this.citySelect.panel.nativeElement;
+
+      console.log(panel, 'panel');
+
+      if (panel) {
+        panel.addEventListener('scroll', this.onCityScroll.bind(this));
+      }
+    });
+  }
+}
 }

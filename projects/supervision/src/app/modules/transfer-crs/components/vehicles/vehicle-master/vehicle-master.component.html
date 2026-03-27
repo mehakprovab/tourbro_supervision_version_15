@@ -52,8 +52,17 @@
       <input
         class="form-control"
         formControlName="vehicle_name"
-        [class.is-invalid]="f.vehicle_name.invalid && (f.vehicle_name.touched)">
-      <div class="invalid-feedback">Vehicle Name is required</div>
+        [class.is-invalid]="f.vehicle_name.invalid && (f.vehicle_name.dirty || f.vehicle_name.touched)">
+       <!-- Required -->
+ <div class="invalid-feedback d-block"
+     *ngIf="f.vehicle_name.errors?.required && (f.vehicle_name.dirty || f.vehicle_name.touched || isSubmitted)">
+  Vehicle Name is required
+</div>
+
+<div class="invalid-feedback d-block"
+     *ngIf="f.vehicle_name.errors?.pattern && (f.vehicle_name.dirty || f.vehicle_name.touched || isSubmitted)">
+  Only characters are allowed
+</div>
     </div>
 
     <!-- AC -->
@@ -221,33 +230,31 @@
                             </div>
                         </div> -->
                     </div>
-            <div class="col-4">
-          <label class="px-3 control-label">
-            Combustion Type <span class="text-danger">*</span>
-          </label>
-          <div class="col-sm-12">
-            <select 
-              class="form-control" 
-              [class.is-invalid]="f.combustion_type.invalid && (f.combustion_type.touched)"
-              formControlName="combustion_type"
-            >
-           <option value="" disabled>Select  Combustion Type</option>
-              <option  value="Petrol">
-           Petrol
-              </option>
-              <option  value="Ev">
-                Ev
-              </option>
-              <option  value="Diesel">
-           Diesel
-              </option>
-                <option  value="Diesel">
-           CNG
-              </option>
-            </select>
-         
-          </div>
-        </div>
+           <div class="col-4">
+  <label class="px-3 control-label">
+    Combustion Type <span class="text-danger">*</span>
+  </label>
+
+  <div class="col-sm-12">
+    <select 
+      class="form-control"
+      formControlName="combustion_type"
+      [class.is-invalid]="f.combustion_type.invalid && (f.combustion_type.touched || isSubmitted)"
+    >
+      <option value="" disabled>Select Combustion Type</option>
+
+      <option *ngFor="let c of combustionList" [value]="c.type">
+        {{ c.type }}
+      </option>
+    </select>
+
+    <!-- Validation -->
+    <div class="invalid-feedback d-block"
+         *ngIf="f.combustion_type.errors && (f.combustion_type.touched || isSubmitted)">
+      Combustion Type is required
+    </div>
+  </div>
+</div>
     <!-- IMAGE -->
     <div class="col-md-4 mb-3">
       <label>Image</label>
@@ -421,7 +428,7 @@
                 </button>
 
                 <button
-                  class="btn btn-sm btn-danger"
+                  class="btn btn-sm btn-primary"
                   (click)="onDeletedRecord(item.id)"
                 >
                   Delete

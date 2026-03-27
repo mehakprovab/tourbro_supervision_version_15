@@ -60,7 +60,7 @@ pageSize = 20;
 collectionSize: number;
   vehiclesType: any[] = [];
   vehicleMasterDataList: any[] = [];
-
+combustionList: any[] = [];
   private destroy$ = new Subject<void>();
   seatCapacity = Array.from({ length: 71 }, (_, i) => i + 1);
   acType = [{ key: 'Yes' }, { key: 'No' }];
@@ -90,7 +90,16 @@ vendorList:any=[]
         itemsShowLimit: 2,
     };
   }
-
+getCombustionList() {
+  this.api.apiHandler('VehicleCombustionList', 'POST', {}, {}, {})
+    .subscribe((res: any) => {
+      if (res.Status) {
+        this.combustionList = res.data || [];
+      } else {
+        this.combustionList = [];
+      }
+    });
+}
   ngOnInit() {
     this.loggedInUserId = JSON.parse(sessionStorage.getItem('currentSupervisionUser')).id;
         this.createForm();
@@ -100,7 +109,25 @@ this.getVendorList()
     this.getVehicleTypeList();
     this.getVehicleMasterList();
     this.getAminities();
+    this.getCombustionList();
+    this.setupVehicleTypeListener();
   }
+  setupVehicleTypeListener() {
+  this.addUpdateVehcleForm.get('vehicle_type').valueChanges
+    .pipe(debounceTime(200), distinctUntilChanged(), takeUntil(this.destroy$))
+    .subscribe((selectedVehicleTypeId: any) => {
+
+      const selectedVehicle = this.vehiclesType.find(
+        v => v.id == selectedVehicleTypeId
+      );
+
+      if (selectedVehicle && selectedVehicle.capacity) {
+        this.addUpdateVehcleForm.patchValue({
+          max_capacity: selectedVehicle.capacity
+        });
+      }
+    })
+}
     getVendorList() {
     this.searchSpin = true;
   this.loading = true;
@@ -158,7 +185,7 @@ this.getVendorList()
     this.addUpdateVehcleForm = this.fb.group({
       trip_type: ['', Validators.required],
       vehicle_type: ['', Validators.required],
-      vehicle_name: ['', Validators.required],
+      vehicle_name: ['', [Validators.required,Validators.pattern('^[a-zA-Z ]+$')]],
       ac_vehicle: ['', Validators.required],
       max_capacity: ['', Validators.required],
       vendor_id: ['', Validators.required],
@@ -197,9 +224,10 @@ this.getVendorList()
 //   this.route.removeAt(index);
 //   this.routeName.removeAt(index);
 // }
-
 onVehicleMasterSave() {
-  if (this.addUpdateVehcleForm.invalid) {
+   this.isSubmitted = true;
+ if (this.addUpdateVehcleForm.invalid) {
+    this.addUpdateVehcleForm.markAllAsTouched(); // 🔥 force validation UI
     this.swal.alert.oops('Please fill all required fields');
     return;
   }

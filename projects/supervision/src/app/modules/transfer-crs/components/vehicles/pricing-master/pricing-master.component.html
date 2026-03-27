@@ -163,7 +163,7 @@
               <td *ngIf="addUpdateVendorForm.value.type === 'Local'">
                 <input type="number" class="form-control"
                        formControlName="hours"
-                       [class.is-invalid]="row.get('hours').invalid && isSubmitted">
+                       [class.is-invalid]="row.get('hours')?.invalid && isSubmitted">
               </td>
 
               <td *ngIf="addUpdateVendorForm.value.type !== 'Local'">
@@ -263,7 +263,7 @@
 
     <td>
       <button class="btn btn-primary btn-sm" (click)="onEdit(item)">Edit</button>
-      <button class="btn btn-danger btn-sm ml-1" (click)="onDelete(item.id)">Delete</button>
+      <button class="btn btn-primary btn-sm ml-1" (click)="onDelete(item.id)">Delete</button>
     </td>
   </tr>
 </tbody>

@@ -34,6 +34,7 @@ interface City {
 export class VenderMasterComponent implements OnInit, OnDestroy {
    @ViewChild('citySelect', { static: false }) citySelect: MatSelect;
    public addUpdateVendorForm: FormGroup;
+   isEditMode = false;
   public editForm: boolean = false;
   public searchText: string;
   public enabledForm: boolean = true;
@@ -143,27 +144,40 @@ onCitySearch(value: string) {
     });
   }
 
+selectedCityForEdit: string | null = null;
+
 setupCountryChangeListener() {
   this.addUpdateVendorForm.get('country').valueChanges
     .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this.destroy$))
     .subscribe((country: Country) => {
 
-      this.currentCountry = country; // ✅ ADD THIS
+      this.currentCountry = country;
 
       this.citySkip = 1;
       this.cityList = [];
       this.hasMoreCities = true;
 
       if (country) {
-        this.getCityListByCountry(country);
+        this.getCityListByCountry(
+          country,
+          '',
+          this.isEditMode ? this.selectedCityForEdit : null
+        );
+
+        // reset after use
+        this.isEditMode = false;
+        this.selectedCityForEdit = null;
       } else {
         this.cityList = [];
       }
     });
 }
 
-getCityListByCountry(country: Country, search: string = '') {
-
+getCityListByCountry(
+  country: Country,
+  search: string = '',
+  selectedCity?: any
+) {
   if (!country) return;
 
   this.loadingCities = true;
@@ -177,9 +191,11 @@ getCityListByCountry(country: Country, search: string = '') {
     {},
     {
       country_code: countryParam,
-      skipLimit: this.citySkip,
-      limit: this.cityLimit,
-      search: search
+      skipLimit: this.citySkip,      // ✅ correct param
+      // limit: this.cityLimit,
+      // type:'limit',
+      search: search,
+      city_id:selectedCity
     }
   ).subscribe((resp: any) => {
 
@@ -187,19 +203,32 @@ getCityListByCountry(country: Country, search: string = '') {
 
     if (resp.Status && resp.data) {
 
-      if (this.citySkip === 0) {
+      if (this.citySkip === 1) {
         this.cityList = resp.data;
       } else {
         this.cityList = [...this.cityList, ...resp.data];
       }
 
+      // ✅ check more data
       if (resp.data.length < this.cityLimit) {
         this.hasMoreCities = false;
+      }
+
+      // ✅ AUTO SELECT CITY (edit case)
+      if (selectedCity) {
+        const found = this.cityList.find(
+          c => c.city_name === selectedCity
+        );
+
+        if (found) {
+          this.addUpdateVendorForm.patchValue({
+            city: found.city_name
+          });
+        }
       }
     }
   });
 }
-
 
 
 
@@ -332,79 +361,37 @@ onVendorSave() {
   }
 
 onEditVendor(data: any) {
+  this.isEditMode = true; // 🚀 enable edit mode
+
   this.id = data.id;
   this.saveTextName = 'Update';
   this.enabledForm = true;
-  
-  // Reset form and validation states first
+
   this.addUpdateVendorForm.reset();
-  
-  // Mark all controls as untouched to hide validation errors
+
   Object.keys(this.addUpdateVendorForm.controls).forEach(key => {
-    const control = this.addUpdateVendorForm.get(key);
-    if (control) {
-      control.markAsUntouched();
-    }
+    this.addUpdateVendorForm.get(key).markAsUntouched();
   });
-  
-  // Find the country object from countryList
-  let countryObj: Country = null;
-  if (data.country_name || data.country) {
-    // Find the country object by name
-    countryObj = this.countryList.find(c => 
-      c.name === data.country_name || c.name === data.country
-    );
-    
-    // If not found by name, try to find by id
-    if (!countryObj && data.country_id) {
-      countryObj = this.countryList.find(c => c.id === data.country_id);
-    }
-  }
-  
-  // Patch values - use the country object, not string
+
+  const selectedCountry = this.countryList.find(
+    c => c.name === data.country
+  );
+
   this.addUpdateVendorForm.patchValue({
     name: data.name,
     phone_code: data.phone_code,
     mobile: data.mobile,
     email: data.email,
-    country: countryObj, // This should be the country object
-    // city: data.city_id || data.city, // Use city_id or city
+    country: selectedCountry,
     address: data.address,
-    
- status: data.status === 1
+    status: data.status === 1
   });
-  
-  // Get cities for the selected country
-const selectedCountry = this.countryList.find(
-    c => c.name === data.country
-  );
 
-  if (selectedCountry) {
-    this.addUpdateVendorForm.patchValue({
-      country: selectedCountry
-    });
- const countryParam = selectedCountry.sortname || selectedCountry.name;
-    // 🚀 LOAD CITIES FIRST
-   this.apiHandlerServices
-  .apiHandler('supervisionCityLists', 'post', {}, {}, { country_code: countryParam })
-  .subscribe((resp: any) => {
-    if (resp.Status && resp.data) {
-      this.cityList = resp.data;
+  // ❌ REMOVE direct API call here
+  // this.getCityListByCountry(...)
 
-      // Find the city object
-      const selectedCity = this.cityList.find(
-        c => c.city_name === data.city || c.id === data.city
-      );
-
-      if (selectedCity) {
-        this.addUpdateVendorForm.patchValue({
-          city: selectedCity.city_name // match your select [value]
-        });
-      }
-    }
-  });
-  }
-  window.scroll({ top: 0, behavior: 'smooth' });
+  // Instead store selected city
+  this.selectedCityForEdit = data.city;
 }
 
   getPhoneList() {

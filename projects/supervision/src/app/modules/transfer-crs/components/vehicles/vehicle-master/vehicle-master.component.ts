@@ -1,9 +1,9 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { SubSink } from 'subsink';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
-import { MatSlideToggleChange, Sort } from '@angular/material';
+import { MatSelect, MatSlideToggleChange, Sort } from '@angular/material';
 import { HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'projects/b2b/src/environments/environment.prod';
 import { Subject } from 'rxjs';
@@ -111,7 +111,22 @@ this.getVendorList()
     this.getAminities();
     this.getCombustionList();
     this.setupVehicleTypeListener();
+    this.searchSubject.pipe(
+  debounceTime(300),
+  distinctUntilChanged()
+).subscribe(search => {
+  this.citySkip = 1;
+  this.hasMoreCities = true;
+  this.cityList = [];
+  this.citySearchText = search;
+
+  this.getCityListByCountry(this.currentCountry, search);
+});
   }
+
+  onCitySearch(value: string) {
+  this.searchSubject.next(value);
+}
   setupVehicleTypeListener() {
   this.addUpdateVehcleForm.get('vehicle_type').valueChanges
     .pipe(debounceTime(200), distinctUntilChanged(), takeUntil(this.destroy$))
@@ -154,36 +169,127 @@ this.getVendorList()
     this.destroy$.next();
     this.destroy$.complete();
   }
- setupCountryChangeListener() {
-    const countryControl = this.addUpdateVehcleForm.get('country');
-    if (countryControl) {
-      countryControl.valueChanges
-        .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this.destroy$))
-        .subscribe((country: Country) => {
-          if (country) this.getCityListByCountry(country);
-          else this.cityList = [];
-        });
+setupCountryChangeListener() {
+  const countryControl = this.addUpdateVehcleForm.get('country');
+
+  if (countryControl) {
+    countryControl.valueChanges
+      .pipe(distinctUntilChanged(), takeUntil(this.destroy$)) // ❌ no debounce
+      .subscribe((country: Country) => {
+
+        this.currentCountry = country;
+
+        this.citySkip = 1;
+        this.cityList = [];
+        this.hasMoreCities = true;
+
+        if (country) {
+          const cityIdToSend = this.isEditTrigger
+            ? this.selectedCityForEdit
+            : null;
+
+          this.getCityListByCountry(
+            country,
+            '',
+            cityIdToSend
+          );
+
+          // ✅ reset AFTER using
+          this.isEditTrigger = false;
+        } else {
+          this.cityList = [];
+        }
+      });
+  }
+}
+
+ getCountryList() {
+  this.api.apiHandler('supervisionCountryLists', 'post', {}, {})
+    .subscribe((resp: any) => {
+      if (resp.Status && resp.data) {
+        this.countryList = resp.data;
+
+        // ✅ Set India as default
+        const india = this.countryList.find(c =>
+          c.name.toLowerCase() === 'india'
+        );
+
+        if (india) {
+          this.addUpdateVehcleForm.patchValue({
+            country: india
+          });
+
+          // ✅ also load cities for India
+          this.currentCountry = india;
+
+          this.citySkip = 1;
+          this.cityList = [];
+          this.hasMoreCities = true;
+
+          // this.getCityListByCountry(india);
+        }
+      }
+    });
+}
+
+getCityListByCountry(
+  country: Country,
+  search: string = '',
+  selectedCity?: any
+) {
+  if (!country) return;
+
+  this.loadingCities = true;
+
+  const countryParam = country.sortname || country.name;
+
+  this.api.apiHandler(
+    'supervisionCityLists',
+    'post',
+    {},
+    {},
+    {
+      country_code: countryParam,
+      skipLimit: this.citySkip,
+      search: search,
+      cityId: selectedCity
     }
-  }
+  ).subscribe((resp: any) => {
 
-  getCountryList() {
-    this.api.apiHandler('supervisionCountryLists', 'post', {}, {})
-      .subscribe((resp: any) => { if (resp.Status) this.countryList = resp.data; });
-  }
+    this.loadingCities = false;
 
-  getCityListByCountry(country: Country) {
-    this.currentCountry = country;
-     this.loadingCities = true;
+    if (resp.Status && resp.data) {
 
-    const countryParam = country.sortname || country.name;
-    this.api.apiHandler('supervisionCityLists', 'post', {}, {}, { country_code: countryParam })
-      .subscribe((resp: any) => { if (resp.Status) this.cityList = resp.data; this.loadingCities = false;});
-  }
+      if (this.citySkip === 1) {
+        this.cityList = resp.data;
+      } else {
+        this.cityList = [...this.cityList, ...resp.data];
+      }
+
+      if (resp.data.length < this.cityLimit) {
+        this.hasMoreCities = false;
+      }
+
+      // ✅ AUTO SELECT (edit case)
+      if (selectedCity) {
+        setTimeout(() => {
+          const found = this.cityList.find(c => c.id == selectedCity);
+          if (found) {
+            this.addUpdateVehcleForm.get('city').setValue(found.id);
+             this.selectedCityForEdit = null;
+      this.isEditMode = false;
+          }
+        });
+      }
+    }
+  });
+}
   get f() { return this.addUpdateVehcleForm.controls; }
 
   createForm() {
     this.addUpdateVehcleForm = this.fb.group({
       trip_type: ['', Validators.required],
+      vehicle_reg_no: ['', Validators.required],
       vehicle_type: ['', Validators.required],
       vehicle_name: ['', [Validators.required,Validators.pattern('^[a-zA-Z ]+$')]],
       ac_vehicle: ['', Validators.required],
@@ -241,6 +347,7 @@ onVehicleMasterSave() {
   formData.append('vehicle_id', this.f.vehicle_type.value);
   formData.append('vehicle_type', this.f.vehicle_type.value);
   formData.append('trip_type', this.f.trip_type.value);
+    formData.append('vehicle_reg_no', this.f.vehicle_reg_no.value);
   formData.append('vendor_id', this.f.vendor_id.value);
   formData.append('vehicle_name', this.f.vehicle_name.value);
   formData.append('ac_vehicle', this.f.ac_vehicle.value);
@@ -281,10 +388,16 @@ onVehicleMasterSave() {
       });
   }
 upateVehicleMaster() {
+   let features = {
+  vehicle:this.f.amenities.value.map(v => v.amenties),
+  driver: [],
+  services: []
+};
   const formData = new FormData();
   formData.append('vehicle_id', this.f.vehicle_type.value);
   formData.append('vehicle_type', this.f.vehicle_type.value);
   formData.append('trip_type', this.f.trip_type.value);
+  formData.append('vehicle_reg_no', this.f.vehicle_reg_no.value);
   formData.append('vendor_id', this.f.vendor_id.value);
   formData.append('vehicle_name', this.f.vehicle_name.value);
   formData.append('ac_vehicle', this.f.ac_vehicle.value);
@@ -292,8 +405,9 @@ upateVehicleMaster() {
   formData.append('ratings', this.f.ratings.value);
   formData.append('duration_hours', String(this.f.duration_hours.value));
   formData.append('duration_minutes', String(this.f.duration_minutes.value));
-  formData.append('status', 'true');
+  formData.append('status', this.f.status.value);
   formData.append('country', this.f.country.value.name);
+    formData.append('features', JSON.stringify(features));
   formData.append('city', this.f.city.value);
     formData.append('cancellation_rule', this.f.cancellation_rule.value);
      formData.append('combustion_type', this.f.combustion_type.value);
@@ -313,21 +427,37 @@ upateVehicleMaster() {
     });
 }
 
- onEditVehicleType(v: any) {
+onEditVehicleType(v: any) {
   this.saveTextName = 'Update';
   this.id = v.id;
 
-  // set image preview (URL string)
+  this.isEditMode = true;
+  this.isEditTrigger = true; // ✅ IMPORTANT
+
+  this.selectedCityForEdit = v.city_id; // ✅ use city_id
+
   this.vehicleImage = this.getImage(v.image);
 
-  // 🔹 find country object by name or id
   const selectedCountry = this.countryList.find(
-    c => c.name === v.country_name 
+    c => c.name === v.country_name
   );
 
-  // patch form (NO direct patch of country string)
+  this.addUpdateVehcleForm.reset();
+let features: any = { vehicle: [] };
+
+if (v.amenities) {
+
+    features = JSON.parse(v.amenities)
+  
+}
+console.log(features.vehicle,"features.vehicle",this.carAmenityList)
+// ✅ Map safely
+const selectedAmenities = this.carAmenityList.filter(a =>
+  features.vehicle.includes(a.amenties)
+);
   this.addUpdateVehcleForm.patchValue({
     trip_type: v.trip_type,
+    vehicle_reg_no: v.vehicle_reg_no,
     vehicle_type: v.vehicle_type,
     vehicle_name: v.vehicle_name,
     ac_vehicle: v.ac_vehicle,
@@ -335,38 +465,22 @@ upateVehicleMaster() {
     vendor_id: v.vendor_id,
     ratings: v.ratings,
     luggage_allowances: v.luggage_allowances,
-    country: selectedCountry || null,
-    city: v.city,
-    cancellation_rule:v.cancellation_rule,
-    combustion_type:v.combustion_type,
-    // cordinates: v.cordinates,
+    country: selectedCountry || null, // 👈 triggers valueChanges
+    cancellation_rule: v.cancellation_rule,
+    combustion_type: v.combustion_type,
     duration_hours: v.duration_hours,
     duration_minutes: v.duration_minutes,
-    status: v.status
+    status: v.status === 1 || v.status === true,
+    amenities: selectedAmenities
   });
 
-  // 🔹 load cities AFTER country patch
-  if (selectedCountry) {
-    this.getCityListByCountry(selectedCountry);
-  }
-
-  // 🔹 patch routes
-  // this.route.clear();
-  // this.routeName.clear();
-
-  // if (v.route.length) {
-  //   v.route.forEach((r: string, i: number) => {
-  //     this.route.push(this.fb.control(r, Validators.required));
-  //     this.routeName.push(
-  //       this.fb.control(v.route_name[i], Validators.required)
-  //     );
-  //   });
-  // }
+  // ❌ REMOVE THIS COMPLETELY
+  /*
+  this.getCityListByCountry(selectedCountry, '', v.city_id);
+  */
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
-
   onDeletedRecord(id) {
     this.swal.alert.delete(ok => {
       if (ok) {
@@ -455,6 +569,59 @@ getVehicleMasterList() {
   getImage(img) {
     return `${img}`;
   }
+@ViewChild('citySelect', { static: false }) citySelect: MatSelect;
 
-  
+private searchSubject = new Subject<string>();
+citySearchText = '';
+
+citySkip = 1;
+cityLimit = 20;
+hasMoreCities = true;
+isEditTrigger = false;
+isEditMode = false;
+selectedCityForEdit: number | null = null;
+  ngAfterViewInit() {
+  // this.citySelect.openedChange
+  //   .pipe(takeUntil(this.destroy$))
+  //   .subscribe(open => {
+  //     if (open) {
+  //       setTimeout(() => {
+  //         const panel = document.querySelector('.city-panel .mat-select-panel');
+
+  //         if (panel) {
+  //           panel.addEventListener('scroll', this.onCityScroll.bind(this));
+  //         }
+  //       });
+  //     }
+  //   });
+}
+
+onCityScroll(event: any) {
+  const panel = event.target;
+
+  const atBottom =
+    panel.scrollHeight - panel.scrollTop <= panel.clientHeight + 10;
+
+  if (atBottom && this.hasMoreCities && !this.loadingCities) {
+    this.citySkip += 1;
+    this.getCityListByCountry(this.currentCountry, this.citySearchText);
+  }
+}
+
+onCityScrollBind: any;
+
+onCityDropdownOpen(open: boolean) {
+  if (open) {
+    setTimeout(() => {
+      const panel = this.citySelect.panel.nativeElement;
+
+      if (panel) {
+        panel.removeEventListener('scroll', this.onCityScrollBind);
+
+        this.onCityScrollBind = this.onCityScroll.bind(this);
+        panel.addEventListener('scroll', this.onCityScrollBind);
+      }
+    });
+  }
+}
 }

@@ -148,14 +148,39 @@
             City <span class="text-danger">*</span>
           </label>
           <div class="col-sm-12">
-            <select class="form-control"
-              [class.is-invalid]="addUpdateVendorForm.get('city').invalid && (addUpdateVendorForm.get('city').touched || isSubmitted)"
-              formControlName="city" [disabled]="loadingCities || !cityList.length">
-              <option value="" disabled>Select City</option>
-              <option *ngFor="let city of cityList" [value]="city.city_name">
-                {{ city.city_name }}
-              </option>
-            </select>
+      <mat-form-field appearance="fill" class="w-100">
+  <mat-label>City</mat-label>
+
+  <mat-select
+    formControlName="city"
+    required
+    (openedChange)="onCityDropdownOpen($event)"
+    #citySelect
+    panelClass="city-panel"
+  >
+
+    <!-- 🔍 SEARCH -->
+    <mat-option>
+      <input
+        matInput
+        placeholder="Search city"
+        (keyup)="onCitySearch($event.target.value)"
+        (click)="$event.stopPropagation()"
+      />
+    </mat-option>
+
+    <!-- OPTIONS -->
+    <mat-option *ngFor="let city of cityList" [value]="city.id">
+      {{ city.city_name }}
+    </mat-option>
+
+    <!-- LOADER -->
+    <mat-option *ngIf="loadingCities" disabled>
+      Loading...
+    </mat-option>
+
+  </mat-select>
+</mat-form-field>
             <div
               *ngIf="addUpdateVendorForm.get('city').invalid && (addUpdateVendorForm.get('city').touched || isSubmitted)"
               class="invalid-feedback">
@@ -325,7 +350,7 @@
                 <button class="btn btn-sm btn-primary mr-1" (click)="editDriver(item)">
                   Edit
                 </button>
-                <button class="btn btn-sm btn-danger" (click)="onDelete(item.id)">
+                <button class="btn btn-sm btn-primary" (click)="onDelete(item.id)">
                   Delete
                 </button>
               </td>

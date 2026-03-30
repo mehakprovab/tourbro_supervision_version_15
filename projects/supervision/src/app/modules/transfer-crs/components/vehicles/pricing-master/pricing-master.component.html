@@ -35,7 +35,7 @@
                 formControlName="commute_supplier_vehicle_id"
                 [class.is-invalid]="addUpdateVendorForm.get('commute_supplier_vehicle_id').invalid && (isSubmitted || addUpdateVendorForm.get('commute_supplier_vehicle_id').touched)">
           <option [ngValue]="null">Select Vehicle Id</option>
-          <option *ngFor="let c of vehicleMasterDataList" [ngValue]="c.id">{{ c.vehicle_name }}</option>
+          <option *ngFor="let c of vehicleMasterDataList" [ngValue]="c.id">{{ c.vehicle_name }}<span *ngIf="c.vehicle_reg_no">({{c.vehicle_reg_no}})</span></option>
         </select>
         <!-- <input type="number" class="form-control"
                formControlName="commute_supplier_vehicle_id"
@@ -58,14 +58,39 @@
       <!-- CITY -->
       <div class="col-3 mb-2">
         <label>City <span class="text-danger">*</span></label>
-        <select class="form-control"
-                formControlName="city"
-                [class.is-invalid]="addUpdateVendorForm.get('city').invalid && (isSubmitted || addUpdateVendorForm.get('city').touched)">
-          <option value="">Select City</option>
-          <option *ngFor="let city of cityList" [value]="city.city_name">
-            {{ city.city_name }}
-          </option>
-        </select>
+      <mat-form-field appearance="fill" class="w-100">
+  <mat-label>City</mat-label>
+
+  <mat-select
+    formControlName="city"
+    required
+    (openedChange)="onCityDropdownOpen($event)"
+    #citySelect
+    panelClass="city-panel"
+  >
+
+    <!-- 🔍 SEARCH -->
+    <mat-option>
+      <input
+        matInput
+        placeholder="Search city"
+        (keyup)="onCitySearch($event.target.value)"
+        (click)="$event.stopPropagation()"
+      />
+    </mat-option>
+
+    <!-- OPTIONS -->
+    <mat-option *ngFor="let city of cityList" [value]="city.id">
+      {{ city.city_name }}
+    </mat-option>
+
+    <!-- LOADER -->
+    <mat-option *ngIf="loadingCities" disabled>
+      Loading...
+    </mat-option>
+
+  </mat-select>
+</mat-form-field>
         <div class="invalid-feedback">City is required</div>
       </div>
 

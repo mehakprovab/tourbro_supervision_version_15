@@ -630,7 +630,13 @@
           <span class="vsm-title pl-10">Vendor Master</span>
         </a>
       </div>
-
+  <div class="vsm-item" *ngIf="isSubMenuExists('Driver Master',TRANSFER_CRS)">
+        <a routerLinkActive="active-item"
+           [routerLink]="['/transfers/driver-master']"
+           class="vsm-link pl-1">
+          <span class="vsm-title pl-10">Driver Master</span>
+        </a>
+      </div>
       <div class="vsm-item" *ngIf="isSubMenuExists('Vehicle Master',TRANSFER_CRS)">
         <a routerLinkActive="active-item"
            [routerLink]="['/transfers/transfer-vehicle-master']"
@@ -639,13 +645,7 @@
         </a>
       </div>
 
-      <div class="vsm-item" *ngIf="isSubMenuExists('Driver Master',TRANSFER_CRS)">
-        <a routerLinkActive="active-item"
-           [routerLink]="['/transfers/driver-master']"
-           class="vsm-link pl-1">
-          <span class="vsm-title pl-10">Driver Master</span>
-        </a>
-      </div>
+    
 
       <div class="vsm-item" *ngIf="isSubMenuExists('Pricing',TRANSFER_CRS)">
         <a routerLinkActive="active-item"

@@ -145,10 +145,10 @@ onCitySearch(value: string) {
   }
 
 selectedCityForEdit: string | null = null;
-
+isEditTrigger = false;
 setupCountryChangeListener() {
   this.addUpdateVendorForm.get('country').valueChanges
-    .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this.destroy$))
+    .pipe(distinctUntilChanged(), takeUntil(this.destroy$))
     .subscribe((country: Country) => {
 
       this.currentCountry = country;
@@ -158,15 +158,19 @@ setupCountryChangeListener() {
       this.hasMoreCities = true;
 
       if (country) {
+
+        const cityIdToSend = this.isEditTrigger 
+          ? this.selectedCityForEdit 
+          : null;
+
         this.getCityListByCountry(
           country,
           '',
-          this.isEditMode ? this.selectedCityForEdit : null
+          cityIdToSend
         );
 
-        // reset after use
-        this.isEditMode = false;
-        this.selectedCityForEdit = null;
+        // ✅ reset AFTER passing value
+        this.isEditTrigger = false;
       } else {
         this.cityList = [];
       }
@@ -179,7 +183,7 @@ getCityListByCountry(
   selectedCity?: any
 ) {
   if (!country) return;
-
+console.log(selectedCity,"selectedCityselectedCity")
   this.loadingCities = true;
 
   const countryParam = country.sortname || country.name;
@@ -191,11 +195,11 @@ getCityListByCountry(
     {},
     {
       country_code: countryParam,
-      skipLimit: this.citySkip,      // ✅ correct param
+      skipLimit: this.citySkip,      
       // limit: this.cityLimit,
       // type:'limit',
       search: search,
-      city_id:selectedCity
+      cityId:selectedCity
     }
   ).subscribe((resp: any) => {
 
@@ -215,17 +219,18 @@ getCityListByCountry(
       }
 
       // ✅ AUTO SELECT CITY (edit case)
-      if (selectedCity) {
-        const found = this.cityList.find(
-          c => c.city_name === selectedCity
-        );
+    if (selectedCity) {
+  setTimeout(() => {
+    const found = this.cityList.find(c => c.id == selectedCity);
 
-        if (found) {
-          this.addUpdateVendorForm.patchValue({
-            city: found.city_name
-          });
-        }
-      }
+    if (found) {
+      this.addUpdateVendorForm.get('city').setValue(found.id);
+        // ✅ RESET HERE (after successful set)
+      this.isEditMode = false;
+      this.selectedCityForEdit = null;
+    }
+  });
+}
     }
   });
 }
@@ -361,22 +366,24 @@ onVendorSave() {
   }
 
 onEditVendor(data: any) {
-  this.isEditMode = true; // 🚀 enable edit mode
+  this.isEditMode = true;
+  this.isEditTrigger = true; // 🔥 important
 
   this.id = data.id;
+
   this.saveTextName = 'Update';
   this.enabledForm = true;
 
   this.addUpdateVendorForm.reset();
 
-  Object.keys(this.addUpdateVendorForm.controls).forEach(key => {
-    this.addUpdateVendorForm.get(key).markAsUntouched();
-  });
-
   const selectedCountry = this.countryList.find(
     c => c.name === data.country
   );
 
+  // store city id
+  this.selectedCityForEdit = data.city_id;
+
+  // ✅ this will trigger valueChanges
   this.addUpdateVendorForm.patchValue({
     name: data.name,
     phone_code: data.phone_code,
@@ -386,14 +393,7 @@ onEditVendor(data: any) {
     address: data.address,
     status: data.status === 1
   });
-
-  // ❌ REMOVE direct API call here
-  // this.getCityListByCountry(...)
-
-  // Instead store selected city
-  this.selectedCityForEdit = data.city;
 }
-
   getPhoneList() {
     this.apiHandlerServices.apiHandler('phoneCodeList', 'post', {}, {})
       .subscribe((resp: any) => {
@@ -594,8 +594,12 @@ onCityScroll(event: any) {
     panel.scrollHeight - panel.scrollTop <= panel.clientHeight + 10;
 
   if (atBottom && this.hasMoreCities && !this.loadingCities) {
-    this.citySkip += 1;   // ✅ 1 → 2 → 3 → 4
-    this.getCityListByCountry(this.currentCountry, this.citySearchText);
+    this.citySkip += 1; // OR += this.cityLimit (depends on API)
+    
+    this.getCityListByCountry(
+      this.currentCountry,
+      this.citySearchText
+    );
   }
 }
 onCityDropdownOpen(open: boolean) {

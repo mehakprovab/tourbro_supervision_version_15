@@ -138,21 +138,44 @@
             City <span class="text-danger">*</span>
           </label>
           <div class="col-sm-12">
-            <select 
-              class="form-control" 
-              [class.is-invalid]="f.city.invalid && (f.city.touched)"
-              formControlName="city"
-              [disabled]="loadingCities || !cityList.length"
-            >
-              <option value="" disabled>Select City</option>
-              <option *ngFor="let city of cityList" [value]="city.city_name">
-                {{ city.city_name }}
-              </option>
-            </select>
-           
-            <small *ngIf="loadingCities" class="text-info">
-              Loading cities...
-            </small>
+     <mat-form-field appearance="fill" class="w-100">
+  <mat-label>City</mat-label>
+
+  <mat-select
+    formControlName="city"
+    required
+    (openedChange)="onCityDropdownOpen($event)"
+    #citySelect
+    panelClass="city-panel"
+  >
+
+    <!-- SEARCH -->
+    <mat-option>
+      <input
+        matInput
+        placeholder="Search city"
+        (keyup)="onCitySearch($event.target.value)"
+        (click)="$event.stopPropagation()"
+      />
+    </mat-option>
+
+    <!-- OPTIONS -->
+    <mat-option *ngFor="let city of cityList" [value]="city.id">
+      {{ city.city_name }}
+    </mat-option>
+
+    <!-- LOADER -->
+    <mat-option *ngIf="loadingCities" disabled>
+      Loading...
+    </mat-option>
+
+  </mat-select>
+</mat-form-field>
+
+<div class="invalid-feedback d-block"
+     *ngIf="f.city.invalid && (f.city.touched || isSubmitted)">
+  City is required
+</div>
           </div>
         </div>
 
@@ -175,19 +198,17 @@
     </div> -->
 
     <!-- COORDINATES -->
-    <!-- <div class="col-md-8 mb-3">
-      <label>Coordinates <span class="text-danger">*</span></label>
-      <textarea
-        rows="2"
+    <div class="col-4">
+      <label>Vehicle Registration Number <span class="text-danger">*</span></label>
+      <input
         class="form-control"
-        formControlName="cordinates"
-        [class.is-invalid]="f.cordinates.invalid && isSubmitted">
-      </textarea>
-      <div class="invalid-feedback">Coordinates are required</div>
-    </div> -->
+        formControlName="vehicle_reg_no"
+        [class.is-invalid]="f.vehicle_reg_no.invalid && isSubmitted"/>
+      <div class="invalid-feedback">Vehicle registration number are required</div>
+    </div>
 
     <!-- LUGGAGE -->
-    <div class="col-md-8 mb-3">
+    <div class="col-4">
       <label>Luggage Allowances</label>
       <textarea class="form-control" formControlName="luggage_allowances"></textarea>
     </div>

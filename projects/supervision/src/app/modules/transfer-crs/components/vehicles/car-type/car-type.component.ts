@@ -16,7 +16,9 @@ carTypeForm: FormGroup;
   saveTextName: string = 'Save';
   isSubmitted = false;
   enabledForm = true;
-
+searchText=''
+secondaryColour: any;
+primaryColour: any;
   carTypeList: any[] = [];
   loading = false;
   searchSpin = false;

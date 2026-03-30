@@ -5,7 +5,8 @@ import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handler
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { environment } from 'projects/b2b/src/environments/environment.prod';
-
+import { MatSelect } from '@angular/material/select';
+import { ViewChild, AfterViewInit } from '@angular/core';
 interface Country {
   id?: number;
   name: string;
@@ -57,8 +58,40 @@ vehicleMasterDataList:any
     this.setupCountryChangeListener();
     this.getPriceList();
     this.getVehicleMasterList()
-  }
+    this.searchSubject.pipe(
+  debounceTime(300),
+  distinctUntilChanged()
+).subscribe(search => {
+  this.citySkip = 1;
+  this.hasMoreCities = true;
+  this.cityList = [];
+  this.citySearchText = search;
 
+  this.getCityListByCountry(this.currentCountry, search);
+});
+  }
+onCityScroll(event: any) {
+  const panel = event.target;
+
+  const atBottom =
+    panel.scrollHeight - panel.scrollTop <= panel.clientHeight + 10;
+
+  if (atBottom && this.hasMoreCities && !this.loadingCities) {
+    this.citySkip += 1;
+    this.getCityListByCountry(this.currentCountry, this.citySearchText);
+  }
+}
+onCityDropdownOpen(open: boolean) {
+  if (open) {
+    setTimeout(() => {
+      const panel = this.citySelect.panel.nativeElement;
+
+      if (panel) {
+        panel.addEventListener('scroll', this.onCityScroll.bind(this));
+      }
+    });
+  }
+}
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -207,29 +240,114 @@ addPriceDetail() {
 }
   removePriceDetail(i: number) { if (this.priceDetailsArray.length > 1) this.priceDetailsArray.removeAt(i); }
 
-  setupCountryChangeListener() {
-    const countryControl = this.addUpdateVendorForm.get('country');
-    if (countryControl) {
-      countryControl.valueChanges
-        .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this.destroy$))
-        .subscribe((country: Country) => {
-          if (country) this.getCityListByCountry(country);
-          else this.cityList = [];
-        });
+setupCountryChangeListener() {
+  this.addUpdateVendorForm.get('country').valueChanges
+    .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this.destroy$))
+    .subscribe((country: Country) => {
+
+      this.currentCountry = country;
+
+      this.citySkip = 1;
+      this.cityList = [];
+      this.hasMoreCities = true;
+
+      if (country) {
+        this.getCityListByCountry(country);
+      } else {
+        this.cityList = [];
+      }
+    });
+}
+
+getCountryList() {
+  this.apiHandlerServices
+    .apiHandler('supervisionCountryLists', 'post', {}, {})
+    .subscribe((resp: any) => {
+      if (resp.Status && resp.data) {
+        this.countryList = resp.data;
+
+        // ✅ Find India
+        const india = this.countryList.find(
+          c => c.name.toLowerCase() === 'india'
+        );
+
+        if (india) {
+          // ✅ Set default country
+          this.addUpdateVendorForm.patchValue({
+            country: india
+          });
+
+          // ✅ Setup city loading
+          this.currentCountry = india;
+
+          this.citySkip = 1;
+          this.cityList = [];
+          this.hasMoreCities = true;
+
+          // 👉 If using advanced city dropdown
+          this.getCityListByCountry(india);
+
+          // 👉 If using simple dropdown (your current code)
+          // this.getCityListByCountry(india);
+        }
+      }
+    });
+}
+
+getCityListByCountry(
+  country: Country,
+  search: string = '',
+  selectedCity?: any
+) {
+  if (!country) return;
+
+  this.loadingCities = true;
+
+  const countryParam = country.sortname || country.name;
+
+  this.apiHandlerServices.apiHandler(
+    'supervisionCityLists',
+    'post',
+    {},
+    {},
+    {
+      country_code: countryParam,
+      skipLimit: this.citySkip,
+      search: search,
+      cityId: selectedCity
     }
-  }
+  ).subscribe((resp: any) => {
 
-  getCountryList() {
-    this.apiHandlerServices.apiHandler('supervisionCountryLists', 'post', {}, {})
-      .subscribe((resp: any) => { if (resp.Status) this.countryList = resp.data; });
-  }
+    this.loadingCities = false;
 
-  getCityListByCountry(country: Country) {
-    this.currentCountry = country;
-    const countryParam = country.sortname || country.name;
-    this.apiHandlerServices.apiHandler('supervisionCityLists', 'post', {}, {}, { country_code: countryParam })
-      .subscribe((resp: any) => { if (resp.Status) this.cityList = resp.data; });
-  }
+    if (resp.Status && resp.data) {
+
+      if (this.citySkip === 1) {
+        this.cityList = resp.data;
+      } else {
+        this.cityList = [...this.cityList, ...resp.data];
+      }
+
+      if (resp.data.length < this.cityLimit) {
+        this.hasMoreCities = false;
+      }
+
+      // ✅ EDIT AUTO SELECT
+      if (selectedCity) {
+        setTimeout(() => {
+          const found = this.cityList.find(c => c.id == selectedCity);
+
+          if (found) {
+            this.addUpdateVendorForm.get('city').setValue(found.id);
+          }
+        });
+      }
+    }
+  });
+}
+onCitySearch(value: string) {
+  this.searchSubject.next(value);
+}
 getVehicleMasterList() {
   this.apiHandlerServices.apiHandler('listVehicleMaster', 'POST', {}, {}, {})
     .subscribe(
@@ -399,7 +517,7 @@ onEdit(item: any) {
     trip_type: item.trip_type,
     commute_supplier_vehicle_id: item.commute_supplier_vehicle_id,
     country: countryObj,
-    city: item.city,
+    // city: item.city,
 
     buffer_km: priceDetails && priceDetails.buffer_km ? priceDetails.buffer_km : 0,
     extra_km_price: priceDetails && priceDetails.extra_km_price ? priceDetails.extra_km_price : 0,
@@ -413,7 +531,16 @@ onEdit(item: any) {
     day_bata: item.day_bata ? item.day_bata : 0,
     night_bata: item.night_bata ? item.night_bata : 0
   });
+// after setting country
+if (countryObj) {
+  this.currentCountry = countryObj;
 
+  this.getCityListByCountry(
+    countryObj,
+    '',
+    item.city_id   // ✅ IMPORTANT
+  );
+}
   // ---------- RESET PRICE DETAILS ARRAY ----------
   const formArray = this.fb.array([]);
 
@@ -492,5 +619,14 @@ onEdit(item: any) {
       });
     });
   }
+@ViewChild('citySelect', { static: false }) citySelect: MatSelect;
 
+loadingCities = false;
+
+private searchSubject = new Subject<string>();
+citySearchText = '';
+
+citySkip = 1;
+cityLimit = 20;
+hasMoreCities = true;
 }

@@ -7,12 +7,15 @@
         <label>Type <span class="text-danger">*</span></label>
         <select class="form-control"
                 formControlName="type"
-                [class.is-invalid]="addUpdateVendorForm.get('type').invalid && (isSubmitted || addUpdateVendorForm.get('type').touched)">
+                 [class.is-invalid]="f.type.invalid && (isSubmitted || f.type.touched)">
           <option value="Airport">Airport</option>
           <option value="Local">Local</option>
           <option value="Outstation">Outstation</option>
         </select>
-        <div class="invalid-feedback">Type is required</div>
+       <div class="invalid-feedback"
+     *ngIf="f.type.invalid && (isSubmitted || f.type.touched)">
+  Type is required
+</div>
       </div>
 
       <!-- TRIP TYPE -->
@@ -33,74 +36,30 @@
         <label>Vehicle ID <span class="text-danger">*</span></label>
            <select class="form-control"
                 formControlName="commute_supplier_vehicle_id"
-                [class.is-invalid]="addUpdateVendorForm.get('commute_supplier_vehicle_id').invalid && (isSubmitted || addUpdateVendorForm.get('commute_supplier_vehicle_id').touched)">
+                  [class.is-invalid]="f.commute_supplier_vehicle_id.invalid && (isSubmitted || f.commute_supplier_vehicle_id.touched)">>
           <option [ngValue]="null">Select Vehicle Id</option>
           <option *ngFor="let c of vehicleMasterDataList" [ngValue]="c.id">{{ c.vehicle_name }}<span *ngIf="c.vehicle_reg_no">({{c.vehicle_reg_no}})</span></option>
         </select>
         <!-- <input type="number" class="form-control"
                formControlName="commute_supplier_vehicle_id"
                [class.is-invalid]="addUpdateVendorForm.get('commute_supplier_vehicle_id').invalid && (isSubmitted || addUpdateVendorForm.get('commute_supplier_vehicle_id').touched)"> -->
-        <div class="invalid-feedback">Vehicle ID is required</div>
+        <div class="invalid-feedback"
+     *ngIf="f.commute_supplier_vehicle_id.invalid && (isSubmitted || f.commute_supplier_vehicle_id.touched)">
+  Vehicle is required
+</div>
       </div>
 
-      <!-- COUNTRY -->
-      <div class="col-3 mb-2">
-        <label>Country <span class="text-danger">*</span></label>
-        <select class="form-control"
-                formControlName="country"
-                [class.is-invalid]="addUpdateVendorForm.get('country').invalid && (isSubmitted || addUpdateVendorForm.get('country').touched)">
-          <option [ngValue]="null">Select Country</option>
-          <option *ngFor="let c of countryList" [ngValue]="c">{{ c.name }}</option>
-        </select>
-        <div class="invalid-feedback">Country is required</div>
-      </div>
-
-      <!-- CITY -->
-      <div class="col-3 mb-2">
-        <label>City <span class="text-danger">*</span></label>
-      <mat-form-field appearance="fill" class="w-100">
-  <mat-label>City</mat-label>
-
-  <mat-select
-    formControlName="city"
-    required
-    (openedChange)="onCityDropdownOpen($event)"
-    #citySelect
-    panelClass="city-panel"
-  >
-
-    <!-- 🔍 SEARCH -->
-    <mat-option>
-      <input
-        matInput
-        placeholder="Search city"
-        (keyup)="onCitySearch($event.target.value)"
-        (click)="$event.stopPropagation()"
-      />
-    </mat-option>
-
-    <!-- OPTIONS -->
-    <mat-option *ngFor="let city of cityList" [value]="city.id">
-      {{ city.city_name }}
-    </mat-option>
-
-    <!-- LOADER -->
-    <mat-option *ngIf="loadingCities" disabled>
-      Loading...
-    </mat-option>
-
-  </mat-select>
-</mat-form-field>
-        <div class="invalid-feedback">City is required</div>
-      </div>
 
       <!-- BUFFER KM -->
       <div class="col-3 mb-2">
         <label>Buffer KM</label>
         <input type="number" class="form-control"
                formControlName="buffer_km"
-               [class.is-invalid]="addUpdateVendorForm.get('buffer_km').invalid && (isSubmitted || addUpdateVendorForm.get('buffer_km').touched)">
-        <div class="invalid-feedback">Must be 0 or greater</div>
+               [class.is-invalid]="f.buffer_km.invalid && (isSubmitted || f.buffer_km.touched)">
+   <div class="invalid-feedback"
+     *ngIf="f.buffer_km.invalid && (isSubmitted || f.buffer_km.touched)">
+  Must be 0 or greater
+</div>
       </div>
 
       <!-- EXTRA KM PRICE -->
@@ -113,13 +72,41 @@
       </div>
 
       <!-- LOCAL ONLY -->
-      <div class="col-3 mb-2" *ngIf="addUpdateVendorForm.value.type === 'Local'">
-        <label>Buffer Minutes</label>
-        <input type="number" class="form-control"
-               formControlName="buffer_minutes"
-               [class.is-invalid]="addUpdateVendorForm.get('buffer_minutes').invalid && (isSubmitted || addUpdateVendorForm.get('buffer_minutes').touched)">
-        <div class="invalid-feedback">Required & must be ≥ 0</div>
-      </div>
+    <div class="col-3 mb-2" *ngIf="addUpdateVendorForm.value.type === 'Local'">
+  
+  <label>
+    Buffer Minutes <span class="text-danger">*</span>
+    <small class="text-muted d-block">
+      Allowed: 0 to 59 minutes
+    </small>
+  </label>
+
+  <input type="number"
+         class="form-control"
+         formControlName="buffer_minutes"
+         min="0"
+         max="59"
+         [class.is-invalid]="f.buffer_minutes.invalid && (isSubmitted || f.buffer_minutes.touched)">
+
+  <!-- Required
+  <div class="invalid-feedback"
+       *ngIf="f.buffer_minutes.errors?.required && (isSubmitted || f.buffer_minutes.touched)">
+    Buffer minutes is required
+  </div> -->
+
+  <!-- Min -->
+  <div class="invalid-feedback"
+       *ngIf="f.buffer_minutes.errors?.min && (isSubmitted || f.buffer_minutes.touched)">
+    Minimum value is 0
+  </div>
+
+  <!-- Max -->
+  <div class="invalid-feedback"
+       *ngIf="f.buffer_minutes.errors?.max && (isSubmitted || f.buffer_minutes.touched)">
+    Maximum value is 59
+  </div>
+
+</div>
 
       <div class="col-3 mb-2" *ngIf="addUpdateVendorForm.value.type === 'Local'">
         <label>Extra Hours Price</label>
@@ -248,8 +235,8 @@
     <th>Type</th>
     <th>Trip</th>
     <th>Vehicle</th>
-    <th>Country</th>
-    <th>City</th>
+    <!-- <th>Country</th>
+    <th>City</th> -->
     <th>Currency</th>
     <th>Buffer KM</th>
     <th>Extra KM Price</th>
@@ -264,8 +251,8 @@
     <td>{{ item.type }}</td>
     <td>{{ item.trip_type }}</td>
     <td>{{ item.commute_supplier_vehicle_id }}</td>
-    <td>{{ item.country }}</td>
-    <td>{{ item.city }}</td>
+    <!-- <td>{{ item.country }}</td>
+    <td>{{ item.city }}</td> -->
     <td>{{ item.currency }}</td>
 
     <td>{{ item.price_details_obj.buffer_km }}</td>

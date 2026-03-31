@@ -12,6 +12,7 @@ import { PricingMasterComponent } from './components/vehicles/pricing-master/pri
 import { CarAminitiesComponent } from './components/car-aminities/car-aminities.component';
 import { CombustionMasterComponent } from './components/vehicles/combustion-master/combustion-master.component';
 import { CarTypeComponent } from './components/vehicles/car-type/car-type.component';
+import { CarManagementComponent } from './components/vehicles/car-management/car-management.component';
 
 const routes: Routes = [
     {
@@ -42,6 +43,11 @@ const routes: Routes = [
                       {
                 path: 'car-type',
                 component: CarTypeComponent,
+                data: { extraParameter: 'transferCrsMenus' }
+            },
+                  {
+                path: 'car-management',
+                component: CarManagementComponent,
                 data: { extraParameter: 'transferCrsMenus' }
             },
             {

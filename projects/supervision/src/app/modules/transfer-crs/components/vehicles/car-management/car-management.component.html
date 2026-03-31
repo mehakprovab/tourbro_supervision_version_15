@@ -1,0 +1,214 @@
+<!-- 🔹 HEADER + SEARCH -->
+<div class="col-12 row align-items-center">
+  <div class="heading col-6">
+    <p>Car Management List</p>
+  </div>
+<!-- 🔥 REASSIGN FORM (OUTSIDE HEADER ROW) -->
+<div class="card mb-3" *ngIf="showReassignForm">
+  <div class="card-body">
+
+    <h5 class="mb-3">Reassign Car</h5>
+
+    <div class="row">
+
+      <!-- CAR NAME -->
+      <div class="col-3">
+        <label>Car Name</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="reassignForm.car_name"
+        />
+        <small class="text-danger"
+          *ngIf="submitted && !reassignForm.car_name">
+          Car name is required
+        </small>
+      </div>
+
+      <!-- CAR NUMBER -->
+      <div class="col-3">
+        <label>Car Number</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="reassignForm.car_number"
+        />
+        <small class="text-danger"
+          *ngIf="submitted && !reassignForm.car_number">
+          Car number is required
+        </small>
+      </div>
+
+      <!-- DRIVER NAME -->
+      <div class="col-3">
+        <label>Driver Name</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="reassignForm.driver_name"
+        />
+        <small class="text-danger"
+          *ngIf="submitted && !reassignForm.driver_name">
+          Driver name is required
+        </small>
+      </div>
+
+      <!-- DRIVER PHONE -->
+      <div class="col-3">
+        <label>Driver Mobile</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="reassignForm.driver_phone"
+          maxlength="10"
+        />
+        <small class="text-danger"
+          *ngIf="submitted && !reassignForm.driver_phone">
+          Driver mobile is required
+        </small>
+
+        <small class="text-danger"
+          *ngIf="submitted && reassignForm.driver_phone && reassignForm.driver_phone.length !== 10">
+          Mobile must be 10 digits
+        </small>
+      </div>
+
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="mt-3">
+      <button class="btn btn-primary mr-2" (click)="submitReassign()">
+        Save
+      </button>
+
+      <button class="btn btn-secondary" (click)="cancelReassign()">
+        Cancel
+      </button>
+    </div>
+
+  </div>
+</div>
+  <div class="form-group mb-0 col-sm-6 col-6 d-flex justify-content-end">
+    <div class="col-6 pt-3">
+      <input
+        class="form-control"
+        type="text"
+        [(ngModel)]="searchText"
+        placeholder="Search"
+      />
+    </div>
+  </div>
+</div>
+
+
+
+<!-- 🔹 TABLE -->
+<div class="entireScreen">
+  <div class="wrapper2">
+    <div class="div2 invisible-scrollbar">
+      <div class="table-responsive">
+
+        <table class="table table-borderless table-striped table-hover">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Status</th>
+              <th>Car</th>
+              <th>Model</th>
+              <th>Capacity</th>
+              <th>Fuel</th>
+              <th>Type</th>
+              <th>Booked On</th>
+              <th>Travel Date</th>
+              <th>Car Number</th>
+              <th>Driver Name</th>
+              <th>Driver Phone</th>
+              <th>Pickup</th>
+              <th>Drop</th>
+              <th>Total Fare</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <!-- LOADING -->
+            <tr *ngIf="searchSpin">
+              <td colspan="16" class="text-center">
+                <mat-spinner [diameter]="30"></mat-spinner>
+              </td>
+            </tr>
+
+            <!-- NO DATA -->
+            <tr *ngIf="!searchSpin && !(carTypeList | filter: searchText)?.length">
+              <td colspan="16" class="text-center text-muted">
+                No Data Found!
+              </td>
+            </tr>
+
+            <!-- DATA -->
+            <tr *ngFor="let item of carTypeList | filter: searchText; let i = index">
+
+              <td>{{ i + 1 }}</td>
+
+              <!-- STATUS DROPDOWN -->
+              <td>
+                <select
+                  class="form-control"
+                  [(ngModel)]="item.booking_status"
+                  (change)="onStatusChange(item)"
+                  [name]="'status_' + i"
+                  style="min-width: 130px;"
+                >
+                  <option value="BOOKING_INPROGRESS">Pending</option>
+                  <option value="CONFIRMED">Accepted</option>
+                  <option value="CANCELLED">Rejected</option>
+                </select>
+              </td>
+
+              <td>{{ item.car_name }}</td>
+              <td>{{ item.car_model }}</td>
+              <td>{{ item.capacity }}</td>
+              <td>{{ item.fuel }}</td>
+              <td>{{ item.trip_type }}</td>
+
+              <td>{{ item.booked_on | date:'short' }}</td>
+              <td>{{ item.travel_date | date:'short' }}</td>
+
+              <td>{{ item.car_number }}</td>
+              <td>{{ item.driver_name || '-' }}</td>
+              <td>{{ item.driver_phone }}</td>
+
+              <td>{{ item.pickup }}</td>
+              <td>{{ item.drop }}</td>
+              <td>₹ {{ item.total }}</td>
+
+              <td>
+                <button
+                  class="btn btn-sm btn-primary"
+                  (click)="onReassign(item)"
+                >
+                  Reassign
+                </button>
+              </td>
+
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 🔹 LOADER -->
+<ngx-loading
+  [show]="loading"
+  [config]="{
+    primaryColour: primaryColour,
+    secondaryColour: secondaryColour,
+    backdropBorderRadius: '3px',
+    fullScreenBackdrop: true
+  }"
+></ngx-loading>

@@ -10,7 +10,13 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./car-management.component.scss']
 })
 export class CarManagementComponent implements OnInit, OnDestroy {
-
+primaryColour=''
+secondaryColour=''
+ statusMap: any = {
+  BOOKING_PENDING: '2',
+  BOOKING_CONFIRMED: '1',
+  BOOKING_REJECTED: '0'
+};
   searchText = '';
   carTypeList: any[] = [];
   loading = false;
@@ -55,7 +61,10 @@ export class CarManagementComponent implements OnInit, OnDestroy {
             } catch (e) {
               console.error('JSON parse error', e);
             }
-
+const apiStatus =
+  item.booking_status ||
+  parsedAttr.booking_status ||
+  'BOOKING_PENDING';
             return {
               ...item,
 
@@ -80,11 +89,8 @@ export class CarManagementComponent implements OnInit, OnDestroy {
               vehicle_id: dataAttr.vehicle_id,
 
               // ✅ DEFAULT STATUS
-booking_status:
-  item.booking_status ||
-  parsedAttr.booking_status ||
-  'BOOKING_INPROGRESS'
-            };
+booking_status: this.statusMap[apiStatus] ?this.statusMap[apiStatus]: '2'
+            }
           });
         },
         error: () => {
@@ -100,7 +106,7 @@ booking_status:
     status: item.booking_status   // ✅ correct field
   };
 
-  this.apiHandler.apiHandler('updateStatusCarType', 'POST', {}, {}, payload)
+  this.apiHandler.apiHandler('carStatusChange', 'POST', {}, {}, payload)
     .pipe(takeUntil(this.destroy$))
     .subscribe(() => {
       this.swal.alert.success('Status updated');
@@ -155,12 +161,12 @@ this.loading = true;
   const payload = {
     id: this.selectedItem.id,
     AppReference: this.selectedItem.app_reference,
-    vehicle_id: this.selectedItem.vehicle_id,
+    // vehicle_id: this.selectedItem.vehicle_id,
 
-    car_name: this.reassignForm.car_name,
-    car_number: this.reassignForm.car_number,
+    vehicle_name: this.reassignForm.car_name,
+    vehicle_reg_no: this.reassignForm.car_number,
     driver_name: this.reassignForm.driver_name,
-    driver_phone: this.reassignForm.driver_phone
+    driver_mobile: this.reassignForm.driver_phone
   };
 
   this.apiHandler.apiHandler('carReassign', 'POST', {}, {}, payload)

@@ -100,6 +100,7 @@ addInputField() {
       visitedCity: ['', Validators.required],
        programTitle: ['', [Validators.required, Validators.maxLength(1000)]],
        itineraryDayId: [''],
+        isHelicopter: [false],
       activities: this.fb.array([this.createActivityGroup()]) // start with 1 activity
     }));
   }
@@ -313,6 +314,7 @@ preFillFormWithUpdateData(updateData: any) {
       this.inputFields.at(i).get('visitedCity').patchValue(day.city_name);
       this.inputFields.at(i).get('programTitle').patchValue(day.program_title);
       this.inputFields.at(i).get('itineraryDayId').patchValue(day.id);
+      this.inputFields.at(i).get('isHelicopter').patchValue(day.isHelicopter);
 
       const activitiesArray = this.inputFields.at(i).get('activities') as FormArray;
       activitiesArray.clear();
@@ -365,7 +367,8 @@ saveDay(dayIndex: number) {
     tourId: this.tourId,
     visitedCity: dayGroup.get('visitedCity').value,
     programTitle: dayGroup.get('programTitle').value,
-   visitedCityDay: `Day ${dayIndex + 1}`
+   visitedCityDay: `Day ${dayIndex + 1}`,
+   isHelicopter:dayGroup.get('isHelicopter').value
   };
 
   this.apiHandlerService.apiHandler('saveDay', 'post', {}, {}, payload)

@@ -98,13 +98,31 @@
   </div>
 </div>
               </div>
-              <button
-                type="button"
-                class="btn btn-primary btn-sm mt-2 mb-2"
-                (click)="saveDay(i)"
-              >
-                Save Day
-              </button>
+            <div class="d-flex align-items-center mb-2">
+  <button
+    type="button"
+    class="btn btn-primary btn-sm mr-3"
+    (click)="saveDay(i)"
+  >
+    Save Day
+  </button>
+
+  <!-- ✅ Heli Services Checkbox -->
+  <div class="form-check ml-3">
+    <input
+      type="checkbox"
+      style="margin-top: 12px;"
+      class="form-check-input"
+      formControlName="isHelicopter"
+      id="isHelicopter{{ i }}"
+    />
+    <label class="form-check-label" style="
+    margin-top: 0.5rem;
+    margin-left: 1.5rem !important;" for="isHelicopter{{ i }}">
+      Heli Services
+    </label>
+  </div>
+</div>
               <!-- Activities -->
               <div formArrayName="activities">
                 <div

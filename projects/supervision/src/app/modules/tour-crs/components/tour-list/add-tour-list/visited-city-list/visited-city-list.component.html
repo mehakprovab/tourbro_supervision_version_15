@@ -42,7 +42,7 @@
                         </tr>
                         <tr *ngFor="let item of visitedCityList; let i=index">
                                 <td class="text-left text-muted">{{(i+1) }}</td>
-                                <td class="text-left">{{ item.CityName }}</td>
+                                <td class="text-left">{{ item.city_name }}</td>
                                 <td class="text-left">{{ item.no_of_nights}}</td>
                                 <td *ngIf="isAddTourCity" class="text-left buttontdsize">
                                     <button class="btn btn-sm btn-primary mr-1" (click)="editTourVisitedCity(item)"> {{'Update'}}  </button>

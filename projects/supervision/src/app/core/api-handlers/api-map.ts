@@ -684,4 +684,5 @@ editVehicleMaster: `${baseUrl}/car/editVehicle`,
             updateStatusVehicleCombustion:`${baseUrl}/car/updateVehicleCombustionStatus`,
             carManagementList:`${baseUrl}/dashboard/report/carMangement`,
             carReassign:`${baseUrl}/dashboard/report/carReassign`,
+            carStatusChange:`${baseUrl}/dashboard/report/carMangementStatus`,
 };

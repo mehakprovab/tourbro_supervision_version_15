@@ -152,26 +152,26 @@
                                             </div>
                                         </td>
                                         <td class="text-left">
-                                            <span *ngIf="data['status'] == 'BOOKING_FAILED'" class="badge badge-danger">
+                                            <span *ngIf="data['booking_status'] == 'BOOKING_FAILED'" class="badge badge-danger">
                                                 Booking Failed
                                             </span>
-                                            <span *ngIf="data['status'] == 'BOOKING_CONFIRMED'"
+                                            <span *ngIf="data['booking_status'] == 'BOOKING_CONFIRMED'"
                                                 class="badge badge-success">
                                                 Booking Confirmed
                                             </span>
-                                            <span *ngIf="data['status'] == 'BOOKING_CANCELLED'"
+                                            <span *ngIf="data['booking_status'] == 'BOOKING_CANCELLED'"
                                                 class="badge badge-danger">
                                                 Booking Cancelled
                                             </span>
-                                            <span *ngIf="data['status'] == 'BOOKING_INPROGRESS'"
+                                            <span *ngIf="data['booking_status'] == 'BOOKING_INPROGRESS'"
                                                 class="badge badge-info">
                                                 Booking Inprogress
                                             </span>
-                                            <span *ngIf="data['status'] == 'BOOKING_HOLD'"
+                                            <span *ngIf="data['booking_status'] == 'BOOKING_HOLD'"
                                             class="badge badge-warning">
                                             Booking Hold
                                         </span>
-                                            {{data.status ? '' : 'N/A'}}
+                                            <!-- {{data.status ? '' : 'N/A'}} -->
                                         </td>
                                         <td class="text-left"> {{data?.app_reference}} </td>
                                         <!-- <td class="text-left">{{data?.supplier_business_name}} </td> -->

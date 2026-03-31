@@ -602,6 +602,13 @@
                               <ng-template ngbPanelContent>
   <div class="vsm-dropdown">
     <div class="vsm-list">
+      <div class="vsm-item" *ngIf="isSubMenuExists('Car Management',TRANSFER_CRS)">
+        <a routerLinkActive="active-item"
+           [routerLink]="['/transfers/car-management']"
+           class="vsm-link pl-1">
+          <span class="vsm-title pl-10">Car Management</span>
+        </a>
+      </div>
 <div class="vsm-item" *ngIf="isSubMenuExists('Car Type',TRANSFER_CRS)">
         <a routerLinkActive="active-item"
            [routerLink]="['/transfers/car-type']"

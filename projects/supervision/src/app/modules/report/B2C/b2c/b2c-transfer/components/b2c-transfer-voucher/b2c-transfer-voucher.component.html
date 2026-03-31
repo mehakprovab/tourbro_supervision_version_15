@@ -127,10 +127,10 @@
               <tbody>
               <tr>
                 <td class="image-download" style="padding:0px 0; border: none; width: 200px;">
-                  <img *ngIf="voucherData?.BookingDetails?.booking_source === 'ZBAPINO00022'" style="width:100%"
-                    src="{{ attributes?.image }}">
-                  <img *ngIf="voucherData?.BookingDetails?.booking_source !== 'ZBAPINO00022'" style="width:100%"
-                    src="{{ attributes?.image }}">
+                  <img *ngIf="voucherData?.BookingItineraryDetails?.booking_source === 'ZBAPINO00022'" style="width:100%"
+                    src="{{ attributes?.carImage }}">
+                  <img *ngIf="voucherData?.BookingItineraryDetails?.booking_source !== 'ZBAPINO00022'" style="width:100%"
+                    src="{{ attributes?.carImage }}">
                 </td>
 
                 <td valign="top" style="padding:0px; border: none; padding-left: 15px;">
@@ -509,7 +509,7 @@
             </tbody>
           </table>
 
-          <table cellpadding="5" cellspacing="0" style=" padding:0;" width="100%">
+          <table cellpadding="5" cellspacing="0" style=" padding:0;" width="100%" *ngIf="bookingDetails.Inclusions">
             <tbody>
               <tr>
                 <td style="font-size: 20px; font-weight: 600; color: #282828;border-top:none;"> Transfers Inclusions</td>

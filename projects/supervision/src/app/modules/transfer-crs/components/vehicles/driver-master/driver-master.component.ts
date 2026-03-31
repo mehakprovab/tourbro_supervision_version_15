@@ -204,7 +204,14 @@ onCityDropdownOpen(open: boolean) {
       phone_code: ['91', Validators.required],
       mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       age: ['', [Validators.required, Validators.min(18)]],
-      dl_no: ['', Validators.required],
+      dl_no: [
+  '',
+  [
+    Validators.required,
+    Validators.pattern('^[A-Za-z0-9-]+$'),
+    Validators.maxLength(25)
+  ]
+],
       country: [null, Validators.required],
       city: ['', Validators.required],
 
@@ -222,29 +229,38 @@ onCityDropdownOpen(open: boolean) {
 onImageChange(event: Event) {
   const input = event.target as HTMLInputElement;
 
-  if (!input.files || input.files.length === 0) {
-    return;
-  }
+  if (!input.files || input.files.length === 0) return;
 
   const file = input.files[0];
 
-  // Size check (1MB)
-  if (file.size > 1048576) {
-    this.swalService.alert.oops('Maximum upload file size: 1 MB');
+  const allowedTypes = ['image/jpeg', 'image/png'];
+
+  // ❌ Type validation
+  if (!allowedTypes.includes(file.type)) {
+    this.swalService.alert.oops('Only JPEG and PNG images are allowed');
     input.value = '';
     this.imagePreview = null;
+    this.addUpdateVendorForm.get('image').setErrors({ invalidType: true });
     return;
   }
 
-  // Store file in form manually
+  // ❌ Size validation (200 KB)
+  if (file.size > 200 * 1024) {
+    this.swalService.alert.oops('Maximum file size allowed is 200 KB');
+    input.value = '';
+    this.imagePreview = null;
+    this.addUpdateVendorForm.get('image').setErrors({ maxSize: true });
+    return;
+  }
+
+  // ✅ Valid file
   this.addUpdateVendorForm.get('image').setValue(file);
   this.addUpdateVendorForm.get('image').updateValueAndValidity();
 
-  // Preview
   const reader = new FileReader();
   reader.onload = () => {
     this.imagePreview = reader.result as string;
-    this.cdr.detectChanges(); // 🔥 FORCE UI UPDATE
+    this.cdr.detectChanges();
   };
   reader.readAsDataURL(file);
 }
@@ -407,6 +423,8 @@ const token = this.getBearerToken();
             this.addUpdateVendorForm.reset({ status: 1 });
             this.getDriverList();
             this.isSubmitted = false;
+             this.imagePreview = '';
+ this.existingImage=null
           } else {
             this.swalService.alert.oops(res.Message);
           }

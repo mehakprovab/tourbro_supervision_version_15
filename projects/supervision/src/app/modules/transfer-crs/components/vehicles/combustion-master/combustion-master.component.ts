@@ -70,7 +70,10 @@ export class CombustionMasterComponent implements OnInit {
             this.isSubmitted = false;
           }
         },
-        error: () => this.loading = false
+        error: (error) => {
+          this.loading = false;
+           this.swal.alert.oops("Duplicate Entry Exist.");
+        }
       });
   }
 
@@ -100,9 +103,14 @@ export class CombustionMasterComponent implements OnInit {
             this.saveText = 'Save';
             this.getList();
             this.isSubmitted = false;
+          }else{
+             this.swal.alert.oops("Duplicate Entry Exist.");
           }
         },
-        error: () => this.loading = false
+ error: (error) => {
+          this.loading = false;
+this.swal.alert.oops("Duplicate Entry Exist.");
+        }
       });
   }
 

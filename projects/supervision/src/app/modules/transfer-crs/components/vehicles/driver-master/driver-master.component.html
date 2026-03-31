@@ -215,24 +215,46 @@
             </div>
           </div>
         </div>
-        <div class="col-4">
-          <label class="px-3 control-label">
-            DL No <span class="text-danger">*</span>
-          </label>
-          <div class="col-sm-12">
-            <input type="text" class="form-control" placeholder="Driving License Number" formControlName="dl_no"
-              [class.is-invalid]="addUpdateVendorForm.get('dl_no').invalid && 
-        (addUpdateVendorForm.get('dl_no').touched || isSubmitted)" />
-            <div *ngIf="addUpdateVendorForm.get('dl_no').invalid && 
-        (addUpdateVendorForm.get('dl_no').touched || isSubmitted)" class="invalid-feedback">
-              DL Number is required
-            </div>
-          </div>
-        </div>
+<div class="col-4">
+  <label class="px-3 control-label">
+    DL No <span class="text-danger">*</span>
+  </label>
+
+  <div class="col-sm-12">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Driving License Number"
+      formControlName="dl_no"
+      [class.is-invalid]="addUpdateVendorForm.get('dl_no').invalid && 
+        (addUpdateVendorForm.get('dl_no').touched || isSubmitted)"
+    />
+
+    <div
+      *ngIf="addUpdateVendorForm.get('dl_no').invalid && 
+        (addUpdateVendorForm.get('dl_no').touched || isSubmitted)"
+      class="invalid-feedback"
+    >
+      <span *ngIf="addUpdateVendorForm.get('dl_no').errors?.required">
+        DL Number is required
+      </span>
+
+      <span *ngIf="addUpdateVendorForm.get('dl_no').errors?.pattern">
+        Only letters, numbers and hyphen (-) are allowed
+      </span>
+      <span *ngIf="addUpdateVendorForm.get('dl_no').errors?.maxlength">
+      Dl can be 25 characters lons
+      </span>
+    </div>
+  </div>
+</div>
             
         <div class="col-4">
           <label class="px-3 control-label">
             Driver Image <span class="text-danger">*</span>
+             <small class="text-muted d-block">
+    Allowed: JPEG, PNG | Max size: 200KB
+  </small>
           </label>
           <div class="col-sm-12">
             <input

@@ -91,8 +91,9 @@ primaryColour: any;
             this.swal.alert.oops(res.Message);
           }
         },
-        error: () => {
+        error: (error) => {
           this.loading = false;
+           this.swal.alert.oops("Duplicate Entry Exist.");
         }
       });
   }
@@ -127,8 +128,11 @@ primaryColour: any;
             this.saveTextName = 'Save';
             this.getCarTypeList();
           } else {
-            this.swal.alert.oops(res.Message);
+          this.swal.alert.oops("Duplicate Entry Exist.");
           }
+        },error: (error) => {
+          this.loading = false;
+           this.swal.alert.oops("Duplicate Entry Exist.");
         }
       });
   }

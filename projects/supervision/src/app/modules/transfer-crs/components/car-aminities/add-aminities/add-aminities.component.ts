@@ -37,7 +37,7 @@ export class AddAminitiesComponent implements OnInit {
                 data['topic'] = 'editCarAmenitiesStatus';
                 this.hotelCrsService.fetch(data)
                     .subscribe(resp => {
-                        if (resp.statusCode == 200) {
+                        if (resp.statusCode == 200 || resp.statusCode == 201) {
                             this.noData = false;
                             this.roomAmenity = resp.data;
                             this.patchRoomAmenity();

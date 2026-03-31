@@ -73,7 +73,7 @@ combustionList: any[] = [];
   vehicleImage: any;
   imageFile: File;
   loggedInUserId: number;
-vendorList:any=[]
+driverList:any=[]
   carAmenityList:any;
       dropdownSettingsForRoom = {};
   constructor(
@@ -127,7 +127,9 @@ this.getVendorList()
   onCitySearch(value: string) {
   this.searchSubject.next(value);
 }
-  setupVehicleTypeListener() {
+filteredSeatCapacity: number[] = [];
+
+setupVehicleTypeListener() {
   this.addUpdateVehcleForm.get('vehicle_type').valueChanges
     .pipe(debounceTime(200), distinctUntilChanged(), takeUntil(this.destroy$))
     .subscribe((selectedVehicleTypeId: any) => {
@@ -137,29 +139,40 @@ this.getVendorList()
       );
 
       if (selectedVehicle && selectedVehicle.capacity) {
-        this.addUpdateVehcleForm.patchValue({
-          max_capacity: selectedVehicle.capacity
-        });
+
+        // ✅ Always restrict dropdown
+        this.filteredSeatCapacity = this.seatCapacity.filter(
+          c => c <= selectedVehicle.capacity
+        );
+
+        // ❌ DO NOT override in edit mode
+        if (!this.isEditMode) {
+          this.addUpdateVehcleForm.patchValue({
+            max_capacity: selectedVehicle.capacity
+          });
+        }
+      } else {
+        this.filteredSeatCapacity = [];
       }
-    })
+    });
 }
     getVendorList() {
     this.searchSpin = true;
   this.loading = true;
     this.api
-      .apiHandler('vendorList', 'POST', {}, {}, {})
+      .apiHandler('driverList', 'POST', {}, {}, {})
       .subscribe({
         next: (res: any) => {
           if (res.Status) {
-            this.vendorList = res.data || [];
+            this.driverList = res.data || [];
               this.loading = false;
           } else {
-            this.vendorList = [];
+            this.driverList = [];
              this.loading = false;
           }
         },
         error: () => {
-          this.vendorList = [];
+          this.driverList = [];
            this.loading = false;
         }
       });
@@ -294,7 +307,7 @@ getCityListByCountry(
       vehicle_name: ['', [Validators.required,Validators.pattern('^[a-zA-Z ]+$')]],
       ac_vehicle: ['', Validators.required],
       max_capacity: ['', Validators.required],
-      vendor_id: ['', Validators.required],
+      driver_id: ['', Validators.required],
       ratings: ['', Validators.required],
       luggage_allowances: ['', Validators.required],
       country: ['', Validators.required],
@@ -348,7 +361,7 @@ onVehicleMasterSave() {
   formData.append('vehicle_type', this.f.vehicle_type.value);
   formData.append('trip_type', this.f.trip_type.value);
     formData.append('vehicle_reg_no', this.f.vehicle_reg_no.value);
-  formData.append('vendor_id', this.f.vendor_id.value);
+  formData.append('driver_id', this.f.driver_id.value);
   formData.append('vehicle_name', this.f.vehicle_name.value);
   formData.append('ac_vehicle', this.f.ac_vehicle.value);
   formData.append('max_capacity', this.f.max_capacity.value);
@@ -398,7 +411,7 @@ upateVehicleMaster() {
   formData.append('vehicle_type', this.f.vehicle_type.value);
   formData.append('trip_type', this.f.trip_type.value);
   formData.append('vehicle_reg_no', this.f.vehicle_reg_no.value);
-  formData.append('vendor_id', this.f.vendor_id.value);
+  formData.append('driver_id', this.f.driver_id.value);
   formData.append('vehicle_name', this.f.vehicle_name.value);
   formData.append('ac_vehicle', this.f.ac_vehicle.value);
   formData.append('max_capacity', this.f.max_capacity.value);
@@ -462,7 +475,7 @@ const selectedAmenities = this.carAmenityList.filter(a =>
     vehicle_name: v.vehicle_name,
     ac_vehicle: v.ac_vehicle,
     max_capacity: v.max_capacity,
-    vendor_id: v.vendor_id,
+    driver_id: v.driver_id,
     ratings: v.ratings,
     luggage_allowances: v.luggage_allowances,
     country: selectedCountry || null, // 👈 triggers valueChanges
@@ -510,15 +523,40 @@ const selectedAmenities = this.carAmenityList.filter(a =>
               // <-- for preview
 
 onFileSelected(event: any) {
-  const file = event.target.files[0]; // get the first selected file
-  if (file) {
-    this.imageFile = file;           // ✅ store for FormData
-    const reader = new FileReader(); 
-    reader.onload = (e: any) => {
-      this.vehicleImage = e.target.result; // ✅ for preview
-    };
-    reader.readAsDataURL(file);
+  const input = event.target as HTMLInputElement;
+
+  if (!input.files || input.files.length === 0) return;
+
+  const file = input.files[0];
+
+  const allowedTypes = ['image/jpeg', 'image/png'];
+
+  // ❌ Type validation
+  if (!allowedTypes.includes(file.type)) {
+    this.swal.alert.oops('Only JPEG and PNG images are allowed');
+    input.value = '';
+    this.imageFile = null;
+    this.vehicleImage = null;
+    return;
   }
+
+  // ❌ Size validation (200 KB)
+  if (file.size > 200 * 1024) {
+    this.swal.alert.oops('Maximum file size allowed is 200 KB');
+    input.value = '';
+    this.imageFile = null;
+    this.vehicleImage = null;
+    return;
+  }
+
+  // ✅ Valid file
+  this.imageFile = file;
+
+  const reader = new FileReader();
+  reader.onload = (e: any) => {
+    this.vehicleImage = e.target.result; // preview
+  };
+  reader.readAsDataURL(file);
 }
 
   uploadImage(id) {

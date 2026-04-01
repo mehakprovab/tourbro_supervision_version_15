@@ -54,7 +54,9 @@ export class B2cTransferComponent implements OnInit {
         { key: 'Action', value: 'Action' },
         { key: 'status', value: 'Status' },
         { key: 'app_reference', value: 'Application Reference' },
-        // { key: 'car_supplier_name', value: 'Supplier Name' },
+        { key: 'car_name', value: 'Car Name' },
+         { key: 'driver_name', value: 'Driver Name' },
+                  { key: 'vehicle_reg_no', value: 'Vehicle Reg No.' },
         { key: 'booking_reference', value: 'Confirmation Reference' },
         { key: 'departure_point', value:'Start Point'},
         { key: 'destination_point', value:'End Point'},
@@ -70,6 +72,7 @@ export class B2cTransferComponent implements OnInit {
         { key: 'admin_markup', value: 'Admin Markup' },//remove for DMC
         { key: 'Discount', value: 'Discount' },//remove for DMC
         { key: 'ConvienceFee', value: 'Convenience Fee' },//remove for DMC
+          { key: 'cancellation_charges', value: 'Cancellation Charges' },
         // { key: 'driver_details', value: 'Driver Details' },
         { key: 'Currency', value: 'Currency' },
         { key: 'CustomerPaidAmount', value: 'Customer Price' },//remove for DMC
@@ -79,7 +82,7 @@ export class B2cTransferComponent implements OnInit {
         { key: 'PaidOn', value: 'Paid On' },//remove for DMC
         // { key: 'cancellationDeadline', value: 'Cancellation Deadline' },
         // { key: 'cancelledOn', value: 'Cancelled On' },
-        // { key: 'cancellationFee', value: 'Cancellation Fee' },
+      
     ];
     noData: boolean = true;
     respData: Array<any> = [];
@@ -147,6 +150,25 @@ export class B2cTransferComponent implements OnInit {
     onInvoiceClick(){
 
     }
+
+    parseAttributes(value: string) {
+  try {
+    // console.log(JSON.parse(value.replace(/'/g, '"')))
+    return JSON.parse(value.replace(/'/g, '"'));
+  } catch {
+    return {};
+  }
+}
+getVehicle(value: string) {
+  return this.parseAttributes(value).vehicle_reg_no || 'N/A';
+}
+getDriver(value: string) {
+  return this.parseAttributes(value).driver_name || 'N/A';
+}
+
+getBasePrice(value: string) {
+  return this.parseAttributes(value).fare_details.basic_fare ? this.parseAttributes(value).fare_details.basic_fare: this.parseAttributes(value).fare_details.basic_price;
+}
  getDeparture(value: string): string {
   if (!value) return 'N/A';
 
@@ -435,8 +457,9 @@ export class B2cTransferComponent implements OnInit {
     showPaxProfile(data) {
         this.showModal = true;
         this.currentRecord = data;
-        let paxDetails = data.pax[0].attributes.replace(/'/g, '"');
-        this.paxDetails = JSON.parse(paxDetails);
+        let paxDetails = data.pax[0];
+        console.log(paxDetails,"JSON.parse(paxDetails)")
+        this.paxDetails = paxDetails;
     }
 
     showCancelPolicy(data) {

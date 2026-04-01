@@ -204,6 +204,7 @@ export const apiMap = {
     b2cFlightReport: `${baseUrl}/dashboard/report/b2cFlightReport`,
     b2cCarReport: `${baseUrl}/dashboard/report/b2cCarReport`,
     b2cHotelVoucher: `${baseUrl}/dashboard/report/hotelVoucher`,
+     b2cCabVoucher: `${baseUrl}/dashboard/report/carVoucher`,
     b2cFlightVoucher: `${baseUrl}/dashboard/report/flightVoucher`,
     b2cCarVoucher: `${baseUrl}/dashboard/report/carVoucher`,
     coreHelpdeskList: `${baseUrl}/core/core-helpdesks/coreHelpdeskList`,

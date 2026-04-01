@@ -1,0 +1,188 @@
+<div class="container mt-3">
+
+ <div class="d-flex justify-content-between align-items-center mb-2">
+
+  <h5 class="mb-0">Guide Request List</h5>
+
+  <input
+    class="form-control w-25"
+    type="text"
+    [(ngModel)]="searchText"
+    (input)="onSearch()"
+    placeholder="Search..."
+  />
+
+</div>
+  <div class="table-responsive">
+    <table class="table  table-striped">
+
+      <thead>
+        <tr>
+          <th>Sl.No</th>
+          <th>Name</th>
+          <th>City</th>
+          <th>Hotel</th>
+          <th>From Date</th>
+          <th>To Date</th>
+          <th>Phone</th>
+          <th>Language</th>
+          <th>Email</th>
+          <th>Message</th>
+        
+          <th>Guide Name</th>
+          <th>Guide Mobile</th>
+          <th>Reported At</th>
+            <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let item of filteredList; let i = index">
+
+          <td>{{ i + 1 }}</td>
+
+
+          <td>{{ item.name }}</td>
+
+          <td>{{ item.city }}</td>
+
+          <td>{{ item.hotel }}</td>
+
+          <td>{{ item.from_date }}</td>
+
+          <td>{{ item.to_date }}</td>
+
+          <td>{{ item.phone_code }} {{ item.phone }}</td>
+
+          <td>{{ item.language }}</td>
+
+          <td>{{ item.email }}</td>
+
+          <td>{{ item.message }}</td>
+ <td>{{ item.guide_name || '-' }}</td>
+
+          <td>{{ item.guide_mobile || '-' }}</td>
+
+          <!-- DATE + TIME -->
+          <td>{{ item.created_at | date:'medium' }}</td>
+          <!-- STATUS TEXT -->
+          <td>
+  <select
+  style="width: 125px !important;"
+    class="form-control"
+    [(ngModel)]="item.status"
+    (change)="onStatusChange(item)"
+  >
+    <option [value]="1">Pending</option>
+    <option [value]="2">Approved</option>
+    <option [value]="3">Rejected</option>
+  </select>
+</td>
+
+         
+
+        </tr>
+
+      </tbody>
+
+    </table>
+  </div>
+
+</div>
+<!-- MODAL -->
+<div class="modal" tabindex="-1" [ngClass]="{'show d-block': showModal}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Update Guide Details</h5>
+        <button type="button" class="close" (click)="closeModal()">&times;</button>
+      </div>
+
+      <form [formGroup]="modalForm" (ngSubmit)="submitModal()">
+<div class="modal-body">
+
+  <!-- GUIDE NAME -->
+<input class="form-control mb-1"
+  placeholder="Guide Name"
+  formControlName="guide_name"
+  [class.is-invalid]="modalForm.get('guide_name').invalid && (modalForm.get('guide_name').touched || modalForm.get('guide_name').dirty)" />
+
+<div class="text-danger mb-2"
+  *ngIf="modalForm.get('guide_name').invalid && (modalForm.get('guide_name').touched || modalForm.get('guide_name').dirty)">
+  Guide name is required
+</div>
+
+
+  <!-- MOBILE -->
+ <input class="form-control mb-1"
+  placeholder="Mobile"
+  formControlName="guide_mobile"
+  [class.is-invalid]="modalForm.get('guide_mobile').invalid && (modalForm.get('guide_mobile').touched || modalForm.get('guide_mobile').dirty)" />
+
+<div class="text-danger mb-2"
+  *ngIf="modalForm.get('guide_mobile').invalid && (modalForm.get('guide_mobile').touched || modalForm.get('guide_mobile').dirty)">
+
+  <span *ngIf="modalForm.get('guide_mobile').errors?.required">
+    Mobile number is required
+  </span>
+
+  <span *ngIf="modalForm.get('guide_mobile').errors?.pattern">
+    Enter valid 10 digit number
+  </span>
+
+</div>
+
+  <!-- MEETING POINT -->
+  <!-- <input class="form-control mb-1"
+    placeholder="Meeting Point"
+    formControlName="meeting_point" />
+
+  <div class="text-danger mb-2"
+    *ngIf="isModalSubmit && modalForm.get('meeting_point').invalid">
+    Meeting point is required
+  </div> -->
+  <!-- PRICE -->
+<input class="form-control mb-1"
+  placeholder="Price"
+  formControlName="price"
+  [class.is-invalid]="modalForm.get('price').invalid && (modalForm.get('price').touched || modalForm.get('price').dirty)" />
+
+<div class="text-danger mb-2"
+  *ngIf="modalForm.get('price').invalid && (modalForm.get('price').touched || modalForm.get('price').dirty)">
+
+  <span *ngIf="modalForm.get('price').errors?.required">
+    Price is required
+  </span>
+
+  <span *ngIf="modalForm.get('price').errors?.pattern">
+    Only numbers allowed
+  </span>
+
+</div>
+  <!-- NOTE -->
+  <!-- <textarea class="form-control mb-1"
+    placeholder="Note"
+    formControlName="note"></textarea>
+
+  <div class="text-danger mb-2"
+    *ngIf="isModalSubmit && modalForm.get('note').invalid">
+    Note is required
+  </div> -->
+
+
+
+
+</div>
+
+        <div class="modal-footer">
+          <button class="btn btn-primary" type="submit">Submit</button>
+          <button class="btn btn-secondary" type="button" (click)="closeModal()">Cancel</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+.modal.show .modal-dialog{
+  margin-top: 5%;
+}
+
+:host {
+  // Hide bfv-messages completely
+  bfv-messages {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+    opacity: 0 !important;
+    position: absolute !important;
+    z-index: -9999 !important;
+  }
+  
+  // Also hide any parent containers that might show validation
+  .has-error bfv-messages,
+  .form-group bfv-messages,
+  .invalid-feedback bfv-messages {
+    display: none !important;
+  }
+  
+  // Ensure our custom validation shows properly
+  .invalid-feedback {
+    display: block;
+    position: relative;
+    z-index: 1000;
+  }
+  
+  // Prevent Bootstrap validation from interfering
+  .was-validated .form-control:invalid,
+  .was-validated .form-control:valid {
+    background-image: none !important;
+  }
+}
+
+.dropdown-box {
+  position: absolute;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #ccc;
+  z-index: 999;
+}
+
+.dropdown-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background: #f1f1f1;
+}

@@ -1,261 +1,168 @@
-<div class="" style="width: auto;height: auto; overflow-y: scroll;" *ngIf="voucherData"></div>
-    <div class="text-center" style="margin-top: 20px;">
-        <a [routerLink]="['/report/b2c-transfer']"><button class="btnStyle">Back</button></a>
-        <a id="download" (click)="downloadA4('pdf', 'potrait')" style="margin-left:15px;"><button
-            class="btnStyle">Download PDF</button></a>
-    </div>
-    <table class="table" cellpadding="0" cellspacing="0" width="100%"
-        style="font-size:13px; width:1006px; margin:0px auto;background-color:#f8f8f8; padding:50px 45px;margin-top: 20px;"  id="print_voucher" #print_voucher>
-        <tbody>
-            <tr>
-                <td colspan="8" style="padding: 5px 14px; color: #fff; line-height: 31px;" class="logocvr">
+<div class="card"
+  style="width:auto;height:auto;background-color:#f8f8f8;border-radius:16px;padding:0px;"
+  *ngIf="voucherData">
 
-                    <table width="100%" style="border-collapse: collapse;" cellpadding="0" cellspacing="0">
-                        <tbody>
-                        
-                            <tr>
-                                <td style="padding: 0px; border-top: 1px solid transparent; border-bottom: 1px solid #082E53;"><img
-                                        style="width:190px; padding: 10px 0px; -webkit-print-color-adjust: exact;"
-                                        src="assets/images/login-images/l-logo.svg">
-                                </td>
-                                <td style="padding: 0px; width: 38%; border-top: 1px solid transparent; border-bottom: 1px solid #082E53;">
-                                    <div class="trapezoid">Transfer Invoice</div>
-                                </td>
-                                
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
+  <!-- Top Buttons -->
+  <div class="text-center" style="margin-top:20px;">
+    <a [routerLink]="['/report/b2c-transfer']">
+      <button class="btnStyle">Back</button>
+    </a>
+
+    <a (click)="downloadA4('pdf','portrait')" style="margin-left:15px;">
+      <button class="btnStyle">Download PDF</button>
+    </a>
+  </div>
+
+  <!-- Invoice Table -->
+  <table class="table" width="100%" id="print_voucher"
+    style="font-size:13px;width:1006px;margin:20px auto;background:#f8f8f8;padding:50px 45px;" id="print_voucher" #print_voucher>
+
+    <tbody>
+
+      <!-- Header -->
+      <tr>
+        <td colspan="8" class="logocvr" style="padding:5px 14px;">
+          <table width="100%">
+            <tr>
+              <td>
+                <img src="assets/images/login-images/l-logo.png"
+                  style="width:190px;padding:10px 0px;">
+              </td>
+              <td style="text-align:right;">
+                <div class="trapezoid">Car Invoice</div>
+              </td>
             </tr>
-            <tr>
-                <td colspan="4" style="width: 60%; padding: 14px;">
-                    <table style="width: 100%;">
-                        <tr><td style="height: 5px; border: none; padding: 0px;"></td></tr>
-                        <tr><td style="height: 5px; border: none; padding: 0px;"></td></tr>
-                            <tr>
-                            <td style="border:none; padding:0px 0px 15px; line-height: 25px; font-size: 15px; width: 50%;">
-                            <strong class="label"
-                            style=" font-size:17px;">
-                            <ng-container>
-                            <span class="text-uppercase">
-                                {{voucherData?.BookingPaxDetails[0]?.title +'. '+voucherData?.BookingPaxDetails[0]?.first_name+' '+voucherData?.BookingPaxDetails[0]?.last_name}} <br>
-                            </span>
-                        </ng-container>
-                            </strong>
-                            <span><i class="fa fa-phone-alt"></i> {{voucherData?.BookingDetails?.phone_number || 'N/A'}}</span>
-                            <br>
-                            <span><i class="fa fa-envelope"></i> {{voucherData?.BookingDetails?.email || 'N/A'}}</span>
-                            </td>
+          </table>
+        </td>
+      </tr>
 
-                            <td style="border:none; padding:0px 0px 15px; line-height: 25px; font-size: 15px; width: 50%; text-align: right;">
-                                <span>
-                                    Reservation Code: <strong>{{voucherData?.BookingDetails?.app_reference}}</strong><br>
-                                </span>
-                                <span *ngIf="voucherData?.bookingDetails?.booking_reference">
-                                    Confirmation No: <strong>{{ voucherData?.bookingDetails?.booking_reference }}</strong><br>
-                                  </span>
-                                <span>Date of Issue: <strong>{{voucherData?.BookingPaxDetails[0]?.created_at  | date: 'dd/MM/yyyy'}}</strong></span>
-                                </td>
-                            </tr>
-                            <tr><td style="height: 5px; border: none; padding: 0px;"></td></tr>
-                  </table>
-                </td>
-                
+      <!-- Customer Info -->
+      <tr>
+        <td colspan="4" style="padding:14px;">
+          <table width="100%">
+
+            <tr>
+              <td style="font-size:15px;line-height:25px;">
+
+                <strong style="font-size:17px;" class="text-uppercase">
+                  {{voucherData?.PassengerDetails[0]?.first_name + ' ' + voucherData?.PassengerDetails[0]?.last_name}}
+                </strong><br>
+
+                <span>
+                  <i class="fa fa-phone-alt"></i>
+                  {{voucherData?.PhoneNumber || 'N/A'}}
+                </span>
+
+              </td>
+
+              <td style="text-align:right;font-size:15px;line-height:25px;">
+
+                <span>
+                  Booking Ref:
+                  <strong>{{voucherData?.BookingReference}}</strong>
+                </span><br>
+
+                <span>
+                  App Ref:
+                  <strong>{{voucherData?.AppReference}}</strong>
+                </span><br>
+
+                <span>
+                  Date:
+                  <strong>{{voucherData?.CreatedDatetime | date:'dd/MM/yyyy'}}</strong>
+                </span>
+
+              </td>
             </tr>
-            
-            <tr>
-                <td colspan="8">
-                    <table style="width: 100%; margin-top: 15px;">
-                        <tbody>
 
-                            <tr><td colspan="2" style="padding:12px 0px 0px; font-size: 18px; border: none;"><img src="assets/images/users-ic.png">&nbsp;<span style="font-weight: 500;">Lead Passenger Details</span></td></tr>
-                            <tr>
-                                <td colspan="2" width="100%" style="padding:0px; width:100%; ">
-                                    <table width="100%" cellpadding="5" cellspacing="2"
-                                        style="font-size: 13px; border-collapse: separate;  box-shadow: 0 0 2px 0 rgba(0,0,0,.08), 0 2px 8px 0 rgba(0,0,0,.16); background: #fff;">
-                                        <tbody>
-                                            <tr style="white-space:nowrap; background: #092e53; color: #fff;">
-                                                <td
-                                                    style=" -webkit-print-color-adjust: exact;padding:10px 15px;color: #fff; width: 5%; font-weight: 700;">
-                                                    Sl.No</td>
-                                                <td
-                                                    style="-webkit-print-color-adjust: exact; width:30%; padding:10px 15px;color: #fff; font-weight: 700;">
-                                                    Guest's&nbsp;Name</td>
-                                                <td
-                                                    style="-webkit-print-color-adjust: exact; width:20%; padding:10px 15px;color: #fff; font-weight: 700; text-align: center;">
-                                                    Type</td>
-                                                    <td
-                                                    style="-webkit-print-color-adjust: exact; width:20%; padding:10px 15px;color: #fff; font-weight: 700; text-align: center;">
-                                                    Tel. No:</td>
-                                                    <td
-                                                    style="-webkit-print-color-adjust: exact; width:20%; padding:10px 15px;color: #fff; font-weight: 700; text-align: center;">
-                                                    Email</td>
+          </table>
+        </td>
+      </tr>
 
-                                            </tr>
-                                          
+      <!-- Passenger Details -->
+      <tr>
+        <td colspan="8">
 
+          <h5 style="margin-top:10px;">Passenger Details</h5>
 
-                                            <tr style="border-bottom: 1px solid #eee;">
-                                                <td style="padding:10px 15px; background: #e7f2fd; font-weight: 600;">
-                                                    {{1}}
-                                                </td>
-                                                <td style="padding:10px 15px; background: #e7f2fd; font-weight: 600;">
-                                                  
-                                                        <span class="text-uppercase">
-                                                          {{bookingDetails?.PassengerDetails[0].Title}}. {{bookingDetails?.PassengerDetails[0].FirstName}} {{bookingDetails?.PassengerDetails[0].LastName}}
-                                                        </span>
-                                                </td>
-                                                <td
-                                                    style="padding:10px 15px; background: #e7f2fd; font-weight: 600; text-align: center; text-transform: capitalize;">
-                                                    {{voucherData?.BookingPaxDetails[0].pax_type}}
-                                                </td>
-                                                <td style="padding:10px 15px; background: #e7f2fd; font-weight: 600;">
-                                                  
-                                                  <span class="text-uppercase">
-                                                    {{bookingDetails?.AddressDetails?.Customer_phone}}
-                                                  </span>
-                                          </td>
-                                          <td style="padding:10px 15px; background: #e7f2fd; font-weight: 600;">
-                                                  
-                                            <span>
-                                              {{bookingDetails?.AddressDetails.CustomerEmail}}
-                                            </span>
-                                    </td>
+          <table width="100%" cellpadding="5"
+            style="background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.1);">
 
-                                               
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table><br>
-                    <table width="100%" cellpadding="5" cellspacing="0"
-                    style="font-size: 13px; border-collapse: separate;  box-shadow: 0 0 2px 0 rgba(0,0,0,.08), 0 2px 8px 0 rgba(0,0,0,.16); background: #fff;">
-                    <tbody>
-                        <tr style="background: #e7f2fd; height: 280px;">
-                            <td colspan="5" style="padding: 0px; border: none;">
-                                <table style="width: 100%;">
-                                    <tr style="white-space:nowrap; background: #092e53; color: #fff; font-weight: 500;">
-                                        <th>#</th>
-                                        <th>Product Name</th>
-                                        <th>Travel Date</th>
-                                        <th>NoOfPax</th>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>{{voucherData?.BookingDetails?.product_name}}</td>
-                                        <td>{{voucherData?.BookingDetails?.travel_date | date: 'dd/MM/yyyy'}}</td>
-                                        <td>{{voucherData?.BookingDetails?.NoOfPax}}</td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                        <!-- <tr >
-                            <th>&nbsp;</th>
-                             <th>&nbsp;</th>
-                            <th>&nbsp;</th>
-                            <th style="text-align: right;">	Base Fare</th>
-                            <th style="border-left: 1px solid #ddd; width: 20.5%; text-align: left;">
-                                &nbsp;
-                                {{bookingDetails?.Price?.Currency}}
-                                {{bookingDetails?.Price?.TotalDisplayFare }}
-                            </th>
-                        </tr>
-                        <tr >
-                            <th>&nbsp;</th>
-                             <th>&nbsp;</th>
-                            <th>&nbsp;</th>
-                            <th style="text-align: right;">	Extras</th>
-                            <th style="border-left: 1px solid #ddd; width: 20.5%; text-align: left;">
-                                &nbsp;
-                                {{voucherData?.BookingItineraryDetails.currency}}
-                                {{voucherData?.BookingItineraryDetails.extras_amount || 0 }}
-                            </th>
-                        </tr>
-                        <tr >
-                            <th>&nbsp;</th>
-                             <th>&nbsp;</th>
-                            <th>&nbsp;</th>
-                            <th style="text-align: right;">	Convenience Fees</th>
-                            <th style="border-left: 1px solid #ddd; width: 20.5%; text-align: left;">
-                                &nbsp;
-                                {{voucherData?.BookingItineraryDetails.currency}}
-                          {{voucherData?.BookingItineraryDetails.Tax }}
-                            </th>
-                        </tr>
-                        <tr >
-                            <th>&nbsp;</th>
-                             <th>&nbsp;</th>
-                            <th>&nbsp;</th>
-                            <th style="text-align: right;">	Discount</th>
-                            <th style="border-left: 1px solid #ddd; width: 20.5%; text-align: left;">
-                                &nbsp;
-                                {{voucherData?.BookingItineraryDetails.currency}}
-                                 {{voucherData?.BookingItineraryDetails.Discount }}
-                            </th>
-                        </tr> -->
-                        <tr >
-                            <th>&nbsp;</th>
-                             <th>&nbsp;</th>
-                            <th>&nbsp;</th>
-                            <th style="text-align: right;">	Total Amount</th>
-                            <th style="border-left: 1px solid #ddd; width: 20.5%; text-align: left;">
-                                &nbsp;
-                                {{voucherData?.BookingItineraryDetails[0].currency}}
-                                {{voucherData?.BookingItineraryDetails[0].total_fare }}
-                                ({{ voucherData?.BookingItineraryDetails[0].total_fare | numberToWords:voucherData?.BookingItineraryDetails[0].currency }})
-                            </th>
-                        </tr>
-
-
-                        <tr style="position: relative;"><td style="position: absolute;
-                            top: -189px;
-                            border: none;
-                            left: 0px;
-                            right: 0px;
-                            margin: auto;
-                            display: table;"><img style="width: 500px; opacity: 0.1;" src="assets/images/login-images/l-logo.svg"></td></tr>
-
-<tr style="white-space:nowrap; background: #fff; color: #000; font-weight: 500;">
-                            
-    <th>&nbsp;</th>
-     <th>&nbsp;</th>
-    <th>&nbsp;</th>
-</tr>
-                        
-                    </tbody>
-                </table>
-
-             </td>
+            <tr style="background:#f5f2fc;">
+              <th>Sl.No</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Address</th>
             </tr>
-            <tr><td></td></tr>
+
+            <tr *ngFor="let p of voucherData?.PassengerDetails; let i=index">
+              <td>{{i+1}}</td>
+              <td class="text-uppercase">
+                {{p.first_name}} {{p.last_name}}
+              </td>
+              <td>{{p.phone}}</td>
+              <td>{{p.adress1}} {{p.adress2}}</td>
+            </tr>
+
+          </table>
+
+        </td>
+      </tr>
+
+      <!-- Booking Details -->
+      <tr>
+        <td colspan="8" style="padding-top:20px;">
+
+          <table width="100%"
+            style="background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.1);">
+
+            <tr style="background:#f5f2fc;">
+              <th>#</th>
+              <th>Car Details</th>
+              <th>Pickup</th>
+              <th>Drop</th>
+              <th>Fare</th>
+            </tr>
 
             <tr>
-                <td style="padding: 0px; border: none;">
-                    <table style="width: 100%;">
-                    <tr>
-                     <td style="width: 55%;
-                     background: #092e53;
-                     border: none;
-                     color: #fff;
-                     padding: 14px 30px;
-                     line-height: 22px;
-                     font-size: 14px;">
-                     <span><i class="fa fa-phone-alt"></i> +44 1254 66 22 22</span><br>
-                     <span><i class="fa fa-envelope"></i> info@.com</span><br>
-                     <span><i class="fa fa-globe"></i> www..com</span><br>
-                        <span>41, Victoria Street 
-Blackburn, Lancashire, United Kingdom - BB1 6DN2</span>
-                     </td>
-                     <td style="width: 45%; border: none; padding: 0px;"><img style="width: 75%; margin: 18px auto; display: block" src="assets/images/invoice_foot.png"></td>
-                     </tr>
-                     </table>
-                     </td>
-                </tr>
+              <td>1</td>
 
-        </tbody>
-    </table>
-    <ngx-loading [show]="loading"
-    [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
-    [template]="loadingTemplate"></ngx-loading>
+              <td>
+                {{voucherData?.CarName}} ({{voucherData?.CarModel}})<br>
+                Pickup: {{voucherData?.CarPickupAddress}}<br>
+                Drop: {{voucherData?.CarDropAddress}}
+              </td>
+
+              <td>
+                {{voucherData?.CarFromDate | date:'dd/MM/yyyy'}}<br>
+                {{voucherData?.PickUpTime}}
+              </td>
+
+              <td>
+                {{voucherData?.CarToDate | date:'dd/MM/yyyy'}}<br>
+                {{voucherData?.DropTime}}
+              </td>
+
+              <td>
+                {{voucherData?.Currency}} {{voucherData?.TotalFare}}
+              </td>
+            </tr>
+
+            <!-- Total -->
+            <tr>
+              <td colspan="4" style="text-align:right;font-weight:600;">
+                Total Amount
+              </td>
+              <td>
+                {{voucherData?.Currency}} {{voucherData?.TotalCharge}}
+              </td>
+            </tr>
+
+          </table>
+
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>

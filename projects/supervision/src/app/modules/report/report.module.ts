@@ -56,6 +56,7 @@ import { B2bHotelEnquiryComponent } from './B2B/b2b/b2b-hotel-enquiry/b2b-hotel-
 import { B2cBusComponent } from './B2C/b2c/b2c-bus/b2c-bus.component';
 import { BusVoucherComponent } from './B2C/b2c/b2c-bus/component/bus-voucher/bus-voucher.component';
 import { BusInvoiceComponent } from './B2C/b2c/b2c-bus/component/bus-invoice/bus-invoice.component';
+import { GuideListComponent } from './B2C/guide-list/guide-list.component';
 
 
 @NgModule({
@@ -108,7 +109,8 @@ import { BusInvoiceComponent } from './B2C/b2c/b2c-bus/component/bus-invoice/bus
         B2bHotelEnquiryComponent,
         B2cBusComponent,
         BusVoucherComponent,
-        BusInvoiceComponent
+        BusInvoiceComponent,
+        GuideListComponent
     ],
     imports: [
         CommonModule,

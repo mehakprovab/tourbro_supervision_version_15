@@ -53,11 +53,13 @@ secondaryColour=''
             let parsedAttr: any = {};
             let innerAttr: any = {};
             let dataAttr: any = {};
+            let mainData:any={}
 
             try {
               parsedAttr = JSON.parse(item.attributes || '{}');
               innerAttr = JSON.parse(parsedAttr.attributes || '{}');
               dataAttr = innerAttr.data || {};
+              mainData=res.data
             } catch (e) {
               console.error('JSON parse error', e);
             }
@@ -87,7 +89,7 @@ const apiStatus =
 
               // IMPORTANT
               vehicle_id: dataAttr.vehicle_id,
-
+bookinStatus: item.booking_status,
               // ✅ DEFAULT STATUS
 booking_status: this.statusMap[apiStatus] ?this.statusMap[apiStatus]: '2'
             }

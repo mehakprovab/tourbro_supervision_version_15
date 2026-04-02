@@ -42,6 +42,7 @@ isSubmitted
 displayColumn = [
   'Sl.No',
   'Status',
+  'Trip Type',
   'City',
   'Vehicle Name',
   'Vehicle Type',

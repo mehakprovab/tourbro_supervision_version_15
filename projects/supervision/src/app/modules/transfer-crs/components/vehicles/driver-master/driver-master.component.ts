@@ -646,6 +646,8 @@ fd.append('status', 'true');
             this.addUpdateVendorForm.reset({ status: 1 });
             this.getDriverList();
             this.isSubmitted = false;
+              this.imagePreview = '';
+ this.existingImage=null
           } else {
             this.swalService.alert.oops(res.Message);
           }

@@ -43,7 +43,10 @@ vehicleMasterDataList:any
     this.getVehicleMasterList()
 
   }
-
+getVehicleName(id: number): string {
+  const vehicle = this.vehicleMasterDataList.find(v => v.id === id);
+  return vehicle ? `${vehicle.vehicle_name}${vehicle.vehicle_reg_no ? ' (' + vehicle.vehicle_reg_no + ')' : ''}` : 'N/A';
+}
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();

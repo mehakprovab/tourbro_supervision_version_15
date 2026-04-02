@@ -22,7 +22,7 @@
       <select
         class="form-control"
         formControlName="trip_type"
-        [class.is-invalid]="f.trip_type.invalid && (isSubmitted || f.trip_type.touched)">
+        [class.is-invalid]="f.trip_type.invalid && (isSubmitted || f.trip_type.dirty)">
         <option value="">Select</option>
         <option value="Airport">Airport</option>
         <option value="Local">Local</option>
@@ -37,7 +37,7 @@
       <select
         class="form-control"
         formControlName="vehicle_type"
-        [class.is-invalid]="f.vehicle_type.invalid && (f.vehicle_type.touched)">
+        [class.is-invalid]="f.vehicle_type.invalid && (f.vehicle_type.dirty)">
         <option value="">Select</option>
         <option *ngFor="let v of vehiclesType" [value]="v.id">
           {{ v.name }}
@@ -52,15 +52,15 @@
       <input
         class="form-control"
         formControlName="vehicle_name"
-        [class.is-invalid]="f.vehicle_name.invalid && (f.vehicle_name.dirty || f.vehicle_name.touched)">
+        [class.is-invalid]="f.vehicle_name.invalid && (f.vehicle_name.dirty || f.vehicle_name.dirty)">
        <!-- Required -->
  <div class="invalid-feedback d-block"
-     *ngIf="f.vehicle_name.errors?.required && (f.vehicle_name.dirty || f.vehicle_name.touched || isSubmitted)">
+     *ngIf="f.vehicle_name.errors?.required && (f.vehicle_name.dirty || f.vehicle_name.dirty || isSubmitted)">
   Vehicle Name is required
 </div>
 
 <div class="invalid-feedback d-block"
-     *ngIf="f.vehicle_name.errors?.pattern && (f.vehicle_name.dirty || f.vehicle_name.touched || isSubmitted)">
+     *ngIf="f.vehicle_name.errors?.pattern && (f.vehicle_name.dirty || f.vehicle_name.dirty || isSubmitted)">
   Only characters are allowed
 </div>
     </div>
@@ -71,7 +71,7 @@
       <select
         class="form-control"
         formControlName="ac_vehicle"
-        [class.is-invalid]="f.ac_vehicle.invalid && (f.ac_vehicle.touched)">
+        [class.is-invalid]="f.ac_vehicle.invalid && (f.ac_vehicle.dirty)">
         <option value="">Select</option>
         <option *ngFor="let a of acType" [value]="a.key">{{ a.key }}</option>
       </select>
@@ -84,7 +84,7 @@
       <select
         class="form-control"
         formControlName="max_capacity"
-        [class.is-invalid]="f.max_capacity.invalid && (f.max_capacity.touched)">
+        [class.is-invalid]="f.max_capacity.invalid && (f.max_capacity.dirty)">
         <option value="">Select</option>
         <option *ngFor="let s of filteredSeatCapacity" [value]="s">{{ s }}</option>
       </select>
@@ -97,7 +97,7 @@
       <select
         class="form-control"
         formControlName="ratings"
-        [class.is-invalid]="f.ratings.invalid && (f.ratings.touched)">
+        [class.is-invalid]="f.ratings.invalid && (f.ratings.dirty)">
         <option value="">Select</option>
         <option *ngFor="let r of ratingList" [value]="r.key">{{ r.key }}</option>
       </select>
@@ -120,7 +120,7 @@
   <div class="col-sm-12">
     <select 
       class="form-control" 
-      [class.is-invalid]="f.country.invalid && (f.country.touched)"
+      [class.is-invalid]="f.country.invalid && (f.country.dirty)"
       formControlName="country"
     >
       <option [ngValue]="null" disabled>Select Country</option>
@@ -173,7 +173,7 @@
 </mat-form-field>
 
 <div class="invalid-feedback d-block"
-     *ngIf="f.city.invalid && (f.city.touched || isSubmitted)">
+     *ngIf="f.city.invalid && (f.city.dirty || isSubmitted)">
   City is required
 </div>
           </div>
@@ -198,14 +198,29 @@
     </div> -->
 
     <!-- COORDINATES -->
-    <div class="col-4">
-      <label>Vehicle Registration Number <span class="text-danger">*</span></label>
-      <input
-        class="form-control"
-        formControlName="vehicle_reg_no"
-        [class.is-invalid]="f.vehicle_reg_no.invalid && isSubmitted"/>
-      <div class="invalid-feedback">Vehicle registration number are required</div>
-    </div>
+<div class="col-4">
+  <label>
+    Vehicle Registration Number <span class="text-danger">*</span>
+  </label>
+
+  <input
+  class="form-control"
+  formControlName="vehicle_reg_no"
+  [class.is-invalid]="f.vehicle_reg_no.invalid && (f.vehicle_reg_no.dirty || isSubmitted)"
+/>
+
+<div *ngIf="f.vehicle_reg_no.invalid && (f.vehicle_reg_no.dirty || isSubmitted)" class="invalid-feedback d-block">
+  
+  <div *ngIf="f.vehicle_reg_no.errors?.required">
+    Vehicle registration number is required
+  </div>
+
+  <div *ngIf="f.vehicle_reg_no.errors?.pattern">
+    Special characters are not allowed
+  </div>
+
+</div>
+</div>
 
     <!-- LUGGAGE -->
     <div class="col-4">
@@ -219,7 +234,7 @@
           <div class="col-sm-12">
             <select 
               class="form-control" 
-              [class.is-invalid]="f.cancellation_rule.invalid && (f.cancellation_rule.touched)"
+              [class.is-invalid]="f.cancellation_rule.invalid && (f.cancellation_rule.dirty)"
               formControlName="cancellation_rule"
             >
            <option value="" disabled>Select Cancellation Rules</option>
@@ -260,7 +275,7 @@
     <select 
       class="form-control"
       formControlName="combustion_type"
-      [class.is-invalid]="f.combustion_type.invalid && (f.combustion_type.touched || isSubmitted)"
+      [class.is-invalid]="f.combustion_type.invalid && (f.combustion_type.dirty || isSubmitted)"
     >
       <option value="" disabled>Select Combustion Type</option>
 
@@ -271,7 +286,7 @@
 
     <!-- Validation -->
     <div class="invalid-feedback d-block"
-         *ngIf="f.combustion_type.errors && (f.combustion_type.touched || isSubmitted)">
+         *ngIf="f.combustion_type.errors && (f.combustion_type.dirty || isSubmitted)">
       Combustion Type is required
     </div>
   </div>
@@ -414,13 +429,13 @@
                 >
                 </mat-slide-toggle>
               </td>
-
+<td>{{ item.city_name }}</td>
               <!-- VEHICLE NAME -->
               <td>{{ item.vehicle_name }}</td>
 
               <!-- VEHICLE TYPE -->
               <td>{{ item.vehicle_type_name }}</td>
-
+<td>{{ item.vehicle_reg_no }}</td>
               <!-- CAPACITY -->
               <td>{{ item.max_capacity }}</td>
 

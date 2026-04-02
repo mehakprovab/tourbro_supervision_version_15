@@ -42,8 +42,10 @@ isSubmitted
 displayColumn = [
   'Sl.No',
   'Status',
+  'City',
   'Vehicle Name',
   'Vehicle Type',
+  'Vehicle Reg No',
   'Capacity',
   'Ride Type',
   'Category',
@@ -302,9 +304,9 @@ getCityListByCountry(
   createForm() {
     this.addUpdateVehcleForm = this.fb.group({
       trip_type: ['', Validators.required],
-      vehicle_reg_no: ['', Validators.required],
-      vehicle_type: ['', Validators.required],
-      vehicle_name: ['', [Validators.required,Validators.pattern('^[a-zA-Z ]+$')]],
+      vehicle_reg_no: ['', [Validators.required, Validators.pattern(/^[A-Za-z0-9 ]+$/)]],
+      vehicle_type: ['', [Validators.required]],
+      vehicle_name: ['', [Validators.required,Validators.pattern('^[a-zA-Z0-9 ]+$')]],
       ac_vehicle: ['', Validators.required],
       max_capacity: ['', Validators.required],
       driver_id: ['', Validators.required],

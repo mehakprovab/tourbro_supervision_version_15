@@ -58,31 +58,30 @@ export class CarAminitiesListComponent implements OnInit {
          });
      }
  
-     onStatusUpdate(val, index): void {
-        //  log.debug(index);
-         const data = [{ id: val['id'] }];
-         data['topic'] = 'editCarAmenitiesStatus';
-         this.hotelCrsService.fetch(data).subscribe(resp => {
-             if (resp.statusCode == 200) {
-                 const data = [{
-                     id: resp.data['id'] || '',
-                     room_amenity_name: resp.data['room_amenity_name'] || '',
-                     status: val['status'] ? true : false,
-                 }];
-                 data['topic'] = 'updateCarAmenities';
-                 this.hotelCrsService.update(data).subscribe(resp => {
-                     if (resp.statusCode == 201) {
-                         this.swalService.alert.update();
-                     }
-                     else
-                         this.swalService.alert.oops();
-                 })
-             } else {
-                 this.swalService.alert.opps();
-             }
-         });
- 
-     }
+   onStatusUpdate(val, index): void {
+
+    console.log('Updated value:', val);
+
+    const payload = [{
+        id: val.id,
+        amenties: val.amenties,   // use correct field from your data
+        status: val.status ? 1 : 0   // OR just val.status (check API)
+    }];
+
+    payload['topic'] = 'updateCarAmenities';
+
+    console.log('Payload:', payload); // ✅ CHECK THIS
+
+    this.hotelCrsService.update(payload).subscribe(resp => {
+        if (resp.statusCode == 201) {
+            this.swalService.alert.update();
+        } else {
+            this.swalService.alert.oops();
+        }
+    }, () => {
+        this.swalService.alert.oops();
+    });
+}
  
  
      updateRoomAmenity(data) {
@@ -90,22 +89,18 @@ export class CarAminitiesListComponent implements OnInit {
      }
  
      applyFilter(text: string) {
-         text = text.toLocaleLowerCase().trim();
-         filterArray = respDataCopy.slice().filter((objData, index) => {
-             const filterOnFields = {
-                 room_amenity_name: objData.room_amenity_name,
-             }
-             if (Object.values(filterOnFields).join().toLocaleLowerCase().match(`${text}`)) {
-                 return objData;
-             }
-         });
-         if (filterArray.length && text.length)
-             this.respData = filterArray;
-         else
-             this.respData = !filterArray.length && text.length ? filterArray : [...respDataCopy];
-             this.page = 1;
-             this.collectionSize = this.respData.length;
-     }
+    text = text.toLowerCase().trim();
+
+    filterArray = respDataCopy.filter((objData) => {
+        const value = objData.amenties || '';   // ✅ FIXED FIELD
+
+        return value.toLowerCase().includes(text);
+    });
+
+    this.respData = text ? filterArray : [...respDataCopy];
+    this.page = 1;
+    this.collectionSize = this.respData.length;
+}
  
      sortData(sort: Sort) {
          const data = filterArray.length ? filterArray : [...respDataCopy];

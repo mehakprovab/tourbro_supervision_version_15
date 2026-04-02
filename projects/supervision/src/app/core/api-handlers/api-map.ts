@@ -638,6 +638,7 @@ deleteAyurvedaCenter: `${baseUrl}/dashboard/report/deleteAyurvedaCenter`,
    vendorList: `${baseUrl}/car/VendorList`,
    deleteVendor:`${baseUrl}/car/deleteVendor`,
     updateVendor:`${baseUrl}/car/updateVendor`,
+    updateVendorStatus:`${baseUrl}/car/updateVendorStatus`,
 
       supervisionCityLists: `${baseUrl}/car/cityList`,
       supervisionCountryLists: `${baseUrl}/car/countryList`,

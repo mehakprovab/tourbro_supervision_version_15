@@ -547,7 +547,7 @@ updateVendor() {
     };
 
     this.apiHandlerServices
-      .apiHandler('updateVendor', 'POST', {}, {}, payload)
+      .apiHandler('updateVendorStatus', 'POST', {}, {}, payload)
       .subscribe(() => {
         this.getVendorList();
       });

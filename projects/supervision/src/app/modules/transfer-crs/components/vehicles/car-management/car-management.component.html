@@ -156,7 +156,7 @@
                 <ng-container *ngIf="item.bookinStatus !== 'BOOKING_CANCELLED'">
                 <select
                   class="form-control"
-                  [(ngModel)]="item.booking_status"
+                  [(ngModel)]="item.status"
                   (change)="onStatusChange(item)"
                   [name]="'status_' + i"
                   style="min-width: 130px;"

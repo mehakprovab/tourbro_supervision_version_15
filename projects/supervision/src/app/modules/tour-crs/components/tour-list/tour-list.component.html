@@ -1,14 +1,22 @@
-<div class="entireScreen  p-0 col-md-12 col-lg-12">
-    <div class="heading">
-        <p>Yatra List</p>
-        <button *ngIf="!editForm" class="orangeButton" type="submit" (click)="onAddButtonClicked()" >Add</button>
+<div class="card adminInner">
+    <div class="card-header mb-3">
+        <h5>Yatra List</h5> 
+       
     </div>
-</div>
+    <div class="form-row">
+        <div class="col-md-3">
+             <button *ngIf="!editForm" class="btn btn-sm btn-primary" type="submit" (click)="onAddButtonClicked()" >Add</button>
+        </div>
+   </div>
+
+
 <div class="entireScreen">
-    <div class="form-group mb-0 col-sm-3 p-0 float-right search">
-        <input class="form-control" type="text" name="Search" [(ngModel)]="searchText" autocomplete="off"
+    <div class="form-group col-sm-3 p-0 mb-3 float-right has-search">
+            Full text search:
+            <input class="form-control ml-0" type="text" name="Search" [(ngModel)]="searchText" autocomplete="off"
             placeholder="Search">
-    </div>
+     </div>
+    
     <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft" #scrollOne >
         <div class="div1"></div>
    </div>
@@ -128,4 +136,5 @@
           </div>
         </div>
     </div>
+</div>
 </div>

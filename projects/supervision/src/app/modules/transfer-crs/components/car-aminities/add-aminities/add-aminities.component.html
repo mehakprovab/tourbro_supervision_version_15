@@ -1,27 +1,28 @@
-<div class="p-0">
-    <form [formGroup]="roomAmenityForm" (ngSubmit)="handleValidSubmit()" class="needs-validation btop pt-4" novalidate>
-        <div class="card border-light">
-            <h3 class="card-header p-0 mb-2">
-                Car Amenity
-            </h3>
-            <div class="card-body p-0">
+<div class="card adminInner">
+     <div class="card-header mb-3">
+        <h5>{{'Add/Update Amenity'}}</h5>
+    </div>
+    <form [formGroup]="roomAmenityForm" (ngSubmit)="handleValidSubmit()" class="needs-validation pt-4" novalidate>
+        <div class="card-body p-0">
                 <fieldset form="user">
-                    <div class="form-group">
-                        <label class="col-sm-3 p-0 control-label" for="room_amenity_name">
+                    <div class="form-row">
+                        <div class="col-md-4">
+                            <label class="p-0 control-label" for="room_amenity_name">
                             Car Amenity Name
                             <span class="text-danger">*</span>
-                        </label>
-                        <div class="col-sm-6 p-0">
-                            <input value="" formControlName="amenties" type="text" placeholder="Car Amenity Name"
-                                class="form-control" [ngClass]="{ 'is-invalid': submitted && f.amenties.errors }"
-                                required />
+                            </label>
+                            <div class="p-0">
+                                <input value="" formControlName="amenties" type="text" placeholder="Car Amenity Name"
+                                    class="form-control" [ngClass]="{ 'is-invalid': submitted && f.amenties.errors }"
+                                    required />
+                            </div>
+                            <div *ngIf="submitted && f.amenties.errors" class="invalid-feedback">
+                                <div *ngIf="f.amenties.errors.required">Car Amenity Name is required</div>
+                            </div>
+
                         </div>
-                        <div *ngIf="submitted && f.amenties.errors" class="invalid-feedback">
-                            <div *ngIf="f.amenties.errors.required">Car Amenity Name is required</div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 p-0 control-label" for="status">
+                        <div class="col-md-3">
+                            <label class="p-0 control-label d-block" for="status">
                             Status
                             <span class="text-danger">*</span>
                         </label>
@@ -30,16 +31,19 @@
                                 [color]="''">
                             </mat-slide-toggle>
                         </span>
+
+                        </div>
+                         <div class="col-md-4">
+                            <div class=" btncontainer">
+                            <button type="submit" id="user_submit" class="btn btn-primary mr-2">Save</button> &nbsp; &nbsp;
+                            <button type="reset" id="user_reset" class="btn btn-secondary" (click)="resetFrom()">Reset</button>
+                         </div>
+
+                         </div>
+                        
                     </div>
+                    
                 </fieldset>
-                <div class="form-group">
-                    <div class="col-sm-8 p-0 col-sm-offset-4 btncontainer">
-                        <button type="submit" id="user_submit" class=" btn btn-success btnStyle">Save</button> &nbsp; &nbsp;
-                        <button type="reset" id="user_reset" class=" btn btn-success btnStyle"
-                            (click)="resetFrom()">Reset</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+             </div>
     </form>
 </div>

@@ -1,8 +1,15 @@
-<div class="entireScreen  p-0 col-md-12 col-lg-12">
-    <div class="heading">
-        <p>{{'Visited City List : [ Tour Name :' + tourName + ']'}}</p>
-        <button *ngIf="!isAddTourCity" class="orangeButton" type="submit" routerLink="/tour-crs/tour-list" >Go Back to tour list</button>
-    </div>      
+<div class="card adminInner">
+    <div class="card-header mb-3">
+        <h5>{{'Visited City List : [ Tour Name :' + tourName + ']'}}</h5>
+       
+    </div>   
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <button *ngIf="!isAddTourCity" class="btn btn-primary" type="submit" routerLink="/tour-crs/tour-list" >Back</button>   
+        </div>
+
+    </div>
+   
     <app-add-visited-city-list *ngIf="isAddTourCity" 
         (insertedRecord)="insertedRecordReceived()"
         [totalAddedNight]="nightsAlreadyAdded"> 
@@ -13,7 +20,7 @@
     <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
         <div class="div2 invisible-scrollbar">
             <div class="table-responsive">
-                <table class="table table-borderless table-striped table-hover" matSort (matSortChange)="sortData($event)">
+                <table class="table table-borderless table-striped table-hover" matSort (matSortChange)="sortData($event)">`
                     <thead>
                         <tr class="p-2">
                             <ng-container *ngFor="let header of displayColumn">
@@ -26,7 +33,7 @@
                             </ng-container>                                                      
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody>`
                         <tr *ngIf="searchSpin">
                             <td colspan="12">
                                 <mat-spinner [diameter]="30" style="margin:0 auto;"

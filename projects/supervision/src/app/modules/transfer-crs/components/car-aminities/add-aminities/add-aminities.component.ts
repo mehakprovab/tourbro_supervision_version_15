@@ -108,13 +108,13 @@ export class AddAminitiesComponent implements OnInit {
                     this.swalService.alert.success('Your data updated successfully ..!');
                     this.someEvent.next({ tabId: 'list_room_amenity', room_amenity: '' })
                     this.roomAmenityForm.reset();
-                } else if (resp.statusCode == 400) {
-                    this.swalService.alert.oops(resp.msg)
+                } else  {
+                    this.swalService.alert.oops("Duplicate Entry exist.")
                 }
-                else {
-                    this.swalService.alert.oops(resp.msg);
-                }
-            })
+                
+            }, (error) => {
+           this.swalService.alert.oops("Duplicate Entry Exist.");
+        })
     }
 
 }

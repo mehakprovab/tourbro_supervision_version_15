@@ -407,7 +407,7 @@ const token = this.getBearerToken();
     fd.append('dl_no', formValue.dl_no);
     fd.append('country', formValue.country.name);
     fd.append('city', formValue.city);
-    fd.append('status', 'true');
+    fd.append('status', '1');
 
     this.loading = true;
  {

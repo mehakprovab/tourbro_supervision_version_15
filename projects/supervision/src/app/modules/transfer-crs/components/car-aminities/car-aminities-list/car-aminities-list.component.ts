@@ -90,22 +90,18 @@ export class CarAminitiesListComponent implements OnInit {
      }
  
      applyFilter(text: string) {
-         text = text.toLocaleLowerCase().trim();
-         filterArray = respDataCopy.slice().filter((objData, index) => {
-             const filterOnFields = {
-                 room_amenity_name: objData.room_amenity_name,
-             }
-             if (Object.values(filterOnFields).join().toLocaleLowerCase().match(`${text}`)) {
-                 return objData;
-             }
-         });
-         if (filterArray.length && text.length)
-             this.respData = filterArray;
-         else
-             this.respData = !filterArray.length && text.length ? filterArray : [...respDataCopy];
-             this.page = 1;
-             this.collectionSize = this.respData.length;
-     }
+    text = text.toLowerCase().trim();
+
+    filterArray = respDataCopy.filter((objData) => {
+        const value = objData.amenties || '';   // ✅ FIXED FIELD
+
+        return value.toLowerCase().includes(text);
+    });
+
+    this.respData = text ? filterArray : [...respDataCopy];
+    this.page = 1;
+    this.collectionSize = this.respData.length;
+}
  
      sortData(sort: Sort) {
          const data = filterArray.length ? filterArray : [...respDataCopy];

@@ -61,7 +61,7 @@ import { TourCRSModule } from "./modules/tour-crs/tour-crs.module";
 import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 import { ActivityCrsModule } from "./modules/actvity-crs/activity-crs.module";
 import { TransferCrsModule } from "./modules/transfer-crs/transfer-crs.module";
-import { NgSelectModule } from '@ng-select/ng-select';
+// import { NgSelectModule } from '@ng-select/ng-select';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
 };

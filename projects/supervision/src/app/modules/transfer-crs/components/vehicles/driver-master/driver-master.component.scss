@@ -1,21 +1,21 @@
-    /* Make mat-form-field full width */
+/* Make mat-form-field full width */
 .mat-form-field {
   width: 100%;
 }
 
 /* Match bootstrap input height */
-.mat-form-field-appearance-fill .mat-form-field-flex {
-  height: 38px;
-  align-items: center;
-  background: white;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
+::ng-deep.mat-form-field-appearance-fill .mat-form-field-flex {
+  height: 45px!important;
+  // align-items: center;
+  background: #fff!important;
+  border:1px solid #C4B3EB;
+  border-radius: 8px!important;
   padding: 0 10px;
 }
 
 /* Remove underline */
-.mat-form-field-underline {
-  display: none;
+::ng-deep .mat-form-field-underline {
+  display: none!important;
 }
 
 /* Remove ripple line */
@@ -69,3 +69,8 @@
 .mat-option:hover {
   background-color: #f8f9fa !important;
 }
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-label{
+  display: none!important;
+}
+::ng-deep .mat-form-field-infix{border-top:none!important;padding: 5px 0px!important;}

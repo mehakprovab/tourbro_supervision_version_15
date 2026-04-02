@@ -1,28 +1,11 @@
-<div class="entireScreen container-fluid p-0">
-  <div class="heading py-3 text-center bg-primary text-white rounded">
-    <p>{{ "Visited City List : [ Tour Name :" + tourName + "]" }}</p>
+<div class="card adminInner">
+  <div class="card-header mb-3">
+    <h5>{{ "Visited City List : [ Tour Name :" + tourName + "]" }}</h5>
   </div>
 
-  <div class="p-4">
-    <div class="add-traveller">
-      <div class="custom-inline-form">
-        <!-- Tour Duration -->
-        <div class="form-group row mb-4">
-          <label class="col-sm-2 col-form-label font-weight-bold"
-            >Tour Duration</label
-          >
-          <div class="col-sm-4">
-            <input
-              type="text"
-              class="form-control shadow-sm"
-              [ngModel]="tourDuration"
-              disabled
-            />
-          </div>
-        </div>
 
         <!-- Visited Cities -->
-        <div *ngFor="let city of cityDataList" class="form-group row mb-3">
+        <div *ngFor="let city of cityDataList" class="form-group row mb-3"> 
           <label class="col-sm-2 col-form-label font-weight-bold"
             >City Visited</label
           >
@@ -196,7 +179,7 @@
                     <div class="col-md-1 text-right">
                       <button
                         type="button"
-                        class="btn btn-danger btn-sm"
+                        class="btn btn-primary btn-sm"
                         (click)="removeActivity(i, j)"
                       >
                         Remove
@@ -224,14 +207,14 @@
                 </div>
                 <button
                   type="button"
-                  class="btn btn-success btn-sm mb-2"
+                  class="btn btn-primary btn-sm mr-2"
                   (click)="addActivity(i)"
                 >
                   Add Activity
                 </button>
                 <button
                   type="button"
-                  class="btn btn-info btn-sm mb-2"
+                  class="btn btn-secondary btn-sm mb-2"
                   style="margin-left: 4px"
                   (click)="saveActivity(i)"
                 >
@@ -264,8 +247,8 @@
           </div> -->
 
           <!-- Buttons -->
-          <div class="saveButton d-flex gap-2">
-            <button type="submit" class="btn btn-warning">Next</button>
+          <div class="saveButton ">
+            <button type="submit" class="btn btn-primary">Next</button>
             <button
               type="button"
               class="btn btn-secondary"
@@ -277,6 +260,6 @@
           </div>
         </form>
       </div>
-    </div>
-  </div>
-</div>
+   
+
+  

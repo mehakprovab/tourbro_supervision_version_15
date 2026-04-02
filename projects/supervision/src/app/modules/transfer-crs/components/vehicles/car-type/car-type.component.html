@@ -1,201 +1,165 @@
-<div class="entireScreen p-0 col-md-12 col-lg-12">
+<div class="card adminInner">
 
   <!-- HEADER -->
-  <div class="col-12 row">
-    <div class="heading col-6">
-      <p>Car Type Master</p>
-    </div>
+  <div class="card-header mb-3">
+
+    <h5>Car Type Master</h5>
+
   </div>
 
   <!-- FORM -->
-  <div class="card" *ngIf="enabledForm">
-    <form
-      [formGroup]="carTypeForm"
-      (ngSubmit)="saveTextName === 'Save' ? onSave() : onUpdate()"
-    >
+  <div class="border-bottom mb-3" *ngIf="enabledForm">
+    <form [formGroup]="carTypeForm" (ngSubmit)="saveTextName === 'Save' ? onSave() : onUpdate()">
       <div class="form-group row">
 
         <!-- CAR TYPE -->
         <div class="col-4">
-          <label class="px-3 control-label">
+          <label class="control-label">
             Car Type <span class="text-danger">*</span>
           </label>
-          <div class="col-sm-12">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Enter Car Type"
-              formControlName="name"
-              [class.is-invalid]="carTypeForm.get('name').invalid && (carTypeForm.get('name').dirty || isSubmitted)"
-            />
-            <div class="invalid-feedback"
-              *ngIf="carTypeForm.get('name').invalid && (carTypeForm.get('name').dirty || isSubmitted)">
-              
-              <span *ngIf="carTypeForm.get('name').errors?.required">
-                Car Type is required
-              </span>
-              <span *ngIf="carTypeForm.get('name').errors?.pattern">
-                Only characters are allowed
-              </span>
-            </div>
+
+          <input type="text" class="form-control" placeholder="Enter Car Type" formControlName="name"
+            [class.is-invalid]="carTypeForm.get('name').invalid && (carTypeForm.get('name').dirty || isSubmitted)" />
+          <div class="invalid-feedback"
+            *ngIf="carTypeForm.get('name').invalid && (carTypeForm.get('name').dirty || isSubmitted)">
+
+            <span *ngIf="carTypeForm.get('name').errors?.required">
+              Car Type is required
+            </span>
+            <span *ngIf="carTypeForm.get('name').errors?.pattern">
+              Only characters are allowed
+            </span>
           </div>
+
         </div>
 
         <!-- CAPACITY -->
         <div class="col-4">
-          <label class="px-3 control-label">
+          <label class="control-label">
             Capacity <span class="text-danger">*</span>
           </label>
-          <div class="col-sm-12">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Enter Capacity"
-              formControlName="capacity"
-              [class.is-invalid]="carTypeForm.get('capacity').invalid && (carTypeForm.get('capacity').dirty || isSubmitted)"
-            />
-            <div class="invalid-feedback"
-              *ngIf="carTypeForm.get('capacity').invalid && (carTypeForm.get('capacity').dirty || isSubmitted)">
-              
-              <span *ngIf="carTypeForm.get('capacity').errors?.required">
-                Capacity is required
-              </span>
-              <span *ngIf="carTypeForm.get('capacity').errors?.pattern">
-                Only numbers allowed
-              </span>
-            </div>
+
+          <input type="text" class="form-control" placeholder="Enter Capacity" formControlName="capacity"
+            [class.is-invalid]="carTypeForm.get('capacity').invalid && (carTypeForm.get('capacity').dirty || isSubmitted)" />
+          <div class="invalid-feedback"
+            *ngIf="carTypeForm.get('capacity').invalid && (carTypeForm.get('capacity').dirty || isSubmitted)">
+
+            <span *ngIf="carTypeForm.get('capacity').errors?.required">
+              Capacity is required
+            </span>
+            <span *ngIf="carTypeForm.get('capacity').errors?.pattern">
+              Only numbers allowed
+            </span>
           </div>
+
         </div>
 
         <!-- STATUS -->
         <div class="col-4" *ngIf="saveTextName == 'Save'">
-          <label class="px-3 control-label">Status</label>
-          <div class="col-sm-12 d-flex align-items-center">
-            <mat-slide-toggle color="primary" formControlName="status">
-              {{ carTypeForm.get('status')?.value ? 'Active' : 'Inactive' }}
-            </mat-slide-toggle>
-          </div>
+          <label class="control-label">Status</label>
+
+          <mat-slide-toggle color="primary" formControlName="status">
+            {{ carTypeForm.get('status')?.value ? 'Active' : 'Inactive' }}
+          </mat-slide-toggle>
+
         </div>
 
       </div>
 
       <!-- BUTTONS -->
-      <div class="saveButton">
-        <button type="submit" class="btnStyle save-btn">
+      <div class="saveButton my-3">
+        <button type="submit" class="btn btn-primary mr-2 save-btn">
           {{ saveTextName }}
         </button>
 
-        <button type="button" class="btnStyle ml-2" (click)="onCancel()">
+        <button type="button" class="btn btn-secondary" (click)="onCancel()">
           Cancel
         </button>
       </div>
 
     </form>
   </div>
-</div>
 
-<!-- LIST HEADER -->
-<div class="col-12 row">
-  <div class="heading col-6">
-    <p>Car Type List</p>
-  </div>
 
-  <!-- SEARCH -->
-  <div class="form-group mb-0 col-sm-6 col-6 p-0 d-flex justify-content-end">
-    <div class="col-6 pt-3">
-      <!-- <span class="fa fa-search form-control-feedback"></span> -->
-      <input
-        class="form-control"
-        type="text"
-        [(ngModel)]="searchText"
-        placeholder="Search"
-      />
+  <!-- TABLE -->
+  <div class="entireScreen">
+    <div class="form-group col-sm-3 p-0 mb-3 float-right has-search">
+      Full text search:
+      <input class="form-control ml-0" type="text" name="Search" [(ngModel)]="searchText" autocomplete="off"
+        placeholder="Search">
     </div>
-  </div>
-</div>
+    <div class="wrapper2">
+      <div class="div2 invisible-scrollbar">
+        <div class="table-responsive">
 
-<!-- TABLE -->
-<div class="entireScreen">
-  <div class="wrapper2">
-    <div class="div2 invisible-scrollbar">
-      <div class="table-responsive">
+          <table class="table table-borderless table-striped table-hover">
+            <thead>
+              <tr>
+                <th *ngFor="let header of displayColumn">{{ header }}</th>
+              </tr>
+            </thead>
 
-        <table class="table table-borderless table-striped table-hover">
-          <thead>
-            <tr>
-              <th *ngFor="let header of displayColumn">{{ header }}</th>
-            </tr>
-          </thead>
+            <tbody>
 
-          <tbody>
+              <!-- LOADER -->
+              <tr *ngIf="searchSpin">
+                <td colspan="6" class="text-center">
+                  <mat-spinner [diameter]="30"></mat-spinner>
+                </td>
+              </tr>
 
-            <!-- LOADER -->
-            <tr *ngIf="searchSpin">
-              <td colspan="6" class="text-center">
-                <mat-spinner [diameter]="30"></mat-spinner>
-              </td>
-            </tr>
+              <!-- NO DATA -->
+              <tr *ngIf="!searchSpin && !carTypeList.length">
+                <td colspan="6" class="text-center text-muted">
+                  No Data Found!
+                </td>
+              </tr>
 
-            <!-- NO DATA -->
-            <tr *ngIf="!searchSpin && !carTypeList.length">
-              <td colspan="6" class="text-center text-muted">
-                No Data Found!
-              </td>
-            </tr>
+              <!-- DATA -->
+              <tr *ngFor="let item of carTypeList | filter: searchText; let i = index">
 
-            <!-- DATA -->
-            <tr *ngFor="let item of carTypeList | filter: searchText; let i = index">
-              
-              <td>{{ i + 1 }}</td>
+                <td>{{ i + 1 }}</td>
 
-              <!-- STATUS -->
-              <td >
-                <mat-slide-toggle
-                  [(ngModel)]="item.status"
-                  (change)="onStatusChange($event, item.id)"
-                ></mat-slide-toggle>
-              </td>
+                <!-- STATUS -->
+                <td>
+                  <mat-slide-toggle [(ngModel)]="item.status"
+                    (change)="onStatusChange($event, item.id)"></mat-slide-toggle>
+                </td>
 
-              <!-- CAR TYPE -->
-              <td>{{ item.name }}</td>
+                <!-- CAR TYPE -->
+                <td>{{ item.name }}</td>
 
-              <!-- CAPACITY -->
-              <td>{{ item.capacity }}</td>
+                <!-- CAPACITY -->
+                <td>{{ item.capacity }}</td>
 
-              <!-- ACTION -->
-              <td>
-                <button
-                  class="btn btn-sm btn-primary mr-1"
-                  (click)="onEdit(item)"
-                >
-                  Edit
-                </button>
+                <!-- ACTION -->
+                <td>
+                  <button class="btn btn-sm btn-primary mr-2" (click)="onEdit(item)">
+                    Edit
+                  </button>
 
-                <button
-                  class="btn btn-sm btn-primary"
-                  (click)="onDelete(item.id)"
-                >
-                  Delete
-                </button>
-              </td>
+                  <button class="btn btn-sm btn-secondary" (click)="onDelete(item.id)">
+                    Delete
+                  </button>
+                </td>
 
-            </tr>
+              </tr>
 
-          </tbody>
-        </table>
+            </tbody>
+          </table>
 
+        </div>
       </div>
     </div>
   </div>
 </div>
 
+
+
 <!-- LOADER -->
-<ngx-loading
-  [show]="loading"
-  [config]="{
+<ngx-loading [show]="loading" [config]="{
     primaryColour: primaryColour,
     secondaryColour: secondaryColour,
     backdropBorderRadius: '3px',
     fullScreenBackdrop: true
-  }"
-></ngx-loading>
+  }"></ngx-loading>

@@ -1,27 +1,20 @@
-<div class="row mx-0 pt-2">
-    <div class="col-md-12">
-        <div class="card main-card mb-6">
-            <div class="card-body">
-                <ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange($event)" #tabs>
-                    <ngb-tab id="list_room_amenity">
-                        <ng-template ngbTabTitle>
-                            <span class="">{{'List Car Amenity'}}</span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <app-car-aminities-list (toUpdate)="triggerTab($event)"></app-car-aminities-list>
-                        </ng-template>
-                    </ngb-tab>
-                    <ngb-tab id="add_room_amenity">
-                        <ng-template ngbTabTitle>
-                            <span class="">{{'Add/Edit Car Amenity'}}</span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <app-add-aminities (someEvent)="triggerTab($event)" [roomAmenityOne]="roomAmenityData"></app-add-aminities>
-                        </ng-template>
-                    </ngb-tab>
-                </ngb-tabset>
-            </div>
-        </div>
-    </div>
-</div>
 
+    <ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange($event)" #tabs>
+        <ngb-tab id="list_room_amenity">
+            <ng-template ngbTabTitle>
+                <span class="">{{'List Car Amenity'}}</span>
+            </ng-template>
+            <ng-template ngbTabContent>
+                <app-car-aminities-list (toUpdate)="triggerTab($event)"></app-car-aminities-list>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab id="add_room_amenity">
+            <ng-template ngbTabTitle>
+                <span class="">{{'Add/Edit Car Amenity'}}</span>
+            </ng-template>
+            <ng-template ngbTabContent>
+                <app-add-aminities (someEvent)="triggerTab($event)" [roomAmenityOne]="roomAmenityData"></app-add-aminities>
+            </ng-template>
+        </ngb-tab>
+    </ngb-tabset>
+            

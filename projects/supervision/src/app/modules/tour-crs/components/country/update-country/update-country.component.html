@@ -1,12 +1,12 @@
-<div class="entireScreen p-0 col-md-12 col-lg-12">
-  <div class="heading">
-    <p>Edit Package Country</p>
+<div class="card adminInner">
+  <div class="card-header mb-3">
+    <h5>Edit Package Country</h5>
   </div>
 
   <form [formGroup]="countryForm" (ngSubmit)="onCountySave()">
-
+<div class="form-row">
     <!-- Continent -->
-    <div class="continentInput">
+    <div class="col-md-4">
       <label>Choose Continent</label>
       <select formControlName="continentName" (change)="selectedContinent($event.target.value)">
         <option value="" disabled>Choose Continent</option>
@@ -14,73 +14,77 @@
           {{ option.name }}
         </option>
       </select>
-    </div>
-    <div *ngIf="f.continentName.touched && f.continentName.errors">
+       <div *ngIf="f.continentName.touched && f.continentName.errors">
       <small class="errorMessage">*Please select continent</small>
     </div>
 
+    </div>
+   
     <!-- Country Name -->
-    <div class="countryInput">
+    <div class="col-md-4">
       <label>Country Name</label>
       <input type="text" formControlName="countryName" (input)="validateInput()">
-    </div>
-    <div *ngIf="f.countryName.touched && f.countryName.errors">
+      <div *ngIf="f.countryName.touched && f.countryName.errors">
       <small *ngIf="f.countryName.errors.required" class="errorMessage">*Required</small>
       <small *ngIf="f.countryName.errors.invalidString" class="errorMessage">*Numbers not allowed</small>
       <small *ngIf="f.countryName.errors.startOrEndSpace" class="errorMessage">*No space at start/end</small>
     </div>
+    </div>
+    
 
     <!-- ISO2 -->
-    <div class="countryInput">
+    <div class="col-md-4">
       <label>ISO2</label>
       <input type="text" formControlName="iso2">
-    </div>
-    <div *ngIf="f.iso2.touched && f.iso2.errors">
+      <div *ngIf="f.iso2.touched && f.iso2.errors">
       <small class="errorMessage">*2 uppercase letters</small>
     </div>
+    </div>
+    
 
     <!-- ISO3 -->
-    <div class="countryInput">
+    <div class="col-md-4">
       <label>ISO3</label>
       <input type="text" formControlName="iso3">
-    </div>
-    <div *ngIf="f.iso3.touched && f.iso3.errors">
+       <div *ngIf="f.iso3.touched && f.iso3.errors">
       <small class="errorMessage">*3 uppercase letters</small>
     </div>
+    </div>
+   
 
     <!-- Phone -->
-    <div class="countryInput">
+    <div class="col-md-4">
       <label>Phone Code</label>
       <input type="text" formControlName="phonecode">
     </div>
 
     <!-- Currency -->
-    <div class="countryInput">
+    <div class="col-md-4">
       <label>Currency Name</label>
       <input type="text" formControlName="currency_name">
     </div>
 
-    <div class="countryInput">
+    <div class="col-md-4">
       <label>Currency Code</label>
       <input type="text" formControlName="currency">
     </div>
 
-    <div class="countryInput">
+    <div class="col-md-4">
       <label>Currency Symbol</label>
       <input type="text" formControlName="currency_symbol">
     </div>
 
     <!-- Lat Long -->
-    <div class="countryInput">
+    <div class="col-md-4">
       <label>Latitude</label>
       <input type="text" formControlName="latitude">
     </div>
 
-    <div class="countryInput">
+    <div class="col-md-4">
       <label>Longitude</label>
       <input type="text" formControlName="longitude">
     </div>
-<div class="cityInput">
+<div class="col-md-4">
   <label class="font-weight-bold">Status</label>
 
   <div class="toggleSwitch">
@@ -98,13 +102,14 @@
     </span>
   </div>
 </div>
-    <!-- Buttons -->
-    <div class="saveButton">
-      <button type="submit" class="orangeButton">Save</button>
-      <button type="button" class="orangeButton packageBtn" routerLink="/tour-crs/country">
+    
+</div>
+<!-- Buttons -->
+    <div class="saveButton my-3">
+      <button type="submit" class="btn-primary mr-2">Save</button>
+      <button type="button" class="btn-secondary packageBtn" routerLink="/tour-crs/country">
         Package Country
       </button>
     </div>
-
   </form>
 </div>

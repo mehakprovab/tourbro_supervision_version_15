@@ -58,31 +58,30 @@ export class CarAminitiesListComponent implements OnInit {
          });
      }
  
-     onStatusUpdate(val, index): void {
-        //  log.debug(index);
-         const data = [{ id: val['id'] }];
-         data['topic'] = 'editCarAmenitiesStatus';
-         this.hotelCrsService.fetch(data).subscribe(resp => {
-             if (resp.statusCode == 200) {
-                 const data = [{
-                     id: resp.data['id'] || '',
-                     room_amenity_name: resp.data['room_amenity_name'] || '',
-                     status: val['status'] ? true : false,
-                 }];
-                 data['topic'] = 'updateCarAmenities';
-                 this.hotelCrsService.update(data).subscribe(resp => {
-                     if (resp.statusCode == 201) {
-                         this.swalService.alert.update();
-                     }
-                     else
-                         this.swalService.alert.oops();
-                 })
-             } else {
-                 this.swalService.alert.opps();
-             }
-         });
- 
-     }
+   onStatusUpdate(val, index): void {
+
+    console.log('Updated value:', val);
+
+    const payload = [{
+        id: val.id,
+        amenties: val.amenties,   // use correct field from your data
+        status: val.status ? 1 : 0   // OR just val.status (check API)
+    }];
+
+    payload['topic'] = 'updateCarAmenities';
+
+    console.log('Payload:', payload); // ✅ CHECK THIS
+
+    this.hotelCrsService.update(payload).subscribe(resp => {
+        if (resp.statusCode == 201) {
+            this.swalService.alert.update();
+        } else {
+            this.swalService.alert.oops();
+        }
+    }, () => {
+        this.swalService.alert.oops();
+    });
+}
  
  
      updateRoomAmenity(data) {

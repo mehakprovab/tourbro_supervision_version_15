@@ -33,9 +33,9 @@
                         <td class="text-left"> {{data['amenties']}} </td>
                         <td>
                             <span title="Slide for Active/Deactive">
-                                <mat-slide-toggle readonly class="example-margin" [color]="''"
-                                    [checked]="data['status']" [(ngModel)]="data['status']" name="status{{i}}"
-                                    (click)="onStatusUpdate(data, i)">
+                                <mat-slide-toggle  class="example-margin" [color]="''"
+                                   [(ngModel)]="data['status']" name="status{{i}}"
+                                    (change)="onStatusUpdate(data, i)">
                                 </mat-slide-toggle>
                             </span>
                         </td>

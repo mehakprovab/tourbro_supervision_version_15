@@ -689,4 +689,7 @@ editVehicleMaster: `${baseUrl}/car/editVehicle`,
             carStatusChange:`${baseUrl}/dashboard/report/carMangementStatus`,
                guideList:`${baseUrl}/dashboard/report/guideRequestList`,
                updateGuideStatus:`${baseUrl}/dashboard/report/guideRequestStatus`,
+                reviewList:`${baseUrl}/dashboard/report/guideReviewsList`,
+                updateReviewStatus:`${baseUrl}/dashboard/report/guideReviewsStatus`,
+
 };

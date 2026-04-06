@@ -241,7 +241,15 @@
                             </span></a>
                         </ng-template>
                       </ngb-panel>
-
+<ngb-panel id="reviewList" *ngIf="isMenuExists('Review List')">
+                        <ng-template ngbPanelHeader>
+                            <i class="vsm-icon pe-7s-plus"></i>
+                            <a routerLinkActive="active-item" [routerLink]="['/report/review-list']" class="vsm-link pl-10"><span
+                              class="vsm-title">
+                             Review List
+                            </span></a>
+                        </ng-template>
+                      </ngb-panel>
                       <ngb-panel id="b2cCmsMenus" *ngIf="isMenuExists('Content Management')">
                         <ng-template ngbPanelHeader>
                           <button ngbPanelToggle class="vsm-link">

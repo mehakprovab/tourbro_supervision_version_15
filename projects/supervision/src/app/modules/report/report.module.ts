@@ -57,6 +57,7 @@ import { B2cBusComponent } from './B2C/b2c/b2c-bus/b2c-bus.component';
 import { BusVoucherComponent } from './B2C/b2c/b2c-bus/component/bus-voucher/bus-voucher.component';
 import { BusInvoiceComponent } from './B2C/b2c/b2c-bus/component/bus-invoice/bus-invoice.component';
 import { GuideListComponent } from './B2C/guide-list/guide-list.component';
+import { ReviewListComponent } from './B2C/review-list/review-list.component';
 
 
 @NgModule({
@@ -110,7 +111,8 @@ import { GuideListComponent } from './B2C/guide-list/guide-list.component';
         B2cBusComponent,
         BusVoucherComponent,
         BusInvoiceComponent,
-        GuideListComponent
+        GuideListComponent,
+        ReviewListComponent
     ],
     imports: [
         CommonModule,

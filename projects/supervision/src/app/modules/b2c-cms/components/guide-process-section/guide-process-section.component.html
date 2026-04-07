@@ -1,0 +1,181 @@
+<div class="card adminInner">
+  <div class="card-header mb-3">
+    <h5>Guide Process Section</h5>
+  </div>
+
+  <form [formGroup]="regConfig">
+
+    <div class="form-row">
+
+      <!-- LOOP 4 SECTIONS -->
+      <ng-container *ngFor="let i of [1,2,3,4]">
+
+        <div class="col-6">
+          <label>Title {{i}}*</label>
+          <input class="form-control" [formControlName]="'title'+i">
+        </div>
+
+        <div class="col-6">
+          <label>Description {{i}}*</label>
+          <textarea class="form-control" [formControlName]="'desc'+i"></textarea>
+        </div>
+
+      </ng-container>
+
+      <!-- IMAGE 1 -->
+      <div class="col-6">
+        <label>Image 1*</label>
+        <input type="file" accept=".png,.jpg,.jpeg"  #fileInput1
+               (change)="onFileChange($event.target.files,'image_1')">
+
+        <img *ngIf="preview.image1" [src]="preview.image1" width="100" class="mt-2">
+      </div>
+
+      <!-- IMAGE 2 -->
+      <div class="col-6">
+        <label>Image 2*</label>
+        <input type="file" accept=".png,.jpg,.jpeg"  #fileInput2
+               (change)="onFileChange($event.target.files,'image_2')">
+
+        <img *ngIf="preview.image2" [src]="preview.image2" width="100" class="mt-2">
+      </div>
+
+    </div>
+
+    <div class="mt-3">
+      <button class="btn btn-primary" (click)="onSubmit()">
+        {{ btnName }}
+      </button>
+
+      <button class="btn btn-secondary ml-2" (click)="onReset()">
+        Reset
+      </button>
+    </div>
+
+  </form>
+</div>
+
+
+<!-- TABLE -->
+<div class="card adminInner mt-4">
+  <div class="card-body">
+
+    <p>Total {{ respData.length }} Records</p>
+<div class="table-responsive">
+   <table class="table table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+<th>Publish</th>
+      <th>Title 1</th>
+      <th>Description 1</th>
+
+      <th>Title 2</th>
+      <th>Description 2</th>
+
+      <th>Title 3</th>
+      <th>Description 3</th>
+
+      <th>Title 4</th>
+      <th>Description 4</th>
+
+      <th>Image 1</th>
+      <th>Image 2</th>
+
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <tr *ngFor="let item of respData; let i=index">
+      <td>{{ i+1 }}</td>
+         <td>
+  <input
+    type="checkbox"
+    [checked]="item.publishStatus == 1"
+    (change)="onPublishChange(item, $event)"
+  />
+</td>
+      <!-- TITLE 1 -->
+      <td>
+        <span class="truncate" [title]="item.title1">
+          {{ item.title1 }}
+        </span>
+      </td>
+
+      <!-- DESC 1 -->
+      <td>
+        <span class="truncate" [title]="item.desc1">
+          {{ item.desc1 }}
+        </span>
+      </td>
+
+      <!-- TITLE 2 -->
+      <td>
+        <span class="truncate" [title]="item.title2">
+          {{ item.title2 }}
+        </span>
+      </td>
+
+      <!-- DESC 2 -->
+      <td>
+        <span class="truncate" [title]="item.desc2">
+          {{ item.desc2 }}
+        </span>
+      </td>
+
+      <!-- TITLE 3 -->
+      <td>
+        <span class="truncate" [title]="item.title3">
+          {{ item.title3 }}
+        </span>
+      </td>
+
+      <!-- DESC 3 -->
+      <td>
+        <span class="truncate" [title]="item.desc3">
+          {{ item.desc3 }}
+        </span>
+      </td>
+
+      <!-- TITLE 4 -->
+      <td>
+        <span class="truncate" [title]="item.title4">
+          {{ item.title4 }}
+        </span>
+      </td>
+
+      <!-- DESC 4 -->
+      <td>
+        <span class="truncate" [title]="item.desc4">
+          {{ item.desc4 }}
+        </span>
+      </td>
+
+      <!-- IMAGE 1 -->
+      <td>
+        <img *ngIf="item.image1" [src]="item.image1" width="60">
+      </td>
+
+      <!-- IMAGE 2 -->
+      <td>
+        <img *ngIf="item.image2" [src]="item.image2" width="60">
+      </td>
+
+      <!-- ACTIONS -->
+      <td>
+        <button class="btn btn-sm btn-primary mr-2"
+                (click)="editData(item)">Edit</button>
+
+        <button class="btn btn-sm btn-primary"
+                (click)="deleteData(item.id)">Delete</button>
+      </td>
+
+    </tr>
+
+  </tbody>
+</table>
+</div>
+  </div>
+</div>

@@ -1,150 +1,119 @@
 <div class="card adminInner">
-    <div class="card-header mb-3">
-       <h5 class="text-center"> {{'Why Choose Us'}} </h5>
-    </div>
-   <div class="custom-inline-form">
-        <form class="" [formGroup]="regConfig" autocomplete="off">
-            
-            <div class="form-row">
-            <div class="col-4 pr-0">
-                <div class="form-group">
-                    <label for="bookedBy">Title</label>
-                    <input  formControlName="header1" type="text" id="page_title" autocomplete="off"
-                    class="form-control form-control-sm nrm_input"
-                    placeholder="Add Title" >
-                    <div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-8 pr-0">
-                <div class="form-group">
-                    <label for="bookedBy">Description</label>
-                    <input  formControlName="description1" type="text" id="page_seo_description" autocomplete="off"
-                    class="form-control form-control-sm nrm_input"
-                    placeholder="Add Description" >
-                    <div>
-                    </div>
-                </div>
-            </div>
-            </div>
-            <div class="form-row">
-                <div class="col-4 pr-0">
-                    <div class="form-group">
-                        <label for="bookedBy">Title</label>
-                        <input  formControlName="header2" type="text" id="page_title" autocomplete="off"
-                        class="form-control form-control-sm nrm_input"
-                        placeholder="Add Title" >
-                        <div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-8 pr-0">
-                    <div class="form-group">
-                        <label for="bookedBy">Description</label>
-                        <input  formControlName="description2" type="text" id="page_seo_description" autocomplete="off"
-                        class="form-control form-control-sm nrm_input"
-                        placeholder="Add Description" >
-                        <div>
-                        </div>
-                    </div>
-                </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-4 pr-0">
-                        <div class="form-group">
-                            <label for="bookedBy">Title</label>
-                            <input  formControlName="header3" type="text" id="page_title" autocomplete="off"
-                            class="form-control form-control-sm nrm_input"
-                            placeholder="Add Title" >
-                            <div>
-                            </div>
-                        </div> 
-                    </div>
-                    <div class="col-8 pr-0">
-                        <div class="form-group">
-                            <label for="bookedBy">Description</label>
-                            <input  formControlName="description3" type="text" id="page_seo_description" autocomplete="off"
-                            class="form-control form-control-sm nrm_input"
-                            placeholder="Add Description" >
-                            <div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
+  <div class="card-header mb-3">
+    <h5 class="text-center">Why Choose Us</h5>
+  </div>
 
-                    <div class="form-row">
-                        <div class="col-4 pr-0">
-                            <div class="form-group">
-                                <label for="bookedBy">Title</label>
-                                <input  formControlName="header4" type="text" id="page_title" autocomplete="off"
-                                class="form-control form-control-sm nrm_input"
-                                placeholder="Add Title" >
-                                <div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-8 pr-0">
-                            <div class="form-group">
-                                <label for="bookedBy">Description</label>
-                                <input  formControlName="description4" type="text" id="page_seo_description" autocomplete="off"
-                                class="form-control form-control-sm nrm_input"
-                                placeholder="Add Description" >
-                                <div>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-4 pr-0">
-                                <div class="form-group">
-                                    <label for="bookedBy">Title</label>
-                                    <input  formControlName="header5" type="text" id="page_title" autocomplete="off"
-                                    class="form-control form-control-sm nrm_input"
-                                    placeholder="Add Title" >
-                                    <div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-8 pr-0">
-                                <div class="form-group">
-                                    <label for="bookedBy">Description</label>
-                                    <input  formControlName="description5" type="text" id="page_seo_description" autocomplete="off"
-                                    class="form-control form-control-sm nrm_input"
-                                    placeholder="Add Description" >
-                                    <div>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col-4 pr-0">
-                                    <div class="form-group">
-                                        <label for="bookedBy">Title</label>
-                                        <input  formControlName="header6" type="text" id="page_title" autocomplete="off"
-                                        class="form-control form-control-sm nrm_input"
-                                        placeholder="Add Title" >
-                                        <div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-8 pr-0">
-                                    <div class="form-group">
-                                        <label for="bookedBy">Description</label>
-                                        <input  formControlName="description6" type="text" id="page_seo_description" autocomplete="off"
-                                        class="form-control form-control-sm nrm_input"
-                                        placeholder="Add Description" >
-                                        <div>
-                                        </div>
-                                    </div>
-                                </div>
-                                </div>
-            <div class="form-group row mb-n2">
-                <div class="col-sm-12 customCenter">
-                    <button type="submit" class="btn btn-sm btn-primary mr-1" (click)="onSubmit()">Submit</button>
-                    <button type="reset" class="btn btn-sm btn-secondary" (click)="onReset()">Reset</button>
-                </div>
-            </div>
-        </form>
+  <form [formGroup]="regConfig" autocomplete="off">
+
+    <!-- MAIN HEADING -->
+    <div class="form-row">
+      <div class="col-4">
+        <label>Main Heading *</label>
+        <input formControlName="main_heading" class="form-control" />
+        <small class="text-danger" *ngIf="regConfig.get('main_heading').touched && regConfig.get('main_heading').invalid">
+          Required
+        </small>
+      </div>
+
+      <div class="col-8">
+        <label>Sub Heading *</label>
+        <input formControlName="sub_heading" class="form-control" />
+        <small class="text-danger" *ngIf="regConfig.get('sub_heading').touched && regConfig.get('sub_heading').invalid">
+          Required
+        </small>
+      </div>
     </div>
-            
+
+    <!-- STATS -->
+    <div class="form-row mt-2">
+      <div class="col-2">
+        <input formControlName="stat1_value" class="form-control" placeholder="Value 1">
+      </div>
+      <div class="col-2">
+        <input formControlName="stat1_label" class="form-control" placeholder="Label 1">
+      </div>
+
+      <div class="col-2">
+        <input formControlName="stat2_value" class="form-control" placeholder="Value 2">
+      </div>
+      <div class="col-2">
+        <input formControlName="stat2_label" class="form-control" placeholder="Label 2">
+      </div>
+
+      <div class="col-2">
+        <input formControlName="stat3_value" class="form-control" placeholder="Value 3">
+      </div>
+      <div class="col-2">
+        <input formControlName="stat3_label" class="form-control" placeholder="Label 3">
+      </div>
+    </div>
+
+    <!-- HEADER 1 -->
+    <div class="form-row mt-3">
+      <div class="col-4">
+        <input formControlName="header1" class="form-control" placeholder="Title 1">
+      </div>
+      <div class="col-8">
+        <input formControlName="description1" class="form-control" placeholder="Description 1">
+      </div>
+    </div>
+
+    <!-- HEADER 2 -->
+    <div class="form-row mt-2">
+      <div class="col-4">
+        <input formControlName="header2" class="form-control" placeholder="Title 2">
+      </div>
+      <div class="col-8">
+        <input formControlName="description2" class="form-control" placeholder="Description 2">
+      </div>
+    </div>
+
+    <!-- HEADER 3 -->
+    <div class="form-row mt-2">
+      <div class="col-4">
+        <input formControlName="header3" class="form-control" placeholder="Title 3">
+      </div>
+      <div class="col-8">
+        <input formControlName="description3" class="form-control" placeholder="Description 3">
+      </div>
+    </div>
+
+    <!-- IMAGE -->
+    <div class="form-group mt-3">
+      <label>Upload Images (Max 2, JPG/PNG, 1MB)</label>
+      <input type="file" (change)="onFileSelected($event)" multiple />
+    </div>
+<!-- IMAGE PREVIEW -->
+<div class="mt-3 d-flex">
+
+  <!-- ✅ Existing Images -->
+  <div *ngFor="let img of existingImages" class="mr-2 text-center">
+    <p class="mb-1">Existing</p>
+    <img 
+      [src]="img" 
+      width="120" 
+      height="80" 
+      style="object-fit: cover; border: 1px solid #ccc;"
+    />
+  </div>
+
+  <!-- ✅ New Selected Images -->
+  <div *ngFor="let img of imagePreviews" class="mr-2 text-center">
+    <p class="mb-1">New</p>
+    <img 
+      [src]="img" 
+      width="120" 
+      height="80" 
+      style="object-fit: cover; border: 1px solid #28a745;"
+    />
+  </div>
+
+</div>
+    <!-- BUTTONS -->
+    <div class="text-center mt-3">
+      <button type="button" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+      <button type="button" class="btn btn-secondary ml-2" (click)="onReset()">Reset</button>
+    </div>
+
+  </form>
 </div>

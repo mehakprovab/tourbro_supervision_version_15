@@ -46,6 +46,7 @@ import { B2cHotelEnquiryComponent } from './B2C/b2c/b2c-hotel-enquiry/b2c-hotel-
 import { B2bHotelEnquiryComponent } from './B2B/b2b/b2b-hotel-enquiry/b2b-hotel-enquiry.component';
 import { B2cBusComponent } from './B2C/b2c/b2c-bus/b2c-bus.component';
 import { GuideListComponent } from './B2C/guide-list/guide-list.component';
+import { ReviewListComponent } from './B2C/review-list/review-list.component';
 
 
 const routes: Routes = [
@@ -99,6 +100,12 @@ const routes: Routes = [
         path: 'guide-list',
         canActivate: [AuthGuard],
         component: GuideListComponent,
+        data: {extraParameter: 'b2c-reports-Menus'}
+      },
+        {
+        path: 'review-list',
+        canActivate: [AuthGuard],
+        component: ReviewListComponent,
         data: {extraParameter: 'b2c-reports-Menus'}
       },
       {

@@ -27,6 +27,10 @@ import { FlightAdvertisementComponent } from './components/flight-advertisement/
 import { AddOrModifyPartnerAirlinesComponent } from './components/add-partner-airlines/add-partner-airlines/add-partner-airlines.component';
 import { AddOrModifyAyurvedaComponent } from './components/add-or-modify-ayurveda/add-or-modify-ayurveda.component';
 import { AddOrModifyMeditationRetreatComponent } from './components/add-or-modify-meditation-retreat/add-or-modify-meditation-retreat.component';
+import { GuideMainSectionComponent } from './components/guide-main-section/guide-main-section.component';
+import { GuideProcessSectionComponent } from './components/guide-process-section/guide-process-section.component';
+import { GeneralModalImageComponent } from './components/general-modal-image/general-modal-image.component';
+import { GuideLastSectionComponent } from './components/guide-last-section/guide-last-section.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +57,10 @@ import { AddOrModifyMeditationRetreatComponent } from './components/add-or-modif
   AddOrModifyPartnerAirlinesComponent,
   AddOrModifyAyurvedaComponent,
   AddOrModifyMeditationRetreatComponent,
+  GuideMainSectionComponent,
+  GuideProcessSectionComponent,
+  GeneralModalImageComponent,
+  GuideLastSectionComponent,
 ],
   imports: [
     CommonModule,

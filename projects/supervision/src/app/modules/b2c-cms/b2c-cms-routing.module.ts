@@ -17,6 +17,10 @@ import { FlightAdvertisementComponent } from "./components/flight-advertisement/
 import { AddOrModifyPartnerAirlinesComponent } from "./components/add-partner-airlines/add-partner-airlines/add-partner-airlines.component";
 import { AddOrModifyAyurvedaComponent } from "./components/add-or-modify-ayurveda/add-or-modify-ayurveda.component";
 import { AddOrModifyMeditationRetreatComponent } from "./components/add-or-modify-meditation-retreat/add-or-modify-meditation-retreat.component";
+import { GuideMainSectionComponent } from "./components/guide-main-section/guide-main-section.component";
+import { GuideProcessSectionComponent } from "./components/guide-process-section/guide-process-section.component";
+import { GeneralModalImageComponent } from "./components/general-modal-image/general-modal-image.component";
+import { GuideLastSectionComponent } from "./components/guide-last-section/guide-last-section.component";
 
 const routes: Routes = [
   {
@@ -112,6 +116,36 @@ const routes: Routes = [
         path: "homepage-widgets/add-modify-meditation-retreat",
         canActivate: [AuthGuard],
         component: AddOrModifyMeditationRetreatComponent,
+        data: { extraParameter: "" },
+      },
+        {
+        path: "homepage-widgets/add-modify-meditation-retreat",
+        canActivate: [AuthGuard],
+        component: AddOrModifyMeditationRetreatComponent,
+        data: { extraParameter: "" },
+      },
+        {
+        path: "book-my-guide-cms/main-content",
+        canActivate: [AuthGuard],
+        component: GuideMainSectionComponent,
+        data: { extraParameter: "" },
+      },
+      {
+        path: "book-my-guide-cms/mid-section",
+        canActivate: [AuthGuard],
+        component: GuideProcessSectionComponent,
+        data: { extraParameter: "" },
+      },
+       {
+        path: "book-my-guide-cms/last-section",
+        canActivate: [AuthGuard],
+        component: GuideLastSectionComponent,
+        data: { extraParameter: "" },
+      },
+      {
+        path: "homepage-banner/general-modal-image",
+        canActivate: [AuthGuard],
+        component: GeneralModalImageComponent,
         data: { extraParameter: "" },
       },
     ],

@@ -1,0 +1,70 @@
+<div class="card adminInner">
+  <div class="card-header mb-3">
+    <h5>Auth Screen Image</h5>
+  </div>
+
+  <form [formGroup]="regConfig" autocomplete="off">
+
+    <div class="form-row">
+
+      <!-- Dropdown -->
+      <div class="col-6 pr-0">
+        <div class="form-group">
+          <label>Type*</label>
+          <select class="form-control form-control-sm"
+                  formControlName="type">
+            <option value="">Select Type</option>
+            <option value="login">Login</option>
+            <option value="register">Register</option>
+            <option value="forgot_password">Forgot Password</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Image Upload -->
+      <div class="col-6 pr-0">
+        <div class="form-group">
+          <label>Image*</label>
+
+          <input
+            type="file"
+            class="form-control form-control-sm"
+            accept=".png,.jpg,.jpeg"
+            (change)="onFileChange($event.target.files)"
+            #fileInput>
+
+          <!-- File Name -->
+          <div *ngIf="selectedFileName" class="mt-1 text-muted">
+            Selected File: {{ selectedFileName }}
+          </div>
+
+          <!-- Preview -->
+          <div *ngIf="imageSrc" class="mt-1">
+            <img [src]="imageSrc" width="120" height="70" class="rounded">
+          </div>
+
+          <small class="text-danger">
+            (JPG, PNG only | Max 1MB)
+          </small>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Buttons -->
+    <div class="btncontainer">
+      <button type="button"
+              class="btn btn-primary"
+              (click)="onSubmit()">
+        {{ btnName }}
+      </button>
+
+      <button type="button"
+              class="btn btn-secondary ml-2"
+              (click)="onReset()">
+        Reset
+      </button>
+    </div>
+
+  </form>
+</div>

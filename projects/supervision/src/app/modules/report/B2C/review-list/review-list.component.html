@@ -1,0 +1,111 @@
+<div class="container mt-3">
+
+  <!-- HEADER -->
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <h5 class="mb-0">Review List</h5>
+
+    <input
+      class="form-control w-25"
+      type="text"
+      [(ngModel)]="searchText"
+      (input)="onSearch()"
+      placeholder="Search by name / heading..."
+    />
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-responsive">
+    <table class="table table-striped">
+
+      <thead>
+        <tr>
+          <th>Sl.No</th>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Stars</th>
+          <th>Heading</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Created At</th>
+          <th>Publish</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let item of filteredList; let i = index">
+
+          <td>{{ i + 1 }}</td>
+
+          <!-- IMAGE -->
+          <td>
+            <img
+              [src]="item.image || 'assets/images/default-user.png'"
+              width="50"
+              height="50"
+              style="object-fit: cover; border-radius: 5px;"
+            />
+          </td>
+
+          <!-- NAME -->
+          <td>{{ item.name }}</td>
+
+          <!-- STARS -->
+          <td>
+            <span *ngFor="let star of [].constructor(item.stars)">
+              ⭐
+            </span>
+          </td>
+
+          <!-- HEADING -->
+          <td>{{ item.heading }}</td>
+
+          <!-- DESCRIPTION -->
+         <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+  {{ item.description }}
+</td>
+
+          <!-- STATUS TEXT -->
+         <td>
+  <span
+    [ngClass]="{
+      'badge bg-warning': item.status == 2,
+      'badge bg-success': item.status == 1,
+      'badge bg-danger': item.status == 0
+    }"
+  >
+    {{
+      item.status == 2 ? 'Pending' :
+      item.status == 1 ? 'Approved' :
+      item.status == 0 ? 'Rejected' : 'Unknown'
+    }}
+  </span>
+</td>
+
+          <!-- DATE -->
+          <td>{{ item.created_at | date:'medium' }}</td>
+
+          <!-- PUBLISH TOGGLE -->
+         <td>
+  <input
+    type="checkbox"
+    [checked]="item.status === 1"
+    (change)="onPublishChange(item, $event.target.checked)"
+  />
+</td>
+
+        </tr>
+
+        <!-- NO DATA -->
+        <tr *ngIf="filteredList.length === 0">
+          <td colspan="9" class="text-center text-muted">
+            No reviews found
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+  </div>
+
+</div>

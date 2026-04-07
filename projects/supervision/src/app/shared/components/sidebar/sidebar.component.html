@@ -309,24 +309,24 @@
                                           ></a
                                         >
                                       </div>
-                                    <div class="vsm-item">
+                                    <!-- <div class="vsm-item">
                                       <a routerLinkActive="active-item" routerLink='/b2c-cms/homepage-widgets/add-modify-holiday'
                                         class="vsm-link pl-10"><span class="vsm-title pl-10">
                                           <i class="fa fa-hotel"></i>
                                           Holiday Widget</span></a>
-                                    </div>
+                                    </div> -->
                                     <!-- <div class="vsm-item">
                                       <a routerLinkActive="active-item" routerLink='/b2c-cms/homepage/flight-advertisement'
                                         class="vsm-link pl-10"><span class="vsm-title pl-10">
                                           <i class="fa fa-hotel"></i>
                                           Flight Advertisement</span></a>
                                     </div> -->
-                                    <div class="vsm-item">
+                                    <!-- <div class="vsm-item">
                                       <a routerLinkActive="active-item" routerLink='/b2c-cms/homepage-widgets/add-modify-faq'
                                         class="vsm-link pl-10"><span class="vsm-title pl-10">
                                           <i class="fa fa-hotel"></i>
                                          Partner FAQ</span></a>
-                                    </div>
+                                    </div> -->
                                     <div class="vsm-item">
                                       <a routerLinkActive="active-item" routerLink='/b2c-cms/homepage-widgets/add-modify-customer-faq'
                                         class="vsm-link pl-10"><span class="vsm-title pl-10">
@@ -341,10 +341,50 @@
                                     </div> -->
                                   </ng-template>
                                 </ngb-panel>
+                                 <!-- NEW Section: Home Book My Guide -->
+        <ngb-panel id="home-book-my-guide">
+          <ng-template ngbPanelHeader *ngIf="isMenuExists('Home Book My Guide')">
+            <button ngbPanelToggle class="vsm-link pl-1" [ngClass]="{'collapsed' : globals.toggleSidebar}">
+              <span class="vsm-title pl-10"> Book My Guide CMS</span>
+              <i class="vsm-arrow"></i>
+            </button>
+          </ng-template>
+          <ng-template ngbPanelContent *ngIf="isSubMenuExists('Book My Guide CMS', BOOK_MY_GUIDE_CMS)">
+            <div class="vsm-item">
+              <a routerLinkActive="active-item" routerLink="/b2c-cms/book-my-guide-cms/main-content" class="vsm-link pl-10">
+                <span class="vsm-title pl-10">
+                  <i class="fa fa-file-text"></i>
+                  Guide Main Content
+                </span>
+              </a>
+            </div>
+            <div class="vsm-item">
+              <a routerLinkActive="active-item" routerLink="/b2c-cms/book-my-guide-cms/mid-section" class="vsm-link pl-10">
+                <span class="vsm-title pl-10">
+                  <i class="fa fa-columns"></i>
+                  Guide Process Section
+                </span>
+              </a>
+            </div>
+            <div class="vsm-item">
+              <a routerLinkActive="active-item" routerLink="/b2c-cms/book-my-guide-cms/last-section" class="vsm-link pl-10">
+                <span class="vsm-title pl-10">
+                  <i class="fa fa-columns"></i>
+                  Guide Footer Section
+                </span>
+              </a>
+            </div>
+          </ng-template>
+        </ngb-panel>
+
                               </ngb-accordion>
                               <a routerLinkActive="active-item" *ngIf="isSubMenuExists('Main Banner Image',CONTENT_MANAGEMENT)"
                                 routerLink="/b2c-cms/homepage-banner/add-modify-image" class="vsm-link pl-1 "><span
                                   class="vsm-title pl-10">Main Banner
+                                  Image</span></a>
+                                   <a routerLinkActive="active-item" *ngIf="isSubMenuExists('General Modal Image',CONTENT_MANAGEMENT)"
+                                routerLink="/b2c-cms/homepage-banner/general-modal-image" class="vsm-link pl-1 "><span
+                                  class="vsm-title pl-10">General Modal
                                   Image</span></a>
                               <a routerLinkActive="active-item"
                                 *ngIf="isSubMenuExists('B2C Static Page Content',CONTENT_MANAGEMENT)"
@@ -361,9 +401,9 @@
                                   routerLink="/b2c-cms//homepage/why-choose-us" class="vsm-link pl-1 "><span
                                     class="vsm-title pl-10">Why Choose Us
                                     </span></a>
-                              <a routerLinkActive="active-item" *ngIf="isSubMenuExists('Discount/Offers',CONTENT_MANAGEMENT)"
+                              <!-- <a routerLinkActive="active-item" *ngIf="isSubMenuExists('Discount/Offers',CONTENT_MANAGEMENT)"
                                 routerLink="/b2c-cms/homepage/discounts" class="vsm-link pl-1 "><span
-                                  class="vsm-title pl-10">Discount/Offers</span></a>
+                                  class="vsm-title pl-10">Discount/Offers</span></a> -->
         
                             </div>
                           </div>

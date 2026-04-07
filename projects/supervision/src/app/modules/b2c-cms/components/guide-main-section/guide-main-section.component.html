@@ -1,0 +1,136 @@
+<div class="card adminInner">
+  <div class="card-header mb-3">
+    <h5>Main Guide Section</h5>
+  </div>
+
+  <form [formGroup]="regConfig" autocomplete="off">
+
+    <div class="form-row">
+
+      <!-- Title -->
+      <div class="col-6 pr-0">
+        <div class="form-group">
+          <label>Title*</label>
+          <input
+            type="text"
+            class="form-control text-capitalize form-control-sm nrm_input"
+            placeholder="Title"
+            formControlName="title">
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="col-6 pr-0">
+        <div class="form-group">
+          <label>Description*</label>
+          <textarea
+            rows="2"
+            class="form-control form-control-sm nrm_input"
+            placeholder="Description"
+            formControlName="description">
+          </textarea>
+        </div>
+      </div>
+
+      <!-- Image -->
+      <div class="col-6 pr-0">
+        <div class="form-group">
+          <label>Image*</label>
+          <input
+            type="file"
+            class="form-control form-control-sm nrm_input"
+            accept=".png,.jpg,.jpeg"
+            (change)="onFileChange($event.target.files)"
+            #fileInput>
+<div *ngIf="selectedFileName" class="mt-1 text-muted">
+  Selected File: {{ selectedFileName }}
+</div>
+          <div *ngIf="imageSrc" class="mt-1">
+            <img [src]="imageSrc" width="100" height="50" class="rounded">
+          </div>
+
+          <div *ngIf="guideImage && !imageSrc" class="mt-1">
+            <img [src]="getImage(guideImage)" width="100" height="50" class="rounded">
+          </div>
+
+          <small class="text-danger">(Jpeg, Png allowed with maximum upload file size: 1 MB)</small>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Buttons -->
+    <div class="btncontainer">
+      <button type="button" class="btn btn-primary" (click)="onSearchSubmit()">
+        {{ btnName }}
+      </button>
+      &nbsp;
+      <button type="button" class="btn btn-secondary" (click)="onReset()">
+        Reset
+      </button>
+    </div>
+  </form>
+</div>
+
+<div class="card adminInner" style="margin-top: 30px;">
+  <div class="card-body p-0">
+    <p>Total {{ respData?.length }} Guide Sections</p>
+
+    <div class="table-responsive">
+      <table class="table table-borderless table-striped table-hover">
+        <thead>
+          <tr>
+            <th *ngFor="let header of displayColumn">
+              {{ header.value }}
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngIf="noData">
+            <td colspan="10" class="text-center">
+              <mat-spinner diameter="30"></mat-spinner>
+            </td>
+          </tr>
+
+          <tr *ngIf="!noData && !respData.length">
+            <td colspan="10" class="text-center text-muted">No Data Found!</td>
+          </tr>
+
+          <tr *ngFor="let data of respData | slice:(page-1)*pageSize:(page*pageSize); let i=index">
+            <td>{{ i + 1 }}</td>
+         <td>
+  <span
+    class="truncate"
+    [title]="data.title">
+    {{ data.title }}
+  </span>
+</td>
+
+<td>
+  <span
+    class="truncate"
+    [title]="data.description">
+    {{ data.description }}
+  </span>
+</td>
+            <td>
+              <img *ngIf="data.image" [src]="data.image" width="100" height="50">
+            </td>
+            <td>
+  <input
+    type="checkbox"
+    [checked]="data.status == 1"
+    (change)="onPublishChange(data, $event)"
+  />
+</td>
+            <td class="text-left">
+              <button (click)="editList(data)" title="Edit Guide" class="btnStyle mr-2">Edit</button>
+              <!-- <button (click)="onDelete(data.id)" class="btnStyle">Delete</button> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

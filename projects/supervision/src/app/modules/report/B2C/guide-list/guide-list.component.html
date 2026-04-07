@@ -19,6 +19,7 @@
       <thead>
         <tr>
           <th>Sl.No</th>
+           <th>Status</th>
           <th>Name</th>
           <th>City</th>
           <th>Hotel</th>
@@ -32,7 +33,7 @@
           <th>Guide Name</th>
           <th>Guide Mobile</th>
           <th>Reported At</th>
-            <th>Status</th>
+           
         </tr>
       </thead>
 
@@ -41,7 +42,18 @@
         <tr *ngFor="let item of filteredList; let i = index">
 
           <td>{{ i + 1 }}</td>
-
+         <td>
+  <select
+  style="width: 125px !important;"
+    class="form-control"
+    [(ngModel)]="item.status"
+    (change)="onStatusChange(item)"
+  >
+    <option [value]="1">Pending</option>
+    <option [value]="2">Approved</option>
+    <option [value]="3">Rejected</option>
+  </select>
+</td>
 
           <td>{{ item.name }}</td>
 
@@ -67,18 +79,7 @@
           <!-- DATE + TIME -->
           <td>{{ item.created_at | date:'medium' }}</td>
           <!-- STATUS TEXT -->
-          <td>
-  <select
-  style="width: 125px !important;"
-    class="form-control"
-    [(ngModel)]="item.status"
-    (change)="onStatusChange(item)"
-  >
-    <option [value]="1">Pending</option>
-    <option [value]="2">Approved</option>
-    <option [value]="3">Rejected</option>
-  </select>
-</td>
+ 
 
          
 

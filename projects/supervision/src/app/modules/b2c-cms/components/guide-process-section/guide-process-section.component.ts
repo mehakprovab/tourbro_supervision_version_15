@@ -70,7 +70,39 @@ regConfig: FormGroup;
     this.regConfig.get(key).clearValidators();
     this.regConfig.get(key).updateValueAndValidity();
   }
+onPublishChange(data: any, event: any) {
+  const isChecked = event.target.checked;
 
+  // Convert to 1 / 0
+  const status = isChecked ? 1 : 0;
+
+  let payload = {
+    id: data.id,
+    publishStatus: status
+  };
+
+  this.api
+    .apiHandler('updateGuideProcessStatus', 'post', {}, {}, payload)
+    .subscribe({
+      next: (resp: any) => {
+        if (resp.statusCode === 200 || resp.statusCode === 201) {
+          this.swal.alert.success('Status updated successfully');
+
+          // Update UI instantly
+          this.getList()
+        } else {
+          this.swal.alert.error('Failed to update status');
+          // revert UI
+          data.publishStatus = data.publishStatus === 1 ? 0 : 1;
+        }
+      },
+      error: () => {
+        this.swal.alert.error('Something went wrong');
+        // revert UI
+        data.status = data.status === 1 ? 0 : 1;
+      }
+    });
+}
   // ✅ GET LIST
   getList() {
     this.api.apiHandler('guideProcessList','post',{}, {}, {})
@@ -96,7 +128,7 @@ regConfig: FormGroup;
     });
 
     if (this.editingId) fd.append('id', this.editingId);
-
+fd.append('publishStatus', '0');
     // images
     ['image_1','image_2'].forEach(k=>{
       if (this.fileStore[k]) {

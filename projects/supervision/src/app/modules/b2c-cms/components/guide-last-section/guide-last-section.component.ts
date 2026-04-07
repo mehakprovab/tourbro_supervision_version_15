@@ -35,6 +35,7 @@ export class GuideLastSectionComponent implements OnInit {
    collectionSize: number;
    displayColumn = [
      { key: 'id', value: 'Sl No.' },
+        { key: 'status', value: 'Publish' }, 
      { key: 'image', value: 'Image' },
      { key: 'actions', value: 'Actions' }
    ];
@@ -68,7 +69,39 @@ export class GuideLastSectionComponent implements OnInit {
   
      });
    }
- 
+ onPublishChange(data: any, event: any) {
+  const isChecked = event.target.checked;
+
+  // Convert to 1 / 0
+  const status = isChecked ? 1 : 0;
+
+  let payload = {
+    id: data.id,
+    publishStatus: status
+  };
+
+  this.apiHandlerService
+    .apiHandler('updateGuideLastStatus', 'post', {}, {}, payload)
+    .subscribe({
+      next: (resp: any) => {
+        if (resp.statusCode === 200 || resp.statusCode === 201) {
+          this.swalService.alert.success('Status updated successfully');
+
+          // Update UI instantly
+          this.getGuideSections()
+        } else {
+          this.swalService.alert.error('Failed to update status');
+          // revert UI
+          data.publishStatus = data.publishStatus === 1 ? 0 : 1;
+        }
+      },
+      error: () => {
+        this.swalService.alert.error('Something went wrong');
+        // revert UI
+        data.status = data.status === 1 ? 0 : 1;
+      }
+    });
+}
  onFileChange(files: FileList) {
    if (!files || files.length === 0) return;
  
@@ -102,17 +135,18 @@ export class GuideLastSectionComponent implements OnInit {
    reader.readAsDataURL(file);
  }
  
-   validateFileSize(size: number): boolean {
-     if (size > 1048576) {
-       this.swalService.alert.oops("Maximum upload file size: 1 MB");
-       const imgControl = this.regConfig.get('image');
-       imgControl.setValidators([Validators.required]);
-       imgControl.updateValueAndValidity();
-       return false;
-     }
-     return true;
-   }
- 
+validateFileSize(size: number): boolean {
+  if (size > 5242880) { // ✅ 5 MB
+    this.swalService.alert.oops("Maximum upload file size: 5 MB");
+
+    const imgControl = this.regConfig.get('image');
+    imgControl.setValidators([Validators.required]);
+    imgControl.updateValueAndValidity();
+
+    return false;
+  }
+  return true;
+}
    getGuideSections() {
      this.noData = true;
      this.respData = [];

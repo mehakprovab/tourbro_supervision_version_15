@@ -66,7 +66,7 @@
   <thead>
     <tr>
       <th>#</th>
-
+<th>Publish</th>
       <th>Title 1</th>
       <th>Description 1</th>
 
@@ -90,7 +90,13 @@
 
     <tr *ngFor="let item of respData; let i=index">
       <td>{{ i+1 }}</td>
-
+         <td>
+  <input
+    type="checkbox"
+    [checked]="item.publishStatus == 1"
+    (change)="onPublishChange(item, $event)"
+  />
+</td>
       <!-- TITLE 1 -->
       <td>
         <span class="truncate" [title]="item.title1">

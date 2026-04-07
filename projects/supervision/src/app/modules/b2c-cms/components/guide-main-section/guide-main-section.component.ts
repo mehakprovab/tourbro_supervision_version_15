@@ -80,11 +80,11 @@ onPublishChange(data: any, event: any) {
           this.swalService.alert.success('Status updated successfully');
 
           // Update UI instantly
-          data.status = status;
+          this.getGuideSections()
         } else {
           this.swalService.alert.error('Failed to update status');
           // revert UI
-          data.status = data.status === 1 ? 0 : 1;
+          data.publishStatus = data.publishStatus === 1 ? 0 : 1;
         }
       },
       error: () => {
@@ -137,16 +137,21 @@ this.selectedFileName = file.name;
   reader.readAsDataURL(file);
 }
 
-  validateFileSize(size: number): boolean {
-    if (size > 1048576) {
-      this.swalService.alert.oops("Maximum upload file size: 1 MB");
-      const imgControl = this.regConfig.get('image');
-      imgControl.setValidators([Validators.required]);
-      imgControl.updateValueAndValidity();
-      return false;
-    }
-    return true;
+validateFileSize(size: number): boolean {
+  const maxSize = 5 * 1024 * 1024; // ✅ 5 MB in bytes
+
+  if (size > maxSize) {
+    this.swalService.alert.oops("Maximum upload file size: 5 MB");
+
+    const imgControl = this.regConfig.get('image');
+    imgControl.setValidators([Validators.required]);
+    imgControl.updateValueAndValidity();
+
+    return false;
   }
+
+  return true;
+}
 
   getGuideSections() {
     this.noData = true;
@@ -229,7 +234,7 @@ editList(data) {
     let req = new FormData();
     req.append('title', formValues.title);
     req.append('description', formValues.description);
-    // req.append('status', formValues.status);
+    req.append('publishStatus', '0');
 
     if (this.editingId) req.append('id', this.editingId);
 

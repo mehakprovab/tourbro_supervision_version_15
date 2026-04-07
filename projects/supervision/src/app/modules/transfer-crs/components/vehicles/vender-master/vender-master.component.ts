@@ -364,12 +364,13 @@ onVendorSave() {
         }
       });
   }
-
+createdId:any=""
 onEditVendor(data: any) {
   this.isEditMode = true;
   this.isEditTrigger = true; // 🔥 important
 
   this.id = data.id;
+  this.createdId=data.created_by_id;
 
   this.saveTextName = 'Update';
   this.enabledForm = true;
@@ -502,7 +503,8 @@ updateVendor() {
     city: formValue.city,
     address: formValue.address,
     status: formValue.status ? 1 : 0,
-    id: this.id
+    id: this.id,
+    created_by_id:this.createdId
   };
 
   console.log('Update payload:', payload); // For debugging

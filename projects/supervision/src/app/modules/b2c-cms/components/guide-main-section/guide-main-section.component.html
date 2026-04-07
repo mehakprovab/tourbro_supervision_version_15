@@ -53,7 +53,7 @@
             <img [src]="getImage(guideImage)" width="100" height="50" class="rounded">
           </div>
 
-          <small class="text-danger">(Jpeg, Png allowed with maximum upload file size: 1 MB)</small>
+          <small class="text-danger">(Jpeg, Png allowed with maximum upload file size: 5 MB)</small>
         </div>
       </div>
 
@@ -120,7 +120,7 @@
             <td>
   <input
     type="checkbox"
-    [checked]="data.status == 1"
+    [checked]="data.publishStatus == 1"
     (change)="onPublishChange(data, $event)"
   />
 </td>

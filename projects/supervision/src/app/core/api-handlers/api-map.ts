@@ -700,4 +700,8 @@ export const apiMap = {
     addGuideLastSection: `${baseUrl}/dashboard/report/guidesideImage`,
       guideLastSectionList: `${baseUrl}/dashboard/report/listGuidesideImage`,
       updateGuideSectionStatus: `${baseUrl}/dashboard/report/editGuideMainStatus`,
+      uploadWhyChooseImage: `${baseUrl}/common/uploadWhyChooseImage`,
+      addwhyChooseusData: `${baseUrl}/common/addwhyChooseusData`,
+      updateGuideProcessStatus: `${baseUrl}/dashboard/report/editGuideProcessStatus`,
+      updateGuideLastStatus: `${baseUrl}/dashboard/report/editGuideSideMainStatus`,
 };

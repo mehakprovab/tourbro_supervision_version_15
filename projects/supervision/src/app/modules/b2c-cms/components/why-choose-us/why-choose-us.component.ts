@@ -13,241 +13,227 @@ import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handler
   styleUrls: ['./why-choose-us.component.scss']
 })
 export class WhyChooseUsComponent implements OnInit {
+ regConfig: FormGroup;
+ whyChooseData:any
+  selectedImages: File[] = [];
+existingImages: string[] = [];
+imagePreviews: string[] = [];
+  constructor(
+    private fb: FormBuilder,
+    private apiHandlerService: ApiHandlerService,
+    private swalService: SwalService
+  ) {}
 
-  @ViewChild ('theFile',{static: false}) fileUploader:ElementRef;
-  private subSunk = new SubSink();
-  logoConfig: FormGroup;
-  @ViewChild('labelImport', { static: false })
-  bannerLogo: string;
-  labelImport: ElementRef;
-  imgObj = {
-      isLogoToUpdate: false,
-      isUploaded: false
+  ngOnInit() {
+
+    this.createForm();
+     this.getWhyChooseData();
   }
-  whyChooseData: any;
-  fileToUpload: File = null;
-  imageSrc;
-  flightImage: string = "";
-  @Output() staticContentTab = new EventEmitter<any>();
-  regConfig: FormGroup;
-  addOrUpdate;
-  public model = {
-      editorData: ''
-  };
-constructor(private fb: FormBuilder, private apiHandlerService: ApiHandlerService,
-  private swalService: SwalService,
-  private cmsService: CmsService,
-  private utility: UtilityService) { }
+getWhyChooseData() {
+ this.apiHandlerService
+    .apiHandler('whyChooseUs', 'POST', '', '', '')
+    .subscribe(res => {
 
-ngOnInit() {
-  this.createForm();
-  this.getWhyChooseData();
-  this.getToUpdate()
+      if ((res.statusCode === 200 || res.statusCode === 201) && res.data) {
+
+        this.whyChooseData = res.data[0];
+// ✅ store existing images
+this.existingImages = [
+  this.whyChooseData.image1,
+  this.whyChooseData.image2
+].filter(img => !!img); // remove empty/null
+        this.regConfig.patchValue({
+          main_heading: this.whyChooseData.main_heading || '',
+          sub_heading: this.whyChooseData.sub_heading || '',
+
+          stat1_value: this.whyChooseData.stat1_value || '',
+          stat1_label: this.whyChooseData.stat1_label || '',
+
+          stat2_value: this.whyChooseData.stat2_value || '',
+          stat2_label: this.whyChooseData.stat2_label || '',
+
+          stat3_value: this.whyChooseData.stat3_value || '',
+          stat3_label: this.whyChooseData.stat3_label || '',
+
+          header1: this.whyChooseData.header1 || '',
+          description1: this.whyChooseData.description1 || '',
+
+          header2: this.whyChooseData.header2 || '',
+          description2: this.whyChooseData.description2 || '',
+
+          header3: this.whyChooseData.header3 || '',
+          description3: this.whyChooseData.description3 || '',
+
+          // optional (if API sends)
+          header4: this.whyChooseData.header4 || '',
+          description4: this.whyChooseData.description4 || '',
+
+          header5: this.whyChooseData.header5 || '',
+          description5: this.whyChooseData.description5 || '',
+
+          header6: this.whyChooseData.header6 || '',
+          description6: this.whyChooseData.description6 || ''
+        });
+
+      }
+    });
 }
 
   createForm() {
-      this.regConfig = this.fb.group({
-          header1: new FormControl('', [Validators.required]),
-          description1: new FormControl('',[Validators.required]),
-          header2: new FormControl('', [Validators.required]),
-          description2: new FormControl('',[Validators.required]),
-          header3: new FormControl('', [Validators.required]),
-          description3: new FormControl('',[Validators.required]),
-          header4: new FormControl('', [Validators.required]),
-          description4: new FormControl('',[Validators.required]),
-          header5: new FormControl('', [Validators.required]),
-          description5: new FormControl('',[Validators.required]),
-          header6: new FormControl('', [Validators.required]),
-          description6: new FormControl('',[Validators.required])
-      });
-      // this.logoConfig = this.fb.group({
-      //     banner_logo: new FormControl("",[Validators.required]),
-      //   });
+    this.regConfig = this.fb.group({
+      main_heading: ['', Validators.required],
+      sub_heading: ['', Validators.required],
+
+      stat1_value: ['', Validators.required],
+      stat1_label: ['', Validators.required],
+
+      stat2_value: ['', Validators.required],
+      stat2_label: ['', Validators.required],
+
+      stat3_value: ['', Validators.required],
+      stat3_label: ['', Validators.required],
+
+      header1: ['', Validators.required],
+      description1: ['', Validators.required],
+
+      header2: ['', Validators.required],
+      description2: ['', Validators.required],
+
+      header3: ['', Validators.required],
+      description3: ['', Validators.required],
+    });
   }
 
-  validateFileSize(fileSize) {
-      if (fileSize >1048576) {
-          this.swalService.alert.oops("Maximum upload file size: 1 MB");
-          const imageControlControl = this.regConfig.get('image');
-          imageControlControl.setValidators([Validators.required]);
-          imageControlControl.updateValueAndValidity();
-          return false;
-      }
-      else {
-          return true
-      }
+  // ✅ IMAGE VALIDATION
+  validateFile(file: File) {
+    const allowedTypes = ['image/jpeg', 'image/png'];
+
+    if (!allowedTypes.includes(file.type)) {
+      this.swalService.alert.oops("Only JPG/PNG allowed");
+      return false;
+    }
+
+    if (file.size > 1048576) {
+      this.swalService.alert.oops("Max size 1MB");
+      return false;
+    }
+
+    return true;
   }
-onSubmit() {
- // console.log(this.addOrUpdate,this.regConfig.value);
+
+onFileSelected(event) {
+  const files: FileList = event.target.files;
+
+  this.selectedImages = [];
+  this.imagePreviews = []; // reset previews
+
+  for (let i = 0; i < files.length && i < 2; i++) {
+    if (this.validateFile(files[i])) {
+
+      this.selectedImages.push(files[i]);
+
+      // ✅ generate preview
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imagePreviews.push(e.target.result);
+      };
+      reader.readAsDataURL(files[i]);
+    }
+  }
+
+  console.log('Selected Images:', this.selectedImages);
+}
+uploadImages(): Promise<any[]> {
+  return new Promise((resolve, reject) => {
+
+    if (!this.selectedImages.length) {
+      resolve([]);
+      return;
+    }
+
+    const formData = new FormData();
+
+    this.selectedImages.forEach(file => {
+      formData.append('WhyChooseImage', file); // confirm key with backend
+    });
+
+    this.apiHandlerService
+      .apiHandler('uploadWhyChooseImage', 'POST', {}, {}, formData)
+      .subscribe(
+        (res: any) => {
+          console.log('Upload Response:', res);
+
+          if (res.statusCode === 200 || res.statusCode === 201) {
+
+            // ✅ HANDLE DIFFERENT RESPONSE FORMATS
+            const images = (res.data || []).map(item => {
+              if (typeof item === 'string') return item;
+              return item.image_url || item.url || item.path || '';
+            });
+
+            resolve(images);
+
+          } else {
+            reject(res);
+          }
+        },
+        err => reject(err)
+      );
+  });
+}
+
+ async onSubmit() {
 
   if (this.regConfig.invalid) {
-      return;
-  }
-  let req = {
-    header1: this.regConfig.get('header1').value,
-    description1: this.regConfig.get('description1').value,
-    header2: this.regConfig.get('header2').value,
-    description2: this.regConfig.get('description2').value,
-    header3: this.regConfig.get('header3').value,
-    description3: this.regConfig.get('description3').value,
-
-    header4: this.regConfig.get('header4').value,
-    description4: this.regConfig.get('description4').value,
-    header5: this.regConfig.get('header5').value,
-    description5: this.regConfig.get('description5').value,
-    header6: this.regConfig.get('header6').value,
-    description6: this.regConfig.get('description6').value
-  }
- 
-  //console.log(this.addOrUpdate,typeof req.id);
- // req['data_source'] = "b2c";
-//  let req = new FormData();
-
-//  //req.append('image_url',this.logoConfig.value.banner_logo);
-//  req.append('header',this.regConfig.value.header);
-//  req.append('description',this.regConfig.value.description);        
-//  //req.append('module_type',this.regConfig.value.module_type);        
-      
-//  let id = this.regConfig.value.id;    
-//  req.append('id',id);    
-this.subSunk.sink=this.apiHandlerService.apiHandler('addWhyChooseUs', 'POST', {}, {}, req)
-.subscribe(resp => {
-    if (resp.statusCode == 200 || resp.statusCode == 201) {
-        this.swalService.alert.success("Content added successfully.");
-        this.staticContentTab.emit({ tabId: 'staticpage_list' });
-    } else {
-        this.swalService.alert.oops();
-    }
-}, (err: HttpErrorResponse) => {
-    console.error(err);
-    this.swalService.alert.oops();
-})
-//   switch (this.addOrUpdate) {
-//       case 'add':
-//           this.subSunk.sink = this.cmsService.addWhyChooseUs(req)
-//               .subscribe(resp => {
-//                   if (resp.statusCode == 200 || resp.statusCode == 201) {
-//                       this.swalService.alert.success("Content added successfully.");
-//                       this.regConfig.reset();
-//                       this.staticContentTab.emit({ tabId: 'staticpage_list' });
-//                   } else {
-//                       this.swalService.alert.oops();
-//                   }
-//               }, (err: HttpErrorResponse) => {
-//                   console.error(err);
-//                   this.swalService.alert.oops();
-//               })
-//           break;
-//       case 'update':
-          
-          
-//           this.subSunk.sink = this.cmsService.updateWhyChooseUs(req)
-//               .subscribe(resp => {
-//                   console.log("error", resp);
-//                   if (resp.statusCode == 200 || resp.statusCode == 201) {
-//                       this.swalService.alert.success("Content updated successfully.");
-//                       this.regConfig.reset();
-//                       this.staticContentTab.emit({ tabId: 'staticpage_list' });
-//                   } else {
-//                       this.swalService.alert.oops();
-//                   }
-//               }, (err: HttpErrorResponse) => {
-//                   console.error(err);
-//                   this.swalService.alert.oops();
-//               })
-//           break;
-//       default:
-//           break;
-//   }
-
-}
-
-getWhyChooseData(){
-    this.subSunk.sink=this.apiHandlerService.apiHandler('whyChooseUs', 'POST', '', '', '')
-    .subscribe(res=>{
-      if((res.statusCode == 200 || res.statusCode== 201) && res.data){
-          this.whyChooseData=res.data[0];
-          this.regConfig.patchValue({
-            header1: this.whyChooseData ? this.whyChooseData.header1 : '',
-            description1: this.whyChooseData ? this.whyChooseData.description1 : '',
-            header2: this.whyChooseData ? this.whyChooseData.header2 : '',
-            description2: this.whyChooseData ? this.whyChooseData.description2 : '',
-            header3: this.whyChooseData ? this.whyChooseData.header3 : '',
-            description3: this.whyChooseData ? this.whyChooseData.description3 : '',
-
-            header4: this.whyChooseData ? this.whyChooseData.header4 : '',
-            description4: this.whyChooseData ? this.whyChooseData.description4 : '',
-            header5: this.whyChooseData ? this.whyChooseData.header5 : '',
-            description5: this.whyChooseData ? this.whyChooseData.description5 : '',
-            header6: this.whyChooseData ? this.whyChooseData.header6 : '',
-            description6: this.whyChooseData ? this.whyChooseData.description6 : '',
-
-        })
-      }
-    })
+    this.regConfig.markAllAsTouched();
+    this.swalService.alert.oops("Fill all required fields");
+    return;
   }
 
-getToUpdate() {
+  try {
+    const uploadedImages = await this.uploadImages();
 
-  this.subSunk.sink = this.cmsService.StaticContent.subscribe(data => {
-      console.log(data)
-      if (!this.utility.isEmpty(data)) {
+    console.log('Uploaded Images:', uploadedImages);
 
-          this.addOrUpdate = 'update';
-          this.regConfig.patchValue({
-              id: data.id ? data.id : '',
-              image:data.image_url ? data.image_url : '',
-              module_type: data.module_type
-              ? data.module_type
-              : '',
-              title: data.title ? data.title : '',
-              description: data.description ? data.description : '',
-              status: data.status ? data.status : '',
+    const req = {
+      ...this.regConfig.value,
 
-          }, { emitEvent: false })
-          this.model.editorData=data.page_description;
-      }else{
-        this.addOrUpdate = 'add';
-      }
-  })
-} 
+      // ✅ FIX: HANDLE EDIT + NEW UPLOAD BOTH
+      image1: uploadedImages[0] || this.whyChooseData.image1 || '',
+      image2: uploadedImages[1] || this.whyChooseData.image2 || ''
+    };
 
-  onReset(){
-      this.cmsService.StaticContent.next({});
-      this.regConfig.reset();
-      this.addOrUpdate = 'add';
-      this.regConfig.patchValue({
-          page_description: '',
-      })
-  } 
+    console.log('Final Payload:', req);
 
+    this.apiHandlerService
+      .apiHandler('addwhyChooseusData', 'POST', {}, {}, req)
+      .subscribe(
+        (resp: any) => {
+          if (resp.statusCode === 200 || resp.statusCode === 201) {
+            this.swalService.alert.success("Saved successfully");
 
-  // getImage(img) {
-  //     return `${baseUrl + '/' + img}`;
-  // }
-  onFileSelected($event) {
-      const file = $event.target.files[0];
-      console.log("file",file)
-      if (file && file.size) {
-          let result=this.validateFileSize(file.size);
-          if(!result){
-              //this.bankLogo = "";
-              this.imageSrc=""
-              this.fileUploader.nativeElement.value = null;
-              this.logoConfig.reset();
-              return;
+            this.regConfig.reset();
+            this.selectedImages = [];
+
+            this.getWhyChooseData(); // reload data
+          } else {
+            this.swalService.alert.oops();
           }
-      }
-      if (file.name) {
-        //this.bankLogo = "";
-        this.imgObj.isLogoToUpdate = true;
-        this.logoConfig.setValue({ banner_logo: file });
-        const reader = new FileReader();
-        reader.onload = (e) => (this.imageSrc = reader.result);
-        reader.readAsDataURL(file);
-      } else {
-        this.imgObj.isLogoToUpdate = false;
-      }
-    }
+        },
+        err => {
+          console.error(err);
+          this.swalService.alert.oops();
+        }
+      );
+
+  } catch (e) {
+    console.error(e);
+    this.swalService.alert.oops("Image upload failed");
+  }
 }
 
+  onReset() {
+    this.regConfig.reset();
+    this.selectedImages = [];
+  }
+}

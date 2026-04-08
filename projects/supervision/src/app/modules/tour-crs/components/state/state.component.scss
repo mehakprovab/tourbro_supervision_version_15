@@ -20,32 +20,32 @@
   }
 
   .wrapper1,
-  .wrapper2 {
-    width: 100%;
-    overflow-x: scroll;
-    overflow-y: hidden;
-  }
-  .wrapper1 {
-    height: 20px;
-  }
-  
-  
-  .div1 {
+.wrapper2 {
+  width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+.wrapper1 {
+  height: 20px;
+}
+
+.div1 {
     width: 1500px;
     height: 20px;
     @media(max-width:767px){
-        width: 600px;
+        width: 1200px;
     }
   }
   .div2 {
     width: 1500px;
     overflow: hidden;
     @media(max-width:767px){
-        width: 600px;
+        width: 1200px;
     }
   }
   
-  .div2 .table-responsive {overflow: inherit;}
-  .invisible-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
+.div2 .table-responsive {overflow: inherit;}
+.invisible-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  

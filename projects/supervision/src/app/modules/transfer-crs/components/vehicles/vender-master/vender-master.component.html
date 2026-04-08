@@ -229,8 +229,11 @@
             <input class="form-control ml-0" type="text" name="Search" [(ngModel)]="searchText" autocomplete="off"
             placeholder="Search">
      </div>
-  <div class="wrapper2">
-    <div class="div2 invisible-scrollbar">
+   <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft" #scrollOne >
+        <div class="div1"></div>
+   </div>
+   <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
+        <div *ngIf="!editForm" class="div2 invisible-scrollbar">
       <div class="table-responsive">
         <table class="table table-borderless table-striped table-hover">
           <thead>

@@ -60,6 +60,7 @@ secondaryColour=''
               innerAttr = JSON.parse(parsedAttr.attributes || '{}');
               dataAttr = innerAttr.data || {};
               mainData=res.data
+              console.log(innerAttr,"parsedAttr")
             } catch (e) {
               console.error('JSON parse error', e);
             }
@@ -79,14 +80,15 @@ const apiStatus =
               total: parsedAttr.total_fare,
               pickup: parsedAttr.car_pickup_address,
               drop: parsedAttr.car_drop_address,
-
+  supplierName: (item.first_name || '') + ' ' + (item.last_name || ''),
               // NEW FIELDS
               booked_on: item.created_at,
               travel_date: parsedAttr.car_from_date,
               car_number: innerAttr.vehicle_reg_no || '-',
               driver_name: innerAttr.driver_name || '-',
+              reassigned_by: item.carassigned_by || '-',
               driver_phone: innerAttr.driver_mobile || '-',
-
+Maintype:innerAttr.searchRequest.type,
               // IMPORTANT
               vehicle_id: dataAttr.vehicle_id,
 bookinStatus: item.booking_status,
@@ -123,12 +125,12 @@ reassignForm = {
   car_name: '',
   car_number: '',
   driver_name: '',
+  reassigned_by:'',
   driver_phone: ''
 };
 
 submitted = false;
 
-// OPEN FORM
 onReassign(item: any) {
   this.selectedItem = item;
   this.showReassignForm = true;
@@ -137,7 +139,8 @@ onReassign(item: any) {
   this.reassignForm = {
     car_name: item.car_name || '',
     car_number: item.car_number || '',
-    driver_name: item.driver_name || '',
+    driver_name: item.driver_name || '',   // ✅ FIXED
+    reassigned_by: item.reassigned_by || '',
     driver_phone: item.driver_phone || ''
   };
 
@@ -154,6 +157,7 @@ submitReassign() {
     !this.reassignForm.car_name ||
     !this.reassignForm.car_number ||
     !this.reassignForm.driver_name ||
+     !this.reassignForm.reassigned_by ||
     !this.reassignForm.driver_phone ||
     this.reassignForm.driver_phone.length !== 10
   ) {
@@ -168,6 +172,7 @@ this.loading = true;
     vehicle_name: this.reassignForm.car_name,
     vehicle_reg_no: this.reassignForm.car_number,
     driver_name: this.reassignForm.driver_name,
+    reassigned_by:this.reassignForm.reassigned_by,
     driver_mobile: this.reassignForm.driver_phone
   };
 

@@ -1,4 +1,9 @@
 <div class="card p-3" *ngIf="enabledForm">
+    <div class="row">
+    <div class="col-6 ">
+      <p>Price Master</p>
+    </div>
+  </div>
   <form [formGroup]="addUpdateVendorForm" (ngSubmit)="onSubmit()">
     <div class="row">
 
@@ -223,7 +228,9 @@
 <!-- ---------- LIST ---------- -->
 <div class="card mt-4 p-3">
   <div class="row mb-2">
-    <div class="col-6"><h5>Price List</h5></div>
+    <div class="heading col-6">
+    <p>Prcie List</p>
+  </div>
     <div class="col-2"></div>
     <div class="col-4"><input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText"></div>
   </div>

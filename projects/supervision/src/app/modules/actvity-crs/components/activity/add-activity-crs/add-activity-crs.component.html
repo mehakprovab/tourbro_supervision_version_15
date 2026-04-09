@@ -89,11 +89,11 @@
                         Country
                         <span class="text-danger">*</span>
                     </label>
-                    <select formControlName="country" class="form-control" (change)="getActivityCityList(229)">
+                    <select formControlName="country" class="form-control">
                         <option value="" disabled selected>Select Country</option>
-                        <option id="autocomplete" *ngFor="let coreCity of countryList" [value]="coreCity.id">
-                            {{coreCity.CountryName}}
-                        </option>
+                      <option *ngFor="let country of countryList" [ngValue]="country.id">
+          {{ country.name }}
+        </option>
                     </select>
                 </div>
                 <div class="col-3">
@@ -103,8 +103,8 @@
                     </label>
                     <select formControlName="city" class="form-control">
                         <option value="" disabled selected>Select City</option>
-                        <option id="autocomplete" *ngFor="let coreCity of cityList" [value]="coreCity.origin">
-                            {{coreCity.CityName}}
+                        <option id="autocomplete" *ngFor="let coreCity of cityList" [value]="coreCity.cityId">
+                            {{coreCity.cityName}}
                         </option>
                     </select>
                 </div>
@@ -280,10 +280,10 @@
                         Country
                         <span class="text-danger">*</span>
                     </label>
-                    <select formControlName="country" class="form-control" (change)="getActivityCityList($event)">
+                    <select formControlName="country" class="form-control" >
                         <option value="" disabled selected>Select Country</option>
                         <option id="autocomplete" *ngFor="let coreCity of countryList" [value]="coreCity.id">
-                            {{coreCity.CountryName}}
+                            {{coreCity.name}}
                         </option>
                     </select>
 
@@ -300,8 +300,8 @@
                     </label>
                     <select formControlName="city" class="form-control">
                         <option value="" disabled selected>Select City</option>
-                        <option id="autocomplete" *ngFor="let coreCity of cityList" [value]="coreCity.origin">
-                            {{coreCity.CityName}}
+                     <option id="autocomplete" *ngFor="let coreCity of cityList" [value]="coreCity.cityId">
+                            {{coreCity.cityName}}
                         </option>
                     </select>
                     <small class="text-danger" *ngIf="

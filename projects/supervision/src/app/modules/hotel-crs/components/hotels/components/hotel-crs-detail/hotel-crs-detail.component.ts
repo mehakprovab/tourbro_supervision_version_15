@@ -11,6 +11,7 @@ import { tap } from 'rxjs/operators';
 import { untilDestroyed } from 'projects/supervision/src/app/core/services/until-destroyed';
 import { HttpErrorResponse } from '@angular/common/http';
 import * as moment from 'moment';
+
 export interface LocationI {
   cityId: string;
   cityName: string;
@@ -791,14 +792,19 @@ initializeSearchBox() {
     });
   }
 onCityChange(event) {
-  let cityId = event;
-  const selectedCity = this.coreCityList.find(city => city.cityName === cityId);
+  const selectedCity = this.coreCityList.find(city => city.cityName === event);
 
-  this.selectedCityName = selectedCity ? selectedCity.cityName : '';
+  if (selectedCity) {
+    this.selectedCityName = selectedCity.cityName;
+    this.selectedCityCode = selectedCity.cityCode; // ✅ IMPORTANT FIX
+    this.toCityId = selectedCity.id;               // (optional but good)
+  } else {
+    this.selectedCityName = '';
+    this.selectedCityCode = '';
+  }
 
   this.updateMapWithCityAndCountry(this.selectedCityName, 'CountryName');
 
-  // 🔥 reinitialize autocomplete with new city
   setTimeout(() => {
     this.initializeSearchBox();
   }, 500);
@@ -825,7 +831,8 @@ onCityChange(event) {
     if (this.hotelForm.valid) {
       // const dt = new Date(this.hotelForm.value.contract_expiry_date);
       // this.hotelForm.value.contract_expiry_date = formatDate(dt, '');
-      this.hotelForm.value.hotel_hotel_amenities = this.hotelForm.get('hotel_hotel_amenities').value || '';
+this.hotelForm.value.hotel_hotel_amenities =
+  this.hotelForm.value.stay_amenities.map(v => v.hotel_amenity_name).join(",") || '';
       this.hotelForm.value.meal_plans = this.hotelForm.value.meal_plans.map(v => v.meals).join(",");
        this.hotelForm.value.stay_amenities = this.hotelForm.value.stay_amenities.map(v => v.stay_amenities).join(",");
       this.hotelForm.value.room_view_ids = this.hotelForm.value.room_view_ids.map(v => v.views).join(",");
@@ -904,6 +911,8 @@ onCityChange(event) {
         else {
           this.swalService.alert.oops(resp.msg);
         }
+      },(error)=>{
+ this.swalService.alert.oops(error.error.Message)
       })
     } else {
       return;

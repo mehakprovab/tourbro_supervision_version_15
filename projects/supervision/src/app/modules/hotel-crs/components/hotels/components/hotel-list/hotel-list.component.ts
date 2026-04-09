@@ -33,9 +33,9 @@ export class HotelListComponent implements OnInit,AfterViewInit {
     hotelAmenityList: any;
     displayColumn: { key: string, value: string }[] = [
         { key: "Slno", value: 'SI No.' },
-        { key: "hotel_code", value: 'Property Code' },
-        { key: "hotel_name", value: 'Property Name' },
-        { key: "user_type", value: 'User Type' },
+        { key: "hotel_code", value: 'Stay Code' },
+        { key: "hotel_name", value: 'Stay Name' },
+        // { key: "user_type", value: 'User Type' },
         { key: "supplier_name", value: 'Supplier Name' },
         { key: "supplier_email", value: 'Supplier Email' },
         { key: "country", value: 'Country' },
@@ -48,7 +48,7 @@ export class HotelListComponent implements OnInit,AfterViewInit {
         // { key: "email", value: 'Email' },
         // {key: "image", value: 'Display Image'},
         { key: "supplierRequest", value: 'Supplier Request' },
-        { key: "homePagePublish", value: 'Home Page Publish (Family Deals)' },
+        // { key: "homePagePublish", value: 'Home Page Publish (Family Deals)' },
         { key: "status", value: 'Status' },
         { key: "action", value: 'Actions' },
     ];
@@ -584,19 +584,24 @@ datas = [
     }
     exportExcel(): void {
         {
+             
+       
+     
+   
             const fileToExport = this.respData.map((response: any, index: number) => {
                 return {
                     "Sl No.": index + 1,
-                    "Hotel Code":response.hotel_code,
-                    "Hotel Name": response.hotel_name,
+                    "Stay Code":response.hotel_code,
+                    "Stay Name": response.hotel_name,
                     "Supplier Name": response.supplier_name,
                     "Supplier Email": response.supplier_email,
                     "Star Rating": response.star_rating,
                     "City": response.city_name,
                     "Country": response.core_country_id,
-                    // "City Code":response.city_code,
+                    "User Type":response.user_type,
                     "Address": response.address,
-                    // "Phone Number": response.phone_number,
+                    "Currency": response.currency,
+                     "Contract Expiry Date": response.contract_expiry_date,
                  
                    
                 }

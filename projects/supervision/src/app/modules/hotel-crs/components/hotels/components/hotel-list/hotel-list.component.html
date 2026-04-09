@@ -73,14 +73,15 @@
         </div>
         
        
-
+       <small>{{countData}} Stay Found.</small>
         <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft"
         #scrollOne>
         <div class="div1"></div>
     </div>
+
     <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
         <div class="div2 invisible-scrollbar">
-      
+   
         <div class="table-respons">
             <table class="table table-borderless table-striped table-hover" matSort (matSortChange)="sortData($event)">
                 <thead>
@@ -113,10 +114,10 @@
                     </tr>
                     <tr
                         *ngFor="let data of respData;let i=index;">
-                        <td class="text-left text-muted">{{i+1}}</td>
+                        <td class="text-left text-muted"> {{ ((page - 1) * pageSize) + i + 1 }}</td>
                         <td class="text-left"> {{data['hotel_code']}} </td>
                         <td class="text-left"> {{data['hotel_name']}} </td>
-                        <td class="text-left"> {{data['user_type']}} </td>
+                        <!-- <td class="text-left"> {{data['user_type']}} </td> -->
                         <td class="text-left"> {{data['supplier_name'] ? data['supplier_name'] : 'Admin' }} </td>
                         <td class="text-left"> {{data['supplier_email']}} </td>
                         <td class="text-left"> {{data['core_country_id']}} </td>
@@ -142,14 +143,14 @@
                           <ng-template #emptyTd>
                             <td></td>
                           </ng-template>                                                   
-                          <td *ngIf="loggedInUser?.auth_role_id !== 6 && loggedInUser?.auth_role_id !== 7">
+                          <!-- <td *ngIf="loggedInUser?.auth_role_id !== 6 && loggedInUser?.auth_role_id !== 7">
                             <button 
                               class="btn" 
                               [ngClass]="data.family_deals === 1 ? 'btn-green' : 'btn-primary'" 
                               (click)="toggleFamilyDeal(data)">
                               {{ data.family_deals === 1 ? 'Enabled' : 'Enable' }}
                             </button>
-                          </td>
+                          </td> -->
                           
                                                  
                         <!-- <td class="text-left"> {{data['phone_number']}} </td>

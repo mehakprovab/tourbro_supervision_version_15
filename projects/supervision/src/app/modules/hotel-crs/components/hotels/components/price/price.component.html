@@ -441,7 +441,9 @@
                           <input type="radio" value="Percentage" formControlName="charge_type" class="form-check-input">
                           Percentage (%)
                         </label>
-                        <input type="number" [min]="0" formControlName="charge" class="form-control ml-3" (keypress)="numberOnly($event)">
+                        <input type="number"   [min]="0"
+  [max]="segment?.get('charge_type')?.value === 'Percentage' ? 100 : null"
+ formControlName="charge" class="form-control ml-3"   (input)="onChargeInput($event, segment)">
                       </div>
                       <div *ngIf="submittedRoomPrice && segment?.get('charge')?.errors" class="invalid-feedback">
                         <div *ngIf="segment?.get('charge')?.errors?.required">Cancellation Charge is required</div>
@@ -546,14 +548,14 @@
                         </div>
                         </div>
                    
-                        <div class="col-sm-4">
+                        <!-- <div class="col-sm-4">
                         <div class="custom-control custom-checkbox custom-control-inline pl-5 pt-4">
                             <input type="checkbox"
                                 class="custom-control-input" id="calendar_days"  (change)="onEarlyCancellable($event)"[checked]="roomPriceForm.value.early_cancellable"name="example1"  />
                                 <span class="custom-control-indicator"></span>
                             <label class="custom-control-label" for="calendar_days">Cancellable</label>
                         </div>
-                        </div>
+                        </div> -->
               
                         </div>
                        
@@ -595,14 +597,14 @@
                             <div *ngIf="hotelRoomSeasonPrice.discount_value1.errors.required">No Of Rooms is required</div>
                         </div>
                         </div>
-                        <div class="col-sm-4">
+                        <!-- <div class="col-sm-4">
                             <div class="custom-control custom-checkbox custom-control-inline pl-5 pt-4">
                                 <input type="checkbox"
                                     class="custom-control-input" id="stay_days"  (change)="onCancellable($event)"[checked]="roomPriceForm.value.cancellable"name="example1"  />
                                     <span class="custom-control-indicator"></span>
                                 <label class="custom-control-label" for="stay_days">Cancellable</label>
                             </div>
-                            </div>
+                            </div> -->
                         </div>
                        
                     </div>

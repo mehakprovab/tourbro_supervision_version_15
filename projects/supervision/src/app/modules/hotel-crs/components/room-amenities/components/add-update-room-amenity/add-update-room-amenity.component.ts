@@ -85,6 +85,12 @@ export class AddUpdateRoomAmenityComponent implements OnInit {
         }
 
         let data = Object.assign({}, this.roomAmenityForm.value);
+         if (data['room_amenity_name']) {
+        data['room_amenity_name'] = data['room_amenity_name']
+            .trim()
+            .toLowerCase()
+            .replace(/^\w/, c => c.toUpperCase());
+    }
         if (data['status']) {
             data['status'] = true;
         } else {
@@ -117,7 +123,11 @@ export class AddUpdateRoomAmenityComponent implements OnInit {
                 else {
                     this.swalService.alert.oops(resp.msg);
                 }
-            })
+            },(error)=>{
+             this.swalService.alert.oops(error.error.Message);
+           
+
+        })
     }
 
 }

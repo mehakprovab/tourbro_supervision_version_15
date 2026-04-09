@@ -70,6 +70,12 @@ export class AddUpdateRoomViewComponent implements OnInit {
         }
         
         let data = Object.assign({}, this.hotelTypeForm.value);
+         if (data['views']) {
+        data['views'] = data['views']
+            .trim()
+            .toLowerCase()
+            .replace(/^\w/, c => c.toUpperCase());
+    }
         if (data['status']) {
             data['status'] = 1;
         } else {
@@ -102,7 +108,11 @@ export class AddUpdateRoomViewComponent implements OnInit {
                 else {
                     this.swalService.alert.oops(resp.msg);
                 }
-            })
+            },(error)=>{
+             this.swalService.alert.oops(error.error.Message);
+           
+
+        })
     }
 
 }

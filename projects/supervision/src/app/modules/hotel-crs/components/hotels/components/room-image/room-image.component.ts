@@ -73,19 +73,43 @@ editRoomImage(){
     this.imageSrc = "";
 }
 previewRoomImage($event) {
-    this.hotelImages =""// Initialize as an array to store multiple images
-    const files = $event.target.files; // Get all selected files
-console.log("files",files)
+    this.hotelImages = "";
+    const files = $event.target.files;
+
+    const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/svg+xml", "image/webp"];
+    const maxSize = 500 * 1024; // 500 KB
+
+    this.selactedFlies = [];   // reset
+    this.imageSrc = [];        // reset preview array
+
     for (let i = 0; i < files.length; i++) {
-        this.selactedFlies.push(files[i])
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                this.imageSrc.push(reader.result); // Store image data for preview
-            };
-            //reader.readAsDataURL(file);
+        let file = files[i];
+
+        // ✅ File type validation
+        if (!allowedTypes.includes(file.type)) {
+            this.swalService.alert.oops(`"${file.name}" is not a supported format.`);
+            continue;
         }
-        console.log("this.selactedFlies",this.selactedFlies)
+
+        // ✅ File size validation (500 KB)
+        if (file.size > maxSize) {
+            this.swalService.alert.oops(`"${file.name}" exceeds 500 KB size limit.`);
+            continue;
+        }
+
+        // ✅ Valid file
+        this.selactedFlies.push(file);
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            this.imageSrc.push(reader.result);
+        };
+
+        reader.readAsDataURL(file); // ❗ this was missing in your code
     }
+
+    console.log("Valid selected files:", this.selactedFlies);
+}
   onSubmitHotelImage() {
     this.loading =true;
     this.imageSrc =''

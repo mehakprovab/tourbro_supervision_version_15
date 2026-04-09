@@ -80,46 +80,52 @@ export class AddUpdateHotelTypeComponent implements OnInit {
         this.hotelTypeForm.reset();
     }
 
-    handleValidSubmit() {
-        this.submitted = true;
-        if (this.hotelTypeForm.invalid) {
-            return;
-        }
-        
-        let data = Object.assign({}, this.hotelTypeForm.value);
-        if (data['status']) {
-            data['status'] = true;
-        } else {
-            data['status'] = false;
-        }
-        try {
-            if (!this.utilityService.isEmpty(this.hotelTypeOne)) {
-                data['id'] = this.hotelTypeOne['id'];
-                data = [data];
-                data['topic'] = 'updateHotelType';
-            }
-            else {
-                data = [data];
-                data['topic'] = 'addHotelType';
-            }
-        } catch (error) {
-            log.debug(error)
-        }
-        log.debug('data', data);
-
-        this.hotelCrsService.update(data)
-            .subscribe(resp => {
-                if (resp.statusCode == 201) {
-                    this.swalService.alert.success('Your data updated successfully ..!');
-                    this.someEvent.next({ tabId: 'list_hotel_types', hotel_type: '' })
-                    this.hotelTypeForm.reset();
-                } else if (resp.statusCode == 400) {
-                    this.swalService.alert.oops(resp.msg)
-                }
-                else {
-                    this.swalService.alert.oops(resp.msg);
-                }
-            })
+   handleValidSubmit() {
+    this.submitted = true;
+    if (this.hotelTypeForm.invalid) {
+        return;
     }
+
+    let data = Object.assign({}, this.hotelTypeForm.value);
+
+    // ✅ Trim + Capitalize first letter
+    if (data['hotel_type_name']) {
+        data['hotel_type_name'] = data['hotel_type_name']
+            .trim()
+            .toLowerCase()
+            .replace(/^\w/, c => c.toUpperCase());
+    }
+
+    // ✅ Ensure boolean status
+    data['status'] = !!data['status'];
+
+    try {
+        if (!this.utilityService.isEmpty(this.hotelTypeOne)) {
+            data['id'] = this.hotelTypeOne['id'];
+            data = [data];
+            data['topic'] = 'updateHotelType';
+        } else {
+            data = [data];
+            data['topic'] = 'addHotelType';
+        }
+    } catch (error) {
+        log.debug(error);
+    }
+
+    this.hotelCrsService.update(data)
+        .subscribe(resp => {
+            if (resp.statusCode == 201) {
+                this.swalService.alert.success('Your data updated successfully ..!');
+                this.someEvent.next({ tabId: 'list_hotel_types', hotel_type: '' });
+                this.hotelTypeForm.reset();
+            } else {
+                this.swalService.alert.oops(resp.Message);
+            }
+        },(error)=>{
+             this.swalService.alert.oops(error.error.Message);
+           
+
+        });
+}
 
 }

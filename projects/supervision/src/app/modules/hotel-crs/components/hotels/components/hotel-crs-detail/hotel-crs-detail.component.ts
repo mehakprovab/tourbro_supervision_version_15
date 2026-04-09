@@ -68,6 +68,7 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
   updateImage;
   isHotelImageActive: boolean;
   dropdownSettingsForHotel = {};
+  dropdownSettingsForAmentities={}
   isOpen = false as boolean;
   isDepartureCityLoading: boolean = false;
   departureLocations = [];
@@ -147,6 +148,13 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
       maxHeight: 197,
       itemsShowLimit: 2,
     };
+      this.dropdownSettingsForAmentities = {
+      singleSelection: false,
+      idField: 'id',
+      textField: 'hotel_amenity_name',
+      maxHeight: 197,
+      itemsShowLimit: 2,
+    };
     this.dropdownSettingsForview = {
       singleSelection: false,
       idField: 'id',
@@ -177,6 +185,13 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
         maxHeight: 197,
         itemsShowLimit: 1,
       };
+           this.dropdownSettingsForAmentities = {
+      singleSelection: false,
+      idField: 'id',
+      textField: 'hotel_amenity_name',
+      maxHeight: 197,
+      itemsShowLimit: 2,
+    };
       this.dropdownSettingsForview = {
         singleSelection: false,
         idField: 'id',
@@ -192,6 +207,13 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
         maxHeight: 197,
         itemsShowLimit: 2,
       };
+           this.dropdownSettingsForAmentities = {
+      singleSelection: false,
+      idField: 'id',
+      textField: 'hotel_amenity_name',
+      maxHeight: 197,
+      itemsShowLimit: 2,
+    };
       this.dropdownSettingsForview = {
         singleSelection: false,
         idField: 'id',
@@ -209,6 +231,7 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
     this.getHotelTypeList();
     this.getCoreCountryList();
     this.getMealList();
+    this.getStayAmenityList()
     this.getViewList();
     this.getCurrencyList();
     if (this.loggedInUser.auth_role_id === 7) {
@@ -264,11 +287,9 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
 
     // } catch (e) { console.log(e); }
   }
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.getGeoCoords();
-    }, 3500); // Adjust the delay as needed (in milliseconds)
-  }
+ ngAfterViewInit() {
+  this.getGeoCoords();
+}
   
   getGeoCoords() {
     if (this.hotelData && this.hotelData.latitude && this.hotelData.longitude) {
@@ -307,6 +328,13 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
       textField: 'meals',
       maxHeight: 197,
       itemsShowLimit: 2
+    };
+          this.dropdownSettingsForAmentities = {
+      singleSelection: false,
+      idField: 'id',
+      textField: 'hotel_amenity_name',
+      maxHeight: 197,
+      itemsShowLimit: 2,
     };
     this.dropdownSettingsForview = {
       singleSelection: false,
@@ -357,6 +385,7 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
       // country_code: this.hotelData.country_code,
       check_in_time: (this.hotelData['check_in_time']) || '',
       check_out_time: (this.hotelData['check_out_time']) || '',
+      stay_amenities: this.getAlreadySelectedAmenities(this.hotelData['stay_amenities']),
       meal_plans: this.getAlreadySelectedAmenities(this.hotelData['meal_plans']),
       weekend_days: this.getAlreadySelectedWeek(this.hotelData['weekend_days']),
       room_view_ids: this.getAlreadySelectedView(this.hotelData['room_view_ids']),
@@ -486,20 +515,20 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
     // Return the formatted time string in 'HH:MM AM/PM' format
     return `${hours}:${formattedMinutes} ${ampm}`;
   }
-  mapInitializer() {
-    this.loading = true;
-    this.mapOptions = {
-      center: this.center,
-      zoom: 10,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
-    console.log("gmap", this.gmap)
-    this.map = new google.maps.Map(this.gmap.nativeElement, this.mapOptions);
-    this.loading = false;
-    console.log("map", this.map)
-    this.placeMarker();
-    this.initializeSearchBox();
-  }
+mapInitializer() {
+  if (!this.gmap) return;
+
+  this.mapOptions = {
+    center: this.center,
+    zoom: 10,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+
+  this.map = new google.maps.Map(this.gmap.nativeElement, this.mapOptions);
+
+  this.placeMarker();
+  this.initializeSearchBox();
+}
   placeMarker() {
     this.marker = new google.maps.Marker({
       position: this.center,
@@ -527,40 +556,62 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
     });
   }
 
-  initializeSearchBox() {
-    const input = this.searchInput.nativeElement as HTMLInputElement;
-    this.searchBox = new google.maps.places.SearchBox(input);
+initializeSearchBox() {
+  const input = this.searchInput.nativeElement as HTMLInputElement;
 
-    this.map.addListener('bounds_changed', () => {
-      this.searchBox.setBounds(this.map.getBounds() as google.maps.LatLngBounds);
-    });
+  const options: google.maps.places.AutocompleteOptions = {
+    types: ['lodging'], // 🔥 only hotels
+    componentRestrictions: { country: 'in' } // restrict to India
+  };
 
-    this.searchBox.addListener('places_changed', () => {
-      const places = this.searchBox.getPlaces();
-      if (!places || places.length === 0) {
-        return;
+  const autocomplete = new google.maps.places.Autocomplete(input, options);
+
+  // 🔥 STRICT CITY BOUNDING
+  if (this.selectedCityName) {
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ address: this.selectedCityName }, (results, status) => {
+      if (status === 'OK' && results[0]) {
+        const bounds = results[0].geometry.viewport;
+
+        autocomplete.setBounds(bounds);
+        autocomplete.setOptions({ strictBounds: true }); // ✅ VERY IMPORTANT
       }
-
-      const place = places[0];
-      if (!place.geometry || !place.geometry.location) {
-        console.error('Place has no geometry');
-        return;
-      }
-
-      // Update the map center and marker position
-      const location = place.geometry.location;
-      this.marker.setPosition(location);
-      this.map.setCenter(location);
-
-      // Update form fields
-      this.hotelForm.get('latitude').setValue(location.lat());
-      this.hotelForm.get('longitude').setValue(location.lng());
-      this.hotelForm.get('address').setValue(place.formatted_address);
-
-      // Call API to get accurate timezone
-      this.getTimezoneOffset(location.lat(), location.lng());
     });
   }
+
+  autocomplete.addListener('place_changed', () => {
+    const place = autocomplete.getPlace();
+
+    if (!place.geometry || !place.geometry.location) {
+      this.swalService.alert.oops("Invalid location");
+      return;
+    }
+
+    // 🔥 EXTRA VALIDATION (MOST IMPORTANT FIX)
+    const address = place.formatted_address || '';
+    if (!address.toLowerCase().includes(this.selectedCityName.toLowerCase())) {
+      this.swalService.alert.oops(`Please select hotel only in ${this.selectedCityName}`);
+      input.value = '';
+      return;
+    }
+
+    const location = place.geometry.location;
+
+    // Move map
+    this.map.setCenter(location);
+    this.marker.setPosition(location);
+
+    // Fill form
+    this.hotelForm.get('latitude').setValue(location.lat());
+    this.hotelForm.get('longitude').setValue(location.lng());
+    this.hotelForm.get('address').setValue(place.formatted_address);
+
+    // Optional: autofill hotel name
+    this.hotelForm.get('hotel_name').setValue(place.name);
+
+    this.getTimezoneOffset(location.lat(), location.lng());
+  });
+}
 
   getAddress(latLng: google.maps.LatLng) {
     this.geocoder = new google.maps.Geocoder();
@@ -697,6 +748,7 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
       latitude: ['', Validators.required],
       longitude: ['', Validators.required],
       meal_plans: [[], Validators.required],
+      stay_amenities: [[], Validators.required],
       weekend_days: [[], Validators.required],
       room_view_ids: [[], Validators.required],
       local_timezone: ['UTC+05:30', Validators.required],
@@ -738,15 +790,19 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
       accomodation_or_meal: [''],
     });
   }
-  onCityChange(event) {
-    console.log("event", event)
-    let cityId = event;
-    const selectedCity = this.coreCityList.find(city => city.cityName === cityId);
-    console.log("selectedCity", selectedCity)
-    this.selectedCityName = selectedCity ? selectedCity.cityName : '';
-    this.selectedCityCode = selectedCity ? selectedCity.cityId : '';
-    this.updateMapWithCityAndCountry(this.selectedCityName, 'CountryName'); // Adjust the country as needed
-  }
+onCityChange(event) {
+  let cityId = event;
+  const selectedCity = this.coreCityList.find(city => city.cityName === cityId);
+
+  this.selectedCityName = selectedCity ? selectedCity.cityName : '';
+
+  this.updateMapWithCityAndCountry(this.selectedCityName, 'CountryName');
+
+  // 🔥 reinitialize autocomplete with new city
+  setTimeout(() => {
+    this.initializeSearchBox();
+  }, 500);
+}
   updateMapWithCityAndCountry(city: string, country: string) {
     console.log("city", city)
     const geocoder = new google.maps.Geocoder();
@@ -771,6 +827,7 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
       // this.hotelForm.value.contract_expiry_date = formatDate(dt, '');
       this.hotelForm.value.hotel_hotel_amenities = this.hotelForm.get('hotel_hotel_amenities').value || '';
       this.hotelForm.value.meal_plans = this.hotelForm.value.meal_plans.map(v => v.meals).join(",");
+       this.hotelForm.value.stay_amenities = this.hotelForm.value.stay_amenities.map(v => v.stay_amenities).join(",");
       this.hotelForm.value.room_view_ids = this.hotelForm.value.room_view_ids.map(v => v.views).join(",");
       this.hotelForm.value.weekend_days = this.hotelForm.value.weekend_days.map(v => v.item_text).join(",");
       this.hotelForm.value.city = this.toCityId;
@@ -907,7 +964,24 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
       }
     });
   }
+amenitiesList:any
 
+    getStayAmenityList(): void {
+     const data = [{ offset: 0, limit: 100 }]
+        data['topic'] = 'hotelAmenityList';
+        this.hotelCrsService.fetch(data).subscribe(resp => {
+            log.debug(resp);
+            if (resp.statusCode == 200) {
+                this.noData = false;
+                this.amenitiesList = resp.data;
+             
+            }
+            else if (resp.statusCode == 404) {
+                this.noData = true;
+                this.swalService.alert.error();
+            }
+        });
+  }
   getViewList(): void {
     const data = [{ offset: 0, limit: 10 }]
     data['topic'] = 'viewList';
@@ -944,7 +1018,7 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
 
   getTimezoneOffset(lat: number, lng: number): void {
     const timestamp = Math.floor(Date.now() / 1000); // Current timestamp in seconds
-    const apiKey = 'AIzaSyB3N3Rg1vCjF6FmEc9qisxtS2JOpVUTKDM'; // Replace with your actual API key
+    const apiKey = 'AIzaSyDhkXfAF11o4mGvk5ft6nECxXknFe-Xj5c'; // Replace with your actual API key
     const url = `https://maps.googleapis.com/maps/api/timezone/json?location=${lat},${lng}&timestamp=${timestamp}&key=${apiKey}`;
 
     fetch(url)

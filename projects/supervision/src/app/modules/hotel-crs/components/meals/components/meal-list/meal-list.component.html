@@ -28,7 +28,7 @@
                     </tr>
                     <tr
                         *ngFor="let data of respData | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
-                        <td class="text-left text-muted">{{i+1}}.</td>
+                        <td class="text-left text-muted">{{ ((page - 1) * pageSize) + i + 1 }}.</td>
                         <td class="text-left"> {{data['meals']}} </td>
                         <td>
                             <span title="Slide for Active/Deactive">

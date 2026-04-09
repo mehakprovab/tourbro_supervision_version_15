@@ -75,6 +75,12 @@ export class AddUpdateMealsComponent implements OnInit {
         }
         
         let data = Object.assign({}, this.mealTypeForm.value);
+              if (data['meals']) {
+        data['meals'] = data['meals']
+            .trim()
+            .toLowerCase()
+            .replace(/^\w/, c => c.toUpperCase());
+    }
         if (data['status']) {
             data['status'] = 1;
         } else {
@@ -107,7 +113,11 @@ export class AddUpdateMealsComponent implements OnInit {
                 else {
                     this.swalService.alert.oops(resp.msg);
                 }
-            })
+            },(error)=>{
+             this.swalService.alert.oops(error.error.Message);
+           
+
+        })
     }
 
 }

@@ -93,8 +93,8 @@ export class HotelImageComponent implements OnInit {
 // }
 
 previewHotelImage($event) {
-    this.hotelImages = ""; // Reset preview images
-    const files = $event.target.files; // Get selected files
+    this.hotelImages = "";
+    const files = $event.target.files;
 
     if (files.length > 30) {
         this.swalService.alert.oops("You can upload a maximum of 30 images.");
@@ -102,25 +102,33 @@ previewHotelImage($event) {
     }
 
     const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/svg+xml", "image/webp"];
-    this.selactedFlies = []; // Clear previous selection
-    this.imageSrc = []; // Clear previous previews
+    const maxSize = 500 * 1024; // 500 KB
+
+    this.selactedFlies = [];
+    this.imageSrc = [];
 
     for (let i = 0; i < files.length; i++) {
         let file = files[i];
 
+        // ✅ Type validation
         if (!allowedTypes.includes(file.type)) {
-            this.swalService.alert.oops("Only JPG, JPEG and PNG formats are allowed.");
-            this.selactedFlies = []; // Clear previous selection
-            this.imageSrc = []; 
-            this.imageUrl = '';
-            continue; // Skip invalid files
+            this.swalService.alert.oops("Only JPG, JPEG, PNG, SVG, and WEBP formats are allowed.");
+            continue;
         }
 
-        this.selactedFlies.push(file); // Store valid files
+        // ✅ Size validation (500 KB)
+        if (file.size > maxSize) {
+            this.swalService.alert.oops(`"${file.name}" exceeds 500 KB size limit.`);
+            continue;
+        }
+
+        // ✅ If valid, proceed
+        this.selactedFlies.push(file);
+
         const reader = new FileReader();
         reader.onload = (e) => {
             this.imageUrl = reader.result;
-            this.imageSrc.push(reader.result); // Preview the valid image
+            this.imageSrc.push(reader.result);
         };
         reader.readAsDataURL(file);
     }

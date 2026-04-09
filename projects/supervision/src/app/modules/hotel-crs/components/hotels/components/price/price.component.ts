@@ -170,7 +170,7 @@ console.log("hotelOne",this.hotelOne)
         isEarlyRequired:[''],
         isStayRequired:[''],
         is_refundable:[false,Validators.required],
-        rate_type:['package_rate',Validators.required],
+        rate_type:['night_rate',Validators.required],
         // date_from:['',Validators.required],
         // currency:[''],
         // charge:['',Validators.required],
@@ -211,6 +211,23 @@ get segments(): FormArray {
       this.segments.removeAt(index);
     }
   }
+
+  onChargeInput(event: any, segment: FormGroup) {
+  let value = event.target.value;
+  const type = segment.get('charge_type').value;
+
+  if (type === 'Percentage') {
+    if (value > 100) {
+      value = 100;
+    }
+  }
+
+  if (value < 0) {
+    value = 0;
+  }
+
+  segment.get('charge').setValue(value, { emitEvent: false });
+}
 loadOptions() {
     forkJoin({
       mealOptions: this.getMealList(),

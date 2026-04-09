@@ -222,7 +222,7 @@
                         <select formControlName="occupancy_adult" class="form-control"
                             (change)="validateOccupancy()"
                             [ngClass]="{ 'is-invalid': submittedRoom && hotelRoom.occupancy_adult.errors }">
-                            <option *ngFor="let num of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" [value]="num">{{ num }}</option>
+                            <option *ngFor="let num of adultOptions" [value]="num">{{ num }}</option>
                         </select>
                         <div *ngIf="submittedRoom && hotelRoom.occupancy_adult.errors" class="invalid-feedback">
                             <div *ngIf="hotelRoom.occupancy_adult.errors.required">Adult is required</div>
@@ -236,7 +236,7 @@
                         <select formControlName="occupancy_child" class="form-control"
                             (change)="validateOccupancy()"
                             [ngClass]="{ 'is-invalid': submittedRoom && hotelRoom.occupancy_child.errors }">
-                            <option *ngFor="let num of [0, 1, 2, 3]" [value]="num">{{ num }}</option>
+                            <option *ngFor="let num of childOptions" [value]="num">{{ num }}</option>
                         </select>
                         <div *ngIf="submittedRoom && hotelRoom.occupancy_child.errors" class="invalid-feedback">
                             <div *ngIf="hotelRoom.occupancy_child.errors.required">Child is required</div>
@@ -248,7 +248,7 @@
                         </label>
                         <select formControlName="occupancy_infant" class="form-control"
                             [ngClass]="{ 'is-invalid': submittedRoom && hotelRoom.occupancy_infant.errors }">
-                            <option *ngFor="let num of [0, 1, 2]" [value]="num">{{ num }}</option>
+                            <option *ngFor="let num of infantOptions" [value]="num">{{ num }}</option>
                         </select>
 
                         <div *ngIf="submittedRoom && hotelRoom.occupancy_infant.errors" class="invalid-feedback">

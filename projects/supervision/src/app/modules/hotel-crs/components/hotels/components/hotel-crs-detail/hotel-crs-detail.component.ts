@@ -11,7 +11,7 @@ import { tap } from 'rxjs/operators';
 import { untilDestroyed } from 'projects/supervision/src/app/core/services/until-destroyed';
 import { HttpErrorResponse } from '@angular/common/http';
 import * as moment from 'moment';
-import { error } from 'console';
+
 export interface LocationI {
   cityId: string;
   cityName: string;

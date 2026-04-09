@@ -235,7 +235,7 @@ export class AddActivityCRSComponent implements OnInit {
       activity_duration_type: ['', Validators.required],
       languages: ['', Validators.required],
       timing: ['', Validators.required],
-      country: [229, Validators.required],
+      country: ['101', Validators.required],
       city: ['', Validators.required],
       pick_up_location: ['', Validators.required],
       drop_off_location: ['', Validators.required],
@@ -281,7 +281,7 @@ export class AddActivityCRSComponent implements OnInit {
       activity_duration: ['', Validators.required],
       operated_lang: ['', Validators.required],
       timing: ['', Validators.required],
-      country: [229, Validators.required],
+      country: ["101", Validators.required],
       city: ['', Validators.required],
       pick_up_location: ['', Validators.required],
       drop_off_location: ['', Validators.required]
@@ -731,18 +731,21 @@ export class AddActivityCRSComponent implements OnInit {
   }
 
   getActivityCountryList() {
-    this.apiHandlerServices.apiHandler('activityCountryList', 'POST', {}, {}, {}).subscribe({
+    this.apiHandlerServices.apiHandler('getMasterCountryList', 'POST', {}, {}, {}).subscribe({
       next: (res) => {
         if (res.Status === true && (res.statusCode === 201 || res.statusCode === 200)) {
-          this.countryList = res.data;
-          this.getActivityCityList(229)
+             this.countryList = res.data.data.countries;
+          console.log(this.countryList,"this.countryList")
+          this.getActivityCityList(101);
           if (this.showUpdateForm) {
             const event = {
               target: {
                 value: String(this.updatedActivityCountryId)
               }
             }
-            this.getActivityCityList(event);
+
+
+            this.getActivityCityList(101);
           }
 
         } else {
@@ -754,26 +757,33 @@ export class AddActivityCRSComponent implements OnInit {
     })
   }
 
-  getActivityCityList(event) {
-    console.log(event)
-    const selectedId = event;
-    const selectedCountry = this.countryList.find(c => c.id == selectedId);
-    const req = {
-      CountryId: selectedCountry.id
-    }
-    this.apiHandlerServices.apiHandler('activityCityList', 'POST', {}, {}, req).subscribe({
-      next: (res) => {
-        if (res.Status === true && (res.statusCode === 201 || res.statusCode === 200)) {
-          this.cityList = res.data;
+getActivityCityList(country: any) {
+  console.log(country,"country")
+  let selectedCountry;
+  if (typeof country === 'number' || typeof country === 'string') {
+    selectedCountry = this.countryList.find(c => c.id == country);
+  } else if (country && country.id) {
+    selectedCountry = country;
+  }
 
-        } else {
-          this.cityList = [];
-        }
-      }, error: (err) => {
+  if (!selectedCountry) return;
+
+  const req = { id: selectedCountry.id };
+
+  this.apiHandlerServices.apiHandler('getMasterCityList', 'POST', {}, {}, req).subscribe({
+    next: (res) => {
+      if (res.Status === true && (res.statusCode === 201 || res.statusCode === 200)) {
+        this.cityList = res.data.data;
+        console.log('City List:', this.cityList);
+      } else {
         this.cityList = [];
       }
-    })
-  }
+    },
+    error: (err) => {
+      this.cityList = [];
+    }
+  });
+}
 backToListPage() {
   this.showUpdateForm = false;
   this.activityCrsService.getActivityUpdateData.next({});

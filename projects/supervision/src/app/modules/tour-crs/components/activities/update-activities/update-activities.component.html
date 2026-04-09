@@ -6,7 +6,7 @@
         <form [formGroup]="activitiesForm" (ngSubmit)="onActivitiesSave()">
             <div class="form-row">
                 <div class="col-md-4">
-                    <div class="activitiesInput">
+                    <div class="form-group">
                         <label for="activities" class="" > Tour Activities</label>
                         <input type="text" class="form-control ml-0" placeholder="Enter Package Activities"  formControlName="activitiesName" maxlength="150"
                         (input)="validateInput()">
@@ -27,7 +27,7 @@
                  <div class="col-md-4">
                     <label style="display: block;">&nbsp;</label>
                      <div class="d-flex align-items-center">
-                          <button  class="btn btn-sm btn-primary mr-1">{{'Save'}}</button>
+                          <button  class="btn btn-sm btn-primary mr-2">{{'Save'}}</button>
                           <button class="btn btn-sm btn-secondary packageBtn" routerLink="/tour-crs/activities"> {{'Package Activities'}}  </button>
                     </div>
                 </div>

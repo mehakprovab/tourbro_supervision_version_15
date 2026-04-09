@@ -1,26 +1,5 @@
 
-p{background-color: #edeff1 !important;
-    color: #022756 !important;
-    width: 30rem !important;
-    height: 3rem !important;
-    padding-top: .8rem !important;
-    text-align: center !important;
-    font-weight: 500 !important;
-    border-radius: .3rem !important;
-    margin: 1rem !important;
-    border: 1px solid #022756;
-}
-button.orangeButton{
-    background-color: #fbc10a !important;
-    color: #fff !important;
-    border: none !important;
-    padding: 10px 20px !important;
-    font-weight: 500 !important;
-    border-radius: 0.3rem 0.3rem !important;
-    margin-top: 1rem !important;
-    height: 3rem !important;
-    // width: 4rem !important
-}
+
 .heading{
     display: flex !important ;
 }
@@ -32,22 +11,7 @@ button.orangeButton{
     width: 300px;
     margin-left: 16rem;
 }
-.saveButton{
-    margin-left: 21.5rem !important;
-    margin-bottom: 1rem;
-}
-input{
-    height: calc(2.25rem + 2px) ;
-    padding: 0.375rem 0.75rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    margin-left: 10px;
-}
+
 .packageBtn{
     width: none !important;
 }
@@ -56,32 +20,32 @@ input{
   }
 
   .wrapper1,
-  .wrapper2 {
-    width: 100%;
-    overflow-x: scroll;
-    overflow-y: hidden;
-  }
-  .wrapper1 {
-    height: 20px;
-  }
-  
-  
-  .div1 {
+.wrapper2 {
+  width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+.wrapper1 {
+  height: 20px;
+}
+
+.div1 {
     width: 1500px;
     height: 20px;
     @media(max-width:767px){
-        width: 600px;
+        width: 1200px;
     }
   }
   .div2 {
     width: 1500px;
     overflow: hidden;
     @media(max-width:767px){
-        width: 600px;
+        width: 1200px;
     }
   }
   
-  .div2 .table-responsive {overflow: inherit;}
-  .invisible-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
+.div2 .table-responsive {overflow: inherit;}
+.invisible-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  

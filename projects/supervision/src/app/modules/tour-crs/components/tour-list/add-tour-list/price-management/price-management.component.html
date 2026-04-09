@@ -1,4 +1,7 @@
-<div class="entireScreen  p-0 col-md-12 col-lg-12">
+<div class="card adminInner">
+     <div class="card-header mb-3">
+        <h5>Price Management</h5>
+      </div>
     <div>
         <app-add-price *ngIf="showAddPriceManagement" (insertedRecord)="insertedRecordReceived($event)" [tourPriceData]="tourUpdateData"></app-add-price>
         <app-update-price *ngIf="updatePriceManagement" (updated)="updatedList($event)" [updatePriceManagementData]="updatePriceManagementData"></app-update-price>
@@ -50,9 +53,9 @@
                                     <span>Non Refundable</span>
                                 </td>
                                 <td class="text-left buttontdsize">
-                                    <button  class="btn btn-sm btn-primary mr-1" (click)="onEdit(item)" >{{'Edit'}}
+                                    <button  class="btn btn-primary mr-1" (click)="onEdit(item)" >{{'Edit'}}
                                     </button>
-                                    <button class="btn btn-sm btn-primary mr-1" (click)="onDeletedRecord(item)"> {{'Delete'}}  </button>
+                                    <button class="btn btn-secondary" (click)="onDeletedRecord(item)"> {{'Delete'}}  </button>
                                 </td>
                         </tr>
                     </tbody>

@@ -1,24 +1,25 @@
-<div class="entireScreen">
+<div class="col-12">
   <form [formGroup]="cityForm" (ngSubmit)="onCitySave()">
-
+<div class="form-row">
     <!-- Country / State -->
-    <div class="countryInput">
-      <label class="font-weight-bold">Choose State</label>
+    <div class="col-md-4">
+      <label class="">Choose State</label>
       <select formControlName="stateId">
         <option value="" disabled selected>Choose State</option>
         <option *ngFor="let option of stateDataList" [value]="option.id">
           {{ option.name }}
         </option>
       </select>
-    </div>
-
-    <div *ngIf="cityForm.get('stateId').touched && cityForm.get('stateId').errors">
+       <div *ngIf="cityForm.get('stateId').touched && cityForm.get('stateId').errors">
       <div class="errorMessage">*Please choose state.</div>
     </div>
+    </div>
+
+   
 
     <!-- City Name -->
-    <div class="cityInput">
-      <label class="font-weight-bold">City Name</label>
+    <div class="col-md-4">
+      <label class="">City Name</label>
       <input
         type="text"
         placeholder="Enter City Name"
@@ -27,9 +28,7 @@
         (input)="validateInput()"
       />
       <!-- <span class="note">Note: Add multiple cities separated by comma (,)</span> -->
-    </div>
-
-    <div *ngIf="cityForm.get('cityName').touched && cityForm.get('cityName').errors">
+        <div *ngIf="cityForm.get('cityName').touched && cityForm.get('cityName').errors">
       <div *ngIf="cityForm.get('cityName').errors.required" class="errorMessage">
         *Please enter city name.
       </div>
@@ -40,41 +39,39 @@
         *No space at start or end.
       </div>
     </div>
+    </div>
+
+   
 
     <!-- Latitude -->
-    <div class="cityInput">
-      <label class="font-weight-bold">Latitude</label>
+    <div class="col-md-4">
+      <label class="">Latitude</label>
       <input type="text" formControlName="latitude" placeholder="Enter Latitude">
     </div>
 
     <!-- Longitude -->
-    <div class="cityInput">
-      <label class="font-weight-bold">Longitude</label>
+   <div class="col-md-4">
+      <label class="">Longitude</label>
       <input type="text" formControlName="longitude" placeholder="Enter Longitude">
     </div>
 <!-- Status Toggle -->
 <!-- Status Toggle -->
-<div class="cityInput">
-  <label class="font-weight-bold">Status</label>
+<div class="col-md-4">
+  <label>Status</label>
 
   <div class="toggleSwitch">
-    <label class="switch">
-      <input
-        type="checkbox"
-        [checked]="cityForm.get('status').value === 1"
-        (change)="onStatusChange($event)"
-      >
-      <span class="slider round"></span>
-    </label>
-
-    <span class="ml-2">
+    <mat-slide-toggle
+      formControlName="status"
+      (change)="onStatusChange($event)"
+    >
       {{ cityForm.get('status').value === 1 ? 'Active' : 'Inactive' }}
-    </span>
+    </mat-slide-toggle>
   </div>
 </div>
+</div>
     <!-- Submit -->
-    <div class="saveButton">
-      <button type="submit" class="orangeButton">Save</button>
+    <div class="saveButton my-3">
+      <button type="submit" class="btn btn-primary">Save</button>
     </div>
 
   </form>

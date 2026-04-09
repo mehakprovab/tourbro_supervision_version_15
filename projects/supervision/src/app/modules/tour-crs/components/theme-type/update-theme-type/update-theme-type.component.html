@@ -1,30 +1,36 @@
-<div class="entireScreen  p-0 col-md-12 col-lg-12">
-    <div class="heading">
-        <p>Edit Package Theme</p>
+<div class="card adminInner">
+    <div class="card-header mb-3">
+        <h5>Edit Package Theme</h5>
     </div>
     <div >
         <form [formGroup]="themeTypeForm" (ngSubmit)="onThemeTypeSave()">
-            <div class="themeTypeInput">
-                <label for="themeType" class="font-weight-bold" > Package Theme</label>
-                <input type="text" placeholder="Enter Package Theme"  formControlName="themeTypeName" maxlength="150"
-                (input)="validateInput()">
+            <div class="form-row">
+                 <div class="col-md-4">
+                    <div class="form-group">
+                         <label for="themeType" class="" > Package Theme</label>
+                         <input type="text" class="form-control" placeholder="Enter Package Theme"  formControlName="themeTypeName" maxlength="150" (input)="validateInput()">
+                 </div>
+                    <div *ngIf="themeTypeForm.controls.themeTypeName.errors && themeTypeForm.controls.themeTypeName.touched">
+                        <div *ngIf="themeTypeForm.controls.themeTypeName.errors.required" class="errorMessage">
+                        *Please enter upatded package theme type name.
+                        </div>
+                        <div *ngIf="themeTypeForm.controls.themeTypeName.errors.invalidString" class="errorMessage">
+                            *Number(s) are not allowed.
+                        </div>
+                        <div *ngIf="themeTypeForm.controls.themeTypeName.errors.startOrEndSpace"  class="errorMessage">
+                            *Empty space(s) in start and end are not allowed.
+                        </div>
+                    </div>
+                 </div>
+                   <div class="col-md-4">
+                    <label style="display: block;">&nbsp;</label>
+                     <div class="d-flex align-items-center">
+                         <button  class="btn btn-sm btn-primary mr-2">{{'Save'}}</button>
+                         <button class="btn btn-sm btn-secondary" routerLink="/tour-crs/theme-type"> {{'Package Theme'}}  </button>
+                     </div>
+                 </div>
             </div>
-            <div *ngIf="themeTypeForm.controls.themeTypeName.errors && themeTypeForm.controls.themeTypeName.touched">
-                <div *ngIf="themeTypeForm.controls.themeTypeName.errors.required" class="errorMessage">
-                  *Please enter upatded package theme type name.
-                </div>
-                <div *ngIf="themeTypeForm.controls.themeTypeName.errors.invalidString" class="errorMessage">
-                    *Number(s) are not allowed.
-                </div>
-                <div *ngIf="themeTypeForm.controls.themeTypeName.errors.startOrEndSpace"  class="errorMessage">
-                    *Empty space(s) in start and end are not allowed.
-                </div>
-            </div>
-            <div class="saveButton">
-                <button  class="btn btn-sm btn-primary mr-1 orangeButton">{{'Save'}}
-                </button>
-                <button class="btn btn-sm btn-primary mr-1 orangeButton packageBtn" routerLink="/tour-crs/theme-type"> {{'Package Theme'}}  </button>
-            </div>
+               
         </form>
     </div>
 </div>

@@ -36,18 +36,18 @@ button.orangeButton{
     margin-left: 21.5rem !important;
     margin-bottom: 1rem;
 }
-input{
-    height: calc(2.25rem + 2px) ;
-    padding: 0.375rem 0.75rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-   // margin-left: 10px;
-}
+// input{
+//     height: calc(2.25rem + 2px) ;
+//     padding: 0.375rem 0.75rem;
+//     font-weight: 400;
+//     line-height: 1.5;
+//     color: #495057;
+//     background-color: #fff;
+//     background-clip: padding-box;
+//     border: 1px solid #ced4da;
+//     border-radius: 0.25rem;
+//    // margin-left: 10px;
+// }
 table {
     border: 1px solid lightgray;
     border-collapse: collapse;
@@ -90,8 +90,9 @@ input[type="radio"] {
     overflow: auto;
     height: 150px;
     padding: 10px 15px;
-    border: 2px solid whitesmoke;
+    border: 1px solid #C4B3EB;
     margin-left: 15px;
+    border-radius: 8px;
 }
 
 ul{

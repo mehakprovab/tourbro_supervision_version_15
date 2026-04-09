@@ -12,8 +12,12 @@
      </div>
    
 
-
-    <form>
+<div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft" #scrollOne >
+        <div class="div1"></div>
+   </div>
+   <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
+        <div *ngIf="!editForm" class="div2 invisible-scrollbar">
+    
         <div class="table-responsive">
             <table class="table table-borderless table-striped table-hover" matSort >
                 <thead>
@@ -87,6 +91,8 @@
                 </tbody>
             </table>
         </div>
+        </div>
+        </div>
         <div class="card-footer pb-0">
             <div class="d-flex w-100 justify-content-between">
                 <ngb-pagination [collectionSize]="collectionSize" [maxSize]="12" [rotate]="true" [boundaryLinks]="true" [(page)]="page"
@@ -99,7 +105,7 @@
                 </select>
             </div>
         </div>
-    </form>
+    
 </div>
 
   <ngx-loading [show]="loading"

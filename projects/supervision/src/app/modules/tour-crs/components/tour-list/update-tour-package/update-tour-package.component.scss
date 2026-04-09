@@ -1,26 +1,5 @@
 
-p{
-    background-color: #f56f42 !important;
-    color: white !important;
-    width: 30rem !important;
-    height: 3rem !important; 
-    padding-top: 0.8rem !important;
-    text-align: center !important;
-    font-weight: 500 !important;
-    border-radius: 0.3rem !important;
-    margin: 1rem 1rem !important;
-}
-button.orangeButton{
-    background-color: #f56f42 !important;
-    color: white !important;
-    border: none !important;
-    padding: 0.4rem !important;
-    font-weight: 500 !important;
-    border-radius: 0.3rem 0.3rem !important;
-    margin-top: 1.3rem !important;
-    height: 2.3rem !important;
-    // width: 4rem !important
-}
+
 .heading{
     display: flex !important ;
 }
@@ -36,17 +15,7 @@ button.orangeButton{
     margin-left: 21.5rem !important;
     margin-bottom: 1rem;
 }
-input{
-    height: calc(2.25rem + 2px) ;
-    padding: 0.375rem 0.75rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-}
+
 table {
     border: 1px solid lightgray;
     border-collapse: collapse;
@@ -89,8 +58,9 @@ input[type="radio"] {
     overflow: auto;
     height: 150px;
     padding: 10px 15px;
-    border: 2px solid whitesmoke;
+    border: 1px solid #C4B3EB;
     margin-left: 15px;
+    border-radius: 8px;
 }
 
 ul{
@@ -145,13 +115,13 @@ input[type="checkbox"] {
 
 .imageList {
     display: inline-flex;
-    margin: 5px;
+    // margin: 5px;
   }
 
 .galleryImageItem{
     width: 180px; 
     height: 180px; 
-    margin-left: 4rem;
+    // margin-left: 4rem;
     @media(max-width: 767px){
         width: 233px;
         height: 151px;

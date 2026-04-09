@@ -1,25 +1,28 @@
-<div class="entireScreen p-0 col-md-12 col-lg-12">
-  <div class="heading">
-    <p>State</p>
-    <button class="orangeButton" (click)="onAddButtonClicked()">Add</button>
+<div class="card adminInner">
+  <div class="card-header mb-3">
+    <h5>State</h5>
+    <!-- <button class="orangeButton" (click)="onAddButtonClicked()">Add</button> -->
   </div>
 
   <!-- ✅ ADD STATE FORM -->
-  <app-add-state
-    *ngIf="enabledForm && !editForm"
-    (insertedRecord)="insertedRecordReceived()">
-  </app-add-state>
-</div>
+   
+    <!-- *ngIf="enabledForm && !editForm" -->
+  <app-add-state (insertedRecord)="insertedRecordReceived()"></app-add-state>
+
 
 <div class="entireScreen">
 
   <!-- Search -->
-  <div class="form-group mb-0 col-sm-3 p-0 float-right search">
-    <input class="form-control" type="text"
-      [(ngModel)]="searchText"
-      placeholder="Search">
-  </div>
-
+   <div class="form-group col-sm-3 p-0 mb-3 float-right has-search">
+            Full text search:
+            <input class="form-control ml-0" type="text" name="Search" [(ngModel)]="searchText" 
+            placeholder="Search">
+     </div>
+ <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft" #scrollOne >
+        <div class="div1"></div>
+   </div>
+   <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
+        <div *ngIf="!editForm" class="div2 invisible-scrollbar">
   <!-- Table -->
   <div class="table-responsive">
 
@@ -50,13 +53,13 @@
           </td>
 
           <td>
-            <button class="btn btn-sm btn-primary mr-1"
+            <button class="btn btn-sm btn-primary mr-2"
               [routerLink]="['/tour-crs/state/update', item.id]"
           >
               Edit
             </button>
 
-            <button class="btn btn-sm btn-primary mr-1"
+            <button class="btn btn-sm btn-secondary"
               (click)="onDeletedRecord(item)">
               Delete
             </button>
@@ -83,4 +86,8 @@
     </div>
 
   </div>
+  </div>
+  </div>
+
+</div>
 </div>

@@ -1,22 +1,20 @@
-<div class="entireScreen p-0 col-md-12 col-lg-12">
-  <div class="col-12 row">
-    <div class="heading col-6">
-      <p>Driver Master</p>
-
-    </div>
+<div class="card adminInner">
+  <div class="card-header mb-3">
+    <h5>Driver Master</h5>
   </div>
 
+
   <!-- ADD / UPDATE FORM -->
-  <div class="card" *ngIf="enabledForm">
+  <div class="mb-3" *ngIf="enabledForm">
     <form [formGroup]="addUpdateVendorForm" (ngSubmit)="saveTextName === 'Save' ? onSave() : update()">
       <div class="form-group row">
 
         <!-- Vendor Name -->
         <div class="col-4">
-          <label class="px-3 control-label">
+          <label class="control-label">
             Driver Name <span class="text-danger">*</span>
           </label>
-          <div class="col-sm-12">
+         
             <input type="text" class="form-control"
               [class.is-invalid]="addUpdateVendorForm.get('name').invalid && (addUpdateVendorForm.get('name').touched || isSubmitted)"
               placeholder="Driver Name" formControlName="name" />
@@ -27,13 +25,13 @@
                 Driver Name is required
               </span>
             </div>
-          </div>
+          
         </div>
-        <div class="col-4">
-          <label class="px-3 control-label">
+        <div class="col-4 p-0">
+          <label class="control-label">
             Age <span class="text-danger">*</span>
           </label>
-          <div class="col-sm-12">
+          
             <input type="number" class="form-control" formControlName="age" placeholder="Age" [class.is-invalid]="
         addUpdateVendorForm.get('age').invalid &&
         (addUpdateVendorForm.get('age').touched || isSubmitted)
@@ -48,17 +46,17 @@
               </span>
 
             </div>
-          </div>
+          
         </div>
 
 
 
         <!-- Phone Code -->
         <div class="col-4">
-          <label class="px-3 control-label">
+          <label class="control-label">
             Code <span class="text-danger">*</span>
           </label>
-          <div class="col-sm-12">
+          
             <select class="form-control"
               [class.is-invalid]="addUpdateVendorForm.get('phone_code').invalid && (addUpdateVendorForm.get('phone_code').touched || isSubmitted)"
               formControlName="phone_code">
@@ -72,15 +70,15 @@
               class="invalid-feedback">
               Phone Code is required
             </div>
-          </div>
+         
         </div>
 
         <!-- Mobile -->
         <div class="col-4">
-          <label class="px-3 control-label">
+          <label class="control-label">
             Mobile <span class="text-danger">*</span>
           </label>
-          <div class="col-sm-12">
+        
             <input type="text" class="form-control"
               [class.is-invalid]="addUpdateVendorForm.get('mobile').invalid && (addUpdateVendorForm.get('mobile').touched || isSubmitted)"
               placeholder="Mobile Number" formControlName="mobile" />
@@ -94,15 +92,15 @@
                 Mobile must be 10 digits
               </span>
             </div>
-          </div>
+          
         </div>
 
         <!-- Email -->
-        <div class="col-4">
-          <label class="px-3 control-label">
+        <div class="col-4 p-0">
+          <label class="control-label">
             Email <span class="text-danger">*</span>
           </label>
-          <div class="col-sm-12">
+          
             <input type="email" class="form-control"
               [class.is-invalid]="addUpdateVendorForm.get('email').invalid && (addUpdateVendorForm.get('email').touched || isSubmitted)"
               placeholder="Email" formControlName="email" />
@@ -116,16 +114,16 @@
                 Please enter a valid email
               </span>
             </div>
-          </div>
+          
         </div>
 
         <!-- Country -->
         <!-- Country -->
         <div class="col-4">
-          <label class="px-3 control-label">
+          <label class="control-label">
             Country <span class="text-danger">*</span>
           </label>
-          <div class="col-sm-12">
+          
             <select class="form-control"
               [class.is-invalid]="addUpdateVendorForm.get('country').invalid && (addUpdateVendorForm.get('country').touched || isSubmitted)"
               formControlName="country" [compareWith]="compareCountries">
@@ -139,48 +137,39 @@
               class="invalid-feedback d-block">
               Country is required
             </div>
-          </div>
+          
         </div>
 
         <!-- City -->
         <div class="col-4">
-          <label class="px-3 control-label">
+          <label class="control-label">
             City <span class="text-danger">*</span>
           </label>
-          <div class="col-sm-12">
-      <mat-form-field appearance="fill" class="w-100">
-  <mat-label>City</mat-label>
+          
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label>City</mat-label>
 
-  <mat-select
-    formControlName="city"
-    required
-    (openedChange)="onCityDropdownOpen($event)"
-    #citySelect
-    panelClass="city-panel"
-  >
+              <mat-select formControlName="city" required (openedChange)="onCityDropdownOpen($event)" #citySelect
+                panelClass="city-panel">
 
-    <!-- 🔍 SEARCH -->
-    <mat-option>
-      <input
-        matInput
-        placeholder="Search city"
-        (keyup)="onCitySearch($event.target.value)"
-        (click)="$event.stopPropagation()"
-      />
-    </mat-option>
+                <!-- 🔍 SEARCH -->
+                <mat-option>
+                  <input matInput placeholder="Search city" (keyup)="onCitySearch($event.target.value)"
+                    (click)="$event.stopPropagation()" />
+                </mat-option>
 
-    <!-- OPTIONS -->
-    <mat-option *ngFor="let city of cityList" [value]="city.id">
-      {{ city.city_name }}
-    </mat-option>
+                <!-- OPTIONS -->
+                <mat-option *ngFor="let city of cityList" [value]="city.id">
+                  {{ city.city_name }}
+                </mat-option>
 
-    <!-- LOADER -->
-    <mat-option *ngIf="loadingCities" disabled>
-      Loading...
-    </mat-option>
+                <!-- LOADER -->
+                <mat-option *ngIf="loadingCities" disabled>
+                  Loading...
+                </mat-option>
 
-  </mat-select>
-</mat-form-field>
+              </mat-select>
+            </mat-form-field>
             <div
               *ngIf="addUpdateVendorForm.get('city').invalid && (addUpdateVendorForm.get('city').touched || isSubmitted)"
               class="invalid-feedback">
@@ -189,14 +178,14 @@
             <small *ngIf="loadingCities" class="text-info">
               Loading cities...
             </small>
-          </div>
+          
         </div>
 
-        <div class="col-4">
-          <label class="px-3 control-label">
+        <div class="col-4 p-0">
+          <label class="control-label">
             Select Vendor <span class="text-danger">*</span>
           </label>
-          <div class="col-sm-12">
+        
             <select class="form-control" formControlName="vendor_id" [class.is-invalid]="
         addUpdateVendorForm.get('vendor_id').invalid &&
         (addUpdateVendorForm.get('vendor_id').touched || isSubmitted)
@@ -213,74 +202,60 @@
       " class="invalid-feedback">
               Vendor is required
             </div>
-          </div>
+          
         </div>
-<div class="col-4">
-  <label class="px-3 control-label">
-    DL No <span class="text-danger">*</span>
-  </label>
-
-  <div class="col-sm-12">
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Driving License Number"
-      formControlName="dl_no"
-      [class.is-invalid]="addUpdateVendorForm.get('dl_no').invalid && 
-        (addUpdateVendorForm.get('dl_no').touched || isSubmitted)"
-    />
-
-    <div
-      *ngIf="addUpdateVendorForm.get('dl_no').invalid && 
-        (addUpdateVendorForm.get('dl_no').touched || isSubmitted)"
-      class="invalid-feedback"
-    >
-      <span *ngIf="addUpdateVendorForm.get('dl_no').errors?.required">
-        DL Number is required
-      </span>
-
-      <span *ngIf="addUpdateVendorForm.get('dl_no').errors?.pattern">
-        Only letters, numbers and hyphen (-) are allowed
-      </span>
-      <span *ngIf="addUpdateVendorForm.get('dl_no').errors?.maxlength">
-      Dl can be 25 characters lons
-      </span>
-    </div>
-  </div>
-</div>
-            
         <div class="col-4">
-          <label class="px-3 control-label">
-            Driver Image <span class="text-danger">*</span>
-             <small class="text-muted d-block">
-    Allowed: JPEG, PNG | Max size: 200KB
-  </small>
+          <label class="control-label">
+            DL No <span class="text-danger">*</span>
           </label>
-          <div class="col-sm-12">
-            <input
-  #fileInput
-  type="file"
-  class="form-control"
-  accept="image/*"
-  (change)="onImageChange($event)"
-  [class.is-invalid]="
+
+          
+            <input type="text" class="form-control" placeholder="Driving License Number" formControlName="dl_no"
+              [class.is-invalid]="addUpdateVendorForm.get('dl_no').invalid && 
+        (addUpdateVendorForm.get('dl_no').touched || isSubmitted)" />
+
+            <div *ngIf="addUpdateVendorForm.get('dl_no').invalid && 
+        (addUpdateVendorForm.get('dl_no').touched || isSubmitted)" class="invalid-feedback">
+              <span *ngIf="addUpdateVendorForm.get('dl_no').errors?.required">
+                DL Number is required
+              </span>
+
+              <span *ngIf="addUpdateVendorForm.get('dl_no').errors?.pattern">
+                Only letters, numbers and hyphen (-) are allowed
+              </span>
+              <span *ngIf="addUpdateVendorForm.get('dl_no').errors?.maxlength">
+                Dl can be 25 characters lons
+              </span>
+            </div>
+          
+        </div>
+
+        <div class="col-4">
+          <label class="control-label">
+            Driver Image <span class="text-danger">*</span>
+            <small class="text-muted d-block">
+              Allowed: JPEG, PNG | Max size: 200KB
+            </small>
+          </label>
+         
+            <input #fileInput type="file" class="form-control" accept="image/*" (change)="onImageChange($event)"
+              [class.is-invalid]="
     addUpdateVendorForm.get('image').invalid &&
     (addUpdateVendorForm.get('image').touched || isSubmitted)
-  "
-/>
+  " />
 
-<!-- New image preview -->
-<div *ngIf="imagePreview" class="mt-1">
-  <img [src]="imagePreview" width="100" height="50" class="rounded">
-</div>
+            <!-- New image preview -->
+            <div *ngIf="imagePreview" class="mt-1">
+              <img [src]="imagePreview" width="100" height="50" class="rounded">
+            </div>
 
-<!-- Existing image (edit mode) -->
-<div *ngIf="!imagePreview && existingImage" class="mt-1">
-  <img [src]="getImage(existingImage)" width="100" height="50" class="rounded">
-</div>
+            <!-- Existing image (edit mode) -->
+            <div *ngIf="!imagePreview && existingImage" class="mt-1">
+              <img [src]="getImage(existingImage)" width="100" height="50" class="rounded">
+            </div>
 
 
-          </div>
+         
         </div>
         <!-- DL Number -->
 
@@ -289,56 +264,48 @@
 
       <!-- BUTTONS -->
       <div class="saveButton">
-        <button type="submit" class="btnStyle save-btn">
+        <button type="submit" class="btn btn-primary save-btn">
           {{ saveTextName }}
         </button>
-        <button type="button" class="btnStyle ml-2" (click)="onCancel()">
+        <button type="button" class="btn btn-secondary ml-2" (click)="onCancel()">
           Cancel
         </button>
       </div>
     </form>
   </div>
-</div>
-<!-- LIST HEADER -->
-<div class="col-12 row">
-  <div class="heading col-6">
-    <p>Driver List</p>
-  </div>
-
-  <div class="form-group mb-0 col-sm-6 col-6 p-0 float-right has-search d-flex justify-content-end">
-    <div class="col-6 pt-3">
-      <span class="fa fa-search form-control-feedback"></span>
-      <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Search" />
+  <!-- TABLE -->
+  <div class="entireScreen">
+    <div class="form-group col-sm-3 p-0 mb-3 float-right has-search">
+      Full text search:
+      <input class="form-control ml-0" type="text" name="Search" [(ngModel)]="searchText" placeholder="Search">
     </div>
-  </div>
-</div>
+     <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft" #scrollOne >
+        <div class="div1"></div>
+   </div>
+   <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
+        <div *ngIf="!editForm" class="div2 invisible-scrollbar">
+        <div class="table-responsive">
+          <table class="table table-borderless table-striped table-hover">
+            <thead>
+              <tr>
+                <th *ngFor="let header of displayColumn">{{ header }}</th>
+              </tr>
+            </thead>
 
-<!-- TABLE -->
-<div class="entireScreen">
-  <div class="wrapper2">
-    <div class="div2 invisible-scrollbar">
-      <div class="table-responsive">
-        <table class="table table-borderless table-striped table-hover">
-          <thead>
-            <tr>
-              <th *ngFor="let header of displayColumn">{{ header }}</th>
-            </tr>
-          </thead>
+            <tbody>
+              <tr *ngIf="searchSpin">
+                <td colspan="10" class="text-center">
+                  <mat-spinner [diameter]="30"></mat-spinner>
+                </td>
+              </tr>
 
-          <tbody>
-            <tr *ngIf="searchSpin">
-              <td colspan="10" class="text-center">
-                <mat-spinner [diameter]="30"></mat-spinner>
-              </td>
-            </tr>
+              <tr *ngIf="!searchSpin && !driverList.length">
+                <td colspan="10" class="text-center text-muted">
+                  No Data Found!
+                </td>
+              </tr>
 
-            <tr *ngIf="!searchSpin && !driverList.length">
-              <td colspan="10" class="text-center text-muted">
-                No Data Found!
-              </td>
-            </tr>
-
-            <tr *ngFor="
+              <tr *ngFor="
       let item of driverList
         | filter: searchText
         | slice:
@@ -346,60 +313,61 @@
             (page - 1) * pageSize + pageSize;
       let i = index
     ">
-              <td>{{ i + 1 }}</td>
-   <td>
-                <mat-slide-toggle
-                  [(ngModel)]="item.status"
-                  (change)="onStatusChange($event, item.id)"
-                ></mat-slide-toggle>
-              </td>
+                <td>{{ i + 1 }}</td>
+                <td>
+                  <mat-slide-toggle [(ngModel)]="item.status"
+                    (change)="onStatusChange($event, item.id)"></mat-slide-toggle>
+                </td>
 
-              <!-- ❌ Status removed -->
+                <!-- ❌ Status removed -->
 
-              <td>{{ item.name }}</td>
-              <td>{{ item.age }}</td>
-              <td>{{ item.dl_no }}</td>
-              <td>{{ item.mobile }}</td>
-              <td>{{ item.email }}</td>
-              <td>{{ item.country }}</td>
-              <td>{{ item.city }}</td>
-            <td>{{ getVendorName(item.vendor_id) }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.age }}</td>
+                <td>{{ item.dl_no }}</td>
+                <td>{{ item.mobile }}</td>
+                <td>{{ item.email }}</td>
+                <td>{{ item.country }}</td>
+                <td>{{ item.city }}</td>
+                <td>{{ getVendorName(item.vendor_id) }}</td>
 
-              <td>
-                <img *ngIf="item.dl_image" [src]="getImage(item.dl_image)" width="80" height="40">
-              </td>
-              <td>
-                <button class="btn btn-sm btn-primary mr-1" (click)="editDriver(item)">
-                  Edit
-                </button>
-                <button class="btn btn-sm btn-primary" (click)="onDelete(item.id)">
-                  Delete
-                </button>
-              </td>
-            </tr>
-          </tbody>
+                <td>
+                  <img *ngIf="item.dl_image" [src]="getImage(item.dl_image)" width="80" height="40">
+                </td>
+                <td>
+                  <button class="btn btn-sm btn-primary mr-2" (click)="editDriver(item)">
+                    Edit
+                  </button>
+                  <button class="btn btn-sm btn-secondary" (click)="onDelete(item.id)">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
 
-        </table>
+          </table>
 
-        <!-- PAGINATION -->
-        <div class="card-footer pb-0">
-          <div class="d-flex w-100 justify-content-between">
-            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
-              [maxSize]="5"></ngb-pagination>
+          <!-- PAGINATION -->
+          <div class="card-footer pb-0">
+            <div class="d-flex w-100 justify-content-between">
+              <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
+                [maxSize]="5"></ngb-pagination>
 
-            <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
-              <option [ngValue]="20">20</option>
-              <option [ngValue]="50">50</option>
-              <option [ngValue]="100">100</option>
-              <option [ngValue]="200">200</option>
-            </select>
+              <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+                <option [ngValue]="20">20</option>
+                <option [ngValue]="50">50</option>
+                <option [ngValue]="100">100</option>
+                <option [ngValue]="200">200</option>
+              </select>
+            </div>
           </div>
-        </div>
 
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+
 
 <!-- LOADER -->
 <ngx-loading [show]="loading" [config]="{

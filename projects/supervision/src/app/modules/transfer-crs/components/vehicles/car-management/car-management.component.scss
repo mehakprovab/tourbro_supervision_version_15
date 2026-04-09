@@ -1,0 +1,125 @@
+.border-bottom{border-bottom:1px solid #ddd;}
+.midheading{font-size: 18px; font-weight: 500;color: #282828;}
+
+
+button.orangeButton{
+    background-color: #fbc10a !important;
+    color: #fff !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    font-weight: 500 !important;
+    border-radius: 0.3rem 0.3rem !important;
+    margin-top: 1rem !important;
+    height: 3rem !important;
+    // width: 4rem !important
+}
+
+.continentInput{
+    width: 300px;
+    margin-left: 16rem;
+}
+
+.packageBtn{
+    width: none !important;
+}
+
+.customeButton{
+    border: none;
+    background: transparent;
+}
+
+input[type=checkbox]{
+    width: auto;
+}
+
+// to action css
+.actions {
+    position: relative;
+  }
+  
+  .actions-menu {
+    position: absolute;
+    top: 30%;
+    left: -55px;
+    z-index: 1;
+    list-style: none;
+    background-color: #ccc;
+    border: 1px solid #ccc;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    display: none;
+  }
+  
+  .actions-menu li {
+    padding: 5px;
+  }
+  
+  .actions-menu li a {
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .btn-secondary:hover + .actions-menu,
+  .actions-menu:hover {
+    display: block;
+  }
+  
+  .btn-secondary:focus + .actions-menu {
+    display: block;
+    outline: none;
+  }
+  
+  .actions-menu li a:hover {
+    background-color: #f2f2f2;
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    width: 62%;
+    justify-content: flex-end !important;
+  }
+  
+  .text-element {
+    margin-right: 10px;
+  }
+  
+  .checkbox-input {
+    margin-left: 10px;
+  }
+  
+  .wrapper1,
+.wrapper2 {
+  width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+.wrapper1 {
+  height: 20px;
+}
+
+.div1 {
+    width: 2500px;
+    height: 20px;
+    @media(max-width:767px){
+        width: 1200px;
+    }
+  }
+  .div2 {
+    width: 2500px;
+    overflow: hidden;
+    @media(max-width:767px){
+        width: 1200px;
+    }
+  }
+  
+.div2 .table-responsive {overflow: inherit;}
+.invisible-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+.search input{
+  margin: 0px !important;
+}
+  

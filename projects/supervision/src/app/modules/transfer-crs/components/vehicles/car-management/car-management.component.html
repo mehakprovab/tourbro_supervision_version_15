@@ -72,7 +72,18 @@
           Mobile must be 10 digits
         </small>
       </div>
-
+<div class="col-3">
+        <label>Reassigned By</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="reassignForm.reassigned_by"
+        />
+        <small class="text-danger"
+          *ngIf="submitted && !reassignForm.reassigned_by">
+          Reassigned by is required
+        </small>
+      </div>
     </div>
 
     <!-- BUTTONS -->
@@ -119,8 +130,10 @@
               <th>Booked On</th>
               <th>Travel Date</th>
               <th>Car Number</th>
+              <th>Supplier Name</th>
               <th>Driver Name</th>
               <th>Driver Phone</th>
+               <th>Reassigned By</th>
               <th>Pickup</th>
               <th>Drop</th>
               <th>Total Fare</th>
@@ -181,15 +194,16 @@
               <td>{{ item.car_model }}</td>
               <td>{{ item.capacity }}</td>
               <td>{{ item.fuel }}</td>
-              <!-- <td>{{ item.trip_type }}</td> -->
+              <td>{{ item.Maintype }}</td>
 
               <td>{{ item.booked_on | date:'short' }}</td>
               <td>{{ item.travel_date | date:'short' }}</td>
 
               <td>{{ item.car_number }}</td>
+              <td>{{item.supplierName}}</td>
               <td>{{ item.driver_name || '-' }}</td>
               <td>{{ item.driver_phone }}</td>
-
+           <td>{{ item.reassigned_by }}</td>
               <td>{{ item.pickup }}</td>
               <td>{{ item.drop }}</td>
               <td>₹ {{ item.total }}</td>

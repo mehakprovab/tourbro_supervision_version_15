@@ -1,10 +1,9 @@
-<div class="card adminInner">
-  <div class="card-header mb-3">
-    <h5>Pricing Master</h5>
+<div class="card p-3" *ngIf="enabledForm">
+    <div class="row">
+    <div class="col-6 ">
+      <p>Price Master</p>
+    </div>
   </div>
-
-
-<div class="mb-0" *ngIf="enabledForm">
   <form [formGroup]="addUpdateVendorForm" (ngSubmit)="onSubmit()">
     <div class="row">
 
@@ -227,19 +226,16 @@
 </div>
 
 <!-- ---------- LIST ---------- -->
-<div class="entireScreen">
-    <div class="form-group col-sm-3 p-0 mb-3 float-right has-search">
-      Full text search:
-      <input class="form-control ml-0" type="text" name="Search" [(ngModel)]="searchText" placeholder="Search">
-    </div>
-
-  <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft" #scrollOne >
-        <div class="div1"></div>
-   </div>
-   <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
-        <div *ngIf="!editForm" class="div2 invisible-scrollbar">
-    <div class="table-responsive">
-  <table class="table table-borderless table-striped table-hover">
+<div class="card mt-4 p-3">
+  <div class="row mb-2">
+    <div class="heading col-6">
+    <p>Prcie List</p>
+  </div>
+    <div class="col-2"></div>
+    <div class="col-4"><input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchText"></div>
+  </div>
+<div class="table-responsive price-scroll">
+  <table class="table table-striped table-hover">
     <thead>
   <tr>
     <th>Sl</th>

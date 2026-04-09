@@ -85,6 +85,13 @@ export class AddUpdateHotelAmenityComponent implements OnInit {
         }
 
         let data = Object.assign({}, this.hotelAmenityForm.value);
+         if (data['hotel_amenity_name']) {
+        data['hotel_amenity_name'] = data['hotel_amenity_name']
+            .trim()
+            .toLowerCase()
+            .replace(/^\w/, c => c.toUpperCase());
+    }
+
         if (data['status']) {
             data['status'] = true;
         } else {
@@ -117,7 +124,11 @@ export class AddUpdateHotelAmenityComponent implements OnInit {
                 else {
                     this.swalService.alert.oops(resp.msg);
                 }
-            })
+            },(error)=>{
+             this.swalService.alert.oops(error.error.Message);
+           
+
+        })
     }
 
 }

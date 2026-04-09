@@ -85,6 +85,14 @@ export class AddUpdateRoomTypeComponent implements OnInit {
         }
 
         let data = Object.assign({}, this.roomTypeForm.value);
+
+    // ✅ Trim + Capitalize first letter
+    if (data['room_type_name']) {
+        data['room_type_name'] = data['room_type_name']
+            .trim()
+            .toLowerCase()
+            .replace(/^\w/, c => c.toUpperCase());
+    }
         if (data['status']) {
             data['status'] = true;
         } else {
@@ -117,7 +125,11 @@ export class AddUpdateRoomTypeComponent implements OnInit {
                 else {
                     this.swalService.alert.oops(resp.msg);
                 }
-            })
+            },(error)=>{
+             this.swalService.alert.oops(error.error.Message);
+           
+
+        })
     }
 
 

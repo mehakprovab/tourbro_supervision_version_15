@@ -225,7 +225,19 @@
                             <div *ngIf="hotel.room_view_ids.errors.required">Room Views are required</div>
                         </div>
                     </div>
-                    <div class="col-sm-6 mb-3">
+                    <div class="col-sm-4 mb-3 meal-plan-dropdown">
+                        <label class=" control-label">
+               Stay Amenities
+                            <span class="text-danger">*</span>
+                        </label>
+                        <ng-multiselect-dropdown formControlName="stay_amenities" [placeholder]="'Select Stay Amenities'"
+                            [data]="amenitiesList" [settings]="dropdownSettingsForAmentities" class="form-control meal-plan-dropdown">
+                        </ng-multiselect-dropdown>
+                        <div *ngIf="submittedHotel && hotel.stay_amenities.errors" class="invalid-feedback">
+                            <div *ngIf="hotel.stay_amenities.errors.required">Stay amenities are required</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 mb-3">
                         <label for="checkInTime" class="control-label">CheckInTime
                             <span class="text-danger">*</span>
                         </label>
@@ -238,7 +250,7 @@
                         </select>
                         <!-- </div> -->
                     </div>
-                    <div class="col-sm-6 mb-3">
+                    <div class="col-sm-4 mb-3">
                         <label for="checkin_time" class="control-label">CheckOutTime
                             <span class="text-danger">*</span>
                         </label>

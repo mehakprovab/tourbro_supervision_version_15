@@ -25,7 +25,9 @@ export class RoomDetailComponent implements OnInit {
     @Output() someEvent = new EventEmitter<any>();
     @Output() roomDataChange = new EventEmitter<any>();
     @Output() selectionChanged = new EventEmitter<any>();
-
+adultOptions: number[] = [];
+childOptions: number[] = [];
+infantOptions: number[] = [];
     selectedMealPlans: any[] = [];
     selectedRoomViews: any[] = [];
     showRoomList: boolean=true;
@@ -166,11 +168,47 @@ createHotelRoomForm(): void {
         hotel_id: [''],
         status: new FormControl('')
     })
-    this.roomDetailForm.get('occupancy_adult').valueChanges.subscribe(() => this.updateTotalOccupancy());
-    this.roomDetailForm.get('occupancy_child').valueChanges.subscribe(() => this.updateTotalOccupancy());
-    this.roomDetailForm.get('occupancy_infant').valueChanges.subscribe(() => this.updateTotalOccupancy());
+    // this.roomDetailForm.get('occupancy_adult').valueChanges.subscribe(() => this.updateTotalOccupancy());
+    // this.roomDetailForm.get('occupancy_child').valueChanges.subscribe(() => this.updateTotalOccupancy());
+    // this.roomDetailForm.get('occupancy_infant').valueChanges.subscribe(() => this.updateTotalOccupancy());
+    // 
+    this.roomDetailForm.get('occupancy').valueChanges.subscribe(() => {
+    this.resetOccupancyFields();
+    this.updateDropdownLimits();
+});
+
+this.roomDetailForm.get('occupancy_adult').valueChanges.subscribe(() => {
+    this.updateDropdownLimits();
+});
+
+this.roomDetailForm.get('occupancy_child').valueChanges.subscribe(() => {
+    this.updateDropdownLimits();
+});
 }
 
+resetOccupancyFields() {
+    this.roomDetailForm.patchValue({
+        occupancy_adult: 1,
+        occupancy_child: 0,
+        occupancy_infant: 0
+    }, { emitEvent: false });
+}
+updateDropdownLimits() {
+    const occupancy = Number(this.roomDetailForm.get('occupancy').value || 0);
+    const adult = Number(this.roomDetailForm.get('occupancy_adult').value || 0);
+    const child = Number(this.roomDetailForm.get('occupancy_child').value || 0);
+
+    // Adult → max = occupancy
+    this.adultOptions = Array.from({ length: occupancy }, (_, i) => i + 1);
+
+    // Child → max = remaining after adult
+    const remainingAfterAdult = occupancy - adult;
+    this.childOptions = Array.from({ length: remainingAfterAdult + 1 }, (_, i) => i);
+
+    // Infant → max = remaining after adult + child
+    const remainingAfterChild = occupancy - adult - child;
+    this.infantOptions = Array.from({ length: remainingAfterChild + 1 }, (_, i) => i);
+}
 updateTotalOccupancy() {
     const occupancyControl = this.roomDetailForm.get('occupancy');
     console.log("occupancyControl",occupancyControl)

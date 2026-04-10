@@ -803,9 +803,19 @@ onSubmitPrice(onSubmitPrice?) {
             log.debug(error)
         }
         log.debug('data', data);
-        this.submitFrom = onSubmitPrice;
-        this.priceDataPayLoad = data;
-        this.hotelCrsService.update(data).subscribe(resp => {
+       this.submitFrom = onSubmitPrice;
+this.priceDataPayLoad = data;
+
+let apiCall;
+
+if (onSubmitPrice === 'topUpRate') {
+  console.log(data,"data")
+  apiCall = this.hotelCrsService.topUpRate(data);
+} else {
+  apiCall = this.hotelCrsService.update(data);
+}
+
+apiCall.subscribe(resp => {
             if (resp.statusCode == 201) {
                 this.addedPriceDetail = resp['data']
                     this.roomPriceList =true;

@@ -11,6 +11,8 @@ import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export
 import { formatDate } from 'ngx-bootstrap/chronos';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { catchError, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 const log = new Logger('report/B2cHotelComponent');
 let filterArray: Array<any> = [];
@@ -57,7 +59,7 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
         { key: 'HotelAddress', value: 'Hotel Location' },
         { key: 'PhoneNumber', value: 'Phone' },
         { key: 'Email', value: 'Email' },
-        { key: 'htb', value: 'HTB/GTA No' },
+        // { key: 'htb', value: 'HTB/GTA No' },
         { key: 'FirstName', value: 'Lead Passenger Name' },
         { key: 'HotelCheckIn', value: 'Checkin Date' },
         { key: 'HotelCheckOut', value: 'Checkout Date' },
@@ -73,7 +75,7 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
         // { key: 'Discount', value: 'Reward Discount' },
         { key: 'supplier_net', value: 'Supplier Netfare' },
         // { key: 'supplier_pay', value: 'Supplier Payable' },
-        { key: 'supplier_currency', value: 'Difference' },
+        // { key: 'supplier_currency', value: 'Difference' },
         { key: 'TotalFare', value: 'Total' },
         { key: 'Currency', value: 'Currency' },
         { key: 'CreatedDatetime', value: 'Booked On' },
@@ -513,47 +515,64 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
         });
     }
     
-      addHCN() {
-
-        let hotelData = this.hcnData;
-        console.log("hotelData", hotelData,)
-        let reqBody = {
-            "app_reference": hotelData.BookingDetails.AppReference,
-            "hcnNumber": this.hotelTypeForm.value.hcnNumber
-        }
-        this.subSunk.sink = this.apiHandlerService.apiHandler('adHcnNumber', 'post', '', '', reqBody).subscribe(res => {
-            if (res) {
-                this.swalService.alert.success("HCN added sucessfully");
-                this.showConfirmHCN = false;
-                this.hotelTypeForm.reset();
-                this.getB2cHotelReport();
-                this.hotelHCNEmail(hotelData.BookingDetails.AppReference);
-            }
-        }, err => {
-            if (err.status == 400)
-                this.swalService.alert.oops(err.error.Message);
+addHCN() {
+    let hotelData = this.hcnData;
+    console.log("hotelData", hotelData)
+    let reqBody = {
+        "app_reference": hotelData.BookingDetails.AppReference,
+        "hcnNumber": this.hotelTypeForm.value.hcnNumber
+    }
+    this.subSunk.sink = this.apiHandlerService.apiHandler('adHcnNumber', 'post', '', '', reqBody).subscribe(res => {
+        if (res) {
+            this.swalService.alert.success("HCN added successfully");
+            // Fire and forget - don't wait for email response
+            this.hotelHCNEmail(hotelData.BookingDetails.AppReference).subscribe({
+                next: (emailRes) => {
+                    console.log("Email sent successfully:", emailRes);
+                },
+                error: (err) => {
+                    console.error("Email notification failed:", err);
+                    // Optional: Show user that email failed but HCN was added
+                    this.swalService.alert.warning("HCN added but email notification failed");
+                }
+            });
             this.showConfirmHCN = false;
-        });
-    }
-        hotelHCNEmail(appReference) {
-        let payLoad;
-        if(this.isUpdate) {
-            payLoad = {
-                booking_source: this.showBookSource,
-                AppReference: appReference,
-                amend: 1   
-            }
-        } else {
-            payLoad = {
-                booking_source: this.showBookSource,
-                AppReference: appReference
-            }
+            this.hotelTypeForm.reset();
+            this.getB2cHotelReport();
         }
-        
-        this.apiHandlerService.apiHandler('hotelHCNEmail','POST','','',payLoad).subscribe((resp)=>{
-
-        })
+    }, err => {
+        if (err.status == 400)
+            this.swalService.alert.oops(err.error.Message);
+        this.showConfirmHCN = false;
+    });
+}
+     hotelHCNEmail(appReference) {
+    let payLoad;
+    if(this.isUpdate) {
+        payLoad = {
+            booking_source: this.showBookSource,
+            AppReference: appReference,
+            amend: 1   
+        }
+    } else {
+        payLoad = {
+            booking_source: this.showBookSource,
+            AppReference: appReference
+        }
     }
+    
+    console.log("Sending email API with payload:", payLoad);
+    
+    return this.apiHandlerService.apiHandler('hotelHCNEmail','POST','','',payLoad).pipe(
+        tap(response => {
+            console.log("Email API response:", response);
+        }),
+        catchError(error => {
+            console.error("Email API error:", error);
+            return of(error);
+        })
+    );
+}
     ngOnDestroy(): void {
         this.subSunk.unsubscribe();
     }

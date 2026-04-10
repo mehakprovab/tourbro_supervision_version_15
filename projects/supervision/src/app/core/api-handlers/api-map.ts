@@ -705,4 +705,5 @@ export const apiMap = {
       addwhyChooseusData: `${baseUrl}/common/addwhyChooseusData`,
       updateGuideProcessStatus: `${baseUrl}/dashboard/report/editGuideProcessStatus`,
       updateGuideLastStatus: `${baseUrl}/dashboard/report/editGuideSideMainStatus`,
+      hotelHCNEmail: `${B2C_URL}/webservice/hotel/hotel/hotelHCNEmail`,
 };

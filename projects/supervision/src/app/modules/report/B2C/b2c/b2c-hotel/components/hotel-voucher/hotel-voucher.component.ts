@@ -46,7 +46,9 @@ export class HotelVoucherComponent implements OnInit, OnDestroy {
         private cdr: ChangeDetectorRef,
           private location : Location
     ) { }
-
+printVoucher() {
+  window.print();
+}
     ngOnInit() {
         this.subSunk.sink = this.activatedRoute.queryParams.subscribe(queryParams => {
             this.app_reference = (queryParams['appReference']);

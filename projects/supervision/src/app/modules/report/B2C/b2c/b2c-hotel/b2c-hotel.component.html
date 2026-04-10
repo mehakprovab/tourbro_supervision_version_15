@@ -240,8 +240,8 @@
                                                 ? data['BookingDetails']['PhoneNumber'] : 'N/A' }} </td>
                                             <td *ngIf="loggedInUser['auth_role_id'] !== 6" class="text-left">{{ data['BookingDetails']['Email']!="undefined" ?
                                                 data['BookingDetails']['Email'] : 'N/A' }}</td>
-                                            <td class="text-left"  *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7">
-                                                {{data['GTANumber'] || 'N/A'}} </td>
+                                            <!-- <td class="text-left"  *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7">
+                                                {{data['GTANumber'] || 'N/A'}} </td> -->
                                             <td class="text-left text-uppercase">
                                                 {{findLeaduserDetails(data.BookingPaxDetails)}} </td>
                                             <td class="text-left"> {{data['BookingDetails']['HotelCheckIn'] | date:
@@ -276,7 +276,7 @@
                                                 }} {{data.BookingDetails?.API_Currency}}</td>
                                             <!-- <td class="text-left"> {{data.BookingDetails?.API_Payable_Price || 0 }}
                                                 {{data.BookingDetails?.API_Currency}}</td> -->
-                                            <td class="text-left"  *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7"> {{data.BookingDetails?.API_Commission || '' }} </td>
+                                            <!-- <td class="text-left"  *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7"> {{data.BookingDetails?.API_Commission || '' }} </td> -->
                                             <td *ngIf="loggedInUser['auth_role_id'] !== 6 " class="text-left"> {{data['BookingItineraryDetails'].length > 0 ?
                                                 data['BookingDetails']['TotalAmount'] : "0"}}
                                             </td>

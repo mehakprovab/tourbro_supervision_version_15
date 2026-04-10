@@ -951,6 +951,10 @@ onViewDeselectAll(event: any) {
   
 onSubmitPrice() {
     this.submittedRoomPrice = true;
+    if(this.roomPriceForm.invalid) {
+  this.logInvalidControls(this.roomPriceForm);
+  return;
+}
     if (this.roomPriceForm.valid) {
       console.log("this.roomPriceForm.value.from_date",this.roomPriceForm.value.from_date)
         // const dt1 = new Date(this.roomPriceForm.value.from_date);
@@ -1068,7 +1072,20 @@ onSubmitPrice() {
 
 }
 
+logInvalidControls(form: FormGroup | FormArray, parentKey: string = '') {
+  Object.keys(form.controls).forEach(key => {
+    const control = form.get(key);
+    const controlKey = parentKey ? `${parentKey}.${key}` : key;
 
+    if (control instanceof FormGroup || control instanceof FormArray) {
+      this.logInvalidControls(control, controlKey);
+    } else {
+      if (control && control.invalid) {
+        console.log(`Invalid control: ${controlKey}`, control.errors);
+      }
+    }
+  });
+}
 
 
 

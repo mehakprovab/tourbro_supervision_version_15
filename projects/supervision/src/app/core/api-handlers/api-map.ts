@@ -124,6 +124,7 @@ export const apiMap = {
   priceList: `${baseUrl}/hotel/room-seasons/roomPriceList`,
   priceManagementList: `${baseUrl}/hotel/room-prices-management/priceList`,
   updatePriceManagement: `${baseUrl}/hotel/room-prices-management/updateRoomPrice`,
+   roomCountUpdate: `${baseUrl}/hotel/room-prices-management/addRoomCount`,
   delRoomPrice: `${baseUrl}/hotel/room-prices-management/delRoomPrice`,
   //addSeason: `${baseUrl}/hotel/room-seasons/addRoomSeason`,
   editSeason: `${baseUrl}/hotel/room-seasons/editRoomSeason`,
@@ -704,4 +705,5 @@ export const apiMap = {
       addwhyChooseusData: `${baseUrl}/common/addwhyChooseusData`,
       updateGuideProcessStatus: `${baseUrl}/dashboard/report/editGuideProcessStatus`,
       updateGuideLastStatus: `${baseUrl}/dashboard/report/editGuideSideMainStatus`,
+      hotelHCNEmail: `${B2C_URL}/webservice/hotel/hotel/hotelHCNEmail`,
 };

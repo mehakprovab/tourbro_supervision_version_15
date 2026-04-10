@@ -258,6 +258,7 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
     this.hotelCrsService.updateData.subscribe((data => {
       this.loading = true;
       console.log("data", data)
+       this.hotelOne = data; 
       console.log("Object.keys(data).length", Object.keys(data).length)
       if (Object.keys(data).length) {
         // if (!this.utilityService.isEmpty(this.hotelOne)) {
@@ -414,27 +415,48 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
     this.updateImage = this.hotelData['image']
     //console.log("this.getAlreadySelectedAmenities(this.hotelData['hotel_hotel_amenities_ids'])",this.getAlreadySelectedAmenities(this.hotelData['hotel_hotel_amenities_ids']))
   }
-  getAlreadySelectedView(amenities) {
+ getAlreadySelectedAmenities(amenities) {
+    // Add this check at the beginning
+    if (!amenities || amenities === 'undefined' || amenities === 'null' || amenities === '') {
+        console.log("No amenities provided, returning empty array");
+        return [];
+    }
+    
     const amenityIds = amenities.split(',');
-    console.log("amenityIds", amenityIds)
-    const selectedView = this.viewList.filter(amenity => amenityIds.includes(String(amenity.views)));
-    console.log("selectedAmenities", selectedView)
-    return selectedView;
-  }
-  getAlreadySelectedAmenities(amenities) {
-    const amenityIds = amenities.split(',');
-    console.log("amenityIds", amenityIds)
+    console.log("amenityIds", amenityIds);
     const selectedMeal = this.mealList.filter(amenity => amenityIds.includes(String(amenity.meals)));
-    console.log("selectedAmenities", selectedMeal)
+    console.log("selectedAmenities", selectedMeal);
     return selectedMeal;
-  }
-  getAlreadySelectedWeek(amenities) {
+}
+
+getAlreadySelectedView(amenities) {
+    // Add this check at the beginning
+    if (!amenities || amenities === 'undefined' || amenities === 'null' || amenities === '') {
+        console.log("No view amenities provided, returning empty array");
+        return [];
+    }
+    
     const amenityIds = amenities.split(',');
-    console.log("amenityIds", amenityIds)
+    console.log("amenityIds", amenityIds);
+    const selectedView = this.viewList.filter(amenity => amenityIds.includes(String(amenity.views)));
+    console.log("selectedAmenities", selectedView);
+    return selectedView;
+}
+
+getAlreadySelectedWeek(amenities) {
+    // Add this check at the beginning
+    if (!amenities || amenities === 'undefined' || amenities === 'null' || amenities === '') {
+        console.log("No week days provided, returning empty array");
+        return [];
+    }
+    
+    const amenityIds = amenities.split(',');
+    console.log("amenityIds", amenityIds);
     const selectedMeal = this.datas.filter(amenity => amenityIds.includes(String(amenity.item_text)));
-    console.log("selectedAmenities", selectedMeal)
+    console.log("selectedAmenities", selectedMeal);
     return selectedMeal;
-  }
+}
+  
 
   supplierRequest(){
     this.filterCurrencyList();

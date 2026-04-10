@@ -504,6 +504,7 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
             const cityValue = cityControl.value.city_value;
             const cityValueType = cityControl.value.city_value_type;
             const city = this.coreCityList.find(c => c.Id === cityId);
+            console.log(city)
             const cityName = city ? city.cityName : '';
     
             return {
@@ -769,8 +770,10 @@ getCountryName(countryCode: string): string {
     return country ? country.countryName : 'Unknown';
   }
   
-  getCityName(cityId: string): string {
-    const city = this.coreCityList.find((c: any) => c.Id === cityId);
+  getCityName(cityId: any): string {
+    console.log(cityId,"cityId")
+    const city = this.coreCityList.find((c: any) => c.Id == cityId);
+      console.log(city,"city")
     return city ? city.cityName : 'Unknown';
   }
   parseSupplier(supplier: string | object): any {

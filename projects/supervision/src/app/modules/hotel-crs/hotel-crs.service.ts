@@ -54,6 +54,17 @@ export class HotelCrsService {
                 untilDestroyed(this),
             )
     }
+
+        topUpRate(data): Observable<any> {
+        return this.apiHandlerService.apiHandler('roomCountUpdate', 'post', {}, {},  data[0])
+            .pipe(
+                map(resp => {
+                    return resp
+                }),
+                shareReplay(1),
+                untilDestroyed(this),
+            )
+    }
     addHotelLogo(data): Observable<any> {
         return this.apiHandlerService.apiHandler(data.topic || '', 'post', {}, {}, data.topic=='addHotelImage' ? data[0].data : data[0])
             .pipe(

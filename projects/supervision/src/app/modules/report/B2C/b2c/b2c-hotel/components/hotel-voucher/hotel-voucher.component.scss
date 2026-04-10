@@ -31,3 +31,8 @@
         width: 20px;
         height: 20px;
       }
+      @media print {
+  .no-print {
+    display: none !important;
+  }
+}

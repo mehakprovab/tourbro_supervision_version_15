@@ -214,6 +214,24 @@
                     </div>
                     </div>
                 </div>
+
+   <div class="form-group required row">
+  <label class="col-sm-2 col-form-label">PromoCode Visibility</label>
+
+  <div class="col-sm-6">
+    <label class="checkbox-inline">
+      <input
+        type="checkbox"
+        formControlName="promo_visibility"
+      />
+      Enable PromoCode
+    </label>
+
+    <div *ngIf="regConfig.get('promo_visibility')?.invalid && regConfig.get('promo_visibility')?.touched" class="text-danger">
+      PromoCode Visibility is required
+    </div>
+  </div>
+</div>
                 <div class="btn-group">
                     <div class="form-group required row">
                         <div class="col-12 d-flex">

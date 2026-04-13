@@ -50,8 +50,8 @@ export class UpdateCityComponent implements OnInit, OnDestroy {
     this.cityForm = this.fb.group({
       state_id: ['', Validators.required],
       city_name: ['', [Validators.required, this.inputValidator]],
-      latitude: ['', [Validators.pattern(/^-?\d+(\.\d+)?$/)]],
-      longitude: ['', [Validators.pattern(/^-?\d+(\.\d+)?$/)]],
+      // latitude: ['', [Validators.pattern(/^-?\d+(\.\d+)?$/)]],
+      // longitude: ['', [Validators.pattern(/^-?\d+(\.\d+)?$/)]],
       status: [1, Validators.required],
     });
   }
@@ -82,8 +82,8 @@ export class UpdateCityComponent implements OnInit, OnDestroy {
             this.cityForm.patchValue({
               city_name: data.city_name,
               state_id: data.state_id,
-              latitude: data.latitude,
-              longitude: data.longitude,
+              // latitude: data.latitude,
+              // longitude: data.longitude,
               status:data.status
             });
           }
@@ -110,8 +110,8 @@ onStatusChange(event: any) {
       id: this.cityId,   // ✅ REQUIRED
       city_name: form.city_name,
       state_id: form.state_id,
-      latitude: form.latitude,
-      longitude: form.longitude,
+      // latitude: form.latitude,
+      // longitude: form.longitude,
       status:form.status,
       type: "City"
     };

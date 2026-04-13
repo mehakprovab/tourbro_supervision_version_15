@@ -94,6 +94,7 @@ export class ManagePromocodeComponent implements OnInit, OnDestroy {
     this.regConfig = this.fb.group({
       id: new FormControl(""),
       promo_code: new FormControl("", [Validators.required]),
+      promo_visibility: new FormControl("", [Validators.required]),
       promo_image: new FormControl(""),
       description: new FormControl("", [Validators.required]),
       category: this.fb.array([], Validators.required),
@@ -124,6 +125,7 @@ getToUpdate() {
           {
             id: data.id ? data.id : "",
             promo_code: data.promo_code ? data.promo_code : "",
+            promo_visibility: data.promo_visibility ? data.promo_visibility : "",
             promo_image: data.promo_image ? data.promo_image : "",
             description: data.description ? data.description : "",
             userType: data.userType ? data.userType : "", // This should work now

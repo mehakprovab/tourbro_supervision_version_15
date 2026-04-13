@@ -22,7 +22,7 @@ export class ActivityCRSListComponent implements OnInit {
     { key: "activity_name", value: 'Activity Name' },
     { key: "supplier_name", value: 'Supplier Name' },
     { key: "prime_user_name", value: 'Prime User' },
-    { key: "distribution_channel", value: 'Distribution Channel' },
+    // { key: "distribution_channel", value: 'Distribution Channel' },
     { key: "activity_type", value: 'Activity Type' },
     { key: "activity_country_name", value: 'Country' },
     { key: "activity_city_name", value: 'City' },
@@ -30,7 +30,7 @@ export class ActivityCRSListComponent implements OnInit {
     { key: "currency", value: 'Currency' },
     { key: "enddate", value: 'Valid Till' },
     { key: "publish_status", value: 'Publish Status' },
-    { key: "book_now", value: 'Book Now' },
+    // { key: "book_now", value: 'Book Now' },
     { key: "action", value: 'Action' },
   ];
   public noData: boolean = true;

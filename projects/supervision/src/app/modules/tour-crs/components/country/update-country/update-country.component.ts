@@ -66,8 +66,8 @@ onStatusChange(event: any) {
       currency: ['', [Validators.required, Validators.pattern(/^[A-Z]{3}$/)]],
       currency_symbol: [''],
 
-      latitude: ['', [ Validators.pattern(/^-?\d+(\.\d+)?$/)]],
-      longitude: ['', [ Validators.pattern(/^-?\d+(\.\d+)?$/)]],
+      // latitude: ['', [ Validators.pattern(/^-?\d+(\.\d+)?$/)]],
+      // longitude: ['', [ Validators.pattern(/^-?\d+(\.\d+)?$/)]],
        status: [1, Validators.required],
     });
 
@@ -108,8 +108,8 @@ let id=this.countryId
             currency_name: data.currency_name,
             currency: data.currency,
             currency_symbol: data.currency_symbol,
-            latitude: data.latitude,
-            longitude: data.longitude,
+            // latitude: data.latitude,
+            // longitude: data.longitude,
               status:data.status
           });
 
@@ -148,8 +148,8 @@ let id=this.countryId
       currency: form.currency,
       currency_symbol: form.currency_symbol,
       region_id: this.selectedContinentId,
-      latitude: form.latitude,
-      longitude: form.longitude,
+      // latitude: form.latitude,
+      // longitude: form.longitude,
         status:form.status
     };
 

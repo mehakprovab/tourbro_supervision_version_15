@@ -44,7 +44,20 @@ export class B2cTourVoucherComponent implements OnInit {
       this.getVoucher();
     });
   }
+getTermsList(): string[] {
+  let terms = this.voucherData.BookingDetails.terms;
 
+  if (!terms) return [];
+
+  // Remove HTML tags
+  terms = terms.replace(/<\/?[^>]+(>|$)/g, '');
+
+  // Split by //
+  return terms
+    .split(/\s*\/\/\s*/)
+    .map(t => t.trim())
+    .filter(t => t.length > 0);
+}
   getVoucher() {
     this.subSunk.sink = this.apiHandlerService.apiHandler('tourVoucher', 'post', {}, {},
       {

@@ -314,147 +314,203 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
     this.cdRef.detectChanges();
   }
 
-  async patchHotel() {
-   
-    if(this.loggedInUser.auth_role_id == 6 || this.loggedInUser.auth_role_id == 7){
-      this.disableCurrency = true;
-      this.hotelForm.get('currency').disable();
-    }
-    if(this.loggedInUser.auth_role_id == 6 || this.loggedInUser.auth_role_id == 7){
-      this.disableUserType = true;
-      this.hotelForm.get('user_type').disable();
-    }
-    this.dropdownSettingsForHotel = {
-      singleSelection: false,
-      idField: 'id',
-      textField: 'meals',
-      maxHeight: 197,
-      itemsShowLimit: 2
-    };
-          this.dropdownSettingsForAmentities = {
-      singleSelection: false,
-      idField: 'id',
-      textField: 'hotel_amenity_name',
-      maxHeight: 197,
-      itemsShowLimit: 2,
-    };
-    this.dropdownSettingsForview = {
-      singleSelection: false,
-      idField: 'id',
-      textField: 'views',
-      maxHeight: 197,
-      itemsShowLimit: 2,
-    };
-    this.dropdownSettingsForWeek = {
-      singleSelection: false,
-      idField: 'item_id',
-      textField: 'item_text',
-      maxHeight: 197,
-      itemsShowLimit: 2,
-      allowSearchFilter: true
-    };
-    const selectedCountryId = this.hotelData['core_country_id'];
-    // this.getStateList({ target: { value: selectedCountryId } });
-    // const selectedCityId = this.hotelData['city_code'];
-    await this.getCityListAuto({ target: { value: selectedCountryId } });
-    this.updateMapWithCityAndCountry(this.hotelData.city_name, 'CountryName');
-    console.log(" this.hotelData", this.hotelData)
-    this.hotelForm.patchValue({
-      hotel_name: this.hotelData['hotel_name'] || '',
-      contract_expiry_date: this.hotelData['contract_expiry_date'] ? `${(moment(this.hotelData['contract_expiry_date'])).format('DD/MM/YYYY')}` : null,
-      star_rating: this.hotelData['star_rating'] == 0 ? 'Unrated' : this.hotelData['star_rating'],
-      hotel_description: this.hotelData['hotel_description'] || '',
-      hotel_hotel_type_id: this.hotelData['hotel_hotel_type_id'] || '',
-      core_country_id: this.hotelData['core_country_id'] || '',
-      core_state_id: this.hotelData['core_state_id'] || '',
-      city_name: this.hotelData['city_name'] || '',
-      address: this.hotelData['address'] || '',
-      latitude: this.hotelData['latitude'] || '',
-      longitude: this.hotelData['longitude'] || '',
-      phone_number: this.hotelData['phone_number'] || '',
-      email: this.hotelData['email'] || '',
-      image: this.hotelData['image'] || '',
-      xl_hotel_code: this.hotelData['xl_hotel_code'] || '',
-      gst_state: this.hotelData['gst_state'] || '',
-      gst_number: this.hotelData['gst_number'] || '',
-      ifsc_code: this.hotelData['ifsc_code'] || '',
-      beneficiary_account_number: this.hotelData['beneficiary_account_number'] || '',
-      beneficiary_name: this.hotelData['beneficiary_name'] || '',
-      bank_name: this.hotelData['bank_name'] || '',
-      location: this.hotelData['location'] || '',
-      status: Number(this.hotelData['status']) ? true : false,
-      hotel_hotel_amenities: '',
-      // country_code: this.hotelData.country_code,
-      check_in_time: (this.hotelData['check_in_time']) || '',
-      check_out_time: (this.hotelData['check_out_time']) || '',
-      stay_amenities: this.getAlreadySelectedAmenities(this.hotelData['stay_amenities']),
-      meal_plans: this.getAlreadySelectedAmenities(this.hotelData['meal_plans']),
-      weekend_days: this.getAlreadySelectedWeek(this.hotelData['weekend_days']),
-      room_view_ids: this.getAlreadySelectedView(this.hotelData['room_view_ids']),
-      currency: this.getCurrencyNameById(this.hotelData['currency']),
-      children_free_before: this.hotelData.children_free_before || 0,
-      paid_children_from_age: this.hotelData.paid_children_from_age || 0,
-      paid_children_to_age: this.hotelData.paid_children_to_age || 0,
-      local_timezone: this.hotelData.local_timezone,
-      meal_price: this.hotelData.meal_price || 0,
-      accomodation_or_meal: this.hotelData.accomodation_or_meal || '',
-      channel: this.hotelData.channel,
-      user_type: this.hotelData.user_type,
-      hotel_policy: this.hotelData.hotelPolicy || ''
-      // channel:this.hotelData.local_timezone,
-
-    });
-    // this.filteredOptions = this.filteredOptions.filter(data => data.value !== this.hotelData.user_type);
-    if (this.hotelData.paid_children_from_age != 0 && this.hotelData.meal_price != 0) {
-      this.isChilderns = true;
-      this.mealPrice = true;
-    } else {
-      this.isChilderns = true;
-    }
-    console.log("hotelForm", this.hotelForm)
-    this.updateImage = this.hotelData['image']
-    //console.log("this.getAlreadySelectedAmenities(this.hotelData['hotel_hotel_amenities_ids'])",this.getAlreadySelectedAmenities(this.hotelData['hotel_hotel_amenities_ids']))
+ async patchHotel() {
+  if(this.loggedInUser.auth_role_id == 6 || this.loggedInUser.auth_role_id == 7){
+    this.disableCurrency = true;
+    this.hotelForm.get('currency').disable();
   }
- getAlreadySelectedAmenities(amenities) {
-    // Add this check at the beginning
-    if (!amenities || amenities === 'undefined' || amenities === 'null' || amenities === '') {
-        console.log("No amenities provided, returning empty array");
-        return [];
-    }
-    
-    const amenityIds = amenities.split(',');
-    console.log("amenityIds", amenityIds);
-    const selectedMeal = this.mealList.filter(amenity => amenityIds.includes(String(amenity.meals)));
-    console.log("selectedAmenities", selectedMeal);
-    return selectedMeal;
+  if(this.loggedInUser.auth_role_id == 6 || this.loggedInUser.auth_role_id == 7){
+    this.disableUserType = true;
+    this.hotelForm.get('user_type').disable();
+  }
+  
+  this.dropdownSettingsForHotel = {
+    singleSelection: false,
+    idField: 'id',
+    textField: 'meals',
+    maxHeight: 197,
+    itemsShowLimit: 2
+  };
+  this.dropdownSettingsForAmentities = {
+    singleSelection: false,
+    idField: 'id',
+    textField: 'hotel_amenity_name',
+    maxHeight: 197,
+    itemsShowLimit: 2,
+  };
+  this.dropdownSettingsForview = {
+    singleSelection: false,
+    idField: 'id',
+    textField: 'views',
+    maxHeight: 197,
+    itemsShowLimit: 2,
+  };
+  this.dropdownSettingsForWeek = {
+    singleSelection: false,
+    idField: 'item_id',
+    textField: 'item_text',
+    maxHeight: 197,
+    itemsShowLimit: 2,
+    allowSearchFilter: true
+  };
+  
+  const selectedCountryId = this.hotelData['core_country_id'];
+  await this.getCityListAuto({ target: { value: selectedCountryId } });
+  this.updateMapWithCityAndCountry(this.hotelData.city_name, 'CountryName');
+  console.log("this.hotelData", this.hotelData);
+  
+  // CRITICAL FIX: Check which field has the amenities data
+  let stayAmenitiesData = '';
+  if (this.hotelData['stay_amenities']) {
+    stayAmenitiesData = this.hotelData['stay_amenities'];
+  } else if (this.hotelData['hotel_hotel_amenities']) {
+    stayAmenitiesData = this.hotelData['hotel_hotel_amenities'];
+  } else if (this.hotelData['hotel_hotel_amenities_ids']) {
+    stayAmenitiesData = this.hotelData['hotel_hotel_amenities_ids'];
+  }
+  
+  console.log("Stay amenities data from API:", stayAmenitiesData);
+  
+  this.hotelForm.patchValue({
+    hotel_name: this.hotelData['hotel_name'] || '',
+    contract_expiry_date: this.hotelData['contract_expiry_date'] ? `${(moment(this.hotelData['contract_expiry_date'])).format('DD/MM/YYYY')}` : null,
+    star_rating: this.hotelData['star_rating'] == 0 ? 'Unrated' : this.hotelData['star_rating'],
+    hotel_description: this.hotelData['hotel_description'] || '',
+    hotel_hotel_type_id: this.hotelData['hotel_hotel_type_id'] || '',
+    core_country_id: this.hotelData['core_country_id'] || '',
+    core_state_id: this.hotelData['core_state_id'] || '',
+    city_name: this.hotelData['city_name'] || '',
+    address: this.hotelData['address'] || '',
+    latitude: this.hotelData['latitude'] || '',
+    longitude: this.hotelData['longitude'] || '',
+    phone_number: this.hotelData['phone_number'] || '',
+    email: this.hotelData['email'] || '',
+    image: this.hotelData['image'] || '',
+    xl_hotel_code: this.hotelData['xl_hotel_code'] || '',
+    gst_state: this.hotelData['gst_state'] || '',
+    gst_number: this.hotelData['gst_number'] || '',
+    ifsc_code: this.hotelData['ifsc_code'] || '',
+    beneficiary_account_number: this.hotelData['beneficiary_account_number'] || '',
+    beneficiary_name: this.hotelData['beneficiary_name'] || '',
+    bank_name: this.hotelData['bank_name'] || '',
+    location: this.hotelData['location'] || '',
+    status: Number(this.hotelData['status']) ? true : false,
+    hotel_hotel_amenities: '',
+    check_in_time: (this.hotelData['check_in_time']) || '',
+    check_out_time: (this.hotelData['check_out_time']) || '',
+    // FIX: Use the correct method for stay amenities
+    stay_amenities: this.getAlreadySelectedStayAmenities(stayAmenitiesData),
+    meal_plans: this.getAlreadySelectedMealPlans(this.hotelData['meal_plans']),
+    weekend_days: this.getAlreadySelectedWeek(this.hotelData['weekend_days']),
+    room_view_ids: this.getAlreadySelectedView(this.hotelData['room_view_ids']),
+    currency: this.getCurrencyNameById(this.hotelData['currency']),
+    children_free_before: this.hotelData.children_free_before || 0,
+    paid_children_from_age: this.hotelData.paid_children_from_age || 0,
+    paid_children_to_age: this.hotelData.paid_children_to_age || 0,
+    local_timezone: this.hotelData.local_timezone,
+    meal_price: this.hotelData.meal_price || 0,
+    accomodation_or_meal: this.hotelData.accomodation_or_meal || '',
+    channel: this.hotelData.channel,
+    user_type: this.hotelData.user_type,
+    hotel_policy: this.hotelData.hotelPolicy || ''
+  });
+  
+  if (this.hotelData.paid_children_from_age != 0 && this.hotelData.meal_price != 0) {
+    this.isChilderns = true;
+    this.mealPrice = true;
+  } else {
+    this.isChilderns = true;
+  }
+  
+  console.log("hotelForm after patch", this.hotelForm.value);
+  this.updateImage = this.hotelData['image'];
 }
 
+// NEW METHOD: For stay amenities (using amenitiesList, not mealList)
+getAlreadySelectedStayAmenities(amenities) {
+  if (!amenities || amenities === 'undefined' || amenities === 'null' || amenities === '') {
+    console.log("No stay amenities provided, returning empty array");
+    return [];
+  }
+  
+  const amenityIds = amenities.split(',');
+  console.log("Stay amenity IDs:", amenityIds);
+  
+  // Make sure amenitiesList is loaded
+  if (!this.amenitiesList || !this.amenitiesList.length) {
+    console.log("Amenities list not loaded yet");
+    return [];
+  }
+  
+  // Filter using amenitiesList, not mealList
+  const selectedAmenities = this.amenitiesList.filter(amenity => 
+    amenityIds.includes(String(amenity.hotel_amenity_name)) || 
+    amenityIds.includes(String(amenity.id))
+  );
+  console.log("Selected stay amenities:", selectedAmenities);
+  return selectedAmenities;
+}
+
+// NEW METHOD: For meal plans (using mealList)
+getAlreadySelectedMealPlans(mealPlans) {
+  if (!mealPlans || mealPlans === 'undefined' || mealPlans === 'null' || mealPlans === '') {
+    console.log("No meal plans provided, returning empty array");
+    return [];
+  }
+  
+  const mealIds = mealPlans.split(',');
+  console.log("Meal plan IDs:", mealIds);
+  
+  if (!this.mealList || !this.mealList.length) {
+    console.log("Meal list not loaded yet");
+    return [];
+  }
+  
+  const selectedMeals = this.mealList.filter(meal => 
+    mealIds.includes(String(meal.meals)) || 
+    mealIds.includes(String(meal.id))
+  );
+  console.log("Selected meal plans:", selectedMeals);
+  return selectedMeals;
+}
+
+// Keep existing methods for view and week
 getAlreadySelectedView(amenities) {
-    // Add this check at the beginning
-    if (!amenities || amenities === 'undefined' || amenities === 'null' || amenities === '') {
-        console.log("No view amenities provided, returning empty array");
-        return [];
-    }
-    
-    const amenityIds = amenities.split(',');
-    console.log("amenityIds", amenityIds);
-    const selectedView = this.viewList.filter(amenity => amenityIds.includes(String(amenity.views)));
-    console.log("selectedAmenities", selectedView);
-    return selectedView;
+  if (!amenities || amenities === 'undefined' || amenities === 'null' || amenities === '') {
+    console.log("No view amenities provided, returning empty array");
+    return [];
+  }
+  
+  const amenityIds = amenities.split(',');
+  console.log("View IDs:", amenityIds);
+  
+  if (!this.viewList || !this.viewList.length) {
+    console.log("View list not loaded yet");
+    return [];
+  }
+  
+  const selectedView = this.viewList.filter(amenity => 
+    amenityIds.includes(String(amenity.views)) || 
+    amenityIds.includes(String(amenity.id))
+  );
+  console.log("Selected views:", selectedView);
+  return selectedView;
 }
 
 getAlreadySelectedWeek(amenities) {
-    // Add this check at the beginning
-    if (!amenities || amenities === 'undefined' || amenities === 'null' || amenities === '') {
-        console.log("No week days provided, returning empty array");
-        return [];
-    }
-    
-    const amenityIds = amenities.split(',');
-    console.log("amenityIds", amenityIds);
-    const selectedMeal = this.datas.filter(amenity => amenityIds.includes(String(amenity.item_text)));
-    console.log("selectedAmenities", selectedMeal);
-    return selectedMeal;
+  if (!amenities || amenities === 'undefined' || amenities === 'null' || amenities === '') {
+    console.log("No week days provided, returning empty array");
+    return [];
+  }
+  
+  const amenityIds = amenities.split(',');
+  console.log("Week days:", amenityIds);
+  
+  const selectedMeal = this.datas.filter(amenity => 
+    amenityIds.includes(String(amenity.item_text))
+  );
+  console.log("Selected week days:", selectedMeal);
+  return selectedMeal;
 }
   
 
@@ -673,7 +729,9 @@ initializeSearchBox() {
     this.hotelCrsService.fetch(data).subscribe(
       resp => {
         this.coreCountryList = resp.data.countries;
-        this.getCityListAuto('India')
+         setTimeout(() => {
+      this.getCityListAuto('India');
+    });
       }
     )
   }
@@ -736,29 +794,36 @@ initializeSearchBox() {
       }
     )
   }
-  getCityListAuto(event): void {
-    console.log("event", event)
-    if (!event || !event.target) {
-    var state_id = event;
-    }else{
-          var state_id = event.target.value;
-   
-    }
-    const selectedCountry = this.coreCountryList.find(country => country.name == state_id);
-    const countryCode = selectedCountry ? selectedCountry.two_code : '';
-    const data = [{
-      offset: 0, limit: 10, "country_name": state_id
-    }];
-    this.hotelForm.patchValue({
-      country_code: countryCode
-    });
-    data['topic'] = 'commonCityList';
-    this.hotelCrsService.fetch(data).subscribe(
-      resp => {
-        this.coreCityList = resp.data;
-      }
-    )
+ getCityListAuto(event): void {
+  let state_id;
+
+  if (typeof event === 'string') {
+    state_id = event; // ✅ FIX for 'India'
+  } else if (event.target.value) {
+    state_id = event.target.value;
+  } else {
+    return;
   }
+
+  const selectedCountry = this.coreCountryList.find(country => country.name == state_id);
+  const countryCode = selectedCountry ? selectedCountry.two_code : '';
+
+  const data = [{
+    offset: 0,
+    limit: 10,
+    country_name: state_id
+  }];
+
+  this.hotelForm.patchValue({
+    country_code: countryCode
+  });
+
+  data['topic'] = 'commonCityList';
+
+  this.hotelCrsService.fetch(data).subscribe(resp => {
+    this.coreCityList = resp.data;
+  });
+}
   createHotelDetailForm(): void {
     this.hotelForm = this.fb.group({
       hotel_name: ['', Validators.required],
@@ -813,17 +878,32 @@ initializeSearchBox() {
       accomodation_or_meal: [''],
     });
   }
-onCityChange(event) {
-  const selectedCity = this.coreCityList.find(city => city.cityName === event);
+onCityChange(event: any) {
+  if (!this.coreCityList || !Array.isArray(this.coreCityList) || this.coreCityList.length === 0) {
+    console.warn('City list not ready yet');
+    return;
+  }
 
-  if (selectedCity) {
-    this.selectedCityName = selectedCity.cityName;
-    this.selectedCityCode = selectedCity.cityCode; // ✅ IMPORTANT FIX
-    this.toCityId = selectedCity.id;               // (optional but good)
-  } else {
+  if (!event) return;
+
+  const cityName = typeof event === 'string' ? event : event.target.value;
+
+  if (!cityName) return;
+
+  const selectedCity = this.coreCityList.find(
+    city => city.cityName === cityName
+  );
+
+  if (!selectedCity) {
+    console.warn('City not found in list:', cityName);
     this.selectedCityName = '';
     this.selectedCityCode = '';
+    return;
   }
+
+  this.selectedCityName = selectedCity.cityName;
+  this.selectedCityCode = selectedCity.cityCode;
+  this.toCityId = selectedCity.id;
 
   this.updateMapWithCityAndCountry(this.selectedCityName, 'CountryName');
 
@@ -848,6 +928,16 @@ onCityChange(event) {
     });
   }
   onSubmitHotelDetail() {
+  console.log("Form Valid:", this.hotelForm.valid);
+  console.log("Form Errors:", this.hotelForm.errors);
+  console.log("Form Controls:", this.hotelForm.controls);
+  
+  // Log individual control errors
+  Object.keys(this.hotelForm.controls).forEach(key => {
+    const control = this.hotelForm.get(key);
+    if (control && control.errors) {
+      console.log(`${key} errors:`, control.errors);
+    }  });
     this.submittedHotel = true;
     this.hotelForm.get('currency').enable();
     if (this.hotelForm.valid) {

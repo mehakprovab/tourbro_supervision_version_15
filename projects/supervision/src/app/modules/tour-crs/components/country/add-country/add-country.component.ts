@@ -46,8 +46,8 @@ export class AddCountryComponent implements OnInit {
       currency: ['', [Validators.required, Validators.pattern(/^[A-Z]{3}$/)]],
       currency_symbol: [''],
 status: [1, Validators.required],
-      latitude: ['', [ Validators.pattern(/^-?\d+(\.\d+)?$/)]],
-      longitude: ['', [ Validators.pattern(/^-?\d+(\.\d+)?$/)]]
+      // latitude: ['', [ Validators.pattern(/^-?\d+(\.\d+)?$/)]],
+      // longitude: ['', [ Validators.pattern(/^-?\d+(\.\d+)?$/)]]
     });
 
     this.autoUppercase();
@@ -84,8 +84,8 @@ status: [1, Validators.required],
       currency: form.currency,
       currency_symbol: form.currency_symbol,
       region_id: this.selectedContinentId,
-      latitude: form.latitude,
-      longitude: form.longitude,
+      // latitude: form.latitude,
+      // longitude: form.longitude,
       status:form.status
     };
 

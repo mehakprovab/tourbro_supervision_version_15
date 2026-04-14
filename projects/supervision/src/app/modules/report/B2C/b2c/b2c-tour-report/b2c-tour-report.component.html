@@ -38,7 +38,7 @@
                             <option value="BOOKING_CONFIRMED">CONFIRMED</option>
                             <!-- <option value="ticked">TICKED</option> -->
                             <!-- <option value="BOOKING_HOLD">BOOKING HOLD</option> -->
-                            <option value="BOOKING_CANCELLED">CANCELLED</option>
+                            <option value="CANCELLED">CANCELLED</option>
                             <!-- <option value="cancelInProgress">CANCELLATION IN PROGRESS</option> -->
                             <!-- <option value="failed">FAILED</option> -->
                             <option value="PROCESSING">IN PROGRESS</option>
@@ -187,12 +187,12 @@
                                         <!-- <td class="text-left">{{getPaxTypeCounts(data)['Infant'] || 0}} </td> -->
                                         <!-- <td class="text-left">{{data.itinerary[0]?.agent_commission}} </td>
                                         <td class="text-left">{{data.itinerary[0]?.agent_tds}} </td> -->
-                                        <td class="text-left">
+                                        <!-- <td class="text-left">
                                             <span *ngFor="let data of getOptionalTours(data.bookingDetails[0]?.OptionalTours ); let i=index">
                                                 <span>{{i+1}}. {{data.name}} - ({{data.price | number:'1.0-2'}})</span><br/>
                                             </span>
                                         </td>
-                                        <td class="text-left">{{data.bookingDetails[0]?.OptionalToursPrice | number:'1.0-2' }} {{data.bookingDetails[0]?.ApiCurrency }}  </td>
+                                        <td class="text-left">{{data.bookingDetails[0]?.OptionalToursPrice | number:'1.0-2' }} {{data.bookingDetails[0]?.ApiCurrency }}  </td> -->
                                         <td class="text-left">{{data.bookingDetails[0]?.SupplierTotalFare | number:'1.0-2'}} {{data.bookingDetails[0]?.ApiCurrency }}  </td>
                                         <td class="text-left" *ngIf="loggedInUser?.auth_role_id !==7">{{data.bookingDetails[0]?.TotalFare | number:'1.0-2' }} </td>
                                         

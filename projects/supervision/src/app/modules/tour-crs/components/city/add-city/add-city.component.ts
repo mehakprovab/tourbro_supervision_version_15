@@ -33,8 +33,8 @@ export class AddCityComponent implements OnInit {
     this.cityForm = this.fb.group({
       stateId: ['', Validators.required],
       cityName: ['', [Validators.required, this.inputValidator]],
-      latitude: ['', Validators.required],
-      longitude: ['', Validators.required],
+      // latitude: ['', Validators.required],
+      // longitude: ['', Validators.required],
       status: [1, Validators.required]
     });
   }
@@ -65,8 +65,8 @@ onStatusChange(event: any) {
 
       const cityNames = this.cityForm.get('cityName').value.split(',');
       const stateId = this.cityForm.get('stateId').value;
-      const latitude = this.cityForm.get('latitude').value;
-      const longitude = this.cityForm.get('longitude').value;
+      // const latitude = this.cityForm.get('latitude').value;
+      // const longitude = this.cityForm.get('longitude').value;
       const status = this.cityForm.get('status').value;
 
       cityNames.forEach(city => {
@@ -74,8 +74,8 @@ onStatusChange(event: any) {
         const payload = {
           city_name: city.trim(),
           state_id: stateId,
-          latitude: latitude,
-          longitude: longitude,
+          // latitude: latitude,
+          // longitude: longitude,
           status:status,
           type: "City"
         };

@@ -48,8 +48,8 @@ export class UpdateStateComponent implements OnInit {
       country_id: ['', Validators.required],
       name: ['', [Validators.required, this.inputValidator]],
       iso2: ['', [Validators.required, Validators.pattern(/^[A-Z]{2,3}$/)]],
-      latitude: ['', [Validators.pattern(/^-?\d+(\.\d+)?$/)]],
-      longitude: ['', [Validators.pattern(/^-?\d+(\.\d+)?$/)]]
+      // latitude: ['', [Validators.pattern(/^-?\d+(\.\d+)?$/)]],
+      // longitude: ['', [Validators.pattern(/^-?\d+(\.\d+)?$/)]]
     });
 
     this.autoUppercase();
@@ -79,8 +79,8 @@ export class UpdateStateComponent implements OnInit {
               name: data.name,
               country_id: data.country_id,
               iso2: data.iso2,
-              latitude: data.latitude,
-              longitude: data.longitude
+              // latitude: data.latitude,
+              // longitude: data.longitude
             });
           }
         },
@@ -104,8 +104,8 @@ export class UpdateStateComponent implements OnInit {
       name: form.name,
       country_id: form.country_id,
       iso2: form.iso2,
-      latitude: form.latitude,
-      longitude: form.longitude
+      // latitude: form.latitude,
+      // longitude: form.longitude
     };
 
     this.subSunk.sink = this.apiHandlerService

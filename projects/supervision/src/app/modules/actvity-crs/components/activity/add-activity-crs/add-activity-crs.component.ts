@@ -835,7 +835,21 @@ backToListPage() {
       timing: this.updateBasicInformationForm.value.timing.map(data => typeof data === 'object' ? data.value : data
         )
     })
-    const payLoad = this.updateBasicInformationForm.value;
+     const formValue = this.updateBasicInformationForm.value;
+
+  const payLoad = {
+    ...formValue,
+    activity_city: formValue.city,
+    activity_country: formValue.country,
+    pickup_location:formValue.pick_up_location,
+    dropoff_location:formValue.drop_off_location,
+  };
+
+  // Optional: remove old keys
+  delete payLoad.city;
+  delete payLoad.country;
+   delete payLoad.pick_up_location;
+  delete payLoad.drop_off_location;
 
     this.apiHandlerServices.apiHandler('updateActivity', 'POST', {}, {}, payLoad).subscribe({
       next: (res) => {

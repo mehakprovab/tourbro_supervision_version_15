@@ -63,8 +63,9 @@ export class ActivityTypeComponent implements OnInit {
               }
           },
           error: (err) => {
-              console.log(err);
-              this.swalService.alert.error();
+           console.log(err);
+  const message = err.error.Message || err.message || 'Something went wrong';
+  this.swalService.alert.oops(message);
           }
       })
     } else {
@@ -82,8 +83,9 @@ export class ActivityTypeComponent implements OnInit {
               }
           },
           error: (err) => {
-              console.log(err);
-              this.swalService.alert.error();
+     console.log(err);
+  const message = err.error.Message || err.message || 'Something went wrong';
+  this.swalService.alert.oops(message);
           }
       })
     }

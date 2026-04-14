@@ -12,7 +12,7 @@ import { TourCrsService } from '../../../../../tour-crs.service';
   styleUrls: ['./add-visited-city-list.component.scss']
 })
 export class AddVisitedCityListComponent implements OnInit {
-
+totalUsedNights: number = 0;
   saveButtonEnable:boolean=false;
   visitedCity:FormGroup
   cityList:Array<any>=[];
@@ -69,10 +69,11 @@ export class AddVisitedCityListComponent implements OnInit {
     this.createVistedForm()
     this.getTourRelatedInitailFilledData();
     this.tourService.editTourCityData.subscribe(data=>{
+      console.log(data,"data")
       if(data){
         this.updateVisitedCity = true;
         this.tourEditId = data.id;
-        this.visitedCity.get('choosenCity').patchValue(data.CityName);
+        this.visitedCity.get('choosenCity').patchValue(data.city_name);
         this.visitedCity.get('choosenDuration').patchValue(data.no_of_nights);
       } else {
         this.updateVisitedCity = false;
@@ -98,31 +99,70 @@ export class AddVisitedCityListComponent implements OnInit {
     this.visitedCity.get('choosenCity').patchValue(inputSelectedCity);
   }
 
-  getTourRelatedInitailFilledData(){
-    this.subSunk.sink = this.apiHandlerService.apiHandler('getTourVisitedCityList', 'post', {}, {},{
-     "toursId":this.tourId 
-       }).subscribe(response => {
-           if (response.statusCode == 200 || response.statusCode == 201) {
-            if(response.data){
-                this.tourDuration=response.data[0]['duration'];
-                this.tourService.editTourCityData.next(null);
-                this.updateVisitedCity = false;
-                localStorage.setItem('tourDuration',this.tourDuration);
-                this.totalAvailableNight=parseInt(this.tourDuration.split("|")[1])
-                this.visitedCity.get('tourDuration').patchValue(this.tourDuration);
-                this.cityList = response.data[0]['city_name'] || [];
-               
-                this.shouldEnableNext();
-            }else{
-                this.swalService.alert.oops(response.Message);
-            }
-           }else{
-            this.swalService.alert.oops(response.Message);
-           }
-       },(err: HttpErrorResponse) => {
-        this.swalService.alert.error(err['error']['Message']);
-    });
- }
+ getTourRelatedInitailFilledData() {
+  this.subSunk.sink = this.apiHandlerService.apiHandler(
+    'getTourVisitedCityList', 'post', {}, {}, {
+      "toursId": this.tourId
+    }).subscribe(response => {
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      if (response.data) {
+
+        this.tourDuration = response.data[0]['duration'];
+        this.tourService.editTourCityData.next(null);
+        this.updateVisitedCity = false;
+
+        this.totalAvailableNight = parseInt(this.tourDuration.split("|")[1]);
+        this.visitedCity.get('tourDuration').patchValue(this.tourDuration);
+
+        this.cityList = response.data[0]['city_name'] || [];
+this.getVisitedCities();
+        // ✅ Calculate total used nights
+//         this.totalUsedNights = 0;
+//         if (response.data[0]['city_name']) {
+//           response.data[0]['city_name'].forEach(city => {
+//             console.log(city,"city")
+//             this.totalUsedNights += parseInt(city.no_of_nights);
+//           });
+//         }
+// console.log(this.totalUsedNights,"this.totalUsedNights")
+        // ✅ Check Next button
+      //  this.getVisitedCities();
+
+      } else {
+        this.swalService.alert.oops(response.Message);
+      }
+    }
+  });
+}
+
+getVisitedCities() {
+  this.subSunk.sink = this.apiHandlerService.apiHandler(
+    'getTourVisitedCities', 'post', {}, {}, {
+      "toursId": this.tourId
+    }
+  ).subscribe(response => {
+
+    if (response.statusCode === 200 || response.statusCode === 201) {
+
+      this.totalUsedNights = 0;
+
+      if (response.data) {
+        response.data.forEach(city => {
+          const match = city.no_of_nights.match(/\d+/);
+const nights = Number(match ? match[0] : 0);
+          this.totalUsedNights += nights;
+        });
+      }
+
+      console.log("Used Nights:", this.totalUsedNights);
+      console.log("Available Nights:", this.totalAvailableNight);
+
+      // ✅ IMPORTANT
+      this.shouldEnableNext();
+    }
+  });
+}
 
  vistedCityFormSubmit(){
   let currentNightSelected=parseInt(this.visitedCity.get('choosenDuration').value);
@@ -135,7 +175,7 @@ export class AddVisitedCityListComponent implements OnInit {
           }).subscribe(response => {
               if (response.statusCode == 200 || response.statusCode == 201) {
               if(response.data){
-                this.enableNext = true;
+                // this.enableNext = true;
                 this.swalService.alert.success("Visted City List is added successfully");
                 this.insertedRecord.emit();
                 this.getTourRelatedInitailFilledData();
@@ -164,7 +204,7 @@ export class AddVisitedCityListComponent implements OnInit {
           }).subscribe(response => {
               if (response.statusCode == 200 || response.statusCode == 201) {
               if(response.data){
-                this.enableNext = true;
+                // this.enableNext = true;
                 this.swalService.alert.success("Visted City List is added successfully");
                 this.insertedRecord.emit();
                 this.getTourRelatedInitailFilledData();
@@ -186,7 +226,7 @@ export class AddVisitedCityListComponent implements OnInit {
     this.enableNext = false;
   }
 
- shouldEnableNext(){
-  
- }
+ shouldEnableNext() {
+  this.enableNext = this.totalUsedNights === this.totalAvailableNight;
+}
 }

@@ -9,6 +9,7 @@
       <div class="col-4 p-0">
         <label for="fromDate" class="">From Date <sup class="text-danger f-16"> * </sup></label>
         <input type="text" class="form-control" id="fromDate" formControlName="fromDate" [bsConfig]="bsDateConf"
+         [datesDisabled]="disabledDates"
           bsDatepicker [minDate]="minDate" [maxDate]="maxDate" placeholder="dd/mm/yyyy">
         <small class="text-danger"
           *ngIf="priceManagementForm?.get('fromDate')?.invalid &&(priceManagementForm?.get('fromDate')?.touched || submittedPrice)">
@@ -18,7 +19,7 @@
       <div class="col-4">
         <label for="toDate" class="">To Date <sup class="text-danger f-16"> * </sup></label>
         <input type="text" class="form-control" id="toDate" formControlName="toDate" [bsConfig]="bsDateConf"
-          bsDatepicker [minDate]="toMinDate" [maxDate]="maxDate" placeholder="dd/mm/yyyy">
+          bsDatepicker [minDate]="toMinDate" [maxDate]="maxDate"  [datesDisabled]="disabledDates" placeholder="dd/mm/yyyy">
         <small class="text-danger"
           *ngIf="priceManagementForm?.get('toDate')?.invalid && (priceManagementForm?.get('toDate')?.touched || submittedPrice)">
           To Date is Required</small>
@@ -26,7 +27,7 @@
 
       <div class="col-4 p-0">
         <label for="adultPrice" class="">Adult Price <sup class="text-danger f-16"> * </sup> {{currentUser?.currency ?
-          currentUser?.currency : 'INR'}}</label>
+         'INR' : 'INR'}}</label>
         <input type="number" [min]="0" class="form-control" id="adultPrice" placeholder="Enter Adult Price"
           formControlName="adultPrice">
         <small class="text-danger"
@@ -37,7 +38,7 @@
 
     <div class="form-group required row">
       <label for="childPrice" style="margin-bottom: 0px !important;" class="col-sm-4 col-form-label font-weight-bold">
-        Child Price <sup class="text-danger f-16"> * </sup> {{currentUser?.currency ? currentUser?.currency : 'INR'}}
+        Child Price <sup class="text-danger f-16"> * </sup> {{currentUser?.currency ? 'INR' : 'INR'}}
       </label>
       <div class="col-sm-12">
         <div formArrayName="childPrice" class=" col-12 pr-0 mt-0">

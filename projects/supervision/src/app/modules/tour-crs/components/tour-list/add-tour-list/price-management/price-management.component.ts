@@ -51,6 +51,7 @@ export class PriceManagementComponent implements OnInit {
         if ((response.statusCode == 200 || response.statusCode == 201) && response.data) {
             this.priceManagementDataList = response.data || [];
             this.priceManagementDataListForSort=this.priceManagementDataList;
+             this.tourService.setPriceList(this.priceManagementDataList);
             this.searchSpin=false;
           }
         },(err: HttpErrorResponse) => {

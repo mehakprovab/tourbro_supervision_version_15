@@ -10,7 +10,7 @@
 
     </div>
    
-    <app-add-visited-city-list *ngIf="isAddTourCity" 
+    <app-add-visited-city-list  
         (insertedRecord)="insertedRecordReceived()"
         [totalAddedNight]="nightsAlreadyAdded"> 
     </app-add-visited-city-list>
@@ -51,7 +51,7 @@
                                 <td class="text-left text-muted">{{(i+1) }}</td>
                                 <td class="text-left">{{ item.city_name }}</td>
                                 <td class="text-left">{{ item.no_of_nights}}</td>
-                                <td *ngIf="isAddTourCity" class="text-left buttontdsize">
+                                <td  class="text-left buttontdsize">
                                     <button class="btn btn-sm btn-primary mr-1" (click)="editTourVisitedCity(item)"> {{'Update'}}  </button>
                                     <button class="btn btn-sm btn-primary mr-1" (click)="onDeletedRecord(item)"> {{'Delete'}}  </button>
                                 </td>

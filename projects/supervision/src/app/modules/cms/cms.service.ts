@@ -105,7 +105,51 @@ addCustomerFaq(data): Observable<any> {
         );
 
 }
+addserviceFaq(data): Observable<any> {
+    return this.apiHandlerService.apiHandler('AddServiceFaq', 'post', {}, {},data)
+        .pipe(
+            map(resp => {
+                if (resp.Status)
+                    return {
+                        statusCode: 200,
+                        data: resp.data || [],
+                        msg: resp.Message || 'OK'
+                    }
+                else
+                    return {
+                        statusCode: 404,
+                        data: resp.Data || [],
+                        msg: resp.Message || 'NOT FOUND'
+                    }
+            }),
+            shareReplay(1),
+            untilDestroyed(this),
+        );
 
+}
+
+addaboutFaq(data): Observable<any> {
+    return this.apiHandlerService.apiHandler('AddAboutFaq', 'post', {}, {},data)
+        .pipe(
+            map(resp => {
+                if (resp.Status)
+                    return {
+                        statusCode: 200,
+                        data: resp.data || [],
+                        msg: resp.Message || 'OK'
+                    }
+                else
+                    return {
+                        statusCode: 404,
+                        data: resp.Data || [],
+                        msg: resp.Message || 'NOT FOUND'
+                    }
+            }),
+            shareReplay(1),
+            untilDestroyed(this),
+        );
+
+}
 updateAgentFaq(data): Observable<any> {
     return this.apiHandlerService.apiHandler('updateAgentFaq', 'post', {}, {},data)
         .pipe(
@@ -239,6 +283,52 @@ getAgentFaqList(data): Observable<any> {
 }
 getCustomerFaqList(data): Observable<any> {
     return this.apiHandlerService.apiHandler('ListCustomerFaq', 'post', {}, {},data)
+        .pipe(
+            map(resp => {
+                if (resp.Status)
+                    return {
+                        statusCode: 200,
+                        data: resp.data || [],
+                        msg: resp.Message || 'OK'
+                    }
+                else
+                    return {
+                        statusCode: 404,
+                        data: resp.Data || [],
+                        msg: resp.Message || 'NOT FOUND'
+                    }
+            }),
+            shareReplay(1),
+            untilDestroyed(this),
+        );
+
+}
+
+getserviceFaqList(data): Observable<any> {
+    return this.apiHandlerService.apiHandler('ListServiceFaq', 'post', {}, {},data)
+        .pipe(
+            map(resp => {
+                if (resp.Status)
+                    return {
+                        statusCode: 200,
+                        data: resp.data || [],
+                        msg: resp.Message || 'OK'
+                    }
+                else
+                    return {
+                        statusCode: 404,
+                        data: resp.Data || [],
+                        msg: resp.Message || 'NOT FOUND'
+                    }
+            }),
+            shareReplay(1),
+            untilDestroyed(this),
+        );
+
+}
+
+getaboutFaqList(data): Observable<any> {
+    return this.apiHandlerService.apiHandler('ListAboutFaq', 'post', {}, {},data)
         .pipe(
             map(resp => {
                 if (resp.Status)

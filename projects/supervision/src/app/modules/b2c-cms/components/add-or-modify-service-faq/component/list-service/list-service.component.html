@@ -1,0 +1,85 @@
+<div class="card adminInner">
+    <!-- <div class="custom-table-layout mt-3">
+        <div class="row">
+            <div class="col-md-12 col-lg-12"> -->
+                <form class="clearfix">
+                    <div class="row col-md-12 col-lg-12 m-0 p-0">
+                        <table style="table-layout: fixed; width: 100%;" id="active-users-report">
+                            <tr>
+                                <td>
+                                    <div class="table-responsive">
+                                        <table
+                                            class="align-middle mb-0 table table-borderless table-striped table-hover"
+                                            matSort >
+                                            <thead>
+                                                <tr class="p-2">
+                                                    <th scope="col" class="text-nowrap"
+                                                        *ngFor="let header of displayColumn;"
+                                                        mat-sort-header="{{header.key}}">
+                                                        {{header.value }}
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngIf="noData">
+                                                    <td colspan="11">
+                                                        <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                                                    </td>
+                                                </tr>
+                                                <tr *ngIf="!noData && !respData.length">
+                                                    <td colspan="11">
+                                                        <h4 class="text-muted text-center">
+                                                            No Data Found!
+                                                        </h4>
+                                                    </td>
+                                                </tr>
+                                                <tr class="p-2"
+                                                *ngFor="let data of respData; let i=index;">
+                                                <td class="text-left text-muted">{{i+1}}.</td>
+                                                <td class="text-left"> {{data['question']}}
+                                                    <td class="text-left text-capitalize">
+                                                       {{data.answer}}  </td>   
+                                                     <!-- <td class="text-left text-capitalize"> {{data['module']}} </td> -->
+                                                     <!-- <td class="text-left">
+                                                        <select class="w-100 m-auto cust-select" (change)='onStatusChange(data)'>
+                                                            <option [selected]="data['status'] == 0">Inactive</option>
+                                                            <option [selected]="data['status'] == 1">Active</option>
+                                                        </select>
+                                                    </td>   -->
+                                                    <td class="text-left" style="display:flex; float:left;"> 
+                                                        <button class="btn btn-sm btn-primary"
+                                                        (click)="updateContent(data)">
+                                                           
+                                                                {{'Update'}}
+                                                          
+                                                        </button>
+                                                        
+                                                        &nbsp; &nbsp;
+                                                        <button class="btn btn-sm btn-secondary pull-right"  (click)="deleteContent(data?.id)">
+                                                           
+                                                                {{'Delete'}}
+                                                         
+                                                        </button>
+                                                    </td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="card-footer pb-0">
+                        <div class="d-flex w-100 justify-content-between">
+                            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                            </ngb-pagination>
+                        </div>
+                    </div>
+                </form>
+            <!-- </div>
+        </div>
+    </div> -->
+</div>
+
+

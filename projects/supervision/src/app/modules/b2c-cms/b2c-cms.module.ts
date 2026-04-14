@@ -31,6 +31,12 @@ import { GuideMainSectionComponent } from './components/guide-main-section/guide
 import { GuideProcessSectionComponent } from './components/guide-process-section/guide-process-section.component';
 import { GeneralModalImageComponent } from './components/general-modal-image/general-modal-image.component';
 import { GuideLastSectionComponent } from './components/guide-last-section/guide-last-section.component';
+import { AddOrModifyServiceFaqComponent } from './components/add-or-modify-service-faq/add-or-modify-service-faq.component';
+import { AddOrModifyAboutFaqComponent } from './components/add-or-modify-about-faq/add-or-modify-about-faq.component';
+import { ListserviceComponent } from './components/add-or-modify-service-faq/component/list-service/list-service.component';
+import { AddUpdateserviceFaqComponent } from './components/add-or-modify-service-faq/component/add-update-service-faq/add-update-service-faq.component';
+import { ListAboutComponent } from './components/add-or-modify-about-faq/component/list-about/list-about.component';
+import { AddUpdateAboutFaqComponent } from './components/add-or-modify-about-faq/component/add-update-about-faq/add-update-about-faq.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +67,12 @@ import { GuideLastSectionComponent } from './components/guide-last-section/guide
   GuideProcessSectionComponent,
   GeneralModalImageComponent,
   GuideLastSectionComponent,
+  AddOrModifyServiceFaqComponent,
+  ListserviceComponent,
+  AddUpdateserviceFaqComponent,
+  AddOrModifyAboutFaqComponent,
+  ListAboutComponent,
+  AddUpdateAboutFaqComponent
 ],
   imports: [
     CommonModule,

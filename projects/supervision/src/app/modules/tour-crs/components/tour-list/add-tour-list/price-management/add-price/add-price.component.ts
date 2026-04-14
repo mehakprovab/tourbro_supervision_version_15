@@ -12,6 +12,7 @@ import { TourCrsService } from '../../../../../tour-crs.service';
   styleUrls: ['./add-price.component.scss']
 })
 export class AddPriceComponent implements OnInit {
+  public disabledDates: Date[] = [];
   priceManagementDataList: Array<any> = [];
   priceManagementForm: FormGroup;
   subSunk = new SubSink();
@@ -28,7 +29,8 @@ export class AddPriceComponent implements OnInit {
     dateInputFormat: 'DD/MM/YYYY',
     rangeInputFormat: 'DD/MM/YYYY',
     containerClass: 'theme-blue',
-    showWeekNumbers: false
+    showWeekNumbers: false,
+     datesDisabled: this.disabledDates 
   };
 
   minDate = new Date(); // Minimum date for "From Date"
@@ -59,10 +61,34 @@ export class AddPriceComponent implements OnInit {
     this.timingList = this.times.map(t => ({ key: t, value: t }));
     this.createPriceManagementForm();
     this.getTourDates();
+      this.tourCrsService.priceList$.subscribe(data => {
+    if (data) {
+      this.priceManagementDataList = data;
+      this.setDisabledDates();   // 🔥 NOW WORKS
+    }
+  });
     const currentUser = sessionStorage.getItem('currentSupervisionUser');
     this.currentUser = JSON.parse(currentUser);
   }
+setDisabledDates() {
+  this.disabledDates = [];
 
+  this.priceManagementDataList.forEach(record => {
+    let current = new Date(record.from_date);
+    let end = new Date(record.to_date);
+
+    while (current <= end) {
+      this.disabledDates.push(new Date(current));
+      current.setDate(current.getDate() + 1);
+    }
+  });
+
+  // ✅ FORCE refresh
+  this.bsDateConf = {
+    ...this.bsDateConf,
+    datesDisabled: this.disabledDates
+  };
+}
 
   setChildPrices(data: any[]) {
     this.childPrices.clear(); // clear existing
@@ -225,6 +251,13 @@ export class AddPriceComponent implements OnInit {
         (response) => {
           if ((response.statusCode == 200 || response.statusCode == 201) && response.data) {
             this.swalService.alert.success("Price has been added successfully");
+              this.tourCrsService.setPriceList([
+          ...this.tourCrsService.getPriceListValue(),
+          {
+            from_date: this.priceManagementForm.get('fromDate').value,
+            to_date: this.priceManagementForm.get('toDate').value
+          }
+        ]);
             this.submittedPrice = false;
             this.insertedRecord.emit(response.data);
             this.childPrices.clear();

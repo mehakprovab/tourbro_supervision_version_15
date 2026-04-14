@@ -621,49 +621,64 @@ addImageApiCall() {
     }
   }
 
-  onImageSelect(event: any) {
-    const file = event.target.files[0];
+onImageSelect(event: any) {
+  const file = event.target.files[0];
 
-    if (file) {
-        const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp'];
-        
-        if (!allowedTypes.includes(file.type)) {
-          this.swalService.alert.oops("Only JPG, JPEG and PNG formats are allowed.");
-            event.target.value = ''; // Reset file input
-            return;
-        }
+  if (file) {
+    const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp'];
+    const maxSize = 1 * 1024 * 1024; // ✅ 1 MB
 
-        this.bannerImage = file;
-        this.logoConfig.get('banner_logo').patchValue(file);
+    if (!allowedTypes.includes(file.type)) {
+      this.swalService.alert.oops("Only JPG, JPEG and PNG formats are allowed.");
+      event.target.value = '';
+      return;
     }
+
+    if (file.size > maxSize) {
+      this.swalService.alert.oops("Banner image must be less than 1 MB.");
+      event.target.value = '';
+      return;
+    }
+
+    this.bannerImage = file;
+    this.logoConfig.get('banner_logo').patchValue(file);
+  }
 }
 
 
 onGallerySelect(event: any) {
   const files: FileList = event.target.files;
   const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp'];
+  const maxSize = 200 * 1024; // ✅ 200 KB
 
   if (files.length > 0) {
-      const validFiles: File[] = [];
+    const validFiles: File[] = [];
 
-      for (let i = 0; i < files.length; i++) {
-          if (allowedTypes.includes(files[i].type)) {
-              validFiles.push(files[i]);
-          }
+    for (let i = 0; i < files.length; i++) {
+
+      if (!allowedTypes.includes(files[i].type)) {
+        continue; // skip invalid type
       }
 
-      if (validFiles.length === 0) {
-        this.swalService.alert.oops("Only JPG, JPEG and PNG formats are allowed.");
-          event.target.value = ''; // Reset file input
-          return;
+      if (files[i].size > maxSize) {
+        this.swalService.alert.oops(`Image "${files[i].name}" exceeds 200 KB limit.`);
+        continue; // skip large file
       }
 
-      this.gallery = validFiles;
-      this.logoConfig.get('gallery_image').patchValue(validFiles);
-      this.addGalleryImageApiCall();
+      validFiles.push(files[i]);
+    }
+
+    if (validFiles.length === 0) {
+      this.swalService.alert.oops("No valid images selected (Max 200 KB each).");
+      event.target.value = '';
+      return;
+    }
+
+    this.gallery = validFiles;
+    this.logoConfig.get('gallery_image').patchValue(validFiles);
+    this.addGalleryImageApiCall();
   }
 }
-
 
 onVideoSelect(event: any) {
   const file = event.target.files[0];

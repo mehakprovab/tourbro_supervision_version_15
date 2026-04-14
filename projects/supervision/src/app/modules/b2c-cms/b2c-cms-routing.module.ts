@@ -21,6 +21,8 @@ import { GuideMainSectionComponent } from "./components/guide-main-section/guide
 import { GuideProcessSectionComponent } from "./components/guide-process-section/guide-process-section.component";
 import { GeneralModalImageComponent } from "./components/general-modal-image/general-modal-image.component";
 import { GuideLastSectionComponent } from "./components/guide-last-section/guide-last-section.component";
+import { AddOrModifyServiceFaqComponent } from "./components/add-or-modify-service-faq/add-or-modify-service-faq.component";
+import { AddOrModifyAboutFaqComponent } from "./components/add-or-modify-about-faq/add-or-modify-about-faq.component";
 
 const routes: Routes = [
   {
@@ -68,6 +70,18 @@ const routes: Routes = [
         path: "homepage-widgets/add-modify-customer-faq",
         canActivate: [AuthGuard],
         component: AddOrModifyCustomerFaqComponent,
+        data: { extraParameter: "" },
+      },
+       {
+        path: "homepage-widgets/add-modify-service-faq",
+        canActivate: [AuthGuard],
+        component: AddOrModifyServiceFaqComponent,
+        data: { extraParameter: "" },
+      },
+       {
+        path: "homepage-widgets/add-modify-about-faq",
+        canActivate: [AuthGuard],
+        component: AddOrModifyAboutFaqComponent,
         data: { extraParameter: "" },
       },
       {

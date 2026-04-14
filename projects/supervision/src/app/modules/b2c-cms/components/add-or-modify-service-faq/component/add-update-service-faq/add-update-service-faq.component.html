@@ -1,0 +1,34 @@
+<div class="card adminInner">
+   
+        <div class="card-header mb-3">
+            <h5>FAQ Page Content</h5>
+        </div>
+        <div class="custom-inline-form">
+            <form class="" [formGroup]="regConfig" autocomplete="off">
+             
+                <div class="form-group required row">
+                    <label for="firstName" class="required" class="col-sm-2 col-form-label">Question</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="firstName" 
+                             formControlName="question">
+                    </div>
+                </div>
+                <div class="form-group required row">
+                    <label for="lastName" class="col-sm-2 col-form-label">Answer</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="lastName" 
+                             formControlName="answer">
+                    </div>
+                </div>
+             
+                   
+                <div class="form-group row mb-n2">
+                    <div class="col-md-4 offset-md-2">
+                        <button type="submit" class="btn btn-sm btn-primary mr-2" (click)="onSubmit()">Submit</button>
+                        <button type="reset" class="btn btn-sm btn-secondary" (click)="onReset()">Reset</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+   
+</div>

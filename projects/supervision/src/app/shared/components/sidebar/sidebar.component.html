@@ -333,6 +333,18 @@
                                           <i class="fa fa-hotel"></i>
                                          Customer FAQ</span></a>
                                     </div>
+                                    <div class="vsm-item">
+                                      <a routerLinkActive="active-item" routerLink='/b2c-cms/homepage-widgets/add-modify-service-faq'
+                                        class="vsm-link pl-10"><span class="vsm-title pl-10">
+                                          <i class="fa fa-question-circle"></i>
+                                         Service FAQ</span></a>
+                                    </div>
+                                    <div class="vsm-item">
+                                      <a routerLinkActive="active-item" routerLink='/b2c-cms/homepage-widgets/add-modify-about-faq'
+                                        class="vsm-link pl-10"><span class="vsm-title pl-10">
+                                            <i class="fa fa-info-circle"></i>
+                                         About FAQ</span></a>
+                                    </div>
                                     <!-- <div class="vsm-item">
                                       <a routerLinkActive="active-item" routerLink='/b2c-cms/homepage-widgets/add-partner-airlines'
                                         class="vsm-link pl-10"><span class="vsm-title pl-10">
@@ -593,7 +605,7 @@
                               <ng-template ngbPanelHeader>
                                   <button ngbPanelToggle class="vsm-link pl-2">
                                       <i class="fa fa-binoculars pr-2 fs-19"></i>
-                                      <span class="vsm-title pl-10">Activity CRS</span>
+                                      <span class="vsm-title pl-10">Experience CRS</span>
                                       <i class="vsm-arrow"></i>
                                   </button>
                               </ng-template>
@@ -605,7 +617,7 @@
                                                   [routerLink]="['/activity/activity-crs']"
                                                   [queryParams]="{ tab: 'add_activitycrs' }"
                                                   class="vsm-link pl-1"><span class="vsm-title pl-10">
-                                                      Create Activity
+                                                      Create Experience
                                                   </span></a>
                                           </div>
                                           <div class="vsm-item" *ngIf="isSubMenuExists('Activity List',ACTIVITY_CRS)">
@@ -613,7 +625,7 @@
                                                   [routerLink]="['/activity/activity-crs']"
                                                   [queryParams]="{ tab: 'list_activitycrs_list' }"
                                                   class="vsm-link pl-1"><span class="vsm-title pl-10">
-                                                      Activity List
+                                                      Experience List
                                                   </span></a>
                                           </div>
                                           <div class="vsm-item" *ngIf="isSubMenuExists('Activity Types',ACTIVITY_CRS) && loggedInUser['auth_role_id'] != 6 || loggedInUser['auth_role_id'] != 7">

@@ -706,4 +706,8 @@ export const apiMap = {
       updateGuideProcessStatus: `${baseUrl}/dashboard/report/editGuideProcessStatus`,
       updateGuideLastStatus: `${baseUrl}/dashboard/report/editGuideSideMainStatus`,
       hotelHCNEmail: `${B2C_URL}/webservice/hotel/hotel/hotelHCNEmail`,
+      ListServiceFaq: `${B2C_URL}/webservice/common/ListservicesFaq`,
+      AddServiceFaq: `${baseUrl}/common/AddservicesFaq`,
+            ListAboutFaq: `${B2C_URL}/webservice/common/ListAboutUsFaq`,
+      AddAboutFaq: `${baseUrl}/common/AddAboutUsFaq`,
 };

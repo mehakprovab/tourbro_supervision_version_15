@@ -15,6 +15,18 @@ export class TourCrsService {
     updatedPriceManagement: BehaviorSubject<any> = new BehaviorSubject<any>({});
     getTourManagementData: BehaviorSubject<any> = new BehaviorSubject<any>({});
     editTourCityData: BehaviorSubject<any> = new BehaviorSubject<any>({});
+
+    //
+    private priceListSubject = new BehaviorSubject<any[]>([]);
+priceList$ = this.priceListSubject.asObservable();
+
+setPriceList(data: any[]) {
+  this.priceListSubject.next(data);
+}
+
+getPriceListValue() {
+  return this.priceListSubject.value;
+}
     constructor(
         private apiHandlerService: ApiHandlerService,
     ) { }

@@ -72,7 +72,7 @@
                                                       <mat-label>Username</mat-label>
                                                       <input matInput formControlName="email" placeholder="Enter the mail id">
                                                       <mat-error *ngIf="loginForm.controls.email.hasError('required')">
-                                                          Enter Username
+                                                        Username
                                                       </mat-error>
                                                       <mat-error
                                                           *ngIf="!loginForm.controls.email.hasError('required') && loginForm.controls.email.hasError('email')">

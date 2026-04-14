@@ -163,7 +163,7 @@ console.log("this.returnUrl",this.returnUrl)
         this.errorMessage = (err.status == 401) 
         ? 'Invalid Credentials' 
         : (err.status == 403) 
-            ? 'Inactive User' 
+            ? 'Invalid Credentials' 
             : err.error.Message;    
         this.swalService.alert.error(this.errorMessage );
       });

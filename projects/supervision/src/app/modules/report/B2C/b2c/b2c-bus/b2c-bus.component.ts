@@ -216,7 +216,7 @@ export class B2cBusComponent implements OnInit {
             for (let i = 0; i < fieldsLength; i++) {
                 columnWidths.push({ wch: 30 });
             }
-            this.loggedInUser = JSON.parse(localStorage.getItem('currentSupervisionUser'));
+            this.loggedInUser = JSON.parse(sessionStorage.getItem('currentSupervisionUser'));
             let value = this.loggedInUser.auth_role_id == 1 ? "Admin" : 'Staff'
             this.utility.exportToExcel(
                 fileToExport,

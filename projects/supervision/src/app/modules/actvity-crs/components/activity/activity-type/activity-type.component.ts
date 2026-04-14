@@ -138,7 +138,7 @@ onEditType(id) {
             {"id":inputRecordToDeleted.id})
             .subscribe(response => {
             if (response.statusCode == 200 || response.statusCode == 201 && response.data) {
-                this.swalService.alert.success("Tour Region data has been deleted successfully");
+                this.swalService.alert.success("Deleted successfully");
                 this.getActivityTypeData();
             }
             },(err: HttpErrorResponse) => {

@@ -93,7 +93,22 @@ export class AddActivityCRSComponent implements OnInit {
     private router: Router,
     private swalService: SwalService
   ) { }
-
+syncChildInclusionAcrossSeasons(seasonIndex: number) {
+  const currentSeason = this.seasonsPricingForm.at(seasonIndex);
+  const isChildIncluded = currentSeason.get('is_child_included').value;
+  console.log(isChildIncluded,"KJHJKHKJ",seasonIndex)
+  // If first season and it's true, sync to all seasons
+  if (seasonIndex === 0 && isChildIncluded === true) {
+    for (let i = 1; i < this.seasonsPricingForm.length; i++) {
+      const otherSeason = this.seasonsPricingForm.at(i);
+      otherSeason.get('is_child_included').setValue(true);
+      // Also trigger the validation for each season
+      this.onCheckboxChange({ target: { value: true } }, true, i);
+    }
+  }
+  // If first season becomes false, don't automatically change others
+  // as per business logic
+}
   ngOnInit(): void {
     const currentDomainUser = sessionStorage.getItem('currentSupervisionUser');
     this.loggedInUser = JSON.parse(currentDomainUser);
@@ -164,6 +179,7 @@ export class AddActivityCRSComponent implements OnInit {
           seasonArray.clear(); // Clear existing form array before patching
 
           data.seasons.forEach((season) => {
+            console.log(season,"season")
             const seasonGroup = this.fb.group({
               season_id: season.season_id,
               StartDate: [new Date(season.start_date), Validators.required],
@@ -353,12 +369,17 @@ export class AddActivityCRSComponent implements OnInit {
   endMinDates: Date[] = [];
 
   addSeasonPricing() {
+     let isFirstSeasonChildIncluded = false;
+  if (this.seasonsPricingForm.length > 0) {
+    const firstSeason = this.seasonsPricingForm.at(0);
+    isFirstSeasonChildIncluded = firstSeason.get('is_child_included').value;
+  }
     const seasonGroup = this.fb.group({
       season_id: [''],
       StartDate: ['', Validators.required],
       EndDate: ['', Validators.required],
       Adultprice: ['', Validators.required],
-      is_child_included: [false],
+      is_child_included: [isFirstSeasonChildIncluded],
       pricing: this.fb.array([]),
       cancellationPolicies: this.fb.array([])
     });
@@ -454,32 +475,35 @@ export class AddActivityCRSComponent implements OnInit {
   }
 
 
-  onCheckboxChange(event, check, seasonIndex) {
-    const checked = event.target.value;
-    const pricingArray = this.getChildPolicies(seasonIndex);
+ onCheckboxChange(event, check, seasonIndex) {
+  const checked = event.target.value;
+  const pricingArray = this.getChildPolicies(seasonIndex);
 
-    pricingArray.controls.forEach((group: FormGroup) => {
-      const childFromAge = group.get('childFromAge');
-      const childbeforeAge = group.get('ChildbeforeAge');
-      const childPrice = group.get('ChildPrice');
+  pricingArray.controls.forEach((group: FormGroup) => {
+    const childFromAge = group.get('childFromAge');
+    const childbeforeAge = group.get('ChildbeforeAge');
+    const childPrice = group.get('ChildPrice');
 
-      if (check === 'true' || check === true) {
-        childFromAge.setValidators([Validators.required]);
-        childbeforeAge.setValidators([Validators.required]);
-        childPrice.setValidators([Validators.required]);
-      } else {
-        childFromAge.clearValidators();
-        childbeforeAge.clearValidators();
-        childPrice.clearValidators();
-        childFromAge.setValue('');
-        childbeforeAge.setValue('');
-        childPrice.setValue('');
-      }
-      group.updateValueAndValidity({ onlySelf: true });
-    });
+    if (check === 'true' || check === true) {
+      childFromAge.setValidators([Validators.required]);
+      childbeforeAge.setValidators([Validators.required]);
+      childPrice.setValidators([Validators.required]);
+    } else {
+      childFromAge.clearValidators();
+      childbeforeAge.clearValidators();
+      childPrice.clearValidators();
+      childFromAge.setValue('');
+      childbeforeAge.setValue('');
+      childPrice.setValue('');
+    }
+    group.updateValueAndValidity({ onlySelf: true });
+  });
 
-    this.seasonPricingForm.updateValueAndValidity();
-  }
+  this.seasonPricingForm.updateValueAndValidity();
+  
+  // Call the sync method
+  this.syncChildInclusionAcrossSeasons(seasonIndex);
+}
 
   onRefundableChange(event: any, isRefundable: boolean, seasonIndex: number, policyIndex: number) {
     const refundArray = this.getRefundPolicies(seasonIndex);

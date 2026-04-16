@@ -3,7 +3,7 @@
 [activeId]="activeIdString">
     <ngb-tab id="list_activitycrs_list">
         <ng-template ngbTabTitle>
-            <span class="">{{'List Activity'}}</span>
+            <span class="">{{'List Experience'}}</span>
         </ng-template>
         <ng-template ngbTabContent>
             <app-list-activity-crs (toUpdate)="triggerTab($event)"></app-list-activity-crs>
@@ -11,7 +11,7 @@
     </ngb-tab>
     <ngb-tab id="add_activitycrs">
         <ng-template ngbTabTitle>
-            <span class="">{{'Create Activity'}}</span>
+            <span class="">{{'Create Experience'}}</span>
         </ng-template>
         <ng-template ngbTabContent>
             <app-add-activity-crs (someEvent)="triggerTab($event)"></app-add-activity-crs>

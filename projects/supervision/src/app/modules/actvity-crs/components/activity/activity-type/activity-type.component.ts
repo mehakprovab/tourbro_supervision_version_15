@@ -76,7 +76,7 @@ export class ActivityTypeComponent implements OnInit {
           next: (res) => {
               console.log(res);
               if(res.Status === true && (res.statusCode === 201 || res.statusCode === 200 )) {
-                this.swalService.alert.success("Activity has been deleted successfully");
+                this.swalService.alert.success("Activity has been added successfully");
                 this.getActivityTypeData();
               } else {
                 this.swalService.alert.oops(res.Message);

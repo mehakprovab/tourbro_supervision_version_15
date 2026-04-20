@@ -227,7 +227,7 @@ export const apiMap = {
   updateProfile: `${baseUrl}/user/service/updateProfile`,
   uploadUserProfilePhoto: `${baseUrl}/user/service/uploadUserProfilePhoto`,
   getUserById: `${baseUrl}/user/service/getUserById`,
-  listPromocode: `${baseUrl}/core/core-promocodes/listPromocode`,
+  listPromocode: `${B2C_URL}/webservice/common/listPromocode`,
   addPromocode: `${baseUrl}/core/core-promocodes/addPromocode`,
   deletePromocode: `${baseUrl}/core/core-promocodes/deletePromocode`,
   updatePromocode: `${baseUrl}/core/core-promocodes/updatePromocode`,

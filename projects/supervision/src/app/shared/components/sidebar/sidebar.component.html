@@ -628,7 +628,7 @@
                                                       Experience List
                                                   </span></a>
                                           </div>
-                                          <div class="vsm-item" *ngIf="isSubMenuExists('Activity Types',ACTIVITY_CRS) && loggedInUser['auth_role_id'] != 6 || loggedInUser['auth_role_id'] != 7">
+                                          <div class="vsm-item" *ngIf="isSubMenuExists('Activity Types',ACTIVITY_CRS) ">
                                               <a routerLinkActive="active-item" [routerLink]="['/activity/activity-type']"
                                                   class="vsm-link pl-1"><span class="vsm-title pl-10">
                                                       Activity Types
@@ -647,7 +647,7 @@
                                                       Countries
                                                   </span></a>
                                           </div> -->
-                                          <div class="vsm-item" *ngIf="isSubMenuExists('Activity Language',ACTIVITY_CRS) && loggedInUser['auth_role_id'] != 6 || loggedInUser['auth_role_id'] != 7">
+                                          <div class="vsm-item" *ngIf="isSubMenuExists('Activity Language',ACTIVITY_CRS) ">
                                               <a routerLinkActive="active-item"
                                                   [routerLink]="['/activity/activity-language']"
                                                   class="vsm-link pl-1"><span class="vsm-title pl-10">

@@ -98,7 +98,7 @@ export class B2cActivityComponent implements OnInit, OnDestroy {
     booking_source: string;
     showUpdateGuideInfo: boolean;
     loggerUserAuthId: any;
-
+isExporting = false;
     constructor(
         private apiHandlerService: ApiHandlerService,
         private fb: FormBuilder,
@@ -252,36 +252,50 @@ export class B2cActivityComponent implements OnInit, OnDestroy {
         }
     }
 
-    download(type: SupportedExtensions, orientation?: string) {
-        // if (type)
+   download(type: SupportedExtensions, orientation?: string) {
+    this.isExporting = true;
+
+    setTimeout(() => {
         this.config.type = type;
+
         if (orientation) {
             this.config.options.jsPDF.orientation = orientation;
         }
-        const date = new Date().toDateString();
-        this.exportAsService.save(this.config, `b2c-ActivityReport`).subscribe((_) => {
-            // save started
-            console.log(`success`);
-            this.swalService.alert.success();
-        }, (err) => {
-            console.log(err);
-            this.swalService.alert.oops();
 
-        });
-    }
+        this.exportAsService.save(this.config, `b2c-ActivityReport`)
+            .subscribe(() => {
+                this.isExporting = false;
+                this.swalService.alert.success();
+            }, () => {
+                this.isExporting = false;
+                this.swalService.alert.oops();
+            });
 
-    downloadPdf() {
+    }, 300);
+}
+
+  downloadPdf() {
+    this.isExporting = true;
+
+    setTimeout(() => {
         const element = document.getElementById('b2c-activity-report');
+
         html2canvas(element).then(canvas => {
             const imgData = canvas.toDataURL('image/png');
             const pdf = new jsPDF('l', 'mm', 'a4');
-            const imgWidth = 297; // A4 width in mm
+
+            const imgWidth = 297;
             const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
             pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
             pdf.save('b2c-ActivityReport.pdf');
+
+            this.isExporting = false;
             this.swalService.alert.success();
         });
-    }
+
+    }, 300);
+}
 
     pdfCallbackFn(pdf: any) {
         // example to add page number as footer to every page of pdf

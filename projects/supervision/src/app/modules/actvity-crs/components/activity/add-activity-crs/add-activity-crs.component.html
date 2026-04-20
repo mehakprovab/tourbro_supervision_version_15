@@ -412,24 +412,27 @@
                                     </div>
 
                                 </div>
-                                <div class="col-3 pr-0 d-flex justify-content-center align-items-center">
+                               <div class="col-3 pr-0 d-flex justify-content-center align-items-center">
+    <label class="control-label px-3">
+        Add Children to this activity?
+    </label>
+    <label class="mr-2">
+        <input type="radio" [value]="true" formControlName="is_child_included"
+            [disabled]="k !== 0"
+            (change)="onCheckboxChange($event, true, k)">
+        <span class="text" style="margin-left: 4px;">Yes</span>
+    </label>
 
-                                    <label class="control-label px-3">
-                                        Add Children to this activity?
-                                    </label>
-                                    <label class="mr-2">
-                                        <input type="radio" [value]="true" formControlName="is_child_included"
-                                            (change)="onCheckboxChange($event,'true',k)">
-                                        <span class="text" style="margin-left: 4px;">Yes</span>
-                                    </label>
-
-                                    <label>
-                                        <input type="radio" [value]="false" formControlName="is_child_included"
-                                            (change)="onCheckboxChange($event,'false',k)">
-                                        <span class="text" style="margin-left: 4px;">No</span>
-                                    </label>
-
-                                </div>
+    <label>
+        <input type="radio" [value]="false" formControlName="is_child_included"
+            [disabled]="k !== 0"
+            (change)="onCheckboxChange($event, false, k)">
+        <span class="text" style="margin-left: 4px;">No</span>
+    </label>
+    <small *ngIf="k !== 0" class="text-muted ml-2" style="font-size: 11px;">
+        (Follows Season 1)
+    </small>
+</div>
                             </div>
                             <!-- <div class=" col-12 row price-details-div">
                                     

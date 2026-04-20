@@ -75,3 +75,8 @@
     height: 50px;
     animation: spin 2s linear infinite;
 }
+
+.export-mode th:nth-child(2),
+.export-mode td:nth-child(2) {
+    display: none !important;
+}

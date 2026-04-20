@@ -15,7 +15,7 @@ let filterArray:Array<any>=[];
   styleUrls: ['./tour-list.component.scss']
 })
 export class TourListComponent implements OnInit {
-
+activeTab: 'add' | 'list' = 'list'; // default list
   enabledForm:boolean=false;
   editForm:boolean=false;
   toursDataList:any[]=[];
@@ -43,7 +43,16 @@ export class TourListComponent implements OnInit {
     this.getToursData();
     
   }
+setTab(tab: 'add' | 'list') {
+  this.activeTab = tab;
 
+  if (tab === 'add') {
+    this.onAddButtonClicked();
+    this.editForm = true;
+  } else {
+    this.editForm = false;
+  }
+}
   onAddButtonClicked(){
     this.enabledForm=!this.enabledForm;
     this.router.navigate(['/tour-crs/tour-list/add-tour'])

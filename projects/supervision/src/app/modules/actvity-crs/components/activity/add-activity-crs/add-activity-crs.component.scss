@@ -136,3 +136,18 @@
     position: absolute;
    bottom:0px!important;
 }
+
+// In your component's SCSS file
+:host {
+  ::ng-deep {
+    input[type="radio"]:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+    
+    .text-muted {
+      font-size: 12px;
+      color: #6c757d;
+    }
+  }
+}

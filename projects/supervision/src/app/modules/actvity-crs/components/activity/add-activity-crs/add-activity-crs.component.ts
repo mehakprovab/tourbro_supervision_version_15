@@ -96,18 +96,27 @@ export class AddActivityCRSComponent implements OnInit {
 syncChildInclusionAcrossSeasons(seasonIndex: number) {
   const currentSeason = this.seasonsPricingForm.at(seasonIndex);
   const isChildIncluded = currentSeason.get('is_child_included').value;
-  console.log(isChildIncluded,"KJHJKHKJ",seasonIndex)
-  // If first season and it's true, sync to all seasons
-  if (seasonIndex === 0 && isChildIncluded === true) {
+  
+  // Only sync from the first season (index 0)
+  if (seasonIndex === 0) {
     for (let i = 1; i < this.seasonsPricingForm.length; i++) {
       const otherSeason = this.seasonsPricingForm.at(i);
-      otherSeason.get('is_child_included').setValue(true);
-      // Also trigger the validation for each season
-      this.onCheckboxChange({ target: { value: true } }, true, i);
+      const otherIsChildIncluded = otherSeason.get('is_child_included');
+      
+      // Update all other seasons to match the first season
+      if (otherIsChildIncluded.value !== isChildIncluded) {
+        otherIsChildIncluded.setValue(isChildIncluded, { emitEvent: false });
+        
+        // If enabling child inclusion, set up validators and form arrays
+        if (isChildIncluded === true) {
+          this.onCheckboxChange({ target: { value: true } }, true, i);
+        } else {
+          // If disabling child inclusion, clear validators and values
+          this.onCheckboxChange({ target: { value: false } }, false, i);
+        }
+      }
     }
   }
-  // If first season becomes false, don't automatically change others
-  // as per business logic
 }
   ngOnInit(): void {
     const currentDomainUser = sessionStorage.getItem('currentSupervisionUser');
@@ -146,53 +155,61 @@ syncChildInclusionAcrossSeasons(seasonIndex: number) {
   }
 
 
-  getUpdateData() {
-    this.activityCrsService.getActivityUpdateData.subscribe((data) => {
-      console.log(data);
-      this.editList = data;
-      if (Object.keys(data).length) {
-        this.showUpdateForm = true;
-        this.insertedActivityId = data.activity_id;
-        this.updateBasicInfoForm();
-        this.updatedActivityCountryId = data.Activity_country_id;
-        this.updatedActivityCityId = data.Activity_city_id;
-        this.updateBasicInformationForm.patchValue({
-          activity_name: data.activity_name,
-          activity_duration: data.activity_duration,
-          activity_duration_type: data.activity_duration_type,
-          timing: data.timing.split(','),
-          country: data.Activity_country_id,
-          city: data.Activity_city_id,
-          pick_up_location: data.pickup_location,
-          drop_off_location: data.dropoff_location,
-          terms_conditions: (data.terms_conditions),
-          excludes:(data.excludes),
-          includes: (data.includes),
-          activity_id: data.activity_id
-        })
+getUpdateData() {
+  this.activityCrsService.getActivityUpdateData.subscribe((data) => {
+    console.log(data);
+    this.editList = data;
+    if (Object.keys(data).length) {
+      this.showUpdateForm = true;
+      this.insertedActivityId = data.activity_id;
+      this.updateBasicInfoForm();
+      this.updatedActivityCountryId = data.Activity_country_id;
+      this.updatedActivityCityId = data.Activity_city_id;
+      this.updateBasicInformationForm.patchValue({
+        activity_name: data.activity_name,
+        activity_duration: data.activity_duration,
+        activity_duration_type: data.activity_duration_type,
+        timing: data.timing.split(','),
+        country: data.Activity_country_id,
+        city: data.Activity_city_id,
+        pick_up_location: data.pickup_location,
+        drop_off_location: data.dropoff_location,
+        terms_conditions: (data.terms_conditions),
+        excludes:(data.excludes),
+        includes: (data.includes),
+        activity_id: data.activity_id
+      })
 
-        this.bannerImagename = data.banner_image? JSON.parse(data.banner_image)[0] : '';
-        this.galleryImages = data.gallery ? data.gallery : '';
+      this.bannerImagename = data.banner_image? JSON.parse(data.banner_image)[0] : '';
+      this.galleryImages = data.gallery ? data.gallery : '';
 
-        if(data.seasons.length) {
-          const seasonArray = this.seasonPricingForm.get('seasonPricing') as FormArray;
-          seasonArray.clear(); // Clear existing form array before patching
+      if(data.seasons.length) {
+        const seasonArray = this.seasonPricingForm.get('seasonPricing') as FormArray;
+        seasonArray.clear(); // Clear existing form array before patching
+        this.seasonMinDates = [];
+        this.endMinDates = [];
 
-          data.seasons.forEach((season) => {
-            console.log(season,"season")
-            const seasonGroup = this.fb.group({
-              season_id: season.season_id,
-              StartDate: [new Date(season.start_date), Validators.required],
-              EndDate: [new Date(season.end_date), Validators.required],
-              Adultprice: [season.adult_price, Validators.required],
-              is_child_included: [season.childPolicies && season.childPolicies.length > 0],
-              pricing: this.fb.array([]),
-              cancellationPolicies: this.fb.array([]),
-            });
+        data.seasons.forEach((season, idx) => {
+          console.log(season,"season")
+          const seasonGroup = this.fb.group({
+            season_id: season.season_id,
+            StartDate: [new Date(season.start_date), Validators.required],
+            EndDate: [new Date(season.end_date), Validators.required],
+            Adultprice: [season.adult_price, Validators.required],
+            is_child_included: [{ 
+      value: season.is_child_included == 1, 
+      disabled: idx !== 0  // Disable for all except first season
+    }],
+            pricing: this.fb.array([]),
+            cancellationPolicies: this.fb.array([]),
+          });
 
-            // ✅ Patch Child Policies
-            const childArray = seasonGroup.get('pricing') as FormArray;
-            if(season.childPolicies) {
+          // ✅ Patch Child Policies
+          const childArray = seasonGroup.get('pricing') as FormArray;
+          
+          // CRITICAL FIX: Always add at least one child policy if is_child_included is true
+          if (season.is_child_included == 1) {
+            if (season.childPolicies && season.childPolicies.length > 0) {
               season.childPolicies.forEach((child) => {
                 childArray.push(
                   this.fb.group({
@@ -203,45 +220,54 @@ syncChildInclusionAcrossSeasons(seasonIndex: number) {
                   })
                 );
               });
-            }
-            
-
-            // ✅ Patch Cancellation Policies
-            const cancelArray = seasonGroup.get('cancellationPolicies') as FormArray;
-            if(season.cancellationPolicies)  {
-              season.cancellationPolicies.forEach((policy) => {
-                cancelArray.push(
-                  this.fb.group({
-                    id: [policy.id],
-                    chargeType: [policy.charge_type, Validators.required],
-                    is_refundable: [policy.refund_type === 'Refundable' ? true : false, Validators.required],
-                    chargeAmount: [policy.refund_amount, Validators.required],
-                    refundablebeforedays: [policy.cancellation_days, Validators.required],
-                  })
-                );
-              });
-            }
-            
-
-            // ✅ Maintain min date arrays if you’re using them in datepickers
-            const lastIndex = seasonArray.length - 1;
-            if (lastIndex >= 0) {
-              const prevEnd = seasonArray.at(lastIndex).get('EndDate').value;
-              this.seasonMinDates.push(prevEnd ? new Date(prevEnd) : this.minDate);
             } else {
-              this.seasonMinDates.push(this.minDate);
+              // Add an empty child policy form if none exist
+              childArray.push(this.createChildPolicy());
+              // Set validators for the empty form
+              const emptyGroup = childArray.at(0);
+              emptyGroup.get('childFromAge').setValidators([Validators.required]);
+              emptyGroup.get('ChildbeforeAge').setValidators([Validators.required]);
+              emptyGroup.get('ChildPrice').setValidators([Validators.required]);
+              emptyGroup.updateValueAndValidity();
             }
-            this.endMinDates.push(this.minDate);
+          }
 
-            // Finally push this season group
-            seasonArray.push(seasonGroup);
-          });
-        } else {
-          // this.addSeasonPricing();
-        }
+          // ✅ Patch Cancellation Policies
+          const cancelArray = seasonGroup.get('cancellationPolicies') as FormArray;
+          if(season.cancellationPolicies && season.cancellationPolicies.length)  {
+            season.cancellationPolicies.forEach((policy) => {
+              cancelArray.push(
+                this.fb.group({
+                  id: [policy.id],
+                  chargeType: [policy.charge_type, Validators.required],
+                  is_refundable: [policy.refund_type === 'Refundable' ? true : false, Validators.required],
+                  chargeAmount: [policy.refund_amount, Validators.required],
+                  refundablebeforedays: [policy.cancellation_days, Validators.required],
+                })
+              );
+            });
+          } else {
+            // Add default refund policy if none exist
+            cancelArray.push(this.createRefundPolicy());
+          }
+
+          // Set min dates
+          if (idx === 0) {
+            this.seasonMinDates.push(this.minDate);
+          } else {
+            const prevEnd = seasonArray.at(idx - 1).get('EndDate').value;
+            this.seasonMinDates.push(prevEnd ? new Date(prevEnd) : this.minDate);
+          }
+          this.endMinDates.push(this.minDate);
+
+          seasonArray.push(seasonGroup);
+        });
+      } else {
+        this.addSeasonPricing();
       }
-    })
-  }
+    }
+  })
+}
 
   updateBasicInfoForm() {
     this.updateBasicInformationForm = this.fb.group({
@@ -368,37 +394,49 @@ syncChildInclusionAcrossSeasons(seasonIndex: number) {
   seasonMinDates: Date[] = [];
   endMinDates: Date[] = [];
 
-  addSeasonPricing() {
-     let isFirstSeasonChildIncluded = false;
+ addSeasonPricing() {
+  let isFirstSeasonChildIncluded = false;
   if (this.seasonsPricingForm.length > 0) {
     const firstSeason = this.seasonsPricingForm.at(0);
     isFirstSeasonChildIncluded = firstSeason.get('is_child_included').value;
   }
-    const seasonGroup = this.fb.group({
-      season_id: [''],
-      StartDate: ['', Validators.required],
-      EndDate: ['', Validators.required],
-      Adultprice: ['', Validators.required],
-      is_child_included: [isFirstSeasonChildIncluded],
-      pricing: this.fb.array([]),
-      cancellationPolicies: this.fb.array([])
-    });
+  
+  const seasonGroup = this.fb.group({
+    season_id: [''],
+    StartDate: ['', Validators.required],
+    EndDate: ['', Validators.required],
+    Adultprice: ['', Validators.required],
+    is_child_included: [{ value: isFirstSeasonChildIncluded, disabled: this.seasonsPricingForm.length > 0 }],
+    pricing: this.fb.array([]),
+    cancellationPolicies: this.fb.array([])
+  });
 
-    (seasonGroup.get('pricing') as FormArray).push(this.createChildPolicy());
-    (seasonGroup.get('cancellationPolicies') as FormArray).push(this.createRefundPolicy());
-
-    const lastIndex = this.seasonsPricingForm.length - 1;
-    if (lastIndex >= 0) {
-      const prevEnd = this.seasonsPricingForm.at(lastIndex).get('EndDate').value;
-      const nextDay = prevEnd ? new Date(new Date(prevEnd).getTime() + 24 * 60 * 60 * 1000) : this.minDate;
-      this.seasonMinDates.push(nextDay);
-    } else {
-      this.seasonMinDates.push(this.minDate);
-    }
-
-    this.endMinDates.push(this.minDate);
-    this.seasonsPricingForm.push(seasonGroup);
+  // Add child policy only if is_child_included is true
+  if (isFirstSeasonChildIncluded) {
+    const childArray = seasonGroup.get('pricing') as FormArray;
+    childArray.push(this.createChildPolicy());
+    
+    // Set validators for the child policy
+    const childGroup = childArray.at(0);
+    childGroup.get('childFromAge').setValidators([Validators.required]);
+    childGroup.get('ChildbeforeAge').setValidators([Validators.required]);
+    childGroup.get('ChildPrice').setValidators([Validators.required]);
   }
+  
+  (seasonGroup.get('cancellationPolicies') as FormArray).push(this.createRefundPolicy());
+
+  const lastIndex = this.seasonsPricingForm.length - 1;
+  if (lastIndex >= 0) {
+    const prevEnd = this.seasonsPricingForm.at(lastIndex).get('EndDate').value;
+    const nextDay = prevEnd ? new Date(new Date(prevEnd).getTime() + 24 * 60 * 60 * 1000) : this.minDate;
+    this.seasonMinDates.push(nextDay);
+  } else {
+    this.seasonMinDates.push(this.minDate);
+  }
+
+  this.endMinDates.push(this.minDate);
+  this.seasonsPricingForm.push(seasonGroup);
+}
 
   onStartDateChange(event: Date, seasonIndex: number) {
     this.endMinDates[seasonIndex] = new Date(event);
@@ -475,34 +513,78 @@ syncChildInclusionAcrossSeasons(seasonIndex: number) {
   }
 
 
- onCheckboxChange(event, check, seasonIndex) {
-  const checked = event.target.value;
+onCheckboxChange(event, check, seasonIndex) {
+  // Check if the control is disabled
+  const season = this.seasonsPricingForm.at(seasonIndex);
+  const isChildIncludedControl = season.get('is_child_included');
+  
+  // If the control is disabled, don't allow changes
+  if (isChildIncludedControl.disabled) {
+    console.log('Child inclusion cannot be changed for this season');
+    return;
+  }
+  
+  const isChildIncluded = check === 'true' || check === true;
   const pricingArray = this.getChildPolicies(seasonIndex);
+  
+  console.log('Checkbox changed:', { isChildIncluded, seasonIndex, currentPricingLength: pricingArray.length });
 
-  pricingArray.controls.forEach((group: FormGroup) => {
-    const childFromAge = group.get('childFromAge');
-    const childbeforeAge = group.get('ChildbeforeAge');
-    const childPrice = group.get('ChildPrice');
-
-    if (check === 'true' || check === true) {
+  if (isChildIncluded) {
+    // If switching to Yes, ensure we have at least one child policy form group
+    if (pricingArray.length === 0) {
+      console.log('Adding child policy form array');
+      this.addChildPolicies(seasonIndex);
+    }
+    
+    // Set validators for all existing child policies
+    pricingArray.controls.forEach((group: FormGroup, index) => {
+      const childFromAge = group.get('childFromAge');
+      const childbeforeAge = group.get('ChildbeforeAge');
+      const childPrice = group.get('ChildPrice');
+      
       childFromAge.setValidators([Validators.required]);
       childbeforeAge.setValidators([Validators.required]);
       childPrice.setValidators([Validators.required]);
-    } else {
+      
+      childFromAge.updateValueAndValidity({ onlySelf: true, emitEvent: false });
+      childbeforeAge.updateValueAndValidity({ onlySelf: true, emitEvent: false });
+      childPrice.updateValueAndValidity({ onlySelf: true, emitEvent: false });
+      
+      console.log(`Set validators for child policy ${index}`);
+    });
+  } else {
+    // If switching to No, clear validators and values
+    pricingArray.controls.forEach((group: FormGroup, index) => {
+      const childFromAge = group.get('childFromAge');
+      const childbeforeAge = group.get('ChildbeforeAge');
+      const childPrice = group.get('ChildPrice');
+      
       childFromAge.clearValidators();
       childbeforeAge.clearValidators();
       childPrice.clearValidators();
       childFromAge.setValue('');
       childbeforeAge.setValue('');
       childPrice.setValue('');
-    }
-    group.updateValueAndValidity({ onlySelf: true });
-  });
+      childFromAge.updateValueAndValidity({ onlySelf: true, emitEvent: false });
+      childbeforeAge.updateValueAndValidity({ onlySelf: true, emitEvent: false });
+      childPrice.updateValueAndValidity({ onlySelf: true, emitEvent: false });
+      
+      console.log(`Cleared validators for child policy ${index}`);
+    });
+  }
 
+  // Force update the form validity
   this.seasonPricingForm.updateValueAndValidity();
   
-  // Call the sync method
-  this.syncChildInclusionAcrossSeasons(seasonIndex);
+  // Trigger change detection for the view
+  setTimeout(() => {
+    this.seasonPricingForm.updateValueAndValidity();
+  }, 0);
+  
+  // Call the sync method only if it's the first season
+  if (seasonIndex === 0) {
+    this.syncChildInclusionAcrossSeasons(seasonIndex);
+  }
 }
 
   onRefundableChange(event: any, isRefundable: boolean, seasonIndex: number, policyIndex: number) {
@@ -553,7 +635,11 @@ syncChildInclusionAcrossSeasons(seasonIndex: number) {
       }
     })
   }
-
+// Add this method to check if child inclusion radio should be disabled for a season
+isChildInclusionDisabled(seasonIndex: number): boolean {
+  // Disable for all seasons except the first one (index 0)
+  return seasonIndex !== 0;
+}
   createIncluExcluForm() {
     this.inclusionExclusionForm = this.fb.group({
       activity_id: [''],

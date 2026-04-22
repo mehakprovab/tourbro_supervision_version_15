@@ -120,4 +120,38 @@ input[type=checkbox]{
 .search input{
   margin: 0px !important;
 }
+
+.tab-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.tab-btn {
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 14px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+/* ACTIVE (Purple) */
+.tab-btn.active {
+  background: linear-gradient(90deg, #5f2eea, #7b3ff2);
+  color: #fff;
+  border: none;
+}
+
+/* INACTIVE (Light with border) */
+.tab-btn.inactive {
+  background: #f3f0ff;
+  color: #6c6c6c;
+  border: 1px solid #d6ccff;
+}
+
+/* Optional hover */
+.tab-btn.inactive:hover {
+  background: #e9e3ff;
+}
   

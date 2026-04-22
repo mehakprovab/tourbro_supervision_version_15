@@ -97,7 +97,7 @@
                 <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
                     <div class="div2 invisible-scrollbar">
                         <div class="table-respons">
-                            <table class="table table-borderless table-striped table-hover" matSort
+                            <table  [class.export-mode]="isExporting" class="table table-borderless table-striped table-hover" matSort
                                 (matSortChange)="sortData($event)" id="b2c-activity-report">
                                 <thead>
                                     <tr>

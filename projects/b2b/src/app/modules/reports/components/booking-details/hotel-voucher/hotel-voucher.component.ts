@@ -233,14 +233,7 @@ export class HotelVoucherComponent implements OnInit {
     }
     const date = new Date().toDateString();
     setTimeout(() => {
-      this.exportAsService.save(this.config, `voucher_${this.app_reference}`).subscribe((_) => {
-        // save started
-        this.swalService.alert.success();
-      }, (err) => {
-        console.log(err);
-        this.swalService.alert.oops();
-      });
-    }, 1000)
+      this.exportAsService.save(this.config, `voucher_${this.app_reference}`)
 
   }
 

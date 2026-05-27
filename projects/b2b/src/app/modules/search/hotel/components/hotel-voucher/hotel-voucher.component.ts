@@ -403,11 +403,7 @@ export class HotelVoucherComponent implements OnInit {
             this.config.options.jsPDF.orientation = orientation;
         }
         const date = new Date().toDateString();
-        this.exportAsService.save(this.config, `${this.voucher['BookingDetails']['AppReference']}- ${this.voucher['BookingDetails']['ConfirmationReference']} -${date}`).subscribe((_) => {
-            console.log(`success`);
-        }, (err) => {
-            console.log(err);
-        });
+        this.exportAsService.save(this.config, `${this.voucher['BookingDetails']['AppReference']}- ${this.voucher['BookingDetails']['ConfirmationReference']} -${date}`)
     }
 
     cancel() {

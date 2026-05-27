@@ -186,13 +186,7 @@ export class SubAdminActiveListComponent implements OnInit, OnDestroy {
             this.config.options.jsPDF.orientation = orientation;
         }
         const date = new Date().toDateString();
-        this.exportAsService.save(this.config, filename).subscribe((_) => {
-            // save started
-            this.swalService.alert.success();
-        }, (err) => {
-            this.swalService.alert.oops();
-
-        });
+       this.exportAsService.save(this.config, filename);
     }
 
     pdfCallbackFn(pdf: any) {

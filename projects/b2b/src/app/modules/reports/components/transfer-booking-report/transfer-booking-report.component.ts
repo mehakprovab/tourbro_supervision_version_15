@@ -382,12 +382,7 @@ getCity(value) {
           this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2b-HotelReport`).subscribe((_) => {
-          this.swalService.alert.success();
-      }, (err) => {
-          console.log(err);
-          this.swalService.alert.oops();
-      });
+      this.exportAsService.save(this.config, `b2b-HotelReport`)
   }
 
   pdfCallbackFn(pdf: any) {

@@ -174,13 +174,7 @@ private subSunk = new SubSink();
             this.config.options.jsPDF.orientation = orientation;
         }
         const date = new Date().toDateString();
-        this.exportAsService.save(this.config, `newsletter_subscriptions`).subscribe((_) => {
-            this.swalService.alert.success();
-        }, (err) => {
-            console.log(err);
-            this.swalService.alert.oops();
-
-        });
+        this.exportAsService.save(this.config, `newsletter_subscriptions`)
     }
 
     pdfCallbackFn(pdf: any) {

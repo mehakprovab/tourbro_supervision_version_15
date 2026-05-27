@@ -17,7 +17,7 @@ import { CoreModule } from '../core/core.module';
 import { HomePageHeaderComponent } from "./components/home-page-header/home-page-header.component";
 import { HomePageFooterComponent } from './components/home-page-footer/home-page-footer.component';
 import { DirectorComponent } from './components/director/director.component';
-import { NgOtpInputModule } from 'ng-otp-input';
+// import { NgOtpInputModule } from 'ng-otp-input';
 
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
@@ -57,7 +57,7 @@ import { RegisterInfoComponent } from './components/register-info/register-info.
     LayoutsModule,
     BsDropdownModule,
     NgxIntlTelInputModule,
-    NgOtpInputModule,
+    // NgOtpInputModule,
     NgMultiSelectDropDownModule
     // import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
   ],

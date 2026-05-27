@@ -311,12 +311,7 @@ export class ActivityBookingReportComponent implements OnInit {
           this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2b-ActivityReport`).subscribe((_) => {
-          this.swalService.alert.success();
-      }, (err) => {
-          console.log(err);
-          this.swalService.alert.oops();
-      });
+      this.exportAsService.save(this.config, `b2b-ActivityReport`)
   }
 
   pdfCallbackFn(pdf: any) {

@@ -263,13 +263,7 @@ isExporting = false;
         }
 
         this.exportAsService.save(this.config, `b2c-ActivityReport`)
-            .subscribe(() => {
-                this.isExporting = false;
-                this.swalService.alert.success();
-            }, () => {
-                this.isExporting = false;
-                this.swalService.alert.oops();
-            });
+         
 
     }, 300);
 }

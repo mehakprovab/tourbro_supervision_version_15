@@ -101,14 +101,7 @@ export class GroupCarComponent implements OnInit,OnDestroy {
             this.config.options.jsPDF.orientation = orientation;
         }
         const date = new Date().toDateString();
-        this.exportAsService.save(this.config, `groupCar_booking`).subscribe((_) => {
-            // save started
-            this.swalService.alert.success();
-        }, (err) => {
-            console.log(err);
-            this.swalService.alert.oops();
-
-        });
+        this.exportAsService.save(this.config, `groupCar_booking`)
     }
 
     pdfCallbackFn(pdf: any) {

@@ -15,7 +15,7 @@ $slick-opacity-not-active: 0.25 !default;
 
 .slick-list {
   .slick-loading & {
-    background: $white slick-image-url("~/assets/images/ajax-loader.gif") center center no-repeat;
+    background: $white url("~/assets/images/ajax-loader.gif") center center no-repeat;
   }
 }
 

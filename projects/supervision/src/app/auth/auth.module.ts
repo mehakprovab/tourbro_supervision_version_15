@@ -9,7 +9,7 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgBootstrapFormValidationModule } from 'ng-bootstrap-form-validation';
 import { RecoveryPasswordComponent } from './components/recovery-password/recovery-password.component';
-import { NgOtpInputModule } from 'ng-otp-input';
+// import { NgOtpInputModule } from 'ng-otp-input';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { SupplierLoginComponent } from './components/supplier-login/supplier-login.component';
 import { DmcLoginComponent } from './components/dmc-login/dmc-login.component';
@@ -32,7 +32,7 @@ import { DmcLoginComponent } from './components/dmc-login/dmc-login.component';
     MatFormFieldModule,
     MatInputModule,
     NgxIntlTelInputModule,
-    NgOtpInputModule 
+    // NgOtpInputModule 
   ],
   exports: [
     LoginComponent,

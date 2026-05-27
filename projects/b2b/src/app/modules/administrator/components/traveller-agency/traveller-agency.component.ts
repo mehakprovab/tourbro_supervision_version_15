@@ -203,13 +203,7 @@ export class TravellerAgencyComponent implements OnInit, OnDestroy {
             this.config.options.jsPDF.orientation = orientation;
         }
         const ts = new Date().toDateString();
-        this.exportAsService.save(this.config, `${ts}`).subscribe((_) => {
-            // save started
-            this.swalService.alert.success();
-        }, (err) => {
-            this.swalService.alert.oops();
-
-        });
+        this.exportAsService.save(this.config, `${ts}`)
     }
 
     pdfCallbackFn(pdf: any) {

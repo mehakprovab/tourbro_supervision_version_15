@@ -253,15 +253,7 @@ export class B2bFlightComponent implements OnInit, OnDestroy {
             this.config.options.jsPDF.orientation = orientation;
         }
         const date = new Date().toDateString();
-        this.exportAsService.save(this.config, `b2b-Flight-Report`).subscribe((_) => {
-            // save started
-            console.log(`success`);
-            this.swalService.alert.success();
-        }, (err) => {
-            console.log(err);
-            this.swalService.alert.oops();
-    
-        });
+        this.exportAsService.save(this.config, `b2b-Flight-Report`)
     }
     
     pdfCallbackFn(pdf: any) {

@@ -205,13 +205,7 @@ export class ContactUsComponent implements OnInit {
           this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2c-TourEnquiry`).subscribe((_) => {
-          this.swalService.alert.success();
-      }, (err) => {
-          console.log(err);
-          this.swalService.alert.oops();
-
-      });
+      this.exportAsService.save(this.config, `b2c-TourEnquiry`)
   }
 
   pdfCallbackFn(pdf: any) {

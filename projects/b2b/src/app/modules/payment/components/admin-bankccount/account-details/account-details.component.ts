@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { ApiHandlerService } from 'projects/b2b/src/app/core/api-handlers';
 import { SwalService } from 'projects/b2b/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/b2b/src/app/core/services/utility.service';

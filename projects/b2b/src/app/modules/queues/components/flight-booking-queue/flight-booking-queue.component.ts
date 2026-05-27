@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { formatDate } from 'ngx-bootstrap/chronos';
@@ -55,7 +55,7 @@ export class FlightBookingQueueComponent implements OnInit, OnDestroy {
     respData: any;
     config: ExportAsConfig = {
         type: 'pdf',
-        elementIdOrContent: 'b2b-flight-report',
+        elementId: 'b2b-flight-report',
         options: {
             jsPDF: {
                 orientation: 'landscape'

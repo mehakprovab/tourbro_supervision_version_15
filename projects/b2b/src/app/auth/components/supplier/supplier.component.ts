@@ -1,11 +1,11 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { CountryISO, SearchCountryField, TooltipLabel } from 'ngx-intl-tel-input';
+import { CountryISO, SearchCountryField } from 'ngx-intl-tel-input';
 import { ApiHandlerService } from '../../../core/api-handlers';
 import { AuthService } from '../../auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '../../../core/services/alert.service';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SwalService } from '../../../core/services/swal.service';
 import { UtilityService } from '../../../core/services/utility.service';
 import { HttpErrorResponse } from '@angular/common/http';

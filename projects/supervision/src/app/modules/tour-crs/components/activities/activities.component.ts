@@ -4,7 +4,7 @@ import { SwalService } from 'projects/supervision/src/app/core/services/swal.ser
 import { SubSink } from 'subsink';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 
 let filterArray:Array<any>=[];
 

@@ -3,7 +3,7 @@ import { ApiHandlerService } from '../../../../core/api-handlers';
 import { SwalService } from '../../../../core/services/swal.service';
 import { finalize } from 'rxjs/operators';
 import { untilDestroyed } from '../../../../core/services/until-destroyed';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { Logger } from '../../../../core/logger/logger.service';
 
 const log = new Logger('settings/ApiCurrencyRateListComponent');

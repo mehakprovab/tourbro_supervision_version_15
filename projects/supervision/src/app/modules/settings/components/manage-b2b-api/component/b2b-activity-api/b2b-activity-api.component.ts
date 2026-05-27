@@ -4,7 +4,7 @@ import { SettingService } from '../../../../setting.service';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 let filterArray: Array<any> = [];
 let respDataCopy: Array<any> = [];
 @Component({

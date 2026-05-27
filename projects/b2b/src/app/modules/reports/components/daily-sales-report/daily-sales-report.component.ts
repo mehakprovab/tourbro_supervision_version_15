@@ -4,7 +4,7 @@ import { UtilityService } from 'projects/b2b/src/app/core/services/utility.servi
 import { Logger } from 'projects/b2b/src/app/core/logger/logger.service';
 import { untilDestroyed } from 'projects/b2b/src/app/core/services';
 import { SwalService } from 'projects/b2b/src/app/core/services/swal.service';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 
 

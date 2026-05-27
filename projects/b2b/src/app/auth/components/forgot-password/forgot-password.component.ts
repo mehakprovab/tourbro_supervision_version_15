@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ApiHandlerService } from '../../../core/api-handlers';
 import { SubSink } from 'subsink';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { LoginComponent } from '../login/login.component';
 
 @Component({

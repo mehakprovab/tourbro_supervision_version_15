@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup , FormArray } from '@angular/forms';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
@@ -31,7 +31,7 @@ private subSunk = new SubSink();
     listType: number;
     config: ExportAsConfig = {
         type: 'pdf',
-        elementIdOrContent: 'payment',
+        elementId: 'payment',
         options: {
             jsPDF: {
                 orientation: 'landscape'

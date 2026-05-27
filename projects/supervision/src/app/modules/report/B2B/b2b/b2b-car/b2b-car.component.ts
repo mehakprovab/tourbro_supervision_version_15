@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { formatDate } from 'ngx-bootstrap/chronos';
 import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
@@ -64,7 +64,7 @@ export class B2bCarComponent implements OnInit, OnDestroy {
     respData: Array<any> = [];
     config: ExportAsConfig = {
         type: 'pdf',
-        elementIdOrContent: 'b2c-car-report',
+        elementId: 'b2c-car-report',
         options: {
             jsPDF: {
                 orientation: 'landscape'

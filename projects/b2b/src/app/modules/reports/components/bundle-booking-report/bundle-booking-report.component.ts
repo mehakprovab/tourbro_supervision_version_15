@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { SubSink } from 'subsink';
 import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
@@ -62,7 +62,7 @@ export class BundleBookingReportComponent implements OnInit {
   respData: Array<any> = [];
   config: ExportAsConfig = {
     type: 'pdf',
-    elementIdOrContent: 'b2b-bundle-report',
+    elementId: 'b2b-bundle-report',
     options: {
       jsPDF: {
         orientation: 'landscape'

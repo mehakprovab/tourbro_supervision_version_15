@@ -8,7 +8,7 @@ import { UtilityService } from 'projects/supervision/src/app/core/services/utili
 import { UserManagementService } from '../../../user-management.service';
 import { Logger } from 'projects/supervision/src/app/core/logger/logger.service';
 import { SubSink } from 'subsink';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { HttpErrorResponse } from '@angular/common/http';
 const log = new Logger('manage-b2c-active/ManageListComponent');
 let filterArray: Array<any> = [];
@@ -34,7 +34,7 @@ export class InactiveAgentGroupListComponent implements OnInit {
   listType: number;
   config: ExportAsConfig = {
       type: 'pdf',
-      elementIdOrContent: 'active-users-report',
+      elementId: 'active-users-report',
       options: {
           jsPDF: {
               orientation: 'landscape'

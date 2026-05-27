@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { formatDate } from 'ngx-bootstrap/chronos';
 import * as moment from 'moment';
 import { Logger } from 'projects/b2b/src/app/core/logger/logger.service';
@@ -65,7 +65,7 @@ export class ActivityBookingReportComponent implements OnInit {
   respData: any;
   config: ExportAsConfig = {
       type: 'pdf',
-      elementIdOrContent: 'b2b-hotel-report',
+      elementId: 'b2b-hotel-report',
       options: {
           jsPDF: {
               orientation: 'landscape'

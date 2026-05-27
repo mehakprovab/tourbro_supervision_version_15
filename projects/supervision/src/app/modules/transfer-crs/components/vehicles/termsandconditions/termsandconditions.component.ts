@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { SubSink } from 'subsink';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({

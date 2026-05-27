@@ -6,7 +6,7 @@ import { ActivitiesService } from '../../../activities.service';
 import { ApiHandlerService } from 'projects/b2b/src/app/core/api-handlers';
 import { UtilityService } from 'projects/b2b/src/app/core/services/utility.service';
 import { SwalService } from 'projects/b2b/src/app/core/services/swal.service';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivitiesLoaderComponent } from '../../activity-loader/activities-loader.component';
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';

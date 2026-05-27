@@ -16,7 +16,7 @@ import { HttpClient } from '@angular/common/http';
 import { KeyValue } from '@angular/common';
 import * as moment from 'moment';
 import { NgbNavChangeEvent, NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TripInfoComponent } from '../result/flight-details/trip-info/trip-info.component';
 import { HotelComponent } from '../../hotel/hotel.component';
 import { TransferSearchComponent } from '../../transfer/transfer-search/transfer-search.component';

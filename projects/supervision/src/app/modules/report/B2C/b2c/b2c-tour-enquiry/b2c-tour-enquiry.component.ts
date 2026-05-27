@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { SwalService } from 'projects/b2b/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/b2b/src/app/core/services/utility.service';
@@ -70,7 +70,7 @@ export class B2cTourEnquiryComponent implements OnInit {
     searchText:string;
     config: ExportAsConfig = {
         type: 'pdf',
-        elementIdOrContent: 'b2c-tour-enquiry',
+        elementId: 'b2c-tour-enquiry',
         options: {
             jsPDF: {
                 orientation: 'landscape'

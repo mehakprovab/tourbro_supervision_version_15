@@ -3,7 +3,7 @@ import { ApiHandlerService } from '../../../../../../../core/api-handlers';
 import { SubSink } from 'subsink';
 import { HotelService } from '../../../../hotel.service';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { CancelInfoComponent } from '../cancel-info/cancel-info.component';
 import { UtilityService } from 'projects/b2b/src/app/core/services/utility.service';
 

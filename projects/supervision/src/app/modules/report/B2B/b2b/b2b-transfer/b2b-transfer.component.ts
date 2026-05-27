@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { formatDate } from 'ngx-bootstrap/chronos';
 import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
@@ -71,7 +71,7 @@ export class B2bTransferComponent implements OnInit {
     respData: Array<any> = [];
     config: ExportAsConfig = {
         type: 'pdf',
-        elementIdOrContent: 'b2b-transfer-report',
+        elementId: 'b2b-transfer-report',
         options: {
             jsPDF: {
                 orientation: 'landscape'

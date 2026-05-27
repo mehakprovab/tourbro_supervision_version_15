@@ -4,7 +4,7 @@ import { UsersService } from '../../../../users.service';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { Logger } from 'projects/supervision/src/app/core/logger/logger.service';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 
 const log = new Logger('users/InactiveB2cUserListComponent');
 let filterArray: Array<any> = [];

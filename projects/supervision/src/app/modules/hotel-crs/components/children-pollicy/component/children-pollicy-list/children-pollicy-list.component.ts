@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { Logger } from 'projects/supervision/src/app/core/logger/logger.service';
 import { HotelCrsService } from '../../../../hotel-crs.service';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';

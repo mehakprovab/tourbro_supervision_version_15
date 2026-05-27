@@ -24,7 +24,7 @@ export class HotelVoucherComponent implements OnInit {
   domainInformation: any;
   config: ExportAsConfig = {
     type: 'pdf',
-    elementIdOrContent: 'print_voucher',
+    elementId: 'print_voucher',
     options: {
       jsPDF: {
         orientation: 'landscape'

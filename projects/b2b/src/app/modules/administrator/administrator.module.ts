@@ -14,11 +14,9 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ExportAsModule } from 'ngx-export-as';
 import { SubAgentPrivilegesComponent } from './components/sub-agent-privileges/sub-agent-privileges.component';
-import {
-  MatDatepickerModule,
-  MatNativeDateModule,
-  MatInputModule
-} from '@angular/material';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [AgencyProfileComponent, TravellerAgencyComponent, AddTravellerComponent, TravellerInfoComponent, CreateSubAgentComponent, SubAgentListComponent, AgencyUserDetailsComponent, AgentsStaffComponent, SubAgentPrivilegesComponent],

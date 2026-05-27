@@ -8,7 +8,7 @@ import { UtilityService } from 'projects/supervision/src/app/core/services/utili
 import { UserManagementService } from '../../user-management.service';
 import { GlobalConstants } from 'projects/supervision/src/app/core/services/global-constants';
 import { Logger } from 'projects/supervision/src/app/core/logger/logger.service';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SubSink } from 'subsink';
 const log = new Logger('manage-b2c-active/ManageListComponent');
@@ -35,7 +35,7 @@ export class AgentGroupingListComponent implements OnInit {
   listType: number;
   config: ExportAsConfig = {
       type: 'pdf',
-      elementIdOrContent: 'active-users-report',
+      elementId: 'active-users-report',
       options: {
           jsPDF: {
               orientation: 'landscape'

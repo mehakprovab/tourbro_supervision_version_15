@@ -4,7 +4,7 @@ import { SwalService } from 'projects/supervision/src/app/core/services/swal.ser
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { SubSink } from 'subsink';
 import { HttpErrorResponse } from '@angular/common/http';
-import { MatSlideToggleChange } from '@angular/material';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
     selector: 'app-language-master',

@@ -5,7 +5,7 @@ import { SwalService } from '../../../../core/services/swal.service';
 import { UtilityService } from '../../../../core/services/utility.service';
 import { SubSink } from 'subsink';
 import { PaymentService } from '../../payment.service';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { Logger } from 'projects/b2b/src/app/core/logger/logger.service';
 
 const log = new Logger('report/TransactionLogsComponent');

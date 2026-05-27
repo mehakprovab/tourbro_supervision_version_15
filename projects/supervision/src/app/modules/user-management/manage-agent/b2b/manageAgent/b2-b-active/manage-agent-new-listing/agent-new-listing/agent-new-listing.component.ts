@@ -8,7 +8,7 @@ import { UtilityService } from 'projects/supervision/src/app/core/services/utili
 import { SubSink } from 'subsink';
 import { GlobalConstants } from 'projects/supervision/src/app/core/services/global-constants';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { UserManagementService } from 'projects/supervision/src/app/modules/user-management/user-management.service';
 
@@ -34,7 +34,7 @@ export class AgentNewListingComponent implements OnInit {
   listType: any;
   config: ExportAsConfig = {
       type: 'pdf',
-      elementIdOrContent: 'active-users-report',
+      elementId: 'active-users-report',
       options: {
           jsPDF: {
               orientation: 'landscape'

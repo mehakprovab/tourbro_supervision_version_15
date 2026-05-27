@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, DoCheck, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { } from 'googlemaps';
 import { browserRefresh } from 'projects/b2b/src/app/app.component';

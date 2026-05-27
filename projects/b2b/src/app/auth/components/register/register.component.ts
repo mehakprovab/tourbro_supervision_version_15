@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiHandlerService } from '../../../core/api-handlers';
 import { SubSink } from 'subsink';
 import { AlertService } from '../../../core/services/alert.service';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
 import { SwalService } from '../../../core/services/swal.service';
 import { HttpErrorResponse } from '@angular/common/http';

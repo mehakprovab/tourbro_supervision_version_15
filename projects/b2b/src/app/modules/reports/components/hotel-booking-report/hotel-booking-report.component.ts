@@ -4,7 +4,7 @@ import { SwalService } from '../../../../core/services/swal.service';
 import { untilDestroyed } from '../../../../core/services';
 import { Logger } from '../../../../core/logger/logger.service';
 import { UtilityService } from '../../../../core/services/utility.service';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { formatDate } from 'ngx-bootstrap/chronos';
@@ -58,7 +58,7 @@ export class HotelBookingReportComponent implements OnInit, OnDestroy {
     respData: any;
     config: ExportAsConfig = {
         type: 'pdf',
-        elementIdOrContent: 'b2b-hotel-report',
+        elementId: 'b2b-hotel-report',
         options: {
             jsPDF: {
                 orientation: 'landscape'

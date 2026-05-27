@@ -6,7 +6,7 @@ import { ApiHandlerService } from "projects/supervision/src/app/core/api-handler
 import { ActivityCrsService } from "../../../../activity-crs.service";
 import { Router } from "@angular/router";
 import { SwalService } from "projects/supervision/src/app/core/services/swal.service";
-import { MatSlideToggleChange } from "@angular/material";
+import { MatSlideToggleChange } from "@angular/material/slide-toggle";
 
 const log = new Logger('transfer-crs/TransferVehicleListComponent');
 let filterArray: Array<any> = [];

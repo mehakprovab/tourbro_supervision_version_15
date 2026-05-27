@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SwalService } from 'projects/b2b/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/b2b/src/app/core/services/utility.service';
 import { Logger } from 'projects/b2b/src/app/core/logger/logger.service';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 
 const log = new Logger('report/AccountLedgerComponent');
 let filterArray: Array<any> = [];

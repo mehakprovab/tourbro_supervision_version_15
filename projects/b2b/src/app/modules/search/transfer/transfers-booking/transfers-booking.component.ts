@@ -11,7 +11,7 @@ import { browserRefresh } from 'projects/b2b/src/app/app.component';
 import { shareReplay } from 'rxjs/operators';
 import { untilDestroyed } from 'projects/b2b/src/app/core/services/until-destroyed';
 import { CustomDialogWrapperComponent } from '../../../custom-dialog-wrapper/custom-dialog-wrapper.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { CartService } from '../../../cart-booking/cart.service';
 import { ActivitySearchFormComponent } from '../../activity/components/activity-search-form/activity-search-form.component';
 import { FlightComponent } from '../../flight/flight.component';

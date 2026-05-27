@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { TravellerAgencyComponent } from '../traveller-agency/traveller-agency.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SubSink } from 'subsink';

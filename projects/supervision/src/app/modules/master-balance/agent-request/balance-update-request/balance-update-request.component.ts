@@ -5,7 +5,8 @@ import { SwalService } from '../../../../core/services/swal.service';
 import { UtilityService } from '../../../../core/services/utility.service';
 import { Logger } from '../../../../core/logger/logger.service';
 import { SubSink } from 'subsink';
-import { MatDialog, MatDialogConfig, Sort } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Sort } from '@angular/material/sort';
 import { MatModalService, ModalConfigDataI, ModalConfigDefault } from 'projects/supervision/src/app/core/services/mat-modal.service';
 import { ProcessTransactionBalanceComponent } from '../../modals/process-transaction-balance/process-transaction-balance.component';
 import { Subscription } from 'rxjs';
@@ -40,7 +41,7 @@ export class BalanceUpdateRequestComponent implements OnInit {
 
   config: ExportAsConfig = {
     type: 'pdf',
-    elementIdOrContent: 'Agent-request',
+    elementId: 'Agent-request',
     options: {
       jsPDF: {
         orientation: 'landscape'

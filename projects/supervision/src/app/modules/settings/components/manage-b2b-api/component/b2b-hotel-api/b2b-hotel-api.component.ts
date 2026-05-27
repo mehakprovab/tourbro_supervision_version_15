@@ -5,7 +5,7 @@ import { UtilityService } from 'projects/supervision/src/app/core/services/utili
 import { SubSink } from 'subsink';
 import { SettingService } from '../../../../setting.service';
 import { Logger } from 'projects/supervision/src/app/core/logger/logger.service';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 const log = new Logger('manage-api/FlightApiComponent')
 let filterArray: Array<any> = [];
 let respDataCopy: Array<any> = [];

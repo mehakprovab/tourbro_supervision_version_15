@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output,OnDestroy } from '@angular/core';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { CmsService } from '../../../../cms.service';
 import { SubSink } from 'subsink';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';

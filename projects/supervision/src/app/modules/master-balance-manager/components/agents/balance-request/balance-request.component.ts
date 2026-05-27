@@ -3,7 +3,7 @@ import { SwalService } from 'projects/supervision/src/app/core/services/swal.ser
 import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { MasterBalanceManagerService } from '../../../master-balance-manager.service';
 import { Logger } from 'projects/supervision/src/app/core/logger/logger.service';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { MatModalService, ModalConfigDataI, ModalConfigDefault } from 'projects/supervision/src/app/core/services/mat-modal.service';
 import { Subscription } from 'rxjs';
 import { ProcessTransactionBalanceComponent } from '../../modals/process-transaction-balance/process-transaction-balance.component';

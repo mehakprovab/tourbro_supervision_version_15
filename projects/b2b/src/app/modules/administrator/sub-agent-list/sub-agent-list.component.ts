@@ -4,7 +4,7 @@ import { AdministratorService } from '../administrator.service';
 import { SubSink } from 'subsink';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SwalService } from 'projects/b2b/src/app/core/services/swal.service';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { UtilityService } from 'projects/b2b/src/app/core/services/utility.service';
 import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { Location } from '@angular/common';
@@ -28,7 +28,7 @@ export class SubAgentListComponent implements OnInit, OnDestroy {
     listType: number;
     config: ExportAsConfig = {
         type: 'pdf',
-        elementIdOrContent: 'sub-agent-list',
+        elementId: 'sub-agent-list',
         options: {
             jsPDF: {
                 orientation: 'landscape'

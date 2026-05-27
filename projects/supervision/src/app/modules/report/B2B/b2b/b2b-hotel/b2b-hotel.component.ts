@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { ApiHandlerService } from '../../../../../core/api-handlers';
 import { Logger } from '../../../../../core/logger/logger.service';
 import { SwalService } from '../../../../../core/services/swal.service';
@@ -33,7 +33,7 @@ export class B2bHotelComponent implements OnInit {
     };
     config: ExportAsConfig = {
         type: 'pdf',
-        elementIdOrContent: 'b2b-hotel-report',
+        elementId: 'b2b-hotel-report',
         options: {
             jsPDF: {
                 orientation: 'landscape'

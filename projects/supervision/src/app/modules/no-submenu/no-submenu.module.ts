@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
-import { MatTableModule, MatSortModule, MatFormFieldModule, MatInputModule, MatPaginatorModule } from '@angular/material';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { SharedModule } from '../../shared/shared.module';
 import { NoSubmenuRoutingModule } from './no-submenu-routing.module';

@@ -2,12 +2,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TravellerInfoComponent } from '../traveller-info/traveller-info.component';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AdministratorService } from '../../administrator.service';
 import { SubSink } from 'subsink';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SwalService } from 'projects/b2b/src/app/core/services/swal.service';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { UtilityService } from 'projects/b2b/src/app/core/services/utility.service';
 import { ApiHandlerService } from 'projects/b2b/src/app/core/api-handlers';
 import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
@@ -31,7 +31,7 @@ export class TravellerAgencyComponent implements OnInit, OnDestroy {
     respData: Array<any> = [];
     config: ExportAsConfig = {
         type: 'pdf',
-        elementIdOrContent: 'traveller-list',
+        elementId: 'traveller-list',
         options: {
             jsPDF: {
                 orientation: 'landscape'

@@ -46,7 +46,7 @@ export class TourDetailsComponent implements OnInit {
     brochurePdf:any;
     config: ExportAsConfig = {
         type: 'pdf',
-        elementIdOrContent: 'print_voucher',
+        elementId: 'print_voucher',
         options: {
           jsPDF: {
             orientation: 'potrait'

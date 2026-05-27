@@ -3,7 +3,7 @@ import { SwalService } from '../../../../core/services/swal.service';
 import { UtilityService } from '../../../../core/services/utility.service';
 import { Logger } from '../../../../core/logger/logger.service';
 import { untilDestroyed } from '../../../../core/services';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { SubSink } from 'subsink';
 import { ApiHandlerService } from '../../../../core/api-handlers';
 import { PaymentService } from '../../payment.service';
@@ -49,7 +49,7 @@ export class AccountLedgerComponent implements OnInit, OnDestroy {
   showFullContent: boolean[] = [];
   config: ExportAsConfig = {
     type: 'pdf',
-    elementIdOrContent: 'account-ladger',
+    elementId: 'account-ladger',
     options: {
       jsPDF: {
         orientation: 'landscape'

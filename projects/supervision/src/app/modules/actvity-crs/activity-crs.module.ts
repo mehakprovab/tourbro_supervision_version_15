@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { MatSlideToggle } from '@angular/material';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { CKEditorModule } from 'ckeditor4-angular';
 import { ActivityCrsRoutingModule } from './activity-crs.rounting.module';

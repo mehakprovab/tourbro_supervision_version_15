@@ -3,7 +3,7 @@ import { PaymentService } from '../../../payment.service';
 import { SwalService } from 'projects/b2b/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/b2b/src/app/core/services/utility.service';
 import { Logger } from 'projects/b2b/src/app/core/logger/logger.service';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { SubSink } from 'subsink';
 import { ApiHandlerService } from 'projects/b2b/src/app/core/api-handlers';
 import { HttpErrorResponse } from '@angular/common/http';

@@ -27,7 +27,7 @@ export class TourInvoiceComponent implements OnInit {
 
   config: ExportAsConfig = {
       type: 'pdf',
-      elementIdOrContent: 'print_voucher',
+      elementId: 'print_voucher',
       options: {
           jsPDF: {
               orientation: 'potrait'

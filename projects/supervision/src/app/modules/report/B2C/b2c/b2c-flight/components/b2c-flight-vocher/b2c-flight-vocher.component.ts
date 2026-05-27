@@ -27,7 +27,7 @@ export class B2cFlightVocherComponent implements OnInit, OnDestroy {
     isSeatInfoNotEmpty:any=false;
     config: ExportAsConfig = {
         type: 'pdf',
-        elementIdOrContent: 'print_voucher',
+        elementId: 'print_voucher',
         options: {
           jsPDF: {
             orientation: 'potrait'

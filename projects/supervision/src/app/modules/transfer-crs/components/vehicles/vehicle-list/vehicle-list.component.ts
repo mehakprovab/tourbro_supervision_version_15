@@ -12,7 +12,7 @@ import { debounceTime } from 'rxjs/operators';
 import { SubSink } from 'subsink';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { MatSlideToggleChange } from '@angular/material';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 let filterArray: Array<any> = [];
 let respDataCopy: Array<any> = [];
 

@@ -2,7 +2,6 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RoundProgressModule } from 'angular-svg-round-progressbar';
@@ -85,7 +84,6 @@ import { MapPipe } from "./pipes/map.pipe";
         RouterModule,
         PerfectScrollbarModule,
         NgbModule,
-        AngularFontAwesomeModule,
         RoundProgressModule,
         TrendModule,
         // NgBootstrapFormValidationModule,
@@ -179,7 +177,6 @@ import { MapPipe } from "./pipes/map.pipe";
         ReactiveFormsModule,
         PerfectScrollbarModule,
         NgbModule,
-        AngularFontAwesomeModule,
         RoundProgressModule,
         TrendModule,
         // NgBootstrapFormValidationModule,

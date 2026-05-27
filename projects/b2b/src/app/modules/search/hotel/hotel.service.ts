@@ -16,7 +16,7 @@ import * as moment from 'moment';
 import { catchError, concatMap, map } from 'rxjs/operators';
 import { SwalService } from '../../../core/services/swal.service';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
     providedIn: 'root'

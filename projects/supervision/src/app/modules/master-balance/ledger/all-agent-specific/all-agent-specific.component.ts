@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { Logger } from 'projects/supervision/src/app/core/logger/logger.service';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
@@ -38,7 +38,7 @@ export class AllAgentSpecificComponent implements OnInit {
     collectionSize: number;
     config: ExportAsConfig = {
         type: 'pdf',
-        elementIdOrContent: 'ledger-request',
+        elementId: 'ledger-request',
         options: {
             jsPDF: {
                 orientation: 'landscape'

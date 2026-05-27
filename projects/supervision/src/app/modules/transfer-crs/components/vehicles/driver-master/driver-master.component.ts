@@ -2,7 +2,8 @@ import { Component, OnInit, ChangeDetectorRef, OnDestroy, ElementRef, ViewChild 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
-import { MatSelect, MatSlideToggleChange } from '@angular/material';
+import { MatSelect } from '@angular/material/select';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { environment } from 'projects/b2b/src/environments/environment.prod';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';

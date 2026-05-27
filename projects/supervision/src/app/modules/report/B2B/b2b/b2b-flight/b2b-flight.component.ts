@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { formatDate } from 'ngx-bootstrap/chronos';
 import { environment } from 'projects/b2b/src/environments/environment.prod';
@@ -39,7 +39,7 @@ export class B2bFlightComponent implements OnInit, OnDestroy {
     maxDate=new Date();
     config: ExportAsConfig = {
         type: 'pdf',
-        elementIdOrContent: 'b2b-flight-report',
+        elementId: 'b2b-flight-report',
         options: {
             jsPDF: {
                 orientation: 'landscape'

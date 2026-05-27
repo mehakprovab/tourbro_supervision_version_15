@@ -30,7 +30,6 @@ import { CancellationComponent } from './components/hotels/components/cancellati
 import { HotelCrsDetailComponent } from './components/hotels/components/hotel-crs-detail/hotel-crs-detail.component';
 import { AddUpdateSeasonComponent } from './components/season/component/add-update-season/add-update-season.component';
 import { SeasonListComponent } from './components/season/component/season-list/season-list.component';
-import { MatSlideToggle } from '@angular/material';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { SeasonsComponent } from './components/hotels/components/seasons/seasons.component';
 import { PriceManagementComponent } from './components/hotels/components/price-management/price-management.component';

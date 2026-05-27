@@ -3,7 +3,7 @@ import { Logger } from 'projects/b2b/src/app/core/logger/logger.service';
 import { PaymentService } from '../../payment.service';
 import { SwalService } from 'projects/b2b/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/b2b/src/app/core/services/utility.service';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { untilDestroyed } from 'projects/b2b/src/app/core/services';
 
 

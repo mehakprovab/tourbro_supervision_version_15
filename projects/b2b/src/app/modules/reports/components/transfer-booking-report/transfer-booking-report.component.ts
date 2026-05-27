@@ -6,7 +6,7 @@ import { SwalService } from 'projects/b2b/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/b2b/src/app/core/services/utility.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { untilDestroyed } from 'projects/b2b/src/app/core/services';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { formatDate } from 'ngx-bootstrap/chronos';
 import * as moment from 'moment';
 import { ApiHandlerService } from 'projects/b2b/src/app/core/api-handlers';
@@ -113,7 +113,7 @@ export class TransferBookingReportComponent implements OnInit {
   respData: any;
   config: ExportAsConfig = {
       type: 'pdf',
-      elementIdOrContent: 'b2b-hotel-report',
+      elementId: 'b2b-hotel-report',
       options: {
           jsPDF: {
               orientation: 'landscape'

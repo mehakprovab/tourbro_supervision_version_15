@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Logger } from 'projects/b2b/src/app/core/logger/logger.service';
 import { FlightService } from '../../../flight.service';
 const log = new Logger('FlightSearchComponent');

@@ -5,7 +5,7 @@ import { UtilityService } from '../../../core/services/utility.service';
 import { ApiHandlerService } from '../../../core/api-handlers';
 import { AppService } from '../../../app.service';
 import { catchError } from 'rxjs/operators';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 @Injectable({
   providedIn: 'root'
 })

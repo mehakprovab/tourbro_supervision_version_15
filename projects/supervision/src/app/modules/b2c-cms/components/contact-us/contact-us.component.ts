@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
@@ -51,7 +51,7 @@ export class ContactUsComponent implements OnInit {
   searchText:string;
   config: ExportAsConfig = {
       type: 'pdf',
-      elementIdOrContent: 'b2c-tour-enquiry',
+      elementId: 'b2c-tour-enquiry',
       options: {
           jsPDF: {
               orientation: 'landscape'

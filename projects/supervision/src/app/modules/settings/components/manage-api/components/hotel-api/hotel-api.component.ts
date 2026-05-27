@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { SubSink } from 'subsink';
 import { ApiHandlerService } from '../../../../../../core/api-handlers';
 import { Logger } from '../../../../../../core/logger/logger.service';

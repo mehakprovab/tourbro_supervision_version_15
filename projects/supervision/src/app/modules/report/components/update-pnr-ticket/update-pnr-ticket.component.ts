@@ -26,7 +26,7 @@ export class UpdatePnrTicketComponent implements OnInit, OnDestroy {
     domainInformation: any;
     config: ExportAsConfig = {
         type: 'pdf',
-        elementIdOrContent: 'flight_voucher',
+        elementId: 'flight_voucher',
         options: {
             jsPDF: {
                 orientation: 'landscape'

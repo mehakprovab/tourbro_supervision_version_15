@@ -4,7 +4,8 @@ import { AuthService } from '../../../auth/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlertService } from '../../../core/services/alert.service';
 import { ApiHandlerService } from '../../../core/api-handlers';
-import { ErrorStateMatcher, MatDialog } from '@angular/material';
+import { ErrorStateMatcher } from '@angular/material/core';
+import {  MatDialog } from '@angular/material/dialog';
 import { SubSink } from 'subsink';
 import { SwalService } from '../../../core/services/swal.service';
 

@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { UtilityService } from 'projects/b2b/src/app/core/services/utility.service';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { SubSink } from 'subsink';

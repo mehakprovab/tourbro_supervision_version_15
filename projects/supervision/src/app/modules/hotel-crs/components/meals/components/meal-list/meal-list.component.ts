@@ -4,7 +4,7 @@ import { HotelCrsService } from '../../../../hotel-crs.service';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { Logger } from 'projects/supervision/src/app/core/logger/logger.service';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 const log = new Logger('hotel-crs/HotelTypeList');
 let filterArray: Array<any> = [];
 let respDataCopy: Array<any> = [];

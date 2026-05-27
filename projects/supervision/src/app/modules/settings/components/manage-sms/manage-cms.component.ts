@@ -4,7 +4,7 @@ import { Logger } from 'projects/supervision/src/app/core/logger/logger.service'
 import { untilDestroyed } from 'projects/supervision/src/app/core/services/until-destroyed';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { finalize } from 'rxjs/operators';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 
 const log = new Logger('ManageCmsComponent');
 let filterArray: Array<any> = [];

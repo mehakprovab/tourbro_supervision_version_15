@@ -5,7 +5,7 @@ import {
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { formatDate } from 'ngx-bootstrap/chronos';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';

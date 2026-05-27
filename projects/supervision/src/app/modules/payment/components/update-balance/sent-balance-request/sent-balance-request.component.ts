@@ -4,7 +4,7 @@ import { SwalService } from 'projects/b2b/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/b2b/src/app/core/services/utility.service';
 import { untilDestroyed } from 'projects/b2b/src/app/core/services/until-destroyed';
 import { Logger } from 'projects/b2b/src/app/core/logger/logger.service';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 
 
 const log = new Logger('payment/SentBalanceRequestComponent');

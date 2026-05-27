@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
@@ -36,7 +36,7 @@ export class PromocodeListComponent implements OnInit,OnDestroy {
     listType: number;
     config: ExportAsConfig = {
         type: 'pdf',
-        elementIdOrContent: 'active-users-report',
+        elementId: 'active-users-report',
         options: {
             jsPDF: {
                 orientation: 'landscape'

@@ -6,7 +6,7 @@ import { Logger } from 'projects/supervision/src/app/core/logger/logger.service'
 import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { formatDate } from 'ngx-bootstrap/chronos';
 import { GlobalConstants } from 'projects/supervision/src/app/core/services/global-constants';
 

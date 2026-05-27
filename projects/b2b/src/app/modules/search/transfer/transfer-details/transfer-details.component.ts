@@ -5,7 +5,7 @@ import { TransferService } from '../transfer.service';
 import { ApiHandlerService } from 'projects/b2b/src/app/core/api-handlers';
 import { UtilityService } from 'projects/b2b/src/app/core/services/utility.service';
 import { SwalService } from 'projects/b2b/src/app/core/services/swal.service';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TransferLoaderComponent } from '../transfer-result/components/transfer-loader/transfer-loader.component';
 import { environment } from "projects/b2b/src/environments/environment.prod";
 const baseUrl = environment.SA_URL;

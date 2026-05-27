@@ -39,7 +39,7 @@ export class CartBookingVoucherComponent implements OnInit {
     journeyListData: any;
     config: ExportAsConfig = {
         type: 'pdf',
-        elementIdOrContent: 'print_voucher',
+        elementId: 'print_voucher',
         options: {
             jsPDF: {
                 orientation: 'portrait'

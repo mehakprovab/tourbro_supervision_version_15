@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
@@ -74,7 +74,7 @@ export class B2bActivityComponent implements OnInit {
   respData: Array<any> = [];
   config: ExportAsConfig = {
       type: 'pdf',
-      elementIdOrContent: 'b2b-activity-report',
+      elementId: 'b2b-activity-report',
       options: {
           jsPDF: {
               orientation: 'landscape'

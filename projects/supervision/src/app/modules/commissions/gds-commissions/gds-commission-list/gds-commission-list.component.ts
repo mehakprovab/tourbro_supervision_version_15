@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { ApiHandlerService } from '../../../../core/api-handlers';
 import { Logger } from '../../../../core/logger/logger.service';
 import { SwalService } from '../../../../core/services/swal.service';

@@ -5,7 +5,7 @@ import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handler
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { TourCrsService } from '../../../../tour-crs.service';
 
 let filterArray:Array<any>=[];

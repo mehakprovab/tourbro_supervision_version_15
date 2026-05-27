@@ -12,7 +12,7 @@ import { SubSink } from 'subsink';
 import { HotelService } from '../../hotel.service';
 import * as moment from 'moment';
 import { browserRefresh } from 'projects/b2b/src/app/app.component';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { HotelSearchLoaderComponent } from '../hotel-result/components/hotel-search-loader/hotel-search-loader.component';
 
 export function getAlertConfig(): TooltipConfig {

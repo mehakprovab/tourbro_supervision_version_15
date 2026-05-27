@@ -35,7 +35,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { RoundProgressModule } from 'angular-svg-round-progressbar';
 import { NgBootstrapFormValidationModule } from 'ng-bootstrap-form-validation';
 import { NgxLoadingModule } from 'ngx-loading';
@@ -82,7 +81,6 @@ import { MapPipe } from './pipes/map.pipe';
         RouterModule,
         PerfectScrollbarModule,
         NgbModule,
-        AngularFontAwesomeModule,
         RoundProgressModule,
         TrendModule,
         // NgBootstrapFormValidationModule,
@@ -179,7 +177,6 @@ import { MapPipe } from './pipes/map.pipe';
         ReactiveFormsModule,
         PerfectScrollbarModule,
         NgbModule,
-        AngularFontAwesomeModule,
         RoundProgressModule,
         TrendModule,
         // NgBootstrapFormValidationModule,

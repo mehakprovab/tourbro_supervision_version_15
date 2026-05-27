@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { ApiHandlerService } from '../../../../../core/api-handlers';
 import { Logger } from '../../../../../core/logger/logger.service';
@@ -125,7 +125,7 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
     respData: Array<any> = [];
     config: ExportAsConfig = {
         type: 'pdf',
-        elementIdOrContent: 'b2c-hotel-report',
+        elementId: 'b2c-hotel-report',
         options: {
             jsPDF: {
                 orientation: 'landscape'

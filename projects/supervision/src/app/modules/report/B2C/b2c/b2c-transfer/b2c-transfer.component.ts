@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
@@ -34,7 +34,7 @@ export class B2cTransferComponent implements OnInit {
     };
     config: ExportAsConfig = {
         type: 'pdf',
-        elementIdOrContent: 'b2c-transfer-report',
+        elementId: 'b2c-transfer-report',
         options: {
             jsPDF: {
                 orientation: 'landscape'

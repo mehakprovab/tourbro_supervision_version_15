@@ -4,7 +4,7 @@ import { SwalService } from '../../../../core/services/swal.service';
 import { untilDestroyed } from '../../../../core/services';
 import { Logger } from '../../../../core/logger/logger.service';
 import { UtilityService } from '../../../../core/services/utility.service';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 
 const log = new Logger('report/BookingDetailsComponent');

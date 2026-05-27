@@ -3,7 +3,7 @@ import { HotelCrsService } from '../../../../hotel-crs/hotel-crs.service';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { TransferCrsService } from '../../../transfer-crs.service';
 
 let filterArray: Array<any> = [];

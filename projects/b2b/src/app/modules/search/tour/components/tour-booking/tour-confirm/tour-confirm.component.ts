@@ -7,7 +7,7 @@ import { ApiHandlerService } from 'projects/b2b/src/app/core/api-handlers';
 import { UtilityService } from 'projects/b2b/src/app/core/services/utility.service';
 import { SwalService } from 'projects/b2b/src/app/core/services/swal.service';
 import { HeaderService } from 'projects/b2b/src/app/shared/components/header/header.service';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { HotelPaymentConfirmationComponent } from '../../../../hotel/components/hotel-booking/components/hotel-payment-confirmation/hotel-payment-confirmation.component';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';

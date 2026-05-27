@@ -5,7 +5,7 @@ import { SwalService } from '../../../../core/services/swal.service';
 import { UtilityService } from '../../../../core/services/utility.service';
 import { Logger } from '../../../../core/logger/logger.service';
 import { SubSink } from 'subsink';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { MatModalService, ModalConfigDataI, ModalConfigDefault } from '../../../../core/services/mat-modal.service';
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -43,7 +43,7 @@ export class ListCreditsComponent implements OnInit {
     agentList: any;
     config: ExportAsConfig = {
         type: 'pdf',
-        elementIdOrContent: 'credit-request',
+        elementId: 'credit-request',
         options: {
             jsPDF: {
                 orientation: 'landscape'

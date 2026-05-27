@@ -4,7 +4,7 @@ import { ApiHandlerService } from '../../../core/api-handlers';
 import { AuthService } from '../../auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '../../../core/services/alert.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { SwalService } from '../../../core/services/swal.service';
 import { UtilityService } from '../../../core/services/utility.service';
 import { HttpErrorResponse } from '@angular/common/http';

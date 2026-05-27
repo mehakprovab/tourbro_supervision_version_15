@@ -7,7 +7,7 @@ import { SwalService } from 'projects/b2b/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/b2b/src/app/core/services/utility.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import * as moment from 'moment';
 
 const log = new Logger('support ticket/SentCallbackComponent');
@@ -49,7 +49,7 @@ export class SentCallbackComponent implements OnInit {
     respData: Array<any> = [];
     config: ExportAsConfig = {
         type: 'pdf',
-        elementIdOrContent: 'agent-callback-list',
+        elementId: 'agent-callback-list',
         options: {
             jsPDF: {
                 orientation: 'landscape'

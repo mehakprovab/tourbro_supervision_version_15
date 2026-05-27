@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { ApiHandlerService } from '../../../../../core/api-handlers';
 import { Logger } from '../../../../../core/logger/logger.service';
@@ -72,7 +72,7 @@ export class B2cActivityComponent implements OnInit, OnDestroy {
     respData: Array<any> = [];
     config: ExportAsConfig = {
         type: 'pdf',
-        elementIdOrContent: 'b2c-activity-report',
+        elementId: 'b2c-activity-report',
         options: {
             jsPDF: {
                 orientation: 'landscape'

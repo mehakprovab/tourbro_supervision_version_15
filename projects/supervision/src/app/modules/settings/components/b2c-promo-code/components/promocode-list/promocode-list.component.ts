@@ -36,7 +36,7 @@ export class PromocodeListComponent implements OnInit,OnDestroy {
     listType: number;
     config: ExportAsConfig = {
         type: 'pdf',
-        elementId: 'active-users-report',
+        elementIdOrContent: 'active-users-report',
         options: {
             jsPDF: {
                 orientation: 'landscape'

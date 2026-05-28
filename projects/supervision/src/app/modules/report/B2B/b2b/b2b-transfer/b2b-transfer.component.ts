@@ -71,7 +71,7 @@ export class B2bTransferComponent implements OnInit {
     respData: Array<any> = [];
     config: ExportAsConfig = {
         type: 'pdf',
-        elementId: 'b2b-transfer-report',
+        elementIdOrContent: 'b2b-transfer-report',
         options: {
             jsPDF: {
                 orientation: 'landscape'

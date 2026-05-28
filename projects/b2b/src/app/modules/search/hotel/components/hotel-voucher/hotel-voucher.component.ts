@@ -27,7 +27,7 @@ export class HotelVoucherComponent implements OnInit {
     showPayment: boolean = true;
     config: ExportAsConfig = {
         type: 'pdf',
-        elementId: 'voucher-print',
+        elementIdOrContent: 'voucher-print',
         options: {
             jsPDF: {
                 orientation: 'landscape'

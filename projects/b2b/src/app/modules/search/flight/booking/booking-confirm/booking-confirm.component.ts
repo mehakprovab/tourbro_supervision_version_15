@@ -47,7 +47,7 @@ export class BookingConfirmComponent implements OnInit {
     segment_indicator1:any;
     config: ExportAsConfig = {
         type: 'pdf',
-        elementId: 'print_voucher',
+        elementIdOrContent: 'print_voucher',
         options: {
             jsPDF: {
                 orientation: 'portrait'

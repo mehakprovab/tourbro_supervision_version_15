@@ -34,7 +34,7 @@ export class AgentNewListingComponent implements OnInit {
   listType: any;
   config: ExportAsConfig = {
       type: 'pdf',
-      elementId: 'active-users-report',
+      elementIdOrContent: 'active-users-report',
       options: {
           jsPDF: {
               orientation: 'landscape'

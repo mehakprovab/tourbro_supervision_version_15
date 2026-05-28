@@ -72,7 +72,7 @@ export class B2cActivityComponent implements OnInit, OnDestroy {
     respData: Array<any> = [];
     config: ExportAsConfig = {
         type: 'pdf',
-        elementId: 'b2c-activity-report',
+        elementIdOrContent: 'b2c-activity-report',
         options: {
             jsPDF: {
                 orientation: 'landscape'

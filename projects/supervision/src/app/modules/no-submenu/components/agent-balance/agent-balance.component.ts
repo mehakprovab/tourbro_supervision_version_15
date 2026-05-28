@@ -33,7 +33,7 @@ export class AgentBalanceComponent implements OnInit {
     listType: number;
     config: ExportAsConfig = {
         type: 'pdf',
-        elementId: 'B2B-users-report',
+        elementIdOrContent: 'B2B-users-report',
         options: {
             jsPDF: {
                 orientation: 'landscape'

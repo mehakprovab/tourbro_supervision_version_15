@@ -30,7 +30,7 @@ export class GroupHotelComponent implements OnInit, OnDestroy {
     listType: number;
     config: ExportAsConfig = {
         type: 'pdf',
-        elementId: 'subscriptions',
+        elementIdOrContent: 'subscriptions',
         options: {
             jsPDF: {
                 orientation: 'landscape'

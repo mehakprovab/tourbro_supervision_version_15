@@ -35,7 +35,7 @@ export class SupplierListComponent implements OnInit {
   supplier_Type:any;
   config: ExportAsConfig = {
       type: 'pdf',
-      elementId: 'active-users-report',
+      elementIdOrContent: 'active-users-report',
       options: {
           jsPDF: {
               orientation: 'landscape'

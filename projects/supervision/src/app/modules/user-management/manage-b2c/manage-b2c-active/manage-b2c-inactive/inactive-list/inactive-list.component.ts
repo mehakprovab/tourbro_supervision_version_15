@@ -32,7 +32,7 @@ export class InactiveListComponent implements OnInit,OnDestroy {
     listType: number;
     config: ExportAsConfig = {
         type: 'pdf',
-        elementId: 'In-active-users-report',
+        elementIdOrContent: 'In-active-users-report',
         options: {
             jsPDF: {
                 orientation: 'landscape'

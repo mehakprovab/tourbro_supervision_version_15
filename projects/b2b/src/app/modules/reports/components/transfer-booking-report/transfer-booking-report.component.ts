@@ -113,7 +113,7 @@ export class TransferBookingReportComponent implements OnInit {
   respData: any;
   config: ExportAsConfig = {
       type: 'pdf',
-      elementId: 'b2b-hotel-report',
+      elementIdOrContent: 'b2b-hotel-report',
       options: {
           jsPDF: {
               orientation: 'landscape'

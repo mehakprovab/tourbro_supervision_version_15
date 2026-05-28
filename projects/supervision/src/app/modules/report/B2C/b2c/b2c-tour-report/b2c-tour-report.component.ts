@@ -75,7 +75,7 @@ export class B2cTourReportComponent implements OnInit {
   respData: Array<any> = [];
   config: ExportAsConfig = {
       type: 'pdf',
-      elementId: 'b2c-tour-report',
+      elementIdOrContent: 'b2c-tour-report',
       options: {
           jsPDF: {
               orientation: 'landscape'

@@ -43,7 +43,7 @@ export class ListCreditsComponent implements OnInit {
     agentList: any;
     config: ExportAsConfig = {
         type: 'pdf',
-        elementId: 'credit-request',
+        elementIdOrContent: 'credit-request',
         options: {
             jsPDF: {
                 orientation: 'landscape'

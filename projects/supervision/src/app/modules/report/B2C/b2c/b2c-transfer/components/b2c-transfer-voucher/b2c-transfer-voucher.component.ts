@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@an
 import { ActivatedRoute } from '@angular/router';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { SupportedExtensions } from 'ngx-export-as/public_api';
+import { SupportedExtensions } from 'ngx-export-as';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { SubSink } from 'subsink/dist/subsink';

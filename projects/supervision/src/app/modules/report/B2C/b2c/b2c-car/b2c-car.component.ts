@@ -64,7 +64,7 @@ export class B2cCarComponent implements OnInit,OnDestroy {
     respData: Array<any> = [];
     config: ExportAsConfig = {
         type: 'pdf',
-        elementId: 'b2c-car-report',
+        elementIdOrContent: 'b2c-car-report',
         options: {
             jsPDF: {
                 orientation: 'landscape'

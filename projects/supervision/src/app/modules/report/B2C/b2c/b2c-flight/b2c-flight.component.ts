@@ -82,7 +82,7 @@ export class B2cFlightComponent implements OnInit,OnDestroy {
     respData: Array<any> = [];
     config: ExportAsConfig = {
         type: 'pdf',
-        elementId: 'b2c-flight-report',
+        elementIdOrContent: 'b2c-flight-report',
         options: {
             jsPDF: {
                 orientation: 'landscape'

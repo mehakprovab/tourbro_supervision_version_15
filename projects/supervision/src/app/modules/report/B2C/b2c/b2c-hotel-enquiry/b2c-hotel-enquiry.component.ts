@@ -60,7 +60,7 @@ export class B2cHotelEnquiryComponent implements OnInit {
   searchText:string;
   config: ExportAsConfig = {
       type: 'pdf',
-      elementId: 'b2c-hotel-enquiry',
+      elementIdOrContent: 'b2c-hotel-enquiry',
       options: {
           jsPDF: {
               orientation: 'landscape'

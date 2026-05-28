@@ -34,7 +34,7 @@ export class VoucherComponent implements OnInit {
     domainInformation: any;
     config: ExportAsConfig = {
         type: 'pdf',
-        elementId: 'print_voucher',
+        elementIdOrContent: 'print_voucher',
         options: {
             jsPDF: {
                 orientation: 'potrait'

@@ -49,7 +49,7 @@ export class SentCallbackComponent implements OnInit {
     respData: Array<any> = [];
     config: ExportAsConfig = {
         type: 'pdf',
-        elementId: 'agent-callback-list',
+        elementIdOrContent: 'agent-callback-list',
         options: {
             jsPDF: {
                 orientation: 'landscape'

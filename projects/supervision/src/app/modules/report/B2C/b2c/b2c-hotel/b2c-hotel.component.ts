@@ -125,7 +125,7 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
     respData: Array<any> = [];
     config: ExportAsConfig = {
         type: 'pdf',
-        elementId: 'b2c-hotel-report',
+        elementIdOrContent: 'b2c-hotel-report',
         options: {
             jsPDF: {
                 orientation: 'landscape'

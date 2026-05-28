@@ -51,7 +51,7 @@ export class ContactUsComponent implements OnInit {
   searchText:string;
   config: ExportAsConfig = {
       type: 'pdf',
-      elementId: 'b2c-tour-enquiry',
+      elementIdOrContent: 'b2c-tour-enquiry',
       options: {
           jsPDF: {
               orientation: 'landscape'

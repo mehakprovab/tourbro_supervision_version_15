@@ -31,7 +31,7 @@ private subSunk = new SubSink();
     listType: number;
     config: ExportAsConfig = {
         type: 'pdf',
-        elementId: 'payment',
+        elementIdOrContent: 'payment',
         options: {
             jsPDF: {
                 orientation: 'landscape'

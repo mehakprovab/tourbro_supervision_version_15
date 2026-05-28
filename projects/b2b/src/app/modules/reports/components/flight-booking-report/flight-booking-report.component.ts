@@ -68,7 +68,7 @@ export class FlightBookingReportComponent implements OnInit, OnDestroy {
     config: ExportAsConfig = {
         type: 'pdf',
         download: false,
-        elementId: 'b2b-flight-report',
+        elementIdOrContent: 'b2b-flight-report',
         options: {
             jsPDF: {
                 orientation: 'landscape'

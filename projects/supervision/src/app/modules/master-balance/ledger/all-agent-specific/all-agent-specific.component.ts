@@ -38,7 +38,7 @@ export class AllAgentSpecificComponent implements OnInit {
     collectionSize: number;
     config: ExportAsConfig = {
         type: 'pdf',
-        elementId: 'ledger-request',
+        elementIdOrContent: 'ledger-request',
         options: {
             jsPDF: {
                 orientation: 'landscape'

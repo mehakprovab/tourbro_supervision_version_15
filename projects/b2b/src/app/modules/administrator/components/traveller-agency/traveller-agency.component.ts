@@ -31,7 +31,7 @@ export class TravellerAgencyComponent implements OnInit, OnDestroy {
     respData: Array<any> = [];
     config: ExportAsConfig = {
         type: 'pdf',
-        elementId: 'traveller-list',
+        elementIdOrContent: 'traveller-list',
         options: {
             jsPDF: {
                 orientation: 'landscape'

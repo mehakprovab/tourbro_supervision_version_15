@@ -39,7 +39,7 @@ export class B2bFlightComponent implements OnInit, OnDestroy {
     maxDate=new Date();
     config: ExportAsConfig = {
         type: 'pdf',
-        elementId: 'b2b-flight-report',
+        elementIdOrContent: 'b2b-flight-report',
         options: {
             jsPDF: {
                 orientation: 'landscape'

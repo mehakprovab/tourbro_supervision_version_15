@@ -41,7 +41,7 @@ export class TransactionLogsComponent implements OnInit, OnDestroy {
     respData: Array<any> = [];
     config: ExportAsConfig = {
         type: 'pdf',
-        elementId: 'transactions-log',
+        elementIdOrContent: 'transactions-log',
         options: {
             jsPDF: {
                 orientation: 'landscape'

@@ -28,7 +28,7 @@ export class SubAgentListComponent implements OnInit, OnDestroy {
     listType: number;
     config: ExportAsConfig = {
         type: 'pdf',
-        elementId: 'sub-agent-list',
+        elementIdOrContent: 'sub-agent-list',
         options: {
             jsPDF: {
                 orientation: 'landscape'

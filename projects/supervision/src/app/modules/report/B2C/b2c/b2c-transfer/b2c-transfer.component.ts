@@ -34,7 +34,7 @@ export class B2cTransferComponent implements OnInit {
     };
     config: ExportAsConfig = {
         type: 'pdf',
-        elementId: 'b2c-transfer-report',
+        elementIdOrContent: 'b2c-transfer-report',
         options: {
             jsPDF: {
                 orientation: 'landscape'

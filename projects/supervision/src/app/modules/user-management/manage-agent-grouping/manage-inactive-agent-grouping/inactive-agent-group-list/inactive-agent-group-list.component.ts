@@ -34,7 +34,7 @@ export class InactiveAgentGroupListComponent implements OnInit {
   listType: number;
   config: ExportAsConfig = {
       type: 'pdf',
-      elementId: 'active-users-report',
+      elementIdOrContent: 'active-users-report',
       options: {
           jsPDF: {
               orientation: 'landscape'

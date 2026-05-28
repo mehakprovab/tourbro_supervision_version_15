@@ -41,7 +41,7 @@ export class BalanceUpdateRequestComponent implements OnInit {
 
   config: ExportAsConfig = {
     type: 'pdf',
-    elementId: 'Agent-request',
+    elementIdOrContent: 'Agent-request',
     options: {
       jsPDF: {
         orientation: 'landscape'

@@ -62,7 +62,7 @@ export class B2bBundleBookingReportComponent implements OnInit {
   respData: Array<any> = [];
   config: ExportAsConfig = {
     type: 'pdf',
-    elementId: 'b2b-bundle-report',
+    elementIdOrContent: 'b2b-bundle-report',
     options: {
       jsPDF: {
         orientation: 'landscape'

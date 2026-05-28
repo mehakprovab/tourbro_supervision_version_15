@@ -74,7 +74,7 @@ export class B2bActivityComponent implements OnInit {
   respData: Array<any> = [];
   config: ExportAsConfig = {
       type: 'pdf',
-      elementId: 'b2b-activity-report',
+      elementIdOrContent: 'b2b-activity-report',
       options: {
           jsPDF: {
               orientation: 'landscape'

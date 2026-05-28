@@ -71,7 +71,7 @@ export class B2bTourEnquiryComponent implements OnInit {
     searchText:string;
     config: ExportAsConfig = {
         type: 'pdf',
-        elementId: 'b2b-tour-enquiry',
+        elementIdOrContent: 'b2b-tour-enquiry',
         options: {
             jsPDF: {
                 orientation: 'landscape'

@@ -52,7 +52,7 @@ export class TourEnquiryReportComponent implements OnInit {
     searchText:string;
     config: ExportAsConfig = {
         type: 'pdf',
-        elementId: 'b2b-tour-enquiry',
+        elementIdOrContent: 'b2b-tour-enquiry',
         options: {
             jsPDF: {
                 orientation: 'landscape'

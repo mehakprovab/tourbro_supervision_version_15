@@ -49,7 +49,7 @@ export class AccountLedgerComponent implements OnInit, OnDestroy {
   showFullContent: boolean[] = [];
   config: ExportAsConfig = {
     type: 'pdf',
-    elementId: 'account-ladger',
+    elementIdOrContent: 'account-ladger',
     options: {
       jsPDF: {
         orientation: 'landscape'

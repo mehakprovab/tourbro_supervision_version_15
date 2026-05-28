@@ -55,7 +55,7 @@ export class FlightBookingQueueComponent implements OnInit, OnDestroy {
     respData: any;
     config: ExportAsConfig = {
         type: 'pdf',
-        elementId: 'b2b-flight-report',
+        elementIdOrContent: 'b2b-flight-report',
         options: {
             jsPDF: {
                 orientation: 'landscape'

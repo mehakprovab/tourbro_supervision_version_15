@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Logger } from 'projects/supervision/src/app/core/logger/logger.service';
 import { ActivatedRoute } from '@angular/router';
-import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 const log = new Logger('BankAccountDetailsComponent');
 

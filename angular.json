@@ -22,7 +22,7 @@
             "main": "projects/b2b/src/main.ts",
             "polyfills": "projects/b2b/src/polyfills.ts",
             "tsConfig": "projects/b2b/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "projects/b2b/src/favicon.ico",
               "projects/b2b/src/assets",
@@ -164,7 +164,7 @@
             "main": "projects/supervision/src/main.ts",
             "polyfills": "projects/supervision/src/polyfills.ts",
             "tsConfig": "projects/supervision/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "projects/supervision/src/favicon.ico",
               "projects/supervision/src/assets"

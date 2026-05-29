@@ -52,6 +52,7 @@ import {
 } from './components';
 import { EscapeHtmlPipe } from './pipes/keep-html.pipe';
 import { MapPipe } from './pipes/map.pipe';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
     declarations: [
@@ -119,6 +120,7 @@ import { MapPipe } from './pipes/map.pipe';
         MatPaginatorModule,
         MatTreeModule,
         MatRippleModule,
+        FontAwesomeModule
     ],
     exports: [
         OptionsDrawerComponent,
@@ -182,7 +184,8 @@ import { MapPipe } from './pipes/map.pipe';
         // NgBootstrapFormValidationModule,
         NgxLoadingModule,
         RangeSliderModule,
-        SlickCarouselModule
+        SlickCarouselModule,
+        FontAwesomeModule
     ]
 })
 export class SharedModule { }

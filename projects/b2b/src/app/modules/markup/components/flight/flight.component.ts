@@ -8,7 +8,7 @@ import { SubSink } from 'subsink';
 import { ApiHandlerService } from 'projects/b2b/src/app/core/api-handlers';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 const log = new Logger('report/TransactionLogsComponent');

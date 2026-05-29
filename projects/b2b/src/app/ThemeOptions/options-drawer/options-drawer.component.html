@@ -1,7 +1,11 @@
 <div class="ui-theme-settings">
   <button type="button" placement="left" ngbTooltip="Open Layout Configurator" class="btn-open-options btn btn-warning"
           (click)="toggleOptionsDrawer()">
-    <fa size="3x" name="cog" animation="spin"></fa>
+   <fa-icon
+  [icon]="faCog"
+  size="3x"
+  [spin]="true">
+</fa-icon>
   </button>
   <div class="theme-settings__inner">
     <div class="scrollbar-container">

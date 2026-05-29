@@ -13,6 +13,7 @@ import { HeaderService } from './header.service';
 import { UtilityService } from '../../../core/services/utility.service';
 import { CartService } from '../../../modules/cart-booking/cart.service';
 import { FlightService } from '../../../modules/search/flight/flight.service';
+import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 const baseUrl2 = environment.B2B_URL;
 @Component({
     selector: 'app-header',
@@ -21,6 +22,7 @@ const baseUrl2 = environment.B2B_URL;
 })
 export class HeaderComponent implements OnInit, OnDestroy {
     private subSunk = new SubSink();
+ faEllipsisV = faEllipsisV
     logoUri = baseUrl2;
     public bellIcon: string = "assets/images/login-images/assets/bell.png";
     public userProfileLogoAvatar: string = "assets/images/login-images/assets/profile_logo.png";

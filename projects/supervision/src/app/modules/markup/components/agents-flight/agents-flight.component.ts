@@ -6,7 +6,7 @@ import { UtilityService } from '../../../../core/services/utility.service';
 import { SubSink } from 'subsink';
 import { ApiHandlerService } from '../../../../core/api-handlers';
 import { AppService } from '../../../../app.service';
-import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 const log = new Logger('report/TransactionLogsComponent');
 let filterArray: Array<any> = [];

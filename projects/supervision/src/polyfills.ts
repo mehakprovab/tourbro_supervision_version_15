@@ -1,3 +1,9 @@
+(window as any).global = window;
+import { Buffer } from 'buffer';
+(window as any).Buffer = Buffer;
+(window as any).process = {
+  env: { DEBUG: undefined }
+};
 import '@angular/localize/init';
 /**
  * This file includes polyfills needed by Angular and is loaded before the app.

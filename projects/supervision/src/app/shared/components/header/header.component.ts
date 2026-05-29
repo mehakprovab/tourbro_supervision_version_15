@@ -3,6 +3,7 @@ import {select} from '@angular-redux/store';
 import {Observable} from 'rxjs';
 import {ThemeOptions} from '../../../theme-options';
 import { environment } from 'projects/supervision/src/environments/environment';
+import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 const baseUrl = environment.baseUrl;
 @Component({
   selector: 'app-header',
@@ -10,6 +11,7 @@ const baseUrl = environment.baseUrl;
 })
 export class HeaderComponent implements OnInit {
   showUser:boolean =true;
+  faEllipsisV=faEllipsisV
   constructor(public globals: ThemeOptions) {
   }
 

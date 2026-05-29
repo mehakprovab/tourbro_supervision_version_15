@@ -57,7 +57,7 @@ import { NgBootstrapFormValidationModule } from 'ng-bootstrap-form-validation';
 import { NgxLoadingModule } from 'ngx-loading';
 import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
 import { MapPipe } from "./pipes/map.pipe";
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 @NgModule({
     declarations: [
         OptionsDrawerComponent,
@@ -120,7 +120,8 @@ import { MapPipe } from "./pipes/map.pipe";
         MatPaginatorModule,
         MatTreeModule,
         MatRippleModule,
-        NgxLoadingModule
+        NgxLoadingModule,
+        FontAwesomeModule
     ],
     exports: [
         OptionsDrawerComponent,
@@ -182,6 +183,7 @@ import { MapPipe } from "./pipes/map.pipe";
         // NgBootstrapFormValidationModule,
         NgxLoadingModule,
         BsDatepickerModule,
+        FontAwesomeModule
     ]
 })
 export class SharedModule { }

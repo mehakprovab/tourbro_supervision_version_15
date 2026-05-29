@@ -5,7 +5,7 @@ import { SubSink } from 'subsink';
 import { ApiHandlerService } from '../../../../core/api-handlers';
 import { SwalService } from '../../../../core/services/swal.service';
 import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
-import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-b2c-flight',

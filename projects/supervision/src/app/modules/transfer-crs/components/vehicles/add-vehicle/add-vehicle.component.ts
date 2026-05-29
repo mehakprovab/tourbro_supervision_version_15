@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { Logger } from 'projects/supervision/src/app/core/logger/logger.service';
 import { FormGroup, FormBuilder, FormControl, FormArray, Validators, Form } from '@angular/forms';

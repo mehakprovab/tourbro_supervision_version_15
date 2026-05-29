@@ -1,19 +1,38 @@
-<ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange(false)" #tabs
-    [activeId]="activeIdString">
-    <ngb-tab id="add_update_subagent">
-        <ng-template ngbTabTitle>
-            <span> Create/Update Sub Agent </span>
+<nav
+    ngbNav
+    #tabs="ngbNav"
+    class="tabs-animated custom_tab nav-tabs"
+    [(activeId)]="activeIdString"
+    (navChange)="beforeChange(false)">
+
+    <ng-container ngbNavItem="add_update_subagent">
+
+        <a ngbNavLink>
+            Create/Update Sub Agent
+        </a>
+
+        <ng-template ngbNavContent>
+            <app-create-sub-agent
+                (subagentUpdate)="triggerTab($event)">
+            </app-create-sub-agent>
         </ng-template>
-        <ng-template ngbTabContent>
-            <app-create-sub-agent (subagentUpdate)="triggerTab($event)"></app-create-sub-agent>
+
+    </ng-container>
+
+    <ng-container ngbNavItem="subagent_list">
+
+        <a ngbNavLink>
+            Sub Agent List
+        </a>
+
+        <ng-template ngbNavContent>
+            <app-sub-agent-list
+                (subagentUpdate)="triggerTab($event)">
+            </app-sub-agent-list>
         </ng-template>
-    </ngb-tab>
-    <ngb-tab id="subagent_list">
-        <ng-template ngbTabTitle>
-            <span> Sub Agent List</span>
-        </ng-template>
-        <ng-template ngbTabContent>
-            <app-sub-agent-list (subagentUpdate)="triggerTab($event)"></app-sub-agent-list>
-        </ng-template>
-    </ngb-tab>
-</ngb-tabset>
+
+    </ng-container>
+
+</nav>
+
+<div [ngbNavOutlet]="tabs"></div>

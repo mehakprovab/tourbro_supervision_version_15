@@ -85,24 +85,33 @@
 <hr>
 <div class="">
     <div class="">
-        <ngb-tabset class="tabs-animated custom_tab" #tabs>
-            <ngb-tab id="markup_detail">
-                <ng-template ngbTabTitle>
-                    <span><i class="fa fa-plus"></i> &nbsp; MARKUP DETAILS</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-agent-markup-b2b-details (toUpdate)="triggerTab($event)"></app-agent-markup-b2b-details>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab id="default_markup">
-                <ng-template ngbTabTitle>
-                    <span><i class="fa fa-edit"></i> &nbsp; ADD/UPDATE MARKUP </span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-agent-markup-b2b-add-update (toList)="triggerTab($event)" [getDataToUpdate]="userData">
-                    </app-agent-markup-b2b-add-update>
-                </ng-template>
-            </ngb-tab>
-        </ngb-tabset>
+       <ul ngbNav #nav="ngbNav" class="nav-tabs tabs-animated custom_tab">
+    <li [ngbNavItem]="'markup_detail'">
+        <a ngbNavLink>
+            <span><i class="fa fa-plus"></i> &nbsp; MARKUP DETAILS</span>
+        </a>
+
+        <ng-template ngbNavContent>
+            <app-agent-markup-b2b-details
+                (toUpdate)="triggerTab($event)">
+            </app-agent-markup-b2b-details>
+        </ng-template>
+    </li>
+
+    <li [ngbNavItem]="'default_markup'">
+        <a ngbNavLink>
+            <span><i class="fa fa-edit"></i> &nbsp; ADD/UPDATE MARKUP</span>
+        </a>
+
+        <ng-template ngbNavContent>
+            <app-agent-markup-b2b-add-update
+                (toList)="triggerTab($event)"
+                [getDataToUpdate]="userData">
+            </app-agent-markup-b2b-add-update>
+        </ng-template>
+    </li>
+</ul>
+
+<div [ngbNavOutlet]="nav"></div>
     </div>
 </div>

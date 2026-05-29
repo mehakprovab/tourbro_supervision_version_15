@@ -2,18 +2,33 @@
     <div class="col-md-12">
         <div class="card main-card mb-6">
             <div class="card-body">
-                <ngb-tabset>
-                    <ngb-tab title="Bank Account Details">
-                        <ng-template ngbTabContent>
+
+                <ul ngbNav #nav="ngbNav" class="nav-tabs">
+
+                    <li [ngbNavItem]="1">
+                        <a ngbNavLink>
+                            Bank Account Details
+                        </a>
+
+                        <ng-template ngbNavContent>
                             <app-list></app-list>
                         </ng-template>
-                    </ngb-tab>
-                    <ngb-tab title="Add/Update Bank Account Details">
-                        <ng-template ngbTabContent>
+                    </li>
+
+                    <li [ngbNavItem]="2">
+                        <a ngbNavLink>
+                            Add/Update Bank Account Details
+                        </a>
+
+                        <ng-template ngbNavContent>
                             <app-add></app-add>
                         </ng-template>
-                    </ngb-tab>
-                </ngb-tabset>
+                    </li>
+
+                </ul>
+
+                <div [ngbNavOutlet]="nav"></div>
+
             </div>
         </div>
     </div>

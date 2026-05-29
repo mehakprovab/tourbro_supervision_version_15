@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNav } from '@ng-bootstrap/ng-bootstrap';
 import { AdministratorService } from '../administrator.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { AdministratorService } from '../administrator.service';
     styleUrls: ['./agents-staff.component.scss']
 })
 export class AgentsStaffComponent implements OnInit {
-    @ViewChild('tabs', { static: true }) public tabs: NgbNavModule;
+    @ViewChild('tabs', { static: true }) public tabs: NgbNav;
     activeIdString = "subagent_list";
     test:boolean;
     constructor(

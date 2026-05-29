@@ -1,27 +1,53 @@
 <div class="card">
     <div class="card-body">
-        <ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange($event)">
-            <ngb-tab *ngFor="let link of navLinks; let i=index;">
-                <ng-template ngbTabTitle>
-                    <span (click)="onSelect(link, i)"> <i class="{{link.icon}}"></i> &nbsp; {{link.label}} </span>
-                </ng-template>
-                <ng-template ngbTabContent>
+
+        <ul ngbNav
+            #nav="ngbNav"
+            class="nav-tabs tabs-animated custom_tab"
+            (navChange)="beforeChange($event)">
+
+            <li *ngFor="let link of navLinks; let i = index"
+                [ngbNavItem]="i">
+
+                <a ngbNavLink (click)="onSelect(link, i)">
+                    <span>
+                        <i class="{{link.icon}}"></i>
+                        &nbsp; {{link.label}}
+                    </span>
+                </a>
+
+                <ng-template ngbNavContent>
                     <hr>
 
                     <div class="card">
                         <div class="card-body">
+
                             <div [ngSwitch]="link.report">
+
                                 <div *ngSwitchCase="'Flight'">
-                                    <app-dynamic-table [data]=" tabsData.Flight "></app-dynamic-table>
+                                    <app-dynamic-table
+                                        [data]="tabsData.Flight">
+                                    </app-dynamic-table>
                                 </div>
+
                                 <div *ngSwitchCase="'Hotel'">
-                                    <app-dynamic-table [data]=" tabsData.Hotel "></app-dynamic-table>
+                                    <app-dynamic-table
+                                        [data]="tabsData.Hotel">
+                                    </app-dynamic-table>
                                 </div>
+
                             </div>
+
                         </div>
                     </div>
+
                 </ng-template>
-            </ngb-tab>
-        </ngb-tabset>
+
+            </li>
+
+        </ul>
+
+        <div [ngbNavOutlet]="nav"></div>
+
     </div>
 </div>

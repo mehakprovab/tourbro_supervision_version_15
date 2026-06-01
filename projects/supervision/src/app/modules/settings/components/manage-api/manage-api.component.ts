@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNav, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { Logger } from '../../../../core/logger/logger.service';
 
 const log = new Logger('manage-api/ManageApiComponent')
@@ -11,7 +11,9 @@ const log = new Logger('manage-api/ManageApiComponent')
 })
 export class ManageApiComponent implements OnInit {
 
-    @ViewChild('tabs', { static: true }) public tabs: NgbTabset;
+    @ViewChild('tabs', { static: true })
+tabs!: NgbNav;
+    activeId = 'hotel_api_list';
     @Output() toUpdate = new EventEmitter<any>();
     hotelData: any;
 

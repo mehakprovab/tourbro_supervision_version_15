@@ -1,23 +1,31 @@
 <div class="">
     <div class="">
-        <ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange(false)" #tabs [activeId]="activeIdString">
-            <ngb-tab id="add_update_b2cUser">
-                <ng-template ngbTabTitle>
-                    <span> Create/Update B2C User</span>
+        <ul
+            ngbNav
+            #tabs="ngbNav"
+            class="nav-tabs tabs-animated custom_tab"
+            [activeId]="activeIdString"
+            (navChange)="beforeChange(false)"
+        >
+            <li [ngbNavItem]="'add_update_b2cUser'">
+                <a ngbNavLink>Create/Update B2C User</a>
+                <ng-template ngbNavContent>
+                    <app-create-b2c
+                        (b2cUserUpdate)="triggerTab($event)">
+                    </app-create-b2c>
                 </ng-template>
-                <ng-template ngbTabContent>
-                    <app-create-b2c (b2cUserUpdate)="triggerTab($event)"></app-create-b2c>
+            </li>
+
+            <li [ngbNavItem]="'b2cUsers_list'">
+                <a ngbNavLink>B2C Users List</a>
+                <ng-template ngbNavContent>
+                    <app-inactive-list
+                        (b2cUserUpdate)="triggerTab($event)">
+                    </app-inactive-list>
                 </ng-template>
-            </ngb-tab>
-            <ngb-tab id="b2cUsers_list">
-                <ng-template ngbTabTitle>
-                    <span> B2C Users List</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-inactive-list (b2cUserUpdate)="triggerTab($event)"></app-inactive-list>
-                </ng-template>
-            </ngb-tab>
-         
-        </ngb-tabset>
+            </li>
+        </ul>
+
+        <div [ngbNavOutlet]="tabs"></div>
     </div>
 </div>

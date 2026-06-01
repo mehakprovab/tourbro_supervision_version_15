@@ -8,7 +8,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { ExportAsModule } from 'ngx-export-as';
 import { B2bComponent } from './B2B/b2b/b2b.component';
 import { B2bFlightComponent } from './B2B/b2b/b2b-flight/b2b-flight.component';
 import { B2bHotelComponent } from './B2B/b2b/b2b-hotel/b2b-hotel.component';
@@ -62,6 +61,7 @@ import { BusVoucherComponent } from './B2C/b2c/b2c-bus/component/bus-voucher/bus
 import { BusInvoiceComponent } from './B2C/b2c/b2c-bus/component/bus-invoice/bus-invoice.component';
 import { GuideListComponent } from './B2C/guide-list/guide-list.component';
 import { ReviewListComponent } from './B2C/review-list/review-list.component';
+import { NgxLoadingModule } from 'ngx-loading';
 
 
 @NgModule({
@@ -122,9 +122,9 @@ import { ReviewListComponent } from './B2C/review-list/review-list.component';
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
+        NgxLoadingModule.forRoot({}),
         BsDatepickerModule,
         NgbModule,
-        ExportAsModule,
         LayoutsModule,
         ReportRoutingModule,
         Ng2SearchPipeModule,

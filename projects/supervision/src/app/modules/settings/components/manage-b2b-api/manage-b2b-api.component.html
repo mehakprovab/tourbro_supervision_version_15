@@ -1,77 +1,88 @@
 <div class="row mx-0 pt-2">
-    <div class="col-md-12">
-        <div class="card main-card mb-6">
-            <div class="card-body">
-                <ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange($event)" #tabs>
-                    <ngb-tab id="flight_api_list">
-                        <ng-template ngbTabTitle>
-                            <span class="">
-                                <i class="fa fa-plane" aria-hidden="true"></i>
-                                &nbsp;{{'Flight'}}
-                            </span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <app-b2b-flight-api (toUpdate)="triggerTab($event)"></app-b2b-flight-api>
-                        </ng-template>
-                    </ngb-tab>
-                    <ngb-tab id="hotel_api_list">
-                        <ng-template ngbTabTitle>
-                            <span class="">
-                                <i class="fa fa-bed" aria-hidden="true"></i>
-                                &nbsp;{{'Hotel'}}
-                            </span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <app-b2b-hotel-api (someEvent)="triggerTab($event)"></app-b2b-hotel-api>
-                        </ng-template>
-                    </ngb-tab>
-                    <ngb-tab id="activity_api_list">
-                        <ng-template ngbTabTitle>
-                            <span class="">
-                                <i class="fa fa-binoculars" aria-hidden="true"></i>
-                                &nbsp;{{'Activity'}}
-                            </span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <app-b2b-activity-api (someEvent)="triggerTab($event)"></app-b2b-activity-api>
-                        </ng-template>
-                    </ngb-tab>
-                  <ngb-tab id="transfer_api_list">
-                        <ng-template ngbTabTitle>
-                            <span class="">
-                                <i class="fa fa-taxi" aria-hidden="true"></i>
-                                &nbsp;{{'Transfer'}}
-                            </span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <app-b2b-transfer-api (someEvent)="triggerTab($event)"></app-b2b-transfer-api>
-                        </ng-template>
-                    </ngb-tab>
-                    <ngb-tab id="tour_api_list">
-                        <ng-template ngbTabTitle>
-                            <span class="">
-                                <i class="fa fa-tree" aria-hidden="true"></i>
-                                &nbsp;{{'Tour'}}
-                            </span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <app-b2b-tour-api (someEvent)="triggerTab($event)"></app-b2b-tour-api>
-                        </ng-template>
-                    </ngb-tab>
-                    <!--   <ngb-tab id="car_api_list">
-                        <ng-template ngbTabTitle>
-                            <span class="">
-                                <i class="fa fa-car" aria-hidden="true"></i>
-                                &nbsp;{{'Car'}}
-                            </span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <app-car-api (someEvent)="triggerTab($event)"></app-car-api>
-                        </ng-template>
-                    </ngb-tab> -->
-                </ngb-tabset>
-            </div>
-        </div>
-    </div>
-</div>
+  <div class="col-md-12">
+    <div class="card main-card mb-6">
+      <div class="card-body">
 
+        <ul
+          ngbNav
+          #tabs="ngbNav"
+          [(activeId)]="activeId"
+          (navChange)="beforeChange($event)"
+          class="nav-tabs tabs-animated custom_tab">
+
+          <li [ngbNavItem]="'flight_api_list'">
+            <a ngbNavLink>
+              <i class="fa fa-plane"></i>&nbsp;Flight
+            </a>
+            <ng-template ngbNavContent>
+              <app-b2b-flight-api
+                (toUpdate)="triggerTab($event)">
+              </app-b2b-flight-api>
+            </ng-template>
+          </li>
+
+          <li [ngbNavItem]="'hotel_api_list'">
+            <a ngbNavLink>
+              <i class="fa fa-bed"></i>&nbsp;Hotel
+            </a>
+            <ng-template ngbNavContent>
+              <app-b2b-hotel-api
+                (someEvent)="triggerTab($event)">
+              </app-b2b-hotel-api>
+            </ng-template>
+          </li>
+
+          <li [ngbNavItem]="'activity_api_list'">
+            <a ngbNavLink>
+              <i class="fa fa-binoculars"></i>&nbsp;Activity
+            </a>
+            <ng-template ngbNavContent>
+              <app-b2b-activity-api
+                (someEvent)="triggerTab($event)">
+              </app-b2b-activity-api>
+            </ng-template>
+          </li>
+
+          <li [ngbNavItem]="'transfer_api_list'">
+            <a ngbNavLink>
+              <i class="fa fa-taxi"></i>&nbsp;Transfer
+            </a>
+            <ng-template ngbNavContent>
+              <app-b2b-transfer-api
+                (someEvent)="triggerTab($event)">
+              </app-b2b-transfer-api>
+            </ng-template>
+          </li>
+
+          <li [ngbNavItem]="'tour_api_list'">
+            <a ngbNavLink>
+              <i class="fa fa-tree"></i>&nbsp;Tour
+            </a>
+            <ng-template ngbNavContent>
+              <app-b2b-tour-api
+                (someEvent)="triggerTab($event)">
+              </app-b2b-tour-api>
+            </ng-template>
+          </li>
+
+          <!--
+          <li [ngbNavItem]="'car_api_list'">
+            <a ngbNavLink>
+              <i class="fa fa-car"></i>&nbsp;Car
+            </a>
+            <ng-template ngbNavContent>
+              <app-car-api
+                (someEvent)="triggerTab($event)">
+              </app-car-api>
+            </ng-template>
+          </li>
+          -->
+
+        </ul>
+
+        <div [ngbNavOutlet]="tabs" class="mt-3"></div>
+
+      </div>
+    </div>
+  </div>
+</div>

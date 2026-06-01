@@ -1,29 +1,45 @@
 <div class="card">
-    <div class="card-body">
-        <ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange($event)">
-            <ngb-tab *ngFor="let link of navLinks; let i=index;">
-                <ng-template ngbTabTitle>
-                    <span (click)="onSelect(link, i)"> <i class="{{link.icon}}"></i> &nbsp; {{link.label}} </span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <hr>
+  <div class="card-body">
 
-                    <div class="">
-                        <div class="">
-                            <div [ngSwitch]="link.report">
-                                <div *ngSwitchCase="'creditLimit'">
-                                    <app-credit-limit-request></app-credit-limit-request>
-                                    <!-- <app-dynamic-table [data]=" tabsData.Flight "></app-dynamic-table> -->
-                                </div>
-                                <div *ngSwitchCase="'balance'">
-                                    <app-balance-request></app-balance-request>
-                                    <!-- <app-dynamic-table [data]=" tabsData.Hotel "></app-dynamic-table> -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </ng-template>
-            </ngb-tab>
-        </ngb-tabset>
-    </div>
+    <ul
+      ngbNav
+      #tabs="ngbNav"
+      class="nav-tabs tabs-animated custom_tab"
+      (navChange)="beforeChange($event)">
+
+      <li
+        *ngFor="let link of navLinks; let i = index"
+        [ngbNavItem]="i">
+
+        <a ngbNavLink (click)="onSelect(link, i)">
+          <i [class]="link.icon"></i>&nbsp; {{ link.label }}
+        </a>
+
+        <ng-template ngbNavContent>
+
+          <hr>
+
+          <div [ngSwitch]="link.report">
+
+            <div *ngSwitchCase="'creditLimit'">
+              <app-credit-limit-request></app-credit-limit-request>
+              <!-- <app-dynamic-table [data]="tabsData.Flight"></app-dynamic-table> -->
+            </div>
+
+            <div *ngSwitchCase="'balance'">
+              <app-balance-request></app-balance-request>
+              <!-- <app-dynamic-table [data]="tabsData.Hotel"></app-dynamic-table> -->
+            </div>
+
+          </div>
+
+        </ng-template>
+
+      </li>
+
+    </ul>
+
+    <div [ngbNavOutlet]="tabs"></div>
+
+  </div>
 </div>

@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./agents.component.scss']
 })
 export class AgentsComponent implements OnInit {
+  activeId = 'flight';
 
   constructor() { }
 

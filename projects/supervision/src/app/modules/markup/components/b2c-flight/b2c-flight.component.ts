@@ -5,7 +5,7 @@ import { SubSink } from 'subsink';
 import { ApiHandlerService } from '../../../../core/api-handlers';
 import { SwalService } from '../../../../core/services/swal.service';
 import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNav, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-b2c-flight',
@@ -24,7 +24,8 @@ export class B2cFlightComponent implements OnInit {
     submitted = false;
     defaultCurrency: string = 'USD';
     airlineLogoUrl = "https://www.travelsoho.com/antrip_v1/extras/system/library/images/airline_logo/";
-    @ViewChild('tabs', { static: true }) public tabs: NgbTabset;
+    @ViewChild('tabs', { static: true })
+tabs!: NgbNav;
     ShowaddAirline: boolean;
     constructor(
         private fb: FormBuilder,

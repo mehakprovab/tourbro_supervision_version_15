@@ -1,22 +1,46 @@
 <div class="">
-    <div class="">
-        <ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange($event)" #tabs [activeId]="activeIdString">
-            <ngb-tab id="add_update_bankaccount">
-                <ng-template ngbTabTitle>
-                    <span> Add/Update Bank Account Details </span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-add-update-bankaccount (activateTab)="activateTab($event)"></app-add-update-bankaccount>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab id="bankaccount_list">
-                <ng-template ngbTabTitle>
-                    <span> Bank Account Details</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-account-details (toUpdate)="triggerTab($event)"></app-account-details>
-                </ng-template>
-            </ngb-tab>
-        </ngb-tabset>
-    </div>
+
+  <div class="">
+
+    <ul
+      ngbNav
+      #tabs="ngbNav"
+      class="tabs-animated custom_tab"
+      [(activeId)]="activeIdString"
+      (navChange)="beforeChange($event)">
+
+      <li [ngbNavItem]="'add_update_bankaccount'">
+
+        <a ngbNavLink>
+          Add/Update Bank Account Details
+        </a>
+
+        <ng-template ngbNavContent>
+          <app-add-update-bankaccount
+            (activateTab)="activateTab($event)">
+          </app-add-update-bankaccount>
+        </ng-template>
+
+      </li>
+
+      <li [ngbNavItem]="'bankaccount_list'">
+
+        <a ngbNavLink>
+          Bank Account Details
+        </a>
+
+        <ng-template ngbNavContent>
+          <app-account-details
+            (toUpdate)="triggerTab($event)">
+          </app-account-details>
+        </ng-template>
+
+      </li>
+
+    </ul>
+
+    <div [ngbNavOutlet]="tabs"></div>
+
+  </div>
+
 </div>

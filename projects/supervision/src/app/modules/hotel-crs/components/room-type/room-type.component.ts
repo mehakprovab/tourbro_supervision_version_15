@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNav, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { Logger } from '../../../../core/logger/logger.service';
 
 const log = new Logger('hotel-crs/RoomTypeComponent')
@@ -11,7 +11,8 @@ const log = new Logger('hotel-crs/RoomTypeComponent')
 })
 export class RoomTypeComponent implements OnInit {
 
-  @ViewChild('tabs', { static: true }) public tabs: NgbTabset;
+  @ViewChild('tabs', { static: true })
+tabs!: NgbNav;
 
   roomTypeData: any;
 

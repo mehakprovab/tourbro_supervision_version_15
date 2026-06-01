@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNav, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { Logger } from 'projects/supervision/src/app/core/logger/logger.service';
 const log = new Logger('activity-crs/ActivityCountryComponent');
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,7 +12,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ActivityCountryComponent implements OnInit {
 
 
-  @ViewChild('tabs', { static: true }) public tabs: NgbTabset;
+  @ViewChild('tabs', { static: true })
+tabs!: NgbNav;
   activeIdString: string = 'list_activity_country';
   transferTypeData: any;
 

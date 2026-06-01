@@ -1,32 +1,66 @@
 <div class="row mx-0 pt-2">
-    <h5><b>Hotel Name:</b> {{hotelOne.hotel_name}}</h5>
-    <div class="col-md-12">
-        <div class="card main-card mb-6">
-            <div class="card-body">
-                <ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange($event)" #tabs>
-                    <ngb-tab id="list_hotel_types">
-                        <ng-template ngbTabTitle>
-                            <span class="">{{'List Tax'}}</span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <app-tax-list (toUpdate)="triggerTab($event)" [hotelOneData]="hotelOne"></app-tax-list>
-                        </ng-template>
-                    </ngb-tab>
-                    <ngb-tab id="add_hotel_type">
-                        <ng-template ngbTabTitle>
-                            <span class="">{{'Add/Edit Tax Type'}}</span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <app-add-update-tax (someEvent)="triggerTab($event)" [hotelOneData]="hotelOne"[hotelTypeOne]="hotelTypeData"></app-add-update-tax>
-                        </ng-template>
-                    </ngb-tab>
-                </ngb-tabset>
-                <button type="reset" class=" btn btn-sm btn-primary btnStyle" (click)="goToHotelList()">
-                    Hotel List
-                </button>
-            </div>
-        </div>
+
+  <h5>
+    <b>Hotel Name:</b> {{ hotelOne.hotel_name }}
+  </h5>
+
+  <div class="col-md-12">
+
+    <div class="card main-card mb-6">
+      <div class="card-body">
+
+        <ul
+          ngbNav
+         
+  #tabs="ngbNav"
+  [(activeId)]="activeId"
+  class="tabs-animated custom_tab">
+
+          <li [ngbNavItem]="'list_hotel_types'">
+
+            <a ngbNavLink>
+              {{ 'List Tax' }}
+            </a>
+
+            <ng-template ngbNavContent>
+              <app-tax-list
+                (toUpdate)="triggerTab($event)"
+                [hotelOneData]="hotelOne">
+              </app-tax-list>
+            </ng-template>
+
+          </li>
+
+          <li [ngbNavItem]="'add_hotel_type'">
+
+            <a ngbNavLink>
+              {{ 'Add/Edit Tax Type' }}
+            </a>
+
+            <ng-template ngbNavContent>
+              <app-add-update-tax
+                (someEvent)="triggerTab($event)"
+                [hotelOneData]="hotelOne"
+                [hotelTypeOne]="hotelTypeData">
+              </app-add-update-tax>
+            </ng-template>
+
+          </li>
+
+        </ul>
+
+        <div [ngbNavOutlet]="tabs"></div>
+
+        <button
+          type="button"
+          class="btn btn-sm btn-primary btnStyle"
+          (click)="goToHotelList()">
+
+          Hotel List
+        </button>
+
+      </div>
     </div>
+
+  </div>
 </div>
-
-

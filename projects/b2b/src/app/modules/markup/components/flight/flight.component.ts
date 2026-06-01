@@ -8,7 +8,7 @@ import { SubSink } from 'subsink';
 import { ApiHandlerService } from 'projects/b2b/src/app/core/api-handlers';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNav, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 const log = new Logger('report/TransactionLogsComponent');
@@ -22,7 +22,8 @@ let respDataCopy: Array<any> = [];
     styleUrls: ['./flight.component.scss']
 })
 export class FlightComponent implements OnInit {
-    @ViewChild('tabs', { static: true }) public tabs: NgbTabset;
+    @ViewChild('tabs', { static: true })
+tabs!: NgbNav;
     
     markuplist: any;
     activeIdString: any = "left";

@@ -43,35 +43,48 @@
                                     <i class="{{ tripType == 'Roundtrip' ? 'fas fa-exchange-alt' : 'lnr-arrow-right'}}"></i> {{ flight.FlightDetails.Details[0][stops(flight)].Destination.CityName + '(' + flight.FlightDetails.Details[0][stops(flight)].Destination.AirportCode
                                     + ')' }}
                                 </h6>
-                                <ngb-tabset class="tab-container">
-                                    <ngb-tab title="Itinerary">
-                                        <ng-template ngbTabContent>
-                                            <app-flight-details-itinerary [flight]="flight"></app-flight-details-itinerary>
-                                        </ng-template>
-                                    </ngb-tab>
-                                    <ngb-tab title="Baggage">
-                                        <ng-template ngbTabContent>
-                                            <app-flight-details-baggage [flight]="flight"></app-flight-details-baggage>
-                                        </ng-template>
-                                    </ngb-tab>
-                                    <ngb-tab title="Fare Breakup">
-                                        <ng-template ngbTabContent>
-                                            <app-flight-details-fare [flight]="flight"></app-flight-details-fare>
-                                        </ng-template>
-                                    </ngb-tab>
-                                    <ngb-tab title="Fare Rules">
-                                        <ng-template ngbTabContent>
-                                            <app-fare-rules [flight]="flight"></app-fare-rules>
-                                        </ng-template>
-                                    </ngb-tab>
+                             <ul ngbNav #nav="ngbNav" class="nav-tabs tab-container" [destroyOnHide]="false">
 
-                                    <!-- <ngb-tab title="SEND ITINERARY">
-                                        <ng-template ngbTabContent>
-                                            <app-send-itinerary [flight]="flight"></app-send-itinerary>
-                                        </ng-template>
-                                    </ngb-tab> -->
+    <li [ngbNavItem]="1">
+        <button ngbNavLink>Itinerary</button>
+        <ng-template ngbNavContent>
+            <app-flight-details-itinerary [flight]="flight"></app-flight-details-itinerary>
+        </ng-template>
+    </li>
 
-                                </ngb-tabset>
+    <li [ngbNavItem]="2">
+        <button ngbNavLink>Baggage</button>
+        <ng-template ngbNavContent>
+            <app-flight-details-baggage [flight]="flight"></app-flight-details-baggage>
+        </ng-template>
+    </li>
+
+    <li [ngbNavItem]="3">
+        <button ngbNavLink>Fare Breakup</button>
+        <ng-template ngbNavContent>
+            <app-flight-details-fare [flight]="flight"></app-flight-details-fare>
+        </ng-template>
+    </li>
+
+    <li [ngbNavItem]="4">
+        <button ngbNavLink>Fare Rules</button>
+        <ng-template ngbNavContent>
+            <app-fare-rules [flight]="flight"></app-fare-rules>
+        </ng-template>
+    </li>
+
+    <!--
+    <li [ngbNavItem]="5">
+        <button ngbNavLink>Send Itinerary</button>
+        <ng-template ngbNavContent>
+            <app-send-itinerary [flight]="flight"></app-send-itinerary>
+        </ng-template>
+    </li>
+    -->
+
+</ul>
+
+<div [ngbNavOutlet]="nav" class="mt-3"></div>
                             </div>
                         </div>
                     </div>

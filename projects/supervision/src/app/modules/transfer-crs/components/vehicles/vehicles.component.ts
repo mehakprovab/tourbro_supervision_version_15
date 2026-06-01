@@ -3,7 +3,7 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { Logger } from '../../../../core/logger/logger.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TransferCrsService } from '../../transfer-crs.service';
-
+import { NgbNav } from '@ng-bootstrap/ng-bootstrap';
 const log = new Logger('transfer-crs/TransferVehiclesComponent');
 
 @Component({
@@ -13,7 +13,8 @@ const log = new Logger('transfer-crs/TransferVehiclesComponent');
 })
 export class TransferVehiclesComponent implements OnInit {
 
-  @ViewChild('tabs', { static: true }) public tabs: NgbTabset;
+  @ViewChild('tabs', { static: true })
+tabs!: NgbNav;
   activeIdString: string = 'list_vehicles';
 
   transferTypeData: any;

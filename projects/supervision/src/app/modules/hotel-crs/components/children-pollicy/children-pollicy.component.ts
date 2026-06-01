@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNav, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { Logger } from 'projects/supervision/src/app/core/logger/logger.service';
 const log = new Logger('hotel-crs/HotelTypeComponent')
 @Component({
@@ -11,7 +11,9 @@ const log = new Logger('hotel-crs/HotelTypeComponent')
 export class ChildrenPollicyComponent implements OnInit {
 
   @Output() callResult = new EventEmitter<boolean>(true);
-  @ViewChild('tabs', { static: true }) public tabs: NgbTabset;
+  @ViewChild('tabs', { static: true })
+tabs!: NgbNav;
+  activeIdString = 'list_hotel_types';
   @Input() hotelOne :any
   hotelTypeData: any;
 

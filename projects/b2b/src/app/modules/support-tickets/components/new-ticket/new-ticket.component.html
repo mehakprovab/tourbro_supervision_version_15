@@ -1,33 +1,36 @@
 <div class="row col-lg-12 col-md-12 pt-3 m-0">
-    <ngb-tabset class="tabs-animated custom_tab w-100">
-        <ngb-tab *ngFor="let link of navLinks; let i=index;">
-            <ng-template ngbTabTitle>
-                <span class="custom-font text-capitalize" (click)="onSelect(link.component)"> <i class="{{link.icon}}"></i> &nbsp; {{link.label}} </span>
-            </ng-template>
-            <ng-template ngbTabContent>
+    <ul ngbNav #nav="ngbNav" class="nav-tabs tabs-animated custom_tab w-100">
+        <li *ngFor="let link of navLinks; let i = index" [ngbNavItem]="i">
+            <a ngbNavLink class="custom-font text-capitalize">
+                <i class="{{link.icon}}"></i> &nbsp; {{link.label}}
+            </a>
+
+            <ng-template ngbNavContent>
                 <div class="row custom-font" [ngSwitch]="link.component">
                     <div *ngSwitchCase="'AGENT_CALLBACK'" class="col-md-12 col-lg-12">
-                       
                         <app-agent-callback></app-agent-callback>
                     </div>
+
                     <div *ngSwitchCase="'SENT_CALLBACK'" class="col-md-12 col-lg-12">
                         <app-sent-callback></app-sent-callback>
                     </div>
+
                     <div *ngSwitchCase="'bus'" class="col-md-12 col-lg-12">
-                        <p>
-                            Bus here
-                        </p>
+                        <p>Bus here</p>
                         <!-- <app-bus></app-bus> -->
                     </div>
-                    <div *ngSwitchCase="'transfers'" class="col-md-12 col-lg-12">
 
+                    <div *ngSwitchCase="'transfers'" class="col-md-12 col-lg-12">
                         <!-- <app-transfers></app-transfers> -->
                     </div>
+
                     <div *ngSwitchCase="'activities'" class="col-md-12 col-lg-12">
                         <!-- <app-activities></app-activities> -->
                     </div>
                 </div>
             </ng-template>
-        </ngb-tab>
-    </ngb-tabset>
+        </li>
+    </ul>
+
+    <div [ngbNavOutlet]="nav" class="mt-2 w-100"></div>
 </div>

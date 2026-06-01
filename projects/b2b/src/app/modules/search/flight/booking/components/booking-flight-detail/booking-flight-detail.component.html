@@ -1,59 +1,30 @@
-<div class="card row">
-    <div id="boxes" style="float: left; width: 100%;">
-        <h4 style="color: #001d46;padding: 15px;" *ngIf="flightSearchData">{{flightSearchData.tripType}}</h4>
-        <div id="leftbox">
-            <div *ngFor="let iList of flight?.FlightDetails?.Details" class="col-md-12">
-                <div *ngFor="let list of iList; let i = index" class="cardList">
-                    <div class=row>
-                    <div class="col-md-4 col-5">
-                      <i class="fas fa-plane"></i> <b>{{list.Origin.CityName}} ({{list.Origin.AirportCode}})</b>
-                     </div>
-                     <div class="col-md-1 col-2 nopad text-center">
-                      <i class="fas fa-exchange-alt"></i>
-                    </div>
-                   <div class="col-md-4 col-5 nopad"> 
-                       <b>{{list.Destination.CityName}} ({{list.Destination.AirportCode}})</b>
-                       </div>
-
-                       <div class="col-md-3 col-12">
-                    <b>{{list.Origin.DateTime | date: 'dd/MM/yyyy'}}</b>
-                    </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="f-14">
-            <span class="travellerSpace"><i class="fa fa-male"></i> {{ traveller?.adults }} Adult </span>
-            <span class="travellerSpace" *ngIf="traveller?.childrens">|<i class="fa fa-child"></i> {{
-                traveller?.childrens }} Child| </span>
-            <span class="travellerSpace" *ngIf="traveller?.infants">|<i class="fas fa-baby"></i> {{ traveller?.infants
-                }} Infants </span>
-            <span class="travellerSpace" *ngIf="flightSearchData">| {{flightSearchData.CabinClass}} </span>
-            <a class="changeFlight pull-right m-2" (click)="backClicked()"> Change Flight</a>
-            <a (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic"
-                class="pull-right m-2"> Flight Details
-            </a>
-
-        </div>
-    </div>
-</div>
 <div id="collapseBasic" [collapse]="isCollapsed" [isAnimated]="true" class="row">
 
-    <ngb-tabset>
-        <ngb-tab title="ITINERARY">
-            <ng-template ngbTabContent>
+    <ul ngbNav #nav="ngbNav" class="nav-tabs w-100" [destroyOnHide]="false">
+        
+        <li [ngbNavItem]="1">
+            <button ngbNavLink>ITINERARY</button>
+            <ng-template ngbNavContent>
                 <app-flight-details-itinerary [flight]="flight"></app-flight-details-itinerary>
             </ng-template>
-        </ngb-tab>
-        <ngb-tab title="BAGGAGE">
-            <ng-template ngbTabContent>
+        </li>
+
+        <li [ngbNavItem]="2">
+            <button ngbNavLink>BAGGAGE</button>
+            <ng-template ngbNavContent>
                 <app-flight-details-baggage [flight]="flight"></app-flight-details-baggage>
             </ng-template>
-        </ngb-tab>
-        <ngb-tab title="FARE BREAKUP & RULES">
-            <ng-template ngbTabContent>
+        </li>
+
+        <li [ngbNavItem]="3">
+            <button ngbNavLink>FARE BREAKUP & RULES</button>
+            <ng-template ngbNavContent>
                 <app-flight-details-fare [flight]="flight"></app-flight-details-fare>
             </ng-template>
-        </ngb-tab>
-    </ngb-tabset>
+        </li>
+
+    </ul>
+
+    <div [ngbNavOutlet]="nav" class="mt-3 w-100"></div>
+
 </div>

@@ -1,71 +1,99 @@
 <div class="card">
     <div class="card-body">
-        <ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange($event)">
-            <ngb-tab *ngFor="let link of navLinks; let i=index;">
-                <ng-template ngbTabTitle>
-                    <span (click)="onSelect(link, i)"> <i class="{{link.icon}}"></i> &nbsp; {{link.label}} </span>
-                </ng-template>
-                <ng-template ngbTabContent>
+
+        <ul
+            ngbNav
+            #nav="ngbNav"
+            [(activeId)]="activeId"
+            class="nav-tabs tabs-animated custom_tab"
+            (navChange)="beforeChange($event)"
+        >
+
+            <li
+                *ngFor="let link of navLinks; let i = index"
+                [ngbNavItem]="i"
+            >
+                <a ngbNavLink (click)="onSelect(link, i)">
+                    <i [class]="link.icon"></i>&nbsp;{{ link.label }}
+                </a>
+
+                <ng-template ngbNavContent>
+
                     <hr>
+
                     <div class="row pb-3">
+
                         <div class="col-md-12 pb-2">
-                            <span class="">
-                                Make your search easy
-                            </span>
+                            <span>Make your search easy</span>
                         </div>
+
                         <div class="col-md-12">
+
                             <span class="p-1">
                                 <a class="btn btn-sm btn-outline-primary" href="javascript:void(0)">
                                     Today Search
                                 </a>
                             </span>
+
                             <span class="pl-0 p-1">
                                 <a class="btn btn-sm btn-outline-primary" href="javascript:void(0)">
                                     Last Day Search
                                 </a>
                             </span>
+
                             <span class="pl-0 p-1">
                                 <a class="btn btn-sm btn-outline-primary" href="javascript:void(0)">
                                     One Week Search
                                 </a>
                             </span>
+
                             <span class="pl-0 p-1">
                                 <a class="btn btn-sm btn-outline-primary" href="javascript:void(0)">
                                     One Month Search
                                 </a>
                             </span>
+
                             <span class="pl-0 p-1">
                                 <a class="btn btn-sm btn-outline-primary" href="javascript:void(0)">
                                     Clear Filter
                                 </a>
                             </span>
+
                         </div>
+
                         <div class="col-md-12">
-                            <form action="p-3">
-                                <div class="form-group row p-3">
-                                    <input type="text" class="form-control form-control-sm mr-1 w-25" placeholder="Application Reference">
-                                    <button class="btn btn-sm btn-outline-primary mr-1"> <i class="fa fa-search"></i> </button>
-                                    <button class="btn btn-sm btn-outline-primary mr-1"> <i class="fa fa-refresh"></i> </button>
+
+                            <form class="p-3">
+
+                                <div class="form-group row">
+
+                                    <input
+                                        type="text"
+                                        class="form-control form-control-sm mr-1 w-25"
+                                        placeholder="Application Reference"
+                                    />
+
+                                    <button
+                                        type="button"
+                                        class="btn btn-sm btn-outline-primary mr-1"
+                                    >
+                                        <i class="fa fa-search"></i>
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        class="btn btn-sm btn-outline-primary mr-1"
+                                    >
+                                        <i class="fa fa-refresh"></i>
+                                    </button>
+
                                 </div>
+
                             </form>
+
                         </div>
+
                     </div>
-                    <!-- <hr>
-                    <div class="pb-3">
-                        <span> Advanced Search Panel </span>
-                        <button type="button" class="btn btn-sm btn-primary" (click)="isCollapsed = !isCollapsed"
-                            [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
-                            {{ isCollapsed ? '-' : '+'}}
-                        </button>
-                        <hr>
-                        <div id="collapseBasic" [collapse]="isCollapsed" [isAnimated]="true">
-                            <div class="card">
-                                <div class="card-body">
-                                    <app-adv-search></app-adv-search>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
 
                     <div class="card">
                         <div class="card-body">
@@ -73,37 +101,65 @@
                         </div>
                     </div>
 
-
                     <div class="card">
                         <div class="card-body">
+
                             <div [ngSwitch]="link.report">
-                                
-                                <div *ngSwitchCase="'Flight'"> {{link.report}}
-                                    <app-dynamic-table [data]=" tabsData.Flight "></app-dynamic-table>
+
+                                <div *ngSwitchCase="'Flight'">
+                                    {{ link.report }}
+                                    <app-dynamic-table
+                                        [data]="tabsData.Flight">
+                                    </app-dynamic-table>
                                 </div>
-                                <!-- <div *ngSwitchCase="'Bus'"> {{link.report}}
-                                    <app-dynamic-table [data]="tabsData.Bus"></app-dynamic-table>
+
+                                <!--
+                                <div *ngSwitchCase="'Bus'">
+                                    {{ link.report }}
+                                    <app-dynamic-table
+                                        [data]="tabsData.Bus">
+                                    </app-dynamic-table>
                                 </div>
-                                <div *ngSwitchCase="'Hotel'"> {{link.report}}
-                                    <app-dynamic-table [data]=" tabsData.Hotel "></app-dynamic-table>
+
+                                <div *ngSwitchCase="'Hotel'">
+                                    {{ link.report }}
+                                    <app-dynamic-table
+                                        [data]="tabsData.Hotel">
+                                    </app-dynamic-table>
                                 </div>
-                                <div *ngSwitchCase="'Transfers'"> {{link.report}}
-                                    <app-dynamic-table [data]=" tabsData.Transfers "></app-dynamic-table>
+
+                                <div *ngSwitchCase="'Transfers'">
+                                    {{ link.report }}
+                                    <app-dynamic-table
+                                        [data]="tabsData.Transfers">
+                                    </app-dynamic-table>
                                 </div>
-                                <div *ngSwitchCase="'Activities'"> {{link.report}}
-                                    <app-dynamic-table [data]=" tabsData.Activities "></app-dynamic-table>
+
+                                <div *ngSwitchCase="'Activities'">
+                                    {{ link.report }}
+                                    <app-dynamic-table
+                                        [data]="tabsData.Activities">
+                                    </app-dynamic-table>
                                 </div>
-                                <div *ngSwitchCase="'Packages'"> {{link.report}}
-                                    <h4>
-                                        No data found...
-                                    </h4>
-                                    //<app-dynamic-table [data]=" tabsData.Packages" ></app-dynamic-table>
-                                </div> -->
+
+                                <div *ngSwitchCase="'Packages'">
+                                    {{ link.report }}
+                                    <h4>No data found...</h4>
+                                </div>
+                                -->
+
                             </div>
+
                         </div>
                     </div>
+
                 </ng-template>
-            </ngb-tab>
-        </ngb-tabset>
+
+            </li>
+
+        </ul>
+
+        <div [ngbNavOutlet]="nav"></div>
+
     </div>
 </div>

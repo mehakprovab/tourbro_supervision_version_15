@@ -372,7 +372,7 @@ onEdit(item: any) {
   });
 
   // ---------- RESET PRICE DETAILS ARRAY ----------
-  const formArray = this.fb.array([]);
+  const formArray = this.fb.array<FormGroup>([]);
 
   if (priceDetails && priceDetails.slabs && priceDetails.slabs.length) {
 

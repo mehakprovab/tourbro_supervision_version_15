@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNav, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { Logger } from '../../../../core/logger/logger.service';
 
 const log = new Logger('users/B2cUsersComponent');
@@ -11,10 +11,11 @@ const log = new Logger('users/B2cUsersComponent');
 })
 export class B2cUsersComponent implements OnInit {
 
- @ViewChild('tabs', { static: true }) public tabs: NgbTabset;
+ @ViewChild('tabs', { static: true })
+tabs!: NgbNav;
 
     userData;
-
+activeId='active_users'
     constructor() { }
 
     ngOnInit() {

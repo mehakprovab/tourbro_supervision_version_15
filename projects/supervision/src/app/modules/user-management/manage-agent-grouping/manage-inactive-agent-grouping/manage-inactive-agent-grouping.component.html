@@ -1,24 +1,31 @@
 <div class="">
     <div class="">
-        <ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange(false)" #tabs
-            [activeId]="activeIdString">
-            <ngb-tab id="add_update_b2bUser">
-                <ng-template ngbTabTitle>
-                    <span> Create Agent Group </span>
+        <ul
+            ngbNav
+            #tabs="ngbNav"
+            class="nav-tabs tabs-animated custom_tab"
+            [activeId]="activeIdString"
+            (navChange)="beforeChange(false)"
+        >
+            <li [ngbNavItem]="'add_update_b2bUser'">
+                <a ngbNavLink>Create Agent Group</a>
+                <ng-template ngbNavContent>
+                    <app-create-agent-grouping
+                        (b2cUserUpdate)="triggerTab($event)">
+                    </app-create-agent-grouping>
                 </ng-template>
-                <ng-template ngbTabContent>
-                    <app-create-agent-grouping (b2cUserUpdate)="triggerTab($event)"></app-create-agent-grouping>
+            </li>
+
+            <li [ngbNavItem]="'supplier_list'">
+                <a ngbNavLink>Agent Group List</a>
+                <ng-template ngbNavContent>
+                    <app-inactive-agent-group-list
+                        (b2cUserUpdate)="triggerTab($event)">
+                    </app-inactive-agent-group-list>
                 </ng-template>
-            </ngb-tab>
-            <ngb-tab id="supplier_list">
-                <ng-template ngbTabTitle>
-                    <span>Agent Group List</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-inactive-agent-group-list (b2cUserUpdate)="triggerTab($event)"></app-inactive-agent-group-list>
-                    </ng-template>
-            </ngb-tab>
- </ngb-tabset>
+            </li>
+        </ul>
+
+        <div [ngbNavOutlet]="tabs"></div>
     </div>
 </div>
-

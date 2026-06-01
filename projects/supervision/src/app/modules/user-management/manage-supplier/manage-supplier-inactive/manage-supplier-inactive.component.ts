@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { NgbNav } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-manage-supplier-inactive',
   templateUrl: './manage-supplier-inactive.component.html',
@@ -8,7 +8,8 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ManageSupplierInactiveComponent implements OnInit {
 
-  @ViewChild('tabs', { static: true }) public tabs: NgbTabset;
+  @ViewChild('tabs', { static: true })
+tabs!: NgbNav;
   activeIdString = "supplier_list";
   test: boolean;
   constructor() { }

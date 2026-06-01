@@ -1,110 +1,197 @@
 <app-search (searchValuesEvent)="receiveSearchValues($event)"></app-search>
+
 <div class="exportWrapper">
-    <p *ngIf="respData">Total {{respData.length}} transaction found</p>
+    <p *ngIf="respData">Total {{ respData.length }} transaction found</p>
     <button type="button">PDF</button>
     <button type="button">Export to Excel</button>
 </div>
 
 <div class="card">
     <div class="card-body">
-        <ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange($event)">
-            <ngb-tab *ngFor="let link of navLinks; let i=index;">
-                <ng-template ngbTabTitle>
-                    <span (click)="onSelect(link, i)"> <i class="{{link.icon}}"></i> &nbsp; {{link.label}} </span>
-                </ng-template>
-                <ng-template ngbTabContent>
+
+        <ul
+            ngbNav
+            #nav="ngbNav"
+            class="nav-tabs tabs-animated custom_tab"
+            (navChange)="beforeChange($event)"
+        >
+            <li
+                [ngbNavItem]="i"
+                *ngFor="let link of navLinks; let i = index"
+            >
+                <a ngbNavLink>
+                    <span>
+                        <i class="{{ link.icon }}"></i>
+                        &nbsp;
+                        {{ link.label }}
+                    </span>
+                </a>
+
+                <ng-template ngbNavContent>
                     <div class="">
                         <div class="">
                             <div [ngSwitch]="link.report">
 
                                 <div *ngSwitchCase="'Flight'">
                                     <div class="mb-3">
+
                                         <div class="card-header-tab card-header">
-                                            <div
-                                                class="card-header-title font-size-lg text-capitalize font-weight-normal">
-                                                <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
-                                                {{'Booking Details'}}
+                                            <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                                                <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"></i>
+                                                Booking Details
                                             </div>
                                         </div>
+
                                         <form>
                                             <div class="p-2">
                                                 <div class="form-group form-inline mb-0">
                                                     Full text search:
-                                                    <input class="form-control ml-2" type="text" name="searchTerm"
-                                                        (keyup)="applyFilter($event.target.value)" />
+                                                    <input
+                                                        class="form-control ml-2"
+                                                        type="text"
+                                                        name="searchTerm"
+                                                        (keyup)="applyFilter($event.target.value)"
+                                                    />
                                                 </div>
                                             </div>
+
                                             <div class="table-responsive">
-                                                <table class="table table-borderless table-striped table-hover" matSort
-                                                    (matSortChange)="sortData($event)">
+                                                <table
+                                                    class="table table-borderless table-striped table-hover"
+                                                    matSort
+                                                    (matSortChange)="sortData($event)"
+                                                >
                                                     <thead>
                                                         <tr>
-                                                            <th scope="col" class="text-left text-nowrap"
-                                                                *ngFor="let header of displayColumn;"
-                                                                mat-sort-header="{{header.key}}">
-                                                                {{header.value }} </th>
+                                                            <th
+                                                                scope="col"
+                                                                class="text-left text-nowrap"
+                                                                *ngFor="let header of displayColumn"
+                                                                [mat-sort-header]="header.key"
+                                                            >
+                                                                {{ header.value }}
+                                                            </th>
                                                         </tr>
                                                     </thead>
+
                                                     <tbody>
                                                         <tr *ngIf="noData">
                                                             <td colspan="11">
-                                                                <mat-spinner [diameter]="30" style="margin:0 auto;"
-                                                                    mode="indeterminate"></mat-spinner>
+                                                                <mat-spinner
+                                                                    [diameter]="30"
+                                                                    style="margin:0 auto;"
+                                                                    mode="indeterminate"
+                                                                >
+                                                                </mat-spinner>
                                                             </td>
                                                         </tr>
+
                                                         <tr
-                                                        *ngFor="let data of respData | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
-                                                        <td class="text-left text-muted">{{i+1}}.</td>
-                                                        <td class="text-left"> {{data['transaction_date'] | date: "d-MMM-y"}} </td>
-                                                        <td class="text-left"> {{data['reference_number']}} </td>
-                                                        <td class="text-left"> {{data['agency_name']}} </td>
-                                                        <td class="text-left">{{data['agent_id']}} </td>
-                                                        <td class="text-left"> {{data['credit_amount']}} </td>
-                                                        <td class="text-left"> Online </td>
-                                                        <td class="text-left"> {{data['closing_balance']}} </td>
-                                                    </tr>
+                                                            *ngFor="
+                                                                let data of respData
+                                                                | slice:(page - 1) * pageSize:(page - 1) * pageSize + pageSize;
+                                                                let i = index
+                                                            "
+                                                        >
+                                                            <td class="text-left text-muted">
+                                                                {{ i + 1 }}.
+                                                            </td>
+
+                                                            <td class="text-left">
+                                                                {{ data['transaction_date'] | date:'d-MMM-y' }}
+                                                            </td>
+
+                                                            <td class="text-left">
+                                                                {{ data['reference_number'] }}
+                                                            </td>
+
+                                                            <td class="text-left">
+                                                                {{ data['agency_name'] }}
+                                                            </td>
+
+                                                            <td class="text-left">
+                                                                {{ data['agent_id'] }}
+                                                            </td>
+
+                                                            <td class="text-left">
+                                                                {{ data['credit_amount'] }}
+                                                            </td>
+
+                                                            <td class="text-left">
+                                                                Online
+                                                            </td>
+
+                                                            <td class="text-left">
+                                                                {{ data['closing_balance'] }}
+                                                            </td>
+                                                        </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
+
                                             <div class="card-footer pb-0">
                                                 <div class="d-flex w-100 justify-content-between">
-                                                    <ngb-pagination [collectionSize]="collectionSize" [(page)]="page"
+
+                                                    <ngb-pagination
+                                                        [collectionSize]="collectionSize"
+                                                        [(page)]="page"
                                                         [pageSize]="pageSize">
                                                     </ngb-pagination>
-                                                    <select class="custom-select" style="width: auto" name="pageSize"
-                                                        [(ngModel)]="pageSize">
-                                                        <option [ngValue]="2">2 items per page</option>
-                                                        <option [ngValue]="4">4 items per page</option>
-                                                        <option [ngValue]="6">6 items per page</option>
+
+                                                    <select
+                                                        class="custom-select"
+                                                        style="width: auto"
+                                                        name="pageSize"
+                                                        [(ngModel)]="pageSize"
+                                                    >
+                                                        <option [ngValue]="2">
+                                                            2 items per page
+                                                        </option>
+                                                        <option [ngValue]="4">
+                                                            4 items per page
+                                                        </option>
+                                                        <option [ngValue]="6">
+                                                            6 items per page
+                                                        </option>
                                                     </select>
+
                                                 </div>
                                             </div>
                                         </form>
+
                                     </div>
                                 </div>
-                                <!-- <div *ngSwitchCase="'Bus'"> {{link.report}}
+
+                                <!--
+                                <div *ngSwitchCase="'Bus'">
                                     <app-dynamic-table [data]="tabsData.Bus"></app-dynamic-table>
                                 </div>
-                                <div *ngSwitchCase="'Hotel'"> {{link.report}}
-                                    <app-dynamic-table [data]=" tabsData.Hotel "></app-dynamic-table>
+
+                                <div *ngSwitchCase="'Hotel'">
+                                    <app-dynamic-table [data]="tabsData.Hotel"></app-dynamic-table>
                                 </div>
-                                <div *ngSwitchCase="'Transfers'"> {{link.report}}
-                                    <app-dynamic-table [data]=" tabsData.Transfers "></app-dynamic-table>
+
+                                <div *ngSwitchCase="'Transfers'">
+                                    <app-dynamic-table [data]="tabsData.Transfers"></app-dynamic-table>
                                 </div>
-                                <div *ngSwitchCase="'Activities'"> {{link.report}}
-                                    <app-dynamic-table [data]=" tabsData.Activities "></app-dynamic-table>
+
+                                <div *ngSwitchCase="'Activities'">
+                                    <app-dynamic-table [data]="tabsData.Activities"></app-dynamic-table>
                                 </div>
-                                <div *ngSwitchCase="'Packages'"> {{link.report}}
-                                    <h4>
-                                        No data found...
-                                    </h4>
-                                    //<app-dynamic-table [data]=" tabsData.Packages" ></app-dynamic-table>
-                                </div> -->
+
+                                <div *ngSwitchCase="'Packages'">
+                                    <h4>No data found...</h4>
+                                </div>
+                                -->
+
                             </div>
                         </div>
                     </div>
                 </ng-template>
-            </ngb-tab>
-        </ngb-tabset>
+            </li>
+        </ul>
+
+        <div [ngbNavOutlet]="nav"></div>
+
     </div>
 </div>

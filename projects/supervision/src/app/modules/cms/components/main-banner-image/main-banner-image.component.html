@@ -1,39 +1,74 @@
 <div class="">
-    <div class="">
-        <ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange(false)" #tabs
-            [activeId]="activeIdString">
-            <ngb-tab id="add_update_sliderimage">
-                <ng-template ngbTabTitle>
-                    <span> Manage Slider Image</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-add-update-slider (activateTab)="triggerTab($event)"></app-add-update-slider>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab id="sliderimage_list">
-                <ng-template ngbTabTitle>
-                    <span> Slider Image List</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-slider-image-list (activateTab)="triggerTab($event)"></app-slider-image-list>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab id="add_update_slider_text">
-                <ng-template ngbTabTitle>
-                    <span> Manage Slider Text</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-add-update-slider-text (activateTab)="triggerTab($event)"></app-add-update-slider-text>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab id="slider_text_list">
-                <ng-template ngbTabTitle>
-                    <span> Slider Text List</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-slider-text-list (activateTab)="triggerTab($event)"></app-slider-text-list>
-                </ng-template>
-            </ngb-tab>
-        </ngb-tabset>
-    </div>
+
+  <div class="">
+
+    <ul
+      ngbNav
+      #tabs="ngbNav"
+      class="tabs-animated custom_tab"
+      [(activeId)]="activeIdString"
+      (navChange)="beforeChange($event)">
+
+      <li [ngbNavItem]="'add_update_sliderimage'">
+
+        <a ngbNavLink>
+          Manage Slider Image
+        </a>
+
+        <ng-template ngbNavContent>
+          <app-add-update-slider
+            (activateTab)="triggerTab($event)">
+          </app-add-update-slider>
+        </ng-template>
+
+      </li>
+
+      <li [ngbNavItem]="'sliderimage_list'">
+
+        <a ngbNavLink>
+          Slider Image List
+        </a>
+
+        <ng-template ngbNavContent>
+          <app-slider-image-list
+            (activateTab)="triggerTab($event)">
+          </app-slider-image-list>
+        </ng-template>
+
+      </li>
+
+      <li [ngbNavItem]="'add_update_slider_text'">
+
+        <a ngbNavLink>
+          Manage Slider Text
+        </a>
+
+        <ng-template ngbNavContent>
+          <app-add-update-slider-text
+            (activateTab)="triggerTab($event)">
+          </app-add-update-slider-text>
+        </ng-template>
+
+      </li>
+
+      <li [ngbNavItem]="'slider_text_list'">
+
+        <a ngbNavLink>
+          Slider Text List
+        </a>
+
+        <ng-template ngbNavContent>
+          <app-slider-text-list
+            (activateTab)="triggerTab($event)">
+          </app-slider-text-list>
+        </ng-template>
+
+      </li>
+
+    </ul>
+
+    <div [ngbNavOutlet]="tabs"></div>
+
+  </div>
+
 </div>

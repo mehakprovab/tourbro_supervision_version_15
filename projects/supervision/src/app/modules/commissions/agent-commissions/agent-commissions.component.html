@@ -1,31 +1,61 @@
 <div class="">
-    <div class="">
-        <ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange($event)" #tabs>
-            <ngb-tab id="agent_list">
-                <ng-template ngbTabTitle>
-                    <span> AGENT COMMISSION LIST</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-agent-commission-list (toUpdate)="triggerTab($event)"></app-agent-commission-list>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab id="agent_detail">
-                <ng-template ngbTabTitle>
-                    <span> COMMISSION DETAILS</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-agent-commission-detail (toUpdate)="triggerTab($event)"></app-agent-commission-detail>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab id="default_commission">
-                <ng-template ngbTabTitle>
-                    <span> ADD/UPDATE COMMISSION </span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-update-default-commission (toList)="triggerTab($event)" [getDataToUpdate]="userData" ></app-update-default-commission>
-                </ng-template>
-            </ngb-tab>
-        </ngb-tabset>
-    </div>
-</div>
 
+  <div class="">
+
+    <ul
+      ngbNav
+      #tabs="ngbNav"
+      class="tabs-animated custom_tab"
+      [(activeId)]="activeIdString"
+      (navChange)="beforeChange($event)">
+
+      <li [ngbNavItem]="'agent_list'">
+
+        <a ngbNavLink>
+          AGENT COMMISSION LIST
+        </a>
+
+        <ng-template ngbNavContent>
+          <app-agent-commission-list
+            (toUpdate)="triggerTab($event)">
+          </app-agent-commission-list>
+        </ng-template>
+
+      </li>
+
+      <li [ngbNavItem]="'agent_detail'">
+
+        <a ngbNavLink>
+          COMMISSION DETAILS
+        </a>
+
+        <ng-template ngbNavContent>
+          <app-agent-commission-detail
+            (toUpdate)="triggerTab($event)">
+          </app-agent-commission-detail>
+        </ng-template>
+
+      </li>
+
+      <li [ngbNavItem]="'default_commission'">
+
+        <a ngbNavLink>
+          ADD/UPDATE COMMISSION
+        </a>
+
+        <ng-template ngbNavContent>
+          <app-update-default-commission
+            (toList)="triggerTab($event)"
+            [getDataToUpdate]="userData">
+          </app-update-default-commission>
+        </ng-template>
+
+      </li>
+
+    </ul>
+
+    <div [ngbNavOutlet]="tabs"></div>
+
+  </div>
+
+</div>

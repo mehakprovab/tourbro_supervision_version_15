@@ -1,19 +1,40 @@
-<div class="card">
-    <div class="card-body">
-        <ngb-tabset class="tabs-animated custom_tab">
-            <ngb-tab *ngFor="let link of navLinks; let i=index;">
-                <ng-template ngbTabTitle>
-                    <span (click)="onSelect(link, i)"> <i class="{{link.icon}}"></i> &nbsp; {{link.label}} </span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <div *ngIf="link.component === 'update'; else notShow">
-                        <app-update-promocode [label]="link.label" ></app-update-promocode>
-                    </div>
-                    <ng-template #notShow>
-                        <app-list-promocode [label]="link.label"></app-list-promocode>
-                    </ng-template>
-                </ng-template>
-            </ngb-tab>
-        </ngb-tabset>
-    </div>
+<div class="">
+  <div class="">
+    
+    <ul
+      ngbNav
+      #tabs="ngbNav"
+      class="nav-tabs tabs-animated custom_tab"
+      [(activeId)]="activeIdString"
+      (navChange)="beforeChange(false)">
+
+      <li [ngbNavItem]="'manage_promocode'">
+        <a ngbNavLink>
+          <span>Manage Promo Code</span>
+        </a>
+
+        <ng-template ngbNavContent>
+          <app-manage-promocode
+            (updatePromoCode)="triggerTab($event)">
+          </app-manage-promocode>
+        </ng-template>
+      </li>
+
+      <li [ngbNavItem]="'promocode_list'">
+        <a ngbNavLink>
+          <span>Promo Code List</span>
+        </a>
+
+        <ng-template ngbNavContent>
+          <app-promocode-list
+            (updatePromoCode)="triggerTab($event)">
+          </app-promocode-list>
+        </ng-template>
+      </li>
+
+    </ul>
+
+    <div [ngbNavOutlet]="tabs"></div>
+
+  </div>
 </div>

@@ -1,55 +1,71 @@
 <div class="">
-    <div class="">
-        <ngb-tabset class="tabs-animated custom_tab">
-            <!-- <ngb-tab>
-                <ng-template ngbTabTitle>
-                    <span><i class="fa fa-plane"></i> &nbsp; Flight Markup</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-b2c-flight></app-b2c-flight>
-                </ng-template>
-            </ngb-tab>-->
-            <ngb-tab> 
-                <ng-template ngbTabTitle>
-                    <span> Stays Markup</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-b2c-hotel></app-b2c-hotel>
-                </ng-template>
-            </ngb-tab>
+  <div class="">
 
-            <ngb-tab>
-                <ng-template ngbTabTitle>
-                    <span> Cabs Markup</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                  <app-b2c-transfer></app-b2c-transfer>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab>
-                <ng-template ngbTabTitle>
-                    <span> Yatra Packages Markup</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-b2c-tour></app-b2c-tour>
-                </ng-template>
-            </ngb-tab>
-                        <ngb-tab>
-                <ng-template ngbTabTitle>
-                    <span>Experiences Markup</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                   <app-b2c-activity></app-b2c-activity>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab>
-                <ng-template ngbTabTitle>
-                    <span>Bus Markup</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-b2c-car></app-b2c-car>
-                </ng-template>
-            </ngb-tab>
-        </ngb-tabset>
-    </div>
+    <ul
+      ngbNav
+      #tabs="ngbNav"
+      class="tabs-animated custom_tab">
+
+      <!-- Flight Markup (commented in original) -->
+      <!--
+      <li [ngbNavItem]="'flight'">
+        <a ngbNavLink>
+          <i class="fa fa-plane"></i>&nbsp; Flight Markup
+        </a>
+        <ng-template ngbNavContent>
+          <app-b2c-flight></app-b2c-flight>
+        </ng-template>
+      </li>
+      -->
+
+      <li [ngbNavItem]="'stays'">
+        <a ngbNavLink>
+          Stays Markup
+        </a>
+        <ng-template ngbNavContent>
+          <app-b2c-hotel></app-b2c-hotel>
+        </ng-template>
+      </li>
+
+      <li [ngbNavItem]="'cabs'">
+        <a ngbNavLink>
+          Cabs Markup
+        </a>
+        <ng-template ngbNavContent>
+          <app-b2c-transfer></app-b2c-transfer>
+        </ng-template>
+      </li>
+
+      <li [ngbNavItem]="'packages'">
+        <a ngbNavLink>
+          Yatra Packages Markup
+        </a>
+        <ng-template ngbNavContent>
+          <app-b2c-tour></app-b2c-tour>
+        </ng-template>
+      </li>
+
+      <li [ngbNavItem]="'experiences'">
+        <a ngbNavLink>
+          Experiences Markup
+        </a>
+        <ng-template ngbNavContent>
+          <app-b2c-activity></app-b2c-activity>
+        </ng-template>
+      </li>
+
+      <li [ngbNavItem]="'bus'">
+        <a ngbNavLink>
+          Bus Markup
+        </a>
+        <ng-template ngbNavContent>
+          <app-b2c-car></app-b2c-car>
+        </ng-template>
+      </li>
+
+    </ul>
+
+    <div [ngbNavOutlet]="tabs"></div>
+
+  </div>
 </div>

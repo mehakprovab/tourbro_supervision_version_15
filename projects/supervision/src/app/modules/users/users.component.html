@@ -1,26 +1,39 @@
 <div class="row">
-    <div class="col-md-12">
-        <div class="card main-card mb-6">
-            <div class="card-body">
-                <ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange($event)" #tabs>
-                    <ngb-tab id="list_users">
-                        <ng-template ngbTabTitle>
-                            <span class="">{{'List User'}}</span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <app-users-list (toUpdate)="triggerTab($event)"></app-users-list>
-                        </ng-template>
-                    </ngb-tab>
-                    <ngb-tab id="add_user">
-                        <ng-template ngbTabTitle>
-                            <span class="">{{'Add/Edit User'}}</span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <app-users-add (someEvent)="triggerTab($event)" [userOne]="userData"></app-users-add>
-                        </ng-template>
-                    </ngb-tab>
-                </ngb-tabset>
-            </div>
-        </div>
+  <div class="col-md-12">
+    <div class="card main-card mb-6">
+      <div class="card-body">
+
+        <ul
+          ngbNav
+          #tabs="ngbNav"
+          [(activeId)]="activeId"
+          (navChange)="beforeChange($event)"
+          class="nav-tabs tabs-animated custom_tab">
+
+          <li [ngbNavItem]="'list_users'">
+            <a ngbNavLink>List User</a>
+            <ng-template ngbNavContent>
+              <app-users-list
+                (toUpdate)="triggerTab($event)">
+              </app-users-list>
+            </ng-template>
+          </li>
+
+          <li [ngbNavItem]="'add_user'">
+            <a ngbNavLink>Add/Edit User</a>
+            <ng-template ngbNavContent>
+              <app-users-add
+                (someEvent)="triggerTab($event)"
+                [userOne]="userData">
+              </app-users-add>
+            </ng-template>
+          </li>
+
+        </ul>
+
+        <div [ngbNavOutlet]="tabs" class="mt-3"></div>
+
+      </div>
     </div>
+  </div>
 </div>

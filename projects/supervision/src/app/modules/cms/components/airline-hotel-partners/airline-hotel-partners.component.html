@@ -1,31 +1,60 @@
 <div class="">
-    <div class="">
-        <ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange(false)" #tabs
-            [activeId]="activeIdString">
-            <ngb-tab id="add_update_airline">
-                <ng-template ngbTabTitle>
-                    <span> Add/Update Airline/Hotel Logo</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-add-update-airline-partner (staticContentTab)="triggerTab($event)"></app-add-update-airline-partner>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab id="airline_list">
-                <ng-template ngbTabTitle>
-                    <span> Airline List</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-list-airline-partner (staticContentTab)="triggerTab($event)"></app-list-airline-partner>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab id="hotel_partner_list">
-                <ng-template ngbTabTitle>
-                    <span> Hotel Partner List</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-hotel-parters-list (staticContentTab)="triggerTab($event)"></app-hotel-parters-list>
-                </ng-template>
-            </ngb-tab>
-        </ngb-tabset>
-    </div>
+
+  <div class="">
+
+    <ul
+      ngbNav
+      #tabs="ngbNav"
+      class="tabs-animated custom_tab"
+      [(activeId)]="activeIdString"
+      (navChange)="beforeChange($event)">
+
+      <li [ngbNavItem]="'add_update_airline'">
+
+        <a ngbNavLink>
+          Add/Update Airline/Hotel Logo
+        </a>
+
+        <ng-template ngbNavContent>
+          <app-add-update-airline-partner
+            (staticContentTab)="triggerTab($event)">
+          </app-add-update-airline-partner>
+        </ng-template>
+
+      </li>
+
+      <li [ngbNavItem]="'airline_list'">
+
+        <a ngbNavLink>
+          Airline List
+        </a>
+
+        <ng-template ngbNavContent>
+          <app-list-airline-partner
+            (staticContentTab)="triggerTab($event)">
+          </app-list-airline-partner>
+        </ng-template>
+
+      </li>
+
+      <li [ngbNavItem]="'hotel_partner_list'">
+
+        <a ngbNavLink>
+          Hotel Partner List
+        </a>
+
+        <ng-template ngbNavContent>
+          <app-hotel-parters-list
+            (staticContentTab)="triggerTab($event)">
+          </app-hotel-parters-list>
+        </ng-template>
+
+      </li>
+
+    </ul>
+
+    <div [ngbNavOutlet]="tabs"></div>
+
+  </div>
+
 </div>

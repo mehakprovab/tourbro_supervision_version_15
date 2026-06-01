@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { NgbNav } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-car-aminities',
   templateUrl: './car-aminities.component.html',
@@ -8,7 +8,9 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 })
 export class CarAminitiesComponent implements OnInit {
 
-@ViewChild('tabs', { static: true }) public tabs: NgbTabset;
+@ViewChild('tabs', { static: true })
+tabs!: NgbNav;
+  activeIdString = 'list_room_amenity';
 
   roomAmenityData: any;
 
@@ -28,4 +30,3 @@ export class CarAminitiesComponent implements OnInit {
   }
 
 }
-

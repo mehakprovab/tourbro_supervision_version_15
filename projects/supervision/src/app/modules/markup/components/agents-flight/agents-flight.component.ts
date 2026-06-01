@@ -6,7 +6,7 @@ import { UtilityService } from '../../../../core/services/utility.service';
 import { SubSink } from 'subsink';
 import { ApiHandlerService } from '../../../../core/api-handlers';
 import { AppService } from '../../../../app.service';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNav, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 const log = new Logger('report/TransactionLogsComponent');
 let filterArray: Array<any> = [];
@@ -38,7 +38,8 @@ export class AgentsFlightComponent implements OnInit {
     public flightIcon: string = "assets/images/login-images/assets/flight.png";
     public hotelIcon: string = "assets/images/login-images/assets/material-hotel.png";
     public insuranceIcon: string = "assets/images/login-images/assets/document.png";
-    @ViewChild('tabs', { static: true }) public tabs: NgbTabset;
+    @ViewChild('tabs', { static: true })
+tabs!: NgbNav;
 
     constructor(
         private swalService: SwalService,

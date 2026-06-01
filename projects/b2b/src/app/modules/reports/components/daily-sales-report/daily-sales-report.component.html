@@ -1,199 +1,257 @@
-<!-- <p>daily-sales-report works!</p> -->
 <div class="card">
     <div class="card-body">
-        <ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange($event)">
-            <ngb-tab *ngFor="let link of navLinks; let i=index;">
-                <ng-template ngbTabTitle>
-                    <span (click)="onSelect(link, i)"> <i class="{{link.icon}}"></i> &nbsp; {{link.label}} </span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <!-- <hr>
-                    <div class="row pb-3">
-                        <div class="col-md-12 pb-2">
-                            <span class="">
-                                Make your search easy
-                            </span>
-                        </div>
-                        <div class="col-md-12">
-                            <span class="p-1">
-                                <a class="btn btn-sm btn-outline-primary" href="javascript:void(0)">
-                                    Today Search
-                                </a>
-                            </span>
-                            <span class="pl-0 p-1">
-                                <a class="btn btn-sm btn-outline-primary" href="javascript:void(0)">
-                                    Last Day Search
-                                </a>
-                            </span>
-                            <span class="pl-0 p-1">
-                                <a class="btn btn-sm btn-outline-primary" href="javascript:void(0)">
-                                    One Week Search
-                                </a>
-                            </span>
-                            <span class="pl-0 p-1">
-                                <a class="btn btn-sm btn-outline-primary" href="javascript:void(0)">
-                                    One Month Search
-                                </a>
-                            </span>
-                            <span class="pl-0 p-1">
-                                <a class="btn btn-sm btn-outline-primary" href="javascript:void(0)">
-                                    Clear Filter
-                                </a>
-                            </span>
-                        </div>
-                        <div class="col-md-12">
-                            <form action="p-3">
-                                <div class="form-group row p-3">
-                                    <input type="text" class="form-control form-control-sm mr-1 w-25" placeholder="Application Reference">
-                                    <button class="btn btn-sm btn-outline-primary mr-1"> <i class="fa fa-search"></i> </button>
-                                    <button class="btn btn-sm btn-outline-primary mr-1"> <i class="fa fa-refresh"></i> </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div> -->
-                    <!-- <hr>
-                    <div class="pb-3">
-                        <span> Advanced Search Panel </span>
-                        <button type="button" class="btn btn-sm btn-primary" (click)="isCollapsed = !isCollapsed"
-                            [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
-                            {{ isCollapsed ? '-' : '+'}}
-                        </button>
-                        <hr>
-                        <div id="collapseBasic" [collapse]="isCollapsed" [isAnimated]="true">
-                            <div class="card">
-                                <div class="card-body">
-                                    <app-adv-search></app-adv-search>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
 
-                    <!-- <div class="card">
-                        <div class="card-body">
-                            <app-adv-search></app-adv-search>
-                        </div>
-                    </div> -->
+        <ul
+            ngbNav
+            #nav="ngbNav"
+            [(activeId)]="activeId"
+            class="nav-tabs tabs-animated custom_tab"
+            (navChange)="beforeChange($event)"
+        >
 
-                    <div class="">
-                        <div class="">
-                            <div [ngSwitch]="link.report">
-                                <div *ngSwitchCase="'Flight'">
-                                    <!-- <app-dynamic-table [data]=" tabsData.Flight "></app-dynamic-table> -->
-                                    <div class="mb-3">
-                                        <div class="card-header-tab card-header">
-                                            <div
-                                                class="card-header-title font-size-lg text-capitalize font-weight-normal">
-                                                <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>
-                                                {{'Daily Sales Report'}}
-                                            </div>
-                                        </div>
-                                        <form>
-                                            <div class="p-2">
-                                                <div class="form-group form-inline mb-0">
-                                                    Full text search:
-                                                    <input class="form-control ml-2" type="text" name="searchTerm"
-                                                        (keyup)="applyFilter($event.target.value)" />
-                                                </div>
-                                            </div>
-                                            <div class="table-responsive">
-                                                <table class="table table-borderless table-striped table-hover" matSort
-                                                    (matSortChange)="sortData($event)">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col" class="text-left text-nowrap"
-                                                                *ngFor="let header of displayColumn;"
-                                                                mat-sort-header="{{header.key}}">
-                                                                {{header.value }} </th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr *ngIf="noData">
-                                                            <td colspan="11">
-                                                                <mat-spinner [diameter]="30" style="margin:0 auto;"
-                                                                    mode="indeterminate"></mat-spinner>
-                                                            </td>
-                                                        </tr>
-                                                        <tr
-                                                            *ngFor="let data of respData | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
-                                                            <td class="text-left text-muted">{{i+1}}.</td>
-                                                            <td class="text-left"> {{data['reference_number']}} </td>
-                                                            <td class="text-left">
-                                                                <span *ngIf="data['status'] == 'BOOKING_SUCCESS'"
-                                                                    class="badge badge-success">
-                                                                    {{data['status']}} </span>
-                                                                <span *ngIf="data['status'] == 'BOOKING_HOLD'"
-                                                                    class="badge badge-warning">
-                                                                    {{data['status']}} </span>
-                                                                <span *ngIf="data['status'] == 'BOOKING_FAILED'"
-                                                                    class="badge badge-danger">
-                                                                    {{data['status']}} </span>
-                                                            </td>
-                                                            <td class="text-left"> {{data['pnr']}} </td>
-                                                            <td class="text-left"> {{data['leadpax_name']}} <br>
-                                                                {{data['leadpx_email']}} <br> {{data['leadpx_phone']}}
-                                                            </td>
-                                                            <td class="text-left"> {{data['from']}} </td>
-                                                            <td class="text-left"> {{data['to']}} </td>
-                                                            <td class="text-left"> {{data['type']}} </td>
-                                                            <td class="text-left"> {{data['agent_netfare']}} </td>
-                                                            <td class="text-left"> {{data['agent_commission']}} </td>
-                                                            <td class="text-left"> {{data['agent_markup']}} </td>
-                                                            <td class="text-left"> {{data['tds']}} </td>
-                                                            <td class="text-left"> {{data['total_fare']}} </td>
-                                                            <td class="text-left"> {{data['tarvel_date']}} </td>
-                                                            <td class="text-left">
-                                                                {{data['booked_on']*1000 | date: "dd-MM-yyyy" }} </td>
-                                                            
-                                                            <td class="text-left" style="vertical-align: middle;">
-                                                                <span *ngFor="let btnCaptn of ['Voucher']"
-                                                                    class="btn btn-sm btn-primary m-1"
-                                                                    [innerHTML]="btnCaptn" (click)="getVoucher(data)">
-                                                                </span>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="card-footer pb-0">
-                                                <div class="d-flex w-100 justify-content-between">
-                                                    <ngb-pagination [collectionSize]="collectionSize" [(page)]="page"
-                                                        [pageSize]="pageSize">
-                                                    </ngb-pagination>
-                                                    <select class="custom-select" style="width: auto" name="pageSize"
-                                                        [(ngModel)]="pageSize">
-                                                        <option [ngValue]="2">2 items per page</option>
-                                                        <option [ngValue]="4">4 items per page</option>
-                                                        <option [ngValue]="6">6 items per page</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </form>
+            <li
+                [ngbNavItem]="i"
+                *ngFor="let link of navLinks; let i = index"
+            >
+
+                <a ngbNavLink (click)="onSelect(link, i)">
+                    <i [class]="link.icon"></i>&nbsp;{{ link.label }}
+                </a>
+
+                <ng-template ngbNavContent>
+
+                    <div [ngSwitch]="link.report">
+
+                        <div *ngSwitchCase="'Flight'">
+
+                            <div class="mb-3">
+
+                                <div class="card-header-tab card-header">
+                                    <div
+                                        class="card-header-title font-size-lg text-capitalize font-weight-normal"
+                                    >
+                                        <i
+                                            class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"
+                                        ></i>
+                                        Daily Sales Report
                                     </div>
                                 </div>
 
-                                <!-- <div *ngSwitchCase="'Bus'"> {{link.report}}
-                                    <app-dynamic-table [data]="tabsData.Bus"></app-dynamic-table>
-                                </div>
-                                <div *ngSwitchCase="'Hotel'"> {{link.report}}
-                                    <app-dynamic-table [data]=" tabsData.Hotel "></app-dynamic-table>
-                                </div>
-                                <div *ngSwitchCase="'Transfers'"> {{link.report}}
-                                    <app-dynamic-table [data]=" tabsData.Transfers "></app-dynamic-table>
-                                </div>
-                                <div *ngSwitchCase="'Activities'"> {{link.report}}
-                                    <app-dynamic-table [data]=" tabsData.Activities "></app-dynamic-table>
-                                </div>
-                                <div *ngSwitchCase="'Packages'"> {{link.report}}
-                                    <h4>
-                                        No data found...
-                                    </h4>
-                                    //<app-dynamic-table [data]=" tabsData.Packages" ></app-dynamic-table>
-                                </div> -->
+                                <form>
+
+                                    <div class="p-2">
+                                        <div class="form-group form-inline mb-0">
+                                            Full text search:
+
+                                            <input
+                                                class="form-control ml-2"
+                                                type="text"
+                                                name="searchTerm"
+                                                (keyup)="applyFilter($event.target.value)"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div class="table-responsive">
+
+                                        <table
+                                            class="table table-borderless table-striped table-hover"
+                                            matSort
+                                            (matSortChange)="sortData($event)"
+                                        >
+
+                                            <thead>
+                                                <tr>
+                                                    <th
+                                                        scope="col"
+                                                        class="text-left text-nowrap"
+                                                        *ngFor="let header of displayColumn"
+                                                        [mat-sort-header]="header.key"
+                                                    >
+                                                        {{ header.value }}
+                                                    </th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+
+                                                <tr *ngIf="noData">
+                                                    <td colspan="16">
+                                                        <mat-spinner
+                                                            [diameter]="30"
+                                                            style="margin:0 auto;"
+                                                            mode="indeterminate"
+                                                        >
+                                                        </mat-spinner>
+                                                    </td>
+                                                </tr>
+
+                                                <tr
+                                                    *ngFor="
+                                                        let data of respData
+                                                        | slice:(page - 1) * pageSize:
+                                                        (page - 1) * pageSize + pageSize;
+                                                        let i = index
+                                                    "
+                                                >
+                                                    <td class="text-left text-muted">
+                                                        {{ i + 1 }}.
+                                                    </td>
+
+                                                    <td class="text-left">
+                                                        {{ data['reference_number'] }}
+                                                    </td>
+
+                                                    <td class="text-left">
+
+                                                        <span
+                                                            *ngIf="data['status'] == 'BOOKING_SUCCESS'"
+                                                            class="badge badge-success"
+                                                        >
+                                                            {{ data['status'] }}
+                                                        </span>
+
+                                                        <span
+                                                            *ngIf="data['status'] == 'BOOKING_HOLD'"
+                                                            class="badge badge-warning"
+                                                        >
+                                                            {{ data['status'] }}
+                                                        </span>
+
+                                                        <span
+                                                            *ngIf="data['status'] == 'BOOKING_FAILED'"
+                                                            class="badge badge-danger"
+                                                        >
+                                                            {{ data['status'] }}
+                                                        </span>
+
+                                                    </td>
+
+                                                    <td class="text-left">
+                                                        {{ data['pnr'] }}
+                                                    </td>
+
+                                                    <td class="text-left">
+                                                        {{ data['leadpax_name'] }}
+                                                        <br />
+                                                        {{ data['leadpx_email'] }}
+                                                        <br />
+                                                        {{ data['leadpx_phone'] }}
+                                                    </td>
+
+                                                    <td class="text-left">
+                                                        {{ data['from'] }}
+                                                    </td>
+
+                                                    <td class="text-left">
+                                                        {{ data['to'] }}
+                                                    </td>
+
+                                                    <td class="text-left">
+                                                        {{ data['type'] }}
+                                                    </td>
+
+                                                    <td class="text-left">
+                                                        {{ data['agent_netfare'] }}
+                                                    </td>
+
+                                                    <td class="text-left">
+                                                        {{ data['agent_commission'] }}
+                                                    </td>
+
+                                                    <td class="text-left">
+                                                        {{ data['agent_markup'] }}
+                                                    </td>
+
+                                                    <td class="text-left">
+                                                        {{ data['tds'] }}
+                                                    </td>
+
+                                                    <td class="text-left">
+                                                        {{ data['total_fare'] }}
+                                                    </td>
+
+                                                    <td class="text-left">
+                                                        {{ data['tarvel_date'] }}
+                                                    </td>
+
+                                                    <td class="text-left">
+                                                        {{
+                                                            data['booked_on'] * 1000
+                                                                | date:'dd-MM-yyyy'
+                                                        }}
+                                                    </td>
+
+                                                    <td
+                                                        class="text-left"
+                                                        style="vertical-align: middle;"
+                                                    >
+                                                        <span
+                                                            *ngFor="let btnCaptn of ['Voucher']"
+                                                            class="btn btn-sm btn-primary m-1"
+                                                            [innerHTML]="btnCaptn"
+                                                            (click)="getVoucher(data)"
+                                                        >
+                                                        </span>
+                                                    </td>
+
+                                                </tr>
+
+                                            </tbody>
+
+                                        </table>
+
+                                    </div>
+
+                                    <div class="card-footer pb-0">
+
+                                        <div class="d-flex w-100 justify-content-between">
+
+                                            <ngb-pagination
+                                                [collectionSize]="collectionSize"
+                                                [(page)]="page"
+                                                [pageSize]="pageSize"
+                                            >
+                                            </ngb-pagination>
+
+                                            <select
+                                                class="custom-select"
+                                                style="width: auto"
+                                                name="pageSize"
+                                                [(ngModel)]="pageSize"
+                                            >
+                                                <option [ngValue]="2">
+                                                    2 items per page
+                                                </option>
+
+                                                <option [ngValue]="4">
+                                                    4 items per page
+                                                </option>
+
+                                                <option [ngValue]="6">
+                                                    6 items per page
+                                                </option>
+                                            </select>
+
+                                        </div>
+
+                                    </div>
+
+                                </form>
+
                             </div>
+
                         </div>
+
                     </div>
+
                 </ng-template>
-            </ngb-tab>
-        </ngb-tabset>
+
+            </li>
+
+        </ul>
+
+        <div [ngbNavOutlet]="nav"></div>
+
     </div>
 </div>

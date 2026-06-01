@@ -782,7 +782,7 @@ if(patchData.non_refundable_discount)
       occupancyArray = occupancyArray.slice(0, 1);
     }
   
-    const formArray = this.fb.array([]);
+    const formArray = this.fb.array<FormGroup>([]);
     occupancyArray.forEach(occupancy => {
       formArray.push(this.fb.group({
         type: [occupancy.type || ''],

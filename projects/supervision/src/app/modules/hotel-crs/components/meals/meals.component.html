@@ -1,20 +1,38 @@
+<ul
+  ngbNav
+  #tabs="ngbNav"
+  class="tabs-animated custom_tab"
+  (navChange)="beforeChange($event)">
 
-<ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange($event)" #tabs>
-    <ngb-tab id="list_hotel_types">
-        <ng-template ngbTabTitle>
-            <span class="">{{'List Meals'}}</span>
-        </ng-template>
-        <ng-template ngbTabContent>
-            <app-meal-list (toUpdate)="triggerTab($event)"></app-meal-list>
-        </ng-template>
-    </ngb-tab>
-    <ngb-tab id="add_hotel_type">
-        <ng-template ngbTabTitle>
-            <span class="">{{'Add/Edit Meal Type'}}</span>
-        </ng-template>
-        <ng-template ngbTabContent>
-            <app-add-update-meals (someEvent)="triggerTab($event)" [hotelTypeOne]="hotelTypeData"></app-add-update-meals>
-        </ng-template>
-    </ngb-tab>
-</ngb-tabset>
-           
+  <li [ngbNavItem]="'list_meals'">
+
+    <a ngbNavLink>
+      {{ 'List Meals' }}
+    </a>
+
+    <ng-template ngbNavContent>
+      <app-meal-list
+        (toUpdate)="triggerTab($event)">
+      </app-meal-list>
+    </ng-template>
+
+  </li>
+
+  <li [ngbNavItem]="'add_meal_type'">
+
+    <a ngbNavLink>
+      {{ 'Add/Edit Meal Type' }}
+    </a>
+
+    <ng-template ngbNavContent>
+      <app-add-update-meals
+        (someEvent)="triggerTab($event)"
+        [hotelTypeOne]="hotelTypeData">
+      </app-add-update-meals>
+    </ng-template>
+
+  </li>
+
+</ul>
+
+<div [ngbNavOutlet]="tabs"></div>

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { GlobalConstants } from 'projects/supervision/src/app/core/services/global-constants';
-
+import { NgbNav } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-manage-agent-new-listing',
   templateUrl: './manage-agent-new-listing.component.html',
@@ -10,7 +10,8 @@ import { GlobalConstants } from 'projects/supervision/src/app/core/services/glob
 })
 export class ManageAgentNewListingComponent implements OnInit {
 
-   @ViewChild('tabs', { static: true }) public tabs: NgbTabset;
+   @ViewChild('tabs', { static: true })
+tabs!: NgbNav;
     activeIdString = "b2cUsers_list";
     test: boolean;
     supplier_type:any;

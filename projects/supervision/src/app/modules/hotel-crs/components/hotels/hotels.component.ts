@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNav, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { Logger } from '../../../../core/logger/logger.service';
 import { HotelCrsService } from '../../hotel-crs.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,7 +13,7 @@ const log = new Logger('hotel-crs/HotelComponent')
 })
 export class HotelsComponent implements OnInit {
 
-  @ViewChild('tabs', { static: true }) public tabs: NgbTabset;
+@ViewChild('tabs', { static: false }) tabs: any;
   activeIdString = "list_hotels";
   add:boolean=true;
   hotelData: any;
@@ -80,18 +80,23 @@ resetValue(){
         this.hotelCrsService.updateData.next({});
     }
 }
-  triggerTab(data: any) {
-    console.log("data",data)
-     this.eventData =data.roomImageRedirect;
-     this.priceDirectData=data;
-     this.priceEvent=data.roomPriceRedirect;
-     this.priceManagementEvent=data.roomPriceManageRedirect;
-      this.hotelData = data.hotel;
-      this.selected = data.hoteltrigger;
-      this.saveState();
-     this.tabs.select(data.tabId)
-   
-      }
+triggerTab(data: any) {
+  if (!data) return;
+
+  this.eventData = data?.roomImageRedirect ?? false;
+  this.priceDirectData = data ?? null;
+  this.priceEvent = data?.roomPriceRedirect ?? false;
+  this.priceManagementEvent = data?.roomPriceManageRedirect ?? false;
+
+  this.hotelData = data?.hotel ?? null;
+  this.selected = data?.hoteltrigger ?? null;
+
+  this.saveState();
+
+  if (data?.tabId && this.tabs) {
+    this.tabs.select(data.tabId);
+  }
+}
 
       saveState() {
         // Save active tab and selected component in localStorage

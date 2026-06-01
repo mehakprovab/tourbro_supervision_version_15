@@ -1,21 +1,46 @@
+<div class="">
 
-<ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange($event)" #tabs
-[activeId]="activeIdString">
-    <ngb-tab id="list_activity_country">
-        <ng-template ngbTabTitle>
-            <span class="">{{'Country List'}}</span>
+  <div class="">
+
+    <ul
+      ngbNav
+      #tabs="ngbNav"
+      class="tabs-animated custom_tab"
+      [(activeId)]="activeIdString"
+      (navChange)="beforeChange($event)">
+
+      <li [ngbNavItem]="'list_activity_country'">
+
+        <a ngbNavLink>
+          Country List
+        </a>
+
+        <ng-template ngbNavContent>
+          <app-list-activity-country
+            (toUpdate)="triggerTab($event)">
+          </app-list-activity-country>
         </ng-template>
-        <ng-template ngbTabContent>
-            <app-list-activity-country (toUpdate)="triggerTab($event)"></app-list-activity-country>
+
+      </li>
+
+      <li [ngbNavItem]="'add_activity_country'">
+
+        <a ngbNavLink>
+          Add/Edit Country
+        </a>
+
+        <ng-template ngbNavContent>
+          <app-add-activity-country
+            (someEvent)="triggerTab($event)">
+          </app-add-activity-country>
         </ng-template>
-    </ngb-tab>
-    <ngb-tab id="add_activity_country">
-        <ng-template ngbTabTitle>
-            <span class="">{{'Add/Edit Country'}}</span>
-        </ng-template>
-        <ng-template ngbTabContent>
-            <app-add-activity-country (someEvent)="triggerTab($event)"></app-add-activity-country>
-        </ng-template>
-    </ngb-tab>
-</ngb-tabset>
-            
+
+      </li>
+
+    </ul>
+
+    <div [ngbNavOutlet]="tabs"></div>
+
+  </div>
+
+</div>

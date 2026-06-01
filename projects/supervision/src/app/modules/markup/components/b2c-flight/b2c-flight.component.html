@@ -1,41 +1,74 @@
 <hr>
+
 <div class="">
-    <div class="">
-        <ngb-tabset class="tabs-animated custom_tab"  #tabs>
-            <ngb-tab id="markup_detail">
-                <ng-template ngbTabTitle>
-                    <span> MARKUP DETAILS</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-agent-b2c-markup-detail (toUpdate)="triggerTab($event)"></app-agent-b2c-markup-detail>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab id="default_markup">
-                <ng-template ngbTabTitle>
-                    <span> ADD/UPDATE MARKUP </span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-agent-b2c-markup-add-update (toList)="triggerTab($event)" [getDataToUpdate]="userData" ></app-agent-b2c-markup-add-update>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab id="default_supplier">
-                <ng-template ngbTabTitle>
-                    <span> Supplier Update </span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-supplier-markup-update (supplierListdata)="triggerTab($event)" [getSupplierToUpdate]="userData" ></app-supplier-markup-update>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab id="default_supplier_list">
-                <ng-template ngbTabTitle>
-                    <span> Supplier List </span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-supplir-markup-list (toUpdateSupplier)="triggerTab($event)"  ></app-supplir-markup-list>
-                </ng-template>
-            </ngb-tab>
-        </ngb-tabset>
-    </div>
+  <div class="">
+
+    <ul
+      ngbNav
+      #tabs="ngbNav"
+      class="tabs-animated custom_tab">
+
+      <li [ngbNavItem]="'markup_detail'">
+
+        <a ngbNavLink>
+          MARKUP DETAILS
+        </a>
+
+        <ng-template ngbNavContent>
+          <app-agent-b2c-markup-detail
+            (toUpdate)="triggerTab($event)">
+          </app-agent-b2c-markup-detail>
+        </ng-template>
+
+      </li>
+
+      <li [ngbNavItem]="'default_markup'">
+
+        <a ngbNavLink>
+          ADD/UPDATE MARKUP
+        </a>
+
+        <ng-template ngbNavContent>
+          <app-agent-b2c-markup-add-update
+            [getDataToUpdate]="userData"
+            (toList)="triggerTab($event)">
+          </app-agent-b2c-markup-add-update>
+        </ng-template>
+
+      </li>
+
+      <li [ngbNavItem]="'default_supplier'">
+
+        <a ngbNavLink>
+          Supplier Update
+        </a>
+
+        <ng-template ngbNavContent>
+          <app-supplier-markup-update
+            [getSupplierToUpdate]="userData"
+            (supplierListdata)="triggerTab($event)">
+          </app-supplier-markup-update>
+        </ng-template>
+
+      </li>
+
+      <li [ngbNavItem]="'default_supplier_list'">
+
+        <a ngbNavLink>
+          Supplier List
+        </a>
+
+        <ng-template ngbNavContent>
+          <app-supplir-markup-list
+            (toUpdateSupplier)="triggerTab($event)">
+          </app-supplir-markup-list>
+        </ng-template>
+
+      </li>
+
+    </ul>
+
+    <div [ngbNavOutlet]="tabs"></div>
+
+  </div>
 </div>
-
-

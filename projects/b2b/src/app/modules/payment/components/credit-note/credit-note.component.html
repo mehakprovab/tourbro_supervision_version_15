@@ -1,16 +1,44 @@
 <div class="col-lg-12 col-md-12 py-3 m-0 custom-font">
-    <ngb-tabset class="tabs-animated custom_tab">
-        <ngb-tab *ngFor="let link of navLinks; let i=index;">
-            <ng-template ngbTabTitle>
-                <span class="text-uppercase" (click)="onSelect()"> <i class=""></i> &nbsp; {{link.label}} </span>
-            </ng-template>
-            <ng-template ngbTabContent>
-                <div class="row card p-0" [ngSwitch]="link.component">
-                    <div *ngSwitchCase="'cancelRefundView'" class="col-md-12 col-lg-12">
-                        <app-cancel-refund-view-note></app-cancel-refund-view-note>
+
+    <ul ngbNav
+        #nav="ngbNav"
+        class="nav-tabs tabs-animated custom_tab">
+
+        <li *ngFor="let link of navLinks; let i = index"
+            [ngbNavItem]="i">
+
+            <a ngbNavLink
+               class="text-uppercase"
+               (click)="onSelect()">
+
+                <span>
+                    <i class=""></i>
+                    &nbsp; {{link.label}}
+                </span>
+
+            </a>
+
+            <ng-template ngbNavContent>
+
+                <div class="row card p-0"
+                     [ngSwitch]="link.component">
+
+                    <div *ngSwitchCase="'cancelRefundView'"
+                         class="col-md-12 col-lg-12">
+
+                        <app-cancel-refund-view-note>
+                        </app-cancel-refund-view-note>
+
                     </div>
+
                 </div>
+
             </ng-template>
-        </ngb-tab>
-    </ngb-tabset>
+
+        </li>
+
+    </ul>
+
+    <div [ngbNavOutlet]="nav"></div>
+
 </div>

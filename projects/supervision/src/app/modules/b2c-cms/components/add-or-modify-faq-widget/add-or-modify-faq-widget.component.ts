@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNav, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-add-or-modify-faq-widget',
@@ -7,7 +7,8 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./add-or-modify-faq-widget.component.scss']
 })
 export class AddOrModifyFaqWidgetComponent implements OnInit {
-    @ViewChild('tabs', { static: true }) public tabs: NgbTabset;
+    @ViewChild('tabs', { static: true })
+tabs!: NgbNav;
     activeIdString = "staticpage_list";
   constructor() { }
 

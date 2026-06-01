@@ -1,62 +1,81 @@
 <div class="">
-    <div class="">
-        <ngb-tabset class="tabs-animated custom_tab">
-            <ngb-tab>
-                <ng-template ngbTabTitle>
-                    <span> Flight Markup</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-agents-flight></app-agents-flight>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab>
-                <ng-template ngbTabTitle>
-                    <span> Hotel Markup</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-agents-hotel></app-agents-hotel>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab>
-                <ng-template ngbTabTitle>
-                    <span> Activity Markup</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-agent-activity></app-agent-activity>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab>
-                <ng-template ngbTabTitle>
-                    <span> Transfer Markup</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                   <app-agent-transfer></app-agent-transfer>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab>
-                <ng-template ngbTabTitle>
-                    <span> Tour Markup</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-agent-tour></app-agent-tour>
-                </ng-template>
-            </ngb-tab>
-            <!-- <ngb-tab>
-                <ng-template ngbTabTitle>
-                    <span><i class="fa fa-car"></i> &nbsp; Car Markup</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-agent-car></app-agent-car>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab>
-                <ng-template ngbTabTitle>
-                    <span><i class="fa fa-calendar"></i> &nbsp; Activity Markup</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-agent-activity></app-agent-activity>
-                </ng-template>
-            </ngb-tab> -->
-        </ngb-tabset>
-    </div>
+  <div class="">
+
+
+     <ul
+  ngbNav
+  #tabs="ngbNav"
+  [(activeId)]="activeId"
+  class="tabs-animated custom_tab">
+
+      <li [ngbNavItem]="'flight'">
+        <a ngbNavLink>
+          Flight Markup
+        </a>
+        <ng-template ngbNavContent>
+          <app-agents-flight></app-agents-flight>
+        </ng-template>
+      </li>
+
+      <li [ngbNavItem]="'hotel'">
+        <a ngbNavLink>
+          Hotel Markup
+        </a>
+        <ng-template ngbNavContent>
+          <app-agents-hotel></app-agents-hotel>
+        </ng-template>
+      </li>
+
+      <li [ngbNavItem]="'activity'">
+        <a ngbNavLink>
+          Activity Markup
+        </a>
+        <ng-template ngbNavContent>
+          <app-agent-activity></app-agent-activity>
+        </ng-template>
+      </li>
+
+      <li [ngbNavItem]="'transfer'">
+        <a ngbNavLink>
+          Transfer Markup
+        </a>
+        <ng-template ngbNavContent>
+          <app-agent-transfer></app-agent-transfer>
+        </ng-template>
+      </li>
+
+      <li [ngbNavItem]="'tour'">
+        <a ngbNavLink>
+          Tour Markup
+        </a>
+        <ng-template ngbNavContent>
+          <app-agent-tour></app-agent-tour>
+        </ng-template>
+      </li>
+
+      <!--
+      <li [ngbNavItem]="'car'">
+        <a ngbNavLink>
+          <i class="fa fa-car"></i>&nbsp; Car Markup
+        </a>
+        <ng-template ngbNavContent>
+          <app-agent-car></app-agent-car>
+        </ng-template>
+      </li>
+
+      <li [ngbNavItem]="'activity2'">
+        <a ngbNavLink>
+          <i class="fa fa-calendar"></i>&nbsp; Activity Markup
+        </a>
+        <ng-template ngbNavContent>
+          <app-agent-activity></app-agent-activity>
+        </ng-template>
+      </li>
+      -->
+
+    </ul>
+
+    <div [ngbNavOutlet]="tabs"></div>
+
+  </div>
 </div>

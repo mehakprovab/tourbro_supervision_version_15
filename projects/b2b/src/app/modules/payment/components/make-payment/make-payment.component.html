@@ -1,26 +1,39 @@
 <div class="">
     <div class="row col-lg-12 col-md-12 pt-3 m-0">
-        <ngb-tabset class="tabs-animated custom_tab w-100" (tabChange)="onSelect($event)" #tabs [activeId]="activeIdString">
-            <ngb-tab id="History_Deposit_Request">
-                <ng-template ngbTabTitle>
+        <ul
+            ngbNav
+            #tabs="ngbNav"
+            class="nav-tabs tabs-animated custom_tab w-100"
+            [(activeId)]="activeIdString"
+            (navChange)="onSelect($event)"
+        >
+            <li [ngbNavItem]="'History_Deposit_Request'">
+                <a ngbNavLink>
                     <span><i class=""></i> &nbsp; HISTORY DEPOSIT REQUEST</span>
-                </ng-template>
-                <ng-template ngbTabContent>
+                </a>
+
+                <ng-template ngbNavContent>
                     <div class="card col-md-12 col-lg-12">
-                    <app-history-deposit-request></app-history-deposit-request>
-                </div>
+                        <app-history-deposit-request></app-history-deposit-request>
+                    </div>
                 </ng-template>
-            </ngb-tab>
-            <ngb-tab id="Deposit_Request">
-                <ng-template ngbTabTitle>
+            </li>
+
+            <li [ngbNavItem]="'Deposit_Request'">
+                <a ngbNavLink>
                     <span><i class=""></i> &nbsp; DEPOSIT REQUEST </span>
+                </a>
+
+                <ng-template ngbNavContent>
+                    <div class="row card custom-font" style="margin-left: 1px !important;">
+                        <app-deposit-request
+                            (activateChildTab)="activateChildTab($event)">
+                        </app-deposit-request>
+                    </div>
                 </ng-template>
-                <ng-template ngbTabContent>
-                    <div class="row card custom-font" style="margin-left: 1px !important;" >
-                    <app-deposit-request (activateChildTab)="activateChildTab($event)"></app-deposit-request>
-                </div>
-                </ng-template>
-            </ngb-tab>
-        </ngb-tabset>
+            </li>
+        </ul>
+
+        <div [ngbNavOutlet]="tabs"></div>
     </div>
 </div>

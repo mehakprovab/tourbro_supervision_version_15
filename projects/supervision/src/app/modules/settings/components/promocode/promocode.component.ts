@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgbNav } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-promocode',
@@ -6,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./promocode.component.scss']
 })
 export class PromocodeComponent implements OnInit {
+  @ViewChild('tabs', { static: true })
+  tabs!: NgbNav;
+
+  activeIdString = 'manage_promocode';
 
   navLinks = [
     {
@@ -25,6 +30,15 @@ export class PromocodeComponent implements OnInit {
   }
 
   onSelect(tab, index) {
+  }
+
+  beforeChange(e) {
+  }
+
+  triggerTab(data: any) {
+    if (data && data.tabId) {
+      this.tabs.select(data.tabId);
+    }
   }
 
 }

@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { NgbNav } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-sub-admin-active',
   templateUrl: './sub-admin-active.component.html',
   styleUrls: ['./sub-admin-active.component.scss']
 })
 export class SubAdminActiveComponent implements OnInit {
-    @ViewChild('tabs', { static: true }) public tabs: NgbTabset;
+    @ViewChild('tabs', { static: true })
+tabs!: NgbNav;
     activeIdString = "staff_list";
     test:boolean;
   constructor() { }

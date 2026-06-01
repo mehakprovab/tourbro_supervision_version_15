@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNav, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-b2c-promo-code',
@@ -8,7 +8,8 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 })
 export class B2cPromoCodeComponent implements OnInit {
 
-  @ViewChild('tabs', { static: true }) public tabs: NgbTabset;
+  @ViewChild('tabs', { static: true })
+tabs!: NgbNav;
     activeIdString = "promocode_list";
     test:boolean;
     

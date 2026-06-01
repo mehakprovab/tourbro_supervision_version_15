@@ -98,10 +98,10 @@ export class ViewEmailsDataSource extends DataSource<ViewEmailsItem> {
   connect(): Observable<ViewEmailsItem[]> {
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
-    const dataMutations = [
+    const dataMutations: Observable<any>[] = [
       observableOf(this.data),
-      this.paginator.page,
-      this.sort.sortChange
+      this.paginator.page as Observable<any>,
+      this.sort.sortChange as Observable<any>
     ];
 
     return merge(...dataMutations).pipe(map(() => {

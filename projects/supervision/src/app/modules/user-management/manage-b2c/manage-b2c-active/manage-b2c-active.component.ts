@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { NgbNav } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-manage-b2c-active',
   templateUrl: './manage-b2c-active.component.html',
   styleUrls: ['./manage-b2c-active.component.scss']
 })
 export class ManageB2cActiveComponent implements OnInit {
-@ViewChild('tabs', { static: true }) public tabs: NgbTabset;
+@ViewChild('tabs', { static: true })
+tabs!: NgbNav;
     activeIdString = "b2cUsers_list";
     test:boolean;
     

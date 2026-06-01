@@ -12,7 +12,6 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterModule } from "@angular/router";
 import { LoadingBarRouterModule } from "@ngx-loading-bar/router";
 import { NgBootstrapFormValidationModule } from "ng-bootstrap-form-validation";
-import { ExportAsModule } from 'ngx-export-as';
 import { NgxLoadingModule } from "ngx-loading";
 import {
   PerfectScrollbarConfigInterface,
@@ -98,7 +97,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     OfflineModule,
     NoSubmenuModule,
     OtherModule,
-    ExportAsModule,
     HotelCrsModule,
     ActivityCrsModule,
     TransferCrsModule,

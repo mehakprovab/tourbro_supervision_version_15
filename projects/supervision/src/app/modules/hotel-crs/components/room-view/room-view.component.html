@@ -1,21 +1,39 @@
+<ul
+  ngbNav
+  #tabs="ngbNav"
+   [(activeId)]="activeId"
+  class="tabs-animated custom_tab"
+  (navChange)="beforeChange($event)">
 
-<ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange($event)" #tabs>
-    <ngb-tab id="list_hotel_types">
-        <ng-template ngbTabTitle>
-            <span class="">{{'List View'}}</span>
-        </ng-template>
-        <ng-template ngbTabContent>
-            <app-list-room-view (toUpdate)="triggerTab($event)"></app-list-room-view>
-        </ng-template>
-    </ngb-tab>
-    <ngb-tab id="add_hotel_type">
-        <ng-template ngbTabTitle>
-            <span class="">{{'Add/Edit View Type'}}</span>
-        </ng-template>
-        <ng-template ngbTabContent>
-            <app-add-update-room-view (someEvent)="triggerTab($event)" [hotelTypeOne]="hotelTypeData"></app-add-update-room-view>
-        </ng-template>
-    </ngb-tab>
-</ngb-tabset>
-           
+  <li [ngbNavItem]="'list_hotel_types'">
 
+    <a ngbNavLink>
+      {{ 'List View' }}
+    </a>
+
+    <ng-template ngbNavContent>
+      <app-list-room-view
+        (toUpdate)="triggerTab($event)">
+      </app-list-room-view>
+    </ng-template>
+
+  </li>
+
+  <li [ngbNavItem]="'add_hotel_type'">
+
+    <a ngbNavLink>
+      {{ 'Add/Edit View Type' }}
+    </a>
+
+    <ng-template ngbNavContent>
+      <app-add-update-room-view
+        (someEvent)="triggerTab($event)"
+        [hotelTypeOne]="hotelTypeData">
+      </app-add-update-room-view>
+    </ng-template>
+
+  </li>
+
+</ul>
+
+<div [ngbNavOutlet]="tabs"></div>

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNav, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { Logger } from 'projects/supervision/src/app/core/logger/logger.service';
 const log = new Logger('hotel-crs/HotelAmenitiesComponent')
 @Component({
@@ -9,7 +9,9 @@ const log = new Logger('hotel-crs/HotelAmenitiesComponent')
 })
 export class SeasonComponent implements OnInit {
 
-    @ViewChild('tabs', { static: true }) public tabs: NgbTabset;
+    @ViewChild('tabs', { static: true })
+tabs!: NgbNav;
+    activeId = 'list_hotel_amenity';
 
     seasonData: any;
   
@@ -30,4 +32,3 @@ export class SeasonComponent implements OnInit {
     }
    // this.tabs.select(data.tabId);
 }
-

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNav, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { BankAccountDetailsService } from './bank-account-details.servise';
 
 @Component({
@@ -9,7 +9,8 @@ import { BankAccountDetailsService } from './bank-account-details.servise';
 })
 export class BankAccountDetailsComponent implements OnInit {
     activeIdString;
-    @ViewChild('tabs', { static: true }) public tabs: NgbTabset;
+    @ViewChild('tabs', { static: true })
+tabs!: NgbNav;
     userData: any;
 
     constructor(

@@ -1,78 +1,65 @@
-<!-- <div class="row mx-0 pt-2">
-    <div class="col-md-12">
-        <div class="card main-card mb-6">
-            <div class="card-body"> -->
-                <ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange($event)" #tabs>
-                    <!-- <ngb-tab id="flight_api_list">
-                        <ng-template ngbTabTitle>
-                            <span class="">
-                                <i class="fa fa-plane" aria-hidden="true"></i>
-                                &nbsp;{{'Flight'}}
-                            </span>
-                         
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <app-flight-api (toUpdate)="triggerTab($event)"></app-flight-api>
-                        </ng-template>
-                    </ngb-tab> -->
-                    <ngb-tab id="hotel_api_list">
-                        <ng-template ngbTabTitle>
-                            <span class="">
-                              
-                               {{'Stays'}}
-                            </span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <app-hotel-api (someEvent)="triggerTab($event)"></app-hotel-api>
-                        </ng-template>
-                    </ngb-tab>
-            
-                    <ngb-tab id="transfer_api_list">
-                        <ng-template ngbTabTitle>
-                            <span class="">
-                               
-                               {{'Cabs'}}
-                            </span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <app-transfer-api (someEvent)="triggerTab($event)"></app-transfer-api>
-                        </ng-template>
-                    </ngb-tab>
-                    <ngb-tab id="tour_api_list">
-                        <ng-template ngbTabTitle>
-                            <span class="">
-                              
-                                {{'Yatra Packages'}}
-                            </span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <app-tour-api (someEvent)="triggerTab($event)"></app-tour-api>
-                        </ng-template>
-                    </ngb-tab>
-                            <ngb-tab id="activity_api_list">
-                        <ng-template ngbTabTitle>
-                            <span class="">
-                            
-                                {{'Experiences'}}
-                            </span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <app-activity-api (someEvent)="triggerTab($event)"></app-activity-api>
-                        </ng-template>
-                    </ngb-tab>
-                    <ngb-tab id="car_api_list">
-                        <ng-template ngbTabTitle>
-                            <span class="">
-                               
-                                &nbsp;{{'Bus'}}
-                            </span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <app-car-api (someEvent)="triggerTab($event)"></app-car-api>
-                        </ng-template>
-                    </ngb-tab>
-                </ngb-tabset>
-            <!-- </div>
-        </div>
-    </div>
-</div> -->
+<ul
+  ngbNav
+  #tabs="ngbNav"
+  [(activeId)]="activeId"
+  (navChange)="beforeChange($event)"
+  class="nav-tabs tabs-animated custom_tab">
+
+  <li [ngbNavItem]="'hotel_api_list'">
+    <a ngbNavLink>
+      Stays
+    </a>
+    <ng-template ngbNavContent>
+      <app-hotel-api
+        (someEvent)="triggerTab($event)">
+      </app-hotel-api>
+    </ng-template>
+  </li>
+
+  <li [ngbNavItem]="'transfer_api_list'">
+    <a ngbNavLink>
+      Cabs
+    </a>
+    <ng-template ngbNavContent>
+      <app-transfer-api
+        (someEvent)="triggerTab($event)">
+      </app-transfer-api>
+    </ng-template>
+  </li>
+
+  <li [ngbNavItem]="'tour_api_list'">
+    <a ngbNavLink>
+      Yatra Packages
+    </a>
+    <ng-template ngbNavContent>
+      <app-tour-api
+        (someEvent)="triggerTab($event)">
+      </app-tour-api>
+    </ng-template>
+  </li>
+
+  <li [ngbNavItem]="'activity_api_list'">
+    <a ngbNavLink>
+      Experiences
+    </a>
+    <ng-template ngbNavContent>
+      <app-activity-api
+        (someEvent)="triggerTab($event)">
+      </app-activity-api>
+    </ng-template>
+  </li>
+
+  <li [ngbNavItem]="'car_api_list'">
+    <a ngbNavLink>
+      Bus
+    </a>
+    <ng-template ngbNavContent>
+      <app-car-api
+        (someEvent)="triggerTab($event)">
+      </app-car-api>
+    </ng-template>
+  </li>
+
+</ul>
+
+<div [ngbNavOutlet]="tabs" class="mt-3"></div>

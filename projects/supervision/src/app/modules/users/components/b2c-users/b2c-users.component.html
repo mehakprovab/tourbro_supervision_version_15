@@ -1,44 +1,56 @@
 <div class="row">
-    <div class="col-md-12">
-        <div class="card main-card mb-6">
-            <div class="card-body">
-                <ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange($event)" #tabs>
-                    <ngb-tab id="active_users">
-                        <ng-template ngbTabTitle>
-                            <span class="">{{'Active Users list'}}</span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <app-active-b2c-user-list (toUpdate)="triggerTab($event)"></app-active-b2c-user-list>
-                        </ng-template>
-                    </ngb-tab>
-                    <ngb-tab id="inactive_users">
-                        <ng-template ngbTabTitle>
-                            <span class="">{{'In Active User list'}}</span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <app-inactive-b2c-user-list (toUpdate)="triggerTab($event)"></app-inactive-b2c-user-list>
-                        </ng-template>
-                    </ngb-tab>
-                    <ngb-tab id="logged_users">
-                        <ng-template ngbTabTitle>
-                            <span class="">{{'Logged in User list'}}</span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <app-loggedin-b2c-user-list (toUpdate)="triggerTab($event)"></app-loggedin-b2c-user-list>
-                        </ng-template>
-                    </ngb-tab>
-                    <ngb-tab id="add_user">
-                        <ng-template ngbTabTitle>
-                            <span class="">{{'Add/Edit User'}}</span>
-                        </ng-template>
-                        <ng-template ngbTabContent>
-                            <app-b2cuser-add-edit (someEvent)="triggerTab($event)" >
-                            	<!-- [userOne]="userData" -->
-                            </app-b2cuser-add-edit>
-                        </ng-template>
-                    </ngb-tab>
-                </ngb-tabset>
-            </div>
-        </div>
+  <div class="col-md-12">
+    <div class="card main-card mb-6">
+      <div class="card-body">
+
+        <ul
+          ngbNav
+          #tabs="ngbNav"
+          [(activeId)]="activeId"
+          (navChange)="beforeChange($event)"
+          class="nav-tabs">
+
+          <li [ngbNavItem]="'active_users'">
+            <a ngbNavLink>Active Users List</a>
+            <ng-template ngbNavContent>
+              <app-active-b2c-user-list
+                (toUpdate)="triggerTab($event)">
+              </app-active-b2c-user-list>
+            </ng-template>
+          </li>
+
+          <li [ngbNavItem]="'inactive_users'">
+            <a ngbNavLink>In Active User List</a>
+            <ng-template ngbNavContent>
+              <app-inactive-b2c-user-list
+                (toUpdate)="triggerTab($event)">
+              </app-inactive-b2c-user-list>
+            </ng-template>
+          </li>
+
+          <li [ngbNavItem]="'logged_users'">
+            <a ngbNavLink>Logged In User List</a>
+            <ng-template ngbNavContent>
+              <app-loggedin-b2c-user-list
+                (toUpdate)="triggerTab($event)">
+              </app-loggedin-b2c-user-list>
+            </ng-template>
+          </li>
+
+          <li [ngbNavItem]="'add_user'">
+            <a ngbNavLink>Add/Edit User</a>
+            <ng-template ngbNavContent>
+              <app-b2cuser-add-edit
+                (someEvent)="triggerTab($event)">
+              </app-b2cuser-add-edit>
+            </ng-template>
+          </li>
+
+        </ul>
+
+        <div [ngbNavOutlet]="tabs" class="mt-3"></div>
+
+      </div>
     </div>
+  </div>
 </div>

@@ -1,21 +1,46 @@
+<div class="">
 
-<ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange($event)" #tabs
-[activeId]="activeIdString">
-    <ngb-tab id="list_activitycrs_list">
-        <ng-template ngbTabTitle>
-            <span class="">{{'List Experience'}}</span>
+  <div class="">
+
+    <ul
+      ngbNav
+      #tabs="ngbNav"
+      class="tabs-animated custom_tab"
+      [(activeId)]="activeIdString"
+      (navChange)="beforeChange($event)">
+
+      <li [ngbNavItem]="'list_activitycrs_list'">
+
+        <a ngbNavLink>
+          List Experience
+        </a>
+
+        <ng-template ngbNavContent>
+          <app-list-activity-crs
+            (toUpdate)="triggerTab($event)">
+          </app-list-activity-crs>
         </ng-template>
-        <ng-template ngbTabContent>
-            <app-list-activity-crs (toUpdate)="triggerTab($event)"></app-list-activity-crs>
+
+      </li>
+
+      <li [ngbNavItem]="'add_activitycrs'">
+
+        <a ngbNavLink>
+          Create Experience
+        </a>
+
+        <ng-template ngbNavContent>
+          <app-add-activity-crs
+            (someEvent)="triggerTab($event)">
+          </app-add-activity-crs>
         </ng-template>
-    </ngb-tab>
-    <ngb-tab id="add_activitycrs">
-        <ng-template ngbTabTitle>
-            <span class="">{{'Create Experience'}}</span>
-        </ng-template>
-        <ng-template ngbTabContent>
-            <app-add-activity-crs (someEvent)="triggerTab($event)"></app-add-activity-crs>
-        </ng-template>
-    </ngb-tab>
-</ngb-tabset>
-            
+
+      </li>
+
+    </ul>
+
+    <div [ngbNavOutlet]="tabs"></div>
+
+  </div>
+
+</div>

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Logger } from 'projects/supervision/src/app/core/logger/logger.service';
 import { ActivatedRoute } from '@angular/router';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNav, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 const log = new Logger('BankAccountDetailsComponent');
 
@@ -11,7 +11,8 @@ const log = new Logger('BankAccountDetailsComponent');
     styleUrls: ['./bank-account-details.component.scss']
 })
 export class BankAccountDetailsComponent implements OnInit {
-    @ViewChild('tabs', { static: true }) public tabs: NgbTabset;
+    @ViewChild('tabs', { static: true })
+tabs!: NgbNav;
     dataToUpdate: any;
     constructor(
         private route: ActivatedRoute

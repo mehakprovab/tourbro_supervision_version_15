@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNav, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-gds-commissions',
@@ -7,7 +7,9 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./gds-commissions.component.scss']
 })
 export class GdsCommissionsComponent implements OnInit {
-    @ViewChild('tabs', { static: true }) public tabs: NgbTabset;
+    @ViewChild('tabs', { static: true })
+tabs!: NgbNav;
+    activeIdString = 'agent_list';
     navLinks = [
         {
             label: 'UPDATE DEFAULT COMMISSION',

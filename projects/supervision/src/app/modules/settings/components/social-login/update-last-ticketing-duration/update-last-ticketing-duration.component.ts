@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNav, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-update-last-ticketing-duration',
@@ -7,7 +7,9 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./update-last-ticketing-duration.component.scss']
 })
 export class UpdateLastTicketingDurationComponent implements OnInit {
- @ViewChild('tabs', { static: true }) public tabs: NgbTabset;
+ @ViewChild('tabs', { static: true })
+tabs!: NgbNav;
+  activeId = 'update';
   constructor() { }
 
   ngOnInit() {

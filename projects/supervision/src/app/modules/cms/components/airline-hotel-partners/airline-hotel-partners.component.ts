@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNav, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-airline-hotel-partners',
@@ -8,7 +8,8 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 })
 export class AirlineHotelPartnersComponent implements OnInit {
 
-    @ViewChild('tabs', { static: true }) public tabs: NgbTabset;
+    @ViewChild('tabs', { static: true })
+tabs!: NgbNav;
     activeIdString = "airline_list";
   constructor() { }
 

@@ -1,21 +1,38 @@
+<ul
+  ngbNav
+  #tabs="ngbNav"
+  class="tabs-animated custom_tab"
+  (navChange)="beforeChange($event)">
 
-<ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange($event)" #tabs>
-    <ngb-tab id="list_room_types">
-        <ng-template ngbTabTitle>
-            <span class="">{{'List Room Types'}}</span>
-        </ng-template>
-        <ng-template ngbTabContent>
-            <!-- {{'List User'}} -->
-            <app-room-type-list (toUpdate)="triggerTab($event)"></app-room-type-list>
-        </ng-template>
-    </ngb-tab>
-    <ngb-tab id="add_room_type">
-        <ng-template ngbTabTitle>
-            <span class="">{{'Add/Edit Room Type'}}</span>
-        </ng-template>
-        <ng-template ngbTabContent>
-            <app-add-update-room-type (someEvent)="triggerTab($event)" [roomTypeOne]="roomTypeData"></app-add-update-room-type>
-        </ng-template>
-    </ngb-tab>
-</ngb-tabset>
-           
+  <li [ngbNavItem]="'list_room_types'">
+
+    <a ngbNavLink>
+      {{ 'List Room Types' }}
+    </a>
+
+    <ng-template ngbNavContent>
+      <app-room-type-list
+        (toUpdate)="triggerTab($event)">
+      </app-room-type-list>
+    </ng-template>
+
+  </li>
+
+  <li [ngbNavItem]="'add_room_type'">
+
+    <a ngbNavLink>
+      {{ 'Add/Edit Room Type' }}
+    </a>
+
+    <ng-template ngbNavContent>
+      <app-add-update-room-type
+        (someEvent)="triggerTab($event)"
+        [roomTypeOne]="roomTypeData">
+      </app-add-update-room-type>
+    </ng-template>
+
+  </li>
+
+</ul>
+
+<div [ngbNavOutlet]="tabs"></div>

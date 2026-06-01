@@ -1,23 +1,47 @@
 <div class="">
-    <div class="">
-        <ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange($event)" #tabs>
-            <ngb-tab id="agent_list">
-                <ng-template ngbTabTitle>
-                    <span> GDS COMMISSION LIST</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-gds-commission-list (toUpdate)="triggerTab($event)"></app-gds-commission-list>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab id="default_commission">
-                <ng-template ngbTabTitle>
-                    <span> ADD/UPDATE COMMISSION </span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-add-update-commission (toList)="triggerTab($event)" [getDataToUpdate]="userData">
-                    </app-add-update-commission>
-                </ng-template>
-            </ngb-tab>
-        </ngb-tabset>
-    </div>
+
+  <div class="">
+
+    <ul
+      ngbNav
+      #tabs="ngbNav"
+      class="tabs-animated custom_tab"
+      [(activeId)]="activeIdString"
+      (navChange)="beforeChange($event)">
+
+      <li [ngbNavItem]="'agent_list'">
+
+        <a ngbNavLink>
+          GDS COMMISSION LIST
+        </a>
+
+        <ng-template ngbNavContent>
+          <app-gds-commission-list
+            (toUpdate)="triggerTab($event)">
+          </app-gds-commission-list>
+        </ng-template>
+
+      </li>
+
+      <li [ngbNavItem]="'default_commission'">
+
+        <a ngbNavLink>
+          ADD/UPDATE COMMISSION
+        </a>
+
+        <ng-template ngbNavContent>
+          <app-add-update-commission
+            (toList)="triggerTab($event)"
+            [getDataToUpdate]="userData">
+          </app-add-update-commission>
+        </ng-template>
+
+      </li>
+
+    </ul>
+
+    <div [ngbNavOutlet]="tabs"></div>
+
+  </div>
+
 </div>

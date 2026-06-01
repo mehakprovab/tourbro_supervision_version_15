@@ -1,24 +1,30 @@
-<div class="">
-    <div class="">
-        <ngb-tabset class="tabs-animated custom_tab" (tabChange)="beforeChange(false)" #tabs
-            [activeId]="activeIdString">
-            <ngb-tab id="add_update_b2bUser">
-                <ng-template ngbTabTitle>
-                    <span>Create Supplier</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-create-supplier (b2bUserUpdate)="triggerTab($event)"></app-create-supplier>
-                </ng-template>
-            </ngb-tab>
-            <ngb-tab id="supplier_list">
-                <ng-template ngbTabTitle>
-                    <span> Supplier List</span>
-                </ng-template>
-                <ng-template ngbTabContent>
-                    <app-supplier-new-listing (b2bUserUpdate)="triggerTab($event)"></app-supplier-new-listing>
-                    </ng-template>
-            </ngb-tab>
- </ngb-tabset>
-    </div>
-</div>
+<div>
+  <ul
+    ngbNav
+    #tabs="ngbNav"
+    [(activeId)]="activeIdString"
+    (navChange)="beforeChange(false)"
+    class="nav-tabs tabs-animated custom_tab">
 
+    <li [ngbNavItem]="'add_update_b2bUser'">
+      <a ngbNavLink>Create Supplier</a>
+      <ng-template ngbNavContent>
+        <app-create-supplier
+          (b2bUserUpdate)="triggerTab($event)">
+        </app-create-supplier>
+      </ng-template>
+    </li>
+
+    <li [ngbNavItem]="'supplier_list'">
+      <a ngbNavLink>Supplier List</a>
+      <ng-template ngbNavContent>
+        <app-supplier-new-listing
+          (b2bUserUpdate)="triggerTab($event)">
+        </app-supplier-new-listing>
+      </ng-template>
+    </li>
+
+  </ul>
+
+  <div [ngbNavOutlet]="tabs" class="mt-3"></div>
+</div>

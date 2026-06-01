@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNav, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { Logger } from '../../../../core/logger/logger.service';
 import { ActivatedRoute, Router  } from '@angular/router';
 import { ActivityCrsService } from '../../activity-crs.service';
@@ -13,7 +13,8 @@ const log = new Logger('activity-crs/ActivityCRSComponent');
 })
 export class ActivityCRSComponent implements OnInit {
 
-  @ViewChild('tabs', { static: true }) public tabs: NgbTabset;
+  @ViewChild('tabs', { static: true })
+tabs!: NgbNav;
 activeIdString: string = 'list_activitycrs_list';
   transferTypeData: any;
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNav, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { Logger } from 'projects/supervision/src/app/core/logger/logger.service';
 
 const log = new Logger('manage-api/ManageApiComponent')
@@ -9,7 +9,9 @@ const log = new Logger('manage-api/ManageApiComponent')
   styleUrls: ['./manage-all-api.component.scss']
 })
 export class ManageAllApiComponent implements OnInit {
-  @ViewChild('tabs', { static: true }) public tabs: NgbTabset;
+  @ViewChild('tabs', { static: true })
+tabs!: NgbNav;
+  activeIdString = 'flight_api_list';
 
   hotelData: any;
 

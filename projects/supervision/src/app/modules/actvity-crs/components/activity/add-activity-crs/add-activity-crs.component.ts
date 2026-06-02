@@ -41,9 +41,21 @@ export class AddActivityCRSComponent implements OnInit {
   public inclusionExclusionForm: FormGroup;
   public termsConditionForm: FormGroup;
 
-  public activityTypeListData: any;
-  public dropdownSettingsForview = {};
-  public dropdownSettingsForviewTiming = {};
+  public activityTypeListData: any[] = [];
+  public dropdownSettingsForview = {
+    singleSelection: false,
+    idField: 'id',
+    textField: 'activity_type_name',
+    maxHeight: 197,
+    itemsShowLimit: 2,
+  };
+  public dropdownSettingsForviewTiming = {
+    singleSelection: false,
+    idField: 'key',
+    textField: 'value',
+    maxHeight: 197,
+    itemsShowLimit: 2,
+  };
   public times: string[] = [
     '06:30 AM', '07:00 AM', '07:30 AM', '08:00 AM', '08:30 AM', '09:00 AM', '09:30 AM', '10:00 AM',
     '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM', '01:00 PM', '01:30 PM', '02:00 PM',
@@ -57,7 +69,13 @@ export class AddActivityCRSComponent implements OnInit {
   public fromChildAgeRange = Array.from({ length: 18 }, (_, index) => index);
   public bannerImage: any;
   public activityLangListData: any;
-  public dropdownSettingsForviewLang = {};
+  public dropdownSettingsForviewLang = {
+    singleSelection: false,
+    idField: 'id',
+    textField: 'activity_language_name',
+    maxHeight: 197,
+    itemsShowLimit: 2,
+  };
   public insertedActivityId: any;
   submittedHotel: boolean;
   public languageMasterDataList: any[] = [];
@@ -122,28 +140,6 @@ syncChildInclusionAcrossSeasons(seasonIndex: number) {
     const currentDomainUser = sessionStorage.getItem('currentSupervisionUser');
     this.loggedInUser = JSON.parse(currentDomainUser);
     this.timingList = this.times.map(t => ({ key: t, value: t }));
-    this.dropdownSettingsForviewTiming = {
-      singleSelection: false,
-      idField: 'key',
-      textField: 'value',
-      maxHeight: 197,
-      itemsShowLimit: 2,
-    };
-    this.dropdownSettingsForview = {
-            singleSelection: false,
-            idField: 'id',
-            textField: 'activity_type_name',
-            maxHeight: 197,
-            itemsShowLimit: 2,
-          };
-          
-    this.dropdownSettingsForviewLang = {
-      singleSelection: false,
-      idField: 'id',
-      textField: 'activity_language_name',
-      maxHeight: 197,
-      itemsShowLimit: 2,
-    };
     this.createBasicInfoForm();
     this.createIncluExcluForm();
     this.createSeasonPriceForm();

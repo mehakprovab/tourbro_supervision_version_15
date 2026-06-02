@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ExportAsService } from 'ngx-export-as';
 import { SubSink } from 'subsink';
 import { ApiHandlerService } from '../../../../../../core/api-handlers';
 import { SwalService } from '../../../../../../core/services/swal.service';
@@ -22,7 +21,6 @@ export class FlightComponent implements OnInit {
     constructor(
         private apiHandlerService: ApiHandlerService,
         private swalService: SwalService,
-        private exportAsService: ExportAsService,
         private utility: UtilityService,
         private router: Router,
         private activatedRoute: ActivatedRoute

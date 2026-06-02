@@ -1,0 +1,433 @@
+<div class="card adminInner mt-3">
+
+    <div class="card-header mb-4">
+        <h5>
+            {{ isEdit ? 'Update Helicopter Schedule' : 'Add Helicopter Schedule' }}
+        </h5>
+    </div>
+
+    <form [formGroup]="addUpdateScheduleForm" (ngSubmit)="onSubmit()">
+
+        <div class="row">
+
+            <!-- OPERATOR -->
+            <div class="col-md-4 mb-3 pr-0">
+
+                <label>
+                    Operator
+                    <span class="text-danger">*</span>
+                </label>
+
+                <mat-form-field appearance="fill" class="w-100">
+
+                    <mat-label>
+                        Select Operator
+                    </mat-label>
+
+                    <mat-select formControlName="operator_name">
+
+                        <mat-option value="">
+                            Select Operator
+                        </mat-option>
+
+                        <mat-option *ngFor="let item of operatorsList" [value]="item.operator_name">
+
+                            {{ item.operator_name }}
+
+                        </mat-option>
+
+                    </mat-select>
+
+                </mat-form-field>
+
+                <small class="text-danger" *ngIf="
+                            addUpdateScheduleForm.get('operator_name')?.errors?.required &&
+                            (
+                                addUpdateScheduleForm.get('operator_name')?.touched ||
+                                submitted
+                            )
+                       ">
+
+                    Operator is required
+
+                </small>
+
+            </div>
+
+            <!-- ROUTE -->
+            <div class="col-md-4 mb-3">
+
+                <label>
+                    Route
+                    <span class="text-danger">*</span>
+                </label>
+
+                <mat-form-field appearance="fill" class="w-100">
+
+                    <mat-label>
+                        Select Route
+                    </mat-label>
+
+                    <mat-select formControlName="route_id">
+
+                        <mat-option value="">
+                            Select Route
+                        </mat-option>
+
+                        <mat-option *ngFor="let item of routesList" [value]="item.id">
+
+                            {{ item.route_name }}
+
+                        </mat-option>
+
+                    </mat-select>
+
+                </mat-form-field>
+
+                <small class="text-danger" *ngIf="
+                            addUpdateScheduleForm.get('route_id')?.errors?.required &&
+                            (
+                                addUpdateScheduleForm.get('route_id')?.touched ||
+                                submitted
+                            )
+                       ">
+
+                    Route is required
+
+                </small>
+
+            </div>
+
+            <!-- TRAVEL DATE -->
+            <div class="col-md-4 mb-3 pl-0">
+
+                <label>
+                    Travel Date
+                    <span class="text-danger">*</span>
+                </label>
+
+                <input type="date" class="form-control" formControlName="travel_date">
+
+                <small class="text-danger" *ngIf="
+                            addUpdateScheduleForm.get('travel_date')?.errors?.required &&
+                            (
+                                addUpdateScheduleForm.get('travel_date')?.touched ||
+                                submitted
+                            )
+                       ">
+
+                    Travel Date is required
+
+                </small>
+
+            </div>
+
+            <!-- DEPARTURE -->
+            <div class="col-md-4 mb-3 pr-0">
+
+                <label>
+                    Departure Time
+                    <span class="text-danger">*</span>
+                </label>
+
+                <input type="time" class="form-control" formControlName="departure_time">
+
+                <small class="text-danger" *ngIf="
+                            addUpdateScheduleForm.get('departure_time')?.errors?.required &&
+                            (
+                                addUpdateScheduleForm.get('departure_time')?.touched ||
+                                submitted
+                            )
+                       ">
+
+                    Departure Time is required
+
+                </small>
+
+            </div>
+
+            <!-- ARRIVAL -->
+            <div class="col-md-4 mb-3">
+
+                <label>
+                    Arrival Time
+                    <span class="text-danger">*</span>
+                </label>
+
+                <input type="time" class="form-control" formControlName="arrival_time">
+
+                <small class="text-danger" *ngIf="
+                            addUpdateScheduleForm.get('arrival_time')?.errors?.required &&
+                            (
+                                addUpdateScheduleForm.get('arrival_time')?.touched ||
+                                submitted
+                            )
+                       ">
+
+                    Arrival Time is required
+
+                </small>
+
+            </div>
+
+            <!-- DURATION -->
+            <div class="col-md-4 mb-3 pl-0">
+
+                <label>
+                    Duration (Minutes)
+                    <span class="text-danger">*</span>
+                </label>
+
+                <input type="number" class="form-control" formControlName="duration" placeholder="Enter Duration">
+
+                <small class="text-danger" *ngIf="
+                            addUpdateScheduleForm.get('duration')?.errors?.required &&
+                            (
+                                addUpdateScheduleForm.get('duration')?.touched ||
+                                submitted
+                            )
+                       ">
+
+                    Duration is required
+
+                </small>
+
+            </div>
+
+            <!-- HELICOPTER TYPE -->
+            <div class="col-md-4 mb-3 pr-0">
+
+                <label>
+                    Helicopter Type
+                    <span class="text-danger">*</span>
+                </label>
+
+                <input type="text" class="form-control" formControlName="helicopter_type"
+                    placeholder="Enter Helicopter Type">
+
+                <small class="text-danger" *ngIf="
+                            addUpdateScheduleForm.get('helicopter_type')?.errors?.required &&
+                            (
+                                addUpdateScheduleForm.get('helicopter_type')?.touched ||
+                                submitted
+                            )
+                       ">
+
+                    Helicopter Type is required
+
+                </small>
+
+            </div>
+
+            <!-- HELICOPTER MODEL -->
+            <div class="col-md-4 mb-3">
+
+                <label>
+                    Helicopter Model
+                    <span class="text-danger">*</span>
+                </label>
+
+                <input type="text" class="form-control" formControlName="helicopter_model"
+                    placeholder="Enter Helicopter Model">
+
+                <small class="text-danger" *ngIf="
+                            addUpdateScheduleForm.get('helicopter_model')?.errors?.required &&
+                            (
+                                addUpdateScheduleForm.get('helicopter_model')?.touched ||
+                                submitted
+                            )
+                       ">
+
+                    Helicopter Model is required
+
+                </small>
+
+            </div>
+
+            <!-- TOTAL SEATS -->
+            <div class="col-md-4 mb-3 pl-0">
+
+                <label>
+                    Total Seats
+                    <span class="text-danger">*</span>
+                </label>
+
+                <input type="number" class="form-control" formControlName="total_seats" placeholder="Enter Total Seats">
+
+                <small class="text-danger" *ngIf="
+                            addUpdateScheduleForm.get('total_seats')?.errors?.required &&
+                            (
+                                addUpdateScheduleForm.get('total_seats')?.touched ||
+                                submitted
+                            )
+                       ">
+
+                    Total Seats is required
+
+                </small>
+
+            </div>
+
+            <!-- AVAILABLE SEATS -->
+            <div class="col-md-4 mb-3 pr-0">
+
+                <label>
+                    Available Seats
+                    <span class="text-danger">*</span>
+                </label>
+
+                <input type="number" class="form-control" formControlName="available_seats"
+                    placeholder="Enter Available Seats">
+
+                <small class="text-danger" *ngIf="
+                            addUpdateScheduleForm.get('available_seats')?.errors?.required &&
+                            (
+                                addUpdateScheduleForm.get('available_seats')?.touched ||
+                                submitted
+                            )
+                       ">
+
+                    Available Seats is required
+
+                </small>
+
+            </div>
+
+            <!-- BLOCKED SEATS -->
+            <div class="col-md-4 mb-3">
+
+                <label>
+                    Blocked Seats
+                    <span class="text-danger">*</span>
+                </label>
+
+                <input type="number" class="form-control" formControlName="blocked_seats"
+                    placeholder="Enter Blocked Seats">
+
+                <small class="text-danger" *ngIf="
+                            addUpdateScheduleForm.get('blocked_seats')?.errors?.required &&
+                            (
+                                addUpdateScheduleForm.get('blocked_seats')?.touched ||
+                                submitted
+                            )
+                       ">
+
+                    Blocked Seats is required
+
+                </small>
+
+            </div>
+
+            <!-- BAGGAGE -->
+            <div class="col-md-4 mb-3 pl-0">
+
+                <label>
+                    Baggage Allowance
+                    <span class="text-danger">*</span>
+                </label>
+
+                <input type="text" class="form-control" formControlName="baggage_allowance"
+                    placeholder="Enter Baggage Allowance">
+
+                <small class="text-danger" *ngIf="
+                            addUpdateScheduleForm.get('baggage_allowance')?.errors?.required &&
+                            (
+                                addUpdateScheduleForm.get('baggage_allowance')?.touched ||
+                                submitted
+                            )
+                       ">
+
+                    Baggage Allowance is required
+
+                </small>
+
+            </div>
+
+            <!-- WEIGHT LIMIT -->
+            <div class="col-md-4 mb-3 pr-0">
+
+                <label>
+                    Weight Limit
+                    <span class="text-danger">*</span>
+                </label>
+
+                <input type="text" class="form-control" formControlName="weight_limit" placeholder="Enter Weight Limit">
+
+                <small class="text-danger" *ngIf="
+                            addUpdateScheduleForm.get('weight_limit')?.errors?.required &&
+                            (
+                                addUpdateScheduleForm.get('weight_limit')?.touched ||
+                                submitted
+                            )
+                       ">
+
+                    Weight Limit is required
+
+                </small>
+
+            </div>
+
+            <!-- CANCELLATION POLICY -->
+            <div class="col-md-4 mb-3">
+
+                <label>
+                    Cancellation Policy
+                    <span class="text-danger">*</span>
+                </label>
+
+                <textarea rows="2" class="form-control" formControlName="cancellation_policy"
+                    placeholder="Enter Cancellation Policy"></textarea>
+
+                <small class="text-danger" *ngIf="
+                            addUpdateScheduleForm.get('cancellation_policy')?.errors?.required &&
+                            (
+                                addUpdateScheduleForm.get('cancellation_policy')?.touched ||
+                                submitted
+                            )
+                       ">
+
+                    Cancellation Policy is required
+
+                </small>
+
+            </div>
+
+            <!-- STATUS -->
+            <div class="col-md-4 mb-3">
+
+                <label class="d-block">
+                    Status
+                </label>
+
+                <label class="switch">
+
+                    <input type="checkbox" formControlName="status">
+
+                    <span class="slider round"></span>
+
+                </label>
+
+            </div>
+
+        </div>
+
+        <!-- BUTTONS -->
+        <div class="text-left btncontainer">
+
+            <button type="submit" class="btn btn-primary mr-2">
+
+                {{ isEdit ? 'Update' : 'Continue' }}
+
+            </button>
+
+            <button type="button" class="btn btn-secondary" (click)="resetForm()">
+
+                Reset
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>

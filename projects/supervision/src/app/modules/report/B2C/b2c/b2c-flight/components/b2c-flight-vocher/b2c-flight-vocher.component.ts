@@ -7,7 +7,6 @@ import { UtilityService } from '../../../../../../../core/services/utility.servi
 import { SubSink } from 'subsink';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { ExportAsConfig, SupportedExtensions } from 'ngx-export-as';
 
 const log = new Logger('report/B2cFlightVocherComponent');
 
@@ -25,7 +24,7 @@ export class B2cFlightVocherComponent implements OnInit, OnDestroy {
     app_reference: "";
     airline_logo = 'https://booking247.com/airline_logo/'; //AI.gif
     isSeatInfoNotEmpty:any=false;
-    config: ExportAsConfig = {
+    config: any = {
         type: 'pdf',
         elementIdOrContent: 'print_voucher',
         options: {
@@ -51,7 +50,7 @@ export class B2cFlightVocherComponent implements OnInit, OnDestroy {
         this.getB2cHotelVoucher();
     }
 
-    downloadA4(type: SupportedExtensions, orientation?: string): void {
+    downloadA4(type: any, orientation?: string): void {
         let fileName = this.voucherData['AppReference']
         window['html2canvas'] = html2canvas;
         const date = new Date().toDateString();

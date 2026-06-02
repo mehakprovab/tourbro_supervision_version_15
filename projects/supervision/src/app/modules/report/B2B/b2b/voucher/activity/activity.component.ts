@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SupportedExtensions } from 'ngx-export-as';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { SubSink } from 'subsink';

@@ -1,0 +1,495 @@
+<div class="card adminInner">
+
+    <div class="card-header mb-4">
+        <h5>Add Wellness Centre</h5>
+    </div>
+
+    <form [formGroup]="wellnessForm" class="needs-validation pt-3" novalidate
+        (ngSubmit)="onSubmit()">
+
+        <div class="row">
+
+            <!-- Therapy Type -->
+            <div class="col-md-4 mb-3">
+                <label>Therapy Type <span class="text-danger">*</span></label>
+
+                <ng-multiselect-dropdown
+                    formControlName="therapy_types"
+                    [placeholder]="'Select Therapy Type'"
+                    [data]="therapyList"
+                    [settings]="dropdownSettingsForTherapy"
+                    class="form-control meal-plan-dropdown">
+                </ng-multiselect-dropdown>
+
+                <div *ngIf="submittedWellness && wellnessForm.get('therapy_types')?.errors">
+                    <span class="invalid text-danger">
+                        Therapy Type is required
+                    </span>
+                </div>
+            </div>
+
+            <!-- Centre Name -->
+            <div class="col-md-4 mb-3">
+                <label>Centre Name <span class="text-danger">*</span></label>
+
+                <input
+                    type="text"
+                    formControlName="center_name"
+                    class="form-control"
+                    placeholder="Enter Centre Name">
+
+                <div *ngIf="submittedWellness && wellnessForm.get('center_name')?.errors">
+                    <span class="invalid text-danger"
+                        *ngIf="wellnessForm.get('center_name')?.errors?.required">
+                        Centre Name is required
+                    </span>
+
+                    <span class="invalid text-danger"
+                        *ngIf="wellnessForm.get('center_name')?.errors?.maxlength">
+                        Maximum 100 characters allowed
+                    </span>
+                </div>
+            </div>
+
+            <!-- Currency -->
+            <div class="col-md-4 mb-3">
+                <label>Currency <span class="text-danger">*</span></label>
+
+                <select formControlName="currency" class="form-control">
+                    <option value="" disabled selected>Select Currency</option>
+
+                    <option *ngFor="let coreCountry of currencyList"
+                        [ngValue]="coreCountry.currency">
+                        {{ coreCountry.currency }}
+                    </option>
+                </select>
+
+                <div *ngIf="submittedWellness && wellnessForm.get('currency')?.errors">
+                    <span class="invalid text-danger">
+                        Currency is required
+                    </span>
+                </div>
+            </div>
+
+            <!-- Country -->
+            <div class="col-md-6 mb-3">
+                <label>Country <span class="text-danger">*</span></label>
+
+                <select
+                    formControlName="country"
+                    class="form-control"
+                    (change)="getCityListAuto($event)">
+
+                    <option value="" disabled selected>Select Country</option>
+
+                    <option *ngFor="let coreCountry of coreCountryList"
+                        [value]="coreCountry.name">
+                        {{ coreCountry.name }}
+                    </option>
+                </select>
+
+                <div *ngIf="submittedWellness && wellnessForm.get('country')?.errors">
+                    <span class="invalid text-danger">
+                        Country is required
+                    </span>
+                </div>
+            </div>
+
+            <!-- City -->
+            <div class="col-md-6 mb-3">
+                <label>City <span class="text-danger">*</span></label>
+
+                <select
+                    formControlName="city"
+                    class="form-control"
+                    (ngModelChange)="onCityChange($event)">
+
+                    <option value="" disabled selected>Select City</option>
+
+                    <option id="autocomplete"
+                        *ngFor="let coreCity of coreCityList"
+                        [value]="coreCity.cityName">
+                        {{ coreCity.cityName }}
+                    </option>
+                </select>
+
+                <div *ngIf="submittedWellness && wellnessForm.get('city')?.errors">
+                    <span class="invalid text-danger">
+                        City is required
+                    </span>
+                </div>
+            </div>
+
+            <!-- Map -->
+            <div class="col-md-12 mb-3">
+                <label>Centre Map <span class="text-danger">*</span></label>
+
+                <div>
+                    <input
+                        #searchInput
+                        type="text"
+                        placeholder="Search location..."
+                        class="form-control mb-3" />
+                </div>
+
+                <div #mapContainer id="map"
+                    style="height: 500px; width: 100%;">
+                </div>
+            </div>
+
+            <!-- Address -->
+            <div class="col-md-12 mb-3">
+                <label>Centre Address <span class="text-danger">*</span></label>
+
+                <textarea
+                    class="form-control"
+                    rows="3"
+                    formControlName="address">
+                </textarea>
+
+                <div *ngIf="submittedWellness && wellnessForm.get('address')?.errors">
+                    <span class="invalid text-danger"
+                        *ngIf="wellnessForm.get('address')?.errors?.required">
+                        Address is required
+                    </span>
+
+                    <span class="invalid text-danger"
+                        *ngIf="wellnessForm.get('address')?.errors?.maxlength">
+                        Maximum 500 characters allowed
+                    </span>
+                </div>
+            </div>
+
+            <!-- Latitude -->
+            <div class="col-md-6 mb-3">
+                <label>Latitude <span class="text-danger">*</span></label>
+
+                <input
+                    type="text"
+                    class="form-control"
+                    formControlName="latitude">
+
+                <div *ngIf="submittedWellness && wellnessForm.get('latitude')?.errors">
+                    <span class="invalid text-danger">
+                        Latitude is required
+                    </span>
+                </div>
+            </div>
+
+            <!-- Longitude -->
+            <div class="col-md-6 mb-3">
+                <label>Longitude <span class="text-danger">*</span></label>
+
+                <input
+                    type="text"
+                    class="form-control"
+                    formControlName="longitude">
+
+                <div *ngIf="submittedWellness && wellnessForm.get('longitude')?.errors">
+                    <span class="invalid text-danger">
+                        Longitude is required
+                    </span>
+                </div>
+            </div>
+
+            <!-- Meal Plans -->
+            <div class="col-md-4 mb-3">
+                <label>Meal Plans</label>
+
+                <ng-multiselect-dropdown
+                    formControlName="meal_plans"
+                    [placeholder]="'Select Meal Plans'"
+                    [data]="mealPlanList"
+                    [settings]="dropdownSettingsForMealPlans"
+                    class="form-control meal-plan-dropdown">
+                </ng-multiselect-dropdown>
+
+                <div *ngIf="submittedWellness && wellnessForm.get('meal_plans')?.errors">
+                    <span class="invalid text-danger">
+                        Meal Plan is required
+                    </span>
+                </div>
+            </div>
+
+            <!-- Check In -->
+            <div class="col-md-4 mb-3">
+                <label>Check In Time <span class="text-danger">*</span></label>
+
+                <select class="form-control" formControlName="check_in_time">
+                    <option value="" disabled selected>Please Select</option>
+
+                    <option *ngFor="let time of times"
+                        [value]="time"
+                        class="ui-menu-item">
+                        {{ time }}
+                    </option>
+                </select>
+
+                <div *ngIf="submittedWellness && wellnessForm.get('check_in_time')?.errors">
+                    <span class="invalid text-danger">
+                        Check In Time is required
+                    </span>
+                </div>
+            </div>
+
+            <!-- Check Out -->
+            <div class="col-md-4 mb-3">
+                <label>Check Out Time <span class="text-danger">*</span></label>
+
+                <select class="form-control" formControlName="check_out_time">
+                    <option value="" disabled selected>Please Select</option>
+
+                    <option *ngFor="let time of times"
+                        [value]="time"
+                        class="ui-menu-item">
+                        {{ time }}
+                    </option>
+                </select>
+
+                <div *ngIf="submittedWellness && wellnessForm.get('check_out_time')?.errors">
+                    <span class="invalid text-danger">
+                        Check Out Time is required
+                    </span>
+                </div>
+            </div>
+
+            <!-- Facilities -->
+            <div class="col-md-4 mb-3">
+                <label>Facilities <span class="text-danger">*</span></label>
+
+                <ng-multiselect-dropdown
+                    formControlName="facilities"
+                    [placeholder]="'Select Facilities'"
+                    [data]="facilitiesList"
+                    [settings]="dropdownSettingsForFacilities"
+                    class="form-control meal-plan-dropdown">
+                </ng-multiselect-dropdown>
+
+                <div *ngIf="submittedWellness && wellnessForm.get('facilities')?.errors">
+                    <span class="invalid text-danger">
+                        Facilities are required
+                    </span>
+                </div>
+            </div>
+
+            <!-- Center Policy -->
+            <div class="col-md-12 mb-3">
+                <label>Center Policy</label>
+
+                <ckeditor
+                    type="text"
+                    formControlName="center_policy"
+                    style="height: auto;">
+                </ckeditor>
+            </div>
+
+            <!-- Time Zone -->
+            <div class="col-md-6 mb-3">
+                <label>Time Zone <span class="text-danger">*</span></label>
+
+                <select
+                    class="form-control form-control-sm nrm_input"
+                    formControlName="local_timezone">
+
+                    <option value="" disabled selected>Please Select</option>
+
+                    <option *ngFor="let time of timezones"
+                        [value]="time"
+                        class="ui-menu-item">
+                        {{ time }}
+                    </option>
+                </select>
+
+                <div *ngIf="submittedWellness && wellnessForm.get('local_timezone')?.errors">
+                    <span class="invalid text-danger">
+                        Time Zone is required
+                    </span>
+                </div>
+            </div>
+
+            <!-- Contract Expiry -->
+            <div class="col-md-6 mb-3">
+                <label>Contract Expiry Date <span class="text-danger">*</span></label>
+
+                <input
+                    type="date"
+                    class="form-control"
+                    formControlName="contract_expiry">
+
+                <div *ngIf="submittedWellness && wellnessForm.get('contract_expiry')?.errors">
+                    <span class="invalid text-danger">
+                        Contract Expiry Date is required
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- About Section -->
+        <div class="card adminInner mt-3">
+
+            <div class="card-header mb-4">
+                <h5>About</h5>
+            </div>
+
+            <div class="row">
+
+                <!-- Health Goals -->
+                <div class="col-md-4 mb-3">
+                    <label>Health Goals <span class="text-danger">*</span></label>
+
+                    <ng-multiselect-dropdown
+                        formControlName="health_goals"
+                        [placeholder]="'Select Health Goals'"
+                        [data]="healthGoalsList"
+                        [settings]="dropdownSettingsForHealthGoals"
+                        class="form-control meal-plan-dropdown">
+                    </ng-multiselect-dropdown>
+
+                    <div *ngIf="submittedWellness && wellnessForm.get('health_goals')?.errors">
+                        <span class="invalid text-danger">
+                            Health Goals are required
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Treatments -->
+                <div class="col-md-4 mb-3">
+                    <label>Treatment Offered <span class="text-danger">*</span></label>
+
+                    <ng-multiselect-dropdown
+                        formControlName="treatments"
+                        [placeholder]="'Select Treatments'"
+                        [data]="treatmentList"
+                        [settings]="dropdownSettingsForTreatments"
+                        class="form-control meal-plan-dropdown">
+                    </ng-multiselect-dropdown>
+
+                    <div *ngIf="submittedWellness && wellnessForm.get('treatments')?.errors">
+                        <span class="invalid text-danger">
+                            Treatments are required
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Stay Options -->
+                <div class="col-md-4 mb-3">
+                    <label>Stay Options</label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter Stay Options"
+                        formControlName="stay_options">
+
+                        <div *ngIf="submittedWellness && wellnessForm.get('stay_options')?.errors">
+                    <span class="invalid text-danger">
+                        Stay Options is required
+                    </span>
+                </div>
+                </div>
+
+                <!-- Ideal Duration -->
+                <div class="col-md-4 mb-3">
+                    <label>Ideal Duration</label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter Ideal Duration"
+                        formControlName="ideal_duration">
+
+                        <div *ngIf="submittedWellness && wellnessForm.get('ideal_duration')?.errors">
+                    <span class="invalid text-danger">
+                        Ideal Duration is required
+                    </span>
+                </div>
+                </div>
+
+                <!-- Inclusions -->
+                <div class="col-md-4 mb-3">
+                    <label>What’s Included</label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter What’s Included"
+                        formControlName="inclusions">
+
+                        <div *ngIf="submittedWellness && wellnessForm.get('inclusions')?.errors">
+                    <span class="invalid text-danger">
+                        Inclusions is required
+                    </span>
+                </div>
+                </div>
+
+                <!-- Booking Method -->
+                <div class="col-md-4 mb-3">
+                    <label>Booking Method <span class="text-danger">*</span></label>
+
+                    <select
+                        class="form-control form-control-sm nrm_input"
+                        formControlName="booking_method">
+
+                        <option value="" disabled selected>Please Select</option>
+
+                        <option value="Doctor Approval Required">
+                            Doctor Approval Required
+                        </option>
+
+                        <option value="Request-based Confirmation">
+                            Request-based Confirmation
+                        </option>
+
+                        <option value="Instant">
+                            Instant
+                        </option>
+                    </select>
+
+                    <div *ngIf="submittedWellness && wellnessForm.get('booking_method')?.errors">
+                        <span class="invalid text-danger">
+                            Booking Method is required
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Status -->
+                <div class="col-md-4 mb-3">
+                    <label class="control-label">
+                        Status <span class="text-danger">*</span>
+                    </label>
+
+                    <label class="switch">
+                        <input
+                            type="checkbox"
+                            name="status"
+                            formControlName="status">
+
+                        <span class="slider round"></span>
+                    </label>
+
+                    <div *ngIf="submittedWellness && wellnessForm.get('status')?.errors">
+                        <span class="invalid text-danger">
+                            Status is required
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Buttons -->
+            <div class="text-left btncontainer">
+                <button type="submit" class="btn btn-primary mr-2">
+                    Save
+                </button>
+
+                <button type="button" class="btn btn-secondary">
+                    Reset
+                </button>
+            </div>
+
+        </div>
+
+    </form>
+
+</div>

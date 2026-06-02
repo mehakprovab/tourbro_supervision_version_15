@@ -1,6 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { Logger } from 'projects/supervision/src/app/core/logger/logger.service';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
@@ -32,7 +31,7 @@ export class AgentNewListingComponent implements OnInit {
   noData: boolean = true;
   respData: Array<any> = [];
   listType: any;
-  config: ExportAsConfig = {
+  config: any = {
       type: 'pdf',
       elementIdOrContent: 'active-users-report',
       options: {
@@ -63,7 +62,6 @@ export class AgentNewListingComponent implements OnInit {
       private swalService: SwalService,
       private utility: UtilityService,
       private activatedRoute: ActivatedRoute,
-      private exportAsService: ExportAsService,
       private userMangementService: UserManagementService,
       private fb: FormBuilder,
   ) { }
@@ -195,7 +193,7 @@ export class AgentNewListingComponent implements OnInit {
           }
       });
   }
-  download(type: SupportedExtensions, orientation?: string) {
+  download(type: any, orientation?: string) {
       // if (type)
       let filename = "New Agent List";
       this.config.type = type;
@@ -203,7 +201,7 @@ export class AgentNewListingComponent implements OnInit {
           this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-     this.exportAsService.save(this.config, filename).subscribe();
+     this.utility.downloadElementAsPdf(this.config.elementIdOrContent, filename, orientation || (this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation));
   }
 
   pdfCallbackFn(pdf: any) {

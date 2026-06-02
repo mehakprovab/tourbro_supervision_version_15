@@ -7,7 +7,6 @@ import { Logger } from 'projects/supervision/src/app/core/logger/logger.service'
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { SubSink } from 'subsink';
-import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 
 const log = new Logger('report/B2cCarComponent');
 let filterArray: Array<any> = [];
@@ -62,7 +61,7 @@ export class B2cCarComponent implements OnInit,OnDestroy {
     ];
     noData: boolean = true;
     respData: Array<any> = [];
-    config: ExportAsConfig = {
+    config: any = {
         type: 'pdf',
         elementIdOrContent: 'b2c-car-report',
         options: {
@@ -85,7 +84,6 @@ export class B2cCarComponent implements OnInit,OnDestroy {
         private apiHandlerService: ApiHandlerService,
         private fb: FormBuilder,
         private swalService: SwalService,
-        private exportAsService: ExportAsService,
         private utility: UtilityService
     ) { }
 
@@ -203,14 +201,14 @@ export class B2cCarComponent implements OnInit,OnDestroy {
         }
     }
 
-    download(type: SupportedExtensions, orientation?: string) {
+    download(type: any, orientation?: string) {
         // if (type)
         this.config.type = type;
         if (orientation) {
             this.config.options.jsPDF.orientation = orientation;
         }
         const date = new Date().toDateString();
-        this.exportAsService.save(this.config, `b2c-CarReport`).subscribe();
+        this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2c-CarReport`, orientation || (this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation));
     }
 
     pdfCallbackFn(pdf: any) {

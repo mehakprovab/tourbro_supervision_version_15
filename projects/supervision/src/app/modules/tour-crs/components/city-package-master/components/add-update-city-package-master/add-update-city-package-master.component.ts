@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ExportAsService } from 'ngx-export-as';
 import { SwalService } from 'projects/b2b/src/app/core/services/swal.service';
 import { environment } from 'projects/b2b/src/environments/environment.prod';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
@@ -70,7 +69,6 @@ export class AddUpdateCityPackageMasterComponent implements OnInit {
     private fb: FormBuilder,
     private cmsService: CmsService,
     private swalService: SwalService,
-    private exportAsService: ExportAsService,
     private utility: UtilityService,
     private cdr: ChangeDetectorRef,
     private router: Router

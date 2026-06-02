@@ -1,0 +1,61 @@
+<div class="card adminInner">
+    <div class="card-header">
+        <h5>Add/ Edit Health Goals/Conditions-Type</h5>
+    </div>
+
+    <form class="needs-validation pt-3" novalidate>
+        <div class="card-body p-0">
+            <fieldset>
+                <div class="row">
+
+                    <!-- Stay Type Name -->
+                     <form [formGroup]="addUpdateHealthGoalTypeListForm" class="w-100"
+                     (ngSubmit)="onSubmit()">
+                    <div class="col-md-12 pr-0 mb-4">
+                        <label class="control-label" for="hotel_type_name">
+                            Health Goals/Conditions-Type
+                            <span class="text-danger">*</span>
+                        </label>
+
+                        <input type="text" 
+                            id="hotel_type_name"
+                            name="hotel_type_name"
+                            formControlName="name"
+                            placeholder="Health Goals/Conditions-Type"
+                            class="form-control"
+                            required />
+
+                        <div class="invalid-feedback"  *ngIf="addUpdateHealthGoalTypeListForm.get('name').invalid && submitted">
+                           Health Goals/Conditions-Type is required
+                        </div>
+                    </div>
+                    
+                    <!-- Status -->
+                   <div class="col-md-12">
+                    <label class="control-label">
+                        Status
+                        <span class="text-danger">*</span>
+                    </label>
+                   
+
+                    <label class="switch">
+                        <input type="checkbox" name="status" formControlName="status">
+                        <span class="slider round"></span>
+                    </label>
+                   </div>
+
+                    <!-- Buttons -->
+                    <div class="col-md-12 mt-4">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        &nbsp;&nbsp;
+                        <button type="reset" class="btn btn-secondary">Reset</button>
+                    </div>
+
+                    </form>
+                </div>
+            </fieldset>
+        </div>
+    </form>
+</div>
+
+

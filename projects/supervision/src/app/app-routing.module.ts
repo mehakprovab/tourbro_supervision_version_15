@@ -68,6 +68,16 @@ const routes: Routes = [
         loadChildren: () => import('./modules/report/report.module').then(m => m.ReportModule,
         )
     },
+      {
+        path: 'wellnesscrs',
+        loadChildren: () => import('./modules/wellness-crs/wellness-crs.module').then(m => m.WellnessCrsModule,
+        )
+    },
+       {
+        path: 'heli',
+        loadChildren: () => import('./modules/heli-crs/heli-crs.module').then(m => m.HeliCrsModule,
+        )
+    },
     {
         path: 'cms',
         loadChildren: () => import('./modules/cms/cms.module').then(m => m.CmsModule,

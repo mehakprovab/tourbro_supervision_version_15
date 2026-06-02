@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgbNav, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNav } from '@ng-bootstrap/ng-bootstrap';
 import { Logger } from '../../../../core/logger/logger.service';
 import { ActivatedRoute, Router  } from '@angular/router';
 import { ActivityCrsService } from '../../activity-crs.service';
 
 const log = new Logger('activity-crs/ActivityCRSComponent');
+const LIST_TAB = 'list_activitycrs_list';
+const ADD_TAB = 'add_activitycrs';
 
 @Component({
   selector: 'app-activity-crs',
@@ -14,8 +16,8 @@ const log = new Logger('activity-crs/ActivityCRSComponent');
 export class ActivityCRSComponent implements OnInit {
 
   @ViewChild('tabs', { static: true })
-tabs!: NgbNav;
-activeIdString: string = 'list_activitycrs_list';
+  tabs!: NgbNav;
+  activeIdString: string = LIST_TAB;
   transferTypeData: any;
 
   constructor(private router: ActivatedRoute,
@@ -25,21 +27,18 @@ activeIdString: string = 'list_activitycrs_list';
 
   ngOnInit(): void {
     this.router.queryParams.subscribe(data=>{
-      console.log(data);
-      // if(data.tab)
-      this.activeIdString = data.tab;
-      // this.tabs.select(data.tab);
+      this.activeIdString = data.tab === ADD_TAB ? ADD_TAB : LIST_TAB;
     })
   }
 
   beforeChange(e) {
     log.debug('tabChanged', e)
-     if(e.nextId === 'list_activitycrs_list'){
+     if(e.nextId === LIST_TAB){
       this.activityCRSService.getActivityUpdateData.next([]);
       this.route.navigate([], { queryParams: {}, replaceUrl: true });
     }
-     else if(e.nextId === 'add_activitycrs'){
-      this.route.navigate([], { queryParams: {tab:'add_activitycrs'}, replaceUrl: true });
+     else if(e.nextId === ADD_TAB){
+      this.route.navigate([], { queryParams: {tab: ADD_TAB}, replaceUrl: true });
     }
     
     else {
@@ -53,8 +52,9 @@ activeIdString: string = 'list_activitycrs_list';
   triggerTab(data: any) {
     // if (data.hotel_type)
     // this.transferTypeData = data.hotel_type;
-    
-    this.tabs.select(data.tabId);
+
+    const tabId = data && data.tabId === ADD_TAB ? ADD_TAB : LIST_TAB;
+    this.tabs.select(tabId);
   }
 
 }

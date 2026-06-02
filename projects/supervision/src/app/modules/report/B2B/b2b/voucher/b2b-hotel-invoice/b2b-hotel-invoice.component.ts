@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { ApiHandlerService } from '../../../../../../core/api-handlers';
 import { SwalService } from '../../../../../../core/services/swal.service';
 import { UtilityService } from '../../../../../../core/services/utility.service';
@@ -42,7 +41,6 @@ export class B2bHotelInvoiceComponent implements OnInit {
   constructor(
         private apiHandlerService: ApiHandlerService,
         private swalService: SwalService,
-        private exportAsService: ExportAsService,
         private utility: UtilityService,
         private router: Router,
         private activatedRoute : ActivatedRoute
@@ -193,7 +191,7 @@ export class B2bHotelInvoiceComponent implements OnInit {
       }
 
 
-    // downloadA4(type: SupportedExtensions, orientation?: string): void {
+    // downloadA4(type: any, orientation?: string): void {
     //     let fileName = this.voucherData['BookingDetails']['AppReference']
     //        window['html2canvas'] = html2canvas;
     //        const date = new Date().toDateString();

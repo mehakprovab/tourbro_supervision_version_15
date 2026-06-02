@@ -3,7 +3,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Sort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { formatDate } from 'ngx-bootstrap/chronos';
-import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { Logger } from 'projects/supervision/src/app/core/logger/logger.service';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
@@ -69,7 +68,7 @@ export class B2bTransferComponent implements OnInit {
     ];
     noData: boolean = true;
     respData: Array<any> = [];
-    config: ExportAsConfig = {
+    config: any = {
         type: 'pdf',
         elementIdOrContent: 'b2b-transfer-report',
         options: {
@@ -105,7 +104,6 @@ export class B2bTransferComponent implements OnInit {
         private apiHandlerService: ApiHandlerService,
         private fb: FormBuilder,
         private swalService: SwalService,
-        private exportAsService: ExportAsService,
         private utility: UtilityService,
         private router: Router,
         private reportService: ReportService
@@ -377,14 +375,14 @@ export class B2bTransferComponent implements OnInit {
         }
 
 
-        download(type: SupportedExtensions, orientation?: string) {
+        download(type: any, orientation?: string) {
             // if (type)
             this.config.type = type;
             if (orientation) {
                 this.config.options.jsPDF.orientation = orientation;
             }
             const date = new Date().toDateString();
-            this.exportAsService.save(this.config, `b2b-transfer-report`).subscribe();
+            this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2b-transfer-report`, orientation || (this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation));
         }
     
         pdfCallbackFn(pdf: any) {

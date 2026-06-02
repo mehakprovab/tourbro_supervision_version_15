@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
@@ -38,7 +37,6 @@ export class B2bActivityInvoiceComponent implements OnInit {
   constructor(
         private apiHandlerService: ApiHandlerService,
         private swalService: SwalService,
-        private exportAsService: ExportAsService,
         private utility: UtilityService,
         private router: Router,
         private activatedRoute : ActivatedRoute

@@ -1,0 +1,379 @@
+<!-- FILTER SECTION -->
+<div class="card adminInner">
+
+    <div class="card-header mb-3">
+        <h5>Heli List</h5>
+    </div>
+
+    <form *ngIf="showFilters">
+
+        <div class="row">
+
+            <!-- OPERATOR NAME -->
+            <div class="col-3 pr-0">
+                <div class="form-group">
+
+                    <label for="operator_name">
+                        Operator Name
+                    </label>
+
+                    <input type="text" class="form-control form-control-sm nrm_input" placeholder="Operator Name"
+                        id="operator_name" [(ngModel)]="filterData.operator_name" name="operator_name">
+
+                </div>
+            </div>
+
+            <!-- COMPANY NAME -->
+            <div class="col-3">
+                <div class="form-group">
+
+                    <label for="company_name">
+                        Company Name
+                    </label>
+
+                    <input type="text" class="form-control form-control-sm nrm_input" placeholder="Company Name"
+                        id="company_name" [(ngModel)]="filterData.company_name" name="company_name">
+
+                </div>
+            </div>
+
+            <!-- EMAIL -->
+            <div class="col-3 pl-0">
+                <div class="form-group">
+
+                    <label for="email">
+                        Email
+                    </label>
+
+                    <input type="text" class="form-control form-control-sm nrm_input" placeholder="Enter Email"
+                        id="email" [(ngModel)]="filterData.email" name="email">
+
+                </div>
+            </div>
+
+            <!-- CITY -->
+            <div class="col-3 pl-0">
+                <div class="form-group">
+
+                    <label for="city">
+                        City
+                    </label>
+
+                    <input type="text" class="form-control form-control-sm nrm_input" placeholder="City" id="city"
+                        [(ngModel)]="filterData.city" name="city">
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="btncontainer">
+
+            <button type="button" class="btn btn-primary" (click)="onSearch()">
+
+                Search
+
+            </button>
+
+            &nbsp;
+
+            <button type="button" class="btn btn-secondary" (click)="resetFilters()">
+
+                Reset
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+<!-- TABLE SECTION -->
+<div class="card adminInner mt-3">
+
+    <div class="d-flex align-items-center justify-content-between pb-3">
+
+        <div>
+
+            <button type="button" class="btn btn-primary" (click)="exportExcel()">
+
+                Export
+
+            </button>
+
+            &nbsp;
+
+            <button type="button" class="btn btn-secondary" (click)="showFilters = !showFilters">
+
+                Filter
+
+            </button>
+
+        </div>
+
+        <!-- FULL SEARCH -->
+        <div class="form-group mb-0 col-sm-3 p-0 float-right has-search">
+
+            Full text search:
+
+            <input class="form-control" type="text" name="searchTerm" [(ngModel)]="searchText"
+                (input)="filterOperators()">
+
+        </div>
+
+    </div>
+
+
+    <!-- SCROLL -->
+    <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft" #scrollOne>
+
+        <div class="div1"></div>
+
+    </div>
+
+    <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
+
+        <div class="div2 invisible-scrollbar">
+
+            <div class="table-respons">
+
+                <table class="table table-borderless table-striped table-hover">
+
+                    <thead>
+
+                        <tr>
+
+                            <th class="text-left text-nowrap">
+                                Sl. No
+                            </th>
+
+                            <th class="text-left text-nowrap">
+                                Status
+                            </th>
+
+                            <th class="text-left text-nowrap">
+                                Operator Name
+                            </th>
+
+                            <th class="text-left text-nowrap">
+                                Company Name
+                            </th>
+
+                            <th class="text-left text-nowrap">
+                                DGCA License Number
+                            </th>
+
+                            <th class="text-left text-nowrap">
+                                Contact Person
+                            </th>
+
+                            <th class="text-left text-nowrap">
+                                Contact Number
+                            </th>
+
+                            <th class="text-left text-nowrap">
+                                Email
+                            </th>
+
+                            <th class="text-left text-nowrap">
+                                Office Address
+                            </th>
+
+                            <th class="text-left text-nowrap">
+                                City
+                            </th>
+
+                            <th class="text-left text-nowrap">
+                                State
+                            </th>
+
+                            <th class="text-left text-nowrap">
+                                Country
+                            </th>
+
+                            <th class="text-left text-nowrap">
+                                GST Number
+                            </th>
+
+                            <th class="text-left text-nowrap">
+                                KYC Documents
+                            </th>
+
+                            <th class="text-left text-nowrap">
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <!-- DATA -->
+                        <tr *ngFor="
+                                let item of filteredOperatorsList;
+                                let i = index
+                            ">
+
+                            <!-- INDEX -->
+                            <td class="text-left">
+
+                                {{ i + 1 }}
+
+                            </td>
+
+                            <!-- STATUS -->
+                            <td>
+
+                                <label class="switch">
+
+                                    <input type="checkbox" [checked]="
+                                            item.status === '1' ||
+                                            item.status === 1
+                                        " (change)="
+                                            onStatusChange($event, item)
+                                        ">
+
+                                    <span class="slider round"></span>
+
+                                </label>
+
+                            </td>
+
+                            <!-- OPERATOR NAME -->
+                            <td class="text-left">
+
+                                {{ item.operator_name || '-' }}
+
+                            </td>
+
+                            <!-- COMPANY NAME -->
+                            <td class="text-left">
+
+                                {{ item.company_name || '-' }}
+
+                            </td>
+
+                            <!-- DGCA -->
+                            <td class="text-left">
+
+                                {{ item.dgpa_licno || '-' }}
+
+                            </td>
+
+                            <!-- CONTACT PERSON -->
+                            <td class="text-left">
+
+                                {{ item.contact_person || '-' }}
+
+                            </td>
+
+                            <!-- CONTACT NUMBER -->
+                            <td class="text-left">
+
+                                {{ item.contact_no || '-' }}
+
+                            </td>
+
+                            <!-- EMAIL -->
+                            <td class="text-left">
+
+                                {{ item.email || '-' }}
+
+                            </td>
+
+                            <!-- ADDRESS -->
+                            <td class="text-left">
+
+                                {{ item.office_addr || '-' }}
+
+                            </td>
+
+                            <!-- CITY -->
+                            <td class="text-left">
+
+                                {{ item.city_name || item.city || '-' }}
+
+                            </td>
+
+                            <!-- STATE -->
+                            <td class="text-left">
+
+                                {{ item.state_name || item.state || '-' }}
+
+                            </td>
+
+                            <!-- COUNTRY -->
+                            <td class="text-left">
+
+                                {{ item.country_name || item.country || '-' }}
+
+                            </td>
+
+                            <!-- GST -->
+                            <td class="text-left">
+
+                                {{ item.gst_no || '-' }}
+
+                            </td>
+
+                            <!-- KYC -->
+                            <td class="text-left">
+
+                                <a *ngIf="item.kyc_doc" [href]="item.kyc_doc" target="_blank">
+
+                                    View
+
+                                </a>
+
+                                <span *ngIf="!item.kyc_doc">
+
+                                    -
+
+                                </span>
+
+                            </td>
+
+                            <!-- ACTIONS -->
+                            <td class="text-left">
+
+                                <button class="btn btn-sm btn-primary mr-2" type="button" (click)="onUpdate(item)">
+
+                                    Edit
+
+                                </button>
+
+                                <button class="btn btn-sm btn-secondary" type="button" (click)="onDelete(item.id)">
+
+                                    Delete
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                        <!-- NO DATA -->
+                        <tr *ngIf="filteredOperatorsList.length === 0">
+
+                            <td colspan="15" class="text-center">
+
+                                No operators found
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

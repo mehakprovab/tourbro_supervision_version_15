@@ -70,6 +70,7 @@ const routes: Routes = [
     loadChildren: () =>
       import("./modules/reports/reports.module").then((m) => m.ReportsModule),
   },
+  
   {
     path: "administrator",
     loadChildren: () =>

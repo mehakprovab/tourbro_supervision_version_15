@@ -1,0 +1,254 @@
+<div class="card adminInner">
+
+    <div class="card-header mb-3">
+        <h5>Helicopter Schedule List</h5>
+    </div>
+
+    <div class="Queues mt-2 mb-2">
+
+        <div class="row">
+
+            <div class="col-4 pr-0">
+
+                <div class="form-group">
+
+                    <label>
+                        Operator Name
+                    </label>
+
+                    <input type="text" class="form-control form-control-sm nrm_input" placeholder="Operator Name"
+                        [(ngModel)]="searchData.operator_name">
+
+                </div>
+
+            </div>
+
+            <div class="col-4">
+
+                <div class="form-group">
+
+                    <label>
+                        Route
+                    </label>
+
+                    <input type="text" class="form-control form-control-sm nrm_input" placeholder="Route"
+                        [(ngModel)]="searchData.route">
+
+                </div>
+
+            </div>
+
+            <div class="col-4 pl-0">
+
+                <div class="form-group">
+
+                    <label>
+                        Helicopter Number
+                    </label>
+
+                    <input type="text" class="form-control form-control-sm nrm_input"
+                        placeholder="Enter Helicopter Number" [(ngModel)]="searchData.helicopter_number">
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="btncontainer">
+
+            <button type="button" class="btn btn-primary" (click)="search()">
+                Search
+            </button>
+
+            &nbsp;
+
+            <button type="button" class="btn btn-secondary" (click)="reset()">
+                Reset
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="card adminInner mt-3">
+
+    <div class="d-flex align-items-center justify-content-between pb-3">
+
+        <div>
+
+            <button type="button" class="btn btn-primary" (click)="exportExcel()">
+                Export
+            </button>
+
+            &nbsp;
+
+            <button type="button" class="btn btn-secondary">
+                Filter
+            </button>
+
+        </div>
+
+        <div class="form-group mb-0 col-sm-3 p-0 float-right has-search">
+
+            Full text search:
+
+            <input class="form-control" type="text" name="searchTerm" [(ngModel)]="searchTerm" (input)="filterList()" />
+
+        </div>
+
+    </div>
+
+    <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft" #scrollOne>
+
+        <div class="div1"></div>
+
+    </div>
+
+    <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
+
+        <div class="div2 invisible-scrollbar">
+
+            <div class="table-respons">
+
+                <table class="table table-borderless table-striped table-hover">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Sl. No</th>
+                            <th>Status</th>
+                            <th>Operator Name</th>
+                            <th>Route</th>
+                            <th>Travel Date</th>
+                            <th>Departure Time</th>
+                            <th>Arrival Time</th>
+                            <th>Duration</th>
+                            <th>Helicopter Type</th>
+                            <th>Helicopter Model</th>
+                            <th>Total Seats</th>
+                            <th>Available Seats</th>
+                            <th>Blocked Seats</th>
+                            <th>Baggage Allowance</th>
+                            <th>Weight Limit</th>
+                            <th>Cancellation Policy</th>
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr *ngFor="let item of filteredList; let i = index">
+
+                            <td>
+                                {{ i + 1 }}
+                            </td>
+
+                            <td>
+
+                                <label class="switch">
+
+                                    <input type="checkbox" [(ngModel)]="item.status" (change)="updateStatus(item)">
+
+                                    <span class="slider round"></span>
+
+                                </label>
+
+                            </td>
+
+                            <td>
+                                {{ item.operator_name }}
+                            </td>
+
+                            <td>
+                                {{ item.route }}
+                            </td>
+
+                            <td>
+                                {{ item.travel_date }}
+                            </td>
+
+                            <td>
+                                {{ item.departure_time }}
+                            </td>
+
+                            <td>
+                                {{ item.arrival_time }}
+                            </td>
+
+                            <td>
+                                {{ item.duration }} mins
+                            </td>
+
+                            <td>
+                                {{ item.helicopter_type }}
+                            </td>
+
+                            <td>
+                                {{ item.helicopter_model }}
+                            </td>
+
+                            <td>
+                                {{ item.total_seats }}
+                            </td>
+
+                            <td>
+                                {{ item.available_seats }}
+                            </td>
+
+                            <td>
+                                {{ item.blocked_seats }}
+                            </td>
+
+                            <td>
+                                {{ item.baggage_allowance }}
+                            </td>
+
+                            <td>
+                                {{ item.weight_limit }}
+                            </td>
+
+                            <td>
+                                {{ item.cancellation_policy }}
+                            </td>
+
+                            <td>
+
+                                <button class="btn btn-sm btn-primary mr-2" (click)="delete(item)">
+                                    Delete
+                                </button>
+
+                                <button class="btn btn-sm btn-secondary" (click)="edit(item)">
+                                    Edit
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                        <tr *ngIf="filteredList.length === 0">
+
+                            <td colspan="17" class="text-center">
+
+                                No Records Found
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

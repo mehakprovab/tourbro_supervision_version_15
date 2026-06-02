@@ -1,0 +1,29 @@
+<div class="card adminInner">
+
+    <div class="card-header mb-3">
+        <h5>Terms And Conditions</h5>
+    </div>
+
+
+    <div class="mb-3">
+        <form [formGroup]="termsandConditionForm" (ngSubmit)="onSubmitTermsAndConditions()">
+            <div class="form-row">
+                <div class="col-12 pr-0">
+                    <div class="form-group  p-0">
+                        <label for="activity_language_name">Terms And Conditions</label>
+                        <ckeditor type="text" formControlName="terms_and_conditions" style="height: auto;"></ckeditor>
+                    </div>
+                </div>
+
+            </div>
+            <div class="saveButton">
+                <button type="submit" class=" btn-primary mr-2"> {{saveTextName}}</button>
+                <button type="button" class="btn btn-secondary" (click)="clearForm()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<ngx-loading [show]="loading"
+    [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+    [template]="loadingTemplate"></ngx-loading>

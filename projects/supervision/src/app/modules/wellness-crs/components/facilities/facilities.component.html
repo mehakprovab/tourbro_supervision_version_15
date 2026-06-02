@@ -1,0 +1,32 @@
+<ul ngbNav #tabs="ngbNav" class="tabs-animated custom_tab" [(activeId)]="activeIdString" (navChange)="onTabSelected($event)">
+
+  <!-- Tab 1 -->
+  <li [ngbNavItem]="'list_facilities'">
+
+    <a ngbNavLink>
+      <span>Facilities List</span>
+    </a>
+
+    <ng-template ngbNavContent>
+      <app-facilities-list></app-facilities-list>
+      </ng-template>
+
+  </li>
+
+  <!-- Tab 2 -->
+  <li [ngbNavItem]="'add_facilities'">
+
+    <a ngbNavLink>
+      <span>Add/ Edit Facilities</span>
+    </a>
+
+    <ng-template ngbNavContent>
+      <app-add-update-facilities-list></app-add-update-facilities-list>
+    </ng-template>
+    
+  </li> 
+
+</ul>
+
+<div [ngbNavOutlet]="tabs"></div>
+

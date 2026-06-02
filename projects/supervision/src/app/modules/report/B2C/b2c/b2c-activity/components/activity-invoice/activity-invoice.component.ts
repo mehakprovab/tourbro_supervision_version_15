@@ -4,7 +4,6 @@ import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handler
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { SubSink } from 'subsink';
-import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { ReportService } from '../../../../../report.service';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -39,7 +38,6 @@ export class ActivityInvoiceComponent implements OnInit, OnDestroy {
   constructor(
         private apiHandlerService: ApiHandlerService,
         private swalService: SwalService,
-        private exportAsService: ExportAsService,
         private utility: UtilityService,
         private router: Router,
         private activatedRoute : ActivatedRoute,
@@ -75,7 +73,7 @@ export class ActivityInvoiceComponent implements OnInit, OnDestroy {
   }
 
   
-  downloadA4(type: SupportedExtensions, orientation?: string): void {
+  downloadA4(type: any, orientation?: string): void {
     let fileName = this.voucherData['bookingDetails']['app_reference']
        window['html2canvas'] = html2canvas;
        const date = new Date().toDateString();

@@ -21,16 +21,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! projects/supervision/src/app/core/api-handlers */ 91488);
 /* harmony import */ var projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! projects/supervision/src/app/core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! projects/supervision/src/app/core/services/utility.service */ 41894);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/router */ 34793);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/common */ 36895);
 /* harmony import */ var ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ngx-bootstrap/datepicker */ 71552);
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
-/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
-/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/material/sort */ 96308);
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
+/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
+/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/material/sort */ 96308);
 /* harmony import */ var ng2_search_filter__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng2-search-filter */ 43189);
-
 
 
 
@@ -523,11 +521,10 @@ let filterArray = [];
 let respDataCopy = [];
 let B2bActivityComponent = /*#__PURE__*/(() => {
   class B2bActivityComponent {
-    constructor(apiHandlerService, fb, swalService, exportAsService, utility, router) {
+    constructor(apiHandlerService, fb, swalService, utility, router) {
       this.apiHandlerService = apiHandlerService;
       this.fb = fb;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.subSunk = new subsink__WEBPACK_IMPORTED_MODULE_1__.SubSink();
@@ -797,7 +794,7 @@ let B2bActivityComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2b-ActivityReport`).subscribe();
+      this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2b-ActivityReport`, orientation || this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation);
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -957,7 +954,7 @@ let B2bActivityComponent = /*#__PURE__*/(() => {
     }
   }
   B2bActivityComponent.ɵfac = function B2bActivityComponent_Factory(t) {
-    return new (t || B2bActivityComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_5__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_6__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_12__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_7__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_13__.Router));
+    return new (t || B2bActivityComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_5__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_6__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_7__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_12__.Router));
   };
   B2bActivityComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdefineComponent"]({
     type: B2bActivityComponent,
@@ -1309,7 +1306,7 @@ let B2bActivityComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngModel", ctx.driverMobile);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_14__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_14__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_11__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_11__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_11__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormControlName, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_16__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_17__.MatSort, _angular_common__WEBPACK_IMPORTED_MODULE_14__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_14__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_9__.Ng2SearchPipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_13__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_13__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_11__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_11__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_11__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormControlName, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_15__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_16__.MatSort, _angular_common__WEBPACK_IMPORTED_MODULE_13__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_13__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_9__.Ng2SearchPipe],
     styles: [".nrm_input[_ngcontent-%COMP%], .src_btn[_ngcontent-%COMP%] {\n  padding: 0.5rem 0.75rem 0.5rem 2.2rem;\n  line-height: 1.7;\n  height: calc(2.5em + 0.75rem + 2px);\n}\n\n.card[_ngcontent-%COMP%] {\n  padding: 30px;\n  font-family: \"Asap\";\n}\n\nh5[_ngcontent-%COMP%] {\n  width: 100%;\n  border-bottom: 1px solid lightgrey;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n}\n\n.btncontainer[_ngcontent-%COMP%] {\n  width: 100%;\n  text-align: center;\n  padding: 12px 0px;\n}\n\nlabel[_ngcontent-%COMP%] {\n  color: #000000;\n  font-weight: 600;\n}\n\n.css[_ngcontent-%COMP%] {\n  background: #000000;\n  color: #ffffff;\n  font-family: \"Asap\";\n  border-radius: 5px;\n}\n\n.modal[_ngcontent-%COMP%] {\n  transform: translate(0, -50%);\n  top: 58%;\n  margin: 0 auto;\n}\n\n.wrapper1[_ngcontent-%COMP%], .wrapper2[_ngcontent-%COMP%] {\n  width: 100%;\n  overflow-x: scroll;\n  overflow-y: hidden;\n}\n\n.wrapper1[_ngcontent-%COMP%] {\n  height: 20px;\n}\n\n.div1[_ngcontent-%COMP%] {\n  width: 4100px;\n  height: 20px;\n}\n\n.div2[_ngcontent-%COMP%] {\n  width: 4100px;\n  overflow: hidden;\n}\n\n.div2[_ngcontent-%COMP%]   .table-responsive[_ngcontent-%COMP%] {\n  overflow: inherit;\n}\n\n.invisible-scrollbar[_ngcontent-%COMP%]::-webkit-scrollbar {\n  display: none;\n}\n\n.loadWrapper1[_ngcontent-%COMP%] {\n  background: rgba(0, 0, 0, 0.3);\n  width: 100%;\n  height: 100%;\n  position: fixed;\n  padding: 50px;\n  top: 0px;\n  left: 0px;\n  z-index: 99999;\n}\n\n.loader1[_ngcontent-%COMP%] {\n  border: 5px solid #f3f3f3;\n  \n  border-top: 5px solid #3d3e3f;\n  \n  position: absolute;\n  left: 50%;\n  top: 50%;\n  margin: auto;\n  border-radius: 50%;\n  width: 50px;\n  height: 50px;\n  animation: spin 2s linear infinite;\n}"]
   });
   return B2bActivityComponent;
@@ -1336,16 +1333,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var _core_api_handlers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../../core/api-handlers */ 91488);
 /* harmony import */ var _core_services_swal_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../../core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var _core_services_utility_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../../core/services/utility.service */ 41894);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/router */ 34793);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/common */ 36895);
 /* harmony import */ var ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ngx-bootstrap/datepicker */ 71552);
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
-/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
-/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/material/sort */ 96308);
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
+/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
+/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/material/sort */ 96308);
 /* harmony import */ var ng2_search_filter__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ng2-search-filter */ 43189);
-
 
 
 
@@ -1914,11 +1909,10 @@ let filterArray = [];
 let respDataCopy = [];
 let B2bBundleBookingReportComponent = /*#__PURE__*/(() => {
   class B2bBundleBookingReportComponent {
-    constructor(apiHandlerService, fb, swalService, exportAsService, utility, router) {
+    constructor(apiHandlerService, fb, swalService, utility, router) {
       this.apiHandlerService = apiHandlerService;
       this.fb = fb;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.subSunk = new subsink__WEBPACK_IMPORTED_MODULE_1__.SubSink();
@@ -2159,7 +2153,7 @@ let B2bBundleBookingReportComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2b-Bundle-Report`).subscribe();
+      this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2b-Bundle-Report`, orientation || this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation);
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -2277,7 +2271,7 @@ let B2bBundleBookingReportComponent = /*#__PURE__*/(() => {
     }
   }
   B2bBundleBookingReportComponent.ɵfac = function B2bBundleBookingReportComponent_Factory(t) {
-    return new (t || B2bBundleBookingReportComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdirectiveInject"](_core_api_handlers__WEBPACK_IMPORTED_MODULE_4__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdirectiveInject"](_core_services_swal_service__WEBPACK_IMPORTED_MODULE_5__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_11__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdirectiveInject"](_core_services_utility_service__WEBPACK_IMPORTED_MODULE_6__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_12__.Router));
+    return new (t || B2bBundleBookingReportComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdirectiveInject"](_core_api_handlers__WEBPACK_IMPORTED_MODULE_4__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdirectiveInject"](_core_services_swal_service__WEBPACK_IMPORTED_MODULE_5__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdirectiveInject"](_core_services_utility_service__WEBPACK_IMPORTED_MODULE_6__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_11__.Router));
   };
   B2bBundleBookingReportComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdefineComponent"]({
     type: B2bBundleBookingReportComponent,
@@ -2569,7 +2563,7 @@ let B2bBundleBookingReportComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵtextInterpolate1"](" ", "From 06 Jan 2021,USD 25 will be charged as cancellation penalty.", " ");
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_13__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_13__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_10__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_10__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_10__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_10__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormControlName, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_7__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_7__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_15__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_16__.MatSort, _angular_router__WEBPACK_IMPORTED_MODULE_12__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_13__.UpperCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_13__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_13__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_8__.Ng2SearchPipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_12__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_12__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_10__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_10__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_10__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_10__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormControlName, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_7__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_7__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_14__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_15__.MatSort, _angular_router__WEBPACK_IMPORTED_MODULE_11__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_12__.UpperCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_12__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_12__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_8__.Ng2SearchPipe],
     styles: [".nrm_input[_ngcontent-%COMP%], .src_btn[_ngcontent-%COMP%] {\n  padding: 0.5rem 0.75rem 0.5rem 2.2rem;\n  line-height: 1.7;\n  height: calc(2.5em + 0.75rem + 2px);\n}\n\n.card[_ngcontent-%COMP%] {\n  padding: 30px;\n  font-family: \"Asap\";\n}\n\nh5[_ngcontent-%COMP%] {\n  width: 100%;\n  border-bottom: 1px solid lightgrey;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n}\n\n.btncontainer[_ngcontent-%COMP%] {\n  width: 100%;\n  text-align: center;\n  padding: 12px 0px;\n}\n\nlabel[_ngcontent-%COMP%] {\n  color: #000000;\n  font-weight: 600;\n}\n\n.css[_ngcontent-%COMP%] {\n  background: #000000;\n  color: #ffffff;\n  font-family: \"Asap\";\n  border-radius: 5px;\n}\n\n.modal[_ngcontent-%COMP%] {\n  transform: translate(0, -50%);\n  top: 58%;\n  margin: 0 auto;\n}\n\n.wrapper1[_ngcontent-%COMP%], .wrapper2[_ngcontent-%COMP%] {\n  width: 100%;\n  overflow-x: scroll;\n  overflow-y: hidden;\n}\n\n.wrapper1[_ngcontent-%COMP%] {\n  height: 20px;\n}\n\n.div1[_ngcontent-%COMP%] {\n  width: 4000px;\n  height: 20px;\n}\n\n.div2[_ngcontent-%COMP%] {\n  width: 4000px;\n  overflow: hidden;\n}\n\n.div2[_ngcontent-%COMP%]   .table-responsive[_ngcontent-%COMP%] {\n  overflow: inherit;\n}\n\n.invisible-scrollbar[_ngcontent-%COMP%]::-webkit-scrollbar {\n  display: none;\n}\n\n.loadWrapper1[_ngcontent-%COMP%] {\n  background: rgba(0, 0, 0, 0.3);\n  width: 100%;\n  height: 100%;\n  position: fixed;\n  padding: 50px;\n  top: 0px;\n  left: 0px;\n  z-index: 99999;\n}\n\n.loader1[_ngcontent-%COMP%] {\n  border: 5px solid #f3f3f3;\n  \n  border-top: 5px solid #3d3e3f;\n  \n  position: absolute;\n  left: 50%;\n  top: 50%;\n  margin: auto;\n  border-radius: 50%;\n  width: 50px;\n  height: 50px;\n  animation: spin 2s linear infinite;\n}"]
   });
   return B2bBundleBookingReportComponent;
@@ -2594,14 +2588,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! projects/supervision/src/app/core/api-handlers */ 91488);
 /* harmony import */ var projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! projects/supervision/src/app/core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! projects/supervision/src/app/core/services/utility.service */ 41894);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/common */ 36895);
 /* harmony import */ var ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ngx-bootstrap/datepicker */ 71552);
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
-/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/material/sort */ 96308);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/router */ 34793);
-
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
+/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/material/sort */ 96308);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/router */ 34793);
 
 
 
@@ -2818,11 +2810,10 @@ let filterArray = [];
 let respDataCopy = [];
 let B2bCarComponent = /*#__PURE__*/(() => {
   class B2bCarComponent {
-    constructor(apiHandlerService, fb, swalService, exportAsService, utility) {
+    constructor(apiHandlerService, fb, swalService, utility) {
       this.apiHandlerService = apiHandlerService;
       this.fb = fb;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.subSunk = new subsink__WEBPACK_IMPORTED_MODULE_2__.SubSink();
       this.isOpen = false;
@@ -3049,7 +3040,7 @@ let B2bCarComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2c-CarReport`).subscribe();
+      this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2c-CarReport`, orientation || this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation);
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -3076,7 +3067,7 @@ let B2bCarComponent = /*#__PURE__*/(() => {
     }
   }
   B2bCarComponent.ɵfac = function B2bCarComponent_Factory(t) {
-    return new (t || B2bCarComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_9__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService));
+    return new (t || B2bCarComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService));
   };
   B2bCarComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineComponent"]({
     type: B2bCarComponent,
@@ -3304,7 +3295,7 @@ let B2bCarComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtextInterpolate1"](" ", "From 06 Jan 2021,USD 25 will be charged as cancellation penalty.", " ");
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_10__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_10__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_8__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_8__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormControlName, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_11__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_11__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_11__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_11__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_11__.NgbPagination, _angular_material_sort__WEBPACK_IMPORTED_MODULE_12__.MatSort, _angular_router__WEBPACK_IMPORTED_MODULE_13__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_10__.UpperCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_10__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_10__.DatePipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_9__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_9__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_8__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_8__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormControlName, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_10__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_10__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_10__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_10__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_10__.NgbPagination, _angular_material_sort__WEBPACK_IMPORTED_MODULE_11__.MatSort, _angular_router__WEBPACK_IMPORTED_MODULE_12__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_9__.UpperCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_9__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_9__.DatePipe],
     styles: [".nrm_input[_ngcontent-%COMP%], .src_btn[_ngcontent-%COMP%] {\n  padding: 0.5rem 0.75rem 0.5rem 2.2rem;\n  line-height: 1.7;\n  height: calc(2.5em + 0.75rem + 2px);\n}\n\n.card[_ngcontent-%COMP%] {\n  padding: 30px;\n  font-family: \"Asap\";\n}\n\nh5[_ngcontent-%COMP%] {\n  width: 100%;\n  border-bottom: 1px solid lightgrey;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n}\n\n.btncontainer[_ngcontent-%COMP%] {\n  width: 100%;\n  text-align: center;\n  padding: 12px 0px;\n}\n\nlabel[_ngcontent-%COMP%] {\n  color: #000000;\n  font-weight: 600;\n}"]
   });
   return B2bCarComponent;
@@ -3336,16 +3327,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_api_handlers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../../core/api-handlers */ 91488);
 /* harmony import */ var _core_services_swal_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../../core/services/swal.service */ 59826);
 /* harmony import */ var _core_services_utility_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../../core/services/utility.service */ 41894);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ngx-export-as */ 30901);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/router */ 34793);
 /* harmony import */ var _report_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../report.service */ 47191);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/common */ 36895);
 /* harmony import */ var ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ngx-bootstrap/datepicker */ 71552);
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
-/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
-/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @angular/material/sort */ 96308);
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
+/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
+/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @angular/material/sort */ 96308);
 /* harmony import */ var ng2_search_filter__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ng2-search-filter */ 43189);
-
 
 
 
@@ -3868,12 +3857,11 @@ let filterArray = [];
 let respDataCopy = [];
 let B2bFlightComponent = /*#__PURE__*/(() => {
   class B2bFlightComponent {
-    constructor(apiHandlerService, fb, swalService, utility, exportAsService, router, reportService) {
+    constructor(apiHandlerService, fb, swalService, utility, router, reportService) {
       this.apiHandlerService = apiHandlerService;
       this.fb = fb;
       this.swalService = swalService;
       this.utility = utility;
-      this.exportAsService = exportAsService;
       this.router = router;
       this.reportService = reportService;
       this.subSunk = new subsink__WEBPACK_IMPORTED_MODULE_2__.SubSink();
@@ -4134,7 +4122,7 @@ let B2bFlightComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2b-Flight-Report`).subscribe();
+      this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2b-Flight-Report`, orientation || this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation);
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -4458,7 +4446,7 @@ let B2bFlightComponent = /*#__PURE__*/(() => {
     }
   }
   B2bFlightComponent.ɵfac = function B2bFlightComponent_Factory(t) {
-    return new (t || B2bFlightComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdirectiveInject"](_core_api_handlers__WEBPACK_IMPORTED_MODULE_7__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_14__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdirectiveInject"](_core_services_swal_service__WEBPACK_IMPORTED_MODULE_8__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdirectiveInject"](_core_services_utility_service__WEBPACK_IMPORTED_MODULE_9__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_15__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_16__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdirectiveInject"](_report_service__WEBPACK_IMPORTED_MODULE_10__.ReportService));
+    return new (t || B2bFlightComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdirectiveInject"](_core_api_handlers__WEBPACK_IMPORTED_MODULE_7__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_14__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdirectiveInject"](_core_services_swal_service__WEBPACK_IMPORTED_MODULE_8__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdirectiveInject"](_core_services_utility_service__WEBPACK_IMPORTED_MODULE_9__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_15__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdirectiveInject"](_report_service__WEBPACK_IMPORTED_MODULE_10__.ReportService));
   };
   B2bFlightComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdefineComponent"]({
     type: B2bFlightComponent,
@@ -4851,7 +4839,7 @@ let B2bFlightComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵproperty"]("ngIf", ctx.subjectName == "Void");
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_17__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_17__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_14__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_14__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_14__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_14__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.FormControlName, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_11__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_11__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_18__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_18__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_18__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_18__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_18__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_19__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_20__.MatSort, _angular_material_sort__WEBPACK_IMPORTED_MODULE_20__.MatSortHeader, _angular_router__WEBPACK_IMPORTED_MODULE_16__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_17__.LowerCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_17__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_17__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_12__.Ng2SearchPipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_16__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_16__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_14__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_14__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_14__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_14__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.FormControlName, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_11__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_11__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_18__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_19__.MatSort, _angular_material_sort__WEBPACK_IMPORTED_MODULE_19__.MatSortHeader, _angular_router__WEBPACK_IMPORTED_MODULE_15__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_16__.LowerCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_16__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_16__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_12__.Ng2SearchPipe],
     styles: [".nrm_input[_ngcontent-%COMP%], .src_btn[_ngcontent-%COMP%] {\n  padding: 0.5rem 0.75rem 0.5rem 2.2rem;\n  line-height: 1.7;\n  height: calc(2.5em + 0.75rem + 2px);\n}\n\n.card[_ngcontent-%COMP%] {\n  padding: 30px;\n  font-family: \"Asap\";\n}\n\nh5[_ngcontent-%COMP%] {\n  width: 100%;\n  border-bottom: 1px solid lightgrey;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n}\n\n.btncontainer[_ngcontent-%COMP%] {\n  width: 100%;\n  text-align: center;\n  padding: 12px 0px;\n}\n\nlabel[_ngcontent-%COMP%] {\n  color: #000000;\n  font-weight: 600;\n}\n\n.modal[_ngcontent-%COMP%] {\n  transform: translate(0, -50%);\n  top: 58%;\n  margin: 0 auto;\n}\n\n.loadWrapper[_ngcontent-%COMP%] {\n  width: 100%;\n  position: relative;\n  padding: 50px;\n  z-index: 99999;\n}\n\n.loader[_ngcontent-%COMP%] {\n  border: 5px solid #f3f3f3; \n  border-top: 5px solid #3d3e3f; \n  position: absolute;\n  left: 0;\n  right: 0px;\n  top: 20px;\n  margin: auto;\n  border-radius: 50%;\n  width: 50px;\n  height: 50px;\n  animation: _ngcontent-%COMP%_spin 2s linear infinite;\n}\n\n@keyframes _ngcontent-%COMP%_spin {\n  0% {\n    transform: rotate(0deg);\n  }\n  100% {\n    transform: rotate(360deg);\n  }\n}\n#scroll_wrapper1[_ngcontent-%COMP%], #scroll_wrapper2[_ngcontent-%COMP%] {\n  width: 600px;\n  overflow-x: scroll;\n  overflow-y: hidden;\n}\n\n#scroll_wrapper1[_ngcontent-%COMP%] {\n  height: 20px;\n  position: sticky !important;\n  top: 0% !important;\n  z-index: 1 !important;\n}\n\n#scroll_wrapper2[_ngcontent-%COMP%] {\n  height: 500px;\n}\n\n#scroll_div[_ngcontent-%COMP%] {\n  width: 900px;\n  height: 20px;\n}\n\n#grid_parent[_ngcontent-%COMP%] {\n  width: 900px;\n  height: 500px;\n  overflow: auto;\n}\n\n#paymentModalLabel[_ngcontent-%COMP%] {\n  border-bottom: none !important;\n  padding-bottom: 0px !important;\n  margin-bottom: 0px !important;\n}\n\n.wrapper1[_ngcontent-%COMP%], .wrapper2[_ngcontent-%COMP%] {\n  width: 100%;\n  overflow-x: scroll;\n  overflow-y: hidden;\n}\n\n.wrapper1[_ngcontent-%COMP%] {\n  height: 20px;\n}\n\n.div1[_ngcontent-%COMP%] {\n  width: 5000px;\n  height: 20px;\n}\n\n.div2[_ngcontent-%COMP%] {\n  width: 5000px;\n  overflow: hidden;\n}\n\n.div2[_ngcontent-%COMP%]   .table-responsive[_ngcontent-%COMP%] {\n  overflow: inherit;\n}\n\n.invisible-scrollbar[_ngcontent-%COMP%]::-webkit-scrollbar {\n  display: none;\n}\n\n.loadWrapper1[_ngcontent-%COMP%] {\n  background: rgba(0, 0, 0, 0.3);\n  width: 100%;\n  height: 100%;\n  position: fixed;\n  padding: 50px;\n  top: 0px;\n  left: 0px;\n  z-index: 99999;\n}\n\n.loader1[_ngcontent-%COMP%] {\n  border: 5px solid #f3f3f3; \n  border-top: 5px solid #3d3e3f; \n  position: absolute;\n  left: 50%;\n  top: 50%;\n  margin: auto;\n  border-radius: 50%;\n  width: 50px;\n  height: 50px;\n  animation: _ngcontent-%COMP%_spin 2s linear infinite;\n}"]
   });
   return B2bFlightComponent;
@@ -4877,16 +4865,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! projects/supervision/src/app/core/api-handlers */ 91488);
 /* harmony import */ var projects_b2b_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! projects/b2b/src/app/core/services/swal.service */ 78525);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ngx-export-as */ 30901);
-/* harmony import */ var projects_b2b_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! projects/b2b/src/app/core/services/utility.service */ 82931);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/router */ 34793);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! projects/supervision/src/app/core/services/utility.service */ 41894);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common */ 36895);
 /* harmony import */ var ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ngx-bootstrap/datepicker */ 71552);
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
-/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
-/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/material/sort */ 96308);
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
+/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
+/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/material/sort */ 96308);
 /* harmony import */ var ng2_search_filter__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ng2-search-filter */ 43189);
-
 
 
 
@@ -5042,11 +5028,10 @@ function B2bHotelEnquiryComponent_tr_72_Template(rf, ctx) {
 }
 let B2bHotelEnquiryComponent = /*#__PURE__*/(() => {
   class B2bHotelEnquiryComponent {
-    constructor(apiHandlerService, fb, swalService, exportAsService, utility, router, route) {
+    constructor(apiHandlerService, fb, swalService, utility, router, route) {
       this.apiHandlerService = apiHandlerService;
       this.fb = fb;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.route = route;
@@ -5242,7 +5227,7 @@ let B2bHotelEnquiryComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2b-HotelEnquiry`).subscribe();
+      this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2b-HotelEnquiry`, orientation || this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation);
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -5320,7 +5305,7 @@ let B2bHotelEnquiryComponent = /*#__PURE__*/(() => {
     }
   }
   B2bHotelEnquiryComponent.ɵfac = function B2bHotelEnquiryComponent_Factory(t) {
-    return new (t || B2bHotelEnquiryComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_b2b_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_10__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_b2b_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_11__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_11__.ActivatedRoute));
+    return new (t || B2bHotelEnquiryComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_b2b_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.ActivatedRoute));
   };
   B2bHotelEnquiryComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdefineComponent"]({
     type: B2bHotelEnquiryComponent,
@@ -5510,7 +5495,7 @@ let B2bHotelEnquiryComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵproperty"]("ngValue", 1000);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_12__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_12__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_9__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_9__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_9__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormControlName, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_14__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_15__.MatSort, _angular_material_sort__WEBPACK_IMPORTED_MODULE_15__.MatSortHeader, _angular_common__WEBPACK_IMPORTED_MODULE_12__.SlicePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_7__.Ng2SearchPipe]
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_11__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_11__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_9__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_9__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_9__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormControlName, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_13__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_14__.MatSort, _angular_material_sort__WEBPACK_IMPORTED_MODULE_14__.MatSortHeader, _angular_common__WEBPACK_IMPORTED_MODULE_11__.SlicePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_7__.Ng2SearchPipe]
   });
   return B2bHotelEnquiryComponent;
 })();
@@ -5538,16 +5523,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_api_handlers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../../core/api-handlers */ 91488);
 /* harmony import */ var _core_services_swal_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../../core/services/swal.service */ 59826);
 /* harmony import */ var _core_services_utility_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../../core/services/utility.service */ 41894);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ngx-export-as */ 30901);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/common */ 36895);
-/* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ngx-loading */ 82021);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ngx-loading */ 82021);
 /* harmony import */ var ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ngx-bootstrap/datepicker */ 71552);
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
-/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
-/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/material/sort */ 96308);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
+/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
+/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/material/sort */ 96308);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/router */ 34793);
 /* harmony import */ var ng2_search_filter__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng2-search-filter */ 43189);
-
 
 
 
@@ -6209,12 +6192,11 @@ let filterArray = [];
 let respDataCopy = [];
 let B2bHotelComponent = /*#__PURE__*/(() => {
   class B2bHotelComponent {
-    constructor(apiHandlerService, fb, swalService, utility, exportAsService) {
+    constructor(apiHandlerService, fb, swalService, utility) {
       this.apiHandlerService = apiHandlerService;
       this.fb = fb;
       this.swalService = swalService;
       this.utility = utility;
-      this.exportAsService = exportAsService;
       this.subSunk = new subsink__WEBPACK_IMPORTED_MODULE_1__.SubSink();
       this.isOpen = false;
       this.bsDateConf = {
@@ -6552,7 +6534,7 @@ let B2bHotelComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2b-HotelReport`).subscribe();
+      this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2b-HotelReport`, orientation || this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation);
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -6721,7 +6703,7 @@ let B2bHotelComponent = /*#__PURE__*/(() => {
     }
   }
   B2bHotelComponent.ɵfac = function B2bHotelComponent_Factory(t) {
-    return new (t || B2bHotelComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_core_api_handlers__WEBPACK_IMPORTED_MODULE_5__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_core_services_swal_service__WEBPACK_IMPORTED_MODULE_6__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_core_services_utility_service__WEBPACK_IMPORTED_MODULE_7__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_12__.ExportAsService));
+    return new (t || B2bHotelComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_core_api_handlers__WEBPACK_IMPORTED_MODULE_5__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_core_services_swal_service__WEBPACK_IMPORTED_MODULE_6__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_core_services_utility_service__WEBPACK_IMPORTED_MODULE_7__.UtilityService));
   };
   B2bHotelComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdefineComponent"]({
     type: B2bHotelComponent,
@@ -7049,7 +7031,7 @@ let B2bHotelComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("show", ctx.loading)("config", _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpureFunction3"](56, _c3, ctx.primaryColour, ctx.secondaryColour, ctx.primaryColour))("template", ctx.loadingTemplate);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_13__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_13__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_11__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_11__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_11__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormControlName, ngx_loading__WEBPACK_IMPORTED_MODULE_14__.NgxLoadingComponent, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_16__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_17__.MatSort, _angular_router__WEBPACK_IMPORTED_MODULE_18__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_13__.UpperCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_13__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_13__.DecimalPipe, _angular_common__WEBPACK_IMPORTED_MODULE_13__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_9__.Ng2SearchPipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_12__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_12__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_11__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_11__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_11__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormControlName, ngx_loading__WEBPACK_IMPORTED_MODULE_13__.NgxLoadingComponent, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_15__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_16__.MatSort, _angular_router__WEBPACK_IMPORTED_MODULE_17__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_12__.UpperCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_12__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_12__.DecimalPipe, _angular_common__WEBPACK_IMPORTED_MODULE_12__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_9__.Ng2SearchPipe],
     styles: [".nrm_input[_ngcontent-%COMP%], .src_btn[_ngcontent-%COMP%] {\n  padding: 0.5rem 0.75rem 0.5rem 2.2rem;\n  line-height: 1.7;\n  height: calc(2.5em + 0.75rem + 2px);\n}\n\n.card[_ngcontent-%COMP%] {\n  padding: 30px;\n  font-family: \"Asap\";\n}\n\nh5[_ngcontent-%COMP%] {\n  width: 100%;\n  border-bottom: 1px solid lightgrey;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n}\n\n.btncontainer[_ngcontent-%COMP%] {\n  width: 100%;\n  text-align: center;\n  padding: 12px 0px;\n}\n\nlabel[_ngcontent-%COMP%] {\n  color: #000000;\n  font-weight: 600;\n}\n\n.css[_ngcontent-%COMP%] {\n  background: #000000;\n  color: #ffffff;\n  font-family: \"Asap\";\n  border-radius: 5px;\n}\n\n.modal[_ngcontent-%COMP%] {\n  transform: translate(0, -50%);\n  top: 58%;\n  margin: 0 auto;\n}\n\n.wrapper1[_ngcontent-%COMP%], .wrapper2[_ngcontent-%COMP%] {\n  width: 100%;\n  overflow-x: scroll;\n  overflow-y: hidden;\n}\n\n.wrapper1[_ngcontent-%COMP%] {\n  height: 20px;\n}\n\n.div1[_ngcontent-%COMP%] {\n  width: 4800px;\n  height: 20px;\n}\n\n.div2[_ngcontent-%COMP%] {\n  width: 4800px;\n  overflow: hidden;\n}\n\n.div2[_ngcontent-%COMP%]   .table-responsive[_ngcontent-%COMP%] {\n  overflow: inherit;\n}\n\n.invisible-scrollbar[_ngcontent-%COMP%]::-webkit-scrollbar {\n  display: none;\n}"]
   });
   return B2bHotelComponent;
@@ -7075,16 +7057,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! projects/supervision/src/app/core/api-handlers */ 91488);
 /* harmony import */ var projects_b2b_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! projects/b2b/src/app/core/services/swal.service */ 78525);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ngx-export-as */ 30901);
-/* harmony import */ var projects_b2b_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! projects/b2b/src/app/core/services/utility.service */ 82931);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/router */ 34793);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! projects/supervision/src/app/core/services/utility.service */ 41894);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common */ 36895);
 /* harmony import */ var ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ngx-bootstrap/datepicker */ 71552);
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
-/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
-/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/material/sort */ 96308);
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
+/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
+/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/material/sort */ 96308);
 /* harmony import */ var ng2_search_filter__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ng2-search-filter */ 43189);
-
 
 
 
@@ -7291,11 +7271,10 @@ function B2bTourEnquiryComponent_tr_72_Template(rf, ctx) {
 }
 let B2bTourEnquiryComponent = /*#__PURE__*/(() => {
   class B2bTourEnquiryComponent {
-    constructor(apiHandlerService, fb, swalService, exportAsService, utility, router, route) {
+    constructor(apiHandlerService, fb, swalService, utility, router, route) {
       this.apiHandlerService = apiHandlerService;
       this.fb = fb;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.route = route;
@@ -7523,7 +7502,7 @@ let B2bTourEnquiryComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2b-tour-enquiry`).subscribe();
+      this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2b-tour-enquiry`, orientation || this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation);
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -7609,7 +7588,7 @@ let B2bTourEnquiryComponent = /*#__PURE__*/(() => {
     }
   }
   B2bTourEnquiryComponent.ɵfac = function B2bTourEnquiryComponent_Factory(t) {
-    return new (t || B2bTourEnquiryComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_b2b_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_10__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_b2b_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_11__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_11__.ActivatedRoute));
+    return new (t || B2bTourEnquiryComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_b2b_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.ActivatedRoute));
   };
   B2bTourEnquiryComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdefineComponent"]({
     type: B2bTourEnquiryComponent,
@@ -7799,7 +7778,7 @@ let B2bTourEnquiryComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵproperty"]("ngValue", 1000);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_12__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_12__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_9__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_9__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_9__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormControlName, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_14__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_15__.MatSort, _angular_material_sort__WEBPACK_IMPORTED_MODULE_15__.MatSortHeader, _angular_common__WEBPACK_IMPORTED_MODULE_12__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_12__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_7__.Ng2SearchPipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_11__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_11__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_9__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_9__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_9__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormControlName, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_13__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_14__.MatSort, _angular_material_sort__WEBPACK_IMPORTED_MODULE_14__.MatSortHeader, _angular_common__WEBPACK_IMPORTED_MODULE_11__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_11__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_7__.Ng2SearchPipe],
     styles: [".nrm_input[_ngcontent-%COMP%], .src_btn[_ngcontent-%COMP%] {\n  padding: 0.5rem 0.75rem 0.5rem 2.2rem;\n  line-height: 1.7;\n  height: calc(2.5em + 0.75rem + 2px);\n}\n\n.card[_ngcontent-%COMP%] {\n  padding: 30px;\n  font-family: \"Asap\";\n}\n\nh5[_ngcontent-%COMP%] {\n  width: 100%;\n  border-bottom: 1px solid lightgrey;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n}\n\n.btncontainer[_ngcontent-%COMP%] {\n  width: 100%;\n  text-align: center;\n  padding: 12px 0px;\n}\n\nlabel[_ngcontent-%COMP%] {\n  color: #000000;\n  font-weight: 600;\n}\n\n.css[_ngcontent-%COMP%] {\n  background: #000000;\n  color: #ffffff;\n  font-family: \"Asap\";\n  border-radius: 5px;\n}\n\n.modal[_ngcontent-%COMP%] {\n  transform: translate(0, -50%);\n  top: 58%;\n  margin: 0 auto;\n}\n\n.wrapper1[_ngcontent-%COMP%], .wrapper2[_ngcontent-%COMP%] {\n  width: 100%;\n  overflow-x: scroll;\n  overflow-y: hidden;\n}\n\n.wrapper1[_ngcontent-%COMP%] {\n  height: 20px;\n}\n\n.div1[_ngcontent-%COMP%] {\n  width: 2000px;\n  height: 20px;\n}\n@media (max-width: 767px) {\n  .div1[_ngcontent-%COMP%] {\n    width: 1500px;\n  }\n}\n\n.div2[_ngcontent-%COMP%] {\n  width: 2000px;\n  overflow: hidden;\n}\n@media (max-width: 767px) {\n  .div2[_ngcontent-%COMP%] {\n    width: 1500px;\n  }\n}\n\n.div2[_ngcontent-%COMP%]   .table-responsive[_ngcontent-%COMP%] {\n  overflow: inherit;\n}\n\n.invisible-scrollbar[_ngcontent-%COMP%]::-webkit-scrollbar {\n  display: none;\n}\n\n@media (max-width: 767px) {\n  .col-4[_ngcontent-%COMP%] {\n    flex: 50%;\n    max-width: 50%;\n  }\n}\n\n.modal-body[_ngcontent-%COMP%] {\n  height: 400px;\n  overflow: auto;\n}"]
   });
   return B2bTourEnquiryComponent;
@@ -7825,13 +7804,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! projects/supervision/src/app/core/api-handlers */ 91488);
 /* harmony import */ var projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! projects/supervision/src/app/core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! projects/supervision/src/app/core/services/utility.service */ 41894);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/router */ 34793);
 /* harmony import */ var _report_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../report.service */ 47191);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common */ 36895);
 /* harmony import */ var _shared_pipes_number_to_words_pipe__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../../../shared/pipes/number-to-words.pipe */ 43289);
-
 
 
 
@@ -8004,10 +7981,9 @@ function B2bTourInvoiceComponent_div_0_Template(rf, ctx) {
 }
 let B2bTourInvoiceComponent = /*#__PURE__*/(() => {
   class B2bTourInvoiceComponent {
-    constructor(apiHandlerService, swalService, exportAsService, utility, router, activatedRoute, reportService) {
+    constructor(apiHandlerService, swalService, utility, router, activatedRoute, reportService) {
       this.apiHandlerService = apiHandlerService;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.activatedRoute = activatedRoute;
@@ -8117,7 +8093,7 @@ let B2bTourInvoiceComponent = /*#__PURE__*/(() => {
     }
   }
   B2bTourInvoiceComponent.ɵfac = function B2bTourInvoiceComponent_Factory(t) {
-    return new (t || B2bTourInvoiceComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_10__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_11__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_11__.ActivatedRoute), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_report_service__WEBPACK_IMPORTED_MODULE_6__.ReportService));
+    return new (t || B2bTourInvoiceComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.ActivatedRoute), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_report_service__WEBPACK_IMPORTED_MODULE_6__.ReportService));
   };
   B2bTourInvoiceComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdefineComponent"]({
     type: B2bTourInvoiceComponent,
@@ -8142,7 +8118,7 @@ let B2bTourInvoiceComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵproperty"]("ngIf", ctx.invoiceData);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_12__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_12__.NgIf, _angular_common__WEBPACK_IMPORTED_MODULE_12__.UpperCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_12__.DatePipe, _shared_pipes_number_to_words_pipe__WEBPACK_IMPORTED_MODULE_7__.NumberToWordsPipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_11__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_11__.NgIf, _angular_common__WEBPACK_IMPORTED_MODULE_11__.UpperCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_11__.DatePipe, _shared_pipes_number_to_words_pipe__WEBPACK_IMPORTED_MODULE_7__.NumberToWordsPipe],
     styles: ["tr.hide_all[_ngcontent-%COMP%]    > td[_ngcontent-%COMP%], td.hide_all[_ngcontent-%COMP%] {\n  border-style: hidden;\n}\n\ntbody.hide_all[_ngcontent-%COMP%]    > tr[_ngcontent-%COMP%], td.hide_all[_ngcontent-%COMP%] {\n  border-style: hidden;\n}\n\n.trapezoid[_ngcontent-%COMP%] {\n  border-bottom: 60px solid #082E53;\n  border-left: 45px solid transparent;\n  border-right: 0px solid transparent;\n  height: 0;\n  width: 100%;\n  color: #fff;\n  text-align: center;\n  line-height: 60px;\n  font-size: 19px;\n  letter-spacing: 8px;\n  text-transform: uppercase;\n  font-weight: 600;\n}"]
   });
   return B2bTourInvoiceComponent;
@@ -8894,7 +8870,7 @@ let B2bTourVoucherComponent = /*#__PURE__*/(() => {
         return `${tmpStatus[0] + ' ' + tmpStatus[1]}`;
       }
     }
-    // downloadA4(type: SupportedExtensions, orientation?: string): void {
+    // downloadA4(type: any, orientation?: string): void {
     //   this.loading = true;
     //   document.getElementById('download').style.display = "none";
     //   window['html2canvas'] = html2canvas;
@@ -9121,17 +9097,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var _core_api_handlers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../../core/api-handlers */ 91488);
 /* harmony import */ var _core_services_swal_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../../core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var _core_services_utility_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../../core/services/utility.service */ 41894);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/router */ 34793);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/common */ 36895);
-/* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ngx-loading */ 82021);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ngx-loading */ 82021);
 /* harmony import */ var ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ngx-bootstrap/datepicker */ 71552);
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
-/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
-/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @angular/material/sort */ 96308);
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
+/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
+/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/material/sort */ 96308);
 /* harmony import */ var ng2_search_filter__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ng2-search-filter */ 43189);
-
 
 
 
@@ -9647,11 +9621,10 @@ let filterArray = [];
 let respDataCopy = [];
 let B2bTourComponent = /*#__PURE__*/(() => {
   class B2bTourComponent {
-    constructor(apiHandlerService, fb, swalService, exportAsService, utility, router) {
+    constructor(apiHandlerService, fb, swalService, utility, router) {
       this.apiHandlerService = apiHandlerService;
       this.fb = fb;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.subSunk = new subsink__WEBPACK_IMPORTED_MODULE_1__.SubSink();
@@ -9941,7 +9914,7 @@ let B2bTourComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2b-tour-report`).subscribe();
+      this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2b-tour-report`, orientation || this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation);
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -10283,7 +10256,7 @@ let B2bTourComponent = /*#__PURE__*/(() => {
     }
   }
   B2bTourComponent.ɵfac = function B2bTourComponent_Factory(t) {
-    return new (t || B2bTourComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](_core_api_handlers__WEBPACK_IMPORTED_MODULE_6__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](_core_services_swal_service__WEBPACK_IMPORTED_MODULE_7__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_13__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](_core_services_utility_service__WEBPACK_IMPORTED_MODULE_8__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_14__.Router));
+    return new (t || B2bTourComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](_core_api_handlers__WEBPACK_IMPORTED_MODULE_6__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](_core_services_swal_service__WEBPACK_IMPORTED_MODULE_7__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](_core_services_utility_service__WEBPACK_IMPORTED_MODULE_8__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_13__.Router));
   };
   B2bTourComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdefineComponent"]({
     type: B2bTourComponent,
@@ -10637,7 +10610,7 @@ let B2bTourComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵproperty"]("show", ctx.loading)("config", _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵpureFunction3"](56, _c1, ctx.primaryColour, ctx.secondaryColour, ctx.primaryColour))("template", ctx.loadingTemplate);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_15__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_15__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_12__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_12__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_12__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormControlName, ngx_loading__WEBPACK_IMPORTED_MODULE_16__.NgxLoadingComponent, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_9__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_9__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_18__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_19__.MatSort, _angular_common__WEBPACK_IMPORTED_MODULE_15__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_15__.DecimalPipe, _angular_common__WEBPACK_IMPORTED_MODULE_15__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_10__.Ng2SearchPipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_14__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_14__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_12__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_12__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_12__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormControlName, ngx_loading__WEBPACK_IMPORTED_MODULE_15__.NgxLoadingComponent, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_9__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_9__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_16__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_16__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_16__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_16__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_16__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_17__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_18__.MatSort, _angular_common__WEBPACK_IMPORTED_MODULE_14__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_14__.DecimalPipe, _angular_common__WEBPACK_IMPORTED_MODULE_14__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_10__.Ng2SearchPipe],
     styles: [".nrm_input[_ngcontent-%COMP%], .src_btn[_ngcontent-%COMP%] {\n  padding: 0.5rem 0.75rem 0.5rem 2.2rem;\n  line-height: 1.7;\n  height: calc(2.5em + 0.75rem + 2px);\n}\n\n.card[_ngcontent-%COMP%] {\n  padding: 30px;\n  font-family: \"Asap\";\n}\n\nh5[_ngcontent-%COMP%] {\n  width: 100%;\n  border-bottom: 1px solid lightgrey;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n}\n\n.btncontainer[_ngcontent-%COMP%] {\n  width: 100%;\n  text-align: center;\n  padding: 12px 0px;\n}\n\nlabel[_ngcontent-%COMP%] {\n  color: #000000;\n  font-weight: 600;\n}\n\n.css[_ngcontent-%COMP%] {\n  background: #000000;\n  color: #ffffff;\n  font-family: \"Asap\";\n  border-radius: 5px;\n}\n\n.modal[_ngcontent-%COMP%] {\n  transform: translate(0, -50%);\n  top: 58%;\n  margin: 0 auto;\n}\n\n.wrapper1[_ngcontent-%COMP%], .wrapper2[_ngcontent-%COMP%] {\n  width: 100%;\n  overflow-x: scroll;\n  overflow-y: hidden;\n}\n\n.wrapper1[_ngcontent-%COMP%] {\n  height: 20px;\n}\n\n.div1[_ngcontent-%COMP%] {\n  width: 5000px;\n  height: 20px;\n}\n\n.div2[_ngcontent-%COMP%] {\n  width: 5000px;\n  overflow: hidden;\n}\n\n.div2[_ngcontent-%COMP%]   .table-responsive[_ngcontent-%COMP%] {\n  overflow: inherit;\n}\n\n.invisible-scrollbar[_ngcontent-%COMP%]::-webkit-scrollbar {\n  display: none;\n}\n\n.loadWrapper1[_ngcontent-%COMP%] {\n  background: rgba(0, 0, 0, 0.3);\n  width: 100%;\n  height: 100%;\n  position: fixed;\n  padding: 50px;\n  top: 0px;\n  left: 0px;\n  z-index: 99999;\n}\n\n.loader1[_ngcontent-%COMP%] {\n  border: 5px solid #f3f3f3;\n  \n  border-top: 5px solid #3d3e3f;\n  \n  position: absolute;\n  left: 50%;\n  top: 50%;\n  margin: auto;\n  border-radius: 50%;\n  width: 50px;\n  height: 50px;\n  animation: spin 2s linear infinite;\n}\n\n.modal-content[_ngcontent-%COMP%] {\n  width: 200% !important;\n}\n\n#b2b-tour-report[_ngcontent-%COMP%] {\n  overflow-x: visible !important;\n}\n\n .dropdown {\n  z-index: 9 !important;\n}"]
   });
   return B2bTourComponent;
@@ -10665,18 +10638,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! projects/supervision/src/app/core/api-handlers */ 91488);
 /* harmony import */ var projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! projects/supervision/src/app/core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! projects/supervision/src/app/core/services/utility.service */ 41894);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/router */ 34793);
 /* harmony import */ var _report_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../report.service */ 47191);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/common */ 36895);
-/* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ngx-loading */ 82021);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ngx-loading */ 82021);
 /* harmony import */ var ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ngx-bootstrap/datepicker */ 71552);
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
-/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
-/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @angular/material/sort */ 96308);
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
+/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
+/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/material/sort */ 96308);
 /* harmony import */ var ng2_search_filter__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ng2-search-filter */ 43189);
-
 
 
 
@@ -11147,11 +11118,10 @@ let filterArray = [];
 let respDataCopy = [];
 let B2bTransferComponent = /*#__PURE__*/(() => {
   class B2bTransferComponent {
-    constructor(apiHandlerService, fb, swalService, exportAsService, utility, router, reportService) {
+    constructor(apiHandlerService, fb, swalService, utility, router, reportService) {
       this.apiHandlerService = apiHandlerService;
       this.fb = fb;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.reportService = reportService;
@@ -11543,7 +11513,7 @@ let B2bTransferComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2b-transfer-report`).subscribe();
+      this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2b-transfer-report`, orientation || this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation);
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -11673,7 +11643,7 @@ let B2bTransferComponent = /*#__PURE__*/(() => {
     }
   }
   B2bTransferComponent.ɵfac = function B2bTransferComponent_Factory(t) {
-    return new (t || B2bTransferComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_5__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_6__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_13__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_7__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_14__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](_report_service__WEBPACK_IMPORTED_MODULE_8__.ReportService));
+    return new (t || B2bTransferComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_5__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_6__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_7__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_13__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](_report_service__WEBPACK_IMPORTED_MODULE_8__.ReportService));
   };
   B2bTransferComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdefineComponent"]({
     type: B2bTransferComponent,
@@ -12018,7 +11988,7 @@ let B2bTransferComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵproperty"]("ngModel", ctx.driverMobile);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_15__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_15__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_12__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_12__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_12__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormControlName, ngx_loading__WEBPACK_IMPORTED_MODULE_16__.NgxLoadingComponent, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_9__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_9__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_18__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_19__.MatSort, _angular_material_sort__WEBPACK_IMPORTED_MODULE_19__.MatSortHeader, _angular_common__WEBPACK_IMPORTED_MODULE_15__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_15__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_10__.Ng2SearchPipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_14__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_14__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_12__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_12__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_12__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormControlName, ngx_loading__WEBPACK_IMPORTED_MODULE_15__.NgxLoadingComponent, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_9__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_9__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_16__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_16__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_16__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_16__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_16__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_17__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_18__.MatSort, _angular_material_sort__WEBPACK_IMPORTED_MODULE_18__.MatSortHeader, _angular_common__WEBPACK_IMPORTED_MODULE_14__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_14__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_10__.Ng2SearchPipe],
     styles: [".nrm_input[_ngcontent-%COMP%], .src_btn[_ngcontent-%COMP%] {\n  padding: 0.5rem 0.75rem 0.5rem 2.2rem;\n  line-height: 1.7;\n  height: calc(2.5em + 0.75rem + 2px);\n}\n\n.card[_ngcontent-%COMP%] {\n  padding: 30px;\n  font-family: \"Asap\";\n}\n\nh5[_ngcontent-%COMP%] {\n  width: 100%;\n  border-bottom: 1px solid lightgrey;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n}\n\n.btncontainer[_ngcontent-%COMP%] {\n  width: 100%;\n  text-align: center;\n  padding: 12px 0px;\n}\n\nlabel[_ngcontent-%COMP%] {\n  color: #000000;\n  font-weight: 600;\n}\n\n.modal[_ngcontent-%COMP%] {\n  transform: translate(0, -50%);\n  top: 58%;\n  margin: 0 auto;\n}\n\n#paymentModalLabel[_ngcontent-%COMP%] {\n  border-bottom: none !important;\n  padding-bottom: 0px !important;\n  margin-bottom: 0px !important;\n}\n\n.wrapper1[_ngcontent-%COMP%], .wrapper2[_ngcontent-%COMP%] {\n  width: 100%;\n  overflow-x: scroll;\n  overflow-y: hidden;\n}\n\n.wrapper1[_ngcontent-%COMP%] {\n  height: 20px;\n}\n\n.div1[_ngcontent-%COMP%] {\n  width: 5000px;\n  height: 20px;\n}\n\n.div2[_ngcontent-%COMP%] {\n  width: 5000px;\n  overflow: hidden;\n}\n\n.div2[_ngcontent-%COMP%]   .table-responsive[_ngcontent-%COMP%] {\n  overflow: inherit;\n}\n\n.invisible-scrollbar[_ngcontent-%COMP%]::-webkit-scrollbar {\n  display: none;\n}\n\n.loadWrapper1[_ngcontent-%COMP%] {\n  background: rgba(0, 0, 0, 0.3);\n  width: 100%;\n  height: 100%;\n  position: fixed;\n  padding: 50px;\n  top: 0px;\n  left: 0px;\n  z-index: 99999;\n}\n\n.loader1[_ngcontent-%COMP%] {\n  border: 5px solid #f3f3f3; \n  border-top: 5px solid #3d3e3f; \n  position: absolute;\n  left: 50%;\n  top: 50%;\n  margin: auto;\n  border-radius: 50%;\n  width: 50px;\n  height: 50px;\n  animation: spin 2s linear infinite;\n}"]
   });
   return B2bTransferComponent;
@@ -12764,13 +12734,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! projects/supervision/src/app/core/api-handlers */ 91488);
 /* harmony import */ var projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! projects/supervision/src/app/core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! projects/supervision/src/app/core/services/utility.service */ 41894);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/router */ 34793);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common */ 36895);
-/* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ngx-loading */ 82021);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ngx-loading */ 82021);
 /* harmony import */ var _shared_pipes_number_to_words_pipe__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../../../shared/pipes/number-to-words.pipe */ 43289);
-
 
 
 
@@ -12813,10 +12781,9 @@ const _c2 = function (a0, a1, a2) {
 };
 let B2bActivityInvoiceComponent = /*#__PURE__*/(() => {
   class B2bActivityInvoiceComponent {
-    constructor(apiHandlerService, swalService, exportAsService, utility, router, activatedRoute) {
+    constructor(apiHandlerService, swalService, utility, router, activatedRoute) {
       this.apiHandlerService = apiHandlerService;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.activatedRoute = activatedRoute;
@@ -12936,7 +12903,7 @@ let B2bActivityInvoiceComponent = /*#__PURE__*/(() => {
     }
   }
   B2bActivityInvoiceComponent.ɵfac = function B2bActivityInvoiceComponent_Factory(t) {
-    return new (t || B2bActivityInvoiceComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_8__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_9__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_9__.ActivatedRoute));
+    return new (t || B2bActivityInvoiceComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_8__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_8__.ActivatedRoute));
   };
   B2bActivityInvoiceComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineComponent"]({
     type: B2bActivityInvoiceComponent,
@@ -13129,7 +13096,7 @@ let B2bActivityInvoiceComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵproperty"]("show", ctx.loading)("config", _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpureFunction3"](35, _c2, ctx.primaryColour, ctx.secondaryColour, ctx.primaryColour))("template", ctx.loadingTemplate);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_10__.NgIf, ngx_loading__WEBPACK_IMPORTED_MODULE_11__.NgxLoadingComponent, _angular_router__WEBPACK_IMPORTED_MODULE_9__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_10__.DatePipe, _shared_pipes_number_to_words_pipe__WEBPACK_IMPORTED_MODULE_6__.NumberToWordsPipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_9__.NgIf, ngx_loading__WEBPACK_IMPORTED_MODULE_10__.NgxLoadingComponent, _angular_router__WEBPACK_IMPORTED_MODULE_8__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_9__.DatePipe, _shared_pipes_number_to_words_pipe__WEBPACK_IMPORTED_MODULE_6__.NumberToWordsPipe],
     styles: ["tr.hide_all[_ngcontent-%COMP%]    > td[_ngcontent-%COMP%], td.hide_all[_ngcontent-%COMP%] {\n  border-style: hidden;\n}\n\ntbody.hide_all[_ngcontent-%COMP%]    > tr[_ngcontent-%COMP%], td.hide_all[_ngcontent-%COMP%] {\n  border-style: hidden;\n}\n\n.trapezoid[_ngcontent-%COMP%] {\n  border-bottom: 60px solid #082E53;\n  border-left: 45px solid transparent;\n  border-right: 0px solid transparent;\n  height: 0;\n  width: 100%;\n  color: #fff;\n  text-align: center;\n  line-height: 60px;\n  font-size: 19px;\n  letter-spacing: 8px;\n  text-transform: uppercase;\n  font-weight: 600;\n}"]
   });
   return B2bActivityInvoiceComponent;
@@ -13564,13 +13531,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var _core_api_handlers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../core/api-handlers */ 91488);
 /* harmony import */ var _core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../../../core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var _core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../../../core/services/utility.service */ 41894);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/router */ 34793);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common */ 36895);
-/* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ngx-loading */ 82021);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ngx-loading */ 82021);
 /* harmony import */ var _shared_pipes_number_to_words_pipe__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../../../shared/pipes/number-to-words.pipe */ 43289);
-
 
 
 
@@ -13824,10 +13789,9 @@ const _c2 = function (a0, a1, a2) {
 };
 let B2bHotelInvoiceComponent = /*#__PURE__*/(() => {
   class B2bHotelInvoiceComponent {
-    constructor(apiHandlerService, swalService, exportAsService, utility, router, activatedRoute) {
+    constructor(apiHandlerService, swalService, utility, router, activatedRoute) {
       this.apiHandlerService = apiHandlerService;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.activatedRoute = activatedRoute;
@@ -13950,7 +13914,7 @@ let B2bHotelInvoiceComponent = /*#__PURE__*/(() => {
         }
       });
     }
-    // downloadA4(type: SupportedExtensions, orientation?: string): void {
+    // downloadA4(type: any, orientation?: string): void {
     //     let fileName = this.voucherData['BookingDetails']['AppReference']
     //        window['html2canvas'] = html2canvas;
     //        const date = new Date().toDateString();
@@ -13985,7 +13949,7 @@ let B2bHotelInvoiceComponent = /*#__PURE__*/(() => {
     }
   }
   B2bHotelInvoiceComponent.ɵfac = function B2bHotelInvoiceComponent_Factory(t) {
-    return new (t || B2bHotelInvoiceComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_9__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.ActivatedRoute));
+    return new (t || B2bHotelInvoiceComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_9__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_9__.ActivatedRoute));
   };
   B2bHotelInvoiceComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineComponent"]({
     type: B2bHotelInvoiceComponent,
@@ -14013,7 +13977,7 @@ let B2bHotelInvoiceComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵproperty"]("show", ctx.loading)("config", _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpureFunction3"](4, _c2, ctx.primaryColour, ctx.secondaryColour, ctx.primaryColour))("template", ctx.loadingTemplate);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_11__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_11__.NgIf, ngx_loading__WEBPACK_IMPORTED_MODULE_12__.NgxLoadingComponent, _angular_router__WEBPACK_IMPORTED_MODULE_10__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_11__.DatePipe, _shared_pipes_number_to_words_pipe__WEBPACK_IMPORTED_MODULE_6__.NumberToWordsPipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_10__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_10__.NgIf, ngx_loading__WEBPACK_IMPORTED_MODULE_11__.NgxLoadingComponent, _angular_router__WEBPACK_IMPORTED_MODULE_9__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_10__.DatePipe, _shared_pipes_number_to_words_pipe__WEBPACK_IMPORTED_MODULE_6__.NumberToWordsPipe],
     styles: [".trapezoid[_ngcontent-%COMP%] {\n  border-bottom: 60px solid #082E53;\n  border-left: 45px solid transparent;\n  border-right: 0px solid transparent;\n  height: 0;\n  width: 100%;\n  color: #fff;\n  text-align: center;\n  line-height: 60px;\n  font-size: 19px;\n  letter-spacing: 8px;\n  text-transform: uppercase;\n  font-weight: 600;\n}"]
   });
   return B2bHotelInvoiceComponent;
@@ -14391,11 +14355,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var _core_api_handlers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../../core/api-handlers */ 91488);
 /* harmony import */ var _core_services_swal_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var _core_services_utility_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../core/services/utility.service */ 41894);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ 34793);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common */ 36895);
-
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ 36895);
 
 
 
@@ -14579,10 +14541,9 @@ function CarComponent_div_0_Template(rf, ctx) {
 }
 let CarComponent = /*#__PURE__*/(() => {
   class CarComponent {
-    constructor(apiHandlerService, swalService, exportAsService, utility, router, activatedRoute) {
+    constructor(apiHandlerService, swalService, utility, router, activatedRoute) {
       this.apiHandlerService = apiHandlerService;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.activatedRoute = activatedRoute;
@@ -14627,7 +14588,7 @@ let CarComponent = /*#__PURE__*/(() => {
     }
   }
   CarComponent.ɵfac = function CarComponent_Factory(t) {
-    return new (t || CarComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_core_api_handlers__WEBPACK_IMPORTED_MODULE_1__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_core_services_swal_service__WEBPACK_IMPORTED_MODULE_2__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_5__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_core_services_utility_service__WEBPACK_IMPORTED_MODULE_3__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_6__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_6__.ActivatedRoute));
+    return new (t || CarComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_core_api_handlers__WEBPACK_IMPORTED_MODULE_1__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_core_services_swal_service__WEBPACK_IMPORTED_MODULE_2__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_core_services_utility_service__WEBPACK_IMPORTED_MODULE_3__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_5__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_5__.ActivatedRoute));
   };
   CarComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineComponent"]({
     type: CarComponent,
@@ -14652,7 +14613,7 @@ let CarComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("ngIf", ctx.voucherData);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_7__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_7__.NgIf, _angular_common__WEBPACK_IMPORTED_MODULE_7__.DatePipe]
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_6__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_6__.NgIf, _angular_common__WEBPACK_IMPORTED_MODULE_6__.DatePipe]
   });
   return CarComponent;
 })();
@@ -14677,13 +14638,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var _core_api_handlers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../core/api-handlers */ 91488);
 /* harmony import */ var _core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../../../core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var _core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../../../core/services/utility.service */ 41894);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/router */ 34793);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common */ 36895);
-/* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ngx-loading */ 82021);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ngx-loading */ 82021);
 /* harmony import */ var _shared_pipes_map_pipe__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../../../shared/pipes/map.pipe */ 64663);
-
 
 
 
@@ -15143,10 +15102,9 @@ const _c2 = function () {
 };
 let FlightComponent = /*#__PURE__*/(() => {
   class FlightComponent {
-    constructor(apiHandlerService, swalService, exportAsService, utility, router, activatedRoute) {
+    constructor(apiHandlerService, swalService, utility, router, activatedRoute) {
       this.apiHandlerService = apiHandlerService;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.activatedRoute = activatedRoute;
@@ -15249,7 +15207,7 @@ let FlightComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `voucher_${this.app_reference}`).subscribe();
+      this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `voucher_${this.app_reference}`, orientation || this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation);
     }
     downloadA4(type, orientation) {
       let fileName = this.voucherData['AppReference'];
@@ -15341,7 +15299,7 @@ let FlightComponent = /*#__PURE__*/(() => {
     }
   }
   FlightComponent.ɵfac = function FlightComponent_Factory(t) {
-    return new (t || FlightComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_9__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.ActivatedRoute));
+    return new (t || FlightComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_9__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_9__.ActivatedRoute));
   };
   FlightComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineComponent"]({
     type: FlightComponent,
@@ -15546,7 +15504,7 @@ let FlightComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵproperty"]("show", ctx.loading)("config", _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpureFunction0"](57, _c2))("template", ctx.loadingTemplate);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_11__.NgClass, _angular_common__WEBPACK_IMPORTED_MODULE_11__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_11__.NgIf, ngx_loading__WEBPACK_IMPORTED_MODULE_12__.NgxLoadingComponent, _angular_router__WEBPACK_IMPORTED_MODULE_10__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_11__.UpperCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_11__.DecimalPipe, _angular_common__WEBPACK_IMPORTED_MODULE_11__.DatePipe, _shared_pipes_map_pipe__WEBPACK_IMPORTED_MODULE_6__.MapPipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_10__.NgClass, _angular_common__WEBPACK_IMPORTED_MODULE_10__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_10__.NgIf, ngx_loading__WEBPACK_IMPORTED_MODULE_11__.NgxLoadingComponent, _angular_router__WEBPACK_IMPORTED_MODULE_9__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_10__.UpperCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_10__.DecimalPipe, _angular_common__WEBPACK_IMPORTED_MODULE_10__.DatePipe, _shared_pipes_map_pipe__WEBPACK_IMPORTED_MODULE_6__.MapPipe],
     styles: [".hide[_ngcontent-%COMP%] {\n  display: none;\n}"]
   });
   return FlightComponent;
@@ -15572,13 +15530,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var _core_api_handlers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../core/api-handlers */ 91488);
 /* harmony import */ var _core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../../../core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var _core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../../../core/services/utility.service */ 41894);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/router */ 34793);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common */ 36895);
-/* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ngx-loading */ 82021);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ngx-loading */ 82021);
 /* harmony import */ var _shared_pipes_map_pipe__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../../../shared/pipes/map.pipe */ 64663);
-
 
 
 
@@ -17024,10 +16980,9 @@ const _c2 = function (a0, a1, a2) {
 };
 let HotelComponent = /*#__PURE__*/(() => {
   class HotelComponent {
-    constructor(apiHandlerService, swalService, exportAsService, utility, router, activatedRoute, cdr) {
+    constructor(apiHandlerService, swalService, utility, router, activatedRoute, cdr) {
       this.apiHandlerService = apiHandlerService;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.activatedRoute = activatedRoute;
@@ -17296,7 +17251,7 @@ let HotelComponent = /*#__PURE__*/(() => {
   }
 
   HotelComponent.ɵfac = function HotelComponent_Factory(t) {
-    return new (t || HotelComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_9__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.ActivatedRoute), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_7__.ChangeDetectorRef));
+    return new (t || HotelComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_9__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_9__.ActivatedRoute), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_7__.ChangeDetectorRef));
   };
   HotelComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineComponent"]({
     type: HotelComponent,
@@ -17330,7 +17285,7 @@ let HotelComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵproperty"]("show", ctx.loading)("config", _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpureFunction3"](6, _c2, ctx.primaryColour, ctx.secondaryColour, ctx.primaryColour))("template", ctx.loadingTemplate);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_11__.NgClass, _angular_common__WEBPACK_IMPORTED_MODULE_11__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_11__.NgIf, _angular_common__WEBPACK_IMPORTED_MODULE_11__.NgStyle, ngx_loading__WEBPACK_IMPORTED_MODULE_12__.NgxLoadingComponent, _angular_router__WEBPACK_IMPORTED_MODULE_10__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_11__.UpperCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_11__.DecimalPipe, _angular_common__WEBPACK_IMPORTED_MODULE_11__.TitleCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_11__.DatePipe, _shared_pipes_map_pipe__WEBPACK_IMPORTED_MODULE_6__.MapPipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_10__.NgClass, _angular_common__WEBPACK_IMPORTED_MODULE_10__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_10__.NgIf, _angular_common__WEBPACK_IMPORTED_MODULE_10__.NgStyle, ngx_loading__WEBPACK_IMPORTED_MODULE_11__.NgxLoadingComponent, _angular_router__WEBPACK_IMPORTED_MODULE_9__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_10__.UpperCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_10__.DecimalPipe, _angular_common__WEBPACK_IMPORTED_MODULE_10__.TitleCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_10__.DatePipe, _shared_pipes_map_pipe__WEBPACK_IMPORTED_MODULE_6__.MapPipe],
     styles: [".trapezoid[_ngcontent-%COMP%] {\n  border-bottom: 60px solid #082E53;\n  border-left: 45px solid transparent;\n  border-right: 0px solid transparent;\n  height: 0;\n  width: 100%;\n  color: #fff;\n  text-align: center;\n  line-height: 60px;\n  font-size: 19px;\n  letter-spacing: 8px;\n  text-transform: uppercase;\n  font-weight: 600;\n}\n\n.flag-icon[_ngcontent-%COMP%] {\n  width: 20px;\n  height: 20px;\n}\n\n.agent-details[_ngcontent-%COMP%] {\n  position: relative;\n  left: 215px;\n}\n\n.policy-text[_ngcontent-%COMP%] {\n  font-size: 14px;\n  line-height: 1.6;\n}\n\n.policy-text[_ngcontent-%COMP%]   ul[_ngcontent-%COMP%] {\n  margin: 0 0 1em 1.5em;\n}\n\n.policy-text[_ngcontent-%COMP%]   li[_ngcontent-%COMP%] {\n  margin-bottom: 0.5em;\n}"]
   });
   return HotelComponent;
@@ -17382,16 +17337,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var _core_api_handlers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../../core/api-handlers */ 91488);
 /* harmony import */ var _core_services_swal_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../../core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var _core_services_utility_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../../core/services/utility.service */ 41894);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/router */ 34793);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/common */ 36895);
 /* harmony import */ var ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ngx-bootstrap/datepicker */ 71552);
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
-/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
-/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/material/sort */ 96308);
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
+/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
+/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/material/sort */ 96308);
 /* harmony import */ var ng2_search_filter__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng2-search-filter */ 43189);
-
 
 
 
@@ -17839,11 +17792,10 @@ let filterArray = [];
 let respDataCopy = [];
 let B2cActivityComponent = /*#__PURE__*/(() => {
   class B2cActivityComponent {
-    constructor(apiHandlerService, fb, swalService, exportAsService, utility, router) {
+    constructor(apiHandlerService, fb, swalService, utility, router) {
       this.apiHandlerService = apiHandlerService;
       this.fb = fb;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.subSunk = new subsink__WEBPACK_IMPORTED_MODULE_1__.SubSink();
@@ -18109,7 +18061,7 @@ let B2cActivityComponent = /*#__PURE__*/(() => {
         if (orientation) {
           this.config.options.jsPDF.orientation = orientation;
         }
-        this.exportAsService.save(this.config, `b2c-ActivityReport`).subscribe();
+        this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2c-ActivityReport`, orientation || this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation);
       }, 300);
     }
     downloadPdf() {
@@ -18247,7 +18199,7 @@ let B2cActivityComponent = /*#__PURE__*/(() => {
     }
   }
   B2cActivityComponent.ɵfac = function B2cActivityComponent_Factory(t) {
-    return new (t || B2cActivityComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_core_api_handlers__WEBPACK_IMPORTED_MODULE_5__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_core_services_swal_service__WEBPACK_IMPORTED_MODULE_6__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_12__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_core_services_utility_service__WEBPACK_IMPORTED_MODULE_7__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_13__.Router));
+    return new (t || B2cActivityComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_core_api_handlers__WEBPACK_IMPORTED_MODULE_5__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_core_services_swal_service__WEBPACK_IMPORTED_MODULE_6__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_core_services_utility_service__WEBPACK_IMPORTED_MODULE_7__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_12__.Router));
   };
   B2cActivityComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdefineComponent"]({
     type: B2cActivityComponent,
@@ -18586,7 +18538,7 @@ let B2cActivityComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngModel", ctx.driverMobile);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_14__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_14__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_11__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_11__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_11__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormControlName, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_16__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_17__.MatSort, _angular_common__WEBPACK_IMPORTED_MODULE_14__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_14__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_9__.Ng2SearchPipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_13__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_13__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_11__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_11__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_11__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormControlName, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_15__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_16__.MatSort, _angular_common__WEBPACK_IMPORTED_MODULE_13__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_13__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_9__.Ng2SearchPipe],
     styles: [".nrm_input[_ngcontent-%COMP%], .src_btn[_ngcontent-%COMP%] {\n  line-height: 1.7;\n  height: calc(2.5em + 0.75rem + 2px);\n}\n\n.btncontainer[_ngcontent-%COMP%] {\n  width: 100%;\n  text-align: center;\n  padding: 12px 0px;\n}\n\n.modal[_ngcontent-%COMP%] {\n  transform: translate(0, -50%);\n  top: 58%;\n  margin: 0 auto;\n}\n\n.wrapper1[_ngcontent-%COMP%], .wrapper2[_ngcontent-%COMP%] {\n  width: 100%;\n  overflow-x: scroll;\n  overflow-y: hidden;\n}\n\n.wrapper1[_ngcontent-%COMP%] {\n  height: 20px;\n}\n\n.div1[_ngcontent-%COMP%] {\n  width: 4000px;\n  height: 20px;\n}\n\n.div2[_ngcontent-%COMP%] {\n  width: 4000px;\n  overflow: hidden;\n}\n\n.div2[_ngcontent-%COMP%]   .table-responsive[_ngcontent-%COMP%] {\n  overflow: inherit;\n}\n\n.invisible-scrollbar[_ngcontent-%COMP%]::-webkit-scrollbar {\n  display: none;\n}\n\n.loadWrapper1[_ngcontent-%COMP%] {\n  background: rgba(0, 0, 0, 0.3);\n  width: 100%;\n  height: 100%;\n  position: fixed;\n  padding: 50px;\n  top: 0px;\n  left: 0px;\n  z-index: 99999;\n}\n\n.loader1[_ngcontent-%COMP%] {\n  border: 5px solid #f3f3f3;\n  \n  border-top: 5px solid #3d3e3f;\n  \n  position: absolute;\n  left: 50%;\n  top: 50%;\n  margin: auto;\n  border-radius: 50%;\n  width: 50px;\n  height: 50px;\n  animation: spin 2s linear infinite;\n}\n\n.export-mode[_ngcontent-%COMP%]   th[_ngcontent-%COMP%]:nth-child(2), .export-mode[_ngcontent-%COMP%]   td[_ngcontent-%COMP%]:nth-child(2) {\n  display: none !important;\n}"]
   });
   return B2cActivityComponent;
@@ -18612,13 +18564,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! projects/supervision/src/app/core/api-handlers */ 91488);
 /* harmony import */ var projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! projects/supervision/src/app/core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! projects/supervision/src/app/core/services/utility.service */ 41894);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/router */ 34793);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common */ 36895);
-/* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ngx-loading */ 82021);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ngx-loading */ 82021);
 /* harmony import */ var _shared_pipes_number_to_words_pipe__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../../../../shared/pipes/number-to-words.pipe */ 43289);
-
 
 
 
@@ -18659,10 +18609,9 @@ const _c1 = function (a0, a1, a2) {
 };
 let ActivityInvoiceComponent = /*#__PURE__*/(() => {
   class ActivityInvoiceComponent {
-    constructor(apiHandlerService, swalService, exportAsService, utility, router, activatedRoute, loc) {
+    constructor(apiHandlerService, swalService, utility, router, activatedRoute, loc) {
       this.apiHandlerService = apiHandlerService;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.activatedRoute = activatedRoute;
@@ -18761,7 +18710,7 @@ let ActivityInvoiceComponent = /*#__PURE__*/(() => {
     }
   }
   ActivityInvoiceComponent.ɵfac = function ActivityInvoiceComponent_Factory(t) {
-    return new (t || ActivityInvoiceComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_9__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.ActivatedRoute), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_common__WEBPACK_IMPORTED_MODULE_11__.Location));
+    return new (t || ActivityInvoiceComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_9__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_9__.ActivatedRoute), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_common__WEBPACK_IMPORTED_MODULE_10__.Location));
   };
   ActivityInvoiceComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineComponent"]({
     type: ActivityInvoiceComponent,
@@ -18948,7 +18897,7 @@ let ActivityInvoiceComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵproperty"]("show", ctx.loading)("config", _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpureFunction3"](33, _c1, ctx.primaryColour, ctx.secondaryColour, ctx.primaryColour))("template", ctx.loadingTemplate);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_11__.NgIf, ngx_loading__WEBPACK_IMPORTED_MODULE_12__.NgxLoadingComponent, _angular_common__WEBPACK_IMPORTED_MODULE_11__.DatePipe, _shared_pipes_number_to_words_pipe__WEBPACK_IMPORTED_MODULE_6__.NumberToWordsPipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_10__.NgIf, ngx_loading__WEBPACK_IMPORTED_MODULE_11__.NgxLoadingComponent, _angular_common__WEBPACK_IMPORTED_MODULE_10__.DatePipe, _shared_pipes_number_to_words_pipe__WEBPACK_IMPORTED_MODULE_6__.NumberToWordsPipe],
     styles: ["tr.hide_all[_ngcontent-%COMP%]    > td[_ngcontent-%COMP%], td.hide_all[_ngcontent-%COMP%] {\n  border-style: hidden;\n}\n\ntbody.hide_all[_ngcontent-%COMP%]    > tr[_ngcontent-%COMP%], td.hide_all[_ngcontent-%COMP%] {\n  border-style: hidden;\n}\n\n.trapezoid[_ngcontent-%COMP%] {\n  border-bottom: 45px solid #3a03be;\n  border-left: 30px solid transparent;\n  border-right: 0px solid transparent;\n  height: 0;\n  width: 100%;\n  color: #fff;\n  text-align: center;\n  line-height: 45px;\n  font-size: 19px;\n  letter-spacing: 1px;\n  font-weight: 600;\n}"]
   });
   return ActivityInvoiceComponent;
@@ -19566,16 +19515,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var _core_api_handlers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../../core/api-handlers */ 91488);
 /* harmony import */ var _core_services_swal_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../../core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var _core_services_utility_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../../core/services/utility.service */ 41894);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/router */ 34793);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/common */ 36895);
 /* harmony import */ var ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ngx-bootstrap/datepicker */ 71552);
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
-/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
-/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/material/sort */ 96308);
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
+/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
+/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/material/sort */ 96308);
 /* harmony import */ var ng2_search_filter__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ng2-search-filter */ 43189);
-
 
 
 
@@ -20144,11 +20091,10 @@ let filterArray = [];
 let respDataCopy = [];
 let B2cBundleBookingReportComponent = /*#__PURE__*/(() => {
   class B2cBundleBookingReportComponent {
-    constructor(apiHandlerService, fb, swalService, exportAsService, utility, router) {
+    constructor(apiHandlerService, fb, swalService, utility, router) {
       this.apiHandlerService = apiHandlerService;
       this.fb = fb;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.subSunk = new subsink__WEBPACK_IMPORTED_MODULE_1__.SubSink();
@@ -20389,7 +20335,7 @@ let B2cBundleBookingReportComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2c-Bundle-Report`).subscribe();
+      this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2c-Bundle-Report`, orientation || this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation);
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -20507,7 +20453,7 @@ let B2cBundleBookingReportComponent = /*#__PURE__*/(() => {
     }
   }
   B2cBundleBookingReportComponent.ɵfac = function B2cBundleBookingReportComponent_Factory(t) {
-    return new (t || B2cBundleBookingReportComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdirectiveInject"](_core_api_handlers__WEBPACK_IMPORTED_MODULE_4__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdirectiveInject"](_core_services_swal_service__WEBPACK_IMPORTED_MODULE_5__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_11__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdirectiveInject"](_core_services_utility_service__WEBPACK_IMPORTED_MODULE_6__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_12__.Router));
+    return new (t || B2cBundleBookingReportComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdirectiveInject"](_core_api_handlers__WEBPACK_IMPORTED_MODULE_4__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdirectiveInject"](_core_services_swal_service__WEBPACK_IMPORTED_MODULE_5__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdirectiveInject"](_core_services_utility_service__WEBPACK_IMPORTED_MODULE_6__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_11__.Router));
   };
   B2cBundleBookingReportComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdefineComponent"]({
     type: B2cBundleBookingReportComponent,
@@ -20799,7 +20745,7 @@ let B2cBundleBookingReportComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵtextInterpolate1"](" ", "From 06 Jan 2021,USD 25 will be charged as cancellation penalty.", " ");
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_13__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_13__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_10__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_10__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_10__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_10__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormControlName, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_7__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_7__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_15__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_16__.MatSort, _angular_router__WEBPACK_IMPORTED_MODULE_12__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_13__.UpperCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_13__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_13__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_8__.Ng2SearchPipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_12__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_12__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_10__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_10__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_10__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_10__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_10__.FormControlName, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_7__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_7__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_14__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_15__.MatSort, _angular_router__WEBPACK_IMPORTED_MODULE_11__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_12__.UpperCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_12__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_12__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_8__.Ng2SearchPipe],
     styles: [".nrm_input[_ngcontent-%COMP%], .src_btn[_ngcontent-%COMP%] {\n  padding: 0.5rem 0.75rem 0.5rem 2.2rem;\n  line-height: 1.7;\n  height: calc(2.5em + 0.75rem + 2px);\n}\n\n.card[_ngcontent-%COMP%] {\n  padding: 30px;\n  font-family: \"Asap\";\n}\n\nh5[_ngcontent-%COMP%] {\n  width: 100%;\n  border-bottom: 1px solid lightgrey;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n}\n\n.btncontainer[_ngcontent-%COMP%] {\n  width: 100%;\n  text-align: center;\n  padding: 12px 0px;\n}\n\nlabel[_ngcontent-%COMP%] {\n  color: #000000;\n  font-weight: 600;\n}\n\n.css[_ngcontent-%COMP%] {\n  background: #000000;\n  color: #ffffff;\n  font-family: \"Asap\";\n  border-radius: 5px;\n}\n\n.modal[_ngcontent-%COMP%] {\n  transform: translate(0, -50%);\n  top: 58%;\n  margin: 0 auto;\n}\n\n.wrapper1[_ngcontent-%COMP%], .wrapper2[_ngcontent-%COMP%] {\n  width: 100%;\n  overflow-x: scroll;\n  overflow-y: hidden;\n}\n\n.wrapper1[_ngcontent-%COMP%] {\n  height: 20px;\n}\n\n.div1[_ngcontent-%COMP%] {\n  width: 4000px;\n  height: 20px;\n}\n\n.div2[_ngcontent-%COMP%] {\n  width: 4000px;\n  overflow: hidden;\n}\n\n.div2[_ngcontent-%COMP%]   .table-responsive[_ngcontent-%COMP%] {\n  overflow: inherit;\n}\n\n.invisible-scrollbar[_ngcontent-%COMP%]::-webkit-scrollbar {\n  display: none;\n}\n\n.loadWrapper1[_ngcontent-%COMP%] {\n  background: rgba(0, 0, 0, 0.3);\n  width: 100%;\n  height: 100%;\n  position: fixed;\n  padding: 50px;\n  top: 0px;\n  left: 0px;\n  z-index: 99999;\n}\n\n.loader1[_ngcontent-%COMP%] {\n  border: 5px solid #f3f3f3;\n  \n  border-top: 5px solid #3d3e3f;\n  \n  position: absolute;\n  left: 50%;\n  top: 50%;\n  margin: auto;\n  border-radius: 50%;\n  width: 50px;\n  height: 50px;\n  animation: spin 2s linear infinite;\n}"]
   });
   return B2cBundleBookingReportComponent;
@@ -21750,14 +21696,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! projects/supervision/src/app/core/api-handlers */ 91488);
 /* harmony import */ var projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! projects/supervision/src/app/core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! projects/supervision/src/app/core/services/utility.service */ 41894);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/common */ 36895);
 /* harmony import */ var ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ngx-bootstrap/datepicker */ 71552);
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
-/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/material/sort */ 96308);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/router */ 34793);
-
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
+/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/material/sort */ 96308);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/router */ 34793);
 
 
 
@@ -21974,11 +21918,10 @@ let filterArray = [];
 let respDataCopy = [];
 let B2cCarComponent = /*#__PURE__*/(() => {
   class B2cCarComponent {
-    constructor(apiHandlerService, fb, swalService, exportAsService, utility) {
+    constructor(apiHandlerService, fb, swalService, utility) {
       this.apiHandlerService = apiHandlerService;
       this.fb = fb;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.subSunk = new subsink__WEBPACK_IMPORTED_MODULE_2__.SubSink();
       this.isOpen = false;
@@ -22198,7 +22141,7 @@ let B2cCarComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2c-CarReport`).subscribe();
+      this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2c-CarReport`, orientation || this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation);
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -22225,7 +22168,7 @@ let B2cCarComponent = /*#__PURE__*/(() => {
     }
   }
   B2cCarComponent.ɵfac = function B2cCarComponent_Factory(t) {
-    return new (t || B2cCarComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_9__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService));
+    return new (t || B2cCarComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService));
   };
   B2cCarComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineComponent"]({
     type: B2cCarComponent,
@@ -22466,7 +22409,7 @@ let B2cCarComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵtextInterpolate1"](" ", "From 06 Jan 2021,USD 25 will be charged as cancellation penalty.", " ");
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_10__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_10__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_8__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_8__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormControlName, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_11__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_11__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_11__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_11__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_11__.NgbPagination, _angular_material_sort__WEBPACK_IMPORTED_MODULE_12__.MatSort, _angular_router__WEBPACK_IMPORTED_MODULE_13__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_10__.UpperCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_10__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_10__.DatePipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_9__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_9__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_8__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_8__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormControlName, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_10__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_10__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_10__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_10__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_10__.NgbPagination, _angular_material_sort__WEBPACK_IMPORTED_MODULE_11__.MatSort, _angular_router__WEBPACK_IMPORTED_MODULE_12__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_9__.UpperCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_9__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_9__.DatePipe],
     styles: [".nrm_input[_ngcontent-%COMP%], .src_btn[_ngcontent-%COMP%] {\n  padding: 0.5rem 0.75rem 0.5rem 2.2rem;\n  line-height: 1.7;\n  height: calc(2.5em + 0.75rem + 2px);\n}\n\n.card[_ngcontent-%COMP%] {\n  padding: 30px;\n  font-family: \"Asap\";\n}\n\nh5[_ngcontent-%COMP%] {\n  width: 100%;\n  border-bottom: 1px solid lightgrey;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n}\n\n.btncontainer[_ngcontent-%COMP%] {\n  width: 100%;\n  text-align: center;\n  padding: 12px 0px;\n}\n\nlabel[_ngcontent-%COMP%] {\n  color: #000000;\n  font-weight: 600;\n}"]
   });
   return B2cCarComponent;
@@ -22488,11 +22431,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! projects/supervision/src/app/core/api-handlers */ 91488);
 /* harmony import */ var projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! projects/supervision/src/app/core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! projects/supervision/src/app/core/services/utility.service */ 41894);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ 34793);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common */ 36895);
-
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ 36895);
 
 
 
@@ -22612,10 +22553,9 @@ function B2cCarCancelComponent_div_0_Template(rf, ctx) {
 }
 let B2cCarCancelComponent = /*#__PURE__*/(() => {
   class B2cCarCancelComponent {
-    constructor(apiHandlerService, swalService, exportAsService, utility, router, activatedRoute) {
+    constructor(apiHandlerService, swalService, utility, router, activatedRoute) {
       this.apiHandlerService = apiHandlerService;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.activatedRoute = activatedRoute;
@@ -22676,7 +22616,7 @@ let B2cCarCancelComponent = /*#__PURE__*/(() => {
     }
   }
   B2cCarCancelComponent.ɵfac = function B2cCarCancelComponent_Factory(t) {
-    return new (t || B2cCarCancelComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_1__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_2__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_5__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_3__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_6__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_6__.ActivatedRoute));
+    return new (t || B2cCarCancelComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_1__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_2__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_3__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_5__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_5__.ActivatedRoute));
   };
   B2cCarCancelComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineComponent"]({
     type: B2cCarCancelComponent,
@@ -22719,7 +22659,7 @@ let B2cCarCancelComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("ngIf", ctx.invoiceData);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_7__.NgIf, _angular_router__WEBPACK_IMPORTED_MODULE_6__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_7__.DatePipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_6__.NgIf, _angular_router__WEBPACK_IMPORTED_MODULE_5__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_6__.DatePipe],
     styles: [".head_can[_ngcontent-%COMP%] {\n  border-bottom: 1px dashed #ccc;\n  display: block;\n  margin: 0 0 20px;\n  overflow: hidden;\n}\n\n.head_can[_ngcontent-%COMP%] {\n  border-bottom: 1px dashed #ccc;\n  display: block;\n  margin: 0 0 20px;\n  overflow: hidden;\n}\n\n.canc_hed[_ngcontent-%COMP%] {\n  color: #333;\n  float: left;\n  font-size: 26px;\n  font-weight: normal;\n  margin: 0;\n  padding: 10px 0;\n}\n\n.ref_number[_ngcontent-%COMP%] {\n  color: #666;\n  float: right;\n  font-size: 14px;\n  text-align: right;\n}\n\n.cancel_bkd[_ngcontent-%COMP%] {\n  background: #fff none repeat scroll 0 0;\n  border: 1px solid #fff;\n  border-radius: 3px;\n  box-shadow: 0 1px 2px 0 #ccc;\n  float: left;\n  width: 100%;\n}\n\n.ritside_can[_ngcontent-%COMP%] {\n  float: right;\n}\n\n.row_can_table.hed_table[_ngcontent-%COMP%] {\n  background: #ddd;\n}\n\n.row_can_table[_ngcontent-%COMP%] {\n  background: #fff none repeat scroll 0 0;\n  border-bottom: 1px dashed #ddd;\n  float: left;\n  width: 100%;\n}\n\n.pad_evry[_ngcontent-%COMP%] {\n  display: block;\n  overflow: hidden;\n  padding: 10px;\n}\n\n.nopad[_ngcontent-%COMP%] {\n  padding: 0 !important;\n}\n\n.can_flt_name[_ngcontent-%COMP%] {\n  color: #444;\n  display: block;\n  overflow: hidden;\n}\n\n.place_big_text[_ngcontent-%COMP%] {\n  color: #333;\n  display: block;\n  font-size: 16px;\n  font-weight: 500;\n  overflow: hidden;\n}\n\n.place_smal_txt[_ngcontent-%COMP%] {\n  color: #666;\n  display: block;\n  font-size: 13px;\n  overflow: hidden;\n}\n\n.date_mension[_ngcontent-%COMP%] {\n  color: #666;\n  display: block;\n  font-size: 12px;\n  overflow: hidden;\n}\n\n.can_pads[_ngcontent-%COMP%] {\n  color: #444;\n  display: block;\n  font-size: 13px;\n  overflow: hidden;\n  padding: 10px;\n}\n\n.imge_can[_ngcontent-%COMP%] {\n  float: left;\n  margin-right: 10px;\n  overflow: hidden;\n  width: 110px;\n}\n\n.amnt_disply[_ngcontent-%COMP%] {\n  color: #444;\n  display: block;\n  font-size: 12px;\n  margin-right: 20px;\n  overflow: hidden;\n  text-align: right;\n  text-transform: uppercase;\n}\n\n.ritside_can[_ngcontent-%COMP%] {\n  float: right;\n}\n\n.btn_continue[_ngcontent-%COMP%] {\n  display: block;\n  overflow: hidden;\n  padding: 20px 0;\n}\n\n.amnt_paid[_ngcontent-%COMP%] {\n  font-size: 20px;\n}"]
   });
   return B2cCarCancelComponent;
@@ -22742,11 +22682,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! projects/supervision/src/app/core/api-handlers */ 91488);
 /* harmony import */ var projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! projects/supervision/src/app/core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! projects/supervision/src/app/core/services/utility.service */ 41894);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ 34793);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ 36895);
-
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common */ 36895);
 
 
 
@@ -23067,10 +23005,9 @@ function B2cCarInvoiceComponent_div_0_Template(rf, ctx) {
 const log = new projects_supervision_src_app_core_logger_logger_service__WEBPACK_IMPORTED_MODULE_0__.Logger('report/B2cCarInvoiceComponent');
 let B2cCarInvoiceComponent = /*#__PURE__*/(() => {
   class B2cCarInvoiceComponent {
-    constructor(apiHandlerService, swalService, exportAsService, utility, router, activatedRoute) {
+    constructor(apiHandlerService, swalService, utility, router, activatedRoute) {
       this.apiHandlerService = apiHandlerService;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.activatedRoute = activatedRoute;
@@ -23129,7 +23066,7 @@ let B2cCarInvoiceComponent = /*#__PURE__*/(() => {
     }
   }
   B2cCarInvoiceComponent.ɵfac = function B2cCarInvoiceComponent_Factory(t) {
-    return new (t || B2cCarInvoiceComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_2__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_3__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_6__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_4__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_7__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_7__.ActivatedRoute));
+    return new (t || B2cCarInvoiceComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_2__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_3__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_4__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_6__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_6__.ActivatedRoute));
   };
   B2cCarInvoiceComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdefineComponent"]({
     type: B2cCarInvoiceComponent,
@@ -23154,7 +23091,7 @@ let B2cCarInvoiceComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵproperty"]("ngIf", ctx.invoiceData);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_8__.NgIf, _angular_router__WEBPACK_IMPORTED_MODULE_7__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_8__.DatePipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_7__.NgIf, _angular_router__WEBPACK_IMPORTED_MODULE_6__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_7__.DatePipe],
     styles: ["tr.hide_all[_ngcontent-%COMP%]    > td[_ngcontent-%COMP%], td.hide_all[_ngcontent-%COMP%] {\n  border-style: hidden;\n}\n\ntbody.hide_all[_ngcontent-%COMP%]    > tr[_ngcontent-%COMP%], td.hide_all[_ngcontent-%COMP%] {\n  border-style: hidden;\n}"]
   });
   return B2cCarInvoiceComponent;
@@ -23177,11 +23114,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! projects/supervision/src/app/core/api-handlers */ 91488);
 /* harmony import */ var projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! projects/supervision/src/app/core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! projects/supervision/src/app/core/services/utility.service */ 41894);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ 34793);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ 36895);
-
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common */ 36895);
 
 
 
@@ -23375,10 +23310,9 @@ function B2cCarVoucherComponent_div_0_Template(rf, ctx) {
 const log = new projects_supervision_src_app_core_logger_logger_service__WEBPACK_IMPORTED_MODULE_0__.Logger('report/HotelVoucherComponent');
 let B2cCarVoucherComponent = /*#__PURE__*/(() => {
   class B2cCarVoucherComponent {
-    constructor(apiHandlerService, swalService, exportAsService, utility, router, activatedRoute) {
+    constructor(apiHandlerService, swalService, utility, router, activatedRoute) {
       this.apiHandlerService = apiHandlerService;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.activatedRoute = activatedRoute;
@@ -23423,7 +23357,7 @@ let B2cCarVoucherComponent = /*#__PURE__*/(() => {
     }
   }
   B2cCarVoucherComponent.ɵfac = function B2cCarVoucherComponent_Factory(t) {
-    return new (t || B2cCarVoucherComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_2__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_3__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_6__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_4__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_7__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_7__.ActivatedRoute));
+    return new (t || B2cCarVoucherComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_2__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_3__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_4__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_6__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_6__.ActivatedRoute));
   };
   B2cCarVoucherComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdefineComponent"]({
     type: B2cCarVoucherComponent,
@@ -23448,7 +23382,7 @@ let B2cCarVoucherComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵproperty"]("ngIf", ctx.voucherData);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_8__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_8__.NgIf, _angular_router__WEBPACK_IMPORTED_MODULE_7__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_8__.DatePipe]
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_7__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_7__.NgIf, _angular_router__WEBPACK_IMPORTED_MODULE_6__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_7__.DatePipe]
   });
   return B2cCarVoucherComponent;
 })();
@@ -23479,16 +23413,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! projects/supervision/src/app/core/api-handlers */ 91488);
 /* harmony import */ var projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! projects/supervision/src/app/core/services/swal.service */ 59826);
 /* harmony import */ var projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! projects/supervision/src/app/core/services/utility.service */ 41894);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ngx-export-as */ 30901);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/router */ 34793);
 /* harmony import */ var _report_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../report.service */ 47191);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/common */ 36895);
 /* harmony import */ var ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ngx-bootstrap/datepicker */ 71552);
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
-/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
-/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @angular/material/sort */ 96308);
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
+/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
+/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @angular/material/sort */ 96308);
 /* harmony import */ var ng2_search_filter__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ng2-search-filter */ 43189);
-
 
 
 
@@ -23982,12 +23914,11 @@ let filterArray = [];
 let respDataCopy = [];
 let B2cFlightComponent = /*#__PURE__*/(() => {
   class B2cFlightComponent {
-    constructor(apiHandlerService, fb, swalService, utility, exportAsService, router, reportService) {
+    constructor(apiHandlerService, fb, swalService, utility, router, reportService) {
       this.apiHandlerService = apiHandlerService;
       this.fb = fb;
       this.swalService = swalService;
       this.utility = utility;
-      this.exportAsService = exportAsService;
       this.router = router;
       this.reportService = reportService;
       this.subSunk = new subsink__WEBPACK_IMPORTED_MODULE_2__.SubSink();
@@ -24299,7 +24230,7 @@ let B2cFlightComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2c-Flight-Report`).subscribe();
+      this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2c-Flight-Report`, orientation || this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation);
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -24564,7 +24495,7 @@ let B2cFlightComponent = /*#__PURE__*/(() => {
     }
   }
   B2cFlightComponent.ɵfac = function B2cFlightComponent_Factory(t) {
-    return new (t || B2cFlightComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_7__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_14__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_8__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_9__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_15__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_16__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdirectiveInject"](_report_service__WEBPACK_IMPORTED_MODULE_10__.ReportService));
+    return new (t || B2cFlightComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_7__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_14__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_8__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_9__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_15__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdirectiveInject"](_report_service__WEBPACK_IMPORTED_MODULE_10__.ReportService));
   };
   B2cFlightComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵdefineComponent"]({
     type: B2cFlightComponent,
@@ -24988,7 +24919,7 @@ let B2cFlightComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_13__["ɵɵproperty"]("ngIf", ctx.subjectName == "Void");
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_17__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_17__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_14__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_14__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_14__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_14__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.FormControlName, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_11__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_11__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_18__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_18__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_18__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_18__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_18__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_19__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_20__.MatSort, _angular_material_sort__WEBPACK_IMPORTED_MODULE_20__.MatSortHeader, _angular_router__WEBPACK_IMPORTED_MODULE_16__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_17__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_17__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_12__.Ng2SearchPipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_16__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_16__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_14__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_14__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_14__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_14__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_14__.FormControlName, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_11__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_11__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_18__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_19__.MatSort, _angular_material_sort__WEBPACK_IMPORTED_MODULE_19__.MatSortHeader, _angular_router__WEBPACK_IMPORTED_MODULE_15__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_16__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_16__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_12__.Ng2SearchPipe],
     styles: [".nrm_input[_ngcontent-%COMP%], .src_btn[_ngcontent-%COMP%] {\n  padding: 0.5rem 0.75rem 0.5rem 2.2rem;\n  line-height: 1.7;\n  height: calc(2.5em + 0.75rem + 2px);\n}\n\n.card[_ngcontent-%COMP%] {\n  padding: 30px;\n  font-family: \"Asap\";\n}\n\nh5[_ngcontent-%COMP%] {\n  width: 100%;\n  border-bottom: 1px solid lightgrey;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n}\n\n.btncontainer[_ngcontent-%COMP%] {\n  width: 100%;\n  text-align: center;\n  padding: 12px 0px;\n}\n\nlabel[_ngcontent-%COMP%] {\n  color: #000000;\n  font-weight: 600;\n}\n\n.modal[_ngcontent-%COMP%] {\n  transform: translate(0, -50%);\n  top: 58%;\n  margin: 0 auto;\n}\n\n#paymentModalLabel[_ngcontent-%COMP%] {\n  border-bottom: none !important;\n  padding-bottom: 0px !important;\n  margin-bottom: 0px !important;\n}\n\n.wrapper1[_ngcontent-%COMP%], .wrapper2[_ngcontent-%COMP%] {\n  width: 100%;\n  overflow-x: scroll;\n  overflow-y: hidden;\n}\n\n.wrapper1[_ngcontent-%COMP%] {\n  height: 20px;\n}\n\n.div1[_ngcontent-%COMP%] {\n  width: 5000px;\n  height: 20px;\n}\n\n.div2[_ngcontent-%COMP%] {\n  width: 5000px;\n  overflow: hidden;\n}\n\n.div2[_ngcontent-%COMP%]   .table-responsive[_ngcontent-%COMP%] {\n  overflow: inherit;\n}\n\n.invisible-scrollbar[_ngcontent-%COMP%]::-webkit-scrollbar {\n  display: none;\n}\n\n.loadWrapper1[_ngcontent-%COMP%] {\n  background: rgba(0, 0, 0, 0.3);\n  width: 100%;\n  height: 100%;\n  position: fixed;\n  padding: 50px;\n  top: 0px;\n  left: 0px;\n  z-index: 99999;\n}\n\n.loader1[_ngcontent-%COMP%] {\n  border: 5px solid #f3f3f3; \n  border-top: 5px solid #3d3e3f; \n  position: absolute;\n  left: 50%;\n  top: 50%;\n  margin: auto;\n  border-radius: 50%;\n  width: 50px;\n  height: 50px;\n  animation: spin 2s linear infinite;\n}"]
   });
   return B2cFlightComponent;
@@ -25014,13 +24945,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! projects/supervision/src/app/core/api-handlers */ 91488);
 /* harmony import */ var projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! projects/supervision/src/app/core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! projects/supervision/src/app/core/services/utility.service */ 41894);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/router */ 34793);
 /* harmony import */ var _report_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../../report.service */ 47191);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common */ 36895);
 /* harmony import */ var _shared_pipes_number_to_words_pipe__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../../../../shared/pipes/number-to-words.pipe */ 43289);
-
 
 
 
@@ -25279,10 +25208,9 @@ function B2cFlightInvoiceComponent_div_0_Template(rf, ctx) {
 }
 let B2cFlightInvoiceComponent = /*#__PURE__*/(() => {
   class B2cFlightInvoiceComponent {
-    constructor(apiHandlerService, swalService, exportAsService, utility, router, activatedRoute, reportService) {
+    constructor(apiHandlerService, swalService, utility, router, activatedRoute, reportService) {
       this.apiHandlerService = apiHandlerService;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.activatedRoute = activatedRoute;
@@ -25366,7 +25294,7 @@ let B2cFlightInvoiceComponent = /*#__PURE__*/(() => {
     }
   }
   B2cFlightInvoiceComponent.ɵfac = function B2cFlightInvoiceComponent_Factory(t) {
-    return new (t || B2cFlightInvoiceComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_10__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_11__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_11__.ActivatedRoute), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_report_service__WEBPACK_IMPORTED_MODULE_6__.ReportService));
+    return new (t || B2cFlightInvoiceComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.ActivatedRoute), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_report_service__WEBPACK_IMPORTED_MODULE_6__.ReportService));
   };
   B2cFlightInvoiceComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdefineComponent"]({
     type: B2cFlightInvoiceComponent,
@@ -25391,7 +25319,7 @@ let B2cFlightInvoiceComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵproperty"]("ngIf", ctx.invoiceData);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_12__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_12__.NgIf, _angular_router__WEBPACK_IMPORTED_MODULE_11__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_12__.UpperCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_12__.DatePipe, _shared_pipes_number_to_words_pipe__WEBPACK_IMPORTED_MODULE_7__.NumberToWordsPipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_11__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_11__.NgIf, _angular_router__WEBPACK_IMPORTED_MODULE_10__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_11__.UpperCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_11__.DatePipe, _shared_pipes_number_to_words_pipe__WEBPACK_IMPORTED_MODULE_7__.NumberToWordsPipe],
     styles: ["tr.hide_all[_ngcontent-%COMP%]    > td[_ngcontent-%COMP%], td.hide_all[_ngcontent-%COMP%] {\n  border-style: hidden;\n}\n\ntbody.hide_all[_ngcontent-%COMP%]    > tr[_ngcontent-%COMP%], td.hide_all[_ngcontent-%COMP%] {\n  border-style: hidden;\n}\n\n.trapezoid[_ngcontent-%COMP%] {\n  border-bottom: 60px solid #082E53;\n  border-left: 45px solid transparent;\n  border-right: 0px solid transparent;\n  height: 0;\n  width: 100%;\n  color: #fff;\n  text-align: center;\n  line-height: 60px;\n  font-size: 19px;\n  letter-spacing: 8px;\n  text-transform: uppercase;\n  font-weight: 600;\n}"]
   });
   return B2cFlightInvoiceComponent;
@@ -26101,16 +26029,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! projects/supervision/src/app/core/api-handlers */ 91488);
 /* harmony import */ var projects_b2b_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! projects/b2b/src/app/core/services/swal.service */ 78525);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ngx-export-as */ 30901);
-/* harmony import */ var projects_b2b_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! projects/b2b/src/app/core/services/utility.service */ 82931);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/router */ 34793);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! projects/supervision/src/app/core/services/utility.service */ 41894);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common */ 36895);
 /* harmony import */ var ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ngx-bootstrap/datepicker */ 71552);
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
-/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
-/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/material/sort */ 96308);
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
+/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
+/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/material/sort */ 96308);
 /* harmony import */ var ng2_search_filter__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ng2-search-filter */ 43189);
-
 
 
 
@@ -26266,11 +26192,10 @@ function B2cHotelEnquiryComponent_tr_72_Template(rf, ctx) {
 }
 let B2cHotelEnquiryComponent = /*#__PURE__*/(() => {
   class B2cHotelEnquiryComponent {
-    constructor(apiHandlerService, fb, swalService, exportAsService, utility, router, route) {
+    constructor(apiHandlerService, fb, swalService, utility, router, route) {
       this.apiHandlerService = apiHandlerService;
       this.fb = fb;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.route = route;
@@ -26466,7 +26391,7 @@ let B2cHotelEnquiryComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2c-hotel-enquiry`).subscribe();
+      this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2c-hotel-enquiry`, orientation || this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation);
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -26544,7 +26469,7 @@ let B2cHotelEnquiryComponent = /*#__PURE__*/(() => {
     }
   }
   B2cHotelEnquiryComponent.ɵfac = function B2cHotelEnquiryComponent_Factory(t) {
-    return new (t || B2cHotelEnquiryComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_b2b_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_10__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_b2b_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_11__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_11__.ActivatedRoute));
+    return new (t || B2cHotelEnquiryComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_b2b_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.ActivatedRoute));
   };
   B2cHotelEnquiryComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdefineComponent"]({
     type: B2cHotelEnquiryComponent,
@@ -26734,7 +26659,7 @@ let B2cHotelEnquiryComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵproperty"]("ngValue", 1000);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_12__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_12__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_9__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_9__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_9__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormControlName, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_14__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_15__.MatSort, _angular_material_sort__WEBPACK_IMPORTED_MODULE_15__.MatSortHeader, _angular_common__WEBPACK_IMPORTED_MODULE_12__.SlicePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_7__.Ng2SearchPipe]
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_11__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_11__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_9__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_9__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_9__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormControlName, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_13__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_14__.MatSort, _angular_material_sort__WEBPACK_IMPORTED_MODULE_14__.MatSortHeader, _angular_common__WEBPACK_IMPORTED_MODULE_11__.SlicePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_7__.Ng2SearchPipe]
   });
   return B2cHotelEnquiryComponent;
 })();
@@ -26764,17 +26689,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var _core_api_handlers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../../core/api-handlers */ 91488);
 /* harmony import */ var _core_services_swal_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../../core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var _core_services_utility_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../../core/services/utility.service */ 41894);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/router */ 34793);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/common */ 36895);
-/* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ngx-loading */ 82021);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ngx-loading */ 82021);
 /* harmony import */ var ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ngx-bootstrap/datepicker */ 71552);
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
-/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
-/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @angular/material/sort */ 96308);
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
+/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
+/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @angular/material/sort */ 96308);
 /* harmony import */ var ng2_search_filter__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng2-search-filter */ 43189);
-
 
 
 
@@ -27548,11 +27471,10 @@ let filterArray = [];
 let respDataCopy = [];
 let B2cHotelComponent = /*#__PURE__*/(() => {
   class B2cHotelComponent {
-    constructor(apiHandlerService, fb, swalService, exportAsService, utility, router) {
+    constructor(apiHandlerService, fb, swalService, utility, router) {
       this.apiHandlerService = apiHandlerService;
       this.fb = fb;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.subSunk = new subsink__WEBPACK_IMPORTED_MODULE_1__.SubSink();
@@ -27928,7 +27850,7 @@ let B2cHotelComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2c-HotelReport`).subscribe();
+      this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2c-HotelReport`, orientation || this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation);
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -28146,7 +28068,7 @@ let B2cHotelComponent = /*#__PURE__*/(() => {
     }
   }
   B2cHotelComponent.ɵfac = function B2cHotelComponent_Factory(t) {
-    return new (t || B2cHotelComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_core_api_handlers__WEBPACK_IMPORTED_MODULE_5__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_core_services_swal_service__WEBPACK_IMPORTED_MODULE_6__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_15__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_core_services_utility_service__WEBPACK_IMPORTED_MODULE_7__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_16__.Router));
+    return new (t || B2cHotelComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_core_api_handlers__WEBPACK_IMPORTED_MODULE_5__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_core_services_swal_service__WEBPACK_IMPORTED_MODULE_6__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_core_services_utility_service__WEBPACK_IMPORTED_MODULE_7__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_15__.Router));
   };
   B2cHotelComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdefineComponent"]({
     type: B2cHotelComponent,
@@ -28471,7 +28393,7 @@ let B2cHotelComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("show", ctx.loading)("config", _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵpureFunction3"](57, _c0, ctx.primaryColour, ctx.secondaryColour, ctx.primaryColour))("template", ctx.loadingTemplate);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_17__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_17__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_11__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_11__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_11__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormControlName, ngx_loading__WEBPACK_IMPORTED_MODULE_18__.NgxLoadingComponent, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_19__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_19__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_19__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_19__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_19__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_20__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_21__.MatSort, _angular_common__WEBPACK_IMPORTED_MODULE_17__.UpperCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_17__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_17__.DecimalPipe, _angular_common__WEBPACK_IMPORTED_MODULE_17__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_9__.Ng2SearchPipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_16__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_16__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_11__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_11__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_11__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormControlName, ngx_loading__WEBPACK_IMPORTED_MODULE_17__.NgxLoadingComponent, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_18__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_18__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_18__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_18__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_18__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_19__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_20__.MatSort, _angular_common__WEBPACK_IMPORTED_MODULE_16__.UpperCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_16__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_16__.DecimalPipe, _angular_common__WEBPACK_IMPORTED_MODULE_16__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_9__.Ng2SearchPipe],
     styles: [".nrm_input[_ngcontent-%COMP%], .src_btn[_ngcontent-%COMP%] {\n  line-height: 1.7;\n  height: calc(2.5em + 0.75rem + 2px);\n}\n\n.btncontainer[_ngcontent-%COMP%] {\n  width: 100%;\n  text-align: center;\n  padding: 12px 0px;\n}\n\n.modal[_ngcontent-%COMP%] {\n  transform: translate(0, -50%);\n  top: 58%;\n  margin: 0 auto;\n}\n\n.wrapper1[_ngcontent-%COMP%], .wrapper2[_ngcontent-%COMP%] {\n  width: 100%;\n  overflow-x: scroll;\n  overflow-y: hidden;\n}\n\n.wrapper1[_ngcontent-%COMP%] {\n  height: 20px;\n}\n\n.div1[_ngcontent-%COMP%] {\n  width: 6000px;\n  height: 20px;\n}\n\n.div2[_ngcontent-%COMP%] {\n  width: 6000px;\n  overflow: hidden;\n}\n\n.div2[_ngcontent-%COMP%]   .table-responsive[_ngcontent-%COMP%] {\n  overflow: inherit;\n}\n\n.invisible-scrollbar[_ngcontent-%COMP%]::-webkit-scrollbar {\n  display: none;\n}"]
   });
   return B2cHotelComponent;
@@ -28498,12 +28420,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! projects/supervision/src/app/core/api-handlers */ 91488);
 /* harmony import */ var projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! projects/supervision/src/app/core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! projects/supervision/src/app/core/services/utility.service */ 41894);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/router */ 34793);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common */ 36895);
 /* harmony import */ var _shared_pipes_number_to_words_pipe__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../../../../shared/pipes/number-to-words.pipe */ 43289);
-
 
 
 
@@ -28743,10 +28663,9 @@ function HotelInvoiceComponent_div_0_Template(rf, ctx) {
 const log = new projects_supervision_src_app_core_logger_logger_service__WEBPACK_IMPORTED_MODULE_0__.Logger('report/HotelVoucherComponent');
 let HotelInvoiceComponent = /*#__PURE__*/(() => {
   class HotelInvoiceComponent {
-    constructor(apiHandlerService, swalService, exportAsService, utility, router, activatedRoute) {
+    constructor(apiHandlerService, swalService, utility, router, activatedRoute) {
       this.apiHandlerService = apiHandlerService;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.activatedRoute = activatedRoute;
@@ -28855,7 +28774,7 @@ let HotelInvoiceComponent = /*#__PURE__*/(() => {
     }
   }
   HotelInvoiceComponent.ɵfac = function HotelInvoiceComponent_Factory(t) {
-    return new (t || HotelInvoiceComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_4__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_5__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_10__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_6__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_11__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_11__.ActivatedRoute));
+    return new (t || HotelInvoiceComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_4__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_5__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_6__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.ActivatedRoute));
   };
   HotelInvoiceComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdefineComponent"]({
     type: HotelInvoiceComponent,
@@ -28880,7 +28799,7 @@ let HotelInvoiceComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵproperty"]("ngIf", ctx.voucherData);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_12__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_12__.NgIf, _angular_router__WEBPACK_IMPORTED_MODULE_11__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_12__.DatePipe, _shared_pipes_number_to_words_pipe__WEBPACK_IMPORTED_MODULE_7__.NumberToWordsPipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_11__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_11__.NgIf, _angular_router__WEBPACK_IMPORTED_MODULE_10__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_11__.DatePipe, _shared_pipes_number_to_words_pipe__WEBPACK_IMPORTED_MODULE_7__.NumberToWordsPipe],
     styles: ["tr.hide_all[_ngcontent-%COMP%]    > td[_ngcontent-%COMP%], td.hide_all[_ngcontent-%COMP%] {\n  border-style: hidden;\n}\n\ntbody.hide_all[_ngcontent-%COMP%]    > tr[_ngcontent-%COMP%], td.hide_all[_ngcontent-%COMP%] {\n  border-style: hidden;\n}\n\n.trapezoid[_ngcontent-%COMP%] {\n  border-bottom: 45px solid #3a03be;\n  border-left: 30px solid transparent;\n  border-right: 0px solid transparent;\n  height: 0;\n  width: 100%;\n  color: #fff;\n  text-align: center;\n  line-height: 45px;\n  font-size: 19px;\n  letter-spacing: 1px;\n  font-weight: 600;\n}"]
   });
   return HotelInvoiceComponent;
@@ -28907,12 +28826,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! projects/supervision/src/app/core/api-handlers */ 91488);
 /* harmony import */ var projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! projects/supervision/src/app/core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! projects/supervision/src/app/core/services/utility.service */ 41894);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/router */ 34793);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common */ 36895);
-/* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ngx-loading */ 82021);
-
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ngx-loading */ 82021);
 
 
 
@@ -29685,10 +29602,9 @@ const _c1 = function (a0, a1, a2) {
 const log = new projects_supervision_src_app_core_logger_logger_service__WEBPACK_IMPORTED_MODULE_0__.Logger('report/HotelVoucherComponent');
 let HotelVoucherComponent = /*#__PURE__*/(() => {
   class HotelVoucherComponent {
-    constructor(apiHandlerService, swalService, exportAsService, utility, router, activatedRoute, cdr, location) {
+    constructor(apiHandlerService, swalService, utility, router, activatedRoute, cdr, location) {
       this.apiHandlerService = apiHandlerService;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.activatedRoute = activatedRoute;
@@ -29957,7 +29873,7 @@ let HotelVoucherComponent = /*#__PURE__*/(() => {
     }
   }
   HotelVoucherComponent.ɵfac = function HotelVoucherComponent_Factory(t) {
-    return new (t || HotelVoucherComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_4__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_5__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_9__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_6__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.ActivatedRoute), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_7__.ChangeDetectorRef), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_common__WEBPACK_IMPORTED_MODULE_11__.Location));
+    return new (t || HotelVoucherComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_4__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_5__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_6__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_9__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_9__.ActivatedRoute), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_7__.ChangeDetectorRef), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_common__WEBPACK_IMPORTED_MODULE_10__.Location));
   };
   HotelVoucherComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineComponent"]({
     type: HotelVoucherComponent,
@@ -29985,7 +29901,7 @@ let HotelVoucherComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵproperty"]("show", ctx.loading)("config", _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵpureFunction3"](4, _c1, ctx.primaryColour, ctx.secondaryColour, ctx.primaryColour))("template", ctx.loadingTemplate);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_11__.NgClass, _angular_common__WEBPACK_IMPORTED_MODULE_11__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_11__.NgIf, _angular_common__WEBPACK_IMPORTED_MODULE_11__.NgStyle, ngx_loading__WEBPACK_IMPORTED_MODULE_12__.NgxLoadingComponent, _angular_common__WEBPACK_IMPORTED_MODULE_11__.UpperCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_11__.DecimalPipe, _angular_common__WEBPACK_IMPORTED_MODULE_11__.TitleCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_11__.DatePipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_10__.NgClass, _angular_common__WEBPACK_IMPORTED_MODULE_10__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_10__.NgIf, _angular_common__WEBPACK_IMPORTED_MODULE_10__.NgStyle, ngx_loading__WEBPACK_IMPORTED_MODULE_11__.NgxLoadingComponent, _angular_common__WEBPACK_IMPORTED_MODULE_10__.UpperCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_10__.DecimalPipe, _angular_common__WEBPACK_IMPORTED_MODULE_10__.TitleCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_10__.DatePipe],
     styles: ["@media print {\n  .blackbg[_ngcontent-%COMP%] {\n    background-color: #000;\n    -webkit-print-color-adjust: exact;\n  }\n}\n.trapezoid[_ngcontent-%COMP%] {\n  border-bottom: 60px solid #082E53;\n  border-left: 45px solid transparent;\n  border-right: 0px solid transparent;\n  height: 0;\n  width: 100%;\n  color: #fff;\n  text-align: center;\n  line-height: 60px;\n  font-size: 19px;\n  letter-spacing: 8px;\n  text-transform: uppercase;\n  font-weight: 600;\n}\n\n.badge[_ngcontent-%COMP%] {\n  display: inline-block;\n  padding: 8px;\n  font-weight: 500;\n  text-align: center;\n}\n\n  ul > li > ol > li {\n  list-style: decimal;\n}\n\n.flag-icon[_ngcontent-%COMP%] {\n  width: 20px;\n  height: 20px;\n}\n\n@media print {\n  .no-print[_ngcontent-%COMP%] {\n    display: none !important;\n  }\n}"]
   });
   return HotelVoucherComponent;
@@ -30011,16 +29927,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! projects/supervision/src/app/core/api-handlers */ 91488);
 /* harmony import */ var projects_b2b_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! projects/b2b/src/app/core/services/swal.service */ 78525);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ngx-export-as */ 30901);
-/* harmony import */ var projects_b2b_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! projects/b2b/src/app/core/services/utility.service */ 82931);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/router */ 34793);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! projects/supervision/src/app/core/services/utility.service */ 41894);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common */ 36895);
 /* harmony import */ var ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ngx-bootstrap/datepicker */ 71552);
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
-/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
-/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/material/sort */ 96308);
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
+/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
+/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/material/sort */ 96308);
 /* harmony import */ var ng2_search_filter__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ng2-search-filter */ 43189);
-
 
 
 
@@ -30227,11 +30141,10 @@ function B2cTourEnquiryComponent_tr_72_Template(rf, ctx) {
 }
 let B2cTourEnquiryComponent = /*#__PURE__*/(() => {
   class B2cTourEnquiryComponent {
-    constructor(apiHandlerService, fb, swalService, exportAsService, utility, router, route) {
+    constructor(apiHandlerService, fb, swalService, utility, router, route) {
       this.apiHandlerService = apiHandlerService;
       this.fb = fb;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.route = route;
@@ -30459,7 +30372,7 @@ let B2cTourEnquiryComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2c-tour-enquiry`).subscribe();
+      this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2c-tour-enquiry`, orientation || this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation);
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -30545,7 +30458,7 @@ let B2cTourEnquiryComponent = /*#__PURE__*/(() => {
     }
   }
   B2cTourEnquiryComponent.ɵfac = function B2cTourEnquiryComponent_Factory(t) {
-    return new (t || B2cTourEnquiryComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_b2b_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_10__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_b2b_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_11__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_11__.ActivatedRoute));
+    return new (t || B2cTourEnquiryComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_b2b_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.ActivatedRoute));
   };
   B2cTourEnquiryComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdefineComponent"]({
     type: B2cTourEnquiryComponent,
@@ -30735,7 +30648,7 @@ let B2cTourEnquiryComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵproperty"]("ngValue", 1000);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_12__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_12__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_9__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_9__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_9__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormControlName, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_13__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_14__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_15__.MatSort, _angular_material_sort__WEBPACK_IMPORTED_MODULE_15__.MatSortHeader, _angular_common__WEBPACK_IMPORTED_MODULE_12__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_12__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_7__.Ng2SearchPipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_11__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_11__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_9__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_9__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_9__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormControlName, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_6__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_13__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_14__.MatSort, _angular_material_sort__WEBPACK_IMPORTED_MODULE_14__.MatSortHeader, _angular_common__WEBPACK_IMPORTED_MODULE_11__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_11__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_7__.Ng2SearchPipe],
     styles: [".nrm_input[_ngcontent-%COMP%], .src_btn[_ngcontent-%COMP%] {\n  padding: 0.5rem 0.75rem 0.5rem 2.2rem;\n  line-height: 1.7;\n  height: calc(2.5em + 0.75rem + 2px);\n}\n\n.card[_ngcontent-%COMP%] {\n  padding: 30px;\n  font-family: \"Asap\";\n}\n\nh5[_ngcontent-%COMP%] {\n  width: 100%;\n  border-bottom: 1px solid lightgrey;\n  margin-bottom: 10px;\n  padding-bottom: 10px;\n}\n\n.btncontainer[_ngcontent-%COMP%] {\n  width: 100%;\n  text-align: center;\n  padding: 12px 0px;\n}\n\nlabel[_ngcontent-%COMP%] {\n  color: #000000;\n  font-weight: 600;\n}\n\n.css[_ngcontent-%COMP%] {\n  background: #000000;\n  color: #ffffff;\n  font-family: \"Asap\";\n  border-radius: 5px;\n}\n\n.modal[_ngcontent-%COMP%] {\n  transform: translate(0, -50%);\n  top: 58%;\n  margin: 0 auto;\n}\n\n.wrapper1[_ngcontent-%COMP%], .wrapper2[_ngcontent-%COMP%] {\n  width: 100%;\n  overflow-x: scroll;\n  overflow-y: hidden;\n}\n\n.wrapper1[_ngcontent-%COMP%] {\n  height: 20px;\n}\n\n.div1[_ngcontent-%COMP%] {\n  width: 2500px;\n  height: 20px;\n}\n@media (max-width: 767px) {\n  .div1[_ngcontent-%COMP%] {\n    width: 1500px;\n  }\n}\n\n.div2[_ngcontent-%COMP%] {\n  width: 2500px;\n  overflow: hidden;\n}\n@media (max-width: 767px) {\n  .div2[_ngcontent-%COMP%] {\n    width: 1500px;\n  }\n}\n\n.div2[_ngcontent-%COMP%]   .table-responsive[_ngcontent-%COMP%] {\n  overflow: inherit;\n}\n\n.invisible-scrollbar[_ngcontent-%COMP%]::-webkit-scrollbar {\n  display: none;\n}\n\n@media (max-width: 767px) {\n  .col-4[_ngcontent-%COMP%] {\n    flex: 50%;\n    max-width: 50%;\n  }\n}\n\n.modal-body[_ngcontent-%COMP%] {\n  height: 400px;\n  overflow: auto;\n}"]
   });
   return B2cTourEnquiryComponent;
@@ -31317,17 +31230,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var _core_api_handlers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../../core/api-handlers */ 91488);
 /* harmony import */ var _core_services_swal_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../../core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var _core_services_utility_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../../core/services/utility.service */ 41894);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/router */ 34793);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/common */ 36895);
-/* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ngx-loading */ 82021);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ngx-loading */ 82021);
 /* harmony import */ var ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ngx-bootstrap/datepicker */ 71552);
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
-/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
-/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @angular/material/sort */ 96308);
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
+/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
+/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/material/sort */ 96308);
 /* harmony import */ var ng2_search_filter__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ng2-search-filter */ 43189);
-
 
 
 
@@ -31791,11 +31702,10 @@ let filterArray = [];
 let respDataCopy = [];
 let B2cTourReportComponent = /*#__PURE__*/(() => {
   class B2cTourReportComponent {
-    constructor(apiHandlerService, fb, swalService, exportAsService, utility, router) {
+    constructor(apiHandlerService, fb, swalService, utility, router) {
       this.apiHandlerService = apiHandlerService;
       this.fb = fb;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.subSunk = new subsink__WEBPACK_IMPORTED_MODULE_1__.SubSink();
@@ -32096,7 +32006,7 @@ let B2cTourReportComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2c-tour-report`).subscribe();
+      this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2c-tour-report`, orientation || this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation);
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -32440,7 +32350,7 @@ let B2cTourReportComponent = /*#__PURE__*/(() => {
     }
   }
   B2cTourReportComponent.ɵfac = function B2cTourReportComponent_Factory(t) {
-    return new (t || B2cTourReportComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](_core_api_handlers__WEBPACK_IMPORTED_MODULE_6__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](_core_services_swal_service__WEBPACK_IMPORTED_MODULE_7__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_13__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](_core_services_utility_service__WEBPACK_IMPORTED_MODULE_8__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_14__.Router));
+    return new (t || B2cTourReportComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](_core_api_handlers__WEBPACK_IMPORTED_MODULE_6__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](_core_services_swal_service__WEBPACK_IMPORTED_MODULE_7__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](_core_services_utility_service__WEBPACK_IMPORTED_MODULE_8__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_13__.Router));
   };
   B2cTourReportComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵdefineComponent"]({
     type: B2cTourReportComponent,
@@ -32782,7 +32692,7 @@ let B2cTourReportComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵproperty"]("show", ctx.loading)("config", _angular_core__WEBPACK_IMPORTED_MODULE_11__["ɵɵpureFunction3"](54, _c1, ctx.primaryColour, ctx.secondaryColour, ctx.primaryColour))("template", ctx.loadingTemplate);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_15__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_15__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_12__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_12__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_12__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormControlName, ngx_loading__WEBPACK_IMPORTED_MODULE_16__.NgxLoadingComponent, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_9__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_9__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_18__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_19__.MatSort, _angular_common__WEBPACK_IMPORTED_MODULE_15__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_15__.DecimalPipe, _angular_common__WEBPACK_IMPORTED_MODULE_15__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_10__.Ng2SearchPipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_14__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_14__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_12__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_12__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_12__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormControlName, ngx_loading__WEBPACK_IMPORTED_MODULE_15__.NgxLoadingComponent, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_9__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_9__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_16__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_16__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_16__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_16__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_16__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_17__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_18__.MatSort, _angular_common__WEBPACK_IMPORTED_MODULE_14__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_14__.DecimalPipe, _angular_common__WEBPACK_IMPORTED_MODULE_14__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_10__.Ng2SearchPipe],
     styles: [".nrm_input[_ngcontent-%COMP%], .src_btn[_ngcontent-%COMP%] {\n  line-height: 1.7;\n  height: calc(2.5em + 0.75rem + 2px);\n}\n\n.btncontainer[_ngcontent-%COMP%] {\n  width: 100%;\n  text-align: center;\n  padding: 12px 0px;\n}\n\n.modal[_ngcontent-%COMP%] {\n  transform: translate(0, -50%);\n  top: 58%;\n  margin: 0 auto;\n}\n\n.wrapper1[_ngcontent-%COMP%], .wrapper2[_ngcontent-%COMP%] {\n  width: 100%;\n  overflow-x: scroll;\n  overflow-y: hidden;\n}\n\n.wrapper1[_ngcontent-%COMP%] {\n  height: 20px;\n}\n\n.div1[_ngcontent-%COMP%] {\n  width: 5000px;\n  height: 20px;\n}\n\n.div2[_ngcontent-%COMP%] {\n  width: 5000px;\n  overflow: hidden;\n}\n\n.div2[_ngcontent-%COMP%]   .table-responsive[_ngcontent-%COMP%] {\n  overflow: inherit;\n}\n\n.invisible-scrollbar[_ngcontent-%COMP%]::-webkit-scrollbar {\n  display: none;\n}"]
   });
   return B2cTourReportComponent;
@@ -32808,13 +32718,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! projects/supervision/src/app/core/api-handlers */ 91488);
 /* harmony import */ var projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! projects/supervision/src/app/core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! projects/supervision/src/app/core/services/utility.service */ 41894);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/router */ 34793);
 /* harmony import */ var _report_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../report.service */ 47191);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common */ 36895);
 /* harmony import */ var _shared_pipes_number_to_words_pipe__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../../../shared/pipes/number-to-words.pipe */ 43289);
-
 
 
 
@@ -32981,10 +32889,9 @@ function TourInvoiceComponent_div_0_Template(rf, ctx) {
 }
 let TourInvoiceComponent = /*#__PURE__*/(() => {
   class TourInvoiceComponent {
-    constructor(apiHandlerService, swalService, exportAsService, utility, router, activatedRoute, reportService) {
+    constructor(apiHandlerService, swalService, utility, router, activatedRoute, reportService) {
       this.apiHandlerService = apiHandlerService;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.activatedRoute = activatedRoute;
@@ -33091,7 +32998,7 @@ let TourInvoiceComponent = /*#__PURE__*/(() => {
     }
   }
   TourInvoiceComponent.ɵfac = function TourInvoiceComponent_Factory(t) {
-    return new (t || TourInvoiceComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_10__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_11__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_11__.ActivatedRoute), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_report_service__WEBPACK_IMPORTED_MODULE_6__.ReportService));
+    return new (t || TourInvoiceComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_3__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_4__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_5__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.ActivatedRoute), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_report_service__WEBPACK_IMPORTED_MODULE_6__.ReportService));
   };
   TourInvoiceComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdefineComponent"]({
     type: TourInvoiceComponent,
@@ -33116,7 +33023,7 @@ let TourInvoiceComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵproperty"]("ngIf", ctx.invoiceData);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_12__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_12__.NgIf, _angular_router__WEBPACK_IMPORTED_MODULE_11__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_12__.UpperCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_12__.DatePipe, _shared_pipes_number_to_words_pipe__WEBPACK_IMPORTED_MODULE_7__.NumberToWordsPipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_11__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_11__.NgIf, _angular_router__WEBPACK_IMPORTED_MODULE_10__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_11__.UpperCasePipe, _angular_common__WEBPACK_IMPORTED_MODULE_11__.DatePipe, _shared_pipes_number_to_words_pipe__WEBPACK_IMPORTED_MODULE_7__.NumberToWordsPipe],
     styles: ["tr.hide_all[_ngcontent-%COMP%]    > td[_ngcontent-%COMP%], td.hide_all[_ngcontent-%COMP%] {\n  border-style: hidden;\n}\n\ntbody.hide_all[_ngcontent-%COMP%]    > tr[_ngcontent-%COMP%], td.hide_all[_ngcontent-%COMP%] {\n  border-style: hidden;\n}\n\n.trapezoid[_ngcontent-%COMP%] {\n  border-bottom: 45px solid #3a03be;\n  border-left: 30px solid transparent;\n  border-right: 0px solid transparent;\n  height: 0;\n  width: 100%;\n  color: #fff;\n  text-align: center;\n  line-height: 45px;\n  font-size: 19px;\n  letter-spacing: 1px;\n  font-weight: 600;\n}"]
   });
   return TourInvoiceComponent;
@@ -33476,7 +33383,7 @@ let B2cTourVoucherComponent = /*#__PURE__*/(() => {
         return `${tmpStatus[0] + ' ' + tmpStatus[1]}`;
       }
     }
-    // downloadA4(type: SupportedExtensions, orientation?: string): void {
+    // downloadA4(type: any, orientation?: string): void {
     //   this.loading = true;
     //   document.getElementById('download').style.display = "none";
     //   window['html2canvas'] = html2canvas;
@@ -33827,11 +33734,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! projects/supervision/src/app/core/api-handlers */ 91488);
 /* harmony import */ var projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! projects/supervision/src/app/core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! projects/supervision/src/app/core/services/utility.service */ 41894);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/router */ 34793);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common */ 36895);
-
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common */ 36895);
 
 
 
@@ -34025,10 +33930,9 @@ function B2CTransferInvoiceComponent_div_0_Template(rf, ctx) {
 const log = new projects_supervision_src_app_core_logger_logger_service__WEBPACK_IMPORTED_MODULE_0__.Logger('report/HotelVoucherComponent');
 let B2CTransferInvoiceComponent = /*#__PURE__*/(() => {
   class B2CTransferInvoiceComponent {
-    constructor(apiHandlerService, swalService, exportAsService, utility, router, activatedRoute) {
+    constructor(apiHandlerService, swalService, utility, router, activatedRoute) {
       this.apiHandlerService = apiHandlerService;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.activatedRoute = activatedRoute;
@@ -34137,7 +34041,7 @@ let B2CTransferInvoiceComponent = /*#__PURE__*/(() => {
     }
   }
   B2CTransferInvoiceComponent.ɵfac = function B2CTransferInvoiceComponent_Factory(t) {
-    return new (t || B2CTransferInvoiceComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_4__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_5__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_9__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_6__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_10__.ActivatedRoute));
+    return new (t || B2CTransferInvoiceComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_4__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_5__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_6__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_9__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_9__.ActivatedRoute));
   };
   B2CTransferInvoiceComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineComponent"]({
     type: B2CTransferInvoiceComponent,
@@ -34162,7 +34066,7 @@ let B2CTransferInvoiceComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵproperty"]("ngIf", ctx.voucherData);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_11__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_11__.NgIf, _angular_router__WEBPACK_IMPORTED_MODULE_10__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_11__.DatePipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_10__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_10__.NgIf, _angular_router__WEBPACK_IMPORTED_MODULE_9__.RouterLink, _angular_common__WEBPACK_IMPORTED_MODULE_10__.DatePipe],
     styles: ["tr.hide_all[_ngcontent-%COMP%]    > td[_ngcontent-%COMP%], td.hide_all[_ngcontent-%COMP%] {\n  border-style: hidden;\n}\n\ntbody.hide_all[_ngcontent-%COMP%]    > tr[_ngcontent-%COMP%], td.hide_all[_ngcontent-%COMP%] {\n  border-style: hidden;\n}\n\n.trapezoid[_ngcontent-%COMP%] {\n  border-bottom: 45px solid #3a03be;\n  border-left: 30px solid transparent;\n  border-right: 0px solid transparent;\n  height: 0;\n  width: 100%;\n  color: #fff;\n  text-align: center;\n  line-height: 45px;\n  font-size: 19px;\n  letter-spacing: 1px;\n  font-weight: 600;\n}"]
   });
   return B2CTransferInvoiceComponent;
@@ -34189,18 +34093,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! projects/supervision/src/app/core/api-handlers */ 91488);
 /* harmony import */ var projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! projects/supervision/src/app/core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! projects/supervision/src/app/core/services/utility.service */ 41894);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/router */ 34793);
 /* harmony import */ var _report_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../report.service */ 47191);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/common */ 36895);
-/* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ngx-loading */ 82021);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/common */ 36895);
+/* harmony import */ var ngx_loading__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ngx-loading */ 82021);
 /* harmony import */ var ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ngx-bootstrap/datepicker */ 71552);
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
-/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
-/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/material/sort */ 96308);
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ 49150);
+/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/material/progress-spinner */ 51572);
+/* harmony import */ var _angular_material_sort__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/material/sort */ 96308);
 /* harmony import */ var ng2_search_filter__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng2-search-filter */ 43189);
-
 
 
 
@@ -34615,11 +34517,10 @@ let filterArray = [];
 let respDataCopy = [];
 let B2cTransferComponent = /*#__PURE__*/(() => {
   class B2cTransferComponent {
-    constructor(apiHandlerService, fb, swalService, exportAsService, utility, router, reportService) {
+    constructor(apiHandlerService, fb, swalService, utility, router, reportService) {
       this.apiHandlerService = apiHandlerService;
       this.fb = fb;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.reportService = reportService;
@@ -35117,7 +35018,7 @@ let B2cTransferComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2c-transfer-report`).subscribe();
+      this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2c-transfer-report`, orientation || this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation);
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -35183,7 +35084,7 @@ let B2cTransferComponent = /*#__PURE__*/(() => {
     }
   }
   B2cTransferComponent.ɵfac = function B2cTransferComponent_Factory(t) {
-    return new (t || B2cTransferComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_4__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_5__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_12__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_6__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_13__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_report_service__WEBPACK_IMPORTED_MODULE_7__.ReportService));
+    return new (t || B2cTransferComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](projects_supervision_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_4__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_5__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_6__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_12__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdirectiveInject"](_report_service__WEBPACK_IMPORTED_MODULE_7__.ReportService));
   };
   B2cTransferComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdefineComponent"]({
     type: B2cTransferComponent,
@@ -35524,7 +35425,7 @@ let B2cTransferComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵproperty"]("ngModel", ctx.driverMobile);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_14__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_14__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_11__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_11__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_11__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormControlName, ngx_loading__WEBPACK_IMPORTED_MODULE_15__.NgxLoadingComponent, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_16__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_16__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_16__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_16__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_16__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_17__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_18__.MatSort, _angular_material_sort__WEBPACK_IMPORTED_MODULE_18__.MatSortHeader, _angular_common__WEBPACK_IMPORTED_MODULE_14__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_14__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_9__.Ng2SearchPipe],
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_13__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_13__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_11__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_11__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_11__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.NgForm, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_11__.FormControlName, ngx_loading__WEBPACK_IMPORTED_MODULE_14__.NgxLoadingComponent, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__.BsDatepickerDirective, ngx_bootstrap_datepicker__WEBPACK_IMPORTED_MODULE_8__.BsDatepickerInputDirective, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__.NgbDropdown, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__.NgbDropdownToggle, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__.NgbDropdownMenu, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__.NgbDropdownItem, _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_15__.NgbPagination, _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_16__.MatProgressSpinner, _angular_material_sort__WEBPACK_IMPORTED_MODULE_17__.MatSort, _angular_material_sort__WEBPACK_IMPORTED_MODULE_17__.MatSortHeader, _angular_common__WEBPACK_IMPORTED_MODULE_13__.SlicePipe, _angular_common__WEBPACK_IMPORTED_MODULE_13__.DatePipe, ng2_search_filter__WEBPACK_IMPORTED_MODULE_9__.Ng2SearchPipe],
     styles: [".nrm_input[_ngcontent-%COMP%], .src_btn[_ngcontent-%COMP%] {\n  line-height: 1.7;\n  height: calc(2.5em + 0.75rem + 2px);\n}\n\n.btncontainer[_ngcontent-%COMP%] {\n  width: 100%;\n  text-align: center;\n  padding: 12px 0px;\n}\n\n.modal[_ngcontent-%COMP%] {\n  transform: translate(0, -50%);\n  top: 58%;\n  margin: 0 auto;\n}\n\n#paymentModalLabel[_ngcontent-%COMP%] {\n  border-bottom: none !important;\n  padding-bottom: 0px !important;\n  margin-bottom: 0px !important;\n}\n\n.wrapper1[_ngcontent-%COMP%], .wrapper2[_ngcontent-%COMP%] {\n  width: 100%;\n  overflow-x: scroll;\n  overflow-y: hidden;\n}\n\n.wrapper1[_ngcontent-%COMP%] {\n  height: 20px;\n}\n\n.div1[_ngcontent-%COMP%] {\n  width: 5000px;\n  height: 20px;\n}\n\n.div2[_ngcontent-%COMP%] {\n  width: 5000px;\n  overflow: hidden;\n}\n\n.div2[_ngcontent-%COMP%]   .table-responsive[_ngcontent-%COMP%] {\n  overflow: inherit;\n}\n\n.invisible-scrollbar[_ngcontent-%COMP%]::-webkit-scrollbar {\n  display: none;\n}\n\n.loadWrapper1[_ngcontent-%COMP%] {\n  background: rgba(0, 0, 0, 0.3);\n  width: 100%;\n  height: 100%;\n  position: fixed;\n  padding: 50px;\n  top: 0px;\n  left: 0px;\n  z-index: 99999;\n}\n\n.loader1[_ngcontent-%COMP%] {\n  border: 5px solid #f3f3f3; \n  border-top: 5px solid #3d3e3f; \n  position: absolute;\n  left: 50%;\n  top: 50%;\n  margin: auto;\n  border-radius: 50%;\n  width: 50px;\n  height: 50px;\n  animation: spin 2s linear infinite;\n}"]
   });
   return B2cTransferComponent;
@@ -37374,11 +37275,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 94650);
 /* harmony import */ var projects_b2b_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! projects/b2b/src/app/core/api-handlers */ 52721);
 /* harmony import */ var projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! projects/supervision/src/app/core/services/swal.service */ 59826);
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ngx-export-as */ 30901);
 /* harmony import */ var projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! projects/supervision/src/app/core/services/utility.service */ 41894);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/router */ 34793);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/common */ 36895);
-
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ 34793);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ 36895);
 
 
 
@@ -37767,10 +37666,9 @@ function UpdatePnrTicketComponent_ng_template_2_Template(rf, ctx) {
 const log = new projects_b2b_src_app_core_logger_logger_service__WEBPACK_IMPORTED_MODULE_0__.Logger('report/VoucherComponent');
 let UpdatePnrTicketComponent = /*#__PURE__*/(() => {
   class UpdatePnrTicketComponent {
-    constructor(apiHandlerService, swalService, exportAsService, utility, router, activatedRoute, fb, location) {
+    constructor(apiHandlerService, swalService, utility, router, activatedRoute, fb, location) {
       this.apiHandlerService = apiHandlerService;
       this.swalService = swalService;
-      this.exportAsService = exportAsService;
       this.utility = utility;
       this.router = router;
       this.activatedRoute = activatedRoute;
@@ -37896,7 +37794,7 @@ let UpdatePnrTicketComponent = /*#__PURE__*/(() => {
       }
       const date = new Date().toDateString();
       setTimeout(() => {
-        this.exportAsService.save(this.config, `voucher`).subscribe();
+        this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `voucher`, orientation || this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation);
       }, 1000);
     }
     pdfCallbackFn(pdf) {
@@ -37991,7 +37889,7 @@ let UpdatePnrTicketComponent = /*#__PURE__*/(() => {
     }
   }
   UpdatePnrTicketComponent.ɵfac = function UpdatePnrTicketComponent_Factory(t) {
-    return new (t || UpdatePnrTicketComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](projects_b2b_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_2__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_3__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](ngx_export_as__WEBPACK_IMPORTED_MODULE_7__.ExportAsService), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_4__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_8__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_8__.ActivatedRoute), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_6__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_common__WEBPACK_IMPORTED_MODULE_9__.Location));
+    return new (t || UpdatePnrTicketComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](projects_b2b_src_app_core_api_handlers__WEBPACK_IMPORTED_MODULE_2__.ApiHandlerService), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_swal_service__WEBPACK_IMPORTED_MODULE_3__.SwalService), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](projects_supervision_src_app_core_services_utility_service__WEBPACK_IMPORTED_MODULE_4__.UtilityService), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_7__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_7__.ActivatedRoute), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_6__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_angular_common__WEBPACK_IMPORTED_MODULE_8__.Location));
   };
   UpdatePnrTicketComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdefineComponent"]({
     type: UpdatePnrTicketComponent,
@@ -38021,7 +37919,7 @@ let UpdatePnrTicketComponent = /*#__PURE__*/(() => {
         _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵproperty"]("ngIf", ctx.voucherData)("ngIfElse", _r2);
       }
     },
-    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_9__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_9__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_6__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_6__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_6__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_6__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_6__.FormControlName, _angular_common__WEBPACK_IMPORTED_MODULE_9__.DecimalPipe, _angular_common__WEBPACK_IMPORTED_MODULE_9__.DatePipe]
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_8__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_8__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_6__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_6__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_6__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_6__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_6__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_6__.FormControlName, _angular_common__WEBPACK_IMPORTED_MODULE_8__.DecimalPipe, _angular_common__WEBPACK_IMPORTED_MODULE_8__.DatePipe]
   });
   return UpdatePnrTicketComponent;
 })();

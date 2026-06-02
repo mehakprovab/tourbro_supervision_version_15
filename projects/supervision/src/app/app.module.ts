@@ -60,7 +60,8 @@ import { TourCRSModule } from "./modules/tour-crs/tour-crs.module";
 import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 import { ActivityCrsModule } from "./modules/actvity-crs/activity-crs.module";
 import { TransferCrsModule } from "./modules/transfer-crs/transfer-crs.module";
-import { ExportAsService } from "ngx-export-as";
+import { WellnessCrsModule } from "./modules/wellness-crs/wellness-crs.module";
+import { HeliCrsModule } from "./modules/heli-crs/heli-crs.module";
 // import { NgSelectModule } from '@ng-select/ng-select';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -117,6 +118,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CommissionsModule,
     B2cCmsModuleModule,
     TourCRSModule,
+      HeliCrsModule,
+    WellnessCrsModule
     
   ],
   providers: [
@@ -131,7 +134,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
     },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
-    ExportAsService,
     ConfigActions,
     ThemeOptions,
   ],

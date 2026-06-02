@@ -31,7 +31,7 @@
                         <span class="text-danger">*</span>
                     </label>
                     <ng-multiselect-dropdown formControlName="activity_type" [placeholder]="'Select Type'"
-                        [data]="activityTypeListData" [settings]="dropdownSettingsForview" class="pl-3 col-12 pr-0  ">
+                        [settings]="dropdownSettingsForview" [data]="activityTypeListData" class="pl-3 col-12 pr-0  ">
                     </ng-multiselect-dropdown>
                     <small class="text-danger"
                         *ngIf="
@@ -70,7 +70,7 @@
                         <span class="text-danger">*</span>
                     </label>
                     <ng-multiselect-dropdown formControlName="languages" [placeholder]="'Select Languages'"
-                        [data]="languageMasterDataList" [settings]="dropdownSettingsForviewLang"
+                        [settings]="dropdownSettingsForviewLang" [data]="languageMasterDataList"
                         class="pl-3 col-12 pr-0  ">
                     </ng-multiselect-dropdown>
                 </div>
@@ -82,7 +82,7 @@
                     </label>
                    
                         <ng-multiselect-dropdown formControlName="timing" [placeholder]="'Select Timing'"
-                            [data]="timingList" [settings]="dropdownSettingsForviewTiming" class="pl-3 col-12 pr-0 ">
+                            [settings]="dropdownSettingsForviewTiming" [data]="timingList" class="pl-3 col-12 pr-0 ">
                         </ng-multiselect-dropdown>
                        
                     
@@ -207,7 +207,7 @@
                         <span class="text-danger">*</span>
                     </label>
                     <ng-multiselect-dropdown formControlName="type" [placeholder]="'Select Type'"
-                        [data]="activityTypeListData" [settings]="dropdownSettingsForview" class="pl-3 col-12 pr-0  ">
+                        [settings]="dropdownSettingsForview" [data]="activityTypeListData" class="pl-3 col-12 pr-0  ">
                     </ng-multiselect-dropdown>
                     <small class="text-danger errormsg" *ngIf="
         basicInfoForm?.get('type')?.invalid &&
@@ -254,7 +254,7 @@
                         <span class="text-danger">*</span>
                     </label>
                     <ng-multiselect-dropdown formControlName="operated_lang" [placeholder]="'Select Languages'"
-                        [data]="languageMasterDataList" [settings]="dropdownSettingsForviewLang"
+                        [settings]="dropdownSettingsForviewLang" [data]="languageMasterDataList"
                         class="pl-3 col-12 pr-0  ">
                     </ng-multiselect-dropdown>
                     <small class="text-danger errormsg" *ngIf="
@@ -270,7 +270,7 @@
                     </label>
                    
                         <ng-multiselect-dropdown formControlName="timing" [placeholder]="'Select Timing'"
-                            [data]="timingList" [settings]="dropdownSettingsForviewTiming" class="pl-3 col-12 pr-0 ">
+                            [settings]="dropdownSettingsForviewTiming" [data]="timingList" class="pl-3 col-12 pr-0 ">
                         </ng-multiselect-dropdown>
                         <small class="text-danger errormsg" *ngIf="
         basicInfoForm?.get('timing')?.invalid &&

@@ -13,6 +13,7 @@ export const apiMap = {
   agentCreditLimitManager:
     baseUrl + "/transaction/service/AgentCreditLimitManager",
   agentList: baseUrl + "/user/service/AgentList",
+  supplierCreate: `${B2C_URL}/webservice/supplier/create`,
   agentDetails: baseUrl + "/user/service/AgentDetails",
   agentAccoutCredit: baseUrl + "/transaction/service/AgentAccoutCredit",
   agentAccoutDebit: `${baseUrl}/transaction/service/AgentAccoutDebit`,
@@ -124,7 +125,7 @@ export const apiMap = {
   priceList: `${baseUrl}/hotel/room-seasons/roomPriceList`,
   priceManagementList: `${baseUrl}/hotel/room-prices-management/priceList`,
   updatePriceManagement: `${baseUrl}/hotel/room-prices-management/updateRoomPrice`,
-   roomCountUpdate: `${baseUrl}/hotel/room-prices-management/addRoomCount`,
+  roomCountUpdate: `${baseUrl}/hotel/room-prices-management/addRoomCount`,
   delRoomPrice: `${baseUrl}/hotel/room-prices-management/delRoomPrice`,
   //addSeason: `${baseUrl}/hotel/room-seasons/addRoomSeason`,
   editSeason: `${baseUrl}/hotel/room-seasons/editRoomSeason`,
@@ -215,7 +216,7 @@ export const apiMap = {
   coreRewardList: `${baseUrl}/core/core-rewards/coreRewardList`,
   coreRewardConversion: `${baseUrl}/core/core-reward-conversion/coreRewardConversion`,
   b2cUsersList: `${baseUrl}/user/service/userList`,
-  supplierList: `${B2C_URL}/webservice/supplier/find_all`,
+  supplierList: `${B2C_URL}/webservice/supplier/supplierList`,
   propertyList: `${B2C_URL}/webservice/supplier/find_properties`,
   userTypeList: `${baseUrl}/user/service/UserTypeList`,
   userTitleList: `${baseUrl}/user/service/userTitleList`,
@@ -668,6 +669,7 @@ export const apiMap = {
 
   tourUploadImage: `${baseUrl}/tour/tours/uploadItineraryimages`,
   saveDay: `${baseUrl}/tour/tours/addTourItineraries`,
+  updateSaveDay: `${baseUrl}/tour/tours/updateTourItinerary`,
   addItineraryActivities: `${baseUrl}/tour/tours/addItineraryActivities`,
   uploadVideo: `${baseUrl}/tour/tours/uploadBannerVideo`,
   addTourFaq: `${baseUrl}/tour/tours/addtourfaq`,
@@ -696,18 +698,149 @@ export const apiMap = {
   guideProcessList: `${baseUrl}/dashboard/report/guideProcessList`,
   addGuideProcess: `${baseUrl}/dashboard/report/guideProcess`,
   updateGuideProcess: `${baseUrl}/dashboard/report/guideProcess`,
-    deleteGuideProcess: `${baseUrl}/dashboard/report/deleteGuideProcess`,
-    addAuthImage: `${baseUrl}/auth/service/uploadAuthImage`,
-    addGuideLastSection: `${baseUrl}/dashboard/report/guidesideImage`,
-      guideLastSectionList: `${baseUrl}/dashboard/report/listGuidesideImage`,
-      updateGuideSectionStatus: `${baseUrl}/dashboard/report/editGuideMainStatus`,
-      uploadWhyChooseImage: `${baseUrl}/common/uploadWhyChooseImage`,
-      addwhyChooseusData: `${baseUrl}/common/addwhyChooseusData`,
-      updateGuideProcessStatus: `${baseUrl}/dashboard/report/editGuideProcessStatus`,
-      updateGuideLastStatus: `${baseUrl}/dashboard/report/editGuideSideMainStatus`,
-      hotelHCNEmail: `${B2C_URL}/webservice/hotel/hotel/hotelHCNEmail`,
-      ListServiceFaq: `${B2C_URL}/webservice/common/ListservicesFaq`,
-      AddServiceFaq: `${baseUrl}/common/AddservicesFaq`,
-            ListAboutFaq: `${B2C_URL}/webservice/common/ListAboutUsFaq`,
-      AddAboutFaq: `${baseUrl}/common/AddAboutUsFaq`,
+  deleteGuideProcess: `${baseUrl}/dashboard/report/deleteGuideProcess`,
+  addAuthImage: `${baseUrl}/auth/service/uploadAuthImage`,
+  addGuideLastSection: `${baseUrl}/dashboard/report/guidesideImage`,
+  guideLastSectionList: `${baseUrl}/dashboard/report/listGuidesideImage`,
+  updateGuideSectionStatus: `${baseUrl}/dashboard/report/editGuideMainStatus`,
+  uploadWhyChooseImage: `${baseUrl}/common/uploadWhyChooseImage`,
+  addwhyChooseusData: `${baseUrl}/common/addwhyChooseusData`,
+  updateGuideProcessStatus: `${baseUrl}/dashboard/report/editGuideProcessStatus`,
+  updateGuideLastStatus: `${baseUrl}/dashboard/report/editGuideSideMainStatus`,
+  hotelHCNEmail: `${B2C_URL}/webservice/hotel/hotel/hotelHCNEmail`,
+  ListServiceFaq: `${B2C_URL}/webservice/common/ListservicesFaq`,
+  AddServiceFaq: `${baseUrl}/common/AddservicesFaq`,
+  ListAboutFaq: `${B2C_URL}/webservice/common/ListAboutUsFaq`,
+  AddAboutFaq: `${baseUrl}/common/AddAboutUsFaq`,
+  supplierDetail: `${B2C_URL}/webservice/supplier/supplierById`,
+  updateSupplierContent: `${baseUrl}/common/updateSupplierTerms`,
+  addSupplierContent: `${baseUrl}/common/addSupplierTerms`,
+  supplierContentList: `${baseUrl}/common/ListSupplierTerms`,
+  staticPageContentsList: `${B2C_URL}/webservice/common/getPageContent`,
+
+
+
+  facilitiesList: `${baseUrl}/wellness/facility-types/facilityTypeList`,
+  addFacilities: `${baseUrl}/wellness/facility-types/addFacilityType`,
+  updateFacilities: `${baseUrl}/wellness/facility-types/updateFacilityType`,
+  editFacilities: `${baseUrl}/wellness/facility-types/editFacilityType`,
+  deleteFacilities: `${baseUrl}/wellness/facility-types/deleteFacilityType`,
+
+  //Meal Plan
+  mealPlanList: `${baseUrl}/wellness/meal-types/mealTypeList`,
+  addMealPlan: `${baseUrl}/wellness/meal-types/addMealType`,
+  updateMealPlan: `${baseUrl}/wellness/meal-types/updateMealType`,
+  deleteMealPlan: `${baseUrl}/wellness/meal-types/deleteMealType`,
+  editMealPlan: `${baseUrl}/wellness/meal-types/editMealType`,
+
+  //Package Type
+  packageTypeList: `${baseUrl}/wellness/package-types/packageTypeList`,
+  addPackageType: `${baseUrl}/wellness/package-types/addPackageType`,
+  updatePackageType: `${baseUrl}/wellness/package-types/updatePackageType`,
+  deletePackageType: `${baseUrl}/wellness/package-types/deletePackageType`,
+  editPackageType: `${baseUrl}/wellness/package-types/editPackageType`,
+
+  //healthGoalCondition
+  healthGoalConditionList: `${baseUrl}/wellness/health-goals-types/healthGoalTypeList`,
+  addHealthGoalCondition: `${baseUrl}/wellness/health-goals-types/addHealthGoalType`,
+  updateHealthGoalCondition: `${baseUrl}/wellness/health-goals-types/updateHealthGoalType`,
+  deleteHealthGoalCondition: `${baseUrl}/wellness/health-goals-types/deleteHealthGoalType`,
+  editHealthGoalCondition: `${baseUrl}/wellness/health-goals-types/editHealthGoalType`,
+
+  //Treatments
+  treatmentList: `${baseUrl}/wellness/treatments-types/treatmentTypeList`,
+  addTreatment: `${baseUrl}/wellness/treatments-types/addTreatmentType`,
+  updateTreatment: `${baseUrl}/wellness/treatments-types/updateTreatmentType`,
+  deleteTreatment: `${baseUrl}/wellness/treatments-types/deleteTreatmentType`,
+  editTreatment: `${baseUrl}/wellness/treatments-types/editTreatmentType`,
+
+  //Therapy Type
+  therapyTypeList: `${baseUrl}/wellness/therapy-types/therapyTypeList`,
+  addTherapyType: `${baseUrl}/wellness/therapy-types/addTherapyType`,
+  updateTherapyType: `${baseUrl}/wellness/therapy-types/updateTherapyType`,
+  deleteTherapyType: `${baseUrl}/wellness/therapy-types/deleteTherapyType`,
+  editTherapyType: `${baseUrl}/wellness/therapy-types/editTherapyType`,
+
+  //Wellness Center
+  wellnessCenterList: `${baseUrl}/wellness/wellnessCenterList`,
+  searchWellnessCenter: `${baseUrl}/wellness/searchWellnessCenters`,
+  addWellnessCenter: `${baseUrl}/wellness/addWellnessCenter`,
+  updateWellnessCenter: `${baseUrl}/wellness/updateWellnessCenter`,
+  wellnessCenterCount: `${baseUrl}/wellness/wellnessCentersCount`,
+  deleteWellnessCenter: `${baseUrl}/wellness/deleteCenter`,
+  wellnessCentersCount: `${baseUrl}/wellness/wellnessCentersCount`,
+  //Wellness Images
+  addWellnessImage: `${baseUrl}/wellness/wellness-images/addWellnessImage`,
+  wellnessImageList: `${baseUrl}/wellness/wellness-images/wellnessImageList`,
+  deleteWellnessImage: `${baseUrl}/wellness/wellness-images/deleteWellnessImage`,
+  updateWellnessImage: `${baseUrl}/wellness/wellness-images/updateWellnessImage`,
+  wellnessPrimaryImage: `${baseUrl}/wellness/wellness-images/primaryImage`,
+
+  //Package rating
+  getPackagesByCenterId: `${baseUrl}/wellness-packages/getPackagesByCenterId`,
+  addWellnessPackage: `${baseUrl}/wellness-packages/addWellnessPackage`,
+  updateWellnessPackage: `${baseUrl}/wellness-packages/updateWellnessPackage`,
+  editWellnessPackage: `${baseUrl}/wellness-packages/editWellnessPackage`,
+  deleteWellnessPackage: `${baseUrl}/wellness-packages/deleteWellnessPackage`,
+
+  //Package Images
+  addPackageImage: `${baseUrl}/wellness/package-images/addPackageImage`,
+  listPackageImage: `${baseUrl}/wellness/package-images/list`,
+  primaryPackageImage: `${baseUrl}/wellness/package-images/primaryImage`,
+  deletePackageImage: `${baseUrl}/wellness/package-images/delete`,
+
+  //Wellness Tax
+  addWellnessTax: `${baseUrl}/wellness/tax-masters/addTaxMaster`,
+  taxMasterList: `${baseUrl}/wellness/tax-masters/taxMasterList`,
+  updateTaxMaster: `${baseUrl}/wellness/tax-masters/updateTaxMaster`,
+  deleteTaxMaster: `${baseUrl}/wellness/tax-masters/deleteTaxMaster`,
+
+  //Add Price
+  addPackagePrice: `${baseUrl}/wellness/package-prices/addPackagePrice`,
+  updatePackagePrice: `${baseUrl}/wellness/package-prices/updatePackagePrice`,
+  packagePriceList: `${baseUrl}/wellness/package-prices/packagePriceList`,
+  deletePackagePrice: `${baseUrl}/wellness/package-prices/deletePackagePrice`,
+
+  //Heli crs
+  addHeliOperator: `${baseUrl}/rotorcraft/addHeliOperator`,
+  updateHeliOperator: `${baseUrl}/rotorcraft/editHeliOperator`,
+  listHeliOperator: `${baseUrl}/rotorcraft/listHeliOperator`,
+  updateHelioperatorStatus: `${baseUrl}/rotorcraft/updateHelioperatorStatus`,
+  deleteHeliOperator: `${baseUrl}/rotorcraft/deleteHeliOperator`,
+
+  //heli pad
+  addHelipad: `${baseUrl}/rotorcraft/addHelipad`,
+  updateHelipad: `${baseUrl}/rotorcraft/updateHelipad`,
+  listHeliPad: `${baseUrl}/rotorcraft/listHeliPad`,
+  updateHelipadStatus: `${baseUrl}/rotorcraft/updateHelipadStatus`,
+  deleteHelipad: `${baseUrl}/rotorcraft/deleteHelipad`,
+
+  // routes
+  addHeliRoute: `${baseUrl}/rotorcraft/addHeliRoutes`,
+  updateHeliRoute: `${baseUrl}/rotorcraft/updateHeliRoutes`,
+  listHeliRoutes: `${baseUrl}/rotorcraft/listHeliRoutes`,
+  updateHeliRouteStatus: `${baseUrl}/rotorcraft/editHeliRoutesStatus`,
+  deleteHeliRoute: `${baseUrl}/rotorcraft/deleteHeliRoutes`,
+
+        //Child Policies
+      childrenPolicyList: `${baseUrl}/wellness/childrenPolicyList`,
+      saveChildPolicy: `${baseUrl}/wellness/saveChildrenPolicy`,
+      deleteChildPolicy: `${baseUrl}/wellness/deleteChildrenPolicy`,
+
+  addHeliSchedule: `${baseUrl}/rotorcraft/addHeliSchedules`,
+  updateHeliSchedule: `${baseUrl}/rotorcraft/updateHeliSchedules`,
+  listHeliSchedule: `${baseUrl}/rotorcraft/listHeliSchedules`,
+  updateHeliScheduleStatus: `${baseUrl}/rotorcraft/editHeliSchedulesStatus`,
+  deleteHeliSchedule: `${baseUrl}/rotorcraft/deleteHeliSchedules`,
+
+  addPricingRule: `${baseUrl}/rotorcraft/addHeliPricing`,
+  updatePricingRule: `${baseUrl}/rotorcraft/updateHeliPricing`,
+  listPricingRules: `${baseUrl}/rotorcraft/listHeliPricing`,
+  updatePricingStatus: `${baseUrl}/rotorcraft/editHeliPricingStatus`,
+  deletePricingRule: `${baseUrl}/rotorcraft/deleteHeliPricing`,
+
+
+  addHeliTermsAndConditions: `${baseUrl}/rotorcraft/updateTermsConditions`,
+  getHeliTermsConditions: `${baseUrl}/rotorcraft/getTermsConditions`,
+  addHeliTransferImage: `${baseUrl}/rotorcraft/uploadImage`,
 };

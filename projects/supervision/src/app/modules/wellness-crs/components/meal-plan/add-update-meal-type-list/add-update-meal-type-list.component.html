@@ -1,0 +1,61 @@
+<div class="card adminInner">
+    <div class="card-header">
+        <h5>Add/ Edit Meal Plan</h5>
+    </div>
+
+    <form class="needs-validation pt-3" novalidate>
+        <div class="card-body p-0">
+            <fieldset>
+                <div class="row">
+
+                   <form [formGroup]="addUpdateMealTypeListForm" class="w-100"
+                     (ngSubmit)="onSubmit()">
+                    <div class="col-md-12 pr-0 mb-4">
+                        <label class="control-label" for="meal_type_name">
+                           Meal Type
+                            <span class="text-danger">*</span>
+                        </label>
+
+                        <input type="text" 
+                            id="meal_type_name"
+                            name="meal_type_name"
+                            formControlName="meals"
+                            placeholder="Add/ Edit Meal Type"
+                            class="form-control"
+                            required />
+
+                        <div class="invalid-feedback">
+                            <small *ngIf="addUpdateMealTypeListForm.get('meals').invalid && submitted">
+                              Meal Type Name is required
+                            </small>
+                        </div>
+                    </div>
+                    
+                    <!-- Status -->
+                   <div class="col-md-12">
+                    <label class="control-label">
+                        Status
+                        <span class="text-danger">*</span>
+                    </label>
+                   
+
+                    <label class="switch">
+                        <input type="checkbox" name="status" formControlName="status">
+                        <span class="slider round"></span>
+                    </label>
+                   </div>
+
+                    <!-- Buttons -->
+                    <div class="col-md-12 mt-4">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        &nbsp;&nbsp;
+                        <button type="reset" class="btn btn-secondary" (click)="resetForm()">Reset</button>
+                    </div>
+                    </form>
+                </div>
+            </fieldset>
+        </div>
+    </form>
+</div>
+
+

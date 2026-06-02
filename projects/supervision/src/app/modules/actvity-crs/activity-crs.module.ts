@@ -17,6 +17,7 @@ import { ListActivityCountryComponent } from './components/activity/activity-cou
 import { ActivityCityComponent } from './components/activity/activity-city/activity-city.component';
 import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     NgMultiSelectDropDownModule,
     CKEditorModule,
     Ng2SearchPipeModule,
-    FormsModule
+    FormsModule,
+    NgbNavModule
   ],
   declarations: [
     ActivityCRSComponent,

@@ -1,0 +1,31 @@
+<ul ngbNav #tabs="ngbNav" class="tabs-animated custom_tab" [(activeId)]="activeIdString" (navChange)="onTabSelected($event)">
+
+
+  <li [ngbNavItem]="'list_pricing_rules'">
+
+    <a ngbNavLink>
+      <span>Pricing Rules List</span>
+    </a>
+
+    <ng-template ngbNavContent>
+      <app-pricing-list></app-pricing-list>
+    </ng-template>
+
+  </li>
+
+
+  <li [ngbNavItem]="'add_pricing_rules'">
+
+    <a ngbNavLink>
+      <span>Add/ Edit Pricing Rules</span>
+    </a>
+
+    <ng-template ngbNavContent>
+      <app-add-update-pricing-list></app-add-update-pricing-list>
+    </ng-template>
+
+  </li>
+
+</ul>
+
+<div [ngbNavOutlet]="tabs"></div>

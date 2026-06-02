@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {  ExportAsConfig, SupportedExtensions  } from 'ngx-export-as';
 import { ApiHandlerService } from '../../../../../../core/api-handlers';
 import { SwalService } from '../../../../../../core/services/swal.service';
 import { UtilityService } from '../../../../../../core/services/utility.service';
@@ -20,7 +19,7 @@ export class B2bFlightInvoiceComponent implements OnInit {
   isOpen = false as boolean;
   invoiceData: any;
   invoiceNo:any;
-  config: ExportAsConfig = {
+  config: any = {
     type: 'pdf',
     elementIdOrContent: 'print_voucher',
     options: {
@@ -50,7 +49,7 @@ export class B2bFlightInvoiceComponent implements OnInit {
   }
 
 
-  downloadA4(type: SupportedExtensions, orientation?: string): void {
+  downloadA4(type: any, orientation?: string): void {
      let fileName = this.invoiceData['AppReference']
         window['html2canvas'] = html2canvas;
         const date = new Date().toDateString();

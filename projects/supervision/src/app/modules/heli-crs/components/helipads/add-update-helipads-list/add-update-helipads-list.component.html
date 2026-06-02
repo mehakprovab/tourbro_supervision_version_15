@@ -1,0 +1,291 @@
+<div class="card adminInner mt-3">
+
+    <div class="card-header mb-4">
+        <h5>{{ isEdit ? 'Update Helipad' : 'Add Helipad' }}</h5>
+    </div>
+
+    <form [formGroup]="addUpdateHelipadForm" (ngSubmit)="onSubmit()">
+
+        <div class="row">
+   <div class="col-md-4 mb-3 pr-0">
+
+                <label>
+                    Operator
+                    <span class="text-danger">*</span>
+                </label>
+
+                <mat-form-field appearance="fill" class="w-100">
+
+                    <mat-label>
+                        Select Operator
+                    </mat-label>
+
+                    <mat-select formControlName="operator_id">
+
+                        <mat-option [value]="null">
+                            Select Operator
+                        </mat-option>
+
+                        <mat-option *ngFor="let item of operatorsList" [value]="item.id">
+
+                            {{ item.operator_name }}
+
+                        </mat-option>
+
+                    </mat-select>
+
+                </mat-form-field>
+
+                <small class="text-danger" *ngIf="
+                            addUpdateHelipadForm.get('operator_id')?.errors?.required &&
+                            (
+                                addUpdateHelipadForm.get('operator_id')?.touched ||
+                                submitted
+                            )
+                       ">
+
+                    Operator is required
+
+                </small>
+
+            </div>
+            <!-- Helipad Name -->
+            <div class="col-md-4 mb-3 pr-0">
+
+                <label>
+                    Helipad Name <span class="text-danger">*</span>
+                </label>
+
+                <input type="text" class="form-control" formControlName="helipadName" placeholder="Enter Helipad Name">
+
+                <small class="text-danger" *ngIf="
+                    addUpdateHelipadForm.get('helipadName')?.errors?.required &&
+                    (addUpdateHelipadForm.get('helipadName')?.touched || submitted)
+                ">
+                    Helipad Name is required
+                </small>
+
+            </div>
+
+            <!-- Country -->
+            <div class="col-md-4 mb-3">
+
+                <label>
+                    Country <span class="text-danger">*</span>
+                </label>
+
+                <select class="form-control" formControlName="country" [compareWith]="compareCountries">
+
+                    <option [ngValue]="null" disabled>
+                        Select Country
+                    </option>
+
+                    <option *ngFor="let c of countryList" [ngValue]="c">
+                        {{ c.name }}
+                    </option>
+
+                </select>
+
+                <small class="text-danger" *ngIf="
+                    addUpdateHelipadForm.get('country')?.errors?.required &&
+                    (addUpdateHelipadForm.get('country')?.touched || submitted)
+                ">
+                    Country is required
+                </small>
+
+            </div>
+
+            <!-- State -->
+            <div class="col-md-4 mb-3 pr-0">
+
+                <label>
+                    State <span class="text-danger">*</span>
+                </label>
+
+                <select class="form-control" formControlName="state">
+
+                    <option value="">
+                        Select State
+                    </option>
+
+                    <option *ngFor="let state of stateList" [value]="state.id">
+                        {{ state.name }}
+                    </option>
+
+                </select>
+
+                <small class="text-danger" *ngIf="
+                    addUpdateHelipadForm.get('state')?.errors?.required &&
+                    (addUpdateHelipadForm.get('state')?.touched || submitted)
+                ">
+                    State is required
+                </small>
+
+            </div>
+
+            <!-- City -->
+            <div class="col-md-4 mb-3 pr-0">
+
+                <label>
+                    City <span class="text-danger">*</span>
+                </label>
+
+                <mat-form-field appearance="fill" class="w-100">
+
+                    <mat-label>City</mat-label>
+
+                    <mat-select formControlName="city" required (openedChange)="onCityDropdownOpen($event)" #citySelect
+                        panelClass="city-panel">
+
+                        <!-- Search -->
+                        <mat-option>
+
+                            <input matInput placeholder="Search city" (keyup)="onCitySearch($event.target.value)"
+                                (click)="$event.stopPropagation()" />
+
+                        </mat-option>
+
+                        <!-- Options -->
+                        <mat-option *ngFor="let city of cityList" [value]="city.id">
+
+                            {{ city.city_name }}
+
+                        </mat-option>
+
+                        <!-- Loader -->
+                        <mat-option *ngIf="loadingCities" disabled>
+                            Loading...
+                        </mat-option>
+
+                    </mat-select>
+
+                </mat-form-field>
+
+                <small class="text-danger" *ngIf="
+                    addUpdateHelipadForm.get('city')?.errors?.required &&
+                    (addUpdateHelipadForm.get('city')?.touched || submitted)
+                ">
+                    City is required
+                </small>
+
+            </div>
+
+            <!-- Map Location -->
+            <div class="col-md-4 mb-3">
+
+                <label>
+                    Map Location <span class="text-danger">*</span>
+                </label>
+
+                <input type="text" class="form-control" formControlName="mapLocation" placeholder="Enter Map Location">
+
+                <small class="text-danger" *ngIf="
+                    addUpdateHelipadForm.get('mapLocation')?.errors?.required &&
+                    (addUpdateHelipadForm.get('mapLocation')?.touched || submitted)
+                ">
+                    Map Location is required
+                </small>
+
+            </div>
+
+            <!-- Latitude -->
+            <div class="col-md-4 mb-3 pr-0">
+
+                <label>
+                    Latitude <span class="text-danger">*</span>
+                </label>
+
+                <input type="text" class="form-control" formControlName="latitude" placeholder="Enter Latitude">
+
+                <small class="text-danger" *ngIf="
+                    addUpdateHelipadForm.get('latitude')?.errors?.required &&
+                    (addUpdateHelipadForm.get('latitude')?.touched || submitted)
+                ">
+                    Latitude is required
+                </small>
+
+            </div>
+
+            <!-- Longitude -->
+            <div class="col-md-4 mb-3 pr-0">
+
+                <label>
+                    Longitude <span class="text-danger">*</span>
+                </label>
+
+                <input type="text" class="form-control" formControlName="longitude" placeholder="Enter Longitude">
+
+                <small class="text-danger" *ngIf="
+                    addUpdateHelipadForm.get('longitude')?.errors?.required &&
+                    (addUpdateHelipadForm.get('longitude')?.touched || submitted)
+                ">
+                    Longitude is required
+                </small>
+
+            </div>
+
+            <!-- Helipad Code -->
+            <div class="col-md-4 mb-3">
+
+                <label>
+                    Helipad Code <span class="text-danger">*</span>
+                </label>
+
+                <input type="text" class="form-control" formControlName="helipadCode" placeholder="Enter Helipad Code">
+
+                <small class="text-danger" *ngIf="
+                    addUpdateHelipadForm.get('helipadCode')?.errors?.required &&
+                    (addUpdateHelipadForm.get('helipadCode')?.touched || submitted)
+                ">
+                    Helipad Code is required
+                </small>
+
+            </div>
+
+            <!-- Description -->
+            <div class="col-md-4 mb-3 pr-0">
+
+                <label>Description</label>
+
+                <textarea rows="2" class="form-control" formControlName="description"
+                    placeholder="Enter Description"></textarea>
+
+            </div>
+
+            <!-- Status -->
+            <div class="col-md-4 mb-3">
+
+                <label class="d-block">
+                    Status
+                </label>
+
+                <label class="switch">
+
+                    <input type="checkbox" formControlName="status">
+
+                    <span class="slider round"></span>
+
+                </label>
+
+            </div>
+
+        </div>
+
+        <!-- Buttons -->
+        <div class="text-left btncontainer">
+
+            <button type="submit" class="btn btn-primary mr-2">
+                {{ isEdit ? 'Update' : 'Continue' }}
+            </button>
+
+            <button type="button" class="btn btn-secondary" (click)="resetForm()">
+
+                Reset
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>

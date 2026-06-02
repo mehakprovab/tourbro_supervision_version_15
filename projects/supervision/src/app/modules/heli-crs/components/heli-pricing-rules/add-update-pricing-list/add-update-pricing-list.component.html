@@ -1,0 +1,142 @@
+<div class="card adminInner mt-3">
+
+    <div class="card-header mb-4">
+        <h5>{{ isEdit ? 'Update Pricing Rules' : 'Add Pricing Rules' }}</h5>
+    </div>
+
+    <form [formGroup]="pricingForm" (ngSubmit)="onSubmit()">
+
+        <div class="row">
+
+            <!-- ================= OPERATOR ================= -->
+            <div class="col-md-4 mb-3 pr-0">
+
+                <label>Operator Name</label>
+
+                <select class="form-control" formControlName="operator_name">
+
+                    <option value="">Select Operator</option>
+
+                    <option *ngFor="let op of operatorsList" [value]="op.operator_name">
+                        {{ op.operator_name }}
+                    </option>
+
+                </select>
+
+                <small class="text-danger" *ngIf="submitted && pricingForm.get('operator_name')?.errors?.required">
+                    Operator is required
+                </small>
+
+            </div>
+
+            <!-- ================= ROUTE ================= -->
+            <div class="col-md-4 mb-3">
+
+                <label>Route</label>
+
+                <select class="form-control" formControlName="route_id">
+
+                    <option value="">Select Route</option>
+
+                    <option *ngFor="let rt of routesList" [value]="rt.id">
+                        {{ rt.route_name || rt.route }}
+                    </option>
+
+                </select>
+
+                <small class="text-danger" *ngIf="submitted && pricingForm.get('route_id')?.errors?.required">
+                    Route is required
+                </small>
+
+            </div>
+
+            <!-- ================= BASE FARE ================= -->
+            <div class="col-md-4 mb-3 pl-0">
+
+                <label>Base Fare</label>
+
+                <input type="text" class="form-control" formControlName="base_fare">
+
+                <small class="text-danger" *ngIf="submitted && pricingForm.get('base_fare')?.errors?.required">
+                    Base fare is required
+                </small>
+
+                <small class="text-danger" *ngIf="submitted && pricingForm.get('base_fare')?.errors?.pattern">
+                    Only numbers allowed
+                </small>
+
+            </div>
+
+            <!-- ================= TAXES ================= -->
+            <div class="col-md-4 mb-3 pr-0">
+
+                <label>Taxes</label>
+
+                <input type="text" class="form-control" formControlName="taxes">
+
+                <small class="text-danger" *ngIf="submitted && pricingForm.get('taxes')?.errors?.required">
+                    Taxes is required
+                </small>
+
+                <small class="text-danger" *ngIf="submitted && pricingForm.get('taxes')?.errors?.pattern">
+                    Only numbers allowed
+                </small>
+
+            </div>
+
+            <!-- ================= EFFECTIVE FROM ================= -->
+            <div class="col-md-4 mb-3">
+
+                <label>Effective From</label>
+
+                <input type="date" class="form-control" formControlName="effective_from">
+
+                <small class="text-danger" *ngIf="submitted && pricingForm.get('effective_from')?.errors?.required">
+                    Effective From is required
+                </small>
+
+            </div>
+
+            <!-- ================= EFFECTIVE TO ================= -->
+            <div class="col-md-4 mb-3 pl-0">
+
+                <label>Effective To</label>
+
+                <input type="date" class="form-control" formControlName="effective_to">
+
+                <small class="text-danger" *ngIf="submitted && pricingForm.get('effective_to')?.errors?.required">
+                    Effective To is required
+                </small>
+
+            </div>
+
+            <!-- ================= STATUS ================= -->
+            <div class="col-md-4 mb-3">
+
+                <label class="d-block">Status</label>
+
+                <label class="switch">
+                    <input type="checkbox" formControlName="status">
+                    <span class="slider round"></span>
+                </label>
+
+            </div>
+
+        </div>
+
+        <!-- ================= BUTTONS ================= -->
+        <div class="text-left btncontainer">
+
+            <button type="submit" class="btn btn-primary mr-2">
+                {{ isEdit ? 'Update' : 'Save' }}
+            </button>
+
+            <button type="button" class="btn btn-secondary" (click)="resetForm()">
+                Reset
+            </button>
+
+        </div>
+
+    </form>
+
+</div>

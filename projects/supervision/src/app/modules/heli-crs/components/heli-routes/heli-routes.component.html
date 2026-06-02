@@ -1,0 +1,33 @@
+<ul ngbNav #tabs="ngbNav" class="tabs-animated custom_tab" [(activeId)]="activeIdString" (navChange)="onTabSelected($event)">
+
+
+  <li [ngbNavItem]="'list_routes'">
+
+    <a ngbNavLink>
+      <span>Routes List</span>
+    </a>
+
+    <ng-template ngbNavContent>
+      <app-routes-list></app-routes-list>
+      </ng-template>
+
+  </li>
+
+
+  <li [ngbNavItem]="'add_routes'">
+
+    <a ngbNavLink>
+      <span>Add/ Edit Routes</span>
+    </a>
+
+    <ng-template ngbNavContent>
+     <app-add-update-routes-list></app-add-update-routes-list>
+    </ng-template>
+    
+  </li> 
+
+</ul>
+
+<div [ngbNavOutlet]="tabs"></div>
+
+

@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Sort } from '@angular/material/sort';
-import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { SwalService } from 'projects/b2b/src/app/core/services/swal.service';
-import { UtilityService } from 'projects/b2b/src/app/core/services/utility.service';
+import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { SubSink } from 'subsink';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -69,7 +68,7 @@ export class B2bTourEnquiryComponent implements OnInit {
     enqiryDetails:any;
     resDataFilter:Array<any>=[];
     searchText:string;
-    config: ExportAsConfig = {
+    config: any = {
         type: 'pdf',
         elementIdOrContent: 'b2b-tour-enquiry',
         options: {
@@ -91,7 +90,6 @@ export class B2bTourEnquiryComponent implements OnInit {
         private apiHandlerService: ApiHandlerService,
         private fb: FormBuilder,
         private swalService: SwalService,
-        private exportAsService: ExportAsService,
         private utility: UtilityService,
         private router:Router,
         private route:ActivatedRoute
@@ -218,14 +216,14 @@ export class B2bTourEnquiryComponent implements OnInit {
         });
     }
 
-    download(type: SupportedExtensions, orientation?: string) {
+    download(type: any, orientation?: string) {
         // if (type)
         this.config.type = type;
         if (orientation) {
             this.config.options.jsPDF.orientation = orientation;
         }
         const date = new Date().toDateString();
-        this.exportAsService.save(this.config, `b2b-tour-enquiry`).subscribe();
+        this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2b-tour-enquiry`, orientation || (this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation));
     }
     
     pdfCallbackFn(pdf: any) {

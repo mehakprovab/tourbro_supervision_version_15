@@ -59,6 +59,7 @@ export class SidebarComponent implements OnInit {
   HOTELCRS='p71';
  TOUR_CRS='p79';
  ACTIVITY_CRS='p88';
+ WELLNESS_CRS='p96';
  TRANSFER_CRS='p95';
  SETTING='p101';
 
@@ -68,6 +69,8 @@ export class SidebarComponent implements OnInit {
  DMCACTIVITYCRS = 'p88';
  DMCTRANSFERCRS = 'p94';
  DMCTOURCRS = 'p79';
+ showYatraCrs: boolean = false;
+ showxperiencesCrs: boolean = false;
  domainSideLogo:any
  domainUser:any;
   toggleSidebar() {
@@ -136,22 +139,34 @@ console.log('SIDE BAR')
 
     
     // 
-    if(this.loggedInUser['selectedSuppliers']) {
-      const selectedServices = this.loggedInUser['selectedSuppliers'].split(',');
-      if (selectedServices.includes('Hotel')) {
-        this.showHotelCrs = true;
-      }
-      if (selectedServices.includes('Activity')) {
-        this.showActivityCrs = true;
-      } 
-      if (selectedServices.includes('Transfer')) {
-        this.showTransferCrs = true;
-      }
-      if (selectedServices.includes('Tour')) {
-        this.showTourCrs = true;
-      }
-    }
-    
+const roleId = this.loggedInUser.auth_role_id;
+const suppliers = this.loggedInUser.selectedSuppliers;
+
+// ✅ SUPER ADMIN → show everything
+if (roleId === 1) {
+  this.showHotelCrs = true;
+  this.showActivityCrs = true;
+  this.showTransferCrs = true;
+  this.showTourCrs = true;
+
+} 
+// ✅ Other users → apply supplier-based filtering
+else if (suppliers) {
+  const selectedServices = JSON.parse(suppliers);
+
+  this.showHotelCrs = selectedServices.includes('stay');
+  this.showActivityCrs = selectedServices.includes('experiences');
+  this.showTransferCrs = selectedServices.includes('Transfer');
+  this.showTourCrs = selectedServices.includes('yatra-packages');
+
+} 
+// ✅ No suppliers (but not super admin) → hide all OR choose default
+else {
+  this.showHotelCrs = false;
+  this.showActivityCrs = false;
+  this.showTransferCrs = false;
+  this.showTourCrs = false;
+} 
     if(this.loggedInUser['supplier_type']) {
       const supplier_types = this.loggedInUser['supplier_type'].split(',');
       if(supplier_types.includes('B2C')) {
@@ -186,7 +201,7 @@ console.log('SIDE BAR')
     }
     
     if (this.loggedInUser && this.loggedInUser['auth_role_id'] == 6 || this.loggedInUser['auth_role_id'] == 7) {
-      this.extraParameter = 'hotelCrsMenus';
+      this.extraParameter = ['hotelCrsMenus'];
 
     } else {
       // You can set it to another value or leave it undefined if no panel should be active

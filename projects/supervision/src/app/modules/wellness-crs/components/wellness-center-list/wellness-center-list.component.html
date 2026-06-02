@@ -1,0 +1,31 @@
+<ul ngbNav #tabs="ngbNav" class="tabs-animated custom_tab" [(activeId)]="activeIdString" (navChange)="onTabSelected($event)">
+
+  <!-- Tab 1 -->
+  <li [ngbNavItem]="'list_wellness'">
+
+    <a ngbNavLink>
+      <span >Wellness Centre List</span>
+    </a>
+
+    <ng-template ngbNavContent>
+      <app-wellness-list (toUpdate)="triggerTab($event)"></app-wellness-list>
+      </ng-template>
+
+  </li>
+
+  <!-- Tab 2 -->
+  <li [ngbNavItem]="'add_wellness'">
+
+    <a ngbNavLink>
+      <span>Add / Edit Wellness Centre</span>
+    </a>
+
+    <ng-template ngbNavContent>
+      <app-add-update-wellness (someEvent)="triggerTab($event)" [selected]="selected" [wellnessOne]="wellnessData"></app-add-update-wellness>
+    </ng-template>
+    
+  </li> 
+
+</ul>
+
+<div [ngbNavOutlet]="tabs"></div>

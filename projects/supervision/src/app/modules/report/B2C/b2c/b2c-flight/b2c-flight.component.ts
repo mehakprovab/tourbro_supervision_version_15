@@ -7,7 +7,6 @@ import { Logger } from 'projects/supervision/src/app/core/logger/logger.service'
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { SubSink } from 'subsink';
-import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { environment } from 'projects/b2b/src/environments/environment.prod';
 import { Router } from '@angular/router';
 import { ReportService } from '../../../report.service';
@@ -80,7 +79,7 @@ export class B2cFlightComponent implements OnInit,OnDestroy {
     ];
     noData: boolean = true;
     respData: Array<any> = [];
-    config: ExportAsConfig = {
+    config: any = {
         type: 'pdf',
         elementIdOrContent: 'b2c-flight-report',
         options: {
@@ -113,7 +112,6 @@ export class B2cFlightComponent implements OnInit,OnDestroy {
         private fb: FormBuilder,
         private swalService: SwalService,
         private utility: UtilityService,
-        private exportAsService: ExportAsService,
         private router: Router,
         private reportService:ReportService
     ) { }
@@ -286,14 +284,14 @@ export class B2cFlightComponent implements OnInit,OnDestroy {
       this.showConfirm = false;
     }
 
-    download(type: SupportedExtensions, orientation?: string) {
+    download(type: any, orientation?: string) {
         // if (type)
         this.config.type = type;
         if (orientation) {
             this.config.options.jsPDF.orientation = orientation;
         }
         const date = new Date().toDateString();
-        this.exportAsService.save(this.config, `b2c-Flight-Report`).subscribe();
+        this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2c-Flight-Report`, orientation || (this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation));
     }
     
     pdfCallbackFn(pdf: any) {

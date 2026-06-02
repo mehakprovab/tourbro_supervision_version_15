@@ -1,0 +1,301 @@
+<div class="card adminInner">
+    <div class="card-header mb-3">
+        <h5>Wellness Package Images</h5>
+    </div>
+
+
+    <ul ngbNav #tabs="ngbNav" class="tabs-animated custom_tab" [(activeId)]="activeIdString" (navChange)="onTabSelected($event)">
+
+
+        <li [ngbNavItem]="'list_wellness_package'">
+
+            <a ngbNavLink>
+                <span>Package List</span>
+            </a>
+
+            <ng-template ngbNavContent>
+                <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft"
+                    #scrollOne>
+                    <div class="div1"></div>
+                </div>
+
+                <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
+                    <div class="div2 invisible-scrollbar">
+
+                        <div class="table-respons">
+                            <table class="table table-borderless table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-left text-nowrap">Sl. No</th>
+                                        <th scope="col" class="text-left text-nowrap">Status</th>
+                                        <th scope="col" class="text-left text-nowrap">Package Code</th>
+                                        <th scope="col" class="text-left text-nowrap">Package Name</th>
+                                        <th scope="col" class="text-left text-nowrap">Therapy Type</th>
+                                        <th scope="col" class="text-left text-nowrap">Package Type</th>
+                                        <th scope="col" class="text-left text-nowrap">Duration</th>
+                                        <th scope="col" class="text-left text-nowrap">Actions</th>
+                                    </tr>
+
+                                </thead>
+                                <tr *ngIf="!wellnessList?.length">
+                                    <td colspan="12">
+                                        <h4 class="text-muted text-center">
+                                            No Data Found!
+                                        </h4>
+                                    </td>
+                                </tr>
+                                <tbody>
+
+                                    <tr *ngFor="let wellness of wellnessList; let i = index" class="cursor-pointer">
+                                        <td class="text-left">{{ i + 1 }}</td>
+                                        <td>
+                                            <label class="switch">
+                                                <input type="checkbox" [checked]="wellness.status">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </td>
+                                        <td class="text-left">{{ wellness.package_code }}</td>
+                                        <td class="text-left address-col">{{ wellness.package_name }}</td>
+                                        <td class="text-left address-col">{{ getPackageType(wellness.therapy_types) }}
+                                        </td>
+                                        <td class="text-left address-col">{{ getPackageType(wellness.package_types) }}
+                                        </td>
+                                        <td class="text-left">{{ getPackageType(wellness.duration_days) }}</td>
+
+                                        <td class="text-left">
+                                            <a title="Edit Hotel" class="p-1 text-primary"
+                                                (click)="updatePackageRate(wellness)"><i
+                                                    class="fas fa-pencil-alt"></i></a>
+                                            <button title="Edit Hotel Image" class="p-1 text-primary"
+                                                (click)="updateCenterImage(wellness)"> Wellness Centre
+                                                Image</button>
+                                            <button title="Edit Hotel Tax" class="p-1 text-primary"
+                                                (click)="addPrice(wellness,'addPrice')">Add Price</button>
+                                            <button class="p-1 text-primarys"
+                                                (click)="deletePackageRate(wellness.id)"><a title="Delete"><i
+                                                        class="fa fa-trash"></i></a></button>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </ng-template>
+
+        </li>
+        <li [ngbNavItem]="'add_wellness_package'">
+
+            <a ngbNavLink>
+                <span>Add Package</span>
+            </a>
+
+            <ng-template ngbNavContent>
+                <div class="card adminInner" *ngIf="!showPackageImageUpload">
+
+
+                    <div class="Queues mt-2 mb-2">
+                        <form [formGroup]="packageForm" (ngSubmit)="onSubmit()">
+                            <div class="row">
+                                <div class="col-4 pr-0">
+                                    <div class="form-group">
+                                        <label for="centercode">Package Type
+                                        </label>
+                                        <ng-multiselect-dropdown formControlName="package_types"
+                                            [placeholder]="'Select Package Type'" [data]="packageList"
+                                            [settings]="dropdownSettingsForPackageTypes"
+                                            class="form-control meal-plan-dropdown">
+                                        </ng-multiselect-dropdown>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label for="centrename">Package Name</label>
+                                        <input type="text" class="form-control form-control-sm nrm_input"
+                                            formControlName="package_name" placeholder="Package Name" id="centrename">
+                                    </div>
+                                </div>
+                                <div class="col-4 pl-0">
+                                    <div class="form-group">
+                                        <label for="email">Description</label>
+                                        <input type="text" class="form-control form-control-sm nrm_input"
+                                            formControlName="description" placeholder="Enter Description " id="email">
+                                    </div>
+                                </div>
+                                <div class="col-6 pr-0">
+                                    <div class="form-group">
+                                        <label for="phone">Therapy Type</label>
+                                        <ng-multiselect-dropdown formControlName="therapy_types"
+                                            [placeholder]="'Select Therapy Type'" [data]="therapyList"
+                                            [settings]="dropdownSettingsForTherapy"
+                                            class="form-control meal-plan-dropdown">
+                                        </ng-multiselect-dropdown>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="supplier_name">Duration</label>
+                                        <ng-multiselect-dropdown formControlName="duration_days"
+                                            [placeholder]="'Select Duration'" [data]="durationList"
+                                            [settings]="dropdownSettingsForDuration"
+                                            class="form-control meal-plan-dropdown">
+                                        </ng-multiselect-dropdown>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>FAQs & Policies</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12" formArrayName="faq_policies">
+
+                                    <div class="row mb-3" *ngFor="let faq of faqPolicies.controls; let i = index"
+                                        [formGroupName]="i">
+
+                                        <div class="col-md-5">
+                                            <input type="text" class="form-control form-control-sm"
+                                                placeholder="Enter Question" formControlName="question">
+                                        </div>
+
+                                        <div class="col-md-5">
+                                            <input class="form-control form-control-sm" type="text"
+                                                placeholder="Enter Answer" formControlName="answer">
+                                        </div>
+
+                                        <div class="col-md-2" *ngIf="faqPolicies.length > 1">
+                                            <button type="button" class="btn btn-secondary" (click)="removeFaq(i)">
+                                                Remove
+                                            </button>
+                                        </div>
+
+                                    </div>
+
+                                    <button type="button" class="btn btn-primary" (click)="addFaq()">
+                                        Add FAQ
+                                    </button>
+
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="control-label">
+                                        Status
+                                        <span class="text-danger">*</span>
+                                    </label>
+
+
+                                    <label class="switch">
+                                        <input type="checkbox" name="status" formControlName="status">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+
+                            </div>
+                            <div class="btncontainer">
+                                <button type="submit" class="btn btn-primary">Save</button> &nbsp;
+                                <button type="button" class="btn btn-secondary" (click)="goBack()">Back</button>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+
+                    <div class="container p-0" *ngIf="showPackageImageUpload">
+                        <div class="table-responsive">
+                            <table class="table table-borderless table-striped table-hover" matSort>
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-left text-nowrap"
+                                            *ngFor="let header of displayColumn;" mat-sort-header="{{header.key}}">
+                                            {{header.value }} </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngIf="noData">
+                        <td colspan="11">
+                            <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                        </td>
+                    </tr>
+                                    <tr *ngFor="let imageUrl of roomImageList;let i=index;">
+                                        <td class="text-left text-muted">{{i+1}}.</td>
+                                        <td class="text-left"><img [src]="imageUrl.image_url" width="100" height="50"
+                                               ></td>
+                                        <td *ngIf="imageUrl.is_primary == 1" class="text-left text-muted">Primary Image
+                                        </td>
+                                        <td class="text-left" *ngIf="imageUrl.is_primary == 0">
+                                            <label class="checkbox-label">
+                                                <input type="checkbox" class="checkbox-input"
+                                                    (change)="onPublish($event.target.checked,i,imageUrl)">
+                                                <span class="checkbox-text">Set as Primary</span>
+                                            </label>
+                                        </td>
+                                        <td class="text-left">
+                                            <button (click)="delete(id)" title="Edit Hotel" class="p-1 btnStyles">
+                                                Delete</button>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        
+                    </div>
+                    
+
+                    <form [formGroup]="hotelImageForm" (ngSubmit)="onSubmitWellNessImage()"
+                        class="needs-validation btop pt-4" novalidate>
+                        <fieldset for="hotelImage">
+                            <div class="form_legend">Add Wellness Package Images</div>
+                            <div *ngIf="hotelImage" class="image-list">
+                                <div *ngFor="let imageUrl of images">
+                                    <img [src]="imageUrl" width="100" height="50">
+                                </div>
+                            </div>
+                            <img *ngIf="imageSrc" height="50" width="100" class="rounded" [src]="imageSrc" alt="logo">
+                            &nbsp; &nbsp;
+
+                            <div class="form-group">
+                                <div class="file-input">
+                                    <span><b>Note:</b> Only JPG, JPEG & PNG formats and 500Kb size are allowed.</span><br>
+                                    <input #file type="file" accept='.jpeg,.jpg' (change)="previewRoomImage($event)"
+                                        class="btn btn-sm" multiple>
+                                    <div *ngIf="hotelImage?.image_url?.errors" class="invalid-feedback">
+                                        <div *ngIf="hotelImage.image_url.errors.required">Images are required</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12 btncontainer p-0">
+                                    <button type=" submit" class=" btn btn-sm btn-success btnStyle">Upload Wellness
+                                        Centre
+                                        Images
+                                    </button>
+                                    &nbsp; &nbsp;
+                                    <button type="reset" class=" btn btn-sm btn-primary btnStyle" (click)="goBack()">
+                                        Wellness Centre List
+                                    </button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+
+
+
+            </ng-template>
+
+        </li>
+
+    </ul>
+
+    <div [ngbNavOutlet]="tabs"></div>
+
+</div>
+
+
+<ngx-loading [show]="loading"
+    [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+    [template]="loadingTemplate"></ngx-loading>

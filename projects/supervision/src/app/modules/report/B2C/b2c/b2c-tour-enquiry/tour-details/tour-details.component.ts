@@ -2,7 +2,6 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import { ExportAsConfig, SupportedExtensions } from 'ngx-export-as';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { SubSink } from 'subsink';
 import { environment } from 'projects/supervision/src/environments/environment.prod';
@@ -44,7 +43,7 @@ export class TourDetailsComponent implements OnInit {
     showEmailBrouchure:boolean=false
     brochureForm:FormGroup;
     brochurePdf:any;
-    config: ExportAsConfig = {
+    config: any = {
         type: 'pdf',
         elementIdOrContent: 'print_voucher',
         options: {
@@ -144,7 +143,7 @@ export class TourDetailsComponent implements OnInit {
         return `${baseUrl + '/tour/tours/getBannerImage/' + this.bannerImage}`;
       }  
   
-      downloadA4(type: SupportedExtensions, orientation?: string): void {
+      downloadA4(type: any, orientation?: string): void {
         let fileName = this.tourDetails['package_name']
         window['html2canvas'] = html2canvas;
         const date = new Date().toDateString();

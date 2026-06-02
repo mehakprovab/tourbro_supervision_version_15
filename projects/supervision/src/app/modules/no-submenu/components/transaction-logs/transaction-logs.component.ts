@@ -5,7 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { Logger } from 'projects/supervision/src/app/core/logger/logger.service';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
-import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { SubSink } from 'subsink';
 import { formatDate } from 'ngx-bootstrap/chronos';
@@ -35,7 +34,7 @@ export class TransactionLogsComponent implements OnInit, OnDestroy {
         showWeekNumbers: false
     };
     maxDate=new Date();
-    config: ExportAsConfig = {
+    config: any = {
         type: 'pdf',
         elementIdOrContent: 'B2B-users-report',
         options: {
@@ -73,7 +72,6 @@ export class TransactionLogsComponent implements OnInit, OnDestroy {
         private swalService: SwalService,
         private utility: UtilityService,
         private router: Router,
-        private exportAsService: ExportAsService,
         private util: UtilityService,
         private activatedRoute: ActivatedRoute
     ) { }
@@ -190,14 +188,14 @@ export class TransactionLogsComponent implements OnInit, OnDestroy {
         if (!this.util.isEmpty(this.agentDetails)) {
         }
     }
-    download(type: SupportedExtensions, orientation?: string) {
+    download(type: any, orientation?: string) {
         let filename = this.collectionSize == 1 ? "" : "";
         this.config.type = type;
         if (orientation) {
             this.config.options.jsPDF.orientation = orientation;
         }
         const date = new Date().toDateString();
-       this.exportAsService.save(this.config, filename).subscribe();
+       this.utility.downloadElementAsPdf(this.config.elementIdOrContent, filename, orientation || (this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation));
     }
 
     pdfCallbackFn(pdf: any) {

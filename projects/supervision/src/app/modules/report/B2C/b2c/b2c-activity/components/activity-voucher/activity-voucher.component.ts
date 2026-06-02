@@ -7,7 +7,6 @@ import { UtilityService } from '../../../../../../../core/services/utility.servi
 import { SubSink } from 'subsink';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { ExportAsConfig, SupportedExtensions } from 'ngx-export-as';
 import { Location } from '@angular/common';
 
 const log = new Logger('report/B2cActivityVocherComponent');
@@ -87,7 +86,7 @@ export class ActivityVoucherComponent implements OnInit {
     }
   }
 
-  downloadA4(type: SupportedExtensions, orientation?: string): void {
+  downloadA4(type: any, orientation?: string): void {
     this.loading = true;
     document.getElementById('download').style.display = "none";
     window['html2canvas'] = html2canvas;

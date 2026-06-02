@@ -3,7 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ApiHandlerService } from 'projects/b2b/src/app/core/api-handlers';
 import { Logger } from 'projects/b2b/src/app/core/logger/logger.service';
 import { SubSink } from 'subsink';
-import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
@@ -24,7 +23,7 @@ export class UpdatePnrTicketComponent implements OnInit, OnDestroy {
     app_reference: "";
     airLineLogoUrl: string = 'https://www.travelsoho.com/antrip_v1/extras/system/library/images/airline_logo/'; //AI.gif
     domainInformation: any;
-    config: ExportAsConfig = {
+    config: any = {
         type: 'pdf',
         elementIdOrContent: 'flight_voucher',
         options: {
@@ -43,7 +42,6 @@ export class UpdatePnrTicketComponent implements OnInit, OnDestroy {
     constructor(
         private apiHandlerService: ApiHandlerService,
         private swalService: SwalService,
-        private exportAsService: ExportAsService,
         private utility: UtilityService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
@@ -163,14 +161,14 @@ export class UpdatePnrTicketComponent implements OnInit, OnDestroy {
         }
     }
 
-    download(type: SupportedExtensions, orientation?: string) {
+    download(type: any, orientation?: string) {
         this.config.type = type;
         if (orientation) {
             this.config.options.jsPDF.orientation = orientation;
         }
         const date = new Date().toDateString();
         setTimeout(() => {
-            this.exportAsService.save(this.config, `voucher`).subscribe();
+            this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `voucher`, orientation || (this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation));
         }, 1000)
 
     }

@@ -2,7 +2,6 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { SubSink } from 'subsink';
 import { ApiHandlerService } from '../../../../../../core/api-handlers';
 import { SwalService } from '../../../../../../core/services/swal.service';
@@ -22,7 +21,7 @@ export class FlightComponent implements OnInit {
     airline_logo = 'https://booking247.com/airline_logo/'; //AI.svg
     domainInformation: any;
 
-    config: ExportAsConfig = {
+    config: any = {
         type: 'pdf',
         elementIdOrContent: 'print_voucher',
         options: {
@@ -41,7 +40,6 @@ export class FlightComponent implements OnInit {
     constructor(
         private apiHandlerService: ApiHandlerService,
         private swalService: SwalService,
-        private exportAsService: ExportAsService,
         private utility: UtilityService,
         private router: Router,
         private activatedRoute: ActivatedRoute
@@ -145,17 +143,17 @@ onPrint(): void {
             })
     }
 
-    download(type: SupportedExtensions, orientation?: string) {
+    download(type: any, orientation?: string) {
         // if (type)
         this.config.type = type;
         if (orientation) {
             this.config.options.jsPDF.orientation = orientation;
         }
         const date = new Date().toDateString();
-        this.exportAsService.save(this.config, `voucher_${this.app_reference}`).subscribe();
+        this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `voucher_${this.app_reference}`, orientation || (this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation));
     }
 
-    downloadA4(type: SupportedExtensions, orientation?: string): void {
+    downloadA4(type: any, orientation?: string): void {
         let fileName = this.voucherData['AppReference']
         window['html2canvas'] = html2canvas;
         const date = new Date().toDateString();

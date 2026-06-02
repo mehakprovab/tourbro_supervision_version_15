@@ -4,7 +4,6 @@ import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handler
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { SubSink } from 'subsink';
-import { ExportAsService } from 'ngx-export-as';
 
 @Component({
   selector: 'app-b2c-car-cancel',
@@ -33,7 +32,6 @@ export class B2cCarCancelComponent implements OnInit,OnDestroy {
   constructor(
         private apiHandlerService: ApiHandlerService,
         private swalService: SwalService,
-        private exportAsService: ExportAsService,
         private utility: UtilityService,
         private router: Router,
         private activatedRoute : ActivatedRoute

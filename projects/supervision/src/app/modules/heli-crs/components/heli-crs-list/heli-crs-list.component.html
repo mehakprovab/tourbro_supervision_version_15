@@ -1,0 +1,32 @@
+<ul ngbNav #tabs="ngbNav" class="tabs-animated custom_tab" [(activeId)]="activeIdString" (navChange)="onTabSelected($event)">
+
+
+  <li [ngbNavItem]="'list_operators'">
+
+    <a ngbNavLink>
+      <span>Operators List</span>
+    </a>
+
+    <ng-template ngbNavContent>
+      <app-operators-list></app-operators-list>
+      </ng-template>
+
+  </li>
+
+
+  <li [ngbNavItem]="'add_operators'">
+
+    <a ngbNavLink>
+      <span>Add/ Edit Operators</span>
+    </a>
+
+    <ng-template ngbNavContent>
+     <app-add-update-operators-list></app-add-update-operators-list>
+    </ng-template>
+    
+  </li> 
+
+</ul>
+
+<div [ngbNavOutlet]="tabs"></div>
+

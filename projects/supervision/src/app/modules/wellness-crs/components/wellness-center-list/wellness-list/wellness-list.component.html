@@ -1,0 +1,167 @@
+<div class="card adminInner">
+    <div class="card-header mb-3">
+        <h5>Wellness Centre List</h5>
+    </div>
+    
+    
+    <div class="Queues mt-2 mb-2">
+        <!-- <form> -->
+            <div class="row">
+                <div class="col-4 pr-0">
+                    <div class="form-group">
+                        <label for="centercode">Centre Code
+                        </label>
+                        <input  type="text"
+                            class="form-control form-control-sm nrm_input"
+                            placeholder="Centre Code" id="centercode">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="centrename">Centre Name</label>
+                        <input type="text"
+                            class="form-control form-control-sm nrm_input" placeholder="Centre Name" id="centrename">
+                    </div>
+                </div>
+                <div class="col-4 pl-0">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input  type="text"
+                            class="form-control form-control-sm nrm_input" placeholder="Enter Email " id="email">
+                    </div> 
+                </div>
+                <div class="col-4 pr-0">
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input   type="text"
+                            class="form-control form-control-sm nrm_input" placeholder="Phone" id="phone">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="supplier_name">Supplier Name</label>
+                        <input type="text"
+                            class="form-control form-control-sm nrm_input" placeholder="Supplier Name" id="supplier_name">
+                    </div>
+                </div>
+                <div class="col-4 pl-0" >
+                    <div class="form-group">
+                        <label for="supplier_email">Supplier Email</label>
+                        <input  type="text"
+                            class="form-control form-control-sm nrm_input" placeholder="Supplier Email" id="supplier_email">
+                    </div>
+                </div>
+                
+            </div>
+            <div class="btncontainer">
+                <button type="submit" class="btn btn-primary">Search</button> &nbsp;
+                <button type="button" class="btn btn-secondary">Reset</button>
+            </div>
+        <!-- </form> -->
+    </div>
+
+    
+</div>
+<div class="card adminInner mt-3">
+    <!-- <form> -->
+        <div class="d-flex align-items-center justify-content-between pb-3">
+            <div class="padding-bottom: 15px;">
+            <button type="button" class="btn btn-primary">Export</button> &nbsp;
+            <button type="button" class="btn btn-secondary">Filter</button>
+        </div>
+            
+        <div class="form-group mb-0 col-sm-3 p-0 float-right has-search">
+            Full text search:
+            <input class="form-control" type="text"  name="searchTerm"/>
+        </div>
+
+        </div>
+        
+       
+     
+        <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft"
+        #scrollOne>
+        <div class="div1"></div>
+       </div>
+
+    <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
+        <div class="div2 invisible-scrollbar">
+   
+        <div class="table-respons">
+            <table class="table table-borderless table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-left text-nowrap">Sl. No</th>
+                        <th scope="col" class="text-left text-nowrap">Status</th>
+                        <th scope="col" class="text-left text-nowrap">Centre Code</th>
+                        <th scope="col" class="text-left text-nowrap">Centre Name</th>
+                        <th scope="col" class="text-left text-nowrap">Supplier Name</th>
+                        <th scope="col" class="text-left text-nowrap">Supplier Email</th>
+                        <th scope="col" class="text-left text-nowrap">Country</th>
+                        <th scope="col" class="text-left text-nowrap">City</th>
+                        <th scope="col" class="text-left text-nowrap">Currency</th>
+                        <th scope="col" class="text-left text-nowrap">Address</th>
+                        <th scope="col" class="text-left text-nowrap">Contract Expiry</th>
+                        <th scope="col" class="text-left text-nowrap">Total Packages</th>
+                        <th scope="col" class="text-left text-nowrap">Created At</th>
+                        <th scope="col" class="text-left text-nowrap">Trending (B2C)</th>
+                        <th scope="col" class="text-left text-nowrap">Actions</th>
+                    </tr>
+                                     
+                </thead>
+                <tbody>
+                   
+                    <tr *ngFor="let wellness of wellnessList; let i = index" class="cursor-pointer">
+                        <td class="text-left">{{ i + 1 }}</td>
+                        <td>
+                        <label class="switch">
+                            <input type="checkbox" [checked]="wellness.status" >
+                            <span class="slider round"></span>
+                        </label>
+                       </td>
+                        <td class="text-left">{{ wellness.center_code }}</td>
+                        <td class="text-left">{{ wellness.center_name }}</td>
+                        <td class="text-left">{{ wellness.supplier_name ? wellness.supplier_name : 'N/A' }}</td>
+                        <td class="text-left">{{ wellness.supplier_email }}</td>
+                        <td class="text-left">{{ wellness.core_country_id }}</td>
+                        <td class="text-left">{{ wellness.city_name }}</td>
+                        <td class="text-left">{{ wellness.currency }}</td>
+                        <td class="text-left address-col">{{ wellness.address }}</td>
+                        <td class="text-left">{{ wellness.contract_expiry_date }}</td>
+                        <td class="text-left">{{ wellness.packages_count ? wellness.packages_count : 'N/A' }}</td>
+                        <td class="text-left">{{ wellness.created_at ? wellness.created_at : 'N/A' }}</td>
+                        <td class="text-left">{{ wellness.status ? 'Yes' : 'No' }}</td>
+                        <td class="text-left">
+                           <a title="Edit Hotel" class="p-1 text-primary" (click)="updateList(wellness,'isEditList')"><i class="fas fa-pencil-alt"></i></a>
+                            <button title="Edit Hotel Image" class="p-1 text-primary" (click)="updateHotel(wellness,'isCenterImage')"> Wellness Centre Image</button>
+                            <button title="Edit Room Detail" class="p-1 text-primary" (click)="updateHotel(wellness,'isRateDetail')"> Manage Package & Rate</button>
+                            <button title="Edit Hotel Tax" class="p-1 text-primary"  (click)="updateHotel(wellness,'isCenterTax')">Centre Tax</button>
+                            <button title="Edit Child Policy" class="p-1 text-primary" (click)="updateHotel(wellness,'isChildPolicy')"> Children Policy</button>
+                            <button class="p-1 text-primarys" (click)="onDelete(wellness)" ><a title="Delete"><i class="fa fa-trash"></i></a></button>
+        
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+        </div>
+
+        <div class="card-footer pb-0">
+            <div class="d-flex w-100 justify-content-between">
+                <ngb-pagination [collectionSize]="countData" [maxSize]="10" [rotate]="true" [boundaryLinks]="true" [(page)]="page"
+                    [pageSize]="pageSize" (pageChange)="getWellnessList()">
+                </ngb-pagination>
+                <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize"(ngModelChange)="getWellnessList($event)">
+                    <option [ngValue]="10">10 items per page</option>
+                    <option [ngValue]="20">20 items per page</option>
+                    <option [ngValue]="50">50 items per page</option>
+                    <option [ngValue]="100">100 items per page</option>
+                </select>
+            </div>
+            </div>
+    <!-- </form> -->
+
+</div>
+ 
+

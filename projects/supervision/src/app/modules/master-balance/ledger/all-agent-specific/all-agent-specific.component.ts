@@ -7,7 +7,6 @@ import { SwalService } from 'projects/supervision/src/app/core/services/swal.ser
 import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { SubSink } from 'subsink';
 import { formatDate } from 'ngx-bootstrap/chronos';
-import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { GlobalConstants } from 'projects/supervision/src/app/core/services/global-constants';
 import * as moment from 'moment';
 
@@ -36,7 +35,7 @@ export class AllAgentSpecificComponent implements OnInit {
     pageSize = 50;
     page = 1;
     collectionSize: number;
-    config: ExportAsConfig = {
+    config: any = {
         type: 'pdf',
         elementIdOrContent: 'ledger-request',
         options: {
@@ -76,7 +75,6 @@ export class AllAgentSpecificComponent implements OnInit {
         private apiHandlerService: ApiHandlerService,
         private fb: FormBuilder,
         private swalService: SwalService,
-        private exportAsService: ExportAsService,
         private utility: UtilityService,
         private cdrRef: ChangeDetectorRef
     ) {
@@ -167,14 +165,14 @@ export class AllAgentSpecificComponent implements OnInit {
             this.collectionSize = this.respData.length;
     }
 
-    download(type: SupportedExtensions, orientation?: string) {
+    download(type: any, orientation?: string) {
         let filename = this.collectionSize == 1 ? "" : "";
         this.config.type = type;
         if (orientation) {
             this.config.options.jsPDF.orientation = orientation;
         }
         const date = new Date().toDateString();
-     this.exportAsService.save(this.config, filename).subscribe();
+     this.utility.downloadElementAsPdf(this.config.elementIdOrContent, filename, orientation || (this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation));
     }
 
     pdfCallbackFn(pdf: any) {

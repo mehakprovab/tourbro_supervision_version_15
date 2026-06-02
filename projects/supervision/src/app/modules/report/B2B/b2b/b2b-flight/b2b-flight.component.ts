@@ -6,7 +6,6 @@ import { formatDate } from 'ngx-bootstrap/chronos';
 import { environment } from 'projects/b2b/src/environments/environment.prod';
 import { SubSink } from 'subsink';
 import { ApiHandlerService } from '../../../../../core/api-handlers';
-import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { Logger } from '../../../../../core/logger/logger.service';
 import { SwalService } from '../../../../../core/services/swal.service';
 import { UtilityService } from '../../../../../core/services/utility.service';
@@ -37,7 +36,7 @@ export class B2bFlightComponent implements OnInit, OnDestroy {
     cancelData: any;
     load:boolean=false;
     maxDate=new Date();
-    config: ExportAsConfig = {
+    config: any = {
         type: 'pdf',
         elementIdOrContent: 'b2b-flight-report',
         options: {
@@ -117,7 +116,6 @@ export class B2bFlightComponent implements OnInit, OnDestroy {
         private fb: FormBuilder,
         private swalService: SwalService,
         private utility: UtilityService,
-        private exportAsService: ExportAsService,
         private router: Router,
         private reportService:ReportService
     ) { }
@@ -246,14 +244,14 @@ export class B2bFlightComponent implements OnInit, OnDestroy {
     }
 
 
-    download(type: SupportedExtensions, orientation?: string) {
+    download(type: any, orientation?: string) {
         // if (type)
         this.config.type = type;
         if (orientation) {
             this.config.options.jsPDF.orientation = orientation;
         }
         const date = new Date().toDateString();
-        this.exportAsService.save(this.config, `b2b-Flight-Report`).subscribe();
+        this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2b-Flight-Report`, orientation || (this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation));
     }
     
     pdfCallbackFn(pdf: any) {

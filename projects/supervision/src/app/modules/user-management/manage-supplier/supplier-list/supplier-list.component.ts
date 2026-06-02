@@ -1,7 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
@@ -33,7 +32,7 @@ export class SupplierListComponent implements OnInit {
   respDataProperty:Array<any> = [];
   listType: number;
   supplier_Type:any;
-  config: ExportAsConfig = {
+  config: any = {
       type: 'pdf',
       elementIdOrContent: 'active-users-report',
       options: {
@@ -62,7 +61,6 @@ export class SupplierListComponent implements OnInit {
       private swalService: SwalService,
       private utility: UtilityService,
       private activatedRoute: ActivatedRoute,
-      private exportAsService: ExportAsService,
       private userMangementService: UserManagementService,
       private fb: FormBuilder,
   ) { }
@@ -221,7 +219,7 @@ getCountryName(countryId: number): string | null {
           }
       });
   }
-  download(type: SupportedExtensions, orientation?: string) {
+  download(type: any, orientation?: string) {
       // if (type)
       let filename = this.listType == 1 ? "Active Supplier List" : "Inactive Supplier List";
       this.config.type = type;
@@ -229,7 +227,7 @@ getCountryName(countryId: number): string | null {
           this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-     this.exportAsService.save(this.config, filename).subscribe();
+     this.utility.downloadElementAsPdf(this.config.elementIdOrContent, filename, orientation || (this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation));
   }
 
   pdfCallbackFn(pdf: any) {

@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ExportAsService } from "ngx-export-as";
 import { ApiHandlerService } from "projects/supervision/src/app/core/api-handlers";
 import { SwalService } from "../../../../core/services/swal.service";
 import { SubSink } from "subsink";
@@ -29,7 +28,6 @@ export class ManagePaymnetGatewayComponent implements OnInit {
     private swalService: SwalService,
     private utility: UtilityService,
     private activatedRoute: ActivatedRoute,
-    private exportAsService: ExportAsService,
     private fb: FormBuilder
   ) { }
   ngOnInit() {

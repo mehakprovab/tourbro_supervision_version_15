@@ -5,7 +5,6 @@ import { Logger } from 'projects/supervision/src/app/core/logger/logger.service'
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { SubSink } from 'subsink';
-import { ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 const log = new Logger('report/HotelVoucherComponent');
@@ -39,7 +38,6 @@ export class B2CTransferInvoiceComponent implements OnInit {
   constructor(
         private apiHandlerService: ApiHandlerService,
         private swalService: SwalService,
-        private exportAsService: ExportAsService,
         private utility: UtilityService,
         private router: Router,
         private activatedRoute : ActivatedRoute
@@ -114,7 +112,7 @@ export class B2CTransferInvoiceComponent implements OnInit {
     	return str.replace(/\d(?=\d{4})/g, "*");
     }
 
-    downloadA4(type: SupportedExtensions, orientation?: string): void {
+    downloadA4(type: any, orientation?: string): void {
       let fileName = this.voucherData['AppReference']
          window['html2canvas'] = html2canvas;
          const date = new Date().toDateString();

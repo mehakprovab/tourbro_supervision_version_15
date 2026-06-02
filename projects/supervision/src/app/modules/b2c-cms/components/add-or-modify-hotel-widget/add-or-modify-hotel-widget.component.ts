@@ -11,7 +11,6 @@ import { Logger } from 'projects/supervision/src/app/core/logger/logger.service'
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { SubSink } from 'subsink';
-import {  ExportAsService } from 'ngx-export-as';
 import { environment } from '../../../../../environments/environment';
 
 const baseUrl = environment.baseUrl;
@@ -97,7 +96,6 @@ export class AddOrModifyHotelWidgetComponent implements OnInit, OnDestroy {
         private apiHandlerService: ApiHandlerService,
         private fb: FormBuilder,
         private swalService: SwalService,
-        private exportAsService: ExportAsService,
         private utility: UtilityService,
         private cdr: ChangeDetectorRef,
         private router: Router,

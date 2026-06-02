@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
-import { SupportedExtensions } from 'ngx-export-as';
 import * as XLSX from 'xlsx';
 const EXCEL_EXTENSION = '.xlsx'; // excel file extension
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { SwalService } from './swal.service';
+
+type SupportedExtensions = 'pdf' | 'png' | 'xlsx' | 'xls' | 'docx' | 'doc' | 'txt' | 'csv' | 'json' | 'xml';
+type PdfOrientation = 'portrait' | 'landscape' | 'p' | 'l';
 
 @Injectable({
     providedIn: 'root'
@@ -207,7 +209,34 @@ export class UtilityService {
     
     }
 
-    downloadA4(type: SupportedExtensions,app_reference, print_voucher:any,orientation?: string): void {
+    downloadElementAsPdf(elementId: string, fileName: string, orientation: PdfOrientation = 'landscape'): void {
+        const element = document.getElementById(elementId);
+        if (!element) {
+            this.swalService.alert.oops();
+            return;
+        }
+
+        const pdfOrientation = orientation === 'portrait' || orientation === 'p' ? 'p' : 'l';
+        const pageWidth = pdfOrientation === 'p' ? 210 : 297;
+        window['html2canvas'] = html2canvas;
+
+        html2canvas(element, {
+            allowTaint: true,
+            useCORS: true
+        }).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            const imgHeight = (canvas.height * pageWidth) / canvas.width;
+            const doc = new jsPDF(pdfOrientation, 'mm', 'a4');
+
+            doc.addImage(imgData, 'PNG', 0, 0, pageWidth, imgHeight);
+            doc.save(`${fileName}.pdf`);
+            this.swalService.alert.success();
+        }).catch(() => {
+            this.swalService.alert.oops();
+        });
+    }
+
+    downloadA4(type: any,app_reference, print_voucher:any,orientation?: string): void {
         let fileName = app_reference;
         window['html2canvas'] = html2canvas;
         const date = new Date().toDateString();

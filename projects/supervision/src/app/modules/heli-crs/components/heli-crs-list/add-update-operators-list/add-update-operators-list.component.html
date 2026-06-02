@@ -1,0 +1,386 @@
+<div class="card adminInner mt-3">
+
+    <div class="card-header mb-4">
+        <h5>{{ isEdit ? 'Update Heli' : 'Add Heli' }}</h5>
+    </div>
+
+    <form [formGroup]="addUpdateOperatorsForm" (ngSubmit)="onSubmit()">
+
+        <div class="row">
+
+            <!-- Operator Name -->
+            <div class="col-md-4 mb-3 pr-0">
+
+                <label>
+                    Operator Name <span class="text-danger">*</span>
+                </label>
+
+                <input type="text" class="form-control" formControlName="operatorName"
+                    placeholder="Enter Operator Name">
+
+                <small class="text-danger" *ngIf="
+                        addUpdateOperatorsForm.get('operatorName')?.errors?.required &&
+                        (addUpdateOperatorsForm.get('operatorName')?.touched || submitted)
+                    ">
+
+                    Operator Name is required
+
+                </small>
+
+            </div>
+
+            <!-- Company Name -->
+            <div class="col-md-4 mb-3">
+
+                <label>
+                    Company Name <span class="text-danger">*</span>
+                </label>
+
+                <input type="text" class="form-control" formControlName="companyName" placeholder="Enter Company Name">
+
+                <small class="text-danger" *ngIf="
+                        addUpdateOperatorsForm.get('companyName')?.errors?.required &&
+                        (addUpdateOperatorsForm.get('companyName')?.touched || submitted)
+                    ">
+
+                    Company Name is required
+
+                </small>
+
+            </div>
+
+            <!-- DGCA -->
+            <div class="col-md-4 mb-3 pl-0">
+
+                <label>
+                    DGCA License Number <span class="text-danger">*</span>
+                </label>
+
+                <input type="text" class="form-control" formControlName="dgcaLicenseNumber"
+                    placeholder="Enter DGCA License Number">
+
+                <small class="text-danger" *ngIf="
+                        addUpdateOperatorsForm.get('dgcaLicenseNumber')?.errors?.required &&
+                        (addUpdateOperatorsForm.get('dgcaLicenseNumber')?.touched || submitted)
+                    ">
+
+                    DGCA License Number is required
+
+                </small>
+
+            </div>
+
+            <!-- Contact Person -->
+            <div class="col-md-4 mb-3 pr-0">
+
+                <label>
+                    Contact Person <span class="text-danger">*</span>
+                </label>
+
+                <input type="text" class="form-control" formControlName="contactPerson"
+                    placeholder="Enter Contact Person">
+
+                <small class="text-danger" *ngIf="
+                        addUpdateOperatorsForm.get('contactPerson')?.errors?.required &&
+                        (addUpdateOperatorsForm.get('contactPerson')?.touched || submitted)
+                    ">
+
+                    Contact Person is required
+
+                </small>
+
+            </div>
+
+            <!-- Country Code -->
+            <div class="col-md-4 mb-3">
+
+                <label>
+                    Country Code <span class="text-danger">*</span>
+                </label>
+
+                <select class="form-control" formControlName="countryCode">
+
+                    <option value="">
+                        Select Code
+                    </option>
+
+                    <option *ngFor="let p of phoneCodes" [value]="p.phone_code">
+
+                        +{{ p.phone_code }}
+
+                    </option>
+
+                </select>
+
+                <small class="text-danger" *ngIf="
+                        addUpdateOperatorsForm.get('countryCode')?.errors?.required &&
+                        (addUpdateOperatorsForm.get('countryCode')?.touched || submitted)
+                    ">
+
+                    Country Code is required
+
+                </small>
+
+            </div>
+
+            <!-- Contact Number -->
+            <div class="col-md-4 mb-3 pl-0">
+
+                <label>
+                    Contact Number <span class="text-danger">*</span>
+                </label>
+
+                <input type="number" class="form-control" formControlName="contactNumber"
+                    placeholder="Enter Contact Number">
+
+                <small class="text-danger" *ngIf="
+                        addUpdateOperatorsForm.get('contactNumber')?.errors?.required &&
+                        (addUpdateOperatorsForm.get('contactNumber')?.touched || submitted)
+                    ">
+
+                    Contact Number is required
+
+                </small>
+
+                <small class="text-danger" *ngIf="
+                        addUpdateOperatorsForm.get('contactNumber')?.errors?.pattern &&
+                        (addUpdateOperatorsForm.get('contactNumber')?.touched || submitted)
+                    ">
+
+                    Enter valid contact number
+
+                </small>
+
+            </div>
+
+            <!-- Email -->
+            <div class="col-md-4 mb-3 pr-0">
+
+                <label>
+                    Email <span class="text-danger">*</span>
+                </label>
+
+                <input type="text" class="form-control" formControlName="email" placeholder="Enter Email">
+
+                <small class="text-danger" *ngIf="
+                        addUpdateOperatorsForm.get('email')?.errors?.required &&
+                        (addUpdateOperatorsForm.get('email')?.touched || submitted)
+                    ">
+
+                    Email is required
+
+                </small>
+
+                <small class="text-danger" *ngIf="
+                        addUpdateOperatorsForm.get('email')?.errors?.email &&
+                        (addUpdateOperatorsForm.get('email')?.touched || submitted)
+                    ">
+
+                    Enter valid email
+
+                </small>
+
+            </div>
+
+            <!-- Office Address -->
+            <div class="col-md-4 mb-3">
+
+                <label>
+                    Office Address <span class="text-danger">*</span>
+                </label>
+
+                <input type="text" class="form-control" formControlName="officeAddress"
+                    placeholder="Enter Office Address">
+
+                <small class="text-danger" *ngIf="
+                        addUpdateOperatorsForm.get('officeAddress')?.errors?.required &&
+                        (addUpdateOperatorsForm.get('officeAddress')?.touched || submitted)
+                    ">
+
+                    Office Address is required
+
+                </small>
+
+            </div>
+
+            <!-- COUNTRY -->
+            <div class="col-md-4 mb-3">
+
+                <label>
+                    Country <span class="text-danger">*</span>
+                </label>
+
+                <select class="form-control" formControlName="country" [compareWith]="compareCountries">
+
+                    <option [ngValue]="null" disabled>
+                        Select Country
+                    </option>
+
+                    <option *ngFor="let c of countryList" [ngValue]="c">
+
+                        {{ c.name }}
+
+                    </option>
+
+                </select>
+
+                <small class="text-danger" *ngIf="
+                        addUpdateOperatorsForm.get('country')?.errors?.required &&
+                        (addUpdateOperatorsForm.get('country')?.touched || submitted)
+                    ">
+
+                    Country is required
+
+                </small>
+
+            </div>
+
+            <!-- STATE -->
+            <div class="col-md-4 mb-3">
+
+                <label>
+                    State <span class="text-danger">*</span>
+                </label>
+
+                <select class="form-control" formControlName="state">
+
+                    <option value="">
+                        Select State
+                    </option>
+
+                    <option *ngFor="let state of stateList" [value]="state.id">
+
+                        {{ state.name }}
+
+                    </option>
+
+                </select>
+
+                <small class="text-danger" *ngIf="
+                        addUpdateOperatorsForm.get('state')?.errors?.required &&
+                        (addUpdateOperatorsForm.get('state')?.touched || submitted)
+                    ">
+
+                    State is required
+
+                </small>
+
+            </div>
+
+            <!-- CITY -->
+            <div class="col-md-4 mb-3">
+
+                <label>
+                    City <span class="text-danger">*</span>
+                </label>
+
+                <mat-form-field appearance="fill" class="w-100">
+
+                    <mat-label>City</mat-label>
+
+                    <mat-select formControlName="city" required (openedChange)="onCityDropdownOpen($event)" #citySelect
+                        panelClass="city-panel">
+
+                        <!-- SEARCH -->
+                        <mat-option>
+
+                            <input matInput placeholder="Search city" (keyup)="onCitySearch($event.target.value)"
+                                (click)="$event.stopPropagation()" />
+
+                        </mat-option>
+
+                        <!-- OPTIONS -->
+                        <mat-option *ngFor="let city of cityList" [value]="city.id">
+
+                            {{ city.city_name }}
+
+                        </mat-option>
+
+                        <!-- LOADER -->
+                        <mat-option *ngIf="loadingCities" disabled>
+
+                            Loading...
+
+                        </mat-option>
+
+                    </mat-select>
+
+                </mat-form-field>
+
+                <small class="text-danger" *ngIf="
+                        addUpdateOperatorsForm.get('city')?.errors?.required &&
+                        (addUpdateOperatorsForm.get('city')?.touched || submitted)
+                    ">
+
+                    City is required
+
+                </small>
+
+            </div>
+
+            <!-- GST -->
+            <div class="col-md-4 mb-3 pl-0">
+
+                <label>GST Number</label>
+
+                <input type="text" class="form-control" formControlName="gstNumber" placeholder="Enter GST Number">
+
+            </div>
+
+            <!-- KYC -->
+            <div class="col-md-4 mb-3 pr-0">
+
+                <label>
+                    KYC Documents <span class="text-danger">*</span>
+                </label>
+
+                <input #kycFileInput type="file" class="form-control" accept=".pdf,.jpg,.jpeg,.png"
+                    (change)="onFileSelect($event)">
+
+                <small class="text-danger" *ngIf="submitted && !selectedKycFile">
+
+                    KYC Document is required
+
+                </small>
+
+            </div>
+
+            <!-- Status -->
+            <div class="col-md-4 mb-3">
+
+                <label class="d-block">
+                    Status
+                </label>
+
+                <label class="switch">
+
+                    <input type="checkbox" formControlName="status">
+
+                    <span class="slider round"></span>
+
+                </label>
+
+            </div>
+
+        </div>
+
+        <!-- Buttons -->
+        <div class="text-left btncontainer">
+
+            <button type="submit" class="btn btn-primary mr-2">
+
+                {{ isEdit ? 'Update' : 'Continue' }}
+
+            </button>
+
+            <button type="button" class="btn btn-secondary" (click)="resetForm()">
+
+                Reset
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>

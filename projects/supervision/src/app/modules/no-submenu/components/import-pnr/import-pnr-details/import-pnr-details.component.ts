@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SupportedExtensions } from 'ngx-export-as';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { ApiHandlerService } from "projects/supervision/src/app/core/api-handlers";
@@ -68,7 +67,7 @@ export class ImportPnrDetailsComponent implements OnInit {
             this.buttonName = "Show Price";
     }
 
-    downloadA4(type: SupportedExtensions, orientation?: string): void {
+    downloadA4(type: any, orientation?: string): void {
         this.utilityService.downloadA4(type, "Import pnr", this.print_voucher, orientation);
     }
 

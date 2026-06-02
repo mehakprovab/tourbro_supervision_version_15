@@ -7,7 +7,6 @@ import { Logger } from '../../../../../core/logger/logger.service';
 import { SwalService } from '../../../../../core/services/swal.service';
 import { UtilityService } from '../../../../../core/services/utility.service';
 import { SubSink } from 'subsink';
-import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { formatDate } from 'ngx-bootstrap/chronos';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -70,7 +69,7 @@ export class B2cActivityComponent implements OnInit, OnDestroy {
     ];
     noData: boolean = true;
     respData: Array<any> = [];
-    config: ExportAsConfig = {
+    config: any = {
         type: 'pdf',
         elementIdOrContent: 'b2c-activity-report',
         options: {
@@ -103,7 +102,6 @@ isExporting = false;
         private apiHandlerService: ApiHandlerService,
         private fb: FormBuilder,
         private swalService: SwalService,
-        private exportAsService: ExportAsService,
         private utility: UtilityService,
         private router: Router
     ) { }
@@ -252,7 +250,7 @@ isExporting = false;
         }
     }
 
-   download(type: SupportedExtensions, orientation?: string) {
+   download(type: any, orientation?: string) {
     this.isExporting = true;
 
     setTimeout(() => {
@@ -262,7 +260,7 @@ isExporting = false;
             this.config.options.jsPDF.orientation = orientation;
         }
 
-        this.exportAsService.save(this.config, `b2c-ActivityReport`).subscribe();
+        this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2c-ActivityReport`, orientation || (this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation));
          
 
     }, 300);

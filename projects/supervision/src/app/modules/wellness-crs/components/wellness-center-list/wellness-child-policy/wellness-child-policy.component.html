@@ -1,0 +1,139 @@
+<div class="card adminInner">
+    <div class="card-header mb-3">
+        <h5>Child Policy </h5>
+    </div>
+
+
+    <ul ngbNav #tabs="ngbNav" class="tabs-animated custom_tab" [(activeId)]="activeIdString" (navChange)="onTabSelected($event)">
+
+
+        <li [ngbNavItem]="'list_wellness_child_policy'">
+
+            <a ngbNavLink>
+                <span>List Policy</span>
+            </a>
+
+            <ng-template ngbNavContent>
+                <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft"
+                    #scrollOne>
+                    <div class="div1"></div>
+                </div>
+
+                <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
+                    <div class="div2 invisible-scrollbar">
+
+                        <div class="table-respons">
+                            <table class="table table-borderless table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-left text-nowrap">Sl. No</th>
+                                        <th scope="col" class="text-left text-nowrap">Status</th>
+                                        <th scope="col" class="text-left text-nowrap">Description</th>
+                                        <th scope="col" class="text-left text-nowrap">Actions</th>
+                                    </tr>
+
+                                </thead>
+                                <tr *ngIf="!wellnessTaxList?.length">
+                                    <td colspan="12">
+                                        <h4 class="text-muted text-center">
+                                            No Data Found!
+                                        </h4>
+                                    </td>
+                                </tr>
+                                <tbody>
+
+                                    <tr *ngFor="let wellness of wellnessTaxList; let i = index" class="cursor-pointer">
+                                        <td class="text-left">{{ i + 1 }}</td>
+                                        <td>
+                                            <label class="switch">
+                                                <input type="checkbox" [checked]="wellness.status">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </td>
+                                        <td class="text-left">{{ wellness.description }}</td>
+                                        
+                                        <td class="text-left">
+                                            <a title="Edit Hotel" class="p-1 text-primary"
+                                                (click)="updatePackageTax(wellness)"><i
+                                                    class="fas fa-pencil-alt"></i></a>
+                                            
+                                            <button class="p-1 text-primarys"
+                                                (click)="deletePackageTax(wellness.id)"><a title="Delete"><i
+                                                        class="fa fa-trash"></i></a></button>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </ng-template>
+
+        </li>
+        <li [ngbNavItem]="'add_wellness_child_policy'">
+
+            <a ngbNavLink>
+                <span>Add/ Edit Child Policy</span>
+            </a>
+
+            <ng-template ngbNavContent>
+                <div class="card adminInner">
+                    <div class="Queues mt-2 mb-2">
+                        <form [formGroup]="hotelTypeForm" (ngSubmit)="createChildPolicy()" class="needs-validation btop pt-0" novalidate>
+    <div class="card border-light p-0">
+        <div class="card-body p-3">
+            <fieldset form="user">
+                <div class="row">
+                    <div class="col-md-12">
+                        
+                        <div class="form-row">
+                            <label class="col-sm control-label">
+                                Description
+                            </label>
+                            <div class="col-12">
+                                    <textarea class="form-control" rows="12" placeholder="Enter Description" formControlName="description"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div><br>
+                <div class="form-row text-center">
+                    <label class="control-label">
+                        Status
+                        <span class="text-danger">*</span>
+                    </label>
+                   
+
+                    <label class="switch">
+                        <input type="checkbox" name="status" formControlName="status">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </fieldset>
+            <div class="form-group">
+                <div class="col-sm-8 col-sm-offset-4 btncontainer text-center">
+                    <button type="submit" id="user_submit" class="btn btn-success btnStyle">Save</button> &nbsp;
+                    &nbsp;
+                    <button type="reset" id="user_reset" class="btn btn-secondry btnStyle" (click)="resetForm()">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+                    </div>
+                </div>
+            </ng-template>
+
+        </li>
+
+    </ul>
+
+    <div [ngbNavOutlet]="tabs"></div>
+
+</div>
+
+
+<ngx-loading [show]="loading"
+[config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
+[template]="loadingTemplate"></ngx-loading>

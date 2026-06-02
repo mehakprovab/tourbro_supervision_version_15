@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers/api-handlers.service';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { SubSink } from 'subsink/dist/subsink';
-import { ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
@@ -60,7 +59,7 @@ export class B2bTransferInvoiceComponent implements OnInit {
       });
   }
 
-  downloadA4(type: SupportedExtensions, orientation: string = 'portrait'): void {
+  downloadA4(type: any, orientation: string = 'portrait'): void {
     let fileName = this.voucherData['BookingDetails']['app_reference'];
     const content = this.print_voucher.nativeElement;
 

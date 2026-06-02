@@ -6,7 +6,6 @@ import { Logger } from 'projects/supervision/src/app/core/logger/logger.service'
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { SubSink } from 'subsink';
-import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { GlobalConstants } from 'projects/supervision/src/app/core/services/global-constants';
 import { UserManagementService } from '../../../../modules/user-management/user-management.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -31,7 +30,7 @@ export class AgentBalanceComponent implements OnInit {
     noData: boolean = true;
     respData: Array<any> = [];
     listType: number;
-    config: ExportAsConfig = {
+    config: any = {
         type: 'pdf',
         elementIdOrContent: 'B2B-users-report',
         options: {
@@ -52,7 +51,6 @@ export class AgentBalanceComponent implements OnInit {
         private swalService: SwalService,
         private utility: UtilityService,
         private activatedRoute: ActivatedRoute,
-        private exportAsService: ExportAsService,
         private userMangementService : UserManagementService
     ) { }
 
@@ -141,14 +139,14 @@ export class AgentBalanceComponent implements OnInit {
     }
     
 
-    download(type: SupportedExtensions, orientation?: string) {
+    download(type: any, orientation?: string) {
         let filename = this.listType == 1 ? "Active B2B List" : "Inactive B2B List";
         this.config.type = type;
         if (orientation) {
             this.config.options.jsPDF.orientation = orientation;
         }
         const date = new Date().toDateString();
-       this.exportAsService.save(this.config, filename).subscribe();
+       this.utility.downloadElementAsPdf(this.config.elementIdOrContent, filename, orientation || (this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation));
     }
 
     pdfCallbackFn(pdf: any) {

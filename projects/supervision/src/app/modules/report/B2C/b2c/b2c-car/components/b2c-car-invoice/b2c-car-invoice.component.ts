@@ -5,7 +5,6 @@ import { Logger } from 'projects/supervision/src/app/core/logger/logger.service'
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { SubSink } from 'subsink';
-import { ExportAsService } from 'ngx-export-as';
 
 const log = new Logger('report/B2cCarInvoiceComponent');
 
@@ -36,7 +35,6 @@ export class B2cCarInvoiceComponent implements OnInit,OnDestroy {
   constructor(
         private apiHandlerService: ApiHandlerService,
         private swalService: SwalService,
-        private exportAsService: ExportAsService,
         private utility: UtilityService,
         private router: Router,
         private activatedRoute : ActivatedRoute

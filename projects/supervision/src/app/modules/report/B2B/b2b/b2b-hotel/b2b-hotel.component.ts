@@ -7,7 +7,6 @@ import { SwalService } from '../../../../../core/services/swal.service';
 import { UtilityService } from '../../../../../core/services/utility.service';
 import { SubSink } from 'subsink';
 import { formatDate } from 'ngx-bootstrap/chronos';
-import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
@@ -31,7 +30,7 @@ export class B2bHotelComponent implements OnInit {
         containerClass: 'theme-blue',
         showWeekNumbers: false
     };
-    config: ExportAsConfig = {
+    config: any = {
         type: 'pdf',
         elementIdOrContent: 'b2b-hotel-report',
         options: {
@@ -151,7 +150,6 @@ export class B2bHotelComponent implements OnInit {
         private fb: FormBuilder,
         private swalService: SwalService,
         private utility: UtilityService,
-        private exportAsService: ExportAsService,
     ) { }
 
     ngOnInit() {
@@ -279,14 +277,14 @@ export class B2bHotelComponent implements OnInit {
         this.totalAPIPayablePrice = this.respData.reduce((sum, item) => sum + (item.BookingDetails.API_Payable_Price || 0), 0);
     }
 
-    download(type: SupportedExtensions, orientation?: string) {
+    download(type: any, orientation?: string) {
         // if (type)
         this.config.type = type;
         if (orientation) {
             this.config.options.jsPDF.orientation = orientation;
         }
         const date = new Date().toDateString();
-        this.exportAsService.save(this.config, `b2b-HotelReport`).subscribe();
+        this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2b-HotelReport`, orientation || (this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation));
     }
 
     pdfCallbackFn(pdf: any) {

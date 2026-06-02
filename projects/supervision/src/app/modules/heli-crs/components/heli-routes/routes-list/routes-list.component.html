@@ -1,0 +1,404 @@
+<!-- FILTER SECTION -->
+<div class="card adminInner">
+
+    <div class="card-header mb-3">
+        <h5>Routes List</h5>
+    </div>
+
+    <form *ngIf="showFilters">
+
+        <!-- TRIP TYPE -->
+        <div class="radio-group mb-3">
+
+            <label class="custom-radio">
+
+                <input type="radio" name="tripType" value="within" [(ngModel)]="tripType">
+
+                <span class="radio-mark"></span>
+
+                Within
+
+            </label>
+
+            <label class="custom-radio">
+
+                <input type="radio" name="tripType" value="intra" [(ngModel)]="tripType">
+
+                <span class="radio-mark"></span>
+
+                Intra
+
+            </label>
+
+        </div>
+
+        <div class="row">
+
+            <!-- ROUTE NAME -->
+            <div class="col-3 pr-0">
+
+                <div class="form-group">
+
+                    <label for="route_name">
+                        Route Name
+                    </label>
+
+                    <input type="text" class="form-control form-control-sm nrm_input" placeholder="Route Name"
+                        id="route_name" [(ngModel)]="filterData.route_name" name="route_name">
+
+                </div>
+
+            </div>
+
+            <!-- CITY -->
+            <div class="col-3">
+
+                <div class="form-group">
+
+                    <label for="city">
+                        City
+                    </label>
+
+                    <input type="text" class="form-control form-control-sm nrm_input" placeholder="City" id="city"
+                        [(ngModel)]="filterData.city" name="city">
+
+                </div>
+
+            </div>
+
+            <!-- FROM CITY -->
+            <div class="col-3 pl-0">
+
+                <div class="form-group">
+
+                    <label for="from_city">
+                        From City
+                    </label>
+
+                    <input type="text" class="form-control form-control-sm nrm_input" placeholder="From City"
+                        id="from_city" [(ngModel)]="filterData.from_city" name="from_city">
+
+                </div>
+
+            </div>
+
+            <!-- TO CITY -->
+            <div class="col-3 pl-0">
+
+                <div class="form-group">
+
+                    <label for="to_city">
+                        To City
+                    </label>
+
+                    <input type="text" class="form-control form-control-sm nrm_input" placeholder="To City" id="to_city"
+                        [(ngModel)]="filterData.to_city" name="to_city">
+
+                </div>
+
+            </div>
+
+            <!-- FROM HELIPAD -->
+            <div class="col-3 pr-0">
+
+                <div class="form-group">
+
+                    <label for="from_helipad_name">
+                        From Helipad Name
+                    </label>
+
+                    <input type="text" class="form-control form-control-sm nrm_input" placeholder="From Helipad Name"
+                        id="from_helipad_name" [(ngModel)]="filterData.from_helipad_name" name="from_helipad_name">
+
+                </div>
+
+            </div>
+
+            <!-- TO HELIPAD -->
+            <div class="col-3">
+
+                <div class="form-group">
+
+                    <label for="to_helipad_name">
+                        To Helipad Name
+                    </label>
+
+                    <input type="text" class="form-control form-control-sm nrm_input" placeholder="To Helipad Name"
+                        id="to_helipad_name" [(ngModel)]="filterData.to_helipad_name" name="to_helipad_name">
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- BUTTONS -->
+        <div class="btncontainer">
+
+            <button type="button" class="btn btn-primary" (click)="onSearch()">
+
+                Search
+
+            </button>
+
+            &nbsp;
+
+            <button type="button" class="btn btn-secondary" (click)="resetFilters()">
+
+                Reset
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+<!-- TABLE SECTION -->
+<div class="card adminInner mt-3">
+
+    <div class="d-flex align-items-center justify-content-between pb-3">
+
+        <div>
+
+            <button type="button" class="btn btn-primary" (click)="exportExcel()">
+
+                Export
+
+            </button>
+
+            &nbsp;
+
+            <button type="button" class="btn btn-secondary" (click)="showFilters = !showFilters">
+
+                Filter
+
+            </button>
+
+        </div>
+
+        <!-- FULL SEARCH -->
+        <div class="form-group mb-0 col-sm-3 p-0 float-right has-search">
+
+            Full text search:
+
+            <input class="form-control" type="text" name="searchTerm" [(ngModel)]="searchText" (input)="filterRoutes()">
+
+        </div>
+
+    </div>
+
+    <!-- SCROLL -->
+    <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft" #scrollOne>
+
+        <div class="div1"></div>
+
+    </div>
+
+    <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
+
+        <div class="div2 invisible-scrollbar">
+
+            <div class="table-respons">
+
+                <table class="table table-borderless table-striped table-hover">
+
+                    <thead>
+
+                        <tr>
+
+                            <th class="text-left text-nowrap">
+                                Sl. No
+                            </th>
+
+                            <th class="text-left text-nowrap">
+                                Status
+                            </th>
+
+                            <th class="text-left text-nowrap">
+                                Trip Type
+                            </th>
+
+                            <th class="text-left text-nowrap">
+                                Route Name
+                            </th>
+
+                        
+
+                            <th class="text-left text-nowrap">
+                                From City
+                            </th>
+
+                            <th class="text-left text-nowrap">
+                                To City
+                            </th>
+
+                            <th class="text-left text-nowrap">
+                                From Helipad Name
+                            </th>
+
+                            <th class="text-left text-nowrap">
+                                To Helipad Name
+                            </th>
+
+                            <th class="text-left text-nowrap">
+                                Distance
+                            </th>
+
+                            <th class="text-left text-nowrap">
+                                Duration (Minutes)
+                            </th>
+
+                            <th class="text-left text-nowrap">
+                                Description
+                            </th>
+
+                            <th class="text-left text-nowrap">
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <!-- DATA -->
+                        <tr *ngFor="
+                                let item of filteredRoutesList;
+                                let i = index
+                            ">
+
+                            <!-- INDEX -->
+                            <td class="text-left">
+
+                                {{ i + 1 }}
+
+                            </td>
+
+                            <!-- STATUS -->
+                            <td>
+
+                                <label class="switch">
+
+                                    <input type="checkbox" [checked]="
+                                            item.status === '1' ||
+                                            item.status === 1
+                                        " (change)="
+                                            onStatusChange($event, item)
+                                        ">
+
+                                    <span class="slider round"></span>
+
+                                </label>
+
+                            </td>
+
+                            <!-- TRIP TYPE -->
+                            <td class="text-left">
+
+                                {{ item.type || '-' }}
+
+                            </td>
+
+                            <!-- ROUTE NAME -->
+                            <td class="text-left">
+
+                                {{ item.route_name || '-' }}
+
+                            </td>
+
+                            <!-- CITY -->
+                            <td class="text-left">
+
+                                {{ item.city_name || item.city || '-' }}
+
+                            </td>
+
+                        
+
+                            <!-- TO CITY -->
+                            <td class="text-left">
+
+                                {{ item.to_city_name || item.to_city || '-' }}
+
+                            </td>
+
+                            <!-- FROM HELIPAD -->
+                            <td class="text-left">
+
+                                {{ item.from_helipad_name || '-' }}
+
+                            </td>
+
+                            <!-- TO HELIPAD -->
+                            <td class="text-left">
+
+                                {{ item.to_helipad_name || '-' }}
+
+                            </td>
+
+                            <!-- DISTANCE -->
+                            <td class="text-left">
+
+                                {{ item.distance || '-' }}
+
+                            </td>
+
+                            <!-- DURATION -->
+                            <td class="text-left">
+
+                                {{ item.duration || '-' }}
+
+                            </td>
+
+                            <!-- DESCRIPTION -->
+                            <td class="text-left">
+
+                                {{ item.description || '-' }}
+
+                            </td>
+
+                            <!-- ACTIONS -->
+                            <td class="text-left">
+
+                                <button class="btn btn-sm btn-primary mr-2" type="button" (click)="onUpdate(item)">
+
+                                    Edit
+
+                                </button>
+
+                                <button class="btn btn-sm btn-secondary" type="button" (click)="onDelete(item.id)">
+
+                                    Delete
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                        <!-- NO DATA -->
+                        <tr *ngIf="filteredRoutesList.length === 0">
+
+                            <td colspan="13" class="text-center">
+
+                                No routes found
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

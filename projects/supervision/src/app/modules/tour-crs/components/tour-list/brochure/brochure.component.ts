@@ -6,7 +6,6 @@ import { environment } from '../../../../../../environments/environment.prod';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { SupportedExtensions } from 'ngx-export-as';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
@@ -125,7 +124,7 @@ export class BrochureComponent implements OnInit {
       }
     }
 
-      downloadA4(type: SupportedExtensions, orientation?: string): void {
+      downloadA4(type: any, orientation?: string): void {
         window.scrollTo(0, 0);
         const data = document.getElementById('print_voucher');
         const date = new Date().toDateString();

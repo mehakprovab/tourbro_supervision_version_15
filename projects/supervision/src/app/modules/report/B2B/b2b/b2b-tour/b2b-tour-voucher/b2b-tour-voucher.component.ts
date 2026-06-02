@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SupportedExtensions } from 'ngx-export-as';
 import { SubSink } from 'subsink';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -114,7 +113,7 @@ export class B2bTourVoucherComponent implements OnInit {
     }
   }
 
-  // downloadA4(type: SupportedExtensions, orientation?: string): void {
+  // downloadA4(type: any, orientation?: string): void {
   //   this.loading = true;
   //   document.getElementById('download').style.display = "none";
   //   window['html2canvas'] = html2canvas;
@@ -141,7 +140,7 @@ export class B2bTourVoucherComponent implements OnInit {
   //   });
   // }
 
-  downloadA4(type: SupportedExtensions, orientation?: string): void {
+  downloadA4(type: any, orientation?: string): void {
     this.loading = true;
     window.scrollTo(0, 0);
     const data = document.getElementById('print_voucher');

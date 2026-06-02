@@ -1,0 +1,80 @@
+ .card {
+    padding: 16px;
+    font-family: 'inter', sans-serif;
+}
+.control-label{display: block!important;}
+/* Toggle Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+}
+
+/* Checked state */
+input:checked + .slider {
+  background-color: #FE4865 ; /* green */
+}
+
+input:checked + .slider:before {
+  transform: translateX(24px);
+}
+
+/* Rounded style */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+::ng-deep .meal-plan-dropdown .multiselect-dropdown .dropdown-btn .dropdown-multiselect__caret {
+    right: 20px !important;
+    height: 39px !important;
+}
+
+::ng-deep .form-control.is-valid, .was-validated .form-control:valid {
+    padding-right: calc(.5em + .5rem) !important;
+}
+::ng-deep .multiselect-dropdown .dropdown-btn {
+    height: 100% !important;
+}
+
+::ng-deep .multiselect-dropdown {
+    height: 100% !important;
+}
+
+::ng-deep .meal-plan-dropdown .multiselect-dropdown .dropdown-btn .dropdown-multiselect__caret {
+    right: 20px !important;
+    height: 39px !important;
+}
+::ng-deep .multiselect-dropdown .dropdown-btn{ border: none !important; padding:0px !important;}

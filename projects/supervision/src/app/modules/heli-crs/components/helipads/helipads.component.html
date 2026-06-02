@@ -1,0 +1,32 @@
+<ul ngbNav #tabs="ngbNav" class="tabs-animated custom_tab" [(activeId)]="activeIdString" (navChange)="onTabSelected($event)">
+
+
+  <li [ngbNavItem]="'list_helipads'">
+
+    <a ngbNavLink>
+      <span>Helipads List</span>
+    </a>
+
+    <ng-template ngbNavContent>
+      <app-helipads-list></app-helipads-list>
+      </ng-template>
+
+  </li>
+
+
+  <li [ngbNavItem]="'add_helipads'">
+
+    <a ngbNavLink>
+      <span>Add/ Edit Helipads</span>
+    </a>
+
+    <ng-template ngbNavContent>
+     <app-add-update-helipads-list></app-add-update-helipads-list>
+    </ng-template>
+    
+  </li> 
+
+</ul>
+
+<div [ngbNavOutlet]="tabs"></div>
+

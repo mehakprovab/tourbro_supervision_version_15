@@ -1,0 +1,82 @@
+<!-- Filter Section -->
+<div class="card adminInner">
+
+    <div class="card-header mb-3">
+        <h5>Package Type List</h5>
+    </div>
+
+    <form *ngIf="showFilters">
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <label>Package Type List</label>
+                <input type="text" class="form-control form-control-sm" placeholder="Package Types">
+            </div>
+        </div>
+
+        <div class="btncontainer">
+            <button type="button" class="btn btn-primary btn-sm mr-2">Search</button>
+            <button type="button" class="btn btn-secondary btn-sm">Reset</button>
+        </div>
+    </form>
+
+</div>
+
+
+<!-- Table Section -->
+<div class="card adminInner mt-3">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <button class="btn btn-primary btn-sm mr-2">Export</button>
+            <button class="btn btn-secondary btn-sm" (click)="showFilters = !showFilters">Filter</button>
+        </div>
+
+        <div style="width:250px;">
+            <small>Full Text Search</small>
+            <input type="text" class="form-control form-control-sm"  [(ngModel)]="searchText"
+        (input)="filterPackageTypes()">
+        </div>
+    </div>
+
+    <!-- <small class="text-muted">25 Therapy Types Found.</small> -->
+
+    <div class="table-responsive mt-3">
+        <table class="table table-striped table-hover">
+
+            <thead>
+                <tr>
+                    <th>Sl. No</th>
+                    <th>Status</th>
+                    <th>Package Type</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                 <tr *ngFor="let facility of filteredPackageTypeList; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>
+                        <label class="switch">
+                            <input type="checkbox" [checked]="facility.status === '1' || facility.status === 1 ? true : false"
+                            (change)="onStatusChange($event, facility)">
+                            <span class="slider round"></span>
+                        </label>
+                    </td>
+                    <td>{{ facility.name }}</td>
+
+                    <td class="action-btn">
+                        <button class="btn btn-sm btn-primary mr-2" type="button" (click)="onUpdate(facility)">Update</button>
+                        <button class="btn btn-sm btn-secondary" type="button" (click)="onDelete(facility.id)">Delete</button>
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+    </div>
+
+
+
+</div>
+

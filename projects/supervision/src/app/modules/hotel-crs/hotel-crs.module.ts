@@ -114,6 +114,7 @@ import { CKEditorModule } from 'ckeditor4-angular';
     TaxComponent,
     RoomViewComponent,
     SeasonComponent,
+    HotelImageComponent,
   ]
 })
 export class HotelCrsModule { }

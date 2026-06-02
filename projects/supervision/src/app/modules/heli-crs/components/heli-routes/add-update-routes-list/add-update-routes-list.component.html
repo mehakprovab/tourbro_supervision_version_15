@@ -1,0 +1,446 @@
+<div class="card adminInner mt-3">
+
+    <div class="card-header mb-4">
+        <h5>{{ isEdit ? 'Update Route' : 'Add Route' }}</h5>
+    </div>
+
+    <form [formGroup]="addUpdateRoutesForm" (ngSubmit)="onSubmit()">
+
+        <div class="row">
+
+            <!-- TRIP TYPE -->
+            <div class="col-md-12 mb-3">
+
+                <div class="radio-group">
+
+                    <label class="custom-radio">
+
+                        <input type="radio" value="within" formControlName="tripType">
+
+                        <span class="radio-mark"></span>
+
+                        Within
+
+                    </label>
+
+                    <label class="custom-radio">
+
+                        <input type="radio" value="intra" formControlName="tripType">
+
+                        <span class="radio-mark"></span>
+
+                        Intra
+
+                    </label>
+
+                </div>
+
+            </div>
+
+            <!-- ROUTE NAME -->
+            <div class="col-md-4 mb-3 pr-0">
+
+                <label>
+                    Route Name
+                    <span class="text-danger">*</span>
+                </label>
+
+                <input type="text" class="form-control" formControlName="routeName" placeholder="Enter Route Name">
+
+                <small class="text-danger" *ngIf="
+                    addUpdateRoutesForm.get('routeName')?.errors?.required &&
+                    (
+                        addUpdateRoutesForm.get('routeName')?.touched ||
+                        submitted
+                    )
+                ">
+
+                    Route Name is required
+
+                </small>
+
+            </div>
+
+            <!-- COUNTRY -->
+            <div class="col-md-4 mb-3">
+
+                <label>
+                    Country
+                    <span class="text-danger">*</span>
+                </label>
+
+                <select class="form-control" formControlName="country" [compareWith]="compareCountries">
+
+                    <option [ngValue]="null" disabled>
+                        Select Country
+                    </option>
+
+                    <option *ngFor="let c of countryList" [ngValue]="c">
+
+                        {{ c.name }}
+
+                    </option>
+
+                </select>
+
+                <small class="text-danger" *ngIf="
+                    addUpdateRoutesForm.get('country')?.errors?.required &&
+                    (
+                        addUpdateRoutesForm.get('country')?.touched ||
+                        submitted
+                    )
+                ">
+
+                    Country is required
+
+                </small>
+
+            </div>
+
+            <!-- STATE -->
+            <!-- <div class="col-md-4 mb-3 pl-0">
+
+                <label>
+                    State
+                    <span class="text-danger">*</span>
+                </label>
+
+                <select class="form-control" formControlName="state">
+
+                    <option value="">
+                        Select State
+                    </option>
+
+                    <option *ngFor="let state of stateList" [value]="state.id">
+
+                        {{ state.name }}
+
+                    </option>
+
+                </select>
+
+                <small class="text-danger" *ngIf="
+                    addUpdateRoutesForm.get('state')?.errors?.required &&
+                    (
+                        addUpdateRoutesForm.get('state')?.touched ||
+                        submitted
+                    )
+                ">
+
+                    State is required
+
+                </small>
+
+            </div> -->
+
+
+
+            <!-- FROM CITY -->
+            <div class="col-md-4 mb-3">
+
+                <label>
+                    From City
+                    <span class="text-danger">*</span>
+                </label>
+
+                <mat-form-field appearance="fill" class="w-100">
+
+                    <mat-label>
+                        From City
+                    </mat-label>
+
+                    <mat-select formControlName="fromCity"   (openedChange)="onCityDropdownOpen($event)"
+    #citySelect>
+
+                            <mat-option>
+
+        <input
+
+             matInput
+    autocomplete="off"
+    placeholder="Search city"
+    (keyup)="onFromCitySearch($event.target.value)"
+    (keydown)="$event.stopPropagation()"
+    (click)="$event.stopPropagation()"
+        />
+
+    </mat-option>
+                        <mat-option *ngFor="let city of fromCityList" [value]="city.id">
+
+                            {{ city.city_name }}
+
+                        </mat-option>
+
+                    </mat-select>
+
+                </mat-form-field> <small class="text-danger" *ngIf="
+                    addUpdateRoutesForm.get('fromCity')?.errors?.required &&
+                    (
+                        addUpdateRoutesForm.get('fromCity')?.touched ||
+                        submitted
+                    )
+                ">
+
+                    From City is required
+
+                </small>
+
+            </div>
+
+            <!-- TO CITY -->
+            <div class="col-md-4 mb-3 pr-0">
+
+                <label>
+                    To City
+                    <span class="text-danger">*</span>
+                </label>
+
+                <mat-form-field appearance="fill" class="w-100">
+
+                    <mat-label>
+                        To City
+                    </mat-label>
+
+                <mat-select
+    formControlName="toCity"
+    (openedChange)="onCityDropdownOpen($event)"
+    #toCitySelect>
+
+    <!-- SEARCH -->
+    <mat-option>
+
+        <input
+              matInput
+    autocomplete="off"
+    placeholder="Search city"
+    (keyup)="onToCitySearch($event.target.value)"
+    (keydown)="$event.stopPropagation()"
+    (click)="$event.stopPropagation()"
+        />
+
+    </mat-option>
+
+    <!-- DEFAULT -->
+    <mat-option value="">
+        Select To City
+    </mat-option>
+
+    <!-- CITY LIST -->
+    <mat-option
+       *ngFor="let city of toCityList"
+        [value]="city.id">
+
+        {{ city.city_name }}
+
+    </mat-option>
+
+    <!-- LOADER -->
+    <mat-option
+        *ngIf="loadingCities"
+        disabled>
+
+        Loading...
+
+    </mat-option>
+
+</mat-select>
+
+                </mat-form-field>
+                <small class="text-danger" *ngIf="
+                    addUpdateRoutesForm.get('toCity')?.errors?.required &&
+                    (
+                        addUpdateRoutesForm.get('toCity')?.touched ||
+                        submitted
+                    )
+                ">
+
+                    To City is required
+
+                </small>
+
+            </div>
+
+            <!-- FROM HELIPAD -->
+            <div class="col-md-4 mb-3 pr-0">
+
+                <label>
+                    From Helipad Name
+                    <span class="text-danger">*</span>
+                </label>
+
+                <mat-form-field appearance="fill" class="w-100">
+
+                    <mat-label>
+                        From Helipad
+                    </mat-label>
+
+                    <mat-select formControlName="fromHelipad">
+
+                        <mat-option value="">
+                            Select From Helipad
+                        </mat-option>
+
+                        <mat-option *ngFor="let helipad of helipadList" [value]="helipad.id">
+
+                            {{ helipad.helipad_name }}
+
+                        </mat-option>
+
+                    </mat-select>
+
+                </mat-form-field>
+
+                <small class="text-danger" *ngIf="
+                    addUpdateRoutesForm.get('fromHelipad')?.errors?.required &&
+                    (
+                        addUpdateRoutesForm.get('fromHelipad')?.touched ||
+                        submitted
+                    )
+                ">
+
+                    From Helipad Name is required
+
+                </small>
+
+            </div>
+
+            <!-- TO HELIPAD -->
+            <div class="col-md-4 mb-3">
+
+                <label>
+                    To Helipad Name
+                    <span class="text-danger">*</span>
+                </label>
+
+                <mat-form-field appearance="fill" class="w-100">
+
+                    <mat-label>
+                        To Helipad
+                    </mat-label>
+
+                    <mat-select formControlName="toHelipad">
+
+                        <mat-option value="">
+                            Select To Helipad
+                        </mat-option>
+
+                        <mat-option *ngFor="let helipad of helipadList" [value]="helipad.id">
+
+                            {{ helipad.helipad_name }}
+
+                        </mat-option>
+
+                    </mat-select>
+
+                </mat-form-field>
+                <small class="text-danger" *ngIf="
+                    addUpdateRoutesForm.get('toHelipad')?.errors?.required &&
+                    (
+                        addUpdateRoutesForm.get('toHelipad')?.touched ||
+                        submitted
+                    )
+                ">
+
+                    To Helipad Name is required
+
+                </small>
+
+            </div>
+
+            <!-- DISTANCE -->
+            <div class="col-md-4 mb-3 pr-0">
+
+                <label>
+                    Distance
+                    <span class="text-danger">*</span>
+                </label>
+
+                <input type="text" class="form-control" formControlName="distance" placeholder="Enter Distance">
+
+                <small class="text-danger" *ngIf="
+                    addUpdateRoutesForm.get('distance')?.errors?.required &&
+                    (
+                        addUpdateRoutesForm.get('distance')?.touched ||
+                        submitted
+                    )
+                ">
+
+                    Distance is required
+
+                </small>
+
+            </div>
+
+            <!-- DURATION -->
+            <div class="col-md-4 mb-3 pr-0">
+
+                <label>
+                    Duration (Minutes)
+                    <span class="text-danger">*</span>
+                </label>
+
+                <input type="number" class="form-control" formControlName="duration" placeholder="Enter Duration">
+
+                <small class="text-danger" *ngIf="
+                    addUpdateRoutesForm.get('duration')?.errors?.required &&
+                    (
+                        addUpdateRoutesForm.get('duration')?.touched ||
+                        submitted
+                    )
+                ">
+
+                    Duration is required
+
+                </small>
+
+            </div>
+
+            <!-- DESCRIPTION -->
+            <div class="col-md-4 mb-3">
+
+                <label>Description</label>
+
+                <textarea rows="2" class="form-control" formControlName="description"
+                    placeholder="Enter Description"></textarea>
+
+            </div>
+
+            <!-- STATUS -->
+            <div class="col-md-4 mb-3">
+
+                <label class="d-block">
+                    Status
+                </label>
+
+                <label class="switch">
+
+                    <input type="checkbox" formControlName="status">
+
+                    <span class="slider round"></span>
+
+                </label>
+
+            </div>
+
+        </div>
+
+        <!-- BUTTONS -->
+        <div class="text-left btncontainer">
+
+            <button type="submit" class="btn btn-primary mr-2">
+
+                {{ isEdit ? 'Update' : 'Continue' }}
+
+            </button>
+
+            <button type="button" class="btn btn-secondary" (click)="resetForm()">
+
+                Reset
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>

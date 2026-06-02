@@ -11,7 +11,6 @@ import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProcessTransactionBalanceComponent } from '../../modals/process-transaction-balance/process-transaction-balance.component';
 import { formatDate } from 'ngx-bootstrap/chronos';
-import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { GlobalConstants } from 'projects/supervision/src/app/core/services/global-constants';
 
 const log = new Logger('NoSubMenu/TransactionLogsComponent');
@@ -41,7 +40,7 @@ export class ListCreditsComponent implements OnInit {
     page = 1;
     collectionSize: number;
     agentList: any;
-    config: ExportAsConfig = {
+    config: any = {
         type: 'pdf',
         elementIdOrContent: 'credit-request',
         options: {
@@ -81,7 +80,6 @@ export class ListCreditsComponent implements OnInit {
         private fb: FormBuilder,
         private swalService: SwalService,
         private utility: UtilityService,
-        private exportAsService: ExportAsService,
         private matModalService: MatModalService
     ) {
         this.modalConfigData = ModalConfigDefault;
@@ -231,14 +229,14 @@ export class ListCreditsComponent implements OnInit {
 
     }
 
-    download(type: SupportedExtensions, orientation?: string) {
+    download(type: any, orientation?: string) {
         let filename = this.collectionSize == 1 ? "" : "";
         this.config.type = type;
         if (orientation) {
             this.config.options.jsPDF.orientation = orientation;
         }
         const date = new Date().toDateString();
-  this.exportAsService.save(this.config, filename).subscribe();
+  this.utility.downloadElementAsPdf(this.config.elementIdOrContent, filename, orientation || (this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation));
     }
 
     pdfCallbackFn(pdf: any) {

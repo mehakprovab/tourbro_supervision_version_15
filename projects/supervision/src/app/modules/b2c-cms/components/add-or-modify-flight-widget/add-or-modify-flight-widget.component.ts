@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Sort } from '@angular/material/sort';
 import { Router } from '@angular/router';
-import { ExportAsService } from 'ngx-export-as';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { Logger } from 'projects/supervision/src/app/core/logger/logger.service';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
@@ -102,7 +101,6 @@ export class AddOrModifyFlightWidgetComponent implements OnInit, OnDestroy {
         private apiHandlerService: ApiHandlerService,
         private fb: FormBuilder,
         private swalService: SwalService,
-        private exportAsService: ExportAsService,
         private utility: UtilityService,
         private cdr: ChangeDetectorRef,
         private router: Router) {

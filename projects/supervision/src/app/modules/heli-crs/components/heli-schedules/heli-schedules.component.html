@@ -1,0 +1,33 @@
+<ul ngbNav #tabs="ngbNav" class="tabs-animated custom_tab" [(activeId)]="activeIdString" (navChange)="onTabSelected($event)">
+
+
+  <li [ngbNavItem]="'list_schedules'">
+
+    <a ngbNavLink>
+      <span>Helicopter Schedule List</span>
+    </a>
+
+    <ng-template ngbNavContent>
+      <app-schedules-list></app-schedules-list>
+      </ng-template>
+
+  </li>
+
+
+  <li [ngbNavItem]="'add_schedules'">
+
+    <a ngbNavLink>
+      <span>Add/ Edit Helicopter Schedules</span>
+    </a>
+
+    <ng-template ngbNavContent>
+     <app-add-update-schedules-list></app-add-update-schedules-list>
+    </ng-template>
+    
+  </li> 
+
+</ul>
+
+<div [ngbNavOutlet]="tabs"></div>
+
+

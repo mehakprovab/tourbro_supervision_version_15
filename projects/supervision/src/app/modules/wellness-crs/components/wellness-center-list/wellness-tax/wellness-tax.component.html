@@ -1,0 +1,191 @@
+<div class="card adminInner">
+    <div class="card-header mb-3">
+        <h5>Wellness </h5>
+    </div>
+
+
+    <ul ngbNav #tabs="ngbNav" class="tabs-animated custom_tab" [(activeId)]="activeIdString" (navChange)="onTabSelected($event)">
+
+
+        <li [ngbNavItem]="'list_wellness_tax'">
+
+            <a ngbNavLink>
+                <span>Tax List</span>
+            </a>
+
+            <ng-template ngbNavContent>
+                <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft"
+                    #scrollOne>
+                    <div class="div1"></div>
+                </div>
+
+                <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
+                    <div class="div2 invisible-scrollbar">
+
+                        <div class="table-respons">
+                            <table class="table table-borderless table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-left text-nowrap">Sl. No</th>
+                                        <th scope="col" class="text-left text-nowrap">Status</th>
+                                        <th scope="col" class="text-left text-nowrap">Tax Name</th>
+                                        <th scope="col" class="text-left text-nowrap">Tax Value</th>
+                                        <!-- <th scope="col" class="text-left text-nowrap">Currency</th> -->
+                                        <th scope="col" class="text-left text-nowrap">Actions</th>
+                                    </tr>
+
+                                </thead>
+                                <tr *ngIf="!wellnessTaxList?.length">
+                                    <td colspan="12">
+                                        <h4 class="text-muted text-center">
+                                            No Data Found!
+                                        </h4>
+                                    </td>
+                                </tr>
+                                <tbody>
+
+                                    <tr *ngFor="let wellness of wellnessTaxList; let i = index" class="cursor-pointer">
+                                        <td class="text-left">{{ i + 1 }}</td>
+                                        <td>
+                                            <label class="switch">
+                                                <input type="checkbox" [checked]="wellness.status">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </td>
+                                        <td class="text-left">{{ wellness.tax_name }}</td>
+                                        <td class="text-left address-col">{{ wellness.tax_value }}</td>
+                                        <!-- <td class="text-left address-col">{{ wellness.currency }}</td> -->
+                                        
+
+                                        <td class="text-left">
+                                            <a title="Edit Hotel" class="p-1 text-primary"
+                                                (click)="updatePackageTax(wellness)"><i
+                                                    class="fas fa-pencil-alt"></i></a>
+                                            
+                                            <button class="p-1 text-primarys"
+                                                (click)="deletePackageTax(wellness.id)"><a title="Delete"><i
+                                                        class="fa fa-trash"></i></a></button>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </ng-template>
+
+        </li>
+        <li [ngbNavItem]="'add_wellness_tax'">
+
+            <a ngbNavLink>
+                <span>Add/ Edit Tax Type</span>
+            </a>
+
+            <ng-template ngbNavContent>
+                <div class="card adminInner">
+                    <div class="Queues mt-2 mb-2">
+                        <form [formGroup]="hotelTypeForm" (ngSubmit)="handleValidSubmit()" class="needs-validation btop pt-0" novalidate>
+    <div class="card border-light p-0">
+        <div class="card-body pl-0">
+            <fieldset form="user">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="checkbox" formControlName="paidTax" />
+                          <span><b> Add Tax </b></span><br>
+                        <div class="form-row">
+                            <label class="col-sm-3 control-label" for="tax">
+                                Tax Type
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-sm-8">
+                                <input formControlName="tax_name" type="text" placeholder="Eg : VAT"
+                                    class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tax_name.errors }" required />
+                            </div>
+                            <div *ngIf="submitted && f.tax_name.errors" class="invalid-feedback">
+                                <div *ngIf="f.tax_name.errors.required">Tax Name is required</div>
+                            </div>
+                        </div> <br>
+
+                        <div class="form-row">
+                            <label class="col-sm-3 control-label">Percentage (%) <span class="text-danger">*</span></label>
+
+                            <div class="col-sm-8 d-flex align-items-center">
+                                <input formControlName="tax_value" placeholder="Enter Tax Value" type="number" [min]="0"
+                                    onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45 && this.value.indexOf("-") === -1 && this.selectionStart == 0)'
+                                    class="form-control">
+                            </div>
+
+                            <div *ngIf="submitted && f.tax_value.errors" class="invalid-feedback">
+                                <!-- <div *ngIf="f.tax_value.errors.required">Tax Value is required</div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="checkbox" formControlName="payUponArrival" />
+                        <span><b>Pay Upon Arrival</b> (Not calculated in the room price. Paid at hotel upon arrival) </span><br>
+                        <div class="form-row">
+                            <label class="col-sm control-label">
+                                Description
+                            </label>
+                            <div class="col-sm-10">
+                                <textarea formControlName="description" style="height: 50px !important;"
+                                    class="form-control"></textarea>
+                            </div>
+                        </div><br>
+
+                        <div class="form-row">
+                            <div class="col-sm-12 d-flex align-items-center">
+                                <select formControlName="currency" class="form-control me-2">
+                                    <option value="" disabled selected>Select Currency</option>
+                                    <option *ngFor="let coreCountry of currencyList" [ngValue]="coreCountry.currency">
+                                        {{ coreCountry.currency }}
+                                    </option>
+                                </select> &nbsp;
+
+                                <input formControlName="arrival_tax_value" placeholder="Enter Tax Value" type="number" [min]="0"
+                                    onkeypress='return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45 && this.value.indexOf("-") === -1 && this.selectionStart == 0)'
+                                    class="form-control">
+                            </div>
+
+                            <div *ngIf="submitted && f.tax_value.errors" class="invalid-feedback">
+                                <!-- <div *ngIf="f.tax_value.errors.required">Tax Value is required</div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div><br>
+                <div class="form-row text-center">
+                    <label class="col-sm-3 control-label" for="hotel_type_name">
+                        Status
+                        <span class="text-danger">*</span>
+                    </label>
+                    <span title="Slide for Active/Deactive" class="slide-toggle-container">
+                        <mat-slide-toggle class="example-margin" formControlName="status" [color]="''">
+                        </mat-slide-toggle>
+                    </span>
+                </div>
+            </fieldset>
+            <div class="form-group">
+                <div class="col-sm-8 col-sm-offset-4 btncontainer text-center">
+                    <button type="submit" id="user_submit" class="btn btn-success btnStyle">Save</button> &nbsp;
+                    &nbsp;
+                    <button type="reset" id="user_reset" class="btn btn-secondary btnStyle" (click)="resetForm()">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+                    </div>
+                </div>
+            </ng-template>
+
+        </li>
+
+    </ul>
+
+    <div [ngbNavOutlet]="tabs"></div>
+
+</div>
+
+

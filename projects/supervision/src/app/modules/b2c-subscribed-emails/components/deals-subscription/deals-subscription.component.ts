@@ -7,7 +7,6 @@ import { Logger } from 'projects/supervision/src/app/core/logger/logger.service'
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { SubSink } from 'subsink';
-import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 
 const log = new Logger('promocode-list/NewsletterSubscriptionComponent');
 let filterArray: Array<any> = [];
@@ -28,7 +27,7 @@ export class DealsSubscriptionComponent implements OnInit,OnDestroy {
     noData: boolean = true;
     respData: Array<any> = [];
     listType: number;
-    config: ExportAsConfig = {
+    config: any = {
         type: 'pdf',
         elementIdOrContent: 'subscriptions',
         options: {
@@ -46,7 +45,6 @@ export class DealsSubscriptionComponent implements OnInit,OnDestroy {
         private swalService: SwalService,
         private utility: UtilityService,
         private activatedRoute: ActivatedRoute,
-        private exportAsService: ExportAsService,
     ) { }
 
     displayColumn: { key: string, value: string }[] = [
@@ -101,13 +99,13 @@ export class DealsSubscriptionComponent implements OnInit,OnDestroy {
         });
     }
     
-    download(type: SupportedExtensions, orientation?: string) {
+    download(type: any, orientation?: string) {
         this.config.type = type;
         if (orientation) {
             this.config.options.jsPDF.orientation = orientation;
         }
         const date = new Date().toDateString();
-        this.exportAsService.save(this.config, `newsletter_subscriptions`).subscribe();
+        this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `newsletter_subscriptions`, orientation || (this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation));
     }
 
     pdfCallbackFn(pdf: any) {

@@ -7,7 +7,6 @@ import { Logger } from '../../../../../core/logger/logger.service';
 import { SwalService } from '../../../../../core/services/swal.service';
 import { UtilityService } from '../../../../../core/services/utility.service';
 import { SubSink } from 'subsink';
-import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
@@ -59,7 +58,7 @@ export class B2cBundleBookingReportComponent implements OnInit {
   ];
   noData: boolean = true;
   respData: Array<any> = [];
-  config: ExportAsConfig = {
+  config: any = {
     type: 'pdf',
     elementIdOrContent: 'b2c-bundle-report',
     options: {
@@ -86,7 +85,6 @@ export class B2cBundleBookingReportComponent implements OnInit {
     private apiHandlerService: ApiHandlerService,
     private fb: FormBuilder,
     private swalService: SwalService,
-    private exportAsService: ExportAsService,
     private utility: UtilityService,
     private router: Router
   ) { }
@@ -247,14 +245,14 @@ export class B2cBundleBookingReportComponent implements OnInit {
     }
   }
 
-  download(type: SupportedExtensions, orientation?: string) {
+  download(type: any, orientation?: string) {
     // if (type)
     this.config.type = type;
     if (orientation) {
         this.config.options.jsPDF.orientation = orientation;
     }
     const date = new Date().toDateString();
-    this.exportAsService.save(this.config, `b2c-Bundle-Report`).subscribe();
+    this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2c-Bundle-Report`, orientation || (this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation));
 }
 
 pdfCallbackFn(pdf: any) {

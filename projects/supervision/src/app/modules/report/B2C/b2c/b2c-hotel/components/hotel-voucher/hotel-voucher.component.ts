@@ -5,7 +5,6 @@ import { Logger } from 'projects/supervision/src/app/core/logger/logger.service'
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { SubSink } from 'subsink';
-import { ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { Location } from '@angular/common';
@@ -39,7 +38,6 @@ export class HotelVoucherComponent implements OnInit, OnDestroy {
     constructor(
         private apiHandlerService: ApiHandlerService,
         private swalService: SwalService,
-        private exportAsService: ExportAsService,
         private utility: UtilityService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
@@ -228,7 +226,7 @@ printVoucher() {
         let tmpStatus = status.split('_');
         return `${tmpStatus[0] + '&nbsp;' + tmpStatus[1]}`
     }
-    downloadA4(type: SupportedExtensions, orientation?: string): void {
+    downloadA4(type: any, orientation?: string): void {
         this.loading = true;
         document.getElementById('download').style.display = "none";
         window['html2canvas'] = html2canvas;

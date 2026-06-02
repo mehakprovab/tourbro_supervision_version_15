@@ -11,7 +11,6 @@ import { MatModalService, ModalConfigDataI, ModalConfigDefault } from 'projects/
 import { ProcessTransactionBalanceComponent } from '../../modals/process-transaction-balance/process-transaction-balance.component';
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { formatDate } from 'ngx-bootstrap/chronos';
 import { GlobalConstants } from 'projects/supervision/src/app/core/services/global-constants';
 import { ViewImageComponent } from '../view-image/view-image.component';
@@ -39,7 +38,7 @@ export class BalanceUpdateRequestComponent implements OnInit {
     showWeekNumbers: false
   };
 
-  config: ExportAsConfig = {
+  config: any = {
     type: 'pdf',
     elementIdOrContent: 'Agent-request',
     options: {
@@ -87,7 +86,6 @@ export class BalanceUpdateRequestComponent implements OnInit {
     private fb: FormBuilder,
     private swalService: SwalService,
     private utility: UtilityService,
-    private exportAsService: ExportAsService,
     private matModalService: MatModalService,
     private dialog: MatDialog
   ) {
@@ -244,14 +242,14 @@ export class BalanceUpdateRequestComponent implements OnInit {
 
   }
 
-  download(type: SupportedExtensions, orientation?: string) {
+  download(type: any, orientation?: string) {
     let filename = this.collectionSize == 1 ? "" : "";
     this.config.type = type;
     if (orientation) {
       this.config.options.jsPDF.orientation = orientation;
     }
     const date = new Date().toDateString();
-   this.exportAsService.save(this.config, filename).subscribe();
+   this.utility.downloadElementAsPdf(this.config.elementIdOrContent, filename, orientation || (this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation));
   }
 
   pdfCallbackFn(pdf: any) {

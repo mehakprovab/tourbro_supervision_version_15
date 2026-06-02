@@ -308,7 +308,7 @@ onReset() {
         this.config.options.jsPDF.orientation = orientation;
     }
     const date = new Date().toDateString();
-    this.exportAsService.save(this.config, `b2c-tour-report`)
+    this.exportAsService.save(this.config, `b2c-tour-report`).subscribe();
 }
 
 pdfCallbackFn(pdf: any) {

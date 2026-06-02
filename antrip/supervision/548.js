@@ -797,7 +797,7 @@ let B2bActivityComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2b-ActivityReport`);
+      this.exportAsService.save(this.config, `b2b-ActivityReport`).subscribe();
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -2159,7 +2159,7 @@ let B2bBundleBookingReportComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2b-Bundle-Report`);
+      this.exportAsService.save(this.config, `b2b-Bundle-Report`).subscribe();
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -3049,7 +3049,7 @@ let B2bCarComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2c-CarReport`);
+      this.exportAsService.save(this.config, `b2c-CarReport`).subscribe();
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -4134,7 +4134,7 @@ let B2bFlightComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2b-Flight-Report`);
+      this.exportAsService.save(this.config, `b2b-Flight-Report`).subscribe();
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -5242,7 +5242,7 @@ let B2bHotelEnquiryComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2b-HotelEnquiry`);
+      this.exportAsService.save(this.config, `b2b-HotelEnquiry`).subscribe();
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -6552,7 +6552,7 @@ let B2bHotelComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2b-HotelReport`);
+      this.exportAsService.save(this.config, `b2b-HotelReport`).subscribe();
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -7523,7 +7523,7 @@ let B2bTourEnquiryComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2b-tour-enquiry`);
+      this.exportAsService.save(this.config, `b2b-tour-enquiry`).subscribe();
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -9941,7 +9941,7 @@ let B2bTourComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2b-tour-report`);
+      this.exportAsService.save(this.config, `b2b-tour-report`).subscribe();
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -11543,7 +11543,7 @@ let B2bTransferComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2b-transfer-report`);
+      this.exportAsService.save(this.config, `b2b-transfer-report`).subscribe();
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -15249,7 +15249,7 @@ let FlightComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `voucher_${this.app_reference}`);
+      this.exportAsService.save(this.config, `voucher_${this.app_reference}`).subscribe();
     }
     downloadA4(type, orientation) {
       let fileName = this.voucherData['AppReference'];
@@ -18109,7 +18109,7 @@ let B2cActivityComponent = /*#__PURE__*/(() => {
         if (orientation) {
           this.config.options.jsPDF.orientation = orientation;
         }
-        this.exportAsService.save(this.config, `b2c-ActivityReport`);
+        this.exportAsService.save(this.config, `b2c-ActivityReport`).subscribe();
       }, 300);
     }
     downloadPdf() {
@@ -20389,7 +20389,7 @@ let B2cBundleBookingReportComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2c-Bundle-Report`);
+      this.exportAsService.save(this.config, `b2c-Bundle-Report`).subscribe();
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -22198,7 +22198,7 @@ let B2cCarComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2c-CarReport`);
+      this.exportAsService.save(this.config, `b2c-CarReport`).subscribe();
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -24299,7 +24299,7 @@ let B2cFlightComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2c-Flight-Report`);
+      this.exportAsService.save(this.config, `b2c-Flight-Report`).subscribe();
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -26466,7 +26466,7 @@ let B2cHotelEnquiryComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2c-hotel-enquiry`);
+      this.exportAsService.save(this.config, `b2c-hotel-enquiry`).subscribe();
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -27928,7 +27928,7 @@ let B2cHotelComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2c-HotelReport`);
+      this.exportAsService.save(this.config, `b2c-HotelReport`).subscribe();
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -30459,7 +30459,7 @@ let B2cTourEnquiryComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2c-tour-enquiry`);
+      this.exportAsService.save(this.config, `b2c-tour-enquiry`).subscribe();
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -32096,7 +32096,7 @@ let B2cTourReportComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2c-tour-report`);
+      this.exportAsService.save(this.config, `b2c-tour-report`).subscribe();
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -35117,7 +35117,7 @@ let B2cTransferComponent = /*#__PURE__*/(() => {
         this.config.options.jsPDF.orientation = orientation;
       }
       const date = new Date().toDateString();
-      this.exportAsService.save(this.config, `b2c-transfer-report`);
+      this.exportAsService.save(this.config, `b2c-transfer-report`).subscribe();
     }
     pdfCallbackFn(pdf) {
       // example to add page number as footer to every page of pdf
@@ -37896,7 +37896,7 @@ let UpdatePnrTicketComponent = /*#__PURE__*/(() => {
       }
       const date = new Date().toDateString();
       setTimeout(() => {
-        this.exportAsService.save(this.config, `voucher`);
+        this.exportAsService.save(this.config, `voucher`).subscribe();
       }, 1000);
     }
     pdfCallbackFn(pdf) {

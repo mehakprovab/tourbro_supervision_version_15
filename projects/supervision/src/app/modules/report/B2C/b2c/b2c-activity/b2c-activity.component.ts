@@ -262,7 +262,7 @@ isExporting = false;
             this.config.options.jsPDF.orientation = orientation;
         }
 
-        this.exportAsService.save(this.config, `b2c-ActivityReport`)
+        this.exportAsService.save(this.config, `b2c-ActivityReport`).subscribe();
          
 
     }, 300);

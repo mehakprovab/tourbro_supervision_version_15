@@ -214,7 +214,7 @@ export class B2bHotelEnquiryComponent implements OnInit {
         this.config.options.jsPDF.orientation = orientation;
     }
     const date = new Date().toDateString();
-    this.exportAsService.save(this.config, `b2b-HotelEnquiry`)
+    this.exportAsService.save(this.config, `b2b-HotelEnquiry`).subscribe();
 }
 
 pdfCallbackFn(pdf: any) {

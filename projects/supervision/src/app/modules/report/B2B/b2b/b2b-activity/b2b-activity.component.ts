@@ -264,7 +264,7 @@ export class B2bActivityComponent implements OnInit {
         this.config.options.jsPDF.orientation = orientation;
     }
     const date = new Date().toDateString();
-    this.exportAsService.save(this.config, `b2b-ActivityReport`)
+    this.exportAsService.save(this.config, `b2b-ActivityReport`).subscribe();
 }
 
 pdfCallbackFn(pdf: any) {

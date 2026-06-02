@@ -333,7 +333,7 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
             this.config.options.jsPDF.orientation = orientation;
         }
         const date = new Date().toDateString();
-        this.exportAsService.save(this.config, `b2c-HotelReport`)
+        this.exportAsService.save(this.config, `b2c-HotelReport`).subscribe();
     }
 
     pdfCallbackFn(pdf: any) {

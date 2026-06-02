@@ -224,7 +224,7 @@ export class B2cTourEnquiryComponent implements OnInit {
             this.config.options.jsPDF.orientation = orientation;
         }
         const date = new Date().toDateString();
-        this.exportAsService.save(this.config, `b2c-tour-enquiry`)
+        this.exportAsService.save(this.config, `b2c-tour-enquiry`).subscribe();
     }
     
     pdfCallbackFn(pdf: any) {

@@ -532,7 +532,7 @@ getBasePrice(value: string) {
             this.config.options.jsPDF.orientation = orientation;
         }
         const date = new Date().toDateString();
-        this.exportAsService.save(this.config, `b2c-transfer-report`)
+        this.exportAsService.save(this.config, `b2c-transfer-report`).subscribe();
     }
 
     pdfCallbackFn(pdf: any) {

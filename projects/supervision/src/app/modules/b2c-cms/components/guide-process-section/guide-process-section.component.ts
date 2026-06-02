@@ -202,6 +202,6 @@ fd.append('publishStatus', '0');
   }
 
   getImage(img){
-    return 'http://54.92.243.81/tourbro/node/dist/apps/supervision/' + img;
+    return 'http://tourbro.com/node/dist/apps/supervision/' + img;
   }
 }

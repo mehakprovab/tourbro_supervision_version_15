@@ -170,7 +170,7 @@ export class UpdatePnrTicketComponent implements OnInit, OnDestroy {
         }
         const date = new Date().toDateString();
         setTimeout(() => {
-            this.exportAsService.save(this.config, `voucher`)
+            this.exportAsService.save(this.config, `voucher`).subscribe();
         }, 1000)
 
     }

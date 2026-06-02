@@ -154,7 +154,7 @@ export class InactiveListComponent implements OnInit,OnDestroy {
             this.config.options.jsPDF.orientation = orientation;
         }
         const date = new Date().toDateString();
-        this.exportAsService.save(this.config, `In-active-users-report`)
+        this.exportAsService.save(this.config, `In-active-users-report`).subscribe();
     }
 
     pdfCallbackFn(pdf: any) {

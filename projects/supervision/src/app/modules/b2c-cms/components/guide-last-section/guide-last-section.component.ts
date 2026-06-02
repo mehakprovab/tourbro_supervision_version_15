@@ -58,7 +58,7 @@ export class GuideLastSectionComponent implements OnInit {
      this.getGuideSections();
    }
    getImage(img) {
-    const url = 'http://54.92.243.81/tourbro/node/dist/apps/supervision/';
+    const url = 'http://tourbro.com/node/dist/apps/supervision/';
     return `${url + img}`;
   }
 

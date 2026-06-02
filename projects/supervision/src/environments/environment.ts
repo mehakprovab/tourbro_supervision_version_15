@@ -4,9 +4,9 @@ export const environment = {
     // b2b_url: 'https://booking247.com:4019',
     // b2c_url: 'https://booking247.com:4017'
 
-    baseUrl:'http://54.92.243.81:2001/sa',
+    baseUrl:'http://tourbro.com:3001/sa',
     b2b_url: 'http://54.92.243.81:2003',
-    b2c_url: 'http://54.92.243.81:2002'
+    b2c_url: 'http://tourbro.com:3002'
 
     // -----UAT Server start-----
     // baseUrl:'https://booking247.com:5024/sa',

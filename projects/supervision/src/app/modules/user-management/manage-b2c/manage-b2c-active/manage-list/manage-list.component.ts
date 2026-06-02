@@ -151,7 +151,7 @@ export class ManageListComponent implements OnInit, OnDestroy {
             this.config.options.jsPDF.orientation = orientation;
         }
         const date = new Date().toDateString();
-        this.exportAsService.save(this.config, `active-users-report`)
+        this.exportAsService.save(this.config, `active-users-report`).subscribe();
     }
 
      downloadPdf() {

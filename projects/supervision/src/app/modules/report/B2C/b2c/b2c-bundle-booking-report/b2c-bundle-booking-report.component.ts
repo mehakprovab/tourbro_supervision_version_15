@@ -254,7 +254,7 @@ export class B2cBundleBookingReportComponent implements OnInit {
         this.config.options.jsPDF.orientation = orientation;
     }
     const date = new Date().toDateString();
-    this.exportAsService.save(this.config, `b2c-Bundle-Report`)
+    this.exportAsService.save(this.config, `b2c-Bundle-Report`).subscribe();
 }
 
 pdfCallbackFn(pdf: any) {

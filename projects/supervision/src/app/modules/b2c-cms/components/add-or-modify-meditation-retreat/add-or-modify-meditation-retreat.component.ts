@@ -193,7 +193,7 @@ private destroy$ = new Subject<void>();
   }
 
   getImage(img) {
-    let url='http://54.92.243.81/tourbro/node/dist/apps/supervision/'
+    let url='http://tourbro.com/node/dist/apps/supervision/'
       return `${url+img}`;
   }
 

@@ -128,7 +128,7 @@ export class PromocodeListComponent implements OnInit,OnDestroy {
             this.config.options.jsPDF.orientation = orientation;
         }
         const date = new Date().toDateString();
-        this.exportAsService.save(this.config, `promoCode_list`)
+        this.exportAsService.save(this.config, `promoCode_list`).subscribe();
     }
 
     pdfCallbackFn(pdf: any) {

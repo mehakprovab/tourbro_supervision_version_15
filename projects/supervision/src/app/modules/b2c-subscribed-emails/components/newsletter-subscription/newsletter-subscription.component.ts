@@ -106,7 +106,7 @@ export class NewsletterSubscriptionComponent implements OnInit,OnDestroy {
             this.config.options.jsPDF.orientation = orientation;
         }
         const date = new Date().toDateString();
-        this.exportAsService.save(this.config, `newsletter_subscriptions`)
+        this.exportAsService.save(this.config, `newsletter_subscriptions`).subscribe();
     }
 
     pdfCallbackFn(pdf: any) {

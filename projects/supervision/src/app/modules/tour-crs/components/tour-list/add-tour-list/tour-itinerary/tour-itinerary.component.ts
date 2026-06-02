@@ -12,7 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./tour-itinerary.component.scss']
 })
 export class TourItineraryComponent implements OnInit {
-imageBaseUrl = 'http://54.92.243.81:2001/sa/tour/tours/getItineraryImages/';
+imageBaseUrl = 'http://tourbro.com:3001/sa/tour/tours/getItineraryImages/';
   tourItinerayForm;
   inputFields: FormArray;
   tourDuration:string=''

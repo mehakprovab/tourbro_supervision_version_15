@@ -36,6 +36,7 @@ import { ManageSupplierNewlistingComponent } from './manage-supplier/manage-supp
 import { SupplierNewListingComponent } from './manage-supplier/manage-supplier-newlisting/supplier-new-listing/supplier-new-listing.component';
 import { ManageAgentNewListingComponent } from './manage-agent/b2b/manageAgent/b2-b-active/manage-agent-new-listing/manage-agent-new-listing.component';
 import { AgentNewListingComponent } from './manage-agent/b2b/manageAgent/b2-b-active/manage-agent-new-listing/agent-new-listing/agent-new-listing.component';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -53,6 +54,8 @@ import { AgentNewListingComponent } from './manage-agent/b2b/manageAgent/b2-b-ac
         SharedModule,
         BsDropdownModule,
         NgxIntlTelInputModule,
+        NgbNavModule,
+        
     ]
 })
 export class UserManagementModule { }

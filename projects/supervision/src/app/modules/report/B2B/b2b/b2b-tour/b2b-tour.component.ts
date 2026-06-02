@@ -290,7 +290,7 @@ loggedInUser: any;
         this.config.options.jsPDF.orientation = orientation;
     }
     const date = new Date().toDateString();
-    this.exportAsService.save(this.config, `b2b-tour-report`)
+    this.exportAsService.save(this.config, `b2b-tour-report`).subscribe();
 }
 
 pdfCallbackFn(pdf: any) {

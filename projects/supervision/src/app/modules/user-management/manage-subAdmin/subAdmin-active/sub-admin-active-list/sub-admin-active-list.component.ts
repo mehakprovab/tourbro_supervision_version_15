@@ -6,10 +6,11 @@ import { Logger } from 'projects/supervision/src/app/core/logger/logger.service'
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { SubSink } from 'subsink';
-import { ExportAsConfig, ExportAsService, SupportedExtensions } from 'ngx-export-as';
 import { GlobalConstants } from 'projects/supervision/src/app/core/services/global-constants';
 import { UserManagementService } from '../../../user-management.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 const log = new Logger('manage-b2c-active/ManageListComponent');
 let filterArray: Array<any> = [];
@@ -30,17 +31,6 @@ export class SubAdminActiveListComponent implements OnInit, OnDestroy {
     noData: boolean = true;
     respData: Array<any> = [];
     listType: number;
-    config: ExportAsConfig = {
-        type: 'pdf',
-        elementIdOrContent: 'active-users-report',
-        options: {
-            jsPDF: {
-                orientation: 'landscape'
-            },
-            pdfCallbackFn: this.pdfCallbackFn // to add header and footer
-        }
-
-    };
     userTypeList: Array<any> = [];
     countriesList: any;
 
@@ -51,7 +41,6 @@ export class SubAdminActiveListComponent implements OnInit, OnDestroy {
         private swalService: SwalService,
         private utility: UtilityService,
         private activatedRoute: ActivatedRoute,
-        private exportAsService: ExportAsService,
         private userMangementService: UserManagementService
     ) { }
 
@@ -178,15 +167,24 @@ export class SubAdminActiveListComponent implements OnInit, OnDestroy {
             }
         });
     }
-    download(type: SupportedExtensions, orientation?: string) {
-        // if (type)
-        let filename = this.listType == 1 ? "Active Staff List" : "Inactive Staff List";
-        this.config.type = type;
-        if (orientation) {
-            this.config.options.jsPDF.orientation = orientation;
+    downloadPdf() {
+        const element = document.getElementById('active-users-report');
+        if (!element) {
+            this.swalService.alert.oops();
+            return;
         }
-        const date = new Date().toDateString();
-       this.exportAsService.save(this.config, filename);
+
+        html2canvas(element).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('l', 'mm', 'a4');
+            const imgWidth = 297;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+            pdf.save(this.listType == 1 ? 'Active Staff List.pdf' : 'Inactive Staff List.pdf');
+            this.swalService.alert.success();
+        }).catch(() => {
+            this.swalService.alert.oops();
+        });
     }
 
     pdfCallbackFn(pdf: any) {

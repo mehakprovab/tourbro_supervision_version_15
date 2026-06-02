@@ -152,7 +152,7 @@ onPrint(): void {
             this.config.options.jsPDF.orientation = orientation;
         }
         const date = new Date().toDateString();
-        this.exportAsService.save(this.config, `voucher_${this.app_reference}`)
+        this.exportAsService.save(this.config, `voucher_${this.app_reference}`).subscribe();
     }
 
     downloadA4(type: SupportedExtensions, orientation?: string): void {

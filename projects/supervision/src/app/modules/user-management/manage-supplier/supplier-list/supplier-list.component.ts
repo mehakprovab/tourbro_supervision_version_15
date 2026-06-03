@@ -134,9 +134,10 @@ export class SupplierListComponent implements OnInit {
       this.subSunk.sink = this.apiHandlerService.apiHandler('supplierList', 'post', {}, {},
           { "status": 1,supplier_type :this.supplier_Type,"supplier_id": GlobalConstants.SUPPLIER_AUTH_ROLE_ID })
           .subscribe(resp => {
-              if ((resp.statusCode == 200 || resp.statusCode == 201) && resp.data && resp.data.length > 0) {
+              const suppliers = this.getSupplierRows(resp);
+              if ((resp.statusCode == 200 || resp.statusCode == 201) && suppliers.length > 0) {
                   this.noData = false;
-                  this.respData = resp.data || [];
+                  this.respData = suppliers;
                   respDataCopy = [...this.respData];
                   this.collectionSize = respDataCopy.length;
               }
@@ -173,13 +174,32 @@ export class SupplierListComponent implements OnInit {
 }
 
 getCountryName(countryId: number): string | null {
+    if (!this.countriesList) {
+        return null;
+    }
     const country = this.countriesList.find(c => c.id == countryId);
     return country ? country.name : null;
   }
 
   getStateName(stateId: number): string | null {
+    if (!this.registerStates) {
+        return null;
+    }
     const state = this.registerStates.find(state => state.id == stateId);
     return state ? state.name : null;
+  }
+
+  getSupplierRows(resp: any): Array<any> {
+      if (Array.isArray(resp?.data)) {
+          return resp.data;
+      }
+      if (Array.isArray(resp?.data?.data)) {
+          return resp.data.data;
+      }
+      if (Array.isArray(resp?.data?.data?.data)) {
+          return resp.data.data.data;
+      }
+      return [];
   }
 
   listStates() {
@@ -256,7 +276,7 @@ getCountryName(countryId: number): string | null {
  
 console.log("data",data)
       this.subSunk.sink = this.apiHandlerService.apiHandler('updateSupplier', 'post', {}, {},
-          { "accept": data.status == 1 ? false : true, "supplier_id": data.id })
+          { "accept": data.status == 1 ? false : true, "supplier_id": data.supplier_id || data.id })
           .subscribe(resp => {
               if (resp.statusCode == 200 || resp.statusCode == 201) {
                   this.swalService.alert.success("User status changed successfully.");
@@ -277,9 +297,9 @@ console.log("data",data)
           const fileToExport = this.respData.map((response: any,index:number) => {
               return {
                   "Sl No.":index+1,
-                  "ID": response.uuid,
+                  "ID": response.uuid || response.supplier_id,
                   "Name": response['first_name'] + '' +response['last_name'],
-                  "Contact": response['phone'],
+                  "Contact": response['phone_number'] || response['phone'],
                   "Email": response.email,
                   "Status": response.status==0 ?'Inactive':'Active'
               }
@@ -308,7 +328,7 @@ console.log("data",data)
 }
 getPropertyList(user) {
     this.subSunk.sink = this.apiHandlerService.apiHandler('findProperties', 'post', {}, {},
-        {  "status": user.status == 1 ? true : false,"supplier_id":user.id})
+        {  "status": user.status == 1 ? true : false,"supplier_id": user.supplier_id || user.id})
         .subscribe(resp => {
             if ((resp.statusCode == 200 || resp.statusCode == 201) && resp.data && resp.data.length > 0) {
                  this.noData =false;
@@ -329,7 +349,7 @@ hide()
   this.showModal = false;
 }
 onTransferProperty(user:any){
-    this.supplierId = user.id;
+    this.supplierId = user.supplier_id || user.id;
     this.showTransfer = true;
     this.getPropertyList(user)
     // this.getUsersList(this.listType)
@@ -381,7 +401,7 @@ updatesupplier(data) {
 onSubmitMail(data){
               this.showMailModal = true;
               this.subSunk.sink = this.apiHandlerService.apiHandler('mailCredentials', 'post', {}, {},
-                  { "supplier_id": data.id,'email':data.email })
+                  { "supplier_id": data.supplier_id || data.id,'email':data.email })
                   .subscribe(resp => {
                       if (resp.statusCode == 200 || resp.statusCode == 201) {
                           this.swalService.alert.success("Credentials has been sent successfully.");

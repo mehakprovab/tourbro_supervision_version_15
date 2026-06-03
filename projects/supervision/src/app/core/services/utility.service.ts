@@ -178,6 +178,20 @@ export class UtilityService {
         XLSX.writeFile(workbook, `${fileName}${EXCEL_EXTENSION}`);
     }
 
+    public downloadElementAsExcel(elementId: string, fileName: string): void {
+        const element = document.getElementById(elementId);
+        const table = element && element.tagName.toLowerCase() === 'table'
+            ? element
+            : element ? element.querySelector('table') : null;
+        if (!table) {
+            this.swalService.alert.oops();
+            return;
+        }
+
+        const workbook = XLSX.utils.table_to_book(table as HTMLTableElement, { sheet: 'Sheet1' });
+        XLSX.writeFile(workbook, `${fileName}${EXCEL_EXTENSION}`);
+    }
+
     checkSeatSelection(passengers) {
         let hasValue = false;
         for (const passenger of passengers) {

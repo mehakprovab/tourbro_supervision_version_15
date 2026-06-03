@@ -21,13 +21,17 @@
 
         <!-- Itinerary Form -->
         <form
+          *ngIf="tourItinerayForm"
           [formGroup]="tourItinerayForm"
           (ngSubmit)="submitItineryForm()"
           autocomplete="off"
         >
           <div formArrayName="inputFields">
+            <div *ngIf="!inputFieldControls.length" class="alert alert-warning mb-3">
+              Please select tour duration first. Day wise itinerary form will open after duration is available.
+            </div>
             <div
-              *ngFor="let day of inputFields.controls; let i = index"
+              *ngFor="let day of inputFieldControls; let i = index"
               [formGroupName]="i"
               class="dayCard mb-4 p-3 rounded shadow-sm bg-light"
             >
@@ -110,7 +114,7 @@
               <div formArrayName="activities">
                 <div
                   *ngFor="
-                    let activity of day.get('activities').controls;
+                    let activity of getActivityControls(day);
                     let j = index
                   "
                   [formGroupName]="j"
@@ -260,6 +264,3 @@
           </div>
         </form>
       </div>
-   
-
-  

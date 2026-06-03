@@ -255,7 +255,11 @@ isExporting = false;
 
     setTimeout(() => {
         this.config.type = type;
-
+        if (type === 'xlsx' || type === 'xls') {
+            this.utility.downloadElementAsExcel(this.config.elementIdOrContent, 'b2c-activity');
+            this.isExporting = false;
+            return;
+        }
         if (orientation) {
             this.config.options.jsPDF.orientation = orientation;
         }

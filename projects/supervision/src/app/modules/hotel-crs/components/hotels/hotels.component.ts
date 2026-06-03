@@ -14,6 +14,8 @@ const log = new Logger('hotel-crs/HotelComponent')
 export class HotelsComponent implements OnInit {
 
 @ViewChild('tabs', { static: false }) tabs: any;
+  readonly listTab = 'list_hotels';
+  readonly addTab = 'add_hotel';
   activeIdString = "list_hotels";
   add:boolean=true;
   hotelData: any;
@@ -23,6 +25,7 @@ export class HotelsComponent implements OnInit {
   priceEvent:boolean=false;
   priceManagementEvent:boolean=false;
   showTax:boolean=false;
+  private selectingFromTrigger = false;
   constructor(
     private hotelCrsService: HotelCrsService,
     private route: ActivatedRoute,
@@ -37,8 +40,8 @@ export class HotelsComponent implements OnInit {
   // });
   this.route.queryParams.subscribe(params => {
     console.log("params",params)
-    if (params['tab'] == 'list_hotels') {
-      this.activeIdString = 'list_hotels'; // Default to Hotel List tab
+    if (params['tab'] === this.listTab || params['tab'] === this.addTab) {
+      this.activeIdString = params['tab'];
     } else {
       this.loadStoredState(); 
     }
@@ -67,16 +70,20 @@ export class HotelsComponent implements OnInit {
   }
   onTabSelected(event) {
     console.log(event)
-    if(event.nextId == 'add_hotel'){
+    this.activeIdString = event.nextId;
+    if (event.nextId === this.addTab) {
+      if (!this.selectingFromTrigger) {
+        this.clearEditState();
+      }
       this.router.navigate([], { queryParams: {}, replaceUrl: true });
     }
-    this.activeIdString = event.nextId;
+    this.selectingFromTrigger = false;
     this.saveState();
     this.resetValue();
 }
 
 resetValue(){
-    if (this.activeIdString == 'list_hotels') {
+    if (this.activeIdString == this.listTab) {
         this.hotelCrsService.updateData.next({});
     }
 }
@@ -90,13 +97,24 @@ triggerTab(data: any) {
 
   this.hotelData = data?.hotel ?? null;
   this.selected = data?.hoteltrigger ?? null;
+  this.activeIdString = data?.tabId ?? this.addTab;
 
   this.saveState();
 
   if (data?.tabId && this.tabs) {
+    this.selectingFromTrigger = true;
     this.tabs.select(data.tabId);
   }
 }
+
+  clearEditState() {
+    this.eventData = false;
+    this.priceDirectData = null;
+    this.priceEvent = false;
+    this.priceManagementEvent = false;
+    this.hotelData = null;
+    this.selected = null;
+  }
 
       saveState() {
         // Save active tab and selected component in localStorage
@@ -132,6 +150,4 @@ triggerTab(data: any) {
         }
       }
   }
-
-
 

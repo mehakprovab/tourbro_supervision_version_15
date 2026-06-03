@@ -247,6 +247,10 @@ export class B2bFlightComponent implements OnInit, OnDestroy {
     download(type: any, orientation?: string) {
         // if (type)
         this.config.type = type;
+        if (type === 'xlsx' || type === 'xls') {
+            this.utility.downloadElementAsExcel(this.config.elementIdOrContent, 'b2b-flight');
+            return;
+        }
         if (orientation) {
             this.config.options.jsPDF.orientation = orientation;
         }

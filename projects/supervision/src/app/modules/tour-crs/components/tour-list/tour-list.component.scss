@@ -87,10 +87,10 @@ input[type=checkbox]{
     margin-left: 10px;
   }
   
-  .wrapper1,
+.wrapper1,
 .wrapper2 {
   width: 100%;
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: hidden;
 }
 .wrapper1 {
@@ -98,24 +98,45 @@ input[type=checkbox]{
 }
 
 .div1 {
-    width: 2500px;
+    min-width: 2700px;
     height: 20px;
     @media(max-width:767px){
-        width: 1200px;
+        min-width: 1200px;
     }
   }
   .div2 {
-    width: 2500px;
-    overflow: hidden;
+    min-width: 2700px;
+    width: max-content;
+    overflow: visible;
     @media(max-width:767px){
-        width: 1200px;
+        min-width: 1200px;
     }
   }
   
-.div2 .table-responsive {overflow: inherit;}
+.div2 .table-responsive {
+  min-width: 100%;
+  width: max-content;
+  overflow: visible !important;
+}
+
+.div2 table {
+  min-width: 2500px;
+  width: max-content;
+}
+
+.div2 th,
+.div2 td {
+  white-space: nowrap;
+}
+
+.invisible-scrollbar {
+  scrollbar-width: thin;
+}
+
 .invisible-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
+  display: block;
+  height: 8px;
+}
   
 .search input{
   margin: 0px !important;
@@ -128,7 +149,7 @@ input[type=checkbox]{
 
 .tab-btn {
   padding: 10px 18px;
-  border-radius: 10px;
+  border-radius: 6px;
   font-weight: 500;
   font-size: 14px;
   border: 1px solid transparent;
@@ -136,22 +157,28 @@ input[type=checkbox]{
   transition: 0.3s ease;
 }
 
-/* ACTIVE (Purple) */
+.crs-tab-buttons {
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e6e8ef;
+}
+
 .tab-btn.active {
-  background: linear-gradient(90deg, #5f2eea, #7b3ff2);
+  background: #FE4865;
   color: #fff;
-  border: none;
+  border-color: #FE4865;
+  box-shadow: 0 3px 10px rgba(254, 72, 101, 0.28);
 }
 
-/* INACTIVE (Light with border) */
 .tab-btn.inactive {
-  background: #f3f0ff;
-  color: #6c6c6c;
-  border: 1px solid #d6ccff;
+  background: #fff;
+  color: #334155;
+  border: 1px solid #d8deea;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
 }
 
-/* Optional hover */
 .tab-btn.inactive:hover {
-  background: #e9e3ff;
+  background: #fff;
+  color: #111827;
+  border-color: #FE4865;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
 }
-  

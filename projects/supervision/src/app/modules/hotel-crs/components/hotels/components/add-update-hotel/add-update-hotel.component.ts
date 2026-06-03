@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Logger } from '../../../../../../core/logger/logger.service';
 import { formatDate } from '../../../../../../core/services/format-date';
@@ -13,7 +13,7 @@ const log = new Logger('Hotel/AddUpdateHotel');
     templateUrl: './add-update-hotel.component.html',
     styleUrls: ['./add-update-hotel.component.scss']
 })
-export class AddUpdateHotelComponent implements OnInit, AfterViewInit {
+export class AddUpdateHotelComponent implements OnInit, OnChanges, AfterViewInit {
     data:boolean=true;
     showSelectedPrice:boolean=false;
     isHotelDetail: boolean;
@@ -63,6 +63,14 @@ export class AddUpdateHotelComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
     }
     ngOnInit(): void {
+        this.setActiveSection();
+    }
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes.hotelOne || changes.selected || changes.isPricedetail) {
+            this.setActiveSection();
+        }
+    }
+    setActiveSection(): void {
         console.log("hotelOne",this.hotelOne)
         console.log("isPricedetail",this.isPricedetail)
         console.log("selected",this.selected)
@@ -72,16 +80,16 @@ export class AddUpdateHotelComponent implements OnInit, AfterViewInit {
         (this.selected=='isRoomDetail')?this.isRoomDetail=true:this.isRoomDetail=false;
         (this.selected=='istax')? this.isHotelTax=true:this.isHotelTax=false;
         (this.selected=='isChildren')? this.isChildrenPollicy = true : this.isChildrenPollicy = false;
-         (this.selected=='isRoomImage' || this.isPricedetail.roomImageRedirect == true )?this.isRoomImage=true:this.isRoomImage=false;
-         (this.selected=='isPriceManagement' || this.isPricedetail.roomPriceManageRedirect == true )?this.isPriceManagement=true:this.isPriceManagement=false;
+         (this.selected=='isRoomImage' || this.isPricedetail?.roomImageRedirect == true )?this.isRoomImage=true:this.isRoomImage=false;
+         (this.selected=='isPriceManagement' || this.isPricedetail?.roomPriceManageRedirect == true )?this.isPriceManagement=true:this.isPriceManagement=false;
          (this.selected=='isSeason')?this.isSeason=true:this.isSeason=false;
-         (this.selected=='isPrice' || this.isPricedetail.roomPriceRedirect == true)?this.isPrice=true:this.isPrice=false;
+         (this.selected=='isPrice' || this.isPricedetail?.roomPriceRedirect == true)?this.isPrice=true:this.isPrice=false;
          (this.selected=='isCancel')?this.isCancellation=true:this.isCancellation=false;
-         if( this.isPricedetail.roomPriceRedirect == true){
+         if( this.isPricedetail?.roomPriceRedirect == true){
             this.roomsData = this.isPricedetail.roomsData;
-         }else if(this.isPricedetail.roomPriceManageRedirect == true){
+         }else if(this.isPricedetail?.roomPriceManageRedirect == true){
             this.roomsData = this.isPricedetail.roomsData;
-         }else if(this.isPricedetail.roomImageRedirect == true){
+         }else if(this.isPricedetail?.roomImageRedirect == true){
             this.roomsData = this.isPricedetail.roomsData;
          }
 

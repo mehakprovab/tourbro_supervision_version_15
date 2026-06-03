@@ -125,6 +125,8 @@ export class WellnessCrsDetailsComponent implements OnInit, AfterViewInit {
     
     const formData = {
   ...this.wellnessForm.value,
+check_in_time: this.formatTimeWithSeconds(this.wellnessForm.value.check_in_time),
+check_out_time: this.formatTimeWithSeconds(this.wellnessForm.value.check_out_time),
 
 inclusions: [this.wellnessForm.value.inclusions],
 supplier_email: this.loggedUserData.email,
@@ -179,6 +181,27 @@ if(this.wellnessForm.invalid) {
         this.swalService.alert.error(err['error']['Message']);
       });
 }
+
+  formatTimeWithSeconds(time: string): string {
+    if (!time) {
+      return time;
+    }
+
+    const trimmedTime = time.trim();
+    const meridiemMatch = trimmedTime.match(/\s+(AM|PM)$/i);
+    const meridiem = meridiemMatch ? meridiemMatch[0] : '';
+    const timeValue = meridiem ? trimmedTime.replace(/\s+(AM|PM)$/i, '') : trimmedTime;
+
+    if (/^\d{1,2}:\d{2}:\d{2}$/.test(timeValue)) {
+      return `${timeValue}${meridiem}`;
+    }
+
+    if (/^\d{1,2}:\d{2}$/.test(timeValue)) {
+      return `${timeValue}:00${meridiem}`;
+    }
+
+    return trimmedTime;
+  }
 
   onPageLoad() {
     this.getPackageTypeList();

@@ -251,8 +251,8 @@
                         <ng-multiselect-dropdown
                           formControlName="meal_type"
                           [placeholder]="'Select Meal Plans'"
-                          [data]="filteredMealView" class="form-control"
                           [settings]="dropdownSettingsForHotel"
+                          [data]="filteredMealView" class="form-control"
                           (onSelect)="onMealSelect($event)"
                           (onDeSelect)="onMealDeselect($event)"
                           (onSelectAll)="onMealSelectAll($event)"
@@ -273,8 +273,8 @@
                         <ng-multiselect-dropdown
                           formControlName="room_view"
                           [placeholder]="'Select Room Views'"
-                          [data]="filteredViewList" class="form-control"
                           [settings]="dropdownSettingsForview"
+                          [data]="filteredViewList" class="form-control"
                           (onSelect)="onViewSelect($event)"
                           (onDeSelect)="onViewDeselect($event)"
                           (onSelectAll)="onViewSelectAll($event)"

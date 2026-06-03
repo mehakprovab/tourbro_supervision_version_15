@@ -16,7 +16,7 @@ imageBaseUrl = 'http://tourbro.com:3001/sa/tour/tours/getItineraryImages/';
   tourItinerayForm;
   inputFields: FormArray;
   tourDuration:string=''
-  totalDaysOfTour:number;
+  totalDaysOfTour:number = 0;
   selectedCheckboxes = [];
   tourId:number;
   tourName:string='';
@@ -30,16 +30,19 @@ imageBaseUrl = 'http://tourbro.com:3001/sa/tour/tours/getItineraryImages/';
   isUpdateTourIternary:boolean=false;
 timeSlots: string[] = [];
   constructor( private fb:FormBuilder, private router:Router,private apiHandlerService:ApiHandlerService,
-                private swalService:SwalService ) { }
+                private swalService:SwalService ) {
+    this.initializeTourItinerayForm();
+  }
 
 ngOnInit() {
   this.tourId = Number(sessionStorage.getItem('tourId'));
   this.tourName = localStorage.getItem('tourName');
-  this.tourDuration = localStorage.getItem('tourDuration');
-  this.totalDaysOfTour = parseInt(this.tourDuration.split("|")[0]);
+  this.tourDuration = localStorage.getItem('tourDuration') || '';
+  this.totalDaysOfTour = this.getTotalDaysFromDuration(this.tourDuration);
 
   this.createTourItinerayForm();
   this.getTourRelatedData();
+  this.getTourDurationIfMissing();
 
   this.updateTourItenary = localStorage.getItem('updateTourPackage');
   if (this.updateTourItenary == 'Yes') {
@@ -59,10 +62,47 @@ generateTimeSlots() {
     this.timeSlots.push(`${hours}:${minutes}`);
   }
 }
-  getDaysOfTour(tourDuration:string):number{
-    let regex = /\d+(?=\sDays)/;
-    let result = Number(tourDuration.match(regex)[0]);
-    return result
+  getDaysOfTour(tourDuration:string):number {
+    return this.getTotalDaysFromDuration(tourDuration);
+  }
+
+  getTotalDaysFromDuration(tourDuration: string): number {
+    if (!tourDuration) {
+      return 0;
+    }
+
+    const pipeDay = Number(tourDuration.split('|')[0]);
+    if (!Number.isNaN(pipeDay) && pipeDay > 0) {
+      return pipeDay;
+    }
+
+    const dayMatch = tourDuration.match(/\d+(?=\s*Days?)/i);
+    return dayMatch ? Number(dayMatch[0]) : 0;
+  }
+
+  setDurationFromTourData(duration: string) {
+    if (this.totalDaysOfTour > 0 || !duration) {
+      return;
+    }
+
+    this.tourDuration = duration;
+    localStorage.setItem('tourDuration', duration);
+    this.totalDaysOfTour = this.getTotalDaysFromDuration(duration);
+    this.createTourItinerayForm();
+  }
+
+  getTourDurationIfMissing() {
+    if (this.totalDaysOfTour > 0 || !this.tourId) {
+      return;
+    }
+
+    this.subSunk.sink = this.apiHandlerService.apiHandler('getTourVisitedCityList', 'post', {}, {}, {
+      toursId: this.tourId
+    }).subscribe(response => {
+      if (response.statusCode === 200 || response.statusCode === 201) {
+        this.setDurationFromTourData(response.data?.[0]?.duration);
+      }
+    });
   }
 
   // createTourItinerayForm(){
@@ -79,22 +119,29 @@ generateTimeSlots() {
               .subscribe(response => {
                   if (response.statusCode == 200 || response.statusCode == 201) {
                       this.cityDataList = response.data[0] || [];
-                      this.mainCityDataList = response.data[1].cities || [];
+                      this.mainCityDataList = response.data[1]?.cities || [];
+                      this.setDurationFromTourData(response.data[0]?.[0]?.duration);
                   }else{
                     this.swalService.alert.oops(response.Message);
                   }
               });
   }
 
-createTourItinerayForm() {
+initializeTourItinerayForm() {
   this.tourItinerayForm = this.fb.group({
     inputFields: this.fb.array([])
   });
+  this.inputFields = this.tourItinerayForm.get('inputFields') as FormArray;
+}
+
+createTourItinerayForm() {
+  this.initializeTourItinerayForm();
   this.addInputField();
 }
 
 addInputField() {
   this.inputFields = this.tourItinerayForm.get('inputFields') as FormArray;
+  this.inputFields.clear();
   for (let i = 0; i < this.totalDaysOfTour; i++) {
     this.inputFields.push(this.fb.group({
       visitedCity: ['', Validators.required],
@@ -114,6 +161,14 @@ createActivityGroup() {
     image: ['', Validators.required],
     activityId: ['']
   });
+}
+
+get inputFieldControls() {
+  return this.inputFields?.controls || [];
+}
+
+getActivityControls(day: any) {
+  return ((day?.get('activities') as FormArray)?.controls) || [];
 }
  addActivity(dayIndex: number) {
   const activities = (this.inputFields.at(dayIndex).get('activities') as FormArray);

@@ -153,8 +153,8 @@
                             <span class="text-danger">*</span>
                         </label>
                         <ng-multiselect-dropdown #multiSelect formControlName="room_amenity_ids"
-                            [placeholder]="'Select Amenities'" [data]="roomAmenityList"
-                            [settings]="dropdownSettingsForRoom">
+                            [placeholder]="'Select Amenities'" [settings]="dropdownSettingsForRoom"
+                            [data]="roomAmenityList">
                         </ng-multiselect-dropdown>
                         <div *ngIf="submitted && f.room_amenity_ids.errors" class="invalid-feedback">
                             <div *ngIf="f.room_amenity_ids.errors.required">Room Amenities are required</div>

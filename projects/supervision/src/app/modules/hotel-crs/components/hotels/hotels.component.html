@@ -1,13 +1,16 @@
 <ul
   ngbNav
   #tabs="ngbNav"
-  class="tabs-animated custom_tab"
+  class="tabs-animated custom_tab crs-tab-ui hotel-tabs"
   [(activeId)]="activeIdString"
   (navChange)="onTabSelected($event)">
 
   <li [ngbNavItem]="'list_hotels'">
 
-    <a ngbNavLink>
+    <a
+      ngbNavLink
+      class="hotel-tab-link"
+      [class.hotel-tab-active]="activeIdString === listTab">
       {{ 'List Stay' }}
     </a>
 
@@ -21,7 +24,10 @@
 
   <li [ngbNavItem]="'add_hotel'">
 
-    <a ngbNavLink>
+    <a
+      ngbNavLink
+      class="hotel-tab-link"
+      [class.hotel-tab-active]="activeIdString === addTab">
 
       <span *ngIf="activeIdString && !selected && !eventData && !priceEvent && !priceManagementEvent">
         {{ 'Add/Edit Stay' }}

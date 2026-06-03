@@ -526,6 +526,10 @@ getBasePrice(value: string) {
     download(type: any, orientation?: string) {
         // if (type)
         this.config.type = type;
+        if (type === 'xlsx' || type === 'xls') {
+            this.utility.downloadElementAsExcel(this.config.elementIdOrContent, 'b2c-transfer');
+            return;
+        }
         if (orientation) {
             this.config.options.jsPDF.orientation = orientation;
         }

@@ -12,6 +12,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class AddCityComponent implements OnInit {
  cityForm: FormGroup;
+ selectedImageFile: File | null = null;
+imagePreviewUrl: string | ArrayBuffer | null = null;
   stateDataList: Array<any> = [];
   subSunk = new SubSink();
 
@@ -29,15 +31,33 @@ export class AddCityComponent implements OnInit {
   }
 
   // ✅ Create Form
-  createCityForm() {
-    this.cityForm = this.fb.group({
-      stateId: ['', Validators.required],
-      cityName: ['', [Validators.required, this.inputValidator]],
-      // latitude: ['', Validators.required],
-      // longitude: ['', Validators.required],
-      status: [1, Validators.required]
-    });
+createCityForm() {
+  this.cityForm = this.fb.group({
+    stateId: ['', Validators.required],
+    cityName: ['', [Validators.required, this.inputValidator]],
+    status: [1, Validators.required],
+    CityImage: ['', Validators.required],           // ✅ New field
+    discription: ['', [Validators.required, Validators.minLength(5)]],  // ✅ New field
+    hourly_rental: [false, Validators.required],    // ✅ New field
+    hourly_durations: ['', Validators.required]     // ✅ New field
+  });
+}
+
+onImageSelected(event: any) {
+  const file = event.target.files[0];
+  if (file) {
+    this.selectedImageFile = file;
+    
+    // Preview image
+    const reader = new FileReader();
+reader.onload = (e) => {
+  this.imagePreviewUrl = (e.target as FileReader).result as string;
+};
+    reader.readAsDataURL(file);
+    
+    this.cityForm.get('CityImage').setValue(file.name);
   }
+}
 onStatusChange(event: any) {
   const isChecked = event.target.checked;
   this.cityForm.get('status').setValue(isChecked ? 1 : 0);
@@ -60,48 +80,53 @@ onStatusChange(event: any) {
   }
 
   // ✅ Save City
-  onCitySave() {
-    if (this.cityForm.valid) {
+ onCitySave() {
+  if (this.cityForm.valid) {
+    const formData = new FormData();  // ✅ Use FormData for file upload
+    
+    const cityNames = this.cityForm.get('cityName').value.split(',');
+    const stateId = this.cityForm.get('stateId').value;
+    const status = this.cityForm.get('status').value;
+    const discription = this.cityForm.get('discription').value;
+    const hourly_rental = this.cityForm.get('hourly_rental').value;
+    const hourly_durations = this.cityForm.get('hourly_durations').value;
 
-      const cityNames = this.cityForm.get('cityName').value.split(',');
-      const stateId = this.cityForm.get('stateId').value;
-      // const latitude = this.cityForm.get('latitude').value;
-      // const longitude = this.cityForm.get('longitude').value;
-      const status = this.cityForm.get('status').value;
+    cityNames.forEach(city => {
+      formData.append('city_name', city.trim());
+      formData.append('state_id', stateId);
+      formData.append('status', status);
+      formData.append('discription', discription);
+      formData.append('hourly_rental', hourly_rental);
+      formData.append('hourly_durations', hourly_durations);
+      formData.append('type', 'City');
+      
+      if (this.selectedImageFile) {
+        formData.append('CityImage', this.selectedImageFile, this.selectedImageFile.name);
+      }
 
-      cityNames.forEach(city => {
-
-        const payload = {
-          city_name: city.trim(),
-          state_id: stateId,
-          // latitude: latitude,
-          // longitude: longitude,
-          status:status,
-          type: "City"
-        };
-
-        this.subSunk.sink = this.apiHandlerService.apiHandler(
-          'addMasterCity',
-          'post',
-          {},
-          {},
-          payload
-        ).subscribe(
-          (response: any) => {
-            if (response.statusCode === 200 || response.statusCode === 201) {
-              this.swalService.alert.success(`City "${city.trim()}" saved successfully`);
-              this.insertedRecord.emit(payload);
-              this.cityForm.reset();
-            }
-          },
-          (err: HttpErrorResponse) => {
-            this.swalService.alert.error(err.error.Message || 'Error occurred');
+      this.subSunk.sink = this.apiHandlerService.apiHandler(
+        'addMasterCity',
+        'post',
+        {},
+        {},
+        formData  // ✅ Send FormData instead of payload object
+      ).subscribe(
+        (response: any) => {
+          if (response.statusCode === 200 || response.statusCode === 201) {
+            this.swalService.alert.success(`City "${city.trim()}" saved successfully`);
+            this.insertedRecord.emit(response.data);
+            this.cityForm.reset();
+            this.selectedImageFile = null;
+            this.imagePreviewUrl = null;
           }
-        );
-
-      });
-    }
+        },
+        (err: HttpErrorResponse) => {
+          this.swalService.alert.error(err.error.Message || 'Error occurred');
+        }
+      );
+    });
   }
+}
 
   // ✅ Custom Validator
   inputValidator(control: FormControl) {

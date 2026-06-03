@@ -1,77 +1,158 @@
 <div class="col-12">
   <form [formGroup]="cityForm" (ngSubmit)="onCitySave()">
-<div class="form-row">
-    <!-- Country / State -->
-    <div class="col-md-4">
-      <label class="">Choose State</label>
-      <select formControlName="stateId">
-        <option value="" disabled selected>Choose State</option>
-        <option *ngFor="let option of stateDataList" [value]="option.id">
-          {{ option.name }}
-        </option>
-      </select>
-       <div *ngIf="cityForm.get('stateId').touched && cityForm.get('stateId').errors">
-      <div class="errorMessage">*Please choose state.</div>
-    </div>
-    </div>
+    <div class="form-row">
+      
+      <!-- State Dropdown -->
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Choose State <span class="text-danger">*</span></label>
+        <select class="form-control" formControlName="stateId">
+          <option value="" disabled selected>Choose State</option>
+          <option *ngFor="let option of stateDataList" [value]="option.id">
+            {{ option.name }}
+          </option>
+        </select>
+        <div *ngIf="cityForm.get('stateId').touched && cityForm.get('stateId').errors">
+          <small class="text-danger">*Please choose state.</small>
+        </div>
+      </div>
 
-   
-
-    <!-- City Name -->
-    <div class="col-md-4">
-      <label class="">City Name</label>
-      <input
-        type="text"
-        placeholder="Enter City Name"
-        formControlName="cityName"
-        maxlength="150"
-        (input)="validateInput()"
-      />
-      <!-- <span class="note">Note: Add multiple cities separated by comma (,)</span> -->
+      <!-- City Name -->
+      <div class="col-md-4 mb-3">
+        <label class="form-label">City Name <span class="text-danger">*</span></label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Enter City Name"
+          formControlName="cityName"
+          maxlength="150"
+          (input)="validateInput()"
+        />
         <div *ngIf="cityForm.get('cityName').touched && cityForm.get('cityName').errors">
-      <div *ngIf="cityForm.get('cityName').errors.required" class="errorMessage">
-        *Please enter city name.
+          <small *ngIf="cityForm.get('cityName').errors?.required" class="text-danger">
+            *Please enter city name.
+          </small>
+          <small *ngIf="cityForm.get('cityName').errors?.invalidString" class="text-danger">
+            *Numbers are not allowed.
+          </small>
+          <small *ngIf="cityForm.get('cityName').errors?.startOrEndSpace" class="text-danger">
+            *No space at start or end.
+          </small>
+        </div>
       </div>
-      <div *ngIf="cityForm.get('cityName').errors.invalidString" class="errorMessage">
-        *Numbers are not allowed.
+
+      <!-- Status Toggle -->
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Status</label>
+        <div class="d-flex align-items-center">
+          <mat-slide-toggle
+            formControlName="status"
+            (change)="onStatusChange($event)"
+          >
+          </mat-slide-toggle>
+          <span class="ml-2">
+            {{ cityForm.get('status').value === 1 ? 'Active' : 'Inactive' }}
+          </span>
+        </div>
       </div>
-      <div *ngIf="cityForm.get('cityName').errors.startOrEndSpace" class="errorMessage">
-        *No space at start or end.
-      </div>
+
     </div>
+
+    <div class="form-row">
+      
+      <!-- City Image -->
+      <div class="col-md-4 mb-3">
+        <label class="form-label">City Image <span class="text-danger">*</span></label>
+        <div class="custom-file">
+          <input
+            type="file"
+            class="custom-file-input"
+            id="cityImage"
+            accept="image/*"
+            (change)="onImageSelected($event)"
+          />
+          <label class="custom-file-label" for="cityImage">
+            {{ selectedImageFile ? selectedImageFile.name : 'Choose file' }}
+          </label>
+        </div>
+        <div *ngIf="cityForm.get('CityImage').touched && cityForm.get('CityImage').errors?.required" class="text-danger mt-1">
+          <small>*Please select an image.</small>
+        </div>
+        <div *ngIf="imagePreviewUrl" class="mt-2">
+          <img [src]="imagePreviewUrl" alt="Preview" class="img-thumbnail" style="max-width: 100px; max-height: 100px;" />
+        </div>
+      </div>
+
+      <!-- Hourly Rental Toggle -->
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Hourly Rental <span class="text-danger">*</span></label>
+        <div class="d-flex align-items-center">
+          <mat-slide-toggle formControlName="hourly_rental"></mat-slide-toggle>
+          <span class="ml-2">
+            {{ cityForm.get('hourly_rental').value ? 'Yes' : 'No' }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Hourly Durations -->
+      <div class="col-md-4 mb-3" *ngIf="cityForm.get('hourly_rental').value">
+        <label class="form-label">Hourly Durations <span class="text-danger">*</span></label>
+        <select class="form-control" formControlName="hourly_durations">
+          <option value="" disabled selected>Select duration</option>
+          <option value="2 hours">2 hours</option>
+          <option value="4 hours">4 hours</option>
+          <option value="6 hours">6 hours</option>
+          <option value="8 hours">8 hours</option>
+          <option value="12 hours">12 hours</option>
+          <option value="24 hours">24 hours</option>
+        </select>
+        <div *ngIf="cityForm.get('hourly_durations').touched && cityForm.get('hourly_durations').errors?.required">
+          <small class="text-danger">*Please select hourly duration.</small>
+        </div>
+      </div>
+
     </div>
 
-   
+    <div class="form-row">
+      
+      <!-- Description -->
+      <div class="col-md-12 mb-3">
+        <label class="form-label">Description <span class="text-danger">*</span></label>
+        <textarea
+          class="form-control"
+          formControlName="discription"
+          placeholder="Enter city description"
+          rows="4"
+          maxlength="500"
+        ></textarea>
+        <div class="d-flex justify-content-between">
+          <div *ngIf="cityForm.get('discription').touched && cityForm.get('discription').errors">
+            <small *ngIf="cityForm.get('discription').errors?.required" class="text-danger">
+              *Please enter description.
+            </small>
+            <small *ngIf="cityForm.get('discription').errors?.minlength" class="text-danger">
+              *Description must be at least 5 characters.
+            </small>
+          </div>
+          <small class="text-muted">
+            {{ cityForm.get('discription')?.value?.length || 0 }}/500 characters
+          </small>
+        </div>
+      </div>
 
-    <!-- Latitude -->
-    <!-- <div class="col-md-4">
-      <label class="">Latitude</label>
-      <input type="text" formControlName="latitude" placeholder="Enter Latitude">
-    </div> -->
+    </div>
 
-    <!-- Longitude -->
-   <!-- <div class="col-md-4">
-      <label class="">Longitude</label>
-      <input type="text" formControlName="longitude" placeholder="Enter Longitude">
-    </div> -->
-<!-- Status Toggle -->
-<!-- Status Toggle -->
-<div class="col-md-4">
-  <label>Status</label>
-
-  <div class="toggleSwitch">
-    <mat-slide-toggle
-      formControlName="status"
-      (change)="onStatusChange($event)"
-    >
-      {{ cityForm.get('status').value === 1 ? 'Active' : 'Inactive' }}
-    </mat-slide-toggle>
-  </div>
-</div>
-</div>
-    <!-- Submit -->
-    <div class="saveButton my-3">
-      <button type="submit" class="btn btn-primary">Save</button>
+    <!-- Submit Button -->
+    <div class="form-row">
+      <div class="col-12">
+        <div class="saveButton my-3">
+          <button type="submit" class="btn btn-primary px-4" [disabled]="cityForm.invalid">
+          Save
+          </button>
+          <button type="button" class="btn btn-secondary ml-2 px-4" routerLink="/tour-crs/city">
+           Cancel
+          </button>
+        </div>
+      </div>
     </div>
 
   </form>

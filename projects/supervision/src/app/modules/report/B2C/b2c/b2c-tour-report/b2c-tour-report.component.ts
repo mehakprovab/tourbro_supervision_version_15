@@ -302,7 +302,11 @@ onReset() {
   download(type: any, orientation?: string) {
     // if (type)
     this.config.type = type;
-    if (orientation) {
+        if (type === 'xlsx' || type === 'xls') {
+            this.utility.downloadElementAsExcel(this.config.elementIdOrContent, 'b2c-tour-report');
+            return;
+        }
+        if (orientation) {
         this.config.options.jsPDF.orientation = orientation;
     }
     const date = new Date().toDateString();

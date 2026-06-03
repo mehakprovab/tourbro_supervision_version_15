@@ -193,7 +193,7 @@
                             <span class="text-danger">*</span>
                         </label>
                         <ng-multiselect-dropdown formControlName="meal_plans" [placeholder]="'Select Meal Plans'"
-                            [data]="mealList" [settings]="dropdownSettingsForHotel" class="form-control meal-plan-dropdown">
+                            [settings]="dropdownSettingsForHotel" [data]="mealList" class="form-control meal-plan-dropdown">
                         </ng-multiselect-dropdown>
                         <div *ngIf="submittedHotel && hotel.meal_plans.errors" class="invalid-feedback">
                             <div *ngIf="hotel.meal_plans.errors.required">Meal Plans are required</div>
@@ -207,7 +207,7 @@
                         </label>
 
                         <ng-multiselect-dropdown formControlName="weekend_days" [placeholder]="'Select Weekend Days'"
-                            [data]="datas" [settings]="dropdownSettingsForWeek" class="form-control meal-plan-dropdown">
+                            [settings]="dropdownSettingsForWeek" [data]="datas" class="form-control meal-plan-dropdown">
                         </ng-multiselect-dropdown>
                         <div *ngIf="submittedHotel && hotel.weekend_days.errors" class="invalid-feedback">
                             <div *ngIf="hotel.weekend_days.errors.required">weekend_days are required</div>
@@ -219,7 +219,7 @@
                             <span class="text-danger">*</span>
                         </label>
                         <ng-multiselect-dropdown formControlName="room_view_ids" [placeholder]="'Select View'"
-                            [data]="viewList" [settings]="dropdownSettingsForview" class="form-control meal-plan-dropdown">
+                            [settings]="dropdownSettingsForview" [data]="viewList" class="form-control meal-plan-dropdown">
                         </ng-multiselect-dropdown>
                         <div *ngIf="submittedHotel && hotel.room_view_ids.errors" class="invalid-feedback">
                             <div *ngIf="hotel.room_view_ids.errors.required">Room Views are required</div>
@@ -231,7 +231,7 @@
                             <span class="text-danger">*</span>
                         </label>
                         <ng-multiselect-dropdown formControlName="stay_amenities" [placeholder]="'Select Stay Amenities'"
-                            [data]="amenitiesList" [settings]="dropdownSettingsForAmentities" class="form-control meal-plan-dropdown">
+                            [settings]="dropdownSettingsForAmentities" [data]="amenitiesList" class="form-control meal-plan-dropdown">
                         </ng-multiselect-dropdown>
                         <div *ngIf="submittedHotel && hotel.stay_amenities.errors" class="invalid-feedback">
                             <div *ngIf="hotel.stay_amenities.errors.required">Stay amenities are required</div>

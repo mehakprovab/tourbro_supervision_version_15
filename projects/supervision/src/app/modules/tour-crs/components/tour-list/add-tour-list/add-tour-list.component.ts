@@ -474,6 +474,7 @@ onCityDeSelect(item: any) {
         ).subscribe(response => {
             if (response.statusCode == 200 || response.statusCode == 201) {
                     localStorage.setItem('tourName',response.data[0].package_name)
+                    localStorage.setItem('tourDuration', this.tourForm.get('chooseDuration').value)
                     sessionStorage.setItem('tourId',response.data[0].id)
                     this.swalService.alert.success("Tour is added successfully");
                     localStorage.removeItem('updateDepartureDate')

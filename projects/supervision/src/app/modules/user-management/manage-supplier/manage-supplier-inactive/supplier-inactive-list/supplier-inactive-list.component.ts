@@ -112,8 +112,24 @@ export class SupplierInactiveListComponent implements OnInit {
 }
 
 getCountryName(countryId: number): string | null {
+    if (!this.countriesList) {
+        return null;
+    }
     const country = this.countriesList.find(c => c.id == countryId);
     return country ? country.name : null;
+  }
+
+  getSupplierRows(resp: any): Array<any> {
+      if (Array.isArray(resp?.data)) {
+          return resp.data;
+      }
+      if (Array.isArray(resp?.data?.data)) {
+          return resp.data.data;
+      }
+      if (Array.isArray(resp?.data?.data?.data)) {
+          return resp.data.data.data;
+      }
+      return [];
   }
 
   getUsersList(type) {
@@ -122,9 +138,10 @@ getCountryName(countryId: number): string | null {
       this.subSunk.sink = this.apiHandlerService.apiHandler('supplierList', 'post', {}, {},
           { "status": 0, supplier_type :this.supplier_Type,"supplier_id": GlobalConstants.SUPPLIER_AUTH_ROLE_ID })
           .subscribe(resp => {
-              if ((resp.statusCode == 200 || resp.statusCode == 201) && resp.data && resp.data.length > 0) {
+              const suppliers = this.getSupplierRows(resp);
+              if ((resp.statusCode == 200 || resp.statusCode == 201) && suppliers.length > 0) {
                   this.noData = false;
-                  this.respData = resp.data || [];
+                  this.respData = suppliers;
                   respDataCopy = [...this.respData];
                   this.collectionSize = respDataCopy.length;
               }
@@ -213,7 +230,7 @@ getCountryName(countryId: number): string | null {
  
 
       this.subSunk.sink = this.apiHandlerService.apiHandler('updateSupplier', 'post', {}, {},
-          { "accept": data.status == 0 ? true : false, "supplier_id": data.id })
+          { "accept": data.status == 0 ? true : false, "supplier_id": data.supplier_id || data.id })
           .subscribe(resp => {
               if (resp.statusCode == 200 || resp.statusCode == 201) {
                   this.swalService.alert.success("User status changed successfully.");
@@ -234,9 +251,9 @@ getCountryName(countryId: number): string | null {
           const fileToExport = this.respData.map((response: any,index:number) => {
               return {
                   "Sl No.":index+1,
-                  "ID": response.uuid,
+                  "ID": response.uuid || response.supplier_id,
                   "Name": response['first_name'] + '' +response['last_name'],
-                  "Contact": response['phone'],
+                  "Contact": response['phone_number'] || response['phone'],
                   "Email": response.email,
                   "Status": response.status==0 ?'Inactive':'Active'
               }
@@ -265,7 +282,7 @@ getCountryName(countryId: number): string | null {
 }
 getPropertyList(user) {
     this.subSunk.sink = this.apiHandlerService.apiHandler('findProperties', 'post', {}, {},
-        {  "status": user.status == 1 ? true : false,"supplier_id":user.id})
+        {  "status": user.status == 1 ? true : false,"supplier_id": user.supplier_id || user.id})
         .subscribe(resp => {
             if ((resp.statusCode == 200 || resp.statusCode == 201) && resp.data && resp.data.length > 0) {
                 this.respDataProperty = resp.data || [];

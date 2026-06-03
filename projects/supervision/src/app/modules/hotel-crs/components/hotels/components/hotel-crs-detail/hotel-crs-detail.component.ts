@@ -44,7 +44,7 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
   submittedHotel: boolean = false;
   submittedHotelImage: boolean = false;
   addedHotelDetail: any;
-  coreCityList: any;
+  coreCityList: any[] = [];
   @Input() hotelOne: any;
   @Output() callResult = new EventEmitter<any>();
   @Output() isHotelDetails = new EventEmitter<any>()
@@ -60,11 +60,11 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
   isHotelDetail: boolean;
   multiSelectAmenity = [];
   noData: boolean;
-  hotelAmenityList: any;
+  hotelAmenityList: any[] = [];
   hotelData: any;
-  hotelTypeList: any;
-  coreCountryList: any;
-  coreStateList: any;
+  hotelTypeList: any[] = [];
+  coreCountryList: any[] = [];
+  coreStateList: any[] = [];
   imgURL;
   updateImage;
   isHotelImageActive: boolean;
@@ -95,8 +95,8 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
     '10:30 PM', '11:00 PM', '11:30 PM', '12:00 AM', '12:30 AM', '01:00 AM', '01:30 AM', '02:00 AM',
     '02:30 AM', '03:00 AM', '03:30 AM', '04:00 AM', '04:30 AM', '05:00 AM', '05:30 AM', '06:00 AM'
   ];
-  viewList: any;
-  mealList: any;
+  viewList: any[] = [];
+  mealList: any[] = [];
   datas = [
     { item_id: 1, item_text: 'Thursday' },
     { item_id: 2, item_text: 'Friday' },
@@ -258,9 +258,9 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
     this.hotelCrsService.updateData.subscribe((data => {
       this.loading = true;
       console.log("data", data)
-       this.hotelOne = data; 
-      console.log("Object.keys(data).length", Object.keys(data).length)
-      if (Object.keys(data).length) {
+      this.hotelOne = data || {};
+      console.log("Object.keys(data).length", Object.keys(this.hotelOne).length)
+      if (Object.keys(this.hotelOne).length) {
         // if (!this.utilityService.isEmpty(this.hotelOne)) {
         this.edit = true;
         console.log("this.hotelOne", this.hotelOne)
@@ -805,7 +805,7 @@ initializeSearchBox() {
     return;
   }
 
-  const selectedCountry = this.coreCountryList.find(country => country.name == state_id);
+      const selectedCountry = (this.coreCountryList || []).find(country => country.name == state_id);
   const countryCode = selectedCountry ? selectedCountry.two_code : '';
 
   const data = [{
@@ -960,16 +960,16 @@ this.hotelForm.value.hotel_hotel_amenities =
       this.hotelForm.value.user_type = this.hotelForm.get('user_type').value || '';
       let data = Object.assign({}, this.hotelForm.value);
       try {
-        if (!this.utilityService.isEmpty(this.hotelOne)) {
+        if (this.hotelOne && !this.utilityService.isEmpty(this.hotelOne)) {
           console.log("hotelOne", this.hotelOne)
           data['id'] = this.hotelOne['id'];
           if (this.selectedCityCode != '' && this.selectedCityName != '') {
             data['city_code'] = this.selectedCityCode;
             data['city_name'] = this.selectedCityName;
           }
-          else{
-            data['city_code'] = this.hotelOne.city_code;
-            data['city_name'] = this.hotelOne.city_name;  
+          else {
+            data['city_code'] = this.hotelOne.city_code || '';
+            data['city_name'] = this.hotelOne.city_name || this.hotelForm.value.city_name || '';
           }
           data = [data];
           data['topic'] = 'updateHotel';
@@ -979,9 +979,9 @@ this.hotelForm.value.hotel_hotel_amenities =
             data['city_name'] = this.selectedCityName;
             data['city_code'] = this.selectedCityCode;
           }
-          else{
-            data['city_code'] = this.hotelOne.city_code;
-            data['city_name'] = this.hotelOne.city_name;  
+          else {
+            data['city_code'] = this.hotelForm.value.city_code || '';
+            data['city_name'] = this.hotelForm.value.city_name || '';
           }
           data = [data];
           data['topic'] = 'addHotel';
@@ -1085,7 +1085,7 @@ this.hotelForm.value.hotel_hotel_amenities =
       }
     });
   }
-amenitiesList:any
+amenitiesList:any[] = []
 
     getStayAmenityList(): void {
      const data = [{ offset: 0, limit: 100 }]

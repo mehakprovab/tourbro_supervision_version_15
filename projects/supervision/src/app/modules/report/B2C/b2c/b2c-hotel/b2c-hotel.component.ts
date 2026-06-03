@@ -325,13 +325,70 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
     }
 
     download(type: any, orientation?: string) {
-        // if (type)
         this.config.type = type;
+        if (type === 'xlsx' || type === 'xls') {
+            this.exportExcel();
+            return;
+        }
         if (orientation) {
             this.config.options.jsPDF.orientation = orientation;
         }
-        const date = new Date().toDateString();
         this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2c-HotelReport`, orientation || (this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation));
+    }
+
+    exportExcel(): void {
+        const columns = (this.isSupplierUser() ? this.displaySupplierColumn : this.displayColumn)
+            .filter(column => column.key !== 'action');
+        const fileToExport = this.respData.map((response: any, index: number) => {
+            return columns.reduce((row, column) => {
+                row[column.value] = this.getExportValue(response, column.key, index);
+                return row;
+            }, {});
+        });
+        const columnWidths = columns.map(column => {
+            return { wch: column.key === 'id' ? 8 : Math.max(column.value.length + 5, 20) };
+        });
+
+        this.utility.exportToExcel(fileToExport, 'B2C_Hotel_Report', columnWidths);
+    }
+
+    isSupplierUser(): boolean {
+        return this.loggedInUser && (this.loggedInUser.auth_role_id === 6 || this.loggedInUser.auth_role_id === 7);
+    }
+
+    getExportValue(data: any, key: string, index: number): any {
+        const booking = data && data.BookingDetails ? data.BookingDetails : {};
+        switch (key) {
+            case 'id': return index + 1;
+            case 'Status': return this.getBookingStatusLabel(booking.Status);
+            case 'SupplierName':
+                if (booking.DomainOrigin === 'CRS') {
+                    const hotelBody = booking.CancellationReason && booking.CancellationReason.hotelBody ? booking.CancellationReason.hotelBody : {};
+                    return `${hotelBody.supplierType || ''} (${hotelBody.supplierName || ''}) ${hotelBody.supplierEmail || ''}`.trim() || 'N/A';
+                }
+                return booking.DomainOrigin || 'N/A';
+            case 'SupplierType': return booking.DomainOrigin === 'CRS' ? 'CRS' : 'API';
+            case 'SupplierReference': return booking.ConfirmationReference && booking.ConfirmationReference !== 'undefined' ? String(booking.ConfirmationReference).toUpperCase() : 'N/A';
+            case 'payment': return booking.PaymentStatus || 'NA';
+            case 'HCN': return booking.hcn_number || 'NA';
+            case 'FirstName': return this.findLeaduserDetails(data.BookingPaxDetails || []) || 'N/A';
+            case 'cancellation_amount': {
+                const cancellation = this.getTotalAmountAndCharge(data);
+                return cancellation.amount ? `${cancellation.amount} ${cancellation.currency || ''}`.trim() : '0';
+            }
+            default: return booking[key] !== undefined && booking[key] !== null && booking[key] !== 'undefined' && booking[key] !== '' ? booking[key] : 'N/A';
+        }
+    }
+
+    getBookingStatusLabel(status: string): string {
+        switch (status) {
+            case 'BOOKING_FAILED': return 'Booking Failed';
+            case 'BOOKING_CONFIRMED': return 'Booking Confirmed';
+            case 'BOOKING_CANCELLED': return 'Booking Cancelled';
+            case 'BOOKING_INPROGRESS': return 'Booking Inprogress';
+            case 'BOOKING_HOLD': return 'Booking Hold';
+            default: return status || 'N/A';
+        }
     }
 
     pdfCallbackFn(pdf: any) {
@@ -434,15 +491,17 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
         return `${day}/${month}/${year}`;
     }
     getEarliestCancellationDate(data): Date | null {
-        if (!data.BookingDetails.CancellationReason.hotelBody.RoomDetails) {
+        const roomDetails = this.getRoomDetails(data);
+        if (!roomDetails.length) {
             return null;
         }
 
         let allDates: Date[] = [];
 
-        data.BookingDetails.CancellationReason.hotelBody.RoomDetails.forEach(room => {
-            if (room.CancellationPolicies && room.CancellationPolicies.$t.length > 0) {
-                room.CancellationPolicies.$t.forEach(policy => {
+        roomDetails.forEach(room => {
+            const policies = this.getCancellationPolicies(room);
+            if (policies.length > 0) {
+                policies.forEach(policy => {
                     if (policy.date_from) {
                         allDates.push(new Date(policy.date_from));
                     }
@@ -464,24 +523,27 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
     }
 
     getTotalAmountAndCharge(data): { amount: number, currency: string } {
-        if (!data.BookingDetails.CancellationReason.hotelBody.RoomDetails) {
+        const booking = data && data.BookingDetails ? data.BookingDetails : {};
+        const roomDetails = this.getRoomDetails(data);
+        if (!roomDetails.length) {
             return { amount: 0, currency: '' };
         }
 
         let totalAmount = 0;
         let currency = '';
 
-        data.BookingDetails.CancellationReason.hotelBody.RoomDetails.forEach(room => {
+        roomDetails.forEach(room => {
+            const policies = this.getCancellationPolicies(room);
             // Add room price
-            if (!room.CancellationPolicies.$t.length) {
-                totalAmount = (data.BookingDetails.TotalAmount);
-                currency = room.Price.Currency || currency; // Use currency from first entry
+            if (!policies.length) {
+                totalAmount = booking.TotalAmount || 0;
+                currency = room.Price && room.Price.Currency ? room.Price.Currency : currency; // Use currency from first entry
             }
 
             // Add cancellation charges
-            if (room.CancellationPolicies.$t.length) {
+            if (policies.length) {
                 totalAmount = 0
-                currency = room.CancellationPolicies.$t[0].currency || currency;
+                currency = policies[0].currency || currency;
                 // room.CancellationPolicies.$t[0].forEach(policy => {
                 //     if (policy.charge) {
                 //         totalAmount += parseFloat(policy.charge);
@@ -492,6 +554,23 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
         });
 
         return { amount: totalAmount, currency };
+    }
+
+    getRoomDetails(data: any): any[] {
+        const booking = data && data.BookingDetails ? data.BookingDetails : {};
+        const roomDetails = booking.CancellationReason && booking.CancellationReason.hotelBody ? booking.CancellationReason.hotelBody.RoomDetails : null;
+        if (Array.isArray(roomDetails)) {
+            return roomDetails;
+        }
+        return roomDetails ? [roomDetails] : [];
+    }
+
+    getCancellationPolicies(room: any): any[] {
+        const policies = room && room.CancellationPolicies ? room.CancellationPolicies.$t : null;
+        if (Array.isArray(policies)) {
+            return policies;
+        }
+        return policies ? [policies] : [];
     }
 
         showAddHCN(data,status) {

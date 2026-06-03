@@ -258,7 +258,11 @@ export class B2bActivityComponent implements OnInit {
   download(type: any, orientation?: string) {
     // if (type)
     this.config.type = type;
-    if (orientation) {
+        if (type === 'xlsx' || type === 'xls') {
+            this.utility.downloadElementAsExcel(this.config.elementIdOrContent, 'b2b-activity');
+            return;
+        }
+        if (orientation) {
         this.config.options.jsPDF.orientation = orientation;
     }
     const date = new Date().toDateString();

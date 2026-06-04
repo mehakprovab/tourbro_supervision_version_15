@@ -958,6 +958,7 @@ this.hotelForm.value.hotel_hotel_amenities =
       this.hotelForm.value.paid_children_from_age = this.hotelForm.value.paid_children_from_age || 0;
       this.hotelForm.value.paid_children_to_age = this.hotelForm.value.paid_children_to_age || 0;
       this.hotelForm.value.user_type = this.hotelForm.get('user_type').value || '';
+      this.hotelForm.value.hotel_description = this.hotelForm.get('hotel_description').value || '';
       let data = Object.assign({}, this.hotelForm.value);
       try {
         if (this.hotelOne && !this.utilityService.isEmpty(this.hotelOne)) {

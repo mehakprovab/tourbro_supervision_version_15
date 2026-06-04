@@ -72,17 +72,13 @@
                         </div>
                     </div> -->
 
-                    <!-- <div class="col-sm-12 mb-3">
+                    <div class="col-sm-12 mb-3">
                         <label class=" control-label">
-                            Hotel Description
-                            <span class="text-danger">*</span>
+                            Stay Description
                         </label>
                         <textarea type="text" formControlName="hotel_description" style="height: 130px !important;" class="form-control"
-                            [ngClass]="{ 'is-invalid': submittedHotel && hotel.hotel_description.errors }"></textarea>
-                        <div *ngIf="submittedHotel && hotel.hotel_description.errors" class="invalid-feedback">
-                            <div *ngIf="hotel.hotel_description.errors.required">Hotel Description is required</div>
-                        </div>
-                    </div> -->
+                            placeholder="Enter hotel description"></textarea>
+                    </div>
                     <div class="col-sm-4 mb-3 pr-0">
                         <label class="control-label">
                             Currency <span *ngIf="disableCurrency" style="font-size: small;">(Contact Admin for Currency Update)</span>

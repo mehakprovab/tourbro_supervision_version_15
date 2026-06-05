@@ -73,6 +73,8 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
         { key: 'Duration', value: 'Duration Of Stay' },
         // { key: 'Discount', value: 'Reward Discount' },
         { key: 'supplier_net', value: 'Supplier Netfare' },
+        { key: 'tax', value: 'Tax' },
+        { key: 'commission', value: 'Commission' },
         // { key: 'supplier_pay', value: 'Supplier Payable' },
         // { key: 'supplier_currency', value: 'Difference' },
         { key: 'TotalFare', value: 'Total' },
@@ -109,6 +111,8 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
         // { key: 'Duration', value: 'Duration Of Stay' },
         // { key: 'Discount', value: 'Reward Discount' },
         { key: 'supplier_net', value: 'Supplier Netfare' },
+        { key: 'tax', value: 'Tax' },
+        { key: 'commission', value: 'Commission' },
         // { key: 'supplier_pay', value: 'Supplier Payable' },
         // { key: 'supplier_currency', value: 'Difference' },
         // { key: 'TotalFare', value: 'Total' },
@@ -376,6 +380,8 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
                 const cancellation = this.getTotalAmountAndCharge(data);
                 return cancellation.amount ? `${cancellation.amount} ${cancellation.currency || ''}`.trim() : '0';
             }
+            case 'tax': return this.getPricingTaxes(data);
+            case 'commission': return this.getPricingCommissions(data);
             default: return booking[key] !== undefined && booking[key] !== null && booking[key] !== 'undefined' && booking[key] !== '' ? booking[key] : 'N/A';
         }
     }
@@ -571,6 +577,42 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
             return policies;
         }
         return policies ? [policies] : [];
+    }
+
+    getPricingTaxes(data: any): string {
+        const commission = this.getAffiliateCommission(data);
+        const taxes = commission && Array.isArray(commission.taxes) ? commission.taxes : [];
+        const gstTax = taxes.find(tax => tax.type === 'GST') || taxes[0];
+        if (!gstTax) {
+            return 'N/A';
+        }
+
+        return this.formatAmount(gstTax.amount);
+    }
+
+    getPricingCommissions(data: any): string {
+        const commission = this.getAffiliateCommission(data);
+        if (!commission) {
+            return 'N/A';
+        }
+
+        return this.formatAmount(commission.netAmount !== undefined && commission.netAmount !== null ? commission.netAmount : commission.grossAmount);
+    }
+
+    private getAffiliateCommission(data: any): any {
+        const pricing = this.getTotalPricing(data);
+        const commissions = pricing && Array.isArray(pricing.commissions) ? pricing.commissions : [];
+        return commissions.find(commission => commission.type === 'AFFILIATE_COMMISSION') || commissions[0];
+    }
+
+    private getTotalPricing(data: any): any {
+        const room = this.getRoomDetails(data)[0];
+        return room && room.Pricing ? room.Pricing.total || room.Pricing.perNight || null : null;
+    }
+
+    private formatAmount(amount: any): string {
+        const numericAmount = Number(amount);
+        return isNaN(numericAmount) ? '0.00' : numericAmount.toFixed(2);
     }
 
         showAddHCN(data,status) {

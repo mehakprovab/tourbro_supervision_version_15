@@ -24,7 +24,7 @@ registerForm: FormGroup;
   submitted = false;
   
   // Data arrays
-  userTitleList: string[] = ['Mr', 'Ms', 'Mrs', 'Dr'];
+  userTitleList: any[] = [];
   registerCountries: any[] = [];
   registerCities: any[] = [];
   registerStates: any[] = [];
@@ -66,8 +66,31 @@ addOrUpdate: 'add' | 'update' = 'add';
   ngOnInit() {
     this.createForm();
    this.loadCountries();
-    // this.loadStates();
+    this.getTitleList();
   }
+
+      getTitleList() {
+        this.apiHandlerServices.apiHandler('userTitleList', 'POST', '', '', {})
+            .subscribe(
+                resp => {
+                    if (resp.statusCode === 200 || resp.statusCode === 201) {
+
+                        const titleList = resp.data || [];
+                        const adultTitles = titleList.filter(item => !item.paxType || item.paxType === 'ADULT');
+                        this.userTitleList = adultTitles.map(item => ({
+                            id: item.id,
+                            title: item.title || item.name || ''
+                        }));
+                    } else {
+                        this.swalService.alert.oops();
+                    }
+                },
+                (err: HttpErrorResponse) => {
+                    console.error(err);
+                    this.swalService.alert.oops();
+                }
+            );
+    }
  filterCities(searchTerm: string): void {
     const stateId = this.registerForm.controls['state'].value;
     if (stateId) {
@@ -402,7 +425,7 @@ getToUpdate() {
 
       this.registerForm.patchValue({
         id: data.id,
-        title: data.title,
+        title: data.title ? Number(data.title) : '',
         first_name: data.first_name,
         last_name: data.last_name,
         phone_number: data.phone_number,

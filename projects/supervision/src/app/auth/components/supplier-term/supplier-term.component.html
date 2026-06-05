@@ -1,0 +1,22 @@
+<div class="static-wrapper" style="min-height: 100vh;">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-spinner">
+    <p>Loading content...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="errorMessage && !isLoading" class="error-message">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <!-- Content State -->
+  <div *ngIf="!isLoading && !errorMessage && staticData.page_title">
+    <h5>{{ staticData.page_title }}</h5>
+    <div style="text-align: justify;" [innerHTML]="sanitizedPageDescription"></div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!isLoading && !errorMessage && !staticData.page_title">
+    <p>No content available.</p>
+  </div>
+</div>

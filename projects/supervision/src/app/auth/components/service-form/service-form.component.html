@@ -1,0 +1,261 @@
+<div class="service-form-container">
+  <div class="container">
+    <div class="form-card">
+      <div class="form-header">
+        <h2>Service Details</h2>
+        <p>Please provide details for the services you selected</p>
+      </div>
+
+      <div class="tabs">
+        <div class="tab-buttons">
+          <button 
+            *ngFor="let service of selectedServices; let i = index"
+            class="tab-btn"
+            [class.active]="activeTab === i"
+            (click)="setActiveTab(i)">
+            {{ service }}
+          </button>
+        </div>
+
+        <form [formGroup]="serviceForm" (ngSubmit)="onSubmit()">
+          <div class="tab-content">
+            
+            <!-- Hotels Tab -->
+            <div *ngIf="selectedServices[activeTab] === 'stays'">
+              <div *ngFor="let item of propertiesFormArray.controls; let i = index">
+                <div [formGroup]="item" class="service-item-card">
+                  <div class="item-header">
+                    <h3>Property Details</h3>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label>Property Name *</label>
+                      <input type="text" formControlName="propertyName" class="form-control">
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label>Currency *</label>
+                      <select formControlName="currency" class="form-control">
+                        <option value="INR">INR</option>
+                        <option value="USD">USD</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <label>Rating *</label>
+                      <select formControlName="propertyRating" class="form-control">
+                        <option value="1">1 Star</option>
+                        <option value="2">2 Star</option>
+                        <option value="3">3 Star</option>
+                        <option value="4">4 Star</option>
+                        <option value="5">5 Star</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label>Country *</label>
+                      <input type="text" formControlName="country" class="form-control">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label>City *</label>
+                      <input type="text" formControlName="city" class="form-control">
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-12">
+                      <label>Address *</label>
+                      <textarea formControlName="propertyAddress" class="form-control" rows="2"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label>Check-in Time *</label>
+                      <input type="time" formControlName="checkInTime" class="form-control">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label>Check-out Time *</label>
+                      <input type="time" formControlName="checkOutTime" class="form-control">
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label>Contract Expiry Date *</label>
+                      <input type="date" formControlName="contract_expiry_date" class="form-control">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label>Amenities</label>
+                      <input type="text" formControlName="hotel_hotel_amenities" class="form-control">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Yatra Tab -->
+            <div *ngIf="selectedServices[activeTab] === 'yatra-packages'">
+              <div *ngFor="let item of yatraFormArray.controls; let i = index">
+                <div [formGroup]="item" class="service-item-card">
+                  <div class="item-header">
+                    <h3>Yatra Package Details</h3>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-12">
+                      <label>Tour Name *</label>
+                      <input type="text" formControlName="TourName" class="form-control">
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-12">
+                      <label>Tour Description *</label>
+                      <textarea formControlName="TourDescription" class="form-control" rows="3"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label>Start Date *</label>
+                      <input type="date" formControlName="StartDate" class="form-control">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label>Expiry Date *</label>
+                      <input type="date" formControlName="ExpiryDate" class="form-control">
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label>Duration *</label>
+                      <input type="text" formControlName="Duration" class="form-control">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label>Country ID *</label>
+                      <input type="number" formControlName="country_id" class="form-control">
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label>City ID *</label>
+                      <input type="number" formControlName="city_id" class="form-control">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Activities Tab -->
+            <div *ngIf="selectedServices[activeTab] === 'experiences'">
+              <div *ngFor="let item of activitiesFormArray.controls; let i = index">
+                <div [formGroup]="item" class="service-item-card">
+                  <div class="item-header">
+                    <h3>Activity Details</h3>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-12">
+                      <label>Activity Name *</label>
+                      <input type="text" formControlName="activity_name" class="form-control">
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label>Duration *</label>
+                      <input type="text" formControlName="activity_duration" class="form-control">
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label>Duration Type</label>
+                      <select formControlName="activity_duration_type" class="form-control">
+                        <option value="Hours">Hours</option>
+                        <option value="Days">Days</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label>Country ID *</label>
+                      <input type="number" formControlName="activity_country" class="form-control">
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label>City ID *</label>
+                      <input type="number" formControlName="activity_city" class="form-control">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label>Pickup Location</label>
+                      <input type="text" formControlName="pickup_location" class="form-control">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cabs Tab -->
+            <div *ngIf="selectedServices[activeTab] === 'cabs'">
+              <div *ngFor="let item of cabsFormArray.controls; let i = index">
+                <div [formGroup]="item" class="service-item-card">
+                  <div class="item-header">
+                    <h3>Cab Details</h3>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label>Vehicle Name *</label>
+                      <input type="text" formControlName="vehicle_name" class="form-control">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label>Vehicle Type *</label>
+                      <input type="text" formControlName="vehicle_type" class="form-control">
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label>Capacity *</label>
+                      <input type="number" formControlName="capacity" class="form-control">
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label>AC</label>
+                      <select formControlName="ac" class="form-control">
+                        <option [value]="true">Yes</option>
+                        <option [value]="false">No</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label>Country ID *</label>
+                      <input type="number" formControlName="country_id" class="form-control">
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label>City ID *</label>
+                      <input type="number" formControlName="city_id" class="form-control">
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label>Vehicle Reg No *</label>
+                      <input type="text" formControlName="vehicle_reg_no" class="form-control">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn-back" (click)="router.navigate(['/auth/registration-form'])">Back</button>
+            <button type="submit" class="btn-submit" [disabled]="loading">
+              {{ loading ? 'Submitting...' : 'Submit All Services' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -9,10 +9,16 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgBootstrapFormValidationModule } from 'ng-bootstrap-form-validation';
 import { RecoveryPasswordComponent } from './components/recovery-password/recovery-password.component';
-// import { NgOtpInputModule } from 'ng-otp-input';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { SupplierLoginComponent } from './components/supplier-login/supplier-login.component';
 import { DmcLoginComponent } from './components/dmc-login/dmc-login.component';
+import { SupplierRegisterComponent } from './components/supplier-register/supplier-register.component';
+import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ServiceFormComponent } from './components/service-form/service-form.component';
+import { SupplierTermComponent } from './components/supplier-term/supplier-term.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { OtpInputComponent } from './components/otp-input/otp-input.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +26,12 @@ import { DmcLoginComponent } from './components/dmc-login/dmc-login.component';
     ForgotPasswordComponent,
     RecoveryPasswordComponent,
     SupplierLoginComponent,
-    DmcLoginComponent
+    DmcLoginComponent,
+    SupplierRegisterComponent,
+    RegistrationFormComponent,
+    ServiceFormComponent,
+    SupplierTermComponent,
+    OtpInputComponent
   ],
   imports: [
     CommonModule,
@@ -31,12 +42,17 @@ import { DmcLoginComponent } from './components/dmc-login/dmc-login.component';
     // NgBootstrapFormValidationModule,
     MatFormFieldModule,
     MatInputModule,
+    MatDialogModule,
     NgxIntlTelInputModule,
-    // NgOtpInputModule 
+    HttpClientModule
   ],
   exports: [
     LoginComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    SupplierRegisterComponent,
+    RegistrationFormComponent,
+    ServiceFormComponent,
+    
   ]
 })
 export class AuthModule { }

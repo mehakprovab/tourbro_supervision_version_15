@@ -18,7 +18,7 @@
                                             <label for="title" class="required">Title</label>
                                             <select id="title" class="form-control capitalize" formControlName="title">
                                                 <option value="" disabled>Select</option>
-                                                <option *ngFor="let t of userTitleList" value="{{t}}">{{t}}</option>
+                                                <option *ngFor="let t of userTitleList" [ngValue]="t.id">{{t.title}}</option>
                                             </select>
                                             <div *ngIf="submitted && registerForm.get('title')?.errors?.required" class="text-danger">
                                                 Title is required

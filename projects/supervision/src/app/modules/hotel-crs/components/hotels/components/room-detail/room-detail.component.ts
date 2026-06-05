@@ -229,13 +229,11 @@ onEdit(patchData) {
     this.patchdData = patchData;
     this.showRoomForm =true;
     this.showRoomList = false;
-    this.selectedModuleCheckboxes=this.patchdData.board_type.split(',').map(api => api.replace(/[\[\]\"\\]/g, '').trim())
+    this.selectedModuleCheckboxes = this.getBoardTypes(this.patchdData.board_type);
     // this.selectedMealCheckboxes = this.patchdData.meal_type.split(',').map(type => type.trim());
     console.log("selectedMealCheckboxes",this.selectedMealCheckboxes)
       this.BoardList.forEach(module => {
-        if (this.selectedModuleCheckboxes.includes(module.id)) {
-            module.isChecked = true;
-        }
+        module.isChecked = this.selectedModuleCheckboxes.includes(module.id);
       });
     this.dropdownSettingsForRoom = {
         singleSelection: false,
@@ -393,7 +391,7 @@ onSubmitRoomDetail(): void {
         const cancellationPolicy = []
         this.roomDetailForm.value.hotel_room_cancellation_policy = cancellationPolicy;  
         let data = Object.assign({}, this.roomDetailForm.value);
-        data['board_type'] = this.selectedModuleCheckboxes;
+        data['board_type'] = '';
         // data['board_type'] = '';
         data['room_policy']=''
         data['max_passanger_capacity']= 0;
@@ -530,6 +528,11 @@ getRoomsByHotelId(): void {
             }
         )
 }
+
+isRoomStatusActive(status: any): boolean {
+    return status === true || status === 1 || status === '1';
+}
+
 getHotelRoomTypeList(): void {
     const data = [{ offset: 0, limit: 10 }]
     data['topic'] = 'roomTypeList';
@@ -562,7 +565,7 @@ goToHotelList() {
     return this.roomDetailForm.controls; 
 }
  
- onBoardCheckBoxChange(checked:Boolean,inclusion:String) {
+onBoardCheckBoxChange(checked:Boolean,inclusion:String) {
     if (checked) {
       this.selectedModuleCheckboxes.push(inclusion);
     } else {
@@ -572,6 +575,33 @@ goToHotelList() {
       }
    }
   }
+
+  private getBoardTypes(boardType: any): string[] {
+    if (!boardType) {
+        return [];
+    }
+
+    let value = boardType;
+    for (let i = 0; i < 5 && typeof value === 'string'; i++) {
+        const trimmedValue = value.trim();
+        if (!trimmedValue || trimmedValue[0] !== '[' && trimmedValue[0] !== '"') {
+            break;
+        }
+
+        try {
+            value = JSON.parse(trimmedValue);
+        } catch (e) {
+            break;
+        }
+    }
+
+    if (Array.isArray(value)) {
+        return value.map(type => String(type).trim()).filter(Boolean);
+    }
+
+    return String(value).split(',').map(type => type.replace(/[\[\]"\\]/g, '').trim()).filter(Boolean);
+  }
+
   onMealCheckBoxChange(checked:Boolean,inclusion:String) {
     if (checked) {
       this.selectedMealCheckboxes.push(inclusion);
@@ -633,17 +663,20 @@ goToHotelList() {
 //     });
 // }
 
-onStatusUpdate(val, index): void {
+onStatusUpdate(val, status: boolean): void {
     // this.selectedModuleCheckboxes=val.board_type.split(',').map(api => api.replace(/[\[\]\"\\]/g, '').trim())
     // this.selectedMealCheckboxes = val.meal_type.split(',').map(type => type.trim());
     let data = Object.assign({}, val);
+    val['room_status'] = status;
     // data['hotel_room_amenity_ids']=this.getAlreadySelectedAmenities(val['hotel_room_amenity_ids'])
     // data['board_type'] = this.selectedModuleCheckboxes;
     // data['meal_type'] = this.selectedMealCheckboxes;
     data['id']=val['id']
     data['hotel_id'] = this.hotelOne['id'];
     data['hotel_code']= this.hotelOne['hotel_code'];
-    data['status']= val['room_status'] ? false : true;
+    data['status']= status;
+    data['room_status']= status;
+    data['board_type'] = '';
     // data['room_name']=this.patchdData['room_name']
     data = [data];
     data['topic'] = 'updateRoom';

@@ -78,6 +78,17 @@ private tokenRefreshInterval: any;
          }
 
     }
+
+  onRegister(formData: FormData): Observable<any> {
+    return this.apiHandlerService.apiHandler('supplierCreate', 'POST', {}, {}, formData).pipe(
+        map(res => {
+            if (res['statusCode'] == 200 || res['statusCode'] == 201) {
+                console.log('Registration successful:', res);
+            }
+            return res;
+        })
+    );
+}
     onLogin(username: string, password: string,user_type:string): Observable<any> {
         return this.apiHandlerService.apiHandler('userLogin', 'POST', '', '', {
             email: username,

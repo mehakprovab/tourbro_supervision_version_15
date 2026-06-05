@@ -1,0 +1,136 @@
+<div class="module-selector-wrapper">
+  <div class="container">
+    <div class="selector-card">
+      <div class="selector-header">
+        <h2 class="selector-title">Select Your Services</h2>
+        <p class="selector-subtitle">Please select the services you wish to provide</p>
+      </div>
+
+      <div class="options-grid">
+        <!-- Stays -->
+        <div 
+          class="option-card" 
+          (click)="toggleModule('stays')" 
+          [class.selected]="isSelected('stays')"
+        >
+          <div class="option-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M3 10h18M5 6h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"></path>
+              <path d="M8 6v12M16 6v12M12 6v12"></path>
+            </svg>
+          </div>
+          <h3 class="option-title">Stays</h3>
+          <p class="option-description">Hotels, Resorts & Accommodations</p>
+        </div>
+
+        <!-- Yatra Packages -->
+        <div 
+          class="option-card" 
+          (click)="toggleModule('yatra-packages')" 
+          [class.selected]="isSelected('yatra-packages')"
+        >
+          <div class="option-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M20 7h-4.18A3 3 0 0 0 16 5.18V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v1.18A3 3 0 0 0 8.18 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"></path>
+              <path d="M12 11v6M9 14h6"></path>
+            </svg>
+          </div>
+          <h3 class="option-title">Yatra Packages</h3>
+          <p class="option-description">Complete holiday packages</p>
+        </div>
+
+        <!-- Experiences -->
+        <div 
+          class="option-card" 
+          (click)="toggleModule('experiences')" 
+          [class.selected]="isSelected('experiences')"
+        >
+          <div class="option-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 2a15 15 0 0 0 0 20 15 15 0 0 0 0-20z"></path>
+              <path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"></path>
+              <path d="M2 12h20"></path>
+            </svg>
+          </div>
+          <h3 class="option-title">Experiences</h3>
+          <p class="option-description">Activities, Tours & Attractions</p>
+        </div>
+
+        <!-- Cabs -->
+        <div 
+          class="option-card" 
+          (click)="toggleModule('cabs')" 
+          [class.selected]="isSelected('cabs')"
+        >
+          <div class="option-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+              <path d="M7 7h.01M17 7h.01"></path>
+            </svg>
+          </div>
+          <h3 class="option-title">Cabs</h3>
+          <p class="option-description">City & Outstation Taxi Services</p>
+        </div>
+
+        <div 
+          class="option-card" 
+          (click)="toggleModule('wellness-retreat')" 
+          [class.selected]="isSelected('wellness-retreat')"
+        >
+          <div class="option-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+              <path d="M7 7h.01M17 7h.01"></path>
+            </svg>
+          </div>
+          <h3 class="option-title">Wellness Retreat</h3>
+          <p class="option-description">Wellness Retreat</p>
+        </div>
+
+        <!-- Travel & Heli Services -->
+        <div 
+          class="option-card" 
+          (click)="toggleModule('travel-heli')" 
+          [class.selected]="isSelected('travel-heli')"
+        >
+          <div class="option-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </div>
+          <h3 class="option-title">Travel & Heli Services</h3>
+          <p class="option-description">Helicopter & Premium Travel Services</p>
+        </div>
+      </div>
+
+      <div class="selector-footer">
+        <button 
+          class="proceed-btn" 
+          (click)="proceedToNext()" 
+          [disabled]="selectedModules.length === 0"
+          [class.disabled]="selectedModules.length === 0"
+        >
+          Proceed
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+        <p *ngIf="selectedModules.length === 0" class="error-message">Please select at least one service to proceed</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="searchload" *ngIf="isLoading">
+  <div class="loader-spinner">
+    <div class="spinner"></div>
+    <p>Loading...</p>
+  </div>
+</div>

@@ -949,7 +949,7 @@ this.hotelForm.value.hotel_hotel_amenities =
        this.hotelForm.value.stay_amenities = this.hotelForm.value.stay_amenities.map(v => v.stay_amenities).join(",");
       this.hotelForm.value.room_view_ids = this.hotelForm.value.room_view_ids.map(v => v.views).join(",");
       this.hotelForm.value.weekend_days = this.hotelForm.value.weekend_days.map(v => v.item_text).join(",");
-      this.hotelForm.value.city = this.toCityId;
+      this.hotelForm.value.city_code = this.selectedCityCode || this.hotelForm.value.city_code || '';
       this.hotelForm.value.checkInTime = this.hotelForm.value.checkInTime;
       this.hotelForm.value.checkOutTime = this.hotelForm.value.checkOutTime;
       // this.hotelForm.value.contract_expiry_date = this.hotelForm.value.contract_expiry_date ? `${(moment(this.hotelForm.value.contract_expiry_date)).format('YYYY-MM-DD')}` : null,
@@ -960,6 +960,7 @@ this.hotelForm.value.hotel_hotel_amenities =
       this.hotelForm.value.user_type = this.hotelForm.get('user_type').value || '';
       this.hotelForm.value.hotel_description = this.hotelForm.get('hotel_description').value || '';
       let data = Object.assign({}, this.hotelForm.value);
+      delete data['city'];
       try {
         if (this.hotelOne && !this.utilityService.isEmpty(this.hotelOne)) {
           console.log("hotelOne", this.hotelOne)

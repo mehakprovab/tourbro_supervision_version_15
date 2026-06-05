@@ -580,6 +580,10 @@ getAdultLabel(index: number): string {
     this.roomPriceList = false;
     this.weekdayPrice = true;
     this.currencyValue =this.hotelOne.currency;
+    this.isPaidCancellation = false;
+    this.isNonRefundableData = false;
+    this.earlyData = false;
+    this.stayData = false;
     // Patch basic fields
     this.roomPriceForm.patchValue({
       hotel_room_season_id: patchData['season_id'] || '',
@@ -589,22 +593,13 @@ getAdultLabel(index: number): string {
       from_date: formattedDate1 || '',
       to_date: formattedDate2 || '',
       // status: patchData['status'] ? true : false,
-      is_refundable: patchData['is_refundable'] === 1 ? true : false,
+      is_refundable: patchData['is_refundable'] === 1 || patchData['is_refundable'] === true || patchData['is_refundable'] === '1' || patchData['is_refundable'] === 'true',
       rate_type: patchData.rate_type,
       non_refundable_discount:patchData['non_refundable_discount'] || 0,
        minimumStay: 0,
     });
-    if(this.roomPriceForm.value.rate_type == 'night_rate'){
-      this.isRateData =true;
-    }
-    if(this.roomPriceForm.value.is_refundable == true){
-      this.isPaidCancellation =true;
-    }
-    if(this.roomPriceForm.value.rate_type == 'night_rate' && this.roomPriceForm.value.is_refundable == true )
-   {
-     this.isRateData =true;
-     this.isPaidCancellation =true;
-  } 
+    this.isRateData = this.roomPriceForm.value.rate_type == 'night_rate';
+    this.isPaidCancellation = this.roomPriceForm.value.is_refundable == true;
   if (patchData.hotel_room_cancellation_policy && patchData.hotel_room_cancellation_policy.length) {
     // Clear existing segments
     this.segments.clear();
@@ -621,15 +616,18 @@ getAdultLabel(index: number): string {
       this.segments.push(segmentGroup);
     });
   }
-if(patchData.non_refundable_discount)
+if(Number(patchData.non_refundable_discount || 0) > 0)
   {
     this.isNonRefundableData = true;
     this.roomPriceForm.patchValue({
     isNonRefundable: true,
 });
 }
-    const early_bird_discount = patchData.early_bird_discount;
-    if(early_bird_discount.days != 0){
+    const early_bird_discount = patchData.early_bird_discount || {};
+    const hasEarlyBirdDiscount = Number(early_bird_discount.days || 0) > 0
+      || Number(early_bird_discount.discount_value || 0) > 0
+      || early_bird_discount.cancellable == true;
+    if(hasEarlyBirdDiscount){
       this.earlyData =true;
       this.roomPriceForm.patchValue({
         isEarlyRequired: true,
@@ -640,8 +638,11 @@ if(patchData.non_refundable_discount)
           discount_value: early_bird_discount.discount_value || '',
           early_cancellable: early_bird_discount.cancellable == true ? 1 : 0,
         });
-    const duration_stay_discount = patchData.duration_stay_discount;
-    if(duration_stay_discount.days != 0){
+    const duration_stay_discount = patchData.duration_stay_discount || {};
+    const hasDurationStayDiscount = Number(duration_stay_discount.days || 0) > 0
+      || Number(duration_stay_discount.discount_value || 0) > 0
+      || duration_stay_discount.cancellable == true;
+    if(hasDurationStayDiscount){
       this.stayData =true
       this.roomPriceForm.patchValue({
         isStayRequired: true,
@@ -840,6 +841,7 @@ getAlreadySelectedView(amenities) {
       });
       this.currencyValue =this.hotelOne.currency;
       this.createRoomPriceForm();
+      this.isRateData = this.roomPriceForm.get('rate_type').value === 'night_rate';
       if(this.addnewRate){
         const formattedDate1 = moment(this.addnewRate.from_date).format("YYYY-MM-DD");
         const formattedDate2 = moment(this.addnewRate.to_date).format("YYYY-MM-DD");
@@ -963,7 +965,7 @@ onSubmitPrice() {
         // const dt2 = new Date(this.roomPriceForm.value.to_date);
         this.roomPriceForm.value.to_date =  moment(this.roomPriceForm.value.to_date, 'DD-MM-YYYY').format('YYYY-MM-DD');
 
-        if(this.roomPriceForm.value.refundable === 'false' || this.roomPriceForm.value.refundable == 0 )
+        if(this.roomPriceForm.value.is_refundable === false || this.roomPriceForm.value.is_refundable == 0 )
         {
             const cancellationPolicy = []
             this.roomPriceForm.value.hotel_room_cancellation_policy = cancellationPolicy;  
@@ -1334,8 +1336,10 @@ maxDate(event) {
 //   this.roomPriceForm.get('charge').updateValueAndValidity();
 //   this.roomPriceForm.get('date_from').updateValueAndValidity();
 // }
-onRefundableChange(event: any) {
-  this.isRefundable = event.target.value === 'true';
+onRefundableChange(value: boolean) {
+  this.isRefundable = value === true;
+  this.roomPriceForm.patchValue({ is_refundable: this.isRefundable }, { emitEvent: false });
+  this.isRateData = this.roomPriceForm.get('rate_type').value === 'night_rate';
 
   // Access the segments form array
   const segmentsArray = this.roomPriceForm.get('segments') as FormArray;
@@ -1349,9 +1353,6 @@ onRefundableChange(event: any) {
     });
   } else {
     this.isPaidCancellation = false;
-    this.roomPriceForm.patchValue({
-      is_refundable: false
-    });
 
     // Clear values and validators for charge and date_from in each segment
     segmentsArray.controls.forEach((segment: FormGroup) => {

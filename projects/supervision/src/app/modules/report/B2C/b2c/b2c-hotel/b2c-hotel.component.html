@@ -274,6 +274,8 @@
                                                 }} </td>
                                             <td class="text-left"> {{data.BookingDetails?.CancellationReason.hotelBody.SupplierPrice || 0
                                                 }} {{data.BookingDetails?.API_Currency}}</td>
+                                            <td class="text-left"> {{ getPricingTaxes(data) }} </td>
+                                            <td class="text-left"> {{ getPricingCommissions(data) }} </td>
                                             <!-- <td class="text-left"> {{data.BookingDetails?.API_Payable_Price || 0 }}
                                                 {{data.BookingDetails?.API_Currency}}</td> -->
                                             <!-- <td class="text-left"  *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7"> {{data.BookingDetails?.API_Commission || '' }} </td> -->

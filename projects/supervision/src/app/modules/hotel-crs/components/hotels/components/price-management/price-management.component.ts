@@ -1614,8 +1614,10 @@ onStopSaleClick(){
   // const formattedDate1 = moment(patchData.from_date).format("YYYY-MM-DD");
   // const formattedDate2 = moment(patchData.to_date).format("YYYY-MM-DD");
 }
-onRefundableChange(event: any) {
-  this.isRefundable = event.target.value === 'true';
+onRefundableChange(value: boolean) {
+  this.isRefundable = value === true;
+  this.roomPriceForm.patchValue({ is_refundable: this.isRefundable }, { emitEvent: false });
+  this.isRateData = this.roomPriceForm.get('rate_type').value === 'night_rate';
 
   // Access the segments form array
   const segmentsArray = this.roomPriceForm.get('segments') as FormArray;
@@ -1628,9 +1630,6 @@ onRefundableChange(event: any) {
     });
   } else {
     this.isPaidCancellation = false;
-    this.roomPriceForm.patchValue({
-      is_refundable: false
-    });
 
     // Clear values and validators for charge and date_from in each segment
     segmentsArray.controls.forEach((segment: FormGroup) => {

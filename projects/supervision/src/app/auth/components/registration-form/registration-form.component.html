@@ -1,0 +1,491 @@
+<div class="h-100">
+    <div class="no-gutters">
+    
+
+        <div class="login-max-screen-1260 row register-section" style="padding-left: 0 !important; background:#faf8f8;">
+            <div class="register-form-section col-12 p-5">
+                <div class="container p-0">
+                    <div class="register-form-title text-center">
+                        
+                        <h3>Supplier Registration Form</h3>
+                        <span>It only takes a few seconds to create your account ...</span>
+                    </div>
+                    <div class="register-form-fields">
+                        <form autocomplete="off" class="needs-validation" [formGroup]="registerForm" novalidate
+                            (ngSubmit)="onRegister(registerForm)">
+
+                            <!-- Section 1: COMPANY MANAGER DETAILS -->
+                            <section class="section1">
+                                <header>
+                                    <div class="bead"><span>1</span></div>COMPANY MANAGER DETAILS (PRIME ADMIN DETAILS)
+                                </header>
+                                <div class="content form-row">
+                                    <div class="col-md-2">
+                                        <fieldset class="form-group">
+                                            <label for="title" class="required">Title</label>
+                                            <select id="title" class="form-control capitalize" formControlName="title">
+                                                <option value="" disabled>Select</option>
+                                                <option *ngFor="let t of userTitleList" [ngValue]="t.id">{{t.name}}</option>
+                                            </select>
+                                            <div *ngIf="submitted && registerForm.get('title')?.errors?.required" class="text-danger">
+                                                Title is required
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <fieldset class="form-group">
+                                            <label for="firstName" class="required">First Name</label>
+                                            <input formControlName="first_name" id="firstName" type="text"
+                                                (keypress)="omitSpecialCharacters($event)" placeholder="First Name"
+                                                class="form-control">
+                                            <div *ngIf="submitted && registerForm.get('first_name')?.errors" class="text-danger">
+                                                <span *ngIf="registerForm.get('first_name')?.errors?.required">First Name is required</span>
+                                                <span *ngIf="registerForm.get('first_name')?.errors?.minlength">Minimum 3 characters required</span>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="lastName" class="required">Last Name</label>
+                                            <input formControlName="last_name" type="text" placeholder="Last Name"
+                                                (keypress)="omitSpecialCharacters($event)" class="form-control">
+                                            <div *ngIf="submitted && registerForm.get('last_name')?.errors?.required" class="text-danger">
+                                                Last Name is required
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="phone_number" class="required">Phone Number</label>
+                                            <input formControlName="phone_number" type="tel" placeholder="Phone Number"
+                                                class="form-control" (keypress)="numberOnly($event)">
+                                            <div *ngIf="submitted && registerForm.get('phone_number')?.errors?.required" class="text-danger">
+                                                Phone Number is required
+                                            </div>
+                                            <div *ngIf="submitted && registerForm.get('phone_number')?.errors?.pattern" class="text-danger">
+                                                Valid 10-digit phone number required
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="email" class="required">Email</label>
+                                            <input formControlName="email" style="text-transform: none;" type="email" 
+                                                placeholder="Email Id" class="form-control">
+                                            <div *ngIf="submitted && registerForm.get('email')?.errors" class="text-danger">
+                                                <span *ngIf="registerForm.get('email')?.errors?.required">Email is required</span>
+                                                <span *ngIf="registerForm.get('email')?.errors?.email">Valid email is required</span>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Section 2: SUPPLIER COMPANY DETAILS -->
+                            <section class="section2">
+                                <header>
+                                    <div class="bead"><span>2</span></div>SUPPLIER COMPANY DETAILS
+                                </header>
+                                <div class="content form-row">
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="registered_legal_name" class="required">Registered Legal Name</label>
+                                            <input formControlName="registered_legal_name" type="text"
+                                                placeholder="Registered Legal Name" class="form-control">
+                                            <div *ngIf="submitted && registerForm.get('registered_legal_name')?.errors?.required" class="text-danger">
+                                                Registered Legal Name is required
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="trade_name" class="required">Company Trade Name</label>
+                                            <input formControlName="trade_name" type="text"
+                                                placeholder="Company Trade Name" class="form-control">
+                                            <div *ngIf="submitted && registerForm.get('trade_name')?.errors?.required" class="text-danger">
+                                                Company Trade Name is required
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="chain_name">Chain Name - if operating under chain</label>
+                                            <input formControlName="chain_name" type="text"
+                                                placeholder="Chain Name - if operating under chain" class="form-control">
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="company_website">Company Website</label>
+                                            <input formControlName="company_website" type="url"
+                                                placeholder="Company Website" class="form-control">
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="registration_number" class="required">Registration Number</label>
+                                            <input formControlName="registration_number" type="text"
+                                                placeholder="Registration Number" class="form-control">
+                                            <div *ngIf="submitted && registerForm.get('registration_number')?.errors?.required" class="text-danger">
+                                                Registration Number is required
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="country_of_registration" class="required">Country Of Registration</label>
+                                           <select formControlName="country_of_registration" class="form-control">
+    <option value="" disabled>Country Of Registration</option>
+    <option *ngFor="let c of registerCountries" [value]="c.id">{{c.name}}</option>
+</select>
+                                            <div *ngIf="submitted && registerForm.get('country_of_registration')?.errors?.required" class="text-danger">
+                                                Country Of Registration is required
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="pan_number" class="required">PAN Number</label>
+                                            <input formControlName="pan_number" type="text" placeholder="PAN Number"
+                                                class="form-control" (keypress)="alphaNumericOnly($event)" maxlength="10">
+                                            <div *ngIf="submitted && registerForm.get('pan_number')?.errors" class="text-danger">
+                                                <span *ngIf="registerForm.get('pan_number')?.errors?.required">PAN Number is required</span>
+                                                <span *ngIf="registerForm.get('pan_number')?.errors?.pattern">Valid PAN number required (ABCDE1234F)</span>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="pan_document" class="required">PAN Document (Upload)</label>
+                                            <div class="file-upload-wrapper">
+                                                <input type="file" id="pan_document" (change)="onFileSelected($event, 'pan_document')"
+                                                    accept=".pdf,.jpg,.jpeg,.png" class="file-input">
+                                                <label for="pan_document" class="file-label">
+                                                    <span *ngIf="!panDocumentName">Choose PAN Document</span>
+                                                    <span *ngIf="panDocumentName">{{panDocumentName}}</span>
+                                                </label>
+                                            </div>
+                                            <div *ngIf="submitted && !panDocument" class="text-danger">
+                                                PAN Document is required
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="aadhaar_number" class="required">Aadhaar Number</label>
+                                            <input formControlName="aadhaar_number" type="text" placeholder="Aadhaar Number"
+                                                class="form-control" (keypress)="numberOnly($event)" maxlength="12">
+                                            <div *ngIf="submitted && registerForm.get('aadhaar_number')?.errors" class="text-danger">
+                                                <span *ngIf="registerForm.get('aadhaar_number')?.errors?.required">Aadhaar Number is required</span>
+                                                <span *ngIf="registerForm.get('aadhaar_number')?.errors?.pattern">Valid 12-digit Aadhaar required</span>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="aadhaar_document" class="required">Aadhaar Document (Upload)</label>
+                                            <div class="file-upload-wrapper">
+                                                <input type="file" id="aadhaar_document" (change)="onFileSelected($event, 'aadhaar_document')"
+                                                    accept=".pdf,.jpg,.jpeg,.png" class="file-input">
+                                                <label for="aadhaar_document" class="file-label">
+                                                    <span *ngIf="!aadhaarDocumentName">Choose Aadhaar Document</span>
+                                                    <span *ngIf="aadhaarDocumentName">{{aadhaarDocumentName}}</span>
+                                                </label>
+                                            </div>
+                                            <div *ngIf="submitted && !aadhaarDocument" class="text-danger">
+                                                Aadhaar Document is required
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="license_number">License Number (IATA/ABTA/ATOL, etc)</label>
+                                            <input formControlName="license_number" type="text" placeholder="License Number"
+                                                class="form-control">
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="license_document">License Document (Upload)</label>
+                                            <div class="file-upload-wrapper">
+                                                <input type="file" id="license_document" (change)="onFileSelected($event, 'license_document')"
+                                                    accept=".pdf,.jpg,.jpeg,.png" class="file-input">
+                                                <label for="license_document" class="file-label">
+                                                    <span *ngIf="!licenseDocumentName">Choose License Document</span>
+                                                    <span *ngIf="licenseDocumentName">{{licenseDocumentName}}</span>
+                                                </label>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="office_phone" class="required">Office Phone Number</label>
+                                            <input formControlName="office_phone" type="tel" placeholder="Office Phone Number"
+                                                class="form-control" (keypress)="numberOnly($event)">
+                                            <div *ngIf="submitted && registerForm.get('office_phone')?.errors?.required" class="text-danger">
+                                                Office Phone Number is required
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="alt_company_email" class="required">Alternative Company Email Id</label>
+                                            <input formControlName="alt_company_email" type="email"
+                                                placeholder="Alternative Company Email Id" class="form-control"
+                                                (keyup)="transformToLowerCase($event)">
+                                            <div *ngIf="submitted && registerForm.get('alt_company_email')?.errors" class="text-danger">
+                                                <span *ngIf="registerForm.get('alt_company_email')?.errors?.required">Alternative Email is required</span>
+                                                <span *ngIf="registerForm.get('alt_company_email')?.errors?.email">Valid email is required</span>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Section 3: SUPPLIER COMPANY ADDRESS -->
+                            <section>
+                                <header>
+                                    <div class="bead"><span>3</span></div>SUPPLIER COMPANY ADDRESS (MAILING ADDRESS)
+                                </header>
+                                <div class="content row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="address_line1" class="required">Address Line1</label>
+                                            <input type="text" formControlName="address_line1"
+                                                placeholder="Address Line 1 (Building number, Street, Area, ...etc)"
+                                                class="form-control" maxlength="250">
+                                            <div *ngIf="submitted && registerForm.get('address_line1')?.errors?.required" class="text-danger">
+                                                Address Line1 is required
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="address_line2">Address line 2</label>
+                                            <input type="text" formControlName="address_line2" class="form-control" maxlength="250">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="country" class="required">Select Country</label>
+                                            <select formControlName="country" class="form-control" (change)="onCountryChange($event)">
+    <option value="">Select Country</option>
+    <option *ngFor="let country of registerCountries" [value]="country.name">
+        {{ country.name }}
+    </option>
+</select>
+                                            <div *ngIf="submitted && registerForm.get('country')?.errors?.required" class="text-danger">
+                                                Country is required
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="state" class="required">Select State</label>
+                                           <select formControlName="state" class="form-control" (change)="onStateChange($event)">
+    <option value="">Select State</option>
+    <option *ngFor="let state of filteredStates" [value]="state.name">
+        {{ state.name }}
+    </option>
+</select>
+                                            <div *ngIf="submitted && registerForm.get('state')?.errors?.required" class="text-danger">
+                                                State is required
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="city" class="required">City</label>
+                                            <input type="text" formControlName="city" placeholder="City" class="form-control" 
+    list="city-list" (input)="filterCities($event.target.value)">
+<datalist id="city-list">
+    <option *ngFor="let city of registerCities" [value]="city.cityName"></option>
+</datalist>
+                                            <div *ngIf="submitted && registerForm.get('city')?.errors?.required" class="text-danger">
+                                                City is required
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="zip_code" class="required">Zip/Postal Code</label>
+                                            <input type="text" formControlName="zip_code" placeholder="Zip / Postal Code" 
+                                                class="form-control">
+                                            <div *ngIf="submitted && registerForm.get('zip_code')?.errors?.required" class="text-danger">
+                                                Zip/Postal Code is required
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Section 4: SUPPLIER ACCOUNTING DETAILS -->
+                            <section>
+                                <header>
+                                    <div class="bead"><span>4</span></div>SUPPLIER ACCOUNTING DETAILS
+                                </header>
+                                <div class="content form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="accounting_email" class="required">Accounting Email ID</label>
+                                            <input type="email" formControlName="accounting_email" class="form-control" 
+                                                placeholder="Accounting Email Id">
+                                            <div *ngIf="submitted && registerForm.get('accounting_email')?.errors" class="text-danger">
+                                                <span *ngIf="registerForm.get('accounting_email')?.errors?.required">Accounting Email is required</span>
+                                                <span *ngIf="registerForm.get('accounting_email')?.errors?.email">Valid email is required</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <fieldset class="form-group">
+                                            <label for="accounting_phone" class="required">Accounting Phone Number</label>
+                                            <input formControlName="accounting_phone" type="tel" placeholder="Accounting Phone Number" 
+                                                class="form-control" (keypress)="numberOnly($event)">
+                                            <div *ngIf="submitted && registerForm.get('accounting_phone')?.errors?.required" class="text-danger">
+                                                Accounting Phone Number is required
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="bank_name">Bank Name</label>
+                                            <input type="text" formControlName="bank_name" class="form-control" 
+                                                placeholder="Bank Name">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="branch_address">Bank Branch Address</label>
+                                            <input type="text" formControlName="branch_address" class="form-control" 
+                                                placeholder="Bank Branch Address">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="account_holder_name">Bank Account Holder Name</label>
+                                            <input type="text" formControlName="account_holder_name" class="form-control" 
+                                                placeholder="Bank Account Holder Name">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="account_number">Account Number</label>
+                                            <input type="text" formControlName="account_number" class="form-control" 
+                                                placeholder="Account Number" (keypress)="numberOnly($event)">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="ifsc_code">IFSC Code</label>
+                                            <input type="text" formControlName="ifsc_code" class="form-control" 
+                                                placeholder="IFSC Code" (keypress)="alphaNumericOnly($event)">
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Section 5: SERVICES SELECTION -->
+                          <!-- Section 5: SERVICES YOU PROVIDE (Read-only from previous page) -->
+<!-- Section 5: SERVICES YOU PROVIDE -->
+<section>
+    <header>
+        <div class="bead"><span>5</span></div>SERVICES YOU PROVIDE
+    </header>
+    <div class="content form-row">
+        <div class="col-md-12">
+            <label class="required">Selected Services</label>
+            <div class="services-grid">
+                <div class="service-checkbox" *ngFor="let service of selectedServicesFromQuery">
+                    <label class="checkbox-container readonly">
+                        <input type="checkbox" [value]="service.value" [checked]="true" disabled>
+                        <span class="checkmark disabled"></span>
+                        {{ service.label }}
+                    </label>
+                </div>
+            </div>
+            <div *ngIf="submitted && selectedServicesFromQuery.length === 0" class="text-danger">
+                Please select at least one service
+            </div>
+        </div>
+    </div>
+</section>
+
+                            <!-- Section 6: LEGAL SUPPLIER AGREEMENT CONFIRMATION -->
+                            <section>
+                                <header>
+                                    <div class="bead"><span>6</span></div>LEGAL SUPPLIER AGREEMENT CONFIRMATION
+                                </header>
+                                <div class="content form-row">
+                                    <div class="col-md-12 nopad">
+                                        <div class="checkcontent">
+                                            <div class="squaredThree">
+                                                <input type="checkbox" id="is_agreed" formControlName="is_agreed">
+                                                <label for="is_agreed"></label>
+                                            </div>
+                                            <label for="is_agreed" style="display: inline; font-size: 14px; color: #082B3A;">
+                                                <strong>Accept TourBro.com's Supplier's
+                                                    <a (click)="openStaticPage('Terms & Conditions')" class="colorbl">Terms and Conditions</a>
+                                                    <a (click)="openStaticPage('Privacy Policy')" class="colorbl">, Privacy Policy</a>
+                                                    and <a (click)="openStaticPage('Refund Policy')" class="colorbl"> Refund Policy</a>.
+                                                </strong>
+                                            </label>
+                                        </div>
+                                        <div *ngIf="submitted && registerForm.get('is_agreed')?.errors?.required" class="text-danger">
+                                            Please check the agreement
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Submit Button -->
+                            <div class="center-section col-md-12">
+                                <button type="submit" class="btn" [disabled]="loading">
+                                    <span *ngIf="loading">Submitting...</span>
+                                    <span *ngIf="!loading">Submit Request</span>
+                                </button>
+                            </div>
+                            
+                            <br>
+                            <div class="col-md-12 mt-1">
+                                <fieldset class="form-group">
+                                    <div class="sign-in">
+                                        <h5 class="mb-0">
+                                            Already have an account?
+                                            <a class="c-pointer" routerLink="/auth/login">Please Sign in</a>
+                                        </h5>
+                                    </div>
+                                    <hr>
+                                </fieldset>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

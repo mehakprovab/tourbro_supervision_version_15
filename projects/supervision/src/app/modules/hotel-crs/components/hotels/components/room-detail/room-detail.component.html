@@ -53,9 +53,9 @@
                         <td class="text-left">{{rooms.max_child_capacity}}</td> -->
                         <td>
                             <span title="Slide for Active/Deactive">
-                                <mat-slide-toggle readonly class="example-margin" [color]="''"
-                                    [checked]="rooms['room_status']" [(ngModel)]="rooms['room_status']"
-                                    name="status{{i}}" (click)="onStatusUpdate(rooms,i)">
+                                <mat-slide-toggle class="example-margin" [color]="''"
+                                    [checked]="isRoomStatusActive(rooms['room_status'])"
+                                    name="status{{i}}" (change)="onStatusUpdate(rooms, $event.checked)">
                                 </mat-slide-toggle>
                             </span>
                         </td>

@@ -608,7 +608,7 @@ onCheckboxChange(event, check, seasonIndex) {
     this.seasonPricingForm.patchValue({
       activity_id: this.insertedActivityId
     })
-    const req = this.seasonPricingForm.value;
+    const req = this.normalizeSeasonPricingPayload(this.seasonPricingForm.value);
     if (!this.seasonPricingForm.valid) {
       return;
     }
@@ -888,8 +888,22 @@ getActivityCityList(country: any) {
     error: (err) => {
       this.cityList = [];
     }
-  });
-}
+    });
+  }
+
+  private normalizeSeasonPricingPayload(payload: any) {
+    const normalizedPayload = { ...payload };
+    normalizedPayload.seasonPricing = (payload.seasonPricing || []).map((season: any) => ({
+      ...season,
+      cancellationPolicies: (season.cancellationPolicies || []).map((policy: any) => ({
+        ...policy,
+        refundablebeforedays: policy.refundablebeforedays === '' || policy.refundablebeforedays === null || policy.refundablebeforedays === undefined
+          ? 0
+          : policy.refundablebeforedays
+      }))
+    }));
+    return normalizedPayload;
+  }
 backToListPage() {
   this.showUpdateForm = false;
   this.activityCrsService.getActivityUpdateData.next({});

@@ -766,6 +766,8 @@ export const apiMap = {
   searchWellnessCenter: `${baseUrl}/wellness/searchWellnessCenters`,
   addWellnessCenter: `${baseUrl}/wellness/addWellnessCenter`,
   updateWellnessCenter: `${baseUrl}/wellness/updateWellnessCenter`,
+  wellnessStatusUpdate: `${baseUrl}/wellness/statusUpdate`,
+  wellnessSetTrending: `${baseUrl}/wellness/setTrending`,
   wellnessCenterCount: `${baseUrl}/wellness/wellnessCentersCount`,
   deleteWellnessCenter: `${baseUrl}/wellness/deleteCenter`,
   wellnessCentersCount: `${baseUrl}/wellness/wellnessCentersCount`,

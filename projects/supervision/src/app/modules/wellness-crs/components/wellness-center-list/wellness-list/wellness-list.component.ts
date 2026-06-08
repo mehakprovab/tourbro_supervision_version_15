@@ -19,6 +19,8 @@ export class WellnessListComponent implements OnInit {
   public wellnessList: any;
   @Output() toUpdate = new EventEmitter<any>();
   countData: any;
+  statusUpdating = {};
+  trendingUpdating = {};
     pageSize = 10;
     page = 1;
   ngOnInit() {
@@ -102,6 +104,78 @@ export class WellnessListComponent implements OnInit {
                 },
               );
             }
-          });
-    }
+      });
+  }
+
+  onStatusChange(wellness: any, event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const previousStatus = wellness.status;
+    const status = input.checked ? 1 : 0;
+
+    wellness.status = status;
+    this.statusUpdating[wellness.center_code] = true;
+
+    const data = [{
+      status,
+      center_code: wellness.center_code
+    }];
+    data["topic"] = "wellnessStatusUpdate";
+
+    this.wellnessCrsService.update(data).subscribe(
+      (response) => {
+        this.statusUpdating[wellness.center_code] = false;
+
+        if (response.Status === true && (response.statusCode === 200 || response.statusCode === 201)) {
+          this.swalService.alert.success("Status updated successfully.");
+          return;
+        }
+
+        wellness.status = previousStatus;
+        input.checked = !!previousStatus;
+        this.swalService.alert.oops(response.Message || response.message || "Status update failed.");
+      },
+      (err: HttpErrorResponse) => {
+        this.statusUpdating[wellness.center_code] = false;
+        wellness.status = previousStatus;
+        input.checked = !!previousStatus;
+        this.swalService.alert.error(err["error"] && err["error"]["Message"] ? err["error"]["Message"] : "Status update failed.");
+      }
+    );
+  }
+
+  onTrendingChange(wellness: any, event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const previousTrending = wellness.is_trending;
+    const is_trending = input.checked ? 1 : 0;
+
+    wellness.is_trending = is_trending;
+    this.trendingUpdating[wellness.center_code] = true;
+
+    const data = [{
+      is_trending,
+      center_code: wellness.center_code
+    }];
+    data["topic"] = "wellnessSetTrending";
+
+    this.wellnessCrsService.update(data).subscribe(
+      (response) => {
+        this.trendingUpdating[wellness.center_code] = false;
+
+        if (response.statusCode === 200 || response.statusCode === 201) {
+          this.swalService.alert.success(is_trending ? "Successfully added to trending list." : "Successfully removed from trending list.");
+          return;
+        }
+
+        wellness.is_trending = previousTrending;
+        input.checked = previousTrending === 1 || previousTrending === true;
+        this.swalService.alert.oops(response.Message || response.message || "Trending update failed.");
+      },
+      (err: HttpErrorResponse) => {
+        this.trendingUpdating[wellness.center_code] = false;
+        wellness.is_trending = previousTrending;
+        input.checked = previousTrending === 1 || previousTrending === true;
+        this.swalService.alert.error(err["error"] && err["error"]["Message"] ? err["error"]["Message"] : "Trending update failed.");
+      }
+    );
+  }
 }

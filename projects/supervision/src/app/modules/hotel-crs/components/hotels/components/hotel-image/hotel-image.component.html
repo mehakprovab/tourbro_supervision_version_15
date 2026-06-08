@@ -1,5 +1,5 @@
 <ng-container >
-    <h5><b>Hotel Name:</b> {{hotelOne.hotel_name}}</h5>
+    <h5><b>{{ entityLabel }} Name:</b> {{ entityName }}</h5>
     <div class="">
         <div class="table-responsive">
             <table class="table table-borderless table-striped table-hover" matSort>
@@ -64,7 +64,7 @@
         <form [formGroup]="hotelImageForm" (ngSubmit)="onSubmitHotelImage()" class="needs-validation btop pt-4"
             novalidate>
             <fieldset for="hotelImage">
-                <div class="form_legend">Add Hotel Images</div>
+                <div class="form_legend">Add {{ entityLabel }} Images</div>
                 <!-- <img [src]="getImage(hotelOne.image)" height="100" width="100" class="m-3"> -->
                 &nbsp; &nbsp;
                 <!-- <div *ngIf="hotelImages" class="image-list">
@@ -91,12 +91,12 @@
                 <span><b>Note:</b> Only JPG, JPEG & PNG formats and 500Kb size are allowed. You can upload a maximum of 30 images.</span><br>
                 <div class="form-group">
                     <div class="col-sm-12 btncontainer p-0">
-                        <button type=" submit" class=" btn btn-sm btn-success btnStyle">Upload Hotel
+                        <button type=" submit" class=" btn btn-sm btn-success btnStyle">Upload {{ entityLabel }}
                             Images
                         </button>
                         &nbsp; &nbsp;
                         <button type="reset" class=" btn btn-sm btn-primary btnStyle" (click)="goToHotelList()">
-                            Hotel List
+                            {{ entityLabel }} List
                         </button>
                     </div>
                 </div>

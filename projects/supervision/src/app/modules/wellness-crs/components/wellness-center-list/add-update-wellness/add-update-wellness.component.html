@@ -1,6 +1,6 @@
 <app-wellness-crs-details *ngIf="isWellnessImage !== true && isRoomDetail !== true && isCenterTax !== true && showPrice !== true && isChildPolicy !== true" [hotelOne]="wellnessOne" ></app-wellness-crs-details>
 
-<app-hotel-image *ngIf="isWellnessImage == true" (callResult)="wellNessImage($event)" [hotelOne]="wellnessOne" ></app-hotel-image>
+<app-hotel-image *ngIf="isWellnessImage == true" (callResult)="wellNessImage($event)" [hotelOne]="wellnessOne" imageFor="wellness" ></app-hotel-image>
 <app-wellness-package-rate *ngIf="isRoomDetail == true" [wellnessOne]="wellnessOne" (packageEvent)="showRoomImage($event)"></app-wellness-package-rate>
 <app-wellness-price *ngIf="showPrice" [packageData]="wellnessOne"></app-wellness-price>
 <!-- <app-room-detail *ngIf="isRoomDetail == true" [hotelOne]="wellnessOne" (showRoomImage)="showRoomImage($event)" ></app-room-detail> -->
@@ -11,4 +11,3 @@
 <app-wellness-child-policy  *ngIf="isChildPolicy == true" [wellnessOne]="wellnessOne"></app-wellness-child-policy>
 <!-- <app-children-pollicy *ngIf="isChildrenPollicy == true"[hotelOne]="hotelOne" (callResult)="childrenPollicy($event)"></app-children-pollicy>
 <app-cancellation *ngIf="isCancellation == true"(goToRoomdetail)="goToRoomdetail($event)"[cancelData]="roomsData"></app-cancellation> -->
-

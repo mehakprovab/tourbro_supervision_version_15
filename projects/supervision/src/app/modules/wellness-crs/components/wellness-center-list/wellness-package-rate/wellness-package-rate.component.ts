@@ -259,14 +259,49 @@ public submittedHotelImage: boolean = false;
     data["topic"] = "getPackagesByCenterId";
     console.log(data)
     this.wellnessCrsService.fetch(data).subscribe((res) => {
-      if (res.Status === true && (res.statusCode === 200 || res.statusCode === 201)) {
+      if (res.statusCode === 200 || res.statusCode === 201) {
         console.log("packages", res.data);
         this.id = '';
-        this.wellnessList = res.data || [];
+        this.wellnessList = this.getPackageListFromResponse(res.data);
+      } else if (res.statusCode === 404) {
+        this.wellnessList = [];
       }
     }, (err) => {
       console.error(err);
+      this.wellnessList = [];
     });
+  }
+
+  getPackageListFromResponse(data: any): any[] {
+    if (Array.isArray(data)) {
+      return data;
+    }
+
+    if (data && Array.isArray(data.data)) {
+      return data.data;
+    }
+
+    if (data && Array.isArray(data.packages)) {
+      return data.packages;
+    }
+
+    if (data && Array.isArray(data.package_list)) {
+      return data.package_list;
+    }
+
+    if (data && Array.isArray(data.wellness_packages)) {
+      return data.wellness_packages;
+    }
+
+    if (data && Array.isArray(data.rows)) {
+      return data.rows;
+    }
+
+    if (data && Array.isArray(data.result)) {
+      return data.result;
+    }
+
+    return [];
   }
 
   onSubmit() {
@@ -306,9 +341,11 @@ public submittedHotelImage: boolean = false;
   }
 
   getPackageType(data) {
-    if (data) {
+    if (Array.isArray(data)) {
       return data.join(', ');
     }
+
+    return data || '';
   }
 
   deletePackageRate(id) {

@@ -66,7 +66,7 @@ export class HotelCrsService {
             )
     }
     addHotelLogo(data): Observable<any> {
-        return this.apiHandlerService.apiHandler(data.topic || '', 'post', {}, {}, data.topic=='addHotelImage' ? data[0].data : data[0])
+        return this.apiHandlerService.apiHandler(data.topic || '', 'post', {}, {}, (data.topic == 'addHotelImage' || data.topic == 'addWellnessImage') ? data[0].data : data[0])
             .pipe(
                 map(resp => {
                     return resp

@@ -70,6 +70,9 @@ export class WellnessCrsDetailsComponent implements OnInit, AfterViewInit {
   public loggedUserData: any;
   @Input() hotelOne: any;
   submittedWellness: boolean = false;
+  editWellnessData: any;
+  isEdit = false;
+  editCityListLoaded = false;
 
   ngOnInit() {
     this.createFrom();
@@ -78,6 +81,12 @@ export class WellnessCrsDetailsComponent implements OnInit, AfterViewInit {
     this.loggedUserData = userData ? JSON.parse(userData) : null;
     this.wellnessCrsService.getEditData.subscribe((data) => {
       console.log(data);
+      if (data && data.center_code) {
+        this.editWellnessData = data;
+        this.isEdit = true;
+        this.editCityListLoaded = false;
+        this.patchEditData();
+      }
     })
   }
 
@@ -122,15 +131,22 @@ export class WellnessCrsDetailsComponent implements OnInit, AfterViewInit {
 
   onSubmit() {
     this.submittedWellness = true;
+
+if(this.wellnessForm.invalid) {
+  this.swalService.alert.oops('Please fill all required fields.')
+  return;
+}
     
     const formData = {
   ...this.wellnessForm.value,
+...(this.isEdit && { center_code: this.editWellnessData.center_code }),
+contract_expiry: this.wellnessForm.value.contract_expiry || null,
 check_in_time: this.formatTimeWithSeconds(this.wellnessForm.value.check_in_time),
 check_out_time: this.formatTimeWithSeconds(this.wellnessForm.value.check_out_time),
 
 inclusions: [this.wellnessForm.value.inclusions],
-supplier_email: this.loggedUserData.email,
-supplier_name: this.loggedUserData.first_name +' '+ this.loggedUserData.last_name,
+supplier_email: this.loggedUserData ? this.loggedUserData.email : this.wellnessForm.value.supplier_email,
+supplier_name: this.loggedUserData ? this.loggedUserData.first_name +' '+ this.loggedUserData.last_name : this.wellnessForm.value.supplier_name,
   therapy_types: this.wellnessForm.value.therapy_types.map(
     item => item.therapy_name
   ),
@@ -156,19 +172,17 @@ console.log('Form Data to Submit:', formData);
 //         data["topic"] = "addWellnessCenter";
 //   }
 
-if(this.wellnessForm.invalid) {
-  this.swalService.alert.oops('Please fill all required fields.')
-  return;
-}
-
   let data = Object.assign({}, formData);
       data = [data];
-      data['topic'] = "addWellnessCenter";
+      data['topic'] = this.isEdit ? "updateWellnessCenter" : "addWellnessCenter";
       this.wellnessCrsService.create(data).subscribe(resp => {
-          if (resp.Status === true && (resp.statusCode === 200 || resp.statusCode === 201)) {
+          if (resp.statusCode === 200 || resp.statusCode === 201) {
             console.log('Wellness Center created successfully:', resp);
-            this.swalService.alert.success('Wellness Center created successfully.');
+            this.swalService.alert.success(this.isEdit ? 'Wellness Center updated successfully.' : 'Wellness Center created successfully.');
             this.submittedWellness = false;
+            this.isEdit = false;
+            this.editWellnessData = null;
+            this.wellnessCrsService.getEditData.next('');
             this.router.navigate([], {
       queryParams: {
         tab: 'list_wellness'
@@ -181,6 +195,114 @@ if(this.wellnessForm.invalid) {
         this.swalService.alert.error(err['error']['Message']);
       });
 }
+
+  normalizeToArray(data: any): any[] {
+    if (Array.isArray(data)) {
+      return data;
+    }
+
+    if (data === null || data === undefined || data === '') {
+      return [];
+    }
+
+    if (typeof data === 'string') {
+      try {
+        const parsedData = JSON.parse(data);
+
+        if (Array.isArray(parsedData)) {
+          return parsedData;
+        }
+      } catch (error) {
+        // Fallback to comma-separated values below.
+      }
+
+      return data.split(',').map(item => item.trim()).filter(item => item);
+    }
+
+    return [data];
+  }
+
+  selectDropdownItems(sourceList: any[], selectedValues: any[], key: string): any[] {
+    return (sourceList || []).filter(item => selectedValues.includes(item[key]));
+  }
+
+  normalizeDate(date: any): any {
+    if (!date) {
+      return '';
+    }
+
+    return String(date).split('T')[0];
+  }
+
+  normalizeTime(time: any): any {
+    if (!time) {
+      return '';
+    }
+
+    const timeValue = String(time).trim();
+    return timeValue.replace(/^(\d{1,2}:\d{2}):\d{2}(\s*(AM|PM))$/i, '$1$2');
+  }
+
+  patchEditData(): void {
+    if (!this.editWellnessData || !this.wellnessForm) {
+      return;
+    }
+
+    const data = this.editWellnessData;
+    const therapyTypes = this.normalizeToArray(data.therapy_types);
+    const healthGoals = this.normalizeToArray(data.health_goals);
+    const treatments = this.normalizeToArray(data.treatments);
+    const facilities = this.normalizeToArray(data.facilities);
+    const mealPlans = this.normalizeToArray(data.meal_plans);
+
+    this.wellnessForm.patchValue({
+      therapy_types: this.selectDropdownItems(this.therapyList, therapyTypes, 'therapy_name'),
+      health_goals: this.selectDropdownItems(this.healthGoalsList, healthGoals, 'name'),
+      treatments: this.selectDropdownItems(this.treatmentList, treatments, 'treatment_name'),
+      facilities: this.selectDropdownItems(this.facilitiesList, facilities, 'name'),
+      meal_plans: this.selectDropdownItems(this.mealPlanList, mealPlans, 'meals'),
+      status: data.status === 1 || data.status === true,
+      center_name: data.center_name || '',
+      supplier_name: data.supplier_name || '',
+      supplier_email: data.supplier_email || '',
+      country_code: data.country_code || '',
+      city_code: data.city_code || '',
+      country: data.country || data.core_country_id || '',
+      state: data.state || '',
+      city: data.city || data.city_name || '',
+      address: data.address || '',
+      latitude: data.latitude || '',
+      longitude: data.longitude || '',
+      currency: data.currency || 'INR',
+      local_timezone: data.local_timezone || 'UTC+05:30',
+      stay_options: data.stay_options || '',
+      ideal_duration: data.ideal_duration || '',
+      inclusions: Array.isArray(data.inclusions) ? data.inclusions.join(', ') : (data.inclusions || ''),
+      booking_method: data.booking_method || '',
+      contract_expiry: this.normalizeDate(data.contract_expiry || data.contract_expiry_date),
+      check_in_time: this.normalizeTime(data.check_in_time),
+      check_out_time: this.normalizeTime(data.check_out_time),
+      center_policy: data.center_policy || this.wellnessForm.value.center_policy,
+      user_type: data.user_type || 'B2C',
+    });
+
+    if (!this.editCityListLoaded && this.coreCountryList && this.coreCountryList.length && (data.country || data.core_country_id)) {
+      this.editCityListLoaded = true;
+      this.getCityListAuto(data.country || data.core_country_id);
+    }
+
+    if (data.latitude && data.longitude) {
+      this.center = {
+        lat: Number(data.latitude),
+        lng: Number(data.longitude)
+      };
+
+      if (this.map && this.marker) {
+        this.map.setCenter(this.center);
+        this.marker.setPosition(this.center);
+      }
+    }
+  }
 
   formatTimeWithSeconds(time: string): string {
     if (!time) {
@@ -255,6 +377,7 @@ if(this.wellnessForm.invalid) {
     this.wellnessCrsService.fetch(data).subscribe(
       resp => {
         this.coreCountryList = resp.data.countries;
+        this.patchEditData();
          setTimeout(() => {
       // this.getCityListAuto('India');
     });
@@ -290,6 +413,7 @@ if(this.wellnessForm.invalid) {
 
   this.wellnessCrsService.fetch(data).subscribe(resp => {
     this.coreCityList = resp.data;
+    this.patchEditData();
   });
 }
 
@@ -352,6 +476,7 @@ onCityChange(event: any) {
             (resp.statusCode === 200 || resp.statusCode === 201)
           ) {
             this.packageTypeList = resp.data || [];
+            this.patchEditData();
           } else if (resp.statusCode === 404) {
             this.packageTypeList = [];
           }
@@ -370,6 +495,7 @@ onCityChange(event: any) {
             (resp.statusCode === 200 || resp.statusCode === 201)
           ) {
             this.therapyList = resp.data.filter((item: any) => item.therapy_name) || [];
+            this.patchEditData();
           } else if (resp.statusCode === 404) {
             this.therapyList = [];
           }
@@ -388,6 +514,7 @@ onCityChange(event: any) {
             (resp.statusCode === 200 || resp.statusCode === 201)
           ) {
             this.mealPlanList = resp.data || [];
+            this.patchEditData();
           } else if (resp.statusCode === 404) {
             this.mealPlanList = [];
           }
@@ -406,6 +533,7 @@ onCityChange(event: any) {
             (resp.statusCode === 200 || resp.statusCode === 201)
           ) {
             this.facilitiesList = resp.data || [];
+            this.patchEditData();
           } else if (resp.statusCode === 404) {
             this.facilitiesList = [];
           }
@@ -424,6 +552,7 @@ onCityChange(event: any) {
             (resp.statusCode === 200 || resp.statusCode === 201)
           ) {
             this.treatmentList = resp.data || [];
+            this.patchEditData();
           } else if (resp.statusCode === 404) {
             this.treatmentList = [];
           }
@@ -442,6 +571,7 @@ onCityChange(event: any) {
             (resp.statusCode === 200 || resp.statusCode === 201)
           ) {
             this.healthGoalsList = resp.data || [];
+            this.patchEditData();
           } else if (resp.statusCode === 404) {
             this.healthGoalsList = [];
           }

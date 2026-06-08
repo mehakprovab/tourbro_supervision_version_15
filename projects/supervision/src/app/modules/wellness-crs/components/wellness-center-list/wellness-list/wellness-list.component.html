@@ -115,7 +115,7 @@
                         <td class="text-left">{{ i + 1 }}</td>
                         <td>
                         <label class="switch">
-                            <input type="checkbox" [checked]="wellness.status" >
+                            <input type="checkbox" [checked]="wellness.status" [disabled]="statusUpdating[wellness.center_code]" (change)="onStatusChange(wellness, $event)" >
                             <span class="slider round"></span>
                         </label>
                        </td>
@@ -130,7 +130,12 @@
                         <td class="text-left">{{ wellness.contract_expiry_date }}</td>
                         <td class="text-left">{{ wellness.packages_count ? wellness.packages_count : 'N/A' }}</td>
                         <td class="text-left">{{ wellness.created_at ? wellness.created_at : 'N/A' }}</td>
-                        <td class="text-left">{{ wellness.status ? 'Yes' : 'No' }}</td>
+                        <td>
+                        <label class="switch">
+                            <input type="checkbox" [checked]="wellness.is_trending == 1 || wellness.is_trending === true" [disabled]="trendingUpdating[wellness.center_code]" (change)="onTrendingChange(wellness, $event)" >
+                            <span class="slider round"></span>
+                        </label>
+                       </td>
                         <td class="text-left">
                            <a title="Edit Hotel" class="p-1 text-primary" (click)="updateList(wellness,'isEditList')"><i class="fas fa-pencil-alt"></i></a>
                             <button title="Edit Hotel Image" class="p-1 text-primary" (click)="updateHotel(wellness,'isCenterImage')"> Wellness Centre Image</button>
@@ -164,4 +169,3 @@
 
 </div>
  
-

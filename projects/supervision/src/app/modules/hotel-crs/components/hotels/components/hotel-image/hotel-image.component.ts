@@ -17,6 +17,7 @@ const baseUrl = environment.baseUrl;
 export class HotelImageComponent implements OnInit {
     @Input() id;
     @Input() hotelOne: any;
+    @Input() imageFor: 'hotel' | 'wellness' = 'hotel';
     @Output() callResult = new EventEmitter<boolean>(true);
     hotelImageForm: FormGroup;
     logoConfig:FormGroup;
@@ -58,6 +59,34 @@ export class HotelImageComponent implements OnInit {
     private router:Router,
     // private apiHandlerService:apiHandlerService
 ) { }
+
+  get isWellnessImageContext(): boolean {
+    return this.imageFor === 'wellness';
+  }
+
+  get entityLabel(): string {
+    return this.isWellnessImageContext ? 'Wellness Centre' : 'Hotel';
+  }
+
+  get entityName(): string {
+    return this.isWellnessImageContext ? this.hotelOne?.center_name : this.hotelOne?.hotel_name;
+  }
+
+  get addImageTopic(): string {
+    return this.isWellnessImageContext ? 'addWellnessImage' : 'addHotelImage';
+  }
+
+  get imageListTopic(): string {
+    return this.isWellnessImageContext ? 'wellnessImageList' : 'hotelImageList';
+  }
+
+  get deleteImageTopic(): string {
+    return this.isWellnessImageContext ? 'deleteWellnessImage' : 'deleteHotelImage';
+  }
+
+  get primaryImageTopic(): string {
+    return this.isWellnessImageContext ? 'wellnessPrimaryImage' : 'primaryImage';
+  }
 
   ngOnInit() {
     console.log("enters",)
@@ -154,13 +183,13 @@ console.log("id",this.id)
                 console.log("file",file)
                 formData.append('image', file, file.name);
               });
-            data['topic'] = 'addHotelImage'; 
+            data['topic'] = this.addImageTopic;
                  this.loading =true;
         this.hotelCrsService.addHotelLogo(data).subscribe(resp => {
             if (resp.statusCode == 201) {
             
                 log.debug("Image Uploaded Sucessfully...!")
-                this.swalService.alert.success("Image Uploaded Sucessfully...!");
+                this.swalService.alert.success(`${this.entityLabel} Image Uploaded Sucessfully...!`);
                 this.loading =false;
                 this.addedHotelImage = resp
                 // this.hotelForm.reset();
@@ -208,9 +237,10 @@ getImage(img) {
     return `${baseUrl + "/" + img}`;
 }
 getHotelImageList(){
-    let hotel_id = this.hotelOne['id']
-    const data = [{ hotel_id: hotel_id, offset: 0, limit: 10 }]
-    data['topic'] = 'hotelImageList';
+    const data = [this.isWellnessImageContext
+        ? { id: this.hotelOne['id'], offset: 0, limit: 10 }
+        : { hotel_id: this.hotelOne['id'], offset: 0, limit: 10 }]
+    data['topic'] = this.imageListTopic;
     this.hotelCrsService.fetch(data).subscribe(resp => {
         if (resp.statusCode == 200) {
             this.hotelImage =  resp['data'];
@@ -228,6 +258,11 @@ getHotelImageList(){
     
 // }
 goToHotelList() {
+    if (this.isWellnessImageContext) {
+        this.callResult.emit(true);
+        return;
+    }
+
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
         this.router.navigate(['/hotels/hotel-crs-lists'], { queryParams: { tab: 'list_hotels' } });
     });
@@ -237,13 +272,14 @@ delete(imageData){
     this.swalService.alert.delete((action)=>{
         if(action){
             console.log("imageData",imageData)
-            let image_id = this.hotelOne['id']
-            const data = [{ id: image_id ,image_url:imageData}]
-            data['topic'] = 'deleteHotelImage';
+            const data = [this.isWellnessImageContext
+                ? { id: this.hotelOne['id'], image_url: imageData }
+                : { id: this.hotelOne['id'], image_url: imageData }]
+            data['topic'] = this.deleteImageTopic;
             this.hotelCrsService.fetch(data).subscribe(response => {
              
                         if (response.statusCode == 200 || response.statusCode == 201 ) {
-                        this.swalService.alert.success(`Hotel Image has been deleted successfully`);
+                        this.swalService.alert.success(`${this.entityLabel} Image has been deleted successfully`);
                         this.getHotelImageList()
                         }
                     },(err: HttpErrorResponse) => {
@@ -278,9 +314,10 @@ openImage(imageUrl: string): void {
   onPublish(checked:boolean,index,publishRecord:any){
     console.log("index",index)
     console.log("publishRecord",publishRecord)
-    let hotel_id = this.hotelOne['id']
-     const data = [{ id: hotel_id,index:index, offset: 0, limit: 10 }]
-    data['topic'] = 'primaryImage';
+     const data = [this.isWellnessImageContext
+        ? { id: this.hotelOne['id'], index: index, offset: 0, limit: 10 }
+        : { id: this.hotelOne['id'], index: index, offset: 0, limit: 10 }]
+    data['topic'] = this.primaryImageTopic;
     this.hotelCrsService.fetch(data).subscribe(resp => {
    
   

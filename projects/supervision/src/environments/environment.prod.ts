@@ -13,10 +13,10 @@ export const environment = {
 
     
     
-    baseUrl:'http://tourbro.com:3001/sa',
-    b2b_url: 'http://54.92.243.81:2003',
-    b2c_url: 'http://tourbro.com:3002'
-    // baseUrl:'http://192.168.2.127:4013/sa',
-    // b2b_url: 'http://192.168.2.127:4019',
-    // b2c_url: 'http://192.168.2.127:4017'
+    baseUrl:'https://tourbro.com:3001/sa',
+    b2b_url: 'https://54.92.243.81:2003',
+    b2c_url: 'https://tourbro.com:3002'
+    // baseUrl:'https://192.168.2.127:4013/sa',
+    // b2b_url: 'https://192.168.2.127:4019',
+    // b2c_url: 'https://192.168.2.127:4017'
 };

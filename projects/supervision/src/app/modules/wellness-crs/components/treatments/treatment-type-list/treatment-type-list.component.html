@@ -49,6 +49,8 @@
                     <th>Status</th>
                     <th>Therapy List</th>
                     <th>Treatment Type</th>
+                    <th>Description</th>
+                    <th>Image</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -66,6 +68,14 @@
                     </td>
                     <td>{{ facility.therapy_name }}</td>
                     <td>{{ facility.treatment_name }}</td>
+                    <td>{{ facility.description || '-' }}</td>
+                    <td>
+                        <img *ngIf="facility.image; else noTreatmentImage"
+                            [src]="getTreatmentImageUrl(facility.image)"
+                            alt="Treatment Image"
+                            class="treatment-image">
+                        <ng-template #noTreatmentImage>-</ng-template>
+                    </td>
                     <td class="action-btn">
                         <button class="btn btn-sm btn-primary mr-2" type="button" (click)="onUpdate(facility)">Update</button>
                         <button class="btn btn-sm btn-secondary" type="button" (click)="onDelete(facility.id)">Delete</button>

@@ -1,5 +1,6 @@
 <button routerLink="/report/b2c-flight" class="css">Flight</button>
 <button routerLink="/report/b2c-hotel" class="css ml-3">Hotel</button>
+<button routerLink="/report/b2c-wellness" class="css ml-3">Wellness</button>
 <button routerLink="/report/b2c-car" class="css ml-3">Car</button>
 
 <div class="">
@@ -31,6 +32,16 @@
       </li>
 
       <li [ngbNavItem]="3">
+        <a ngbNavLink>
+          <span>Wellness Bookings</span>
+        </a>
+
+        <ng-template ngbNavContent>
+          <app-b2c-wellness-report></app-b2c-wellness-report>
+        </ng-template>
+      </li>
+
+      <li [ngbNavItem]="4">
         <a ngbNavLink>
           <span>Car Bookings</span>
         </a>

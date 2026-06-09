@@ -178,6 +178,16 @@
                               </a>
                             </div>
 
+                            <div class="vsm-item" *ngIf="isSubMenuExists('B2C Hotel Report',REPORTS)">
+                              <a routerLinkActive="active-item" routerLink='/report/b2c-wellness'
+                                class="vsm-link pl-10">
+                                <span class="vsm-title pl-10">
+                                  <i class="fa fa-heartbeat"></i>
+                                  Wellness
+                                </span>
+                              </a>
+                            </div>
+
                             <div class="vsm-item" *ngIf="isSubMenuExists('B2C Tour Report',REPORTS)">
                               <a routerLinkActive="active-item" routerLink='/report/b2c-tour' class="vsm-link pl-10">
                                 <span class="vsm-title pl-10">

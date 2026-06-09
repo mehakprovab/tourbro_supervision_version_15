@@ -132,3 +132,9 @@ input:checked + .slider:before {
 }
 .table thead th{border-bottom: none;}
 .table th,.table td{border-top: none;}
+.health-goal-image {
+  width: 70px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px;
+}

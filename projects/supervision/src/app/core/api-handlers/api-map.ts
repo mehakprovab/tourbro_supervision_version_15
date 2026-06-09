@@ -206,9 +206,11 @@ export const apiMap = {
   paymmentGatewayRequest: `${baseUrl}/ws-apis/updateWsPaymentGateWays`, // update payment gateway request
   updateAirlineList: `${baseUrl}/ws-apis/updateWsBlockAirline`, // update block airline list
   b2cHotelReport: `${baseUrl}/dashboard/report/b2cHotelReport`,
+  b2cWellnessReport: `${baseUrl}/dashboard/report/b2cWellnessReport`,
   b2cFlightReport: `${baseUrl}/dashboard/report/b2cFlightReport`,
   b2cCarReport: `${baseUrl}/dashboard/report/b2cCarReport`,
   b2cHotelVoucher: `${baseUrl}/dashboard/report/hotelVoucher`,
+  wellnessVoucher: `${baseUrl}/dashboard/report/wellnessVoucher`,
   b2cCabVoucher: `${baseUrl}/dashboard/report/carVoucher`,
   b2cFlightVoucher: `${baseUrl}/dashboard/report/flightVoucher`,
   b2cCarVoucher: `${baseUrl}/dashboard/report/carVoucher`,
@@ -765,6 +767,7 @@ export const apiMap = {
   wellnessCenterList: `${baseUrl}/wellness/wellnessCenterList`,
   searchWellnessCenter: `${baseUrl}/wellness/searchWellnessCenters`,
   addWellnessCenter: `${baseUrl}/wellness/addWellnessCenter`,
+  editCenter: `${baseUrl}/wellness/editCenter`,
   updateWellnessCenter: `${baseUrl}/wellness/updateWellnessCenter`,
   wellnessStatusUpdate: `${baseUrl}/wellness/statusUpdate`,
   wellnessSetTrending: `${baseUrl}/wellness/setTrending`,

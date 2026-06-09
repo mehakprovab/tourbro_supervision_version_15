@@ -238,7 +238,7 @@ getImage(img) {
 }
 getHotelImageList(){
     const data = [this.isWellnessImageContext
-        ? { id: this.hotelOne['id'], offset: 0, limit: 10 }
+        ? { wellness_id: this.hotelOne['wellness_id'] || this.hotelOne['id'], offset: 0, limit: 10 }
         : { hotel_id: this.hotelOne['id'], offset: 0, limit: 10 }]
     data['topic'] = this.imageListTopic;
     this.hotelCrsService.fetch(data).subscribe(resp => {

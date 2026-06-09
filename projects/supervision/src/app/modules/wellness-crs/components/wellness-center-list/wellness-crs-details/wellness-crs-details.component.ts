@@ -81,7 +81,7 @@ export class WellnessCrsDetailsComponent implements OnInit, AfterViewInit {
     this.loggedUserData = userData ? JSON.parse(userData) : null;
     this.wellnessCrsService.getEditData.subscribe((data) => {
       console.log(data);
-      if (data && data.center_code) {
+      if (data && (data.center_code || data.id)) {
         this.editWellnessData = data;
         this.isEdit = true;
         this.editCityListLoaded = false;
@@ -139,7 +139,8 @@ if(this.wellnessForm.invalid) {
     
     const formData = {
   ...this.wellnessForm.value,
-...(this.isEdit && { center_code: this.editWellnessData.center_code }),
+...(this.isEdit && this.editWellnessData.id && { id: this.editWellnessData.id }),
+...(this.isEdit && this.editWellnessData.center_code && { center_code: this.editWellnessData.center_code }),
 contract_expiry: this.wellnessForm.value.contract_expiry || null,
 check_in_time: this.formatTimeWithSeconds(this.wellnessForm.value.check_in_time),
 check_out_time: this.formatTimeWithSeconds(this.wellnessForm.value.check_out_time),

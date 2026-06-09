@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WellnessCrsService } from '../../../wellness-crs.service';
-import { FormBuilder,FormControl, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -23,6 +23,8 @@ export class AddUpdateTreatmentTypeListComponent implements OnInit {
   public submitted: boolean = false;
   public isEdit: boolean = false;
   public dropdownSettingsForTherapy={};
+  public fileToUpload: File = null;
+  public imageSrc: any;
 
   ngOnInit() {
 
@@ -41,8 +43,11 @@ export class AddUpdateTreatmentTypeListComponent implements OnInit {
         this.addUpdateTreatmentTypeListForm.patchValue({
           treatment_name: resp.treatment_name,
           therapy_name: resp.therapy_name,
+          description: resp.description || '',
+          image_url: resp.image_url || '',
           status: (resp.status === '1' || resp.status === 1) ? true : false
         });
+        this.imageSrc = resp.image_url || '';
       } else {
         this.isEdit = false;
       }
@@ -51,11 +56,52 @@ export class AddUpdateTreatmentTypeListComponent implements OnInit {
   }
 
   createForm() {
-this.addUpdateTreatmentTypeListForm = this.formBuilder.group({
+    this.addUpdateTreatmentTypeListForm = this.formBuilder.group({
       treatment_name: ['', Validators.required],
       therapy_name: ['', Validators.required],
+      description: ['', Validators.required],
+      image_url: [''],
       status: [true]
     });
+  }
+
+  previewImage(event: any) {
+    const file = event.target.files && event.target.files.length ? event.target.files[0] : null;
+
+    if (!file) {
+      return;
+    }
+
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/svg+xml', 'image/webp'];
+    const maxSize = 500 * 1024;
+
+    if (!allowedTypes.includes(file.type)) {
+      this.swalService.alert.oops('Only JPG, JPEG, PNG, SVG, and WEBP formats are allowed.');
+      event.target.value = '';
+      return;
+    }
+
+    if (file.size > maxSize) {
+      this.swalService.alert.oops('Image exceeds 500 KB size limit.');
+      event.target.value = '';
+      return;
+    }
+
+    this.fileToUpload = file;
+    this.addUpdateTreatmentTypeListForm.patchValue({ image_url: file.name });
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imageSrc = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  resetForm() {
+    this.addUpdateTreatmentTypeListForm.reset({ status: true });
+    this.fileToUpload = null;
+    this.imageSrc = '';
+    this.submitted = false;
   }
 
   onSubmit() {
@@ -63,11 +109,27 @@ this.addUpdateTreatmentTypeListForm = this.formBuilder.group({
     if(this.addUpdateTreatmentTypeListForm.invalid) {
       return;
     }
-    if(this.isEdit) {
-      this.addUpdateTreatmentTypeListForm.value['id'] = this.wellnessCrsService.getEditData.value.id;
+
+    if (!this.isEdit && !this.fileToUpload) {
+      this.swalService.alert.oops('Please select image to upload.');
+      return;
     }
-     let data = Object.assign({}, this.addUpdateTreatmentTypeListForm.value);
-      data = [data];
+
+      const formData = new FormData();
+      formData.append('treatment_name', this.addUpdateTreatmentTypeListForm.value.treatment_name);
+      formData.append('therapy_name', this.addUpdateTreatmentTypeListForm.value.therapy_name);
+      formData.append('description', this.addUpdateTreatmentTypeListForm.value.description);
+      formData.append('status', this.addUpdateTreatmentTypeListForm.value.status ? '1' : '0');
+
+      if(this.isEdit) {
+        formData.append('id', this.wellnessCrsService.getEditData.value.id);
+      }
+
+      if (this.fileToUpload) {
+        formData.append('image', this.fileToUpload, this.fileToUpload.name);
+      }
+
+      let data: any = [formData];
       data['topic'] = this.isEdit ? 'updateTreatment' : 'addTreatment';
       this.wellnessCrsService.create(data).subscribe(resp => {
           if (resp.Status === true && (resp.statusCode === 200 || resp.statusCode === 201)) {
@@ -80,6 +142,8 @@ this.addUpdateTreatmentTypeListForm = this.formBuilder.group({
   }
 );
               this.submitted = false;
+              this.fileToUpload = null;
+              this.imageSrc = '';
               this.swalService.alert.success();
           } else {
               this.swalService.alert.error();

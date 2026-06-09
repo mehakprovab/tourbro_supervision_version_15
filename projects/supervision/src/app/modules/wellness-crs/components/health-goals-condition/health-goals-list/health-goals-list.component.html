@@ -50,6 +50,8 @@
                     <th>Sl. No</th>
                     <th>Status</th>
                     <th>Health Goals/Conditions-Type</th>
+                    <th>Description</th>
+                    <th>Image</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -66,6 +68,14 @@
                         </label>
                     </td>
                     <td>{{ facility.name }}</td>
+                    <td>{{ facility.description || '-' }}</td>
+                    <td>
+                        <img *ngIf="facility.image_url || facility.image; else noHealthGoalImage"
+                            [src]="getHealthGoalImageUrl(facility)"
+                            alt="Health Goals/Conditions Image"
+                            class="health-goal-image">
+                        <ng-template #noHealthGoalImage>-</ng-template>
+                    </td>
 
                     <td class="action-btn">
                         <button class="btn btn-sm btn-primary mr-2" type="button" (click)="onUpdate(facility)">Update</button>

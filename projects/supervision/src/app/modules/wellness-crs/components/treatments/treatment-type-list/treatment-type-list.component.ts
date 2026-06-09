@@ -21,6 +21,7 @@ export class TreatmentTypeListComponent implements OnInit {
   public treatmentTypeList: any = [];
   public searchText = "";
   public filteredTreatmentTypeList: any[] = [];
+  public imageBaseUrl = 'http://tourbro.com/dev/node/dist/apps/supervision/';
 
   ngOnInit() {
     this.getAllTreatmentTypes();
@@ -55,6 +56,18 @@ export class TreatmentTypeListComponent implements OnInit {
       item.treatment_name.toLowerCase().includes(search) ||
       item.therapy_name.toLowerCase().includes(search)
     );
+  }
+
+  getTreatmentImageUrl(imageUrl: string) {
+    if (!imageUrl) {
+      return '';
+    }
+
+    if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+      return imageUrl;
+    }
+
+    return `${this.imageBaseUrl}${imageUrl.replace(/^\/+/, '')}`;
   }
 
   onStatusChange(event: any, data1: any) {

@@ -309,7 +309,7 @@
                                             <input type="text" formControlName="city" placeholder="City" class="form-control" 
     list="city-list" (input)="filterCities($event.target.value)">
 <datalist id="city-list">
-    <option *ngFor="let city of registerCities" [value]="city.cityName"></option>
+    <option *ngFor="let city of filteredCities; trackBy: trackByCity" [value]="city.cityName || city.name"></option>
 </datalist>
                                             <div *ngIf="submitted && registerForm.get('city')?.errors?.required" class="text-danger">
                                                 City is required

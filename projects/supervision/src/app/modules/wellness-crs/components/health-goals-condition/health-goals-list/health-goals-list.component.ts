@@ -21,6 +21,7 @@ export class HealthGoalsListComponent implements OnInit {
   public healthGoalsList: any = [];
   public searchText = "";
   public filteredHealthGoalsList: any[] = [];
+  public imageBaseUrl = 'http://tourbro.com/dev/node/dist/apps/supervision/';
 
    ngOnInit() {
     this.getAllHealthGoals();
@@ -50,8 +51,23 @@ export class HealthGoalsListComponent implements OnInit {
       return;
     }
     this.filteredHealthGoalsList = this.healthGoalsList.filter((item) =>
-      item.name.toLowerCase().includes(search),
+      item.name.toLowerCase().includes(search) ||
+      (item.description || '').toLowerCase().includes(search),
     );
+  }
+
+  getHealthGoalImageUrl(item: any) {
+    const imageUrl = item && (item.image_url || item.image);
+
+    if (!imageUrl) {
+      return '';
+    }
+
+    if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+      return imageUrl;
+    }
+
+    return `${this.imageBaseUrl}${imageUrl.replace(/^\/+/, '')}`;
   }
 
   onStatusChange(event: any, data1: any) {
@@ -61,6 +77,7 @@ export class HealthGoalsListComponent implements OnInit {
     data["0"] = {
       id: data1.id,
       name: data1.name,
+      description: data1.description,
       status: status,
     };
     this.wellnessCrsService.create(data).subscribe((resp) => {

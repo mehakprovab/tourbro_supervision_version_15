@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         // }
         if (currentUser && currentUser['auth_role_id'] === 7 || currentUser && currentUser['auth_role_id'] === 6 ) {
             if (state.url.startsWith('/hotels/hotel-crs-lists') || state.url.startsWith('/report/b2c-hotel') || state.url.startsWith('/report/b2b-hotel') || state.url.startsWith('/report/b2c-activity')
-                || state.url.startsWith('/report/b2c-transfer') || state.url.startsWith('/report/b2c-tour') || state.url.startsWith('/report/b2c-hotel-enquiry')
+                || state.url.startsWith('/report/b2c-transfer') || state.url.startsWith('/report/b2c-tour') || state.url.startsWith('/report/b2c-wellness') || state.url.startsWith('/report/b2c-hotel-enquiry')
                 || state.url.startsWith('/report/b2c-tour-enquiry') || state.url.startsWith('/report/b2b-activity') || state.url.startsWith('/report/b2b-transfer') || 
                 state.url.startsWith('/report/b2b-tour')) {
                 return true;

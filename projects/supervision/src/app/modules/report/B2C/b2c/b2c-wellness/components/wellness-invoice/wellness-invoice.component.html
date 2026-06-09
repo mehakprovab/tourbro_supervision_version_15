@@ -1,0 +1,61 @@
+<div class="mb-3 container">
+  <a [routerLink]="['/report/b2c-wellness']"><button class="btnStyle">Back</button></a>&nbsp;
+  <button class="btnStyle" (click)="printInvoice()">Print</button>&nbsp;
+  <button class="btnStyle" (click)="downloadPdf()">Download Invoice</button>
+</div>
+
+<div id="wellness-invoice" #print_invoice class="invoice-card" *ngIf="invoiceData">
+  <div class="invoice-header">
+    <div>
+      <h3>Wellness Invoice</h3>
+      <p>Invoice No: <strong>{{ invoiceNumber }}</strong></p>
+      <p>Application Reference: <strong>{{ booking.AppReference }}</strong></p>
+      <p>Booked On: {{ booking.CreatedDatetime || booking.created_at }}</p>
+    </div>
+    <div class="text-right">
+      <p>Status: <strong>{{ booking.Status }}</strong></p>
+      <p>Payment: <strong>{{ booking.PaymentStatus || 'N/A' }}</strong></p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h5>Booking Details</h5>
+    <p>Center: {{ booking.WellnessCenterName }} ({{ booking.CenterCode }})</p>
+    <p>Package: {{ packageDetails.PackageName || 'N/A' }}</p>
+    <p>Check-in: {{ booking.CenterCheckIn | date:'dd/MM/yyyy' }}</p>
+    <p>Check-out: {{ booking.CenterCheckOut | date:'dd/MM/yyyy' }}</p>
+  </div>
+
+  <table class="table table-bordered mt-3">
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th class="text-right">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Supplier Netfare</td>
+        <td class="text-right">{{ booking.API_Payable_Price || center.SupplierPrice || 0 }} {{ booking.Currency }}</td>
+      </tr>
+      <tr>
+        <td>Admin Markup</td>
+        <td class="text-right">{{ booking.AdminMarkup || 0 }} {{ booking.Currency }}</td>
+      </tr>
+      <tr>
+        <td>Convenience Fee</td>
+        <td class="text-right">{{ booking.ConvinenceAmount || 0 }} {{ booking.Currency }}</td>
+      </tr>
+      <tr>
+        <td>Discount</td>
+        <td class="text-right">{{ booking.Discount || center.Price?.EligibleDiscount || 0 }} {{ booking.Currency }}</td>
+      </tr>
+      <tr>
+        <th>Total</th>
+        <th class="text-right">{{ booking.TotalAmount || 0 }} {{ booking.Currency }}</th>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ngx-loading [show]="loading"></ngx-loading>

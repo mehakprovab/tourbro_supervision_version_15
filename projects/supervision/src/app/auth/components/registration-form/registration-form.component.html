@@ -285,7 +285,7 @@
                                             <label for="country" class="required">Select Country</label>
                                             <select formControlName="country" class="form-control" (change)="onCountryChange($event)">
     <option value="">Select Country</option>
-    <option *ngFor="let country of registerCountries" [value]="country.name">
+    <option *ngFor="let country of registerCountries; trackBy: trackByCountry" [value]="country.id">
         {{ country.name }}
     </option>
 </select>
@@ -300,7 +300,7 @@
                                             <label for="state" class="required">Select State</label>
                                            <select formControlName="state" class="form-control" (change)="onStateChange($event)">
     <option value="">Select State</option>
-    <option *ngFor="let state of filteredStates" [value]="state.name">
+    <option *ngFor="let state of filteredStates; trackBy: trackByState" [value]="state.id">
         {{ state.name }}
     </option>
 </select>
@@ -316,7 +316,7 @@
                                             <input type="text" formControlName="city" placeholder="City" class="form-control" 
     list="city-list" (input)="filterCities($event.target.value)">
 <datalist id="city-list">
-    <option *ngFor="let city of registerCities" [value]="city.cityName"></option>
+    <option *ngFor="let city of filteredCities; trackBy: trackByCity" [value]="city.cityName || city.name"></option>
 </datalist>
                                             <div *ngIf="submitted && registerForm.get('city')?.errors?.required" class="text-danger">
                                                 City is required

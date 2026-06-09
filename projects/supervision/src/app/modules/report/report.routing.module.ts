@@ -8,6 +8,9 @@ import { B2cComponent } from './B2C/b2c/b2c.component';
 import { B2cCarComponent } from './B2C/b2c/b2c-car/b2c-car.component';
 import { B2cFlightComponent } from './B2C/b2c/b2c-flight/b2c-flight.component';
 import { B2cHotelComponent } from './B2C/b2c/b2c-hotel/b2c-hotel.component';
+import { B2cWellnessReportComponent } from './B2C/b2c/b2c-wellness/b2c-wellness.component';
+import { WellnessVoucherComponent } from './B2C/b2c/b2c-wellness/components/wellness-voucher/wellness-voucher.component';
+import { WellnessInvoiceComponent } from './B2C/b2c/b2c-wellness/components/wellness-invoice/wellness-invoice.component';
 import { AuthGuard } from '../../auth/auth.guard';
 import { HotelVoucherComponent } from './B2C/b2c/b2c-hotel/components/hotel-voucher/hotel-voucher.component';
 import { HotelInvoiceComponent } from './B2C/b2c/b2c-hotel/components/hotel-invoice/hotel-invoice.component';
@@ -123,6 +126,22 @@ const routes: Routes = [
         path: 'b2c-hotel',
         canActivate: [AuthGuard],
         component: B2cHotelComponent,
+        data: {extraParameter: 'b2c-reports-Menus'}
+      },
+      {
+        path: 'b2c-wellness/voucher',
+        component: WellnessVoucherComponent,
+        data: {extraParameter: ''}
+      },
+      {
+        path: 'b2c-wellness/invoice',
+        component: WellnessInvoiceComponent,
+        data: {extraParameter: ''}
+      },
+      {
+        path: 'b2c-wellness',
+        canActivate: [AuthGuard],
+        component: B2cWellnessReportComponent,
         data: {extraParameter: 'b2c-reports-Menus'}
       },
             {

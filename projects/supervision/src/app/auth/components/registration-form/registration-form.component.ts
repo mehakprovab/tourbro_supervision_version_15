@@ -27,6 +27,8 @@ registerForm: FormGroup;
   registerStates: any[] = [];
   filteredStates: any[] = [];
   filteredCities: any[] = [];
+  private stateRequestId = 0;
+  private cityRequestId = 0;
   
   // Available services
   availableServices = [
@@ -60,8 +62,7 @@ registerForm: FormGroup;
 
   ngOnInit() {
     this.createForm();
-   this.loadCountries();
-    this.loadStates();
+    this.loadCountries();
     // this.loadCities();
      this.getSelectedServicesFromQueryParams();
   }
@@ -70,7 +71,7 @@ registerForm: FormGroup;
     if (stateId) {
         this.filteredCities = this.registerCities.filter(
             (city) => (city.state_id == stateId || city.stateId == stateId) && 
-            city.name.toLowerCase().includes(searchTerm.toLowerCase())
+            (city.cityName || city.name || '').toLowerCase().includes(searchTerm.toLowerCase())
         );
     }
 }
@@ -168,15 +169,37 @@ loadCountries() {
     });
 }
 
-loadStates() {
-    const req = {};
+trackByCountry(index: number, item: any) {
+  return item.id || item.name || index;
+}
+
+trackByState(index: number, item: any) {
+  return item.id || item.name || index;
+}
+
+trackByCity(index: number, item: any) {
+  return item.id || item.cityName || item.name || index;
+}
+
+loadStates(countryId: string) {
+    const requestId = ++this.stateRequestId;
+    const req = { country_id: Number(countryId) };
     this.apiHandlerServices.apiHandler('getMasterState', 'POST', {}, {}, req).subscribe({
         next: (res) => {
+            if (requestId !== this.stateRequestId) {
+                return;
+            }
             if (res.Status === true && (res.statusCode === 201 || res.statusCode === 200)) {
                 this.registerStates = res.data.data;
+                this.filteredStates = this.registerStates || [];
             }
         },
         error: (err) => {
+            if (requestId !== this.stateRequestId) {
+                return;
+            }
+            this.registerStates = [];
+            this.filteredStates = [];
             console.error(err);
         }
     });
@@ -196,34 +219,41 @@ loadStates() {
 //     });
 // }
 loadCitiesByCountry(countryId: string) {
+    const requestId = ++this.cityRequestId;
     const req = { id: Number(countryId) };
     this.apiHandlerServices.apiHandler('getMasterCityList', 'POST', {}, {}, req).subscribe({
         next: (res) => {
+            if (requestId !== this.cityRequestId) {
+                return;
+            }
             if (res.Status === true && (res.statusCode === 201 || res.statusCode === 200)) {
-                this.registerCities = res.data.data;
+                this.registerCities = res.data.data || [];
             }
         },
         error: (err) => {
+            if (requestId !== this.cityRequestId) {
+                return;
+            }
+            this.registerCities = [];
+            this.filteredCities = [];
             console.error(err);
         }
     });
 }
 onCountryChange(event: Event): void {
     const countryId = (event.target as HTMLSelectElement).value;
-    
-    // Filter states by country
-    this.filteredStates = this.registerStates.filter(
-        (state) => state.country_id == countryId || state.countryId == countryId
-    );
-    
-    // Load cities by country
-    if (countryId) {
-        this.loadCitiesByCountry(countryId);
-    }
-    
+
     this.registerForm.controls['state'].setValue('');
     this.registerForm.controls['city'].setValue('');
+    this.registerStates = [];
+    this.filteredStates = [];
+    this.registerCities = [];
     this.filteredCities = [];
+
+    if (countryId) {
+        this.loadStates(countryId);
+        this.loadCitiesByCountry(countryId);
+    }
 }
 
 onStateChange(event: Event): void {

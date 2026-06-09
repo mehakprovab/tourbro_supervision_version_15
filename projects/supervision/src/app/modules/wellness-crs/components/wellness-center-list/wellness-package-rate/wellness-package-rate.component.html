@@ -3,25 +3,19 @@
         <h5>Wellness Package Images</h5>
     </div>
 
-
     <ul ngbNav #tabs="ngbNav" class="tabs-animated custom_tab crs-tab-ui" [(activeId)]="activeIdString" (navChange)="onTabSelected($event)">
-
-
         <li [ngbNavItem]="'list_wellness_package'">
-
             <a ngbNavLink>
                 <span>Package List</span>
             </a>
 
             <ng-template ngbNavContent>
-                <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft"
-                    #scrollOne>
+                <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft" #scrollOne>
                     <div class="div1"></div>
                 </div>
 
                 <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
                     <div class="div2 invisible-scrollbar">
-
                         <div class="table-respons">
                             <table class="table table-borderless table-striped table-hover">
                                 <thead>
@@ -35,17 +29,13 @@
                                         <th scope="col" class="text-left text-nowrap">Duration</th>
                                         <th scope="col" class="text-left text-nowrap">Actions</th>
                                     </tr>
-
                                 </thead>
                                 <tr *ngIf="!wellnessList?.length">
                                     <td colspan="12">
-                                        <h4 class="text-muted text-center">
-                                            No Data Found!
-                                        </h4>
+                                        <h4 class="text-muted text-center">No Data Found!</h4>
                                     </td>
                                 </tr>
                                 <tbody>
-
                                     <tr *ngFor="let wellness of wellnessList; let i = index" class="cursor-pointer">
                                         <td class="text-left">{{ i + 1 }}</td>
                                         <td>
@@ -56,25 +46,24 @@
                                         </td>
                                         <td class="text-left">{{ wellness.package_code }}</td>
                                         <td class="text-left address-col">{{ wellness.package_name }}</td>
-                                        <td class="text-left address-col">{{ getPackageType(wellness.therapy_types) }}
-                                        </td>
-                                        <td class="text-left address-col">{{ getPackageType(wellness.package_types) }}
-                                        </td>
+                                        <td class="text-left address-col">{{ getPackageType(wellness.therapy_types) }}</td>
+                                        <td class="text-left address-col">{{ getPackageType(wellness.package_types) }}</td>
                                         <td class="text-left">{{ getPackageType(wellness.duration_days) }}</td>
-
                                         <td class="text-left">
-                                            <a title="Edit Hotel" class="p-1 text-primary"
-                                                (click)="updatePackageRate(wellness)"><i
-                                                    class="fas fa-pencil-alt"></i></a>
-                                            <button title="Edit Hotel Image" class="p-1 text-primary"
-                                                (click)="updateCenterImage(wellness)"> Wellness Centre
-                                                Image</button>
-                                            <button title="Edit Hotel Tax" class="p-1 text-primary"
-                                                (click)="addPrice(wellness,'addPrice')">Add Price</button>
-                                            <button class="p-1 text-primarys"
-                                                (click)="deletePackageRate(wellness.id)"><a title="Delete"><i
-                                                        class="fa fa-trash"></i></a></button>
-
+                                            <div class="action-buttons">
+                                                <button type="button" title="Edit Package" class="btn btn-sm action-btn action-btn-primary"
+                                                    (click)="updatePackageRate(wellness)">
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </button>
+                                                <button type="button" title="Package Images" class="btn btn-sm action-btn action-btn-primary"
+                                                    (click)="updateCenterImage(wellness)">Images</button>
+                                                <button type="button" title="Add Price" class="btn btn-sm action-btn action-btn-primary"
+                                                    (click)="addPrice(wellness,'addPrice')">Add Price</button>
+                                                <button type="button" title="Delete" class="btn btn-sm action-btn action-btn-dark"
+                                                    (click)="deletePackageRate(wellness.id)">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -82,69 +71,110 @@
                         </div>
                     </div>
                 </div>
-
             </ng-template>
-
         </li>
-        <li [ngbNavItem]="'add_wellness_package'">
 
+        <li [ngbNavItem]="'add_wellness_package'">
             <a ngbNavLink>
                 <span>Add Package</span>
             </a>
 
             <ng-template ngbNavContent>
-                <div class="card adminInner" *ngIf="!showPackageImageUpload">
-
-
+                <!-- Add Package Form Section -->
+                <div class="card adminInner" *ngIf="!showPackageImageUpload && packageForm && isDataLoaded">
                     <div class="Queues mt-2 mb-2">
                         <form [formGroup]="packageForm" (ngSubmit)="onSubmit()">
                             <div class="row">
+                                <!-- Package Type Dropdown -->
                                 <div class="col-4 pr-0">
                                     <div class="form-group">
-                                        <label for="centercode">Package Type
-                                        </label>
-                                        <ng-multiselect-dropdown formControlName="package_types"
-                                            [placeholder]="'Select Package Type'" [data]="packageList"
-                                            [settings]="dropdownSettingsForPackageTypes"
-                                            class="form-control meal-plan-dropdown">
-                                        </ng-multiselect-dropdown>
+                                        <label for="centercode">Package Type</label>
+                                        <div class="multi-select" (click)="$event.stopPropagation()">
+                                            <button type="button" class="form-control multi-select-toggle"
+                                                (click)="toggleDropdown('package_types')">
+                                                {{ getSelectedText('package_types', 'Select Package Type') }}
+                                            </button>
+                                            <div class="multi-select-menu" *ngIf="isDropdownOpen('package_types')">
+                                                <label class="multi-select-option" *ngFor="let packageType of packageList">
+                                                    <input type="radio" name="package_type"
+                                                        [checked]="isSelected('package_types', packageType.name)"
+                                                        (change)="selectSingle('package_types', packageType.name)">
+                                                    <span>{{ packageType.name }}</span>
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <!-- Package Name -->
                                 <div class="col-4">
                                     <div class="form-group">
                                         <label for="centrename">Package Name</label>
                                         <input type="text" class="form-control form-control-sm nrm_input"
                                             formControlName="package_name" placeholder="Package Name" id="centrename">
+                                        <div *ngIf="packageForm.get('package_name')?.invalid && packageForm.get('package_name')?.touched" 
+                                            class="text-danger">
+                                            Package Name is required
+                                        </div>
                                     </div>
                                 </div>
+
+                                <!-- Description -->
                                 <div class="col-4 pl-0">
                                     <div class="form-group">
                                         <label for="email">Description</label>
                                         <input type="text" class="form-control form-control-sm nrm_input"
-                                            formControlName="description" placeholder="Enter Description " id="email">
-                                    </div>
-                                </div>
-                                <div class="col-6 pr-0">
-                                    <div class="form-group">
-                                        <label for="phone">Therapy Type</label>
-                                        <ng-multiselect-dropdown formControlName="therapy_types"
-                                            [placeholder]="'Select Therapy Type'" [data]="therapyList"
-                                            [settings]="dropdownSettingsForTherapy"
-                                            class="form-control meal-plan-dropdown">
-                                        </ng-multiselect-dropdown>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="supplier_name">Duration</label>
-                                        <ng-multiselect-dropdown formControlName="duration_days"
-                                            [placeholder]="'Select Duration'" [data]="durationList"
-                                            [settings]="dropdownSettingsForDuration"
-                                            class="form-control meal-plan-dropdown">
-                                        </ng-multiselect-dropdown>
+                                            formControlName="description" placeholder="Enter Description" id="email">
+                                        <div *ngIf="packageForm.get('description')?.invalid && packageForm.get('description')?.touched" 
+                                            class="text-danger">
+                                            Description is required
+                                        </div>
                                     </div>
                                 </div>
 
+                                <!-- Therapy Type Dropdown -->
+                                <div class="col-6 pr-0">
+                                    <div class="form-group">
+                                        <label for="phone">Therapy Type</label>
+                                        <div class="multi-select" (click)="$event.stopPropagation()">
+                                            <button type="button" class="form-control multi-select-toggle"
+                                                (click)="toggleDropdown('therapy_types')">
+                                                {{ getSelectedText('therapy_types', 'Select Therapy Type') }}
+                                            </button>
+                                            <div class="multi-select-menu" *ngIf="isDropdownOpen('therapy_types')">
+                                                <label class="multi-select-option" *ngFor="let therapy of therapyList">
+                                                    <input type="checkbox"
+                                                        [checked]="isSelected('therapy_types', therapy.therapy_name)"
+                                                        (change)="toggleSelection('therapy_types', therapy.therapy_name)">
+                                                    <span>{{ therapy.therapy_name }}</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Duration Dropdown -->
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="supplier_name">Duration</label>
+                                        <div class="multi-select" (click)="$event.stopPropagation()">
+                                            <button type="button" class="form-control multi-select-toggle"
+                                                (click)="toggleDropdown('duration_days')">
+                                                {{ getSelectedText('duration_days', 'Select Duration') }}
+                                            </button>
+                                            <div class="multi-select-menu" *ngIf="isDropdownOpen('duration_days')">
+                                                <label class="multi-select-option" *ngFor="let duration of durationList">
+                                                    <input type="checkbox"
+                                                        [checked]="isSelected('duration_days', duration.name)"
+                                                        (change)="toggleSelection('duration_days', duration.name)">
+                                                    <span>{{ duration.name }}</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- FAQs & Policies Section -->
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label>FAQs & Policies</label>
@@ -152,150 +182,157 @@
                                 </div>
 
                                 <div class="col-12" formArrayName="faq_policies">
-
                                     <div class="row mb-3" *ngFor="let faq of faqPolicies.controls; let i = index"
                                         [formGroupName]="i">
-
                                         <div class="col-md-5">
                                             <input type="text" class="form-control form-control-sm"
                                                 placeholder="Enter Question" formControlName="question">
                                         </div>
-
                                         <div class="col-md-5">
                                             <input class="form-control form-control-sm" type="text"
                                                 placeholder="Enter Answer" formControlName="answer">
                                         </div>
-
                                         <div class="col-md-2" *ngIf="faqPolicies.length > 1">
-                                            <button type="button" class="btn btn-secondary" (click)="removeFaq(i)">
+                                            <button type="button" class="btn btn-secondary btn-sm" (click)="removeFaq(i)">
                                                 Remove
                                             </button>
                                         </div>
-
                                     </div>
-
-                                    <button type="button" class="btn btn-primary" (click)="addFaq()">
+                                    <button type="button" class="btn btn-primary btn-sm" (click)="addFaq()">
                                         Add FAQ
                                     </button>
-
                                 </div>
+
+                                <!-- Status -->
                                 <div class="col-md-4 mb-3">
                                     <label class="control-label">
                                         Status
                                         <span class="text-danger">*</span>
                                     </label>
-
-
                                     <label class="switch">
                                         <input type="checkbox" name="status" formControlName="status">
                                         <span class="slider round"></span>
                                     </label>
                                 </div>
-
                             </div>
+
+                            <!-- Form Buttons -->
                             <div class="btncontainer">
-                                <button type="submit" class="btn btn-primary">Save</button> &nbsp;
-                                <button type="button" class="btn btn-secondary" (click)="goBack()">Back</button>
+                                <button type="submit" class="btn btn-primary">
+                                    Save
+                                </button>
+                                &nbsp;
+                                <button type="button" class="btn btn-secondary" (click)="goBack()">
+                                    Back
+                                </button>
                             </div>
                         </form>
                     </div>
-
-
                 </div>
 
-                    <div class="container p-0" *ngIf="showPackageImageUpload">
-                        <div class="table-responsive">
-                            <table class="table table-borderless table-striped table-hover" matSort>
-                                <thead>
-                                    <tr>
-                                        <th scope="col" class="text-left text-nowrap"
-                                            *ngFor="let header of displayColumn;" mat-sort-header="{{header.key}}">
-                                            {{header.value }} </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngIf="noData">
-                        <td colspan="11">
-                            <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
-                        </td>
-                    </tr>
-                                    <tr *ngFor="let imageUrl of roomImageList;let i=index;">
-                                        <td class="text-left text-muted">{{i+1}}.</td>
-                                        <td class="text-left"><img [src]="imageUrl.image_url" width="100" height="50"
-                                               ></td>
-                                        <td *ngIf="imageUrl.is_primary == 1" class="text-left text-muted">Primary Image
-                                        </td>
-                                        <td class="text-left" *ngIf="imageUrl.is_primary == 0">
-                                            <label class="checkbox-label">
-                                                <input type="checkbox" class="checkbox-input"
-                                                    (change)="onPublish($event.target.checked,i,imageUrl)">
-                                                <span class="checkbox-text">Set as Primary</span>
-                                            </label>
-                                        </td>
-                                        <td class="text-left">
-                                            <button (click)="delete(id)" title="Edit Hotel" class="p-1 btnStyles">
-                                                Delete</button>
+                <!-- Loading State for Add Package Form -->
+                <div class="card adminInner" *ngIf="!showPackageImageUpload && (!packageForm || !isDataLoaded)">
+                    <div class="text-center p-5">
+                        <mat-spinner [diameter]="40" mode="indeterminate"></mat-spinner>
+                        <p class="mt-3">Loading form data...</p>
+                    </div>
+                </div>
 
+                <!-- Package Images Section -->
+                <div class="container p-0" *ngIf="showPackageImageUpload">
+                    <!-- Images Table -->
+                    <div class="table-responsive">
+                        <table class="table table-borderless table-striped table-hover" matSort>
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-left text-nowrap"
+                                        *ngFor="let header of displayColumn;" mat-sort-header="{{header.key}}">
+                                        {{header.value}}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="noData">
+                                    <td colspan="11">
+                                        <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let imageUrl of roomImageList; let i=index;">
+                                    <td class="text-left text-muted">{{i+1}}.</td>
+                                    <td class="text-left">
+                                        <img [src]="imageUrl.image_url" width="100" height="50" alt="Package Image">
+                                    </td>
+                                    <td *ngIf="imageUrl.is_primary == 1" class="text-left text-muted">Primary Image</td>
+                                    <td class="text-left" *ngIf="imageUrl.is_primary == 0">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" class="checkbox-input"
+                                                (change)="onPublish($event.target.checked, i, imageUrl)">
+                                            <span class="checkbox-text">Set as Primary</span>
+                                        </label>
+                                    </td>
+                                    <td class="text-left">
+                                        <button (click)="delete(imageUrl)" title="Delete Image" class="p-1 btnStyles btn btn-danger btn-sm">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="roomImageList && roomImageList.length === 0 && !noData">
+                                    <td colspan="5" class="text-center text-muted">
+                                        No images uploaded yet
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-
-                        
                     </div>
-                    
 
+                    <!-- Upload Images Form -->
                     <form [formGroup]="hotelImageForm" (ngSubmit)="onSubmitWellNessImage()"
                         class="needs-validation btop pt-4" novalidate>
-                        <fieldset for="hotelImage">
+                        <fieldset>
                             <div class="form_legend">Add Wellness Package Images</div>
-                            <div *ngIf="hotelImage" class="image-list">
-                                <div *ngFor="let imageUrl of images">
-                                    <img [src]="imageUrl" width="100" height="50">
+                            
+                            <!-- Image Preview -->
+                            <div *ngIf="images && images.length > 0" class="image-list mb-3">
+                                <div *ngFor="let imageUrl of images" class="d-inline-block mr-2">
+                                    <img [src]="imageUrl" width="100" height="50" class="rounded" alt="Preview">
                                 </div>
                             </div>
-                            <img *ngIf="imageSrc" height="50" width="100" class="rounded" [src]="imageSrc" alt="logo">
-                            &nbsp; &nbsp;
-
+                            
+                            <!-- File Input -->
                             <div class="form-group">
                                 <div class="file-input">
                                     <span><b>Note:</b> Only JPG, JPEG & PNG formats and 500Kb size are allowed.</span><br>
-                                    <input #file type="file" accept='.jpeg,.jpg' (change)="previewRoomImage($event)"
-                                        class="btn btn-sm" multiple>
-                                    <div *ngIf="hotelImage?.image_url?.errors" class="invalid-feedback">
-                                        <div *ngIf="hotelImage.image_url.errors.required">Images are required</div>
+                                    <input #file type="file" accept=".jpeg,.jpg,.png" (change)="previewRoomImage($event)"
+                                        class="btn btn-sm mt-2" multiple>
+                                    <div *ngIf="hotelImageForm.get('image_url')?.errors" class="invalid-feedback">
+                                        <div *ngIf="hotelImageForm.get('image_url')?.errors?.required">Images are required</div>
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Action Buttons -->
                             <div class="form-group">
                                 <div class="col-sm-12 btncontainer p-0">
-                                    <button type=" submit" class=" btn btn-sm btn-success btnStyle">Upload Wellness
-                                        Centre
-                                        Images
+                                    <button type="submit" class="btn btn-sm btn-success btnStyle" [disabled]="selactedFlies.length === 0">
+                                        Upload Wellness Package Images
                                     </button>
                                     &nbsp; &nbsp;
-                                    <button type="reset" class=" btn btn-sm btn-primary btnStyle" (click)="goBack()">
-                                        Wellness Centre List
+                                    <button type="button" class="btn btn-sm btn-primary btnStyle" (click)="goBack()">
+                                        Back to Package List
                                     </button>
                                 </div>
                             </div>
                         </fieldset>
                     </form>
                 </div>
-
-
-
             </ng-template>
-
         </li>
-
     </ul>
 
     <div [ngbNavOutlet]="tabs"></div>
-
 </div>
 
-
 <ngx-loading [show]="loading"
-    [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
-    [template]="loadingTemplate"></ngx-loading>
+    [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px', fullScreenBackdrop: true}"
+    [template]="loadingTemplate">
+</ngx-loading>

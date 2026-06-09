@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { NgbNav } from '@ng-bootstrap/ng-bootstrap';
 import { WellnessCrsService } from '../../../wellness-crs.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormControl, Validators, FormGroup, FormArray } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, Validators, FormGroup, FormArray } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 
@@ -16,24 +16,26 @@ export class WellnessPackageRateComponent implements OnInit {
   @Input() wellnessOne: any;
   @ViewChild('tabs', { static: true }) public tabs: NgbNav;
   activeIdString = 'list_wellness_package';
+  private readonly packageTabIds = ['list_wellness_package', 'add_wellness_package'];
   wellnessList: any;
   packageForm!: FormGroup;
 
-  dropdownSettingsForTherapy = {};
-  dropdownSettingsForPackageTypes = {};
-  dropdownSettingsForDuration = {};
-  public therapyList: any;
-  public packageList: any;
-
+  public therapyList: any[] = [];
+  public packageList: any[] = [];
   public durationList = Array.from({ length: 30 }, (_, i) => ({
-  name: `${i + 1} Day${i > 0 ? 's' : ''}`
-}));
-public id: any;
-loading:boolean =false;
-primaryColour: any;
-secondaryColour: any;
-loadingTemplate: any;
-public submittedHotelImage: boolean = false;
+    name: `${i + 1} Day${i > 0 ? 's' : ''}`
+  }));
+  
+  public id: any;
+  loading: boolean = false;
+  primaryColour: any;
+  secondaryColour: any;
+  loadingTemplate: any;
+  public submittedHotelImage: boolean = false;
+  public isDataLoaded: boolean = false;
+  private therapyListLoaded: boolean = false;
+  private packageListLoaded: boolean = false;
+  openDropdown: string = '';
 
   displayColumn: { key: string, value: string }[] = [
     { key: "Slno", value: 'SI No.' },
@@ -57,59 +59,41 @@ public submittedHotelImage: boolean = false;
     private fb: FormBuilder,
     private swalService: SwalService
   ) { }
+
   openImage(imageUrl: string): void {
     // this.selectedImage = imageUrl;
   }
+
+  @HostListener('document:click')
+  closeDropdown(): void {
+    this.openDropdown = '';
+  }
+
   onTabSelected(event: any) {
+    if (!this.packageTabIds.includes(event.nextId)) {
+      if (event.preventDefault) {
+        event.preventDefault();
+      }
+      this.activeIdString = 'list_wellness_package';
+      return;
+    }
+
+    const isAddPackageClick = event.nextId === 'add_wellness_package' && this.activeIdString !== 'add_wellness_package';
+    if (isAddPackageClick) {
+      this.prepareAddPackage();
+    }
+
     this.activeIdString = event.nextId;
-    // this.router.navigate([], {
-    //     queryParams: {
-    //       tab: event.nextId
-    //     },
-    //     queryParamsHandling: 'merge',
-    //     replaceUrl: true
-    //   });
   }
 
   triggerTab(data: any) {
-    //   console.log("data",data)
-    //   this.activeIdString = 'add_wellness_package';
-    //  this.router.navigate([], {
-    //       queryParams: {
-    //         tab: 'add_wellness_package'
-    //       },
-    //       queryParamsHandling: 'merge',
-    //       replaceUrl: true
-    //     });
-    //     this.tabs.select(data.tabId)
-
+    // Not needed
   }
 
   onPageLoad() {
-    this.dropdownSettingsForTherapy = {
-      singleSelection: false,
-      idField: 'id',
-      textField: 'therapy_name',
-      maxHeight: 197,
-      itemsShowLimit: 2,
-    };
-
-    this.dropdownSettingsForPackageTypes = {
-      singleSelection: false,
-      idField: 'id',
-      textField: 'name',
-      maxHeight: 197,
-      itemsShowLimit: 2,
-    };
-
-    this.dropdownSettingsForDuration = {
-      singleSelection: false,
-      idField: 'name',
-      textField: 'name',
-      maxHeight: 197,
-      itemsShowLimit: 2,
-    };
-
+    this.isDataLoaded = false;
+    this.therapyListLoaded = false;
+    this.packageListLoaded = false;
     this.getAllTherapyList();
     this.getAllPackageList();
     this.createHotelImageForm();
@@ -123,43 +107,35 @@ public submittedHotelImage: boolean = false;
     });
   }
 
-
   previewRoomImage($event) {
     const files = $event.target.files;
-
     const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/svg+xml", "image/webp"];
     const maxSize = 500 * 1024; // 500 KB
 
-    this.selactedFlies = [];   // reset
-    this.imageSrc = [];        // reset preview array
+    this.selactedFlies = [];
+    this.imageSrc = [];
 
     for (let i = 0; i < files.length; i++) {
       let file = files[i];
 
-      // ✅ File type validation
       if (!allowedTypes.includes(file.type)) {
         this.swalService.alert.oops(`"${file.name}" is not a supported format.`);
         continue;
       }
 
-      // ✅ File size validation (500 KB)
       if (file.size > maxSize) {
         this.swalService.alert.oops(`"${file.name}" exceeds 500 KB size limit.`);
         continue;
       }
 
-      // ✅ Valid file
       this.selactedFlies.push(file);
 
       const reader = new FileReader();
       reader.onload = (e) => {
         this.imageSrc.push(reader.result);
       };
-
-      reader.readAsDataURL(file); // ❗ this was missing in your code
+      reader.readAsDataURL(file);
     }
-
-    console.log("Valid selected files:", this.selactedFlies);
   }
 
   getAllTherapyList() {
@@ -167,16 +143,22 @@ public submittedHotelImage: boolean = false;
       topic: "therapyTypeList",
     };
     this.wellnessCrsService.fetch(data).subscribe((resp) => {
-      if (
-        resp.Status === true &&
-        (resp.statusCode === 200 || resp.statusCode === 201)
-      ) {
-        this.therapyList = resp.data.filter((item: any) => item.therapy_name) || [];
+      if (resp.statusCode === 200 || resp.statusCode === 201) {
+        this.therapyList = this.getListFromResponse(resp)
+          .filter((item: any) => item.therapy_name)
+          .map((item: any, index: number) => ({
+            ...item,
+            id: item.id || item.therapy_type_id || item.therapy_id || index + 1
+          }));
       } else if (resp.statusCode === 404) {
         this.therapyList = [];
       }
+      this.therapyListLoaded = true;
+      this.checkDataLoaded();
     }, (err: HttpErrorResponse) => {
-      // this.swalService.alert.error(err['error']['Message']);
+      this.therapyList = [];
+      this.therapyListLoaded = true;
+      this.checkDataLoaded();
     });
   }
 
@@ -185,69 +167,172 @@ public submittedHotelImage: boolean = false;
       topic: "packageTypeList",
     };
     this.wellnessCrsService.fetch(data).subscribe((resp) => {
-      if (
-        resp.Status === true &&
-        (resp.statusCode === 200 || resp.statusCode === 201)
-      ) {
-        this.packageList = resp.data.filter((item: any) => item.name) || [];
+      if (resp.statusCode === 200 || resp.statusCode === 201) {
+        this.packageList = this.getListFromResponse(resp)
+          .filter((item: any) => item.name)
+          .map((item: any, index: number) => ({
+            ...item,
+            id: item.id || item.package_type_id || index + 1
+          }));
       } else if (resp.statusCode === 404) {
         this.packageList = [];
       }
+      this.packageListLoaded = true;
+      this.checkDataLoaded();
     }, (err: HttpErrorResponse) => {
-      // this.swalService.alert.error(err['error']['Message']);
+      this.packageList = [];
+      this.packageListLoaded = true;
+      this.checkDataLoaded();
     });
+  }
+
+  checkDataLoaded() {
+    this.isDataLoaded = this.therapyListLoaded && this.packageListLoaded;
+  }
+
+  getListFromResponse(resp: any): any[] {
+    const data = resp ? resp.data : [];
+
+    if (Array.isArray(data)) {
+      return data;
+    }
+
+    if (data && Array.isArray(data.data)) {
+      return data.data;
+    }
+
+    if (data && Array.isArray(data.result)) {
+      return data.result;
+    }
+
+    if (data && Array.isArray(data.rows)) {
+      return data.rows;
+    }
+
+    return [];
   }
 
   ngOnInit() {
     console.log("wellnessOne", this.wellnessOne);
-    this.route.queryParams.subscribe(params => {
-
-      if (params['tab']) {
-        this.activeIdString = params['tab'];
-      }
-    });
+    this.activeIdString = 'list_wellness_package';
+    this.createForm();
     this.getPackagesByCenterId();
     this.onPageLoad();
-    this.createForm();
   }
+
   createForm() {
     this.packageForm = this.fb.group({
-      center_code: ['', [Validators.required]],
+      center_code: [''],
       package_name: ['', [Validators.required]],
-      package_types: ['', [Validators.required]],
-      therapy_types: ['', [Validators.required]],
-      duration_days: ['', [Validators.required]],
+      package_types: [[], [this.arrayRequired]],
+      therapy_types: [[], [this.arrayRequired]],
+      duration_days: [[], [this.arrayRequired]],
       description: ['', [Validators.required]],
       faq_policies: this.fb.array([]),
       status: [true]
     });
-    this.createFaq();
+    
     this.addFaq();
   }
 
-  get faqPolicies(): FormArray {
-    return this.packageForm.get('faq_policies') as FormArray;
+  arrayRequired(control: AbstractControl) {
+    return Array.isArray(control.value) && control.value.length > 0 ? null : { required: true };
   }
 
-
-  // create single FAQ
   createFaq(): FormGroup {
     return this.fb.group({
-      question: ['', Validators.required],
-      answer: ['', Validators.required]
+      question: [''],
+      answer: ['']
     });
   }
 
-
-  // add FAQ
   addFaq(): void {
     this.faqPolicies.push(this.createFaq());
   }
 
+  prepareAddPackage(): void {
+    this.id = '';
+    this.showPackageImageUpload = false;
+    this.roomImageList = [];
+    this.packageId = null;
+    this.imageSrc = [];
+    this.selactedFlies = [];
+    this.openDropdown = '';
 
-  // remove FAQ
+    if (this.packageForm) {
+      this.packageForm.reset({
+        center_code: '',
+        package_name: '',
+        package_types: [],
+        therapy_types: [],
+        duration_days: [],
+        description: '',
+        status: true
+      });
+      while (this.faqPolicies.length) {
+        this.faqPolicies.removeAt(0);
+      }
+      this.addFaq();
+    } else {
+      this.createForm();
+    }
+  }
+
+  get faqPolicies(): FormArray {
+    return this.packageForm?.get('faq_policies') as FormArray;
+  }
+
   removeFaq(index: number): void {
     this.faqPolicies.removeAt(index);
+  }
+
+  toggleDropdown(controlName: string): void {
+    this.openDropdown = this.openDropdown === controlName ? '' : controlName;
+  }
+
+  isDropdownOpen(controlName: string): boolean {
+    return this.openDropdown === controlName;
+  }
+
+  getSelectedValues(controlName: string): string[] {
+    const value = this.packageForm.get(controlName).value;
+    return Array.isArray(value) ? value : [];
+  }
+
+  isSelected(controlName: string, value: string): boolean {
+    return this.getSelectedValues(controlName).includes(value);
+  }
+
+  toggleSelection(controlName: string, value: string): void {
+    const selectedValues = this.getSelectedValues(controlName);
+    const nextValues = selectedValues.includes(value)
+      ? selectedValues.filter(item => item !== value)
+      : [...selectedValues, value];
+
+    this.packageForm.get(controlName).setValue(nextValues);
+    this.packageForm.get(controlName).markAsTouched();
+    this.packageForm.get(controlName).updateValueAndValidity();
+  }
+
+  selectSingle(controlName: string, value: string): void {
+    this.packageForm.get(controlName).setValue([value]);
+    this.packageForm.get(controlName).markAsTouched();
+    this.packageForm.get(controlName).updateValueAndValidity();
+    this.openDropdown = '';
+  }
+
+  getSelectedText(controlName: string, placeholder: string): string {
+    const selectedValues = this.getSelectedValues(controlName);
+
+    if (!selectedValues.length) {
+      return placeholder;
+    }
+
+    if (selectedValues.length <= 2) {
+      return selectedValues.join(', ');
+    }
+
+    return `${selectedValues.length} selected`;
   }
 
   getPackagesByCenterId() {
@@ -257,71 +342,32 @@ public submittedHotelImage: boolean = false;
       "limit": 10
     }];
     data["topic"] = "getPackagesByCenterId";
-    console.log(data)
     this.wellnessCrsService.fetch(data).subscribe((res) => {
-      if (res.statusCode === 200 || res.statusCode === 201) {
-        console.log("packages", res.data);
-        this.id = '';
-        this.wellnessList = this.getPackageListFromResponse(res.data);
-      } else if (res.statusCode === 404) {
-        this.wellnessList = [];
+      if (res.Status === true && (res.statusCode === 200 || res.statusCode === 201)) {
+        this.wellnessList = res.data || [];
       }
     }, (err) => {
       console.error(err);
-      this.wellnessList = [];
     });
-  }
-
-  getPackageListFromResponse(data: any): any[] {
-    if (Array.isArray(data)) {
-      return data;
-    }
-
-    if (data && Array.isArray(data.data)) {
-      return data.data;
-    }
-
-    if (data && Array.isArray(data.packages)) {
-      return data.packages;
-    }
-
-    if (data && Array.isArray(data.package_list)) {
-      return data.package_list;
-    }
-
-    if (data && Array.isArray(data.wellness_packages)) {
-      return data.wellness_packages;
-    }
-
-    if (data && Array.isArray(data.rows)) {
-      return data.rows;
-    }
-
-    if (data && Array.isArray(data.result)) {
-      return data.result;
-    }
-
-    return [];
   }
 
   onSubmit() {
     console.log(this.packageForm.value)
+    if (this.packageForm.invalid) {
+      this.packageForm.markAllAsTouched();
+      this.swalService.alert.oops('Please fill all required fields.');
+      return;
+    }
+
     const formData = {
       ...this.packageForm.value,
       ...(this.id && { id: this.id }),
       center_code: this.wellnessOne.center_code,
-      therapy_types: this.packageForm.value.therapy_types.map(
-        item => item.therapy_name
-      ),
-
-      package_types: this.packageForm.value.package_types.map(
-        item => item.name
-      ),
-
-      duration_days: this.packageForm.value.duration_days.map(
-        item => item.name
-      ),
-
+      therapy_types: this.packageForm.value.therapy_types || [],
+      package_types: this.packageForm.value.package_types || [],
+      duration_days: this.packageForm.value.duration_days || [],
+      faq_policies: this.normalizeToArray(this.packageForm.value.faq_policies)
+        .filter((faq: any) => faq.question || faq.answer),
     };
 
     let data = Object.assign({}, formData);
@@ -329,10 +375,9 @@ public submittedHotelImage: boolean = false;
     data['topic'] = this.id ? 'updateWellnessPackage' : "addWellnessPackage";
     this.wellnessCrsService.create(data).subscribe(resp => {
       if (resp.Status === true && (resp.statusCode === 200 || resp.statusCode === 201)) {
-        console.log('Wellness Center created successfully:', resp);
         this.swalService.alert.success('Package Rate added Successfully.!')
         this.getPackagesByCenterId();
-        this.packageForm.reset();
+        this.prepareAddPackage();
         this.activeIdString = 'list_wellness_package';
       }
     }, (err: HttpErrorResponse) => {
@@ -344,7 +389,6 @@ public submittedHotelImage: boolean = false;
     if (Array.isArray(data)) {
       return data.join(', ');
     }
-
     return data || '';
   }
 
@@ -356,9 +400,7 @@ public submittedHotelImage: boolean = false;
         this.wellnessCrsService.fetch(data).subscribe(
           (response) => {
             if (response.statusCode == 200 || response.statusCode == 201) {
-              this.swalService.alert.success(
-                `Package Rate has been deleted successfully`,
-              );
+              this.swalService.alert.success(`Package Rate has been deleted successfully`);
               this.getPackagesByCenterId();
             }
           },
@@ -373,25 +415,13 @@ public submittedHotelImage: boolean = false;
   updatePackageRate(data) {
     if (data) {
       this.id = data.id;
-      const selectedPackageTypes = this.packageList.filter(item =>
-        data.package_types.includes(item.name)
-      );
+      const selectedPackageTypes = this.normalizeToArray(data.package_types);
+      const selectedTherapyTypes = this.normalizeToArray(data.therapy_types);
+      const selectedDurations = this.normalizeToArray(data.duration_days);
 
-      // therapy types
-      const selectedTherapyTypes = this.therapyList.filter(item =>
-        data.therapy_types.includes(item.therapy_name)
-      );
-
-      // duration
-      const selectedDurations = this.durationList.filter(item =>
-        data.duration_days.includes(item.name)
-      );
-
-      // clear existing faq
       this.faqPolicies.clear();
 
-      // add faq rows
-      data.faq_policies.forEach(faq => {
+      this.normalizeToArray(data.faq_policies).forEach(faq => {
         this.faqPolicies.push(
           this.fb.group({
             question: [faq.question],
@@ -400,7 +430,6 @@ public submittedHotelImage: boolean = false;
         );
       });
 
-      // patch form
       this.packageForm.patchValue({
         center_code: data.center_code,
         package_name: data.package_name,
@@ -412,20 +441,40 @@ public submittedHotelImage: boolean = false;
       });
       this.activeIdString = 'add_wellness_package';
     }
+  }
 
+  normalizeToArray(data: any): any[] {
+    if (Array.isArray(data)) {
+      return data;
+    }
+
+    if (data === null || data === undefined || data === '') {
+      return [];
+    }
+
+    if (typeof data === 'string') {
+      try {
+        const parsedData = JSON.parse(data);
+        if (Array.isArray(parsedData)) {
+          return parsedData;
+        }
+      } catch (error) {
+        return data.split(',').map(item => item.trim()).filter(item => item);
+      }
+    }
+
+    return [data];
   }
 
   addPrice(wellness, tab) {
     this.wellnessCrsService.getEditData.next(wellness);
     this.packageEvent.emit({ rooms: wellness, roomsEditData: '', hoteltrigger: tab });
   }
+
   onPublish(checked: boolean, index, publishRecord: any) {
-    let hotel_room_id = this.wellnessOne['id'];
     const data = [{ wellness_package_id: this.packageId.id, id: publishRecord.id }]
     data['topic'] = 'primaryPackageImage';
     this.wellnessCrsService.fetch(data).subscribe(resp => {
-
-
       if (resp.statusCode == 200 || resp.statusCode == 201) {
         if (checked) {
           this.swalService.alert.success('Successfully Enabled')
@@ -447,9 +496,7 @@ public submittedHotelImage: boolean = false;
         this.wellnessCrsService.fetch(data).subscribe(
           (response) => {
             if (response.statusCode == 200 || response.statusCode == 201) {
-              this.swalService.alert.success(
-                `Package Rate has been deleted successfully`,
-              );
+              this.swalService.alert.success(`Package Rate has been deleted successfully`);
               this.getRoomImageList();
             }
           },
@@ -471,30 +518,26 @@ public submittedHotelImage: boolean = false;
   }
 
   getRoomImageList() {
-    let hotel_room_id = this.wellnessOne['id'];
     const data = [{ wellness_package_id: this.packageId.id, offset: 0, limit: 10 }]
     data['topic'] = 'listPackageImage';
     this.wellnessCrsService.fetch(data).subscribe(resp => {
       if (resp.statusCode == 200) {
         this.roomImageList = resp['data'];
-        console.log(" this.hotelImage", this.roomImageList)
       }
-
     });
   }
 
   goBack() {
     this.activeIdString = 'list_wellness_package';
+    this.showPackageImageUpload = false;
   }
 
   onSubmitWellNessImage() {
     this.loading = true;
     this.imageSrc = '';
     if (this.hotelImageForm.valid) {
-      console.log("this.hotelOne", this.wellnessOne)
       const formData = new FormData();
       this.selactedFlies.forEach(file => {
-        console.log("file", file)
         formData.append('image', file, file.name);
       });
       formData.append('wellness_package_id', this.packageId.id)
@@ -522,6 +565,9 @@ public submittedHotelImage: boolean = false;
         this.swalService.alert.oops("Kindly upload in the accepted formats of JPG, JPEG and PNG only.");
         this.loading = false;
       }))
-    } else { return; }
-}
+    } else { 
+      this.loading = false;
+      return; 
+    }
+  }
 }

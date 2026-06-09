@@ -81,8 +81,17 @@ export class WellnessListComponent implements OnInit {
   updateList(data,ev) {
       this.router.navigate([], { queryParams: {}, replaceUrl: true });
         console.log("data",data)
-        this.wellnessCrsService.getEditData.next(data);
-        this.toUpdate.emit({ tabId: 'add_wellness', wellness: data,wellnessTrigger:ev });
+        const reqBody = [{ id: data.id }];
+        reqBody['topic'] = 'editCenter';
+        this.wellnessCrsService.fetch(reqBody).subscribe((resp) => {
+          if (resp.statusCode === 200 || resp.statusCode === 201) {
+            const editData = { ...data, ...(Array.isArray(resp.data) ? resp.data[0] : resp.data) };
+            this.wellnessCrsService.getEditData.next(editData);
+            this.toUpdate.emit({ tabId: 'add_wellness', wellness: editData,wellnessTrigger:ev });
+          }
+        }, (err: HttpErrorResponse) => {
+          this.swalService.alert.error(err['error']['Message']);
+        });
   }
 
     onDelete(id) {

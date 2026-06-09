@@ -1,0 +1,50 @@
+<div class="mb-3 container">
+  <a [routerLink]="['/report/b2c-wellness']"><button class="btnStyle">Back</button></a>&nbsp;
+  <button class="btnStyle" (click)="printVoucher()">Print</button>&nbsp;
+  <button class="btnStyle" (click)="downloadPdf()">Download Voucher</button>
+</div>
+
+<div id="wellness-voucher" #print_voucher class="voucher-card" *ngIf="voucherData">
+  <div class="voucher-header">
+    <div>
+      <h3>Wellness Voucher</h3>
+      <p>Application Reference: <strong>{{ booking.AppReference }}</strong></p>
+      <p>Status: <strong>{{ booking.Status }}</strong></p>
+    </div>
+    <img *ngIf="booking.CenterPhoto" [src]="booking.CenterPhoto" alt="Wellness Center">
+  </div>
+
+  <div class="section">
+    <h5>Center Details</h5>
+    <p><strong>{{ booking.WellnessCenterName }}</strong> ({{ booking.CenterCode }})</p>
+    <p>{{ booking.CenterAddress }}</p>
+    <p>Phone: {{ booking.PhoneNumber || 'N/A' }} | Email: {{ booking.Email || 'N/A' }}</p>
+    <p>Check-in: {{ booking.CenterCheckIn | date:'dd/MM/yyyy' }} {{ booking.CheckinTime }}</p>
+    <p>Check-out: {{ booking.CenterCheckOut | date:'dd/MM/yyyy' }} {{ booking.CheckOutTime }}</p>
+    <p>Duration: {{ center.NoOfDays || calculateDiff(booking.CenterCheckIn, booking.CenterCheckOut) }} Days</p>
+  </div>
+
+  <div class="section">
+    <h5>Package Details</h5>
+    <p><strong>{{ packageDetails.PackageName || 'N/A' }}</strong></p>
+    <p>Package Code: {{ packageDetails.PackageCode || 'N/A' }}</p>
+    <p>Package Type: {{ packageDetails.PackageType || 'N/A' }}</p>
+    <p>Duration: {{ packageDetails.DurationDays || 'N/A' }}</p>
+    <p>{{ packageDetails.Description || '' }}</p>
+  </div>
+
+  <div class="section">
+    <h5>Lead Passenger</h5>
+    <p>{{ leadPassenger.Title }} {{ leadPassenger.FirstName }} {{ leadPassenger.LastName }}</p>
+    <p>Pax Type: {{ leadPassenger.PaxType || 'N/A' }}</p>
+  </div>
+
+  <div class="section">
+    <h5>Payment</h5>
+    <p>Payment Mode: {{ booking.PaymentMode || 'N/A' }}</p>
+    <p>Payment Status: {{ booking.PaymentStatus || 'N/A' }}</p>
+    <p>Total Amount: {{ booking.TotalAmount || 0 }} {{ booking.Currency }}</p>
+  </div>
+</div>
+
+<ngx-loading [show]="loading"></ngx-loading>

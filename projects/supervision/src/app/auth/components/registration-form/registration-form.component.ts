@@ -365,40 +365,83 @@ onRegister(form: FormGroup) {
   const formData = new FormData();
   const formValues = this.registerForm.value;
 
+  // Log the form values to debug
+  console.log('Form Values:', formValues);
+  console.log('Selected Services:', this.selectedServiceValues);
+
+  // Append each field with proper type handling
   Object.keys(formValues).forEach(key => {
     const value = formValues[key];
-    if (value !== null && value !== undefined && value !== '') {
-      formData.append(key, value);
+    
+    // Skip null, undefined, or empty strings
+    if (value === null || value === undefined || value === '') {
+      return;
+    }
+
+    // Handle boolean fields
+    if (typeof value === 'boolean') {
+      formData.append(key, value.toString());
+    }
+    // Handle number fields (like IDs)
+    else if (typeof value === 'number' || (!isNaN(Number(value)) && value !== '')) {
+      formData.append(key, value.toString());
+    }
+    // Handle regular strings
+    else {
+      formData.append(key, value.toString());
     }
   });
 
+  // Append services as array - try different formats based on backend expectation
+  // Option 1: As JSON string
   formData.append('services', JSON.stringify(this.selectedServiceValues));
+  
+  // Option 2: If backend expects comma-separated values
+  // formData.append('services', this.selectedServiceValues.join(','));
+  
+  // Option 3: Append each service individually
+  // this.selectedServiceValues.forEach((service, index) => {
+  //   formData.append(`services[${index}]`, service);
+  // });
+
+  // Append files
   if (this.panDocument) {
-    formData.append('pan', this.panDocument);
+    formData.append('pan', this.panDocument); // Changed from 'pan' to match field name
+    // Also try with just 'pan' if that's what backend expects
+    // formData.append('pan', this.panDocument);
   }
+  
   if (this.aadhaarDocument) {
     formData.append('aadhaar', this.aadhaarDocument);
   }
+  
   if (this.licenseDocument) {
     formData.append('license', this.licenseDocument);
   }
 
+  // Log FormData contents for debugging
+  console.log('FormData entries:');
+  formData.forEach((value, key) => {
+    if (value instanceof File) {
+      console.log(`${key}: File (${value.name}, ${value.size} bytes)`);
+    } else {
+      console.log(`${key}: ${value}`);
+    }
+  });
+
   this.authService.onRegister(formData).subscribe({
     next: (res: any) => {
       this.loading = false;
+      console.log('Success Response:', res);
       
-      // Check if response is successful
       if (res.statusCode === 200 || res.statusCode === 201) {
-        const supplierId = res.data.id || res.id;
-        
         Swal.fire({
           icon: 'success',
           title: 'Success',
-          text: res.Message,
+          text: res.Message || res.message || 'Registration submitted successfully',
           showConfirmButton: true
         }).then(() => {
-          console.log(this.selectedServiceValues,"this.selectedServiceValues")
-       this.router.navigate(['/auth/login']);
+          this.router.navigate(['/auth/login']);
         });
       } else {
         Swal.fire({
@@ -411,15 +454,19 @@ onRegister(form: FormGroup) {
     },
     error: (error: any) => {
       this.loading = false;
-      console.log(error)
+      console.error('Full error object:', error);
+      
       let errorMessage = 'Something went wrong. Please try again.';
       
-      if (error.error.message) {
+      if (error.error && error.error.message) {
         errorMessage = error.error.message;
       } else if (error.message) {
         errorMessage = error.message;
-      } else if (typeof error === 'string') {
-        errorMessage = error;
+      }
+      
+      // Log the actual request payload if possible
+      if (error.error) {
+        console.error('Error response body:', error.error);
       }
       
       Swal.fire({
@@ -428,8 +475,6 @@ onRegister(form: FormGroup) {
         text: errorMessage,
         confirmButtonText: 'OK'
       });
-      
-      console.error('API Error:', error);
     }
   });
 }

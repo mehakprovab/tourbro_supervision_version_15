@@ -62,7 +62,14 @@
           <app-b2c-car></app-b2c-car>
         </ng-template>
       </li>
-
+<li [ngbNavItem]="'wellness'">
+        <a ngbNavLink>
+          Wellness Markup
+        </a>
+        <ng-template ngbNavContent>
+          <app-b2c-wellness></app-b2c-wellness>
+        </ng-template>
+      </li>
     </ul>
 
     <div [ngbNavOutlet]="tabs"></div>

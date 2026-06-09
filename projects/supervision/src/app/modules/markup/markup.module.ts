@@ -25,6 +25,7 @@ import { SupplirMarkupListComponent } from './components/b2c-flight/supplir-mark
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { B2cTourComponent } from './components/b2c-tour/b2c-tour.component';
 import { AgentTourComponent } from './components/agent-tour/agent-tour.component';
+import { B2cWellnessComponent } from './components/b2c-wellness/b2c-wellness.component';
 
 
 
@@ -56,6 +57,7 @@ import { AgentTourComponent } from './components/agent-tour/agent-tour.component
         SupplirMarkupListComponent,
         B2cTourComponent,
         AgentTourComponent,
+        B2cWellnessComponent,
     ]
 })
 export class MarkupModule { }

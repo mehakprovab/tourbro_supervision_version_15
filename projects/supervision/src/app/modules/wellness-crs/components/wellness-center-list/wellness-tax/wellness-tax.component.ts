@@ -205,7 +205,7 @@ export class WellnessTaxComponent implements OnInit {
 
         this.wellnessCrsService.update(data)
             .subscribe(resp => {
-                if (resp.statusCode == 200) {
+                if (resp.statusCode == 200 || resp.statusCode == 201) {
                     this.swalService.alert.success('Your data added successfully!');
                     // this.someEvent.next({ tabId: 'list_hotel_types', hotel_type: '' });
                     this.resetForm(); // Properly reset after submission
@@ -242,7 +242,7 @@ export class WellnessTaxComponent implements OnInit {
                     (response) => {
                         if (response.statusCode == 200 || response.statusCode == 201) {
                             this.swalService.alert.success(
-                                `Package Rate has been deleted successfully`,
+                                `Tax has been deleted successfully`,
                             );
                             this.getWellnessTaxList();
                         }

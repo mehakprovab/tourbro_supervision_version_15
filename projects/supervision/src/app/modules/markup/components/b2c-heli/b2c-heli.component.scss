@@ -1,0 +1,13 @@
+table {
+    width: 100%;
+}
+
+::ng-deep .multiselect-dropdown .dropdown-btn{ border: none !important; padding:0px !important;}
+span.dropdown-multiselect__caret {
+    height: 45px !important;
+    right: -12px !important;
+    top: -7px !important;
+}
+span.dropdown-multiselect__caret::before {
+    top: 50%;
+}

@@ -39,6 +39,8 @@ import { WellnessTaxComponent } from './components/wellness-center-list/wellness
 import { WellnessPriceComponent } from './components/wellness-center-list/wellness-price/wellness-price.component';
 import { WellnessChildPolicyComponent } from './components/wellness-center-list/wellness-child-policy/wellness-child-policy.component';
 import { WellnessCrsComponent } from './wellness-crs.component';
+import { PatanjaliWellnessGalleryComponent } from './components/patanjali-wellness-gallery/patanjali-wellness-gallery.component';
+import { PatanjaliDoctorsComponent } from './components/patanjali-doctors/patanjali-doctors.component';
 @NgModule({
   declarations: [
     WellnessCenterListComponent,
@@ -68,7 +70,9 @@ import { WellnessCrsComponent } from './wellness-crs.component';
     WellnessTaxComponent,
     WellnessPriceComponent,
     WellnessChildPolicyComponent,
-    WellnessCrsComponent
+    WellnessCrsComponent,
+    PatanjaliWellnessGalleryComponent,
+    PatanjaliDoctorsComponent
     // WellnessImagesComponent
   ],
   imports: [

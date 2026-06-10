@@ -1,0 +1,87 @@
+<div class="card patanjali-gallery">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <div>
+      <h5 class="mb-0">Patanjali Wellness Gallery</h5>
+      <small class="text-muted">Gallery upload ID: {{ galleryId }}</small>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <form (ngSubmit)="uploadGallery()" class="mb-4">
+      <div class="form-group">
+        <label for="uploadGallery"><b>Upload Gallery</b></label>
+        <input
+          #galleryInput
+          type="file"
+          id="uploadGallery"
+          class="form-control-file"
+          multiple
+          accept=".png,.jpg,.jpeg,.webp,.svg"
+          (change)="onGallerySelect($event)">
+        <small class="text-danger">Only JPG, JPEG, PNG, SVG, and WEBP images up to 1 MB are allowed.</small>
+      </div>
+
+      <button type="submit" class="btn btn-sm btn-success" [disabled]="loading || !selectedFiles.length">
+        Upload Images
+      </button>
+    </form>
+
+    <div *ngIf="editingImage" class="edit-panel mb-4">
+      <h6 class="mb-3">Update Image: {{ getImageName(editingImage) }}</h6>
+      <div class="d-flex align-items-center flex-wrap">
+        <img [src]="getImageUrl(editingImage)" class="edit-preview mr-3 mb-2" alt="Selected gallery image">
+        <div>
+          <input
+            #updateInput
+            type="file"
+            class="form-control-file mb-2"
+            accept=".png,.jpg,.jpeg,.webp,.svg"
+            (change)="onUpdateSelect($event)">
+          <button type="button" class="btn btn-sm btn-primary mr-2" [disabled]="loading || !updateFile" (click)="updateImage()">
+            Update
+          </button>
+          <button type="button" class="btn btn-sm btn-secondary" (click)="cancelEdit()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-borderless table-striped table-hover">
+        <thead>
+          <tr>
+            <th>SI No.</th>
+            <th>Image</th>
+            <th>File</th>
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="!galleryImages.length">
+            <td colspan="4" class="text-center text-muted">
+              No gallery images found.
+            </td>
+          </tr>
+          <tr *ngFor="let image of galleryImages; let i = index">
+            <td>{{ i + 1 }}.</td>
+            <td>
+              <a [href]="getImageUrl(image)" target="_blank">
+                <img [src]="getImageUrl(image)" class="gallery-thumb" alt="Gallery image">
+              </a>
+            </td>
+            <td>{{ getImageName(image) }}</td>
+            <td class="text-right">
+              <button type="button" class="btn btn-sm btn-primary mr-2" (click)="editImage(image, i)">
+                Edit
+              </button>
+              <button type="button" class="btn btn-sm btn-danger" [disabled]="loading" (click)="deleteImage(image, i)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

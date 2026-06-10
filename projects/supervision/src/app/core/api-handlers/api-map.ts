@@ -207,6 +207,7 @@ export const apiMap = {
   updateAirlineList: `${baseUrl}/ws-apis/updateWsBlockAirline`, // update block airline list
   b2cHotelReport: `${baseUrl}/dashboard/report/b2cHotelReport`,
   b2cWellnessReport: `${baseUrl}/dashboard/report/b2cWellnessReport`,
+  b2cHeliReport: `${baseUrl}/dashboard/report/b2cHeliReport`,
   b2cFlightReport: `${baseUrl}/dashboard/report/b2cFlightReport`,
   b2cCarReport: `${baseUrl}/dashboard/report/b2cCarReport`,
   b2cHotelVoucher: `${baseUrl}/dashboard/report/hotelVoucher`,
@@ -780,6 +781,12 @@ export const apiMap = {
   deleteWellnessImage: `${baseUrl}/wellness/wellness-images/deleteWellnessImage`,
   updateWellnessImage: `${baseUrl}/wellness/wellness-images/updateWellnessImage`,
   wellnessPrimaryImage: `${baseUrl}/wellness/wellness-images/primaryImage`,
+  patanjaliWellnessDoctors: `${baseUrl}/wellness/doctors`,
+  patanjaliWellnessDoctorById: `${baseUrl}/wellness/doctors/:id`,
+  patanjaliWellnessGalleryList: `${baseUrl}/wellness/galleryList`,
+  patanjaliWellnessUploadGallery: `${baseUrl}/wellness/uploadGallery`,
+  patanjaliWellnessUpdateGallery: `${baseUrl}/wellness/updateGallery`,
+  patanjaliWellnessDeleteGallery: `${baseUrl}/wellness/deleteGallery`,
 
   //Package rating
   getPackagesByCenterId: `${baseUrl}/wellness-packages/getPackagesByCenterId`,

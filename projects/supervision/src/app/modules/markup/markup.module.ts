@@ -11,6 +11,7 @@ import {
     B2cCarComponent,
     AgentCarComponent,
     AgentActivityComponent,
+    B2cHeliComponent,
 } from './components';
 import { AgentMarkUpListComponent } from './components/agents-flight/agent-mark-up-list/agent-mark-up-list.component';
 import { AgentMarkupDetailComponent } from './components/agents-flight/agent-markup-detail/agent-markup-detail.component';
@@ -58,6 +59,7 @@ import { B2cWellnessComponent } from './components/b2c-wellness/b2c-wellness.com
         B2cTourComponent,
         AgentTourComponent,
         B2cWellnessComponent,
+        B2cHeliComponent,
     ]
 })
 export class MarkupModule { }

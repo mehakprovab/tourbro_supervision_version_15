@@ -11,11 +11,11 @@ import { MarkupService } from '../../markup.service';
 
 
 @Component({
-  selector: 'app-b2c-wellness',
-  templateUrl: './b2c-wellness.component.html',
-  styleUrls: ['./b2c-wellness.component.scss']
+  selector: 'app-b2c-heli',
+  templateUrl: './b2c-heli.component.html',
+  styleUrls: ['./b2c-heli.component.scss']
 })
-export class B2cWellnessComponent implements OnInit, OnDestroy{
+export class B2cHeliComponent implements OnInit, OnDestroy{
 
   updateGeneral = false;
   submitted: boolean;
@@ -116,7 +116,7 @@ export class B2cWellnessComponent implements OnInit, OnDestroy{
 
   getMarkupData() {
     this.subSunk.sink = this.apiHandlerService.apiHandler('b2cMarkupList', 'post', {}, {}, {
-      module_type: 'b2c_wellness',
+      module_type: 'b2c_helicopter',
       type: 'supplier',
       auth_user_id: this.util.readStorage('currentSupervisionUser', sessionStorage).id,
       is_deleted: 1
@@ -144,7 +144,7 @@ export class B2cWellnessComponent implements OnInit, OnDestroy{
     const payload = {
       type: 'supplier',
       fare_type: 'Public',
-      module_type: 'b2c_wellness',
+      module_type: 'b2c_helicopter',
       flight_airline_id: 0,
       value: parseInt(formValue.supplier_value),
       value_type: formValue.supplier_value_type,
@@ -172,7 +172,7 @@ export class B2cWellnessComponent implements OnInit, OnDestroy{
       });
   }
 
-  addWellness() {
+  addHeli() {
     if (this.regConfig.invalid) {
       return;
     }
@@ -203,7 +203,7 @@ export class B2cWellnessComponent implements OnInit, OnDestroy{
     const payload = {
       type: 'supplier',
       fare_type: 'Public',
-      module_type: 'b2c_wellness',
+      module_type: 'b2c_helicopter',
       flight_airline_id: 0,
       cityId: parseInt(formValues.city_name),
       value: parseInt(formValues.city_value) || 0,
@@ -232,7 +232,7 @@ export class B2cWellnessComponent implements OnInit, OnDestroy{
 
   getSupplierWiseMarkupData(supplierId) {
     this.subSunk.sink = this.apiHandlerService.apiHandler('b2cMarkupList', 'post', {}, {}, {
-      module_type: 'b2c_wellness',
+      module_type: 'b2c_helicopter',
       type: 'supplier',
       auth_user_id: this.util.readStorage('currentSupervisionUser', sessionStorage).id,
       is_deleted: 1,
@@ -268,7 +268,7 @@ export class B2cWellnessComponent implements OnInit, OnDestroy{
           const payload = {
             type: 'supplier',
             fare_type: 'Public',
-            module_type: 'b2c_wellness',
+            module_type: 'b2c_helicopter',
             cityId: parseInt(formValues.city_name),
             flight_airline_id: 0,
             value: parseInt(formValues.city_value) || 0,
@@ -340,7 +340,7 @@ export class B2cWellnessComponent implements OnInit, OnDestroy{
     const payload = {
       type: 'supplier',
       fare_type: 'Public',
-      module_type: 'b2c_wellness',
+      module_type: 'b2c_helicopter',
       flight_airline_id: 0,
       cityId: parseInt(this.city),
       countryCode: 'IN',
@@ -372,7 +372,7 @@ export class B2cWellnessComponent implements OnInit, OnDestroy{
 
   onSubmit() {
     if (this.respData == null || !this.respData.length) {
-      this.addWellness();
+      this.addHeli();
     } else if (this.supplierData) {
       this.updatedMarkup();
     } else {
@@ -386,7 +386,7 @@ export class B2cWellnessComponent implements OnInit, OnDestroy{
       if (existingSupplierData.length) {
         this.getSupplierWiseMarkupData(existingSupplierData[0]);
       } else {
-        this.addWellness();
+        this.addHeli();
       }
     }
   }
@@ -397,7 +397,7 @@ export class B2cWellnessComponent implements OnInit, OnDestroy{
 
   getSuppliers() {
     this.subSunk.sink = this.apiHandlerService.apiHandler('b2cSupplierList', 'post', {}, {}, {
-      module: 'wellness',
+      module: 'Helicopter',
       userType: 'B2C'
     }).subscribe(resp => {
       if (resp.statusCode === 201 || resp.statusCode === 200) {

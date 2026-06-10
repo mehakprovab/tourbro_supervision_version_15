@@ -9,6 +9,8 @@ import { HealthGoalsConditionComponent } from './components/health-goals-conditi
 import { PackageTypeComponent } from './components/package-type/package-type.component';
 import { MealPlanComponent } from './components/meal-plan/meal-plan.component';
 import { FacilitiesComponent } from './components/facilities/facilities.component';
+import { PatanjaliWellnessGalleryComponent } from './components/patanjali-wellness-gallery/patanjali-wellness-gallery.component';
+import { PatanjaliDoctorsComponent } from './components/patanjali-doctors/patanjali-doctors.component';
 
 const routes: Routes = [
 {
@@ -21,7 +23,9 @@ const routes: Routes = [
    { path: 'health-goals-condition', component: HealthGoalsConditionComponent },
    { path: 'package-type', component: PackageTypeComponent },
    { path: 'meal-plan', component: MealPlanComponent },
-   { path: 'facilities', component: FacilitiesComponent }
+   { path: 'facilities', component: FacilitiesComponent },
+   { path: 'patanjali-wellness/upload-gallery', component: PatanjaliWellnessGalleryComponent },
+   { path: 'patanjali-wellness/doctors', component: PatanjaliDoctorsComponent }
  ]
 }
 ];

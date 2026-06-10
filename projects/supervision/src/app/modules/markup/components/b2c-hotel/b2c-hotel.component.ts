@@ -26,7 +26,7 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
     defaultCurrency: string = 'INR';
     generalMarkupId: number;
     currentUser: any;
-    supplierList :any;
+    supplierList: any[] = [];
     dropdownSettingsForSupplier={}
     coreCityList: any;
     coreCountryList: any;
@@ -671,7 +671,7 @@ selectedSupplierList(agent: any): string {
     if (!agent || !agent.supplier_id) {
       return 'Unknown Supplier'; // Handle cases where supplier_id is missing
     }
-    const selectedAgent = this.supplierList.find(
+    const selectedAgent = (Array.isArray(this.supplierList) ? this.supplierList : []).find(
       (supplier) => supplier.source_key === agent.supplier_id
     );
     return selectedAgent ? selectedAgent.name : 'Unknown Supplier'; // Handle cases where supplier is not found

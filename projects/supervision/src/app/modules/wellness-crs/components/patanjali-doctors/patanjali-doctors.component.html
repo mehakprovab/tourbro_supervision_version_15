@@ -1,0 +1,135 @@
+<div class="card patanjali-doctors">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <div>
+      <h5 class="mb-0">Patanjali Doctors Master</h5>
+      <small class="text-muted">Upload doctor OPD details</small>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <form [formGroup]="doctorForm" (ngSubmit)="saveDoctor()" class="mb-4">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="doctorName">Doctor Name <span class="text-danger">*</span></label>
+            <input
+              type="text"
+              id="doctorName"
+              class="form-control"
+              formControlName="name"
+              placeholder="Dr.Nandan">
+            <small class="text-danger" *ngIf="doctorForm.get('name').touched && doctorForm.get('name').hasError('required')">
+              Doctor name is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="specialization">Specialization <span class="text-danger">*</span></label>
+            <input
+              type="text"
+              id="specialization"
+              class="form-control"
+              formControlName="specialization"
+              placeholder="Joint Pain">
+            <small class="text-danger" *ngIf="doctorForm.get('specialization').touched && doctorForm.get('specialization').hasError('required')">
+              Specialization is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="opdDays">OPD Days <span class="text-danger">*</span></label>
+            <input
+              type="text"
+              id="opdDays"
+              class="form-control"
+              formControlName="opd_days"
+              placeholder="Mon - Fri">
+            <small class="text-danger" *ngIf="doctorForm.get('opd_days').touched && doctorForm.get('opd_days').hasError('required')">
+              OPD days are required.
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="opdStartTime">OPD Start Time <span class="text-danger">*</span></label>
+            <input
+              type="time"
+              id="opdStartTime"
+              class="form-control"
+              formControlName="opd_start_time">
+            <small class="text-danger" *ngIf="doctorForm.get('opd_start_time').touched && doctorForm.get('opd_start_time').hasError('required')">
+              Start time is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="opdEndTime">OPD End Time <span class="text-danger">*</span></label>
+            <input
+              type="time"
+              id="opdEndTime"
+              class="form-control"
+              formControlName="opd_end_time">
+            <small class="text-danger" *ngIf="doctorForm.get('opd_end_time').touched && doctorForm.get('opd_end_time').hasError('required')">
+              End time is required.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-sm btn-secondary mr-2" [disabled]="loading" (click)="resetForm()">
+          {{ editingDoctor ? 'Cancel' : 'Reset' }}
+        </button>
+        <button type="submit" class="btn btn-sm btn-success" [disabled]="loading">
+          {{ editingDoctor ? 'Update Doctor Data' : 'Upload Doctor Data' }}
+        </button>
+      </div>
+    </form>
+
+    <div class="table-responsive">
+      <table class="table table-borderless table-striped table-hover">
+        <thead>
+          <tr>
+            <th>SI No.</th>
+            <th>Name</th>
+            <th>Specialization</th>
+            <th>OPD Days</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="!doctors.length">
+            <td colspan="7" class="text-center text-muted">
+              No doctor data found.
+            </td>
+          </tr>
+          <tr *ngFor="let doctor of doctors; let i = index">
+            <td>{{ i + 1 }}.</td>
+            <td>{{ doctor.name }}</td>
+            <td>{{ doctor.specialization }}</td>
+            <td>{{ doctor.opd_days }}</td>
+            <td>{{ doctor.opd_start_time }}</td>
+            <td>{{ doctor.opd_end_time }}</td>
+            <td class="text-right">
+              <button type="button" class="btn btn-sm btn-primary mr-2" [disabled]="loading" (click)="editDoctor(doctor)">
+                Edit
+              </button>
+              <button type="button" class="btn btn-sm btn-danger" [disabled]="loading" (click)="deleteDoctor(doctor)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

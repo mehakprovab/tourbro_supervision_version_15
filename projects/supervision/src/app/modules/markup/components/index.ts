@@ -7,6 +7,7 @@ export * from './agents-hotel/agents-hotel.component';
 export * from './agent-car/agent-car.component';
 export * from './agent-activity/agent-activity.component';
 export * from './b2c-car/b2c-car.component';
+export * from './b2c-heli/b2c-heli.component';
 
 // export {
 //     B2cComponent,

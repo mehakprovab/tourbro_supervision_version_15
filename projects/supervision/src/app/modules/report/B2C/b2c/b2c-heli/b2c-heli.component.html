@@ -1,0 +1,287 @@
+<div class="card adminInner">
+  <div class="card-header mb-3">
+    <h5>B2C Heli Report</h5>
+  </div>
+
+  <form [formGroup]="regConfig">
+    <div>
+      <div class="form-row">
+        <div class="col-4 pr-0">
+          <div class="form-group">
+            <label for="appReference">Application Reference</label>
+            <input
+              formControlName="app_reference"
+              type="text"
+              class="form-control text-capitalize form-control-sm nrm_input"
+              placeholder="Application Reference"
+              id="appReference"
+            />
+          </div>
+        </div>
+
+        <div class="col-4 pr-0">
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input
+              formControlName="phone_number"
+              type="text"
+              class="form-control form-control-sm nrm_input"
+              placeholder="Phone"
+              id="phone"
+              (keypress)="numberOnly($event)"
+            />
+          </div>
+        </div>
+
+        <div class="col-4 pr-0">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              formControlName="email"
+              type="email"
+              class="form-control form-control-sm nrm_input"
+              placeholder="Email"
+              id="email"
+            />
+          </div>
+        </div>
+
+        <div class="col-4 pr-0">
+          <div class="form-group">
+            <label for="bookedBy">Status</label>
+            <select formControlName="status" id="bookedBy" class="form-control form-control-sm nrm_input">
+              <option value="ALL">ALL</option>
+              <option value="BOOKING_CONFIRMED">CONFIRMED</option>
+              <option value="BOOKING_CANCELLED">CANCELLED</option>
+              <option value="BOOKING_INPROGRESS">IN PROGRESS</option>
+              <option value="BOOKING_HOLD">HOLD</option>
+              <option value="BOOKING_FAILED">FAILED</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-4 pr-0">
+          <div class="form-group">
+            <span class="icon depart_date" (click)="isOpen = !isOpen"></span>
+            <label for="fromDate">Booked From Date</label>
+            <input
+              formControlName="booked_from_date"
+              type="text"
+              id="fromDate"
+              autocomplete="off"
+              class="form-control form-control-sm nrm_input"
+              placement="bottom left"
+              placeholder="dd/mm/yyyy"
+              bsDatepicker
+              [bsConfig]="bsDateConf"
+              [isOpen]="isOpen"
+              onkeydown="return false"
+            />
+          </div>
+        </div>
+
+        <div class="col-4 pr-0">
+          <div class="form-group">
+            <span class="icon depart_date" (click)="isOpen = !isOpen"></span>
+            <label for="toDate">Booked To Date</label>
+            <input
+              formControlName="booked_to_date"
+              type="text"
+              id="toDate"
+              autocomplete="off"
+              class="form-control form-control-sm nrm_input"
+              placement="bottom left"
+              placeholder="dd/mm/yyyy"
+              bsDatepicker
+              [bsConfig]="bsDateConf"
+              [isOpen]="isOpen"
+              onkeydown="return false"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="btncontainer">
+        <button type="submit" class="btn btn-primary" (click)="onSearchSubmit()">Search</button>
+        &nbsp;
+        <button type="button" class="btn btn-secondary" (click)="onReset()">Reset</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="card adminInner" style="margin-top: 30px;">
+  <div class="card-body">
+    <p>Total {{ respData?.length }} Bookings</p>
+
+    <div style="padding-bottom: 15px;">
+      <button class="btn btn-primary" (click)="downloadPdf()">PDF</button>
+      &nbsp;
+      <button class="btn btn-secondary" (click)="download('xlsx', 'portrait')">Export to Excel</button>
+
+      <div class="form-group mb-0 col-sm-3 p-0 float-right has-search">
+        <span class="fa fa-search form-control-feedback"></span>
+        <input
+          class="form-control"
+          type="text"
+          name="Search"
+          [(ngModel)]="searchText"
+          autocomplete="off"
+          placeholder="Search"
+        />
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <form>
+        <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft" #scrollOne>
+          <div class="div1"></div>
+        </div>
+
+        <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
+          <div class="div2 invisible-scrollbar">
+            <div class="table-respons">
+              <div id="b2c-heli-report">
+                <table class="table table-borderless table-striped table-hover" matSort (matSortChange)="sortData($event)">
+                  <thead>
+                    <tr>
+                      <th scope="col" class="text-left text-nowrap" *ngFor="let header of displayColumn">
+                        {{ header.value }}
+                      </th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr *ngIf="noData">
+                      <td [attr.colspan]="displayColumn.length">
+                        <mat-spinner [diameter]="30" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+                      </td>
+                    </tr>
+
+                    <tr *ngIf="!noData && (!respData.length || (respData | filter:searchText).length === 0)">
+                      <td [attr.colspan]="displayColumn.length">
+                        <h4 class="text-muted text-center">No Data Found!</h4>
+                      </td>
+                    </tr>
+
+                    <tr
+                      *ngFor="let data of respData | filter:searchText | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i = index;"
+                    >
+                      <td class="text-left text-muted">{{ (page - 1) * pageSize + i + 1 }}.</td>
+                      <td class="text-left overflow-hidden">
+                        <div ngbDropdown container="body">
+                          <button class="btnStyle" ngbDropdownToggle>Action</button>
+                          <div ngbDropdownMenu>
+                            <button ngbDropdownItem (click)="showPaxProfile(data)">Pax Profile</button>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="text-left">{{ data.app_reference || 'N/A' }}</td>
+                      <td class="text-left">
+                        <span class="badge" [ngClass]="getStatusBadgeClass(data.status)">
+                          {{ getBookingStatusLabel(data.status) }}
+                        </span>
+                      </td>
+                      <td class="text-left">{{ data.payment_status || 'N/A' }}</td>
+                      <td class="text-left">{{ data.booking_reference || 'N/A' }}</td>
+                      <td class="text-left">{{ data.operator_name || 'N/A' }}</td>
+                      <td class="text-left">{{ data.route_name || 'N/A' }}</td>
+                      <td class="text-left">{{ data.type || 'N/A' }}</td>
+                      <td class="text-left">{{ getHelipadName(data.from_helipad) }}</td>
+                      <td class="text-left">{{ getHelipadName(data.to_helipad) }}</td>
+                      <td class="text-left">{{ getAttributes(data).travel_date ? (getAttributes(data).travel_date | date:'dd/MM/yyyy') : 'N/A' }}</td>
+                      <td class="text-left">{{ data.departure_time || 'N/A' }}</td>
+                      <td class="text-left">{{ data.arrival_time || 'N/A' }}</td>
+                      <td class="text-left">{{ data.duration ? data.duration + ' mins' : 'N/A' }}</td>
+                      <td class="text-left">{{ data.helicopter_type || 'N/A' }}</td>
+                      <td class="text-left">{{ data.helicopter_model || 'N/A' }}</td>
+                      <td class="text-left">{{ data.available_seats || 0 }}</td>
+                      <td class="text-left">{{ getPaxList(data).length || getAttributes(data).passengers || 0 }}</td>
+                      <td class="text-left text-uppercase">{{ getLeadPaxName(data) }}</td>
+                      <td class="text-left">{{ getLeadPax(data).mobile || 'N/A' }}</td>
+                      <td class="text-left">{{ getLeadPax(data).email || 'N/A' }}</td>
+                      <td class="text-left">{{ data.base_fare || 0 }}</td>
+                      <td class="text-left">{{ data.AdminMarkup || 0 }}</td>
+                      <td class="text-left">{{ data.taxes || 0 }}</td>
+                      <td class="text-left">{{ data.convinenceFee || 0 }}</td>
+                      <td class="text-left">{{ data.discount || 0 }}</td>
+                      <td class="text-left">{{ data.total_fare || 0 }}</td>
+                      <td class="text-left">{{ data.promo_code || 'N/A' }}</td>
+                      <td class="text-left">{{ data.outpay_status || 'N/A' }}</td>
+                      <td class="text-left">{{ data.booking_source || getAttributes(data).booking_source || getAttributes(data).BookingSource || 'N/A' }}</td>
+                      <td class="text-left">{{ data.created_at ? (data.created_at | date:'dd/MM/yyyy') : 'N/A' }}</td>
+                      <td class="text-left">{{ data.updated_at ? (data.updated_at | date:'dd/MM/yyyy') : 'N/A' }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-footer pb-0">
+          <div class="d-flex w-100 justify-content-between">
+            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"></ngb-pagination>
+            <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="pageSize">
+              <option [ngValue]="50">50 items per page</option>
+              <option [ngValue]="100">100 items per page</option>
+              <option [ngValue]="150">150 items per page</option>
+              <option [ngValue]="200">200 items per page</option>
+              <option [ngValue]="500">500 items per page</option>
+              <option [ngValue]="700">700 items per page</option>
+              <option [ngValue]="1000">1000 items per page</option>
+            </select>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="paxProfile" [style.display]="showModal ? 'block' : 'none'">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Passenger Profile</h4>
+        <button type="button" class="close" (click)="hide()">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <table class="table table-borderless table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Passenger</th>
+              <th>Gender</th>
+              <th>Age</th>
+              <th>Weight</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>KYC</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let pax of getPaxList(currentRecord)">
+              <td>{{ pax.title || '' }} {{ pax.name || 'N/A' }}</td>
+              <td>{{ pax.gender || 'N/A' }}</td>
+              <td>{{ pax.age || 'N/A' }}</td>
+              <td>{{ pax.weight || 'N/A' }}</td>
+              <td>{{ pax.mobile || 'N/A' }}</td>
+              <td>{{ pax.email || 'N/A' }}</td>
+              <td>
+                <a *ngIf="pax.kyc_document" [href]="pax.kyc_document" target="_blank">View</a>
+                <span *ngIf="!pax.kyc_document">N/A</span>
+              </td>
+            </tr>
+            <tr *ngIf="!getPaxList(currentRecord).length">
+              <td colspan="7" class="text-center text-muted">No passenger data found.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="hide()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

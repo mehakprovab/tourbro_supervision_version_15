@@ -1,0 +1,44 @@
+.nrm_input,
+.src_btn {
+    // padding: 0.5rem 0.75rem 0.5rem 2.2rem;
+    line-height: 1.7;
+    height: calc(2.5em + 0.75rem + 2px);
+}
+
+.btncontainer {
+    width: 100%;
+    text-align: center;
+    padding: 12px 0px;
+}
+
+
+.modal {
+    -webkit-transform: translate(0,-50%);
+    -o-transform: translate(0,-50%);
+    transform: translate(0,-50%);
+    top: 58%;
+    margin: 0 auto;
+}
+
+.wrapper1,
+.wrapper2 {
+  width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+.wrapper1 {
+  height: 20px;
+}
+
+.div1 {
+  width: 6000px;
+  height: 20px;
+}
+.div2 {
+  width: 6000px;
+  overflow: hidden;
+}
+.div2 .table-responsive {overflow: inherit;}
+.invisible-scrollbar::-webkit-scrollbar {
+    display: none;
+  }

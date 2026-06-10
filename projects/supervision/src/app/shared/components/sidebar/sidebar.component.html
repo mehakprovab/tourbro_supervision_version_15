@@ -188,6 +188,16 @@
                               </a>
                             </div>
 
+                            <div class="vsm-item" *ngIf="isSubMenuExists('B2C Hotel Report',REPORTS)">
+                              <a routerLinkActive="active-item" routerLink='/report/b2c-heli'
+                                class="vsm-link pl-10">
+                                <span class="vsm-title pl-10">
+                                  <i class="fa fa-helicopter"></i>
+                                  Heli
+                                </span>
+                              </a>
+                            </div>
+
                             <div class="vsm-item" *ngIf="isSubMenuExists('B2C Tour Report',REPORTS)">
                               <a routerLinkActive="active-item" routerLink='/report/b2c-tour' class="vsm-link pl-10">
                                 <span class="vsm-title pl-10">
@@ -352,6 +362,37 @@
                                             About FAQ</span></a>
                                       </div>
 
+                                  </ng-template>
+                                </ngb-panel>
+                                  <ngb-panel id="patanjali-wellness-cms">
+                                    <ng-template ngbPanelHeader>
+                                      <button ngbPanelToggle class="vsm-link pl-1"
+                                        [ngClass]="{'collapsed' : globals.toggleSidebar}">
+                                        <span class="vsm-title pl-10">Patanjali Wellness</span>
+                                        <i class="vsm-arrow"></i>
+                                      </button>
+                                    </ng-template>
+                                    <ng-template ngbPanelContent>
+                                      <div class="vsm-item">
+                                        <a routerLinkActive="active-item"
+                                          routerLink="/wellnesscrs/patanjali-wellness/upload-gallery"
+                                          class="vsm-link pl-10">
+                                          <span class="vsm-title pl-10">
+                                            <i class="fa fa-picture-o"></i>
+                                            Upload Gallery
+                                          </span>
+                                        </a>
+                                      </div>
+                                      <div class="vsm-item">
+                                        <a routerLinkActive="active-item"
+                                          routerLink="/wellnesscrs/patanjali-wellness/doctors"
+                                          class="vsm-link pl-10">
+                                          <span class="vsm-title pl-10">
+                                            <i class="fa fa-user-md"></i>
+                                            Doctors Master
+                                          </span>
+                                        </a>
+                                      </div>
                                     </ng-template>
                                   </ngb-panel>
                                   <!-- NEW Section: Home Book My Guide -->

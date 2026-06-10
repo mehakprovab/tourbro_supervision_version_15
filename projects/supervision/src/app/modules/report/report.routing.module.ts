@@ -9,6 +9,7 @@ import { B2cCarComponent } from './B2C/b2c/b2c-car/b2c-car.component';
 import { B2cFlightComponent } from './B2C/b2c/b2c-flight/b2c-flight.component';
 import { B2cHotelComponent } from './B2C/b2c/b2c-hotel/b2c-hotel.component';
 import { B2cWellnessReportComponent } from './B2C/b2c/b2c-wellness/b2c-wellness.component';
+import { B2cHeliReportComponent } from './B2C/b2c/b2c-heli/b2c-heli.component';
 import { WellnessVoucherComponent } from './B2C/b2c/b2c-wellness/components/wellness-voucher/wellness-voucher.component';
 import { WellnessInvoiceComponent } from './B2C/b2c/b2c-wellness/components/wellness-invoice/wellness-invoice.component';
 import { AuthGuard } from '../../auth/auth.guard';
@@ -142,6 +143,12 @@ const routes: Routes = [
         path: 'b2c-wellness',
         canActivate: [AuthGuard],
         component: B2cWellnessReportComponent,
+        data: {extraParameter: 'b2c-reports-Menus'}
+      },
+      {
+        path: 'b2c-heli',
+        canActivate: [AuthGuard],
+        component: B2cHeliReportComponent,
         data: {extraParameter: 'b2c-reports-Menus'}
       },
             {

@@ -1,0 +1,20 @@
+.printformClass {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+th {
+  white-space: nowrap;
+  width: 22%;
+}
+
+@media print {
+  button {
+    display: none !important;
+  }
+
+  .adminInner {
+    box-shadow: none;
+    border: 0;
+  }
+}

@@ -1,0 +1,144 @@
+<div class="text-center mb-2" *ngIf="voucherData">
+  <button class="btn btn-primary" (click)="printVoucher()">Print</button>
+  &nbsp;
+  <button class="btn btn-secondary" (click)="downloadPdf()">Download PDF</button>
+</div>
+
+<div class="card adminInner" *ngIf="loading">
+  <mat-spinner [diameter]="30" style="margin: 20px auto;" mode="indeterminate"></mat-spinner>
+</div>
+
+<div class="card adminInner" *ngIf="!loading && !voucherData">
+  <h4 class="text-muted text-center">No Voucher Data Found!</h4>
+</div>
+
+<div class="printformClass card adminInner" id="heli-voucher" #print_voucher *ngIf="voucherData">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">Heli Booking Voucher</h5>
+    <strong>{{ voucherData.app_reference || 'N/A' }}</strong>
+  </div>
+
+  <div class="card-body">
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <th>Booking Status</th>
+          <td>{{ getBookingStatusLabel(voucherData.status) }}</td>
+          <th>Payment Status</th>
+          <td>{{ voucherData.payment_status || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>Booking Reference</th>
+          <td>{{ voucherData.booking_reference || 'N/A' }}</td>
+          <th>Booked On</th>
+          <td>{{ voucherData.created_at ? (voucherData.created_at | date:'dd/MM/yyyy') : 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>Operator</th>
+          <td>{{ voucherData.operator_name || 'N/A' }}</td>
+          <th>Route</th>
+          <td>{{ voucherData.route_name || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>From Helipad</th>
+          <td>{{ getHelipadName(voucherData.from_helipad) }}</td>
+          <th>To Helipad</th>
+          <td>{{ getHelipadName(voucherData.to_helipad) }}</td>
+        </tr>
+        <tr>
+          <th>Travel Date</th>
+          <td>{{ attributes.travel_date ? (attributes.travel_date | date:'dd/MM/yyyy') : 'N/A' }}</td>
+          <th>Departure</th>
+          <td>{{ voucherData.departure_time || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>Arrival</th>
+          <td>{{ voucherData.arrival_time || 'N/A' }}</td>
+          <th>Duration</th>
+          <td>{{ voucherData.duration ? voucherData.duration + ' mins' : 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>Helicopter Type</th>
+          <td>{{ voucherData.helicopter_type || 'N/A' }}</td>
+          <th>Helicopter Model</th>
+          <td>{{ voucherData.helicopter_model || 'N/A' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h5 class="mt-4">Lead Passenger</h5>
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <th>Name</th>
+          <td>{{ getLeadPaxName() }}</td>
+          <th>Gender</th>
+          <td>{{ leadPax.gender || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>Age</th>
+          <td>{{ leadPax.age || 'N/A' }}</td>
+          <th>Weight</th>
+          <td>{{ leadPax.weight || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>Phone</th>
+          <td>{{ leadPax.phone_code ? '+' + leadPax.phone_code + ' ' : '' }}{{ leadPax.mobile || 'N/A' }}</td>
+          <th>Email</th>
+          <td>{{ leadPax.email || 'N/A' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h5 class="mt-4">Passengers</h5>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Sl No.</th>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>Age</th>
+          <th>Weight</th>
+          <th>KYC</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pax of paxList; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ pax.title || '' }} {{ pax.name || 'N/A' }}</td>
+          <td>{{ pax.gender || 'N/A' }}</td>
+          <td>{{ pax.age || 'N/A' }}</td>
+          <td>{{ pax.weight || 'N/A' }}</td>
+          <td>
+            <a *ngIf="pax.kyc_document" [href]="pax.kyc_document" target="_blank">View</a>
+            <span *ngIf="!pax.kyc_document">N/A</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h5 class="mt-4">Fare Summary</h5>
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <th>Base Fare</th>
+          <td>{{ voucherData.base_fare || 0 }}</td>
+          <th>Admin Markup</th>
+          <td>{{ voucherData.AdminMarkup || 0 }}</td>
+        </tr>
+        <tr>
+          <th>Taxes</th>
+          <td>{{ voucherData.taxes || 0 }}</td>
+          <th>Convenience Fee</th>
+          <td>{{ voucherData.convinenceFee || 0 }}</td>
+        </tr>
+        <tr>
+          <th>Discount</th>
+          <td>{{ voucherData.discount || 0 }}</td>
+          <th>Total Fare</th>
+          <td><strong>{{ voucherData.total_fare || 0 }}</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

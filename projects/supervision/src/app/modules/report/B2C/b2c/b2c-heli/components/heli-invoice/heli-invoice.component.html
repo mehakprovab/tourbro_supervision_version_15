@@ -1,0 +1,111 @@
+<div class="text-center mb-2" *ngIf="invoiceData">
+  <button class="btn btn-primary" (click)="printInvoice()">Print</button>
+  &nbsp;
+  <button class="btn btn-secondary" (click)="downloadPdf()">Download PDF</button>
+</div>
+
+<div class="card adminInner" *ngIf="loading">
+  <mat-spinner [diameter]="30" style="margin: 20px auto;" mode="indeterminate"></mat-spinner>
+</div>
+
+<div class="card adminInner" *ngIf="!loading && !invoiceData">
+  <h4 class="text-muted text-center">No Invoice Data Found!</h4>
+</div>
+
+<div class="printformClass card adminInner" id="heli-invoice" #print_invoice *ngIf="invoiceData">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h5 class="mb-0">Heli Booking Invoice</h5>
+    <strong>{{ invoiceNumber }}</strong>
+  </div>
+
+  <div class="card-body">
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <th>Application Reference</th>
+          <td>{{ invoiceData.app_reference || 'N/A' }}</td>
+          <th>Booking Reference</th>
+          <td>{{ invoiceData.booking_reference || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>Invoice Date</th>
+          <td>{{ invoiceData.created_at ? (invoiceData.created_at | date:'dd/MM/yyyy') : 'N/A' }}</td>
+          <th>Payment Status</th>
+          <td>{{ invoiceData.payment_status || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>Customer</th>
+          <td>{{ getLeadPaxName() }}</td>
+          <th>Contact</th>
+          <td>{{ leadPax.phone_code ? '+' + leadPax.phone_code + ' ' : '' }}{{ leadPax.mobile || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>Email</th>
+          <td>{{ leadPax.email || 'N/A' }}</td>
+          <th>Passengers</th>
+          <td>{{ paxList.length || attributes.passengers || 0 }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h5 class="mt-4">Journey Details</h5>
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <th>Operator</th>
+          <td>{{ invoiceData.operator_name || 'N/A' }}</td>
+          <th>Route</th>
+          <td>{{ invoiceData.route_name || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>From Helipad</th>
+          <td>{{ getHelipadName(invoiceData.from_helipad) }}</td>
+          <th>To Helipad</th>
+          <td>{{ getHelipadName(invoiceData.to_helipad) }}</td>
+        </tr>
+        <tr>
+          <th>Travel Date</th>
+          <td>{{ attributes.travel_date ? (attributes.travel_date | date:'dd/MM/yyyy') : 'N/A' }}</td>
+          <th>Departure</th>
+          <td>{{ invoiceData.departure_time || 'N/A' }}</td>
+        </tr>
+        <tr>
+          <th>Helicopter</th>
+          <td>{{ invoiceData.helicopter_type || 'N/A' }}</td>
+          <th>Model</th>
+          <td>{{ invoiceData.helicopter_model || 'N/A' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h5 class="mt-4">Fare Details</h5>
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <th>Base Fare</th>
+          <td class="text-right">{{ invoiceData.base_fare || 0 }}</td>
+        </tr>
+        <tr>
+          <th>Admin Markup</th>
+          <td class="text-right">{{ invoiceData.AdminMarkup || 0 }}</td>
+        </tr>
+        <tr>
+          <th>Taxes</th>
+          <td class="text-right">{{ invoiceData.taxes || 0 }}</td>
+        </tr>
+        <tr>
+          <th>Convenience Fee</th>
+          <td class="text-right">{{ invoiceData.convinenceFee || 0 }}</td>
+        </tr>
+        <tr>
+          <th>Discount</th>
+          <td class="text-right">{{ invoiceData.discount || 0 }}</td>
+        </tr>
+        <tr>
+          <th>Total Fare</th>
+          <td class="text-right"><strong>{{ invoiceData.total_fare || 0 }}</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

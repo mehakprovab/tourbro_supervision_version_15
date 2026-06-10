@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Sort } from '@angular/material/sort';
+import { Router } from '@angular/router';
 import { ApiHandlerService } from '../../../../../core/api-handlers';
 import { SwalService } from '../../../../../core/services/swal.service';
 import { UtilityService } from '../../../../../core/services/utility.service';
@@ -79,6 +80,7 @@ export class B2cHeliReportComponent implements OnInit, OnDestroy {
         private fb: FormBuilder,
         private swalService: SwalService,
         private utility: UtilityService,
+        private router: Router,
     ) { }
 
     ngOnInit() {
@@ -247,6 +249,15 @@ export class B2cHeliReportComponent implements OnInit, OnDestroy {
     showPaxProfile(data: any) {
         this.currentRecord = data;
         this.showModal = true;
+    }
+
+    onHeliRedirect(appReference: string, type: 'voucher' | 'invoice') {
+        if (!appReference) {
+            return;
+        }
+
+        const path = type === 'voucher' ? '/report/b2c-heli/voucher' : '/report/b2c-heli/invoice';
+        this.router.navigate([path], { queryParams: { appReference } });
     }
 
     hide() {

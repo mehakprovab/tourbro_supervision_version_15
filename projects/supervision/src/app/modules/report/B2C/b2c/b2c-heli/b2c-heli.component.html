@@ -172,6 +172,8 @@
                         <div ngbDropdown container="body">
                           <button class="btnStyle" ngbDropdownToggle>Action</button>
                           <div ngbDropdownMenu>
+                            <button ngbDropdownItem (click)="onHeliRedirect(data.app_reference, 'voucher')">View Voucher</button>
+                            <button ngbDropdownItem (click)="onHeliRedirect(data.app_reference, 'invoice')">View Invoice</button>
                             <button ngbDropdownItem (click)="showPaxProfile(data)">Pax Profile</button>
                           </div>
                         </div>

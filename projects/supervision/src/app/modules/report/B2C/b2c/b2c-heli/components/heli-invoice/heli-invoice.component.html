@@ -1,9 +1,3 @@
-<div class="text-center mb-2" *ngIf="invoiceData">
-  <button class="btn btn-primary" (click)="printInvoice()">Print</button>
-  &nbsp;
-  <button class="btn btn-secondary" (click)="downloadPdf()">Download PDF</button>
-</div>
-
 <div class="card adminInner" *ngIf="loading">
   <mat-spinner [diameter]="30" style="margin: 20px auto;" mode="indeterminate"></mat-spinner>
 </div>
@@ -12,98 +6,142 @@
   <h4 class="text-muted text-center">No Invoice Data Found!</h4>
 </div>
 
-<div class="printformClass card adminInner" id="heli-invoice" #print_invoice *ngIf="invoiceData">
-  <div class="card-header d-flex justify-content-between align-items-center">
-    <h5 class="mb-0">Heli Booking Invoice</h5>
-    <strong>{{ invoiceNumber }}</strong>
-  </div>
-
-  <div class="card-body">
-    <table class="table table-bordered">
+<div class="heli-document-wrap" *ngIf="invoiceData">
+  <div class="printformClass" id="heli-invoice" #print_invoice>
+    <table class="table heli-document" cellpadding="0" cellspacing="0">
       <tbody>
         <tr>
-          <th>Application Reference</th>
-          <td>{{ invoiceData.app_reference || 'N/A' }}</td>
-          <th>Booking Reference</th>
-          <td>{{ invoiceData.booking_reference || 'N/A' }}</td>
-        </tr>
-        <tr>
-          <th>Invoice Date</th>
-          <td>{{ invoiceData.created_at ? (invoiceData.created_at | date:'dd/MM/yyyy') : 'N/A' }}</td>
-          <th>Payment Status</th>
-          <td>{{ invoiceData.payment_status || 'N/A' }}</td>
-        </tr>
-        <tr>
-          <th>Customer</th>
-          <td>{{ getLeadPaxName() }}</td>
-          <th>Contact</th>
-          <td>{{ leadPax.phone_code ? '+' + leadPax.phone_code + ' ' : '' }}{{ leadPax.mobile || 'N/A' }}</td>
-        </tr>
-        <tr>
-          <th>Email</th>
-          <td>{{ leadPax.email || 'N/A' }}</td>
-          <th>Passengers</th>
-          <td>{{ paxList.length || attributes.passengers || 0 }}</td>
-        </tr>
-      </tbody>
-    </table>
+          <td class="document-cell">
+            <table class="header-table">
+              <tbody>
+                <tr>
+                  <td class="logo-cell">
+                    <img class="brand-logo" src="assets/images/login-images/l-logo.png">
+                  </td>
+                  <td class="title-cell">
+                    <div class="doc-title">Heli Invoice</div>
+                    <div class="no-print action-row">
+                      <a [routerLink]="['/report/b2c-heli']" class="doc-btn doc-btn-light">Back</a>
+                      <a (click)="printInvoice()" class="doc-btn doc-btn-light">Print</a>
+                      <a (click)="downloadPdf()" class="doc-btn doc-btn-primary">PDF Download</a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
-    <h5 class="mt-4">Journey Details</h5>
-    <table class="table table-bordered">
-      <tbody>
-        <tr>
-          <th>Operator</th>
-          <td>{{ invoiceData.operator_name || 'N/A' }}</td>
-          <th>Route</th>
-          <td>{{ invoiceData.route_name || 'N/A' }}</td>
-        </tr>
-        <tr>
-          <th>From Helipad</th>
-          <td>{{ getHelipadName(invoiceData.from_helipad) }}</td>
-          <th>To Helipad</th>
-          <td>{{ getHelipadName(invoiceData.to_helipad) }}</td>
-        </tr>
-        <tr>
-          <th>Travel Date</th>
-          <td>{{ attributes.travel_date ? (attributes.travel_date | date:'dd/MM/yyyy') : 'N/A' }}</td>
-          <th>Departure</th>
-          <td>{{ invoiceData.departure_time || 'N/A' }}</td>
-        </tr>
-        <tr>
-          <th>Helicopter</th>
-          <td>{{ invoiceData.helicopter_type || 'N/A' }}</td>
-          <th>Model</th>
-          <td>{{ invoiceData.helicopter_model || 'N/A' }}</td>
-        </tr>
-      </tbody>
-    </table>
+            <table class="summary-table">
+              <tbody>
+                <tr>
+                  <td class="summary-left">
+                    <strong class="lead-name text-uppercase">{{ getLeadPaxName() }}</strong>
+                    <span><i class="fa fa-phone-alt"></i>&nbsp;{{ getContactNumber() }}</span>
+                    <span><i class="fa fa-envelope"></i>&nbsp;{{ leadPax.email || leadPax.Email || invoiceData.Email || 'N/A' }}</span>
+                  </td>
+                  <td class="summary-right">
+                    <span>Invoice No: <strong>{{ invoiceNumber || 'N/A' }}</strong></span>
+                    <span>Application Ref: <strong>{{ invoiceData.app_reference || 'N/A' }}</strong></span>
+                    <span>Booking Ref: <strong>{{ invoiceData.booking_reference || 'N/A' }}</strong></span>
+                    <span>Date of Issue: <strong>{{ invoiceData.created_at ? (invoiceData.created_at | date:'dd/MM/yyyy') : 'N/A' }}</strong></span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
-    <h5 class="mt-4">Fare Details</h5>
-    <table class="table table-bordered">
-      <tbody>
-        <tr>
-          <th>Base Fare</th>
-          <td class="text-right">{{ invoiceData.base_fare || 0 }}</td>
-        </tr>
-        <tr>
-          <th>Admin Markup</th>
-          <td class="text-right">{{ invoiceData.AdminMarkup || 0 }}</td>
-        </tr>
-        <tr>
-          <th>Taxes</th>
-          <td class="text-right">{{ invoiceData.taxes || 0 }}</td>
-        </tr>
-        <tr>
-          <th>Convenience Fee</th>
-          <td class="text-right">{{ invoiceData.convinenceFee || 0 }}</td>
-        </tr>
-        <tr>
-          <th>Discount</th>
-          <td class="text-right">{{ invoiceData.discount || 0 }}</td>
-        </tr>
-        <tr>
-          <th>Total Fare</th>
-          <td class="text-right"><strong>{{ invoiceData.total_fare || 0 }}</strong></td>
+            <div class="document-section">
+              <table class="section-table">
+                <tbody>
+                  <tr>
+                    <td colspan="4" class="section-title">Customer Details</td>
+                  </tr>
+                  <tr class="label-row">
+                    <td>Customer</td>
+                    <td>Contact</td>
+                    <td>Email</td>
+                    <td>Passengers</td>
+                  </tr>
+                  <tr class="value-row">
+                    <td class="text-uppercase">{{ getLeadPaxName() }}</td>
+                    <td>{{ getContactNumber() }}</td>
+                    <td>{{ leadPax.email || leadPax.Email || invoiceData.Email || 'N/A' }}</td>
+                    <td>{{ getPassengerCount() }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="document-section">
+              <table class="section-table">
+                <tbody>
+                  <tr>
+                    <td colspan="4" class="section-title">Journey Details</td>
+                  </tr>
+                  <tr class="label-row">
+                    <td>Operator</td>
+                    <td>Route</td>
+                    <td>From Helipad</td>
+                    <td>To Helipad</td>
+                  </tr>
+                  <tr class="value-row">
+                    <td>{{ invoiceData.operator_name || 'N/A' }}</td>
+                    <td>{{ invoiceData.route_name || 'N/A' }}</td>
+                    <td>{{ getHelipadName(invoiceData.from_helipad) }}</td>
+                    <td>{{ getHelipadName(invoiceData.to_helipad) }}</td>
+                  </tr>
+                  <tr class="label-row">
+                    <td>Travel Date</td>
+                    <td>Departure</td>
+                    <td>Helicopter Type</td>
+                    <td>Helicopter Model</td>
+                  </tr>
+                  <tr class="value-row">
+                    <td>{{ attributes.travel_date ? (attributes.travel_date | date:'dd/MM/yyyy') : 'N/A' }}</td>
+                    <td>{{ invoiceData.departure_time || 'N/A' }}</td>
+                    <td>{{ invoiceData.helicopter_type || 'N/A' }}</td>
+                    <td>{{ invoiceData.helicopter_model || 'N/A' }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="document-section">
+              <table class="section-table payment-table">
+                <tbody>
+                  <tr>
+                    <td colspan="2" class="section-title">Fare Details</td>
+                  </tr>
+                  <tr>
+                    <td>Base Fare</td>
+                    <td>{{ getCurrency() }} {{ invoiceData.base_fare || 0 | number:'1.2-2' }}</td>
+                  </tr>
+                  <tr>
+                    <td>Admin Markup</td>
+                    <td>{{ getCurrency() }} {{ invoiceData.AdminMarkup || 0 | number:'1.2-2' }}</td>
+                  </tr>
+                  <tr>
+                    <td>Taxes</td>
+                    <td>{{ getCurrency() }} {{ invoiceData.taxes || 0 | number:'1.2-2' }}</td>
+                  </tr>
+                  <tr>
+                    <td>Convenience Fee</td>
+                    <td>{{ getCurrency() }} {{ invoiceData.convinenceFee || 0 | number:'1.2-2' }}</td>
+                  </tr>
+                  <tr>
+                    <td>Discount</td>
+                    <td>{{ getCurrency() }} {{ invoiceData.discount || 0 | number:'1.2-2' }}</td>
+                  </tr>
+                  <tr class="total-row">
+                    <td>Total Amount</td>
+                    <td>{{ getCurrency() }} {{ invoiceData.total_fare || 0 | number:'1.2-2' }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="invoice-note">
+              This invoice will not be recognised as paid unless supported by company payment records.
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>

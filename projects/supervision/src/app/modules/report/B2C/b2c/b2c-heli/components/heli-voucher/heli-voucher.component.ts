@@ -17,6 +17,7 @@ export class HeliVoucherComponent implements OnInit, OnDestroy {
   private subSunk = new SubSink();
   appReference = '';
   voucherData: any;
+  bookingPaxDetails: any[] = [];
   loading = false;
 
   constructor(
@@ -43,7 +44,9 @@ export class HeliVoucherComponent implements OnInit, OnDestroy {
     }).subscribe(resp => {
       this.loading = false;
       if (resp.statusCode === 200 || resp.statusCode === 201) {
-        this.voucherData = Array.isArray(resp.data) ? resp.data[0] : resp.data;
+        const voucherData = Array.isArray(resp.data) ? resp.data[0] : resp.data;
+        this.voucherData = voucherData && voucherData.BookingDetails ? voucherData.BookingDetails : voucherData;
+        this.bookingPaxDetails = voucherData && Array.isArray(voucherData.BookingPaxDetails) ? voucherData.BookingPaxDetails : [];
       } else {
         this.swalService.alert.error(resp.msg || '');
       }
@@ -58,15 +61,70 @@ export class HeliVoucherComponent implements OnInit, OnDestroy {
   }
 
   get paxList(): any[] {
+    if (this.bookingPaxDetails.length) {
+      return this.bookingPaxDetails;
+    }
     return this.voucherData && Array.isArray(this.voucherData.pax) ? this.voucherData.pax : [];
   }
 
   get leadPax(): any {
-    return this.paxList.find(pax => pax.is_lead_pax === 1) || this.paxList[0] || {};
+    return this.paxList.find(pax => pax.is_lead_pax === 1 || pax.IsLeadPax === 1) || this.paxList[0] || {};
   }
 
   getLeadPaxName(): string {
-    return this.leadPax.name ? `${this.leadPax.title || ''} ${this.leadPax.name}`.trim() : 'N/A';
+    if (this.leadPax.name) {
+      return `${this.leadPax.title || ''} ${this.leadPax.name}`.trim();
+    }
+    if (this.leadPax.FirstName || this.leadPax.LastName) {
+      return `${this.leadPax.Title || ''} ${this.leadPax.FirstName || ''} ${this.leadPax.LastName || ''}`.trim();
+    }
+    return 'N/A';
+  }
+
+  getContactNumber(): string {
+    const phoneCode = this.leadPax.phone_code || this.leadPax.PhoneCode;
+    const mobile = this.leadPax.mobile || this.leadPax.Mobile || this.voucherData && (this.voucherData.PhoneNumber || this.voucherData.phone_number);
+    return mobile ? `${phoneCode ? `+${phoneCode} ` : ''}${mobile}` : 'N/A';
+  }
+
+  getPassengerCount(): number {
+    return this.paxList.length || this.attributes.passengers || 0;
+  }
+
+  getCurrency(): string {
+    return this.voucherData && (this.voucherData.currency || this.voucherData.Currency || this.attributes.currency || this.attributes.Currency) || '';
+  }
+
+  getDurationLabel(): string {
+    return this.voucherData && this.voucherData.duration ? `${this.voucherData.duration} mins` : 'N/A';
+  }
+
+  getPaxName(pax: any): string {
+    if (pax.name) {
+      return `${pax.title || ''} ${pax.name}`.trim();
+    }
+    return `${pax.Title || ''} ${pax.FirstName || ''} ${pax.LastName || ''}`.trim() || 'N/A';
+  }
+
+  getPaxGender(pax: any): string {
+    return pax.gender || pax.Gender || 'N/A';
+  }
+
+  getPaxAge(pax: any): string {
+    return pax.age || pax.Age || 'N/A';
+  }
+
+  getPaxWeight(pax: any): string {
+    return pax.weight || pax.Weight || 'N/A';
+  }
+
+  getPaxKycDocument(pax: any): string {
+    return pax.kyc_document || pax.KycDocument || '';
+  }
+
+  getTermsAndConditionHtml(): string {
+    const terms = this.parseJson(this.voucherData && this.voucherData.TermsAndCondition);
+    return typeof terms === 'string' ? terms : '';
   }
 
   getHelipadName(value: any): string {
@@ -82,6 +140,17 @@ export class HeliVoucherComponent implements OnInit, OnDestroy {
       case 'BOOKING_INPROGRESS': return 'Booking Inprogress';
       case 'BOOKING_HOLD': return 'Booking Hold';
       default: return status || 'N/A';
+    }
+  }
+
+  getBadgeClass(status: string): string {
+    switch (status) {
+      case 'BOOKING_CONFIRMED': return 'badge-success';
+      case 'BOOKING_FAILED':
+      case 'BOOKING_CANCELLED': return 'badge-danger';
+      case 'BOOKING_INPROGRESS': return 'badge-info';
+      case 'BOOKING_HOLD': return 'badge-warning';
+      default: return 'badge-info';
     }
   }
 
@@ -111,7 +180,14 @@ export class HeliVoucherComponent implements OnInit, OnDestroy {
     }
     try {
       const parsed = JSON.parse(value);
-      return typeof parsed === 'string' ? JSON.parse(parsed) : parsed;
+      if (typeof parsed === 'string') {
+        try {
+          return JSON.parse(parsed);
+        } catch (error) {
+          return parsed;
+        }
+      }
+      return parsed;
     } catch (error) {
       return {};
     }

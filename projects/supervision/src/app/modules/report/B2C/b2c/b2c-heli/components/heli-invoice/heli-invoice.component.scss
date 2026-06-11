@@ -1,20 +1,196 @@
-.printformClass {
-  max-width: 1000px;
+.heli-document-wrap {
+  width: 90%;
+  padding: 40px 0 0;
+  position: relative;
   margin: 0 auto;
 }
 
-th {
+.printformClass {
+  -webkit-print-color-adjust: exact;
+}
+
+.heli-document {
+  font-size: 13px;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, .08), 0 2px 8px 0 rgba(0, 0, 0, .16);
+  background: #f3f3f3;
+  margin: 0 auto;
+  -webkit-print-color-adjust: exact;
+  padding: 50px 45px;
+}
+
+.document-cell {
+  padding: 15px 15px 30px;
+  border-top: unset;
+}
+
+.header-table,
+.summary-table,
+.section-table {
+  width: 100%;
+  border-collapse: separate;
+}
+
+.logo-cell {
+  padding: 0;
+  border-top: 1px solid transparent;
+}
+
+.brand-logo {
+  padding: 10px 0;
+  -webkit-print-color-adjust: exact;
+}
+
+.title-cell {
+  padding: 0;
+  width: 45%;
+  border-top: 1px solid transparent;
+  text-align: right;
+}
+
+.doc-title {
+  display: inline-block;
+  background: #082e53;
+  color: #fff;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.action-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.doc-btn {
+  font-size: 16px;
+  -webkit-print-color-adjust: exact;
+  padding: 12px 20px;
+  display: block;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.doc-btn-light {
+  color: #fe4865;
+  background: #fff5f6;
+}
+
+.doc-btn-primary {
+  border: 1px solid #fe4865;
+  background: #fe4865;
+  color: #fff;
+}
+
+.summary-table td {
+  border: none;
+  padding: 0 0 15px;
+  line-height: 25px;
+  font-size: 15px;
+}
+
+.summary-left,
+.summary-right {
+  width: 50%;
+}
+
+.summary-left span,
+.summary-right span {
+  display: block;
+}
+
+.summary-right {
+  text-align: right;
+}
+
+.lead-name {
+  display: block;
+  font-size: 17px;
+}
+
+.document-section {
+  margin-bottom: 16px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid #e8e8e8;
+  box-shadow: 20px 14px 18px 0 rgba(194, 194, 194, 0.15);
+  background: #fff;
+}
+
+.section-title {
+  padding: 12px 16px;
+  background: #f5f2fc;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  color: #282828;
+  font-size: 20px;
+}
+
+.section-table td {
+  border: none;
+  padding: 10px 15px;
+}
+
+.label-row {
   white-space: nowrap;
-  width: 22%;
+  color: #4b4b4b;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.value-row {
+  color: #4b4b4b;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.payment-table tr:not(:first-child) {
+  white-space: nowrap;
+  color: #4b4b4b;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.payment-table td:last-child {
+  text-align: right;
+}
+
+.total-row td {
+  color: #fe4865;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.invoice-note {
+  margin-top: 16px;
+  padding: 15px;
+  color: #282828;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 @media print {
+  .no-print,
   button {
     display: none !important;
   }
 
-  .adminInner {
+  .heli-document-wrap {
+    width: 100%;
+    padding: 0;
+  }
+
+  .heli-document {
     box-shadow: none;
-    border: 0;
   }
 }

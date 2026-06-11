@@ -163,7 +163,7 @@
             "main": "projects/supervision/src/main.ts",
             "polyfills": "projects/supervision/src/polyfills.ts",
             "tsConfig": "projects/supervision/tsconfig.app.json",
-            "aot": true,
+            "aot": false,
             "assets": [
               "projects/supervision/src/favicon.ico",
               "projects/supervision/src/assets"
@@ -182,6 +182,15 @@
             ]
           },
           "configurations": {
+            "development": {
+              "optimization": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "aot": false,
+              "extractLicenses": false,
+              "vendorChunk": true,
+              "buildOptimizer": false
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -215,13 +224,17 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "supervision:build"
+            "browserTarget": "supervision:build:development"
           },
           "configurations": {
+            "development": {
+              "browserTarget": "supervision:build:development"
+            },
             "production": {
               "browserTarget": "supervision:build:production"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

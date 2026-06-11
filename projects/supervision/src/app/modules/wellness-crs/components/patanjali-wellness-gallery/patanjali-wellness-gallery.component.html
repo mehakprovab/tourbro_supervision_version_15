@@ -20,6 +20,15 @@
           (change)="onGallerySelect($event)">
         <small class="text-danger">Only JPG, JPEG, PNG, SVG, and WEBP images up to 1 MB are allowed.</small>
       </div>
+      <div class="form-group form-check">
+        <input
+          type="checkbox"
+          id="isTrending"
+          class="form-check-input"
+          name="is_trending"
+          [(ngModel)]="isTrending">
+        <label class="form-check-label" for="isTrending">Is Trending</label>
+      </div>
 
       <button type="submit" class="btn btn-sm btn-success" [disabled]="loading || !selectedFiles.length">
         Upload Images
@@ -37,7 +46,16 @@
             class="form-control-file mb-2"
             accept=".png,.jpg,.jpeg,.webp,.svg"
             (change)="onUpdateSelect($event)">
-          <button type="button" class="btn btn-sm btn-primary mr-2" [disabled]="loading || !updateFile" (click)="updateImage()">
+          <div class="form-check mb-2">
+            <input
+              type="checkbox"
+              id="updateIsTrending"
+              class="form-check-input"
+              name="update_is_trending"
+              [(ngModel)]="isTrending">
+            <label class="form-check-label" for="updateIsTrending">Is Trending</label>
+          </div>
+          <button type="button" class="btn btn-sm btn-primary mr-2" [disabled]="loading" (click)="updateImage()">
             Update
           </button>
           <button type="button" class="btn btn-sm btn-secondary" (click)="cancelEdit()">
@@ -54,12 +72,13 @@
             <th>SI No.</th>
             <th>Image</th>
             <th>File</th>
+            <th>Trending</th>
             <th class="text-right">Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngIf="!galleryImages.length">
-            <td colspan="4" class="text-center text-muted">
+            <td colspan="5" class="text-center text-muted">
               No gallery images found.
             </td>
           </tr>
@@ -71,11 +90,12 @@
               </a>
             </td>
             <td>{{ getImageName(image) }}</td>
+            <td>{{ isTrending ? 'True' : 'False' }}</td>
             <td class="text-right">
               <button type="button" class="btn btn-sm btn-primary mr-2" (click)="editImage(image, i)">
                 Edit
               </button>
-              <button type="button" class="btn btn-sm btn-danger" [disabled]="loading" (click)="deleteImage(image, i)">
+              <button type="button" class="btn btn-sm btn-primary" [disabled]="loading" (click)="deleteImage(image, i)">
                 Delete
               </button>
             </td>

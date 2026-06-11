@@ -783,11 +783,15 @@ export const apiMap = {
   updateWellnessImage: `${baseUrl}/wellness/wellness-images/updateWellnessImage`,
   wellnessPrimaryImage: `${baseUrl}/wellness/wellness-images/primaryImage`,
   patanjaliWellnessDoctors: `${baseUrl}/wellness/doctors`,
+  patanjaliWellnessDoctorsList: `${baseUrl}/wellness/doctorsList`,
+  patanjaliWellnessDoctorDelete: `${baseUrl}/wellness/deleteDoctor`,
+  patanjaliWellnessDoctorUpdate: `${baseUrl}/wellness/updateDoctor`,
   patanjaliWellnessDoctorById: `${baseUrl}/wellness/doctors/:id`,
-  patanjaliWellnessGalleryList: `${baseUrl}/wellness/galleryList`,
+  patanjaliWellnessGalleryList: `${B2C_URL}/webservice/wellness/wellness/getPatanjaliGallery`,
   patanjaliWellnessUploadGallery: `${baseUrl}/wellness/uploadGallery`,
-  patanjaliWellnessUpdateGallery: `${baseUrl}/wellness/updateGallery`,
-  patanjaliWellnessDeleteGallery: `${baseUrl}/wellness/deleteGallery`,
+  patanjaliWellnessUpdateGallery: `${baseUrl}/wellness/editPatanjaliCenter`,
+  patanjaliWellnessDeleteGallery: `${baseUrl}/wellness/deleteGallaryImage`,
+  patanjaliWellnessCentersCount: `${baseUrl}/wellness/patanjaliCentersCount`,
 
   //Package rating
   getPackagesByCenterId: `${baseUrl}/wellness-packages/getPackagesByCenterId`,

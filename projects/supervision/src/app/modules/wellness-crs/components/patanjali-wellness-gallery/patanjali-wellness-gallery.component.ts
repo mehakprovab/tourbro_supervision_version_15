@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
+import { environment } from 'projects/supervision/src/environments/environment';
 
 @Component({
   selector: 'app-patanjali-wellness-gallery',
@@ -13,13 +14,14 @@ export class PatanjaliWellnessGalleryComponent implements OnInit {
   @ViewChild('updateInput', { static: false }) updateInput: ElementRef<HTMLInputElement>;
 
   readonly galleryId = 1;
-  readonly imageBaseUrl = 'http://54.92.243.81:2001';
+  readonly imageBaseUrl = `${environment.baseUrl}/wellness/getGalleryImages`;
 
   galleryImages: any[] = [];
   selectedFiles: File[] = [];
   updateFile: File | null = null;
   editingImage: any = null;
   editingIndex: number | null = null;
+  isTrending = false;
   loading = false;
 
   constructor(
@@ -42,6 +44,7 @@ export class PatanjaliWellnessGalleryComponent implements OnInit {
       (response) => {
         if (response && (response.statusCode === 200 || response.statusCode === 201)) {
           this.galleryImages = this.normalizeImages(response.data);
+          this.isTrending = this.getTrendingValue(response.data, this.isTrending);
         }
       },
       () => {
@@ -69,6 +72,7 @@ export class PatanjaliWellnessGalleryComponent implements OnInit {
 
     const formData = new FormData();
     formData.append('id', String(this.galleryId));
+    formData.append('is_trending', String(this.isTrending));
     this.selectedFiles.forEach((file) => formData.append('Gallery', file, file.name));
 
     this.loading = true;
@@ -107,8 +111,8 @@ export class PatanjaliWellnessGalleryComponent implements OnInit {
   }
 
   updateImage(): void {
-    if (!this.updateFile || this.editingIndex === null) {
-      this.swalService.alert.oops('Please select image to update.');
+    if (this.editingIndex === null) {
+      this.swalService.alert.oops('Please select gallery image to update.');
       return;
     }
 
@@ -116,10 +120,13 @@ export class PatanjaliWellnessGalleryComponent implements OnInit {
     formData.append('id', String(this.galleryId));
     formData.append('index', String(this.editingIndex));
     formData.append('image_url', this.getImageValue(this.editingImage));
-    formData.append('Gallery', this.updateFile, this.updateFile.name);
+    formData.append('is_trending', String(this.isTrending));
+    if (this.updateFile) {
+      formData.append('Gallery', this.updateFile, this.updateFile.name);
+    }
 
     this.loading = true;
-    this.apiHandlerService.apiHandler('patanjaliWellnessUpdateGallery', 'post', {}, {}, formData).subscribe(
+    this.apiHandlerService.apiHandler('patanjaliWellnessUploadGallery', 'post', {}, {}, formData).subscribe(
       (response) => {
         this.loading = false;
         if (response && (response.statusCode === 200 || response.statusCode === 201)) {
@@ -144,9 +151,8 @@ export class PatanjaliWellnessGalleryComponent implements OnInit {
       }
 
       const request = {
-        id: this.galleryId,
-        index,
-        image_url: this.getImageValue(image)
+        id: String(this.galleryId),
+        image_url: this.getImageName(image)
       };
 
       this.loading = true;
@@ -177,10 +183,7 @@ export class PatanjaliWellnessGalleryComponent implements OnInit {
     if (/^https?:\/\//i.test(imageValue)) {
       return imageValue;
     }
-    if (imageValue.startsWith('/')) {
-      return `${this.imageBaseUrl}${imageValue}`;
-    }
-    return `${this.imageBaseUrl}/${imageValue}`;
+    return `${this.imageBaseUrl}/${imageValue.replace(/^\/+/, '')}`;
   }
 
   getImageName(image: any): string {
@@ -217,7 +220,8 @@ export class PatanjaliWellnessGalleryComponent implements OnInit {
 
   private normalizeImages(data: any, fallback: any[] = []): any[] {
     if (Array.isArray(data)) {
-      return data;
+      const images = data.reduce((list, item) => list.concat(this.normalizeImages(item, [])), []);
+      return images.length ? images : data;
     }
     if (data && Array.isArray(data.gallery)) {
       return data.gallery;
@@ -235,6 +239,14 @@ export class PatanjaliWellnessGalleryComponent implements OnInit {
       return data.split(',').map((image) => image.trim()).filter((image) => image);
     }
     return fallback;
+  }
+
+  private getTrendingValue(data: any, fallback: boolean): boolean {
+    const record = Array.isArray(data) ? data.find((item) => item && typeof item === 'object' && 'is_trending' in item) : data;
+    if (!record || typeof record !== 'object' || !('is_trending' in record)) {
+      return fallback;
+    }
+    return record.is_trending === true || record.is_trending === 1 || record.is_trending === '1' || record.is_trending === 'true';
   }
 
   private getImageValue(image: any): string {

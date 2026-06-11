@@ -38,7 +38,7 @@ export class PatanjaliDoctorsComponent implements OnInit {
 
   getDoctors(): void {
     this.loading = true;
-    this.apiHandlerService.apiHandler('patanjaliWellnessDoctors', 'get').subscribe(
+    this.apiHandlerService.apiHandler('patanjaliWellnessDoctorsList', 'post',{},{},{}).subscribe(
       (response) => {
         this.loading = false;
         this.doctors = this.normalizeDoctors(response);
@@ -67,12 +67,17 @@ export class PatanjaliDoctorsComponent implements OnInit {
 
     const isEdit = !!this.editingDoctor;
     const id = this.getDoctorId(this.editingDoctor);
-    const topic = isEdit && id ? 'patanjaliWellnessDoctorById' : 'patanjaliWellnessDoctors';
-    const method = isEdit ? 'put' : 'post';
-    const pathParams = isEdit && id ? { id } : {};
+    if (isEdit && !id) {
+      this.swalService.alert.oops('Doctor id not found.');
+      return;
+    }
+    if (isEdit) {
+      payload['id'] = id;
+    }
+    const topic = isEdit ? 'patanjaliWellnessDoctorUpdate' : 'patanjaliWellnessDoctors';
 
     this.loading = true;
-    this.apiHandlerService.apiHandler(topic, method, pathParams, {}, payload).subscribe(
+    this.apiHandlerService.apiHandler(topic, 'post', {}, {}, payload).subscribe(
       (response) => {
         this.loading = false;
         if (response && (response.statusCode === 200 || response.statusCode === 201 || response.success)) {
@@ -114,7 +119,7 @@ export class PatanjaliDoctorsComponent implements OnInit {
       }
 
       this.loading = true;
-      this.apiHandlerService.apiHandler('patanjaliWellnessDoctorById', 'delete', { id }).subscribe(
+      this.apiHandlerService.apiHandler('patanjaliWellnessDoctorDelete', 'post', {}, {}, { id }).subscribe(
         (response) => {
           this.loading = false;
           if (response && (response.statusCode === 200 || response.statusCode === 201 || response.success)) {

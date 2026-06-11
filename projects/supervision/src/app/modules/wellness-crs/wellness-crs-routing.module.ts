@@ -11,6 +11,7 @@ import { MealPlanComponent } from './components/meal-plan/meal-plan.component';
 import { FacilitiesComponent } from './components/facilities/facilities.component';
 import { PatanjaliWellnessGalleryComponent } from './components/patanjali-wellness-gallery/patanjali-wellness-gallery.component';
 import { PatanjaliDoctorsComponent } from './components/patanjali-doctors/patanjali-doctors.component';
+import { PatanjaliCentersComponent } from './components/patanjali-centers/patanjali-centers.component';
 
 const routes: Routes = [
 {
@@ -24,6 +25,7 @@ const routes: Routes = [
    { path: 'package-type', component: PackageTypeComponent },
    { path: 'meal-plan', component: MealPlanComponent },
    { path: 'facilities', component: FacilitiesComponent },
+   { path: 'patanjali-wellness/centers', component: PatanjaliCentersComponent },
    { path: 'patanjali-wellness/upload-gallery', component: PatanjaliWellnessGalleryComponent },
    { path: 'patanjali-wellness/doctors', component: PatanjaliDoctorsComponent }
  ]

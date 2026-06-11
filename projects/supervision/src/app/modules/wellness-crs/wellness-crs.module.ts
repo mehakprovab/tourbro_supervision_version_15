@@ -41,6 +41,7 @@ import { WellnessChildPolicyComponent } from './components/wellness-center-list/
 import { WellnessCrsComponent } from './wellness-crs.component';
 import { PatanjaliWellnessGalleryComponent } from './components/patanjali-wellness-gallery/patanjali-wellness-gallery.component';
 import { PatanjaliDoctorsComponent } from './components/patanjali-doctors/patanjali-doctors.component';
+import { PatanjaliCentersComponent } from './components/patanjali-centers/patanjali-centers.component';
 @NgModule({
   declarations: [
     WellnessCenterListComponent,
@@ -72,7 +73,8 @@ import { PatanjaliDoctorsComponent } from './components/patanjali-doctors/patanj
     WellnessChildPolicyComponent,
     WellnessCrsComponent,
     PatanjaliWellnessGalleryComponent,
-    PatanjaliDoctorsComponent
+    PatanjaliDoctorsComponent,
+    PatanjaliCentersComponent
     // WellnessImagesComponent
   ],
   imports: [

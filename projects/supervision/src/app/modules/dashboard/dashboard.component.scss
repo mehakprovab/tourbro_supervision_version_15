@@ -1,3 +1,4 @@
+@import './dashboardStyles.scss';
 .w-35 {
     width: 35%;
 }
@@ -57,4 +58,21 @@ line-height: 16px;
 .bg-primary {
     background-color: #3901be !important;
     color: #ffffff !important;
+}
+
+.top-level-kpi-sec {
+    background-color: #fff4f6;
+    border-radius: 5px;
+}
+.top-level-head{
+    font-family: Inter;
+font-weight: 600;
+font-size: 22px;
+leading-trim: NONE;
+line-height: 32px;
+letter-spacing: 0%;
+color: rgba(77, 26, 196, 1);
+}
+.quick-link-span {
+    color: rgb(253, 78, 78);
 }

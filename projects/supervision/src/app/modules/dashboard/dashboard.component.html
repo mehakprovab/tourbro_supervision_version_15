@@ -1,4 +1,4 @@
-<div class="row bg-white">
+<!-- <div class="row bg-white">
     <div class="col-md-12 d-flex flex-row m-2 dashboard-repors-section">
         <div class="col-md-6 d-flex flex-row m-2" *ngIf="!moduleBookingCountFound; else dnotShow">
             <div class="text-center">
@@ -80,24 +80,24 @@
             </div>
         </div>
     </div>
-    <!-- <ng-template #hideMe>
+    <ng-template #hideMe>
         <div class="col-md-7 booking_list_data">
             <div class="text-center">
               <h4> No data found! </h4>
             </div>
         </div>
-    </ng-template> -->
+    </ng-template>
 </div>
 <br>
 <hr>
 <br>
-<!-- <div class="row bg-white">
+<div class="row bg-white">
     <div class="col-md-12">
         <highcharts-chart [Highcharts]="highcharts2" [options]="chartOptions2"
             style="width: 100%; height: 500px; display: block;">
         </highcharts-chart>
     </div>
-</div> -->
+</div>
 <br>
 <div class="row">
     <div class="col-md-6 col-lg-6 p-0">
@@ -106,8 +106,174 @@
     <div class="col-md-6 col-lg-6 py-0 pr-0">
         <app-recent-booking-transactions></app-recent-booking-transactions>
     </div>
-</div>
+</div> -->
 
 <ngx-loading [show]="loading"
 [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
 [template]="loadingTemplate"></ngx-loading>
+
+<!-- New Dashboard Start -->
+<div class="col-12">
+    <div class="top-level-kpi-sec px-3 py-2">
+        <div class="row">
+            <div class="col-12">
+                <div class="row px-3">
+                    <div class="p-0 d-flex justify-content-start col-6">
+                        <h5 class="top-level-head">Top-Level KPI</h5>
+                    </div>
+                    <div class="p-0 d-flex justify-content-end col-6">
+                        <span class="quick-link-span">Quick Links</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="row px-3">
+                    <div class="total-gmv col-3 ">
+                        <div class="row px-3 py-2 col-12 head-sect">
+                            <div class="col-6 pl-0">
+                                <span class="f-15">Total GMV</span>
+                            </div>
+                            <div class="col-6 pr-0 d-flex justify-content-end">
+                                <select class="b-none">
+                                    <option>Today</option>
+                            <option>Last Day</option>
+                            <option>Last Week</option>
+                            <option>Last Month</option>
+                            <option>All</option>
+                                </select>
+                            </div>
+
+                            <span class="num-span">1000</span>
+                        </div>
+                    </div>
+                    <div class="net-revenue col-3">
+                        <div class="row px-3 py-2 col-12 head-sect">
+                            <div class="col-6 p-0">
+                                <span class="f-15">Net Revenue</span>
+                            </div>
+                            <div class="col-6 pr-0 d-flex justify-content-end">
+                                <select class="b-none">
+                                    <option>Today</option>
+                            <option>Last Day</option>
+                            <option>Last Week</option>
+                            <option>Last Month</option>
+                            <option>All</option>
+                                </select>
+                            </div>
+
+                            <span class="num-span">₹1000</span>
+                        </div>
+                    </div>
+                    <div class="total-bookings col-3">
+                        <div class="row px-3 py-2 col-12 head-sect">
+                            <div class="col-6 p-0">
+                                <span class="f-15">Total Bookings</span>
+                            </div>
+                            <div class="col-6 pr-0 d-flex justify-content-end">
+                                <select class="b-none">
+                                    <option>Today</option>
+                            <option>Last Day</option>
+                            <option>Last Week</option>
+                            <option>Last Month</option>
+                            <option>All</option>
+                                </select>
+                            </div>
+
+                            <span class="num-span">1000</span>
+                        </div>
+                    </div>
+                    <div class="bookings col-3">
+                        <div class="row px-3 py-3 col-12 head-sect">
+                            <div class="col-6 px-0 py-1">
+                                <span class="f-15">Bookings</span>
+                            </div>
+                            <div class="col-6 pr-0 d-flex justify-content-end">
+                                <select class="b-none">
+                                    <option>Today</option>
+                            <option>Last Day</option>
+                            <option>Last Week</option>
+                            <option>Last Month</option>
+                            <option>All</option>
+                                </select>
+                            </div>
+
+                            <span class="num-span">1000</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="row px-3">
+                    <div class="avg-booking-value col-2 mr-4">
+                        <div class="row head-sect">
+                            <div class="col-12">
+                                <span class="f-15">Average Booking Value</span>
+                            </div>
+                            <div class="col-12">
+                                <span class="num-span">10</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pending-vendor-confirm col-2 mr-4 ml-2">
+                        <div class="row head-sect">
+                            <div class="col-12">
+                                <span class="f-15">Pending Vendor Confirmations</span>
+                            </div>
+                            <div class="col-12">
+                                <span class="num-span">10</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pending-payments col-2 mr-4 ml-2">
+                        <div class="row head-sect">
+                            <div class="col-12">
+                                <span class="f-15">Pending Payments</span>
+                            </div>
+                            <div class="col-12">
+                                <span class="num-span">10</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="refund-pendings col-2 mr-4 ml-2">
+                        <div class="row head-sect py-2">
+                            <div class="col-12 py-1">
+                                <span class="f-15">Refunds Pending</span>
+                            </div>
+                            <div class="col-12">
+                                <span class="num-span">10</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="open-cust-issues col-2 mr-4 ml-2">
+                        <div class="row head-sect">
+                            <div class="col-12">
+                                <span class="f-15">Open Customer Issues</span>
+                            </div>
+                            <div class="col-12">
+                                <span class="num-span">10</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <app-revenue-finance></app-revenue-finance>
+    <app-booking-operations></app-booking-operations>
+    <app-vendor-management></app-vendor-management>
+    <div class="col-12">
+        <div class="row p-0">
+            <div class="col-6 pl-0">
+                <app-customer></app-customer>
+            </div>
+            <div class="col-6 pr-0">
+                <app-geo-route></app-geo-route>
+            </div>
+        </div>
+    </div>
+</div>

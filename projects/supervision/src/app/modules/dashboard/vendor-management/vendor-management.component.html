@@ -1,0 +1,164 @@
+<div class="col-12 revenue-finance-top-sec mt-3 pb-3 pt-3">
+    <div class="row">
+
+        <!-- Vendor Management -->
+        <div class="col-md-6">
+            <span class="revenue-span">Vendor Management</span>
+
+            <!-- Stats -->
+            <div class="row mt-2 g-2">
+
+                <div class="col-6">
+                    <div class="head-sect p-3 ">
+                        <p class="f-15 mb-1">Total Vendors</p>
+                        <p class="num-span mb-0">100000</p>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="head-sect p-3 ">
+                        <p class="f-15 mb-1">Active Vendors</p>
+                        <p class="num-span mb-0">100000</p>
+                    </div>
+                </div>
+
+                <div class="col-6 mt-2">
+                    <div class="head-sect p-3 ">
+                        <p class="f-15 mb-1">Pending Vendors</p>
+                        <p class="num-span mb-0">100000</p>
+                    </div>
+                </div>
+
+                <div class="col-6 mt-2">
+                    <div class="head-sect p-3 ">
+                        <div class="row align-items-center">
+                            <div class="col-10">
+                                <span class="f-17">Vendor Location</span>
+                            </div>
+
+                            <div class="col-2 text-end">
+                                <span class="f-17">></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Vendor Category -->
+            <div class="head-sect mt-3 p-3">
+
+                <div
+                    class="row menu-trigger align-items-center"
+                    (click)="isOpen = !isOpen">
+
+                    <div class="col-8">
+                        <span class="f-17">Vendor Category</span>
+                    </div>
+
+                    <div class="col-4 text-end">
+                        <span
+                            class="rotate-span"
+                            [class.rotate-arrow-span]="isOpen">
+                            >
+                        </span>
+                    </div>
+                </div>
+
+                <div
+                    class="menu mt-2"
+                    *ngIf="isOpen"
+                    [@dropDownMenu]>
+
+                    <div
+                        echarts
+                        [options]="options"
+                        class="menu-item pie-chart-card content-scrooling">
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Package & Inventory -->
+        <div class="col-md-6">
+
+            <span class="revenue-span">Package & Inventory</span>
+
+            <!-- Top Stats -->
+            <div class="row mt-2 g-2">
+
+                <div class="col-4">
+                    <div class="head-sect p-3 ">
+                        <p class="f-15 mb-1">Total Active Packages</p>
+                        <p class="num-span mb-0">1000</p>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="head-sect p-3 ">
+                        <p class="f-15 mb-1">Inactive Packages</p>
+                        <p class="num-span mb-0">1000</p>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="head-sect p-3 ">
+                        <p class="f-15 mb-1">Available Inventory</p>
+                        <p class="num-span mb-0">1000</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Package Revenue -->
+            <div class="head-sect mt-3 p-3">
+                <div class="row">
+                    <div class="col-8">
+                        <span class="f-15">Package Revenue</span>
+                    </div>
+
+                    <div class="col-4 text-end">
+                        <select class="b-none">
+                            <option>Today</option>
+                            <option>Last Day</option>
+                            <option>Last Week</option>
+                            <option>Last Month</option>
+                            <option>All</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 mt-2">
+                        <span class="num-span">100</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package Bookings -->
+            <div class="head-sect mt-3 p-3">
+                <div class="row">
+                    <div class="col-8">
+                        <span class="f-15">Package Bookings</span>
+                    </div>
+
+                    <div class="col-4 text-end">
+                        <select class="b-none">
+                            <option>Today</option>
+                            <option>Last Day</option>
+                            <option>Last Week</option>
+                            <option>Last Month</option>
+                            <option>All</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 mt-2">
+                        <span class="num-span">100</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

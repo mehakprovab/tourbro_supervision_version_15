@@ -1,0 +1,73 @@
+.revenue-finance-top-sec {
+    background-color: #fff4f6;
+    border-radius: 5px;
+}
+
+.revenue-span {
+    color: rgba(77, 26, 196, 1);
+    font-family: Inter;
+font-weight: 600;
+font-size: 22px;
+leading-trim: NONE;
+line-height: 32px;
+letter-spacing: 0%;
+}
+.head-sect{
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+}
+.f-15 {
+   font-family: Inter;
+font-weight: 500;
+font-style: Medium;
+font-size: 16px;
+leading-trim: NONE;
+line-height: 24px;
+letter-spacing: 0%;
+color: rgba(75, 75, 75, 1);
+
+}
+.b-none {
+    border: none;
+}
+
+.num-span {
+    font-family: Inter;
+font-weight: 700;
+font-style: Bold;
+font-size: 20px;
+leading-trim: NONE;
+line-height: 100%;
+letter-spacing: 0%;
+color: rgba(3, 7, 18, 1);
+
+}
+
+.f-17 {
+    font-family: Inter;
+    font-weight: 600;
+    font-style: Semi Bold;
+    font-size: 20px;
+    leading-trim: NONE;
+    line-height: 30px;
+    letter-spacing: 0%;
+    color: rgba(3, 7, 18, 1);
+
+}
+
+.text-end {
+    display: flex;
+    justify-content: end;
+}
+
+.rotate-span {
+    font-size: 17px;
+    font-weight: 600;
+     transition: transform 0.3s ease;
+       display: inline-block;
+}
+
+.rotate-arrow-span {
+    transform: rotate(90deg);
+}

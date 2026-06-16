@@ -1,0 +1,230 @@
+<div class="col-12 revenue-finance-top-sec mt-3 pb-3 pt-2">
+  <div class="row">
+
+    <!-- Header -->
+    <div class="col-12">
+      <span class="revenue-span">Revenue & Finance</span>
+    </div>
+
+    <!-- Left Section -->
+    <div class="col-md-6">
+      <div echarts [options]="options" class="pie-chart-card content-scrooling"></div>
+
+      
+<div
+                    class="menu mt-2"
+                    *ngIf="isOpenRevenue"
+                    [@dropDownMenu]>
+
+                    <div
+                        echarts
+                        [options]="pieChart"
+                        class="menu-item pie-chart-card content-scrooling">
+                    </div>
+
+                </div>
+      <div class="row px-3 g-3">
+        <div class="col-12">
+          <div class="head-sect px-3 py-2">
+            <div class="row align-items-center" (click)="isOpenRevenue = !isOpenRevenue">
+              <div class="col-10">
+                <span class="f-17">Module-wise Revenue</span>
+              </div>
+              <div class="col-2 text-end">
+                <span
+                    class="rotate-span"
+                    [class.rotate-arrow-span]="isOpenRevenue">
+                    >
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+         <div class="col-12 mt-2">
+          <div class="head-sect px-3 py-2">
+            <div>
+              <span class="f-15">Gross Margin</span>
+            </div>
+
+            <span class="num-span">1000</span>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+    <!-- Right Section -->
+    <div class="col-md-6">
+      <div echarts [options]="options" class="pie-chart-card content-scrooling"></div>
+
+      <div
+                    class="menu mt-2"
+                    *ngIf="isOpen"
+                    [@dropDownMenu]>
+
+                    <div
+                        echarts
+                        [options]="pieChart"
+                        class="menu-item pie-chart-card content-scrooling">
+                    </div>
+
+                </div>
+
+      <div class="row px-3 g-3">
+       
+
+        <div class="col-12">
+          <div class="head-sect px-3 py-2">
+            <div class="row align-items-center" (click)="isOpen = !isOpen">
+              <div class="col-10">
+                <span class="f-17">Vendor-wise Revenue</span>
+              </div>
+              <div class="col-2 text-end">
+                <span
+                    class="rotate-span"
+                    [class.rotate-arrow-span]="isOpen">
+                    >
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 mt-2">
+          <div class="head-sect px-3 py-2">
+            <div>
+              <span class="f-15">Refund Amount</span>
+            </div>
+
+            <span class="num-span">1000</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Cards -->
+    <div class="col-12 mt-3">
+
+      <!-- Row 1 -->
+      <div class="row px-3 g-3">
+
+        <div class="col-md-4">
+          <div class="head-sect px-3 py-2 ">
+            <div class="row">
+              <div class="col-8">
+                <span class="f-15">Payment Success Rate</span>
+              </div>
+
+              <div class="col-4 text-end">
+                <select class="b-none">
+                  <option>Today</option>
+                            <option>Last Day</option>
+                            <option>Last Week</option>
+                            <option>Last Month</option>
+                            <option>All</option>
+                </select>
+              </div>
+            </div>
+
+            <span class="num-span">1000</span>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="head-sect px-3 py-2 ">
+            <div class="row">
+              <div class="col-8">
+                <span class="f-15">Failed Payment Rate</span>
+              </div>
+
+              <div class="col-4 text-end">
+                <select class="b-none">
+                  <option>Today</option>
+                            <option>Last Day</option>
+                            <option>Last Week</option>
+                            <option>Last Month</option>
+                            <option>All</option>
+                </select>
+              </div>
+            </div>
+
+            <span class="num-span">1000</span>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="head-sect px-3 py-2 ">
+            <div>
+              <span class="f-15">Outstanding Vendor Payables</span>
+            </div>
+
+            <span class="num-span">1000</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Row 2 -->
+      <div class="row px-3 g-3 mt-2">
+
+        <div class="col-md-4">
+          <div class="head-sect px-3 py-2 ">
+            <div>
+              <span class="f-15">Customer Receivables</span>
+            </div>
+
+            <span class="num-span">1000</span>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="head-sect px-3 py-2 ">
+            <div class="row">
+              <div class="col-8">
+                <span class="f-15">Discount Cost</span>
+              </div>
+
+              <div class="col-4 text-end">
+                <select class="b-none">
+                  <option>Today</option>
+                            <option>Last Day</option>
+                            <option>Last Week</option>
+                            <option>Last Month</option>
+                            <option>All</option>
+                </select>
+              </div>
+            </div>
+
+            <span class="num-span">1000</span>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="head-sect px-3 py-2 ">
+            <div class="row">
+              <div class="col-8">
+                <span class="f-15">Markup Earned</span>
+              </div>
+
+              <div class="col-4 text-end">
+                <select class="b-none">
+                  <option>Today</option>
+                            <option>Last Day</option>
+                            <option>Last Week</option>
+                            <option>Last Month</option>
+                            <option>All</option>
+                </select>
+              </div>
+            </div>
+
+            <span class="num-span">1000</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

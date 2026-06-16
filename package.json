@@ -6,7 +6,7 @@
     "start": "ng serve --proxy-config proxy.conf.json --host 0.0.0.0 --disable-host-check",
     "super": "ng serve supervision --proxy-config proxy.conf.json --port 4206 --host 0.0.0.0 --disable-host-check",
     "agent": "ng serve b2b --port 4302 --proxy-config proxy.conf.json --host 0.0.0.0 --poll=2000 --disable-host-check",
-    "build": "ng build --project supervision --prod --aot --base-href 'supervision'",
+    "build": "ng build --project supervision --configuration production --aot --base-href 'supervision'",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

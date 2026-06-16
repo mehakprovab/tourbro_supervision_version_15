@@ -90,7 +90,8 @@ input[type=checkbox]{
 .wrapper1,
 .wrapper2 {
   width: 100%;
-  overflow-x: auto;
+  max-width: 100%;
+  overflow-x: scroll;
   overflow-y: hidden;
 }
 .wrapper1 {
@@ -98,30 +99,44 @@ input[type=checkbox]{
 }
 
 .div1 {
-    min-width: 2700px;
+    min-width: 2800px;
+    width: 2800px;
     height: 20px;
     @media(max-width:767px){
         min-width: 1200px;
+        width: 1200px;
     }
   }
   .div2 {
-    min-width: 2700px;
-    width: max-content;
+    min-width: 2800px;
+    width: 2800px;
     overflow: visible;
     @media(max-width:767px){
         min-width: 1200px;
+        width: 1200px;
     }
   }
   
 .div2 .table-responsive {
-  min-width: 100%;
-  width: max-content;
+  display: block;
+  min-width: 2800px;
+  width: 2800px;
+  max-width: none;
   overflow: visible !important;
+  @media(max-width:767px){
+    min-width: 1200px;
+    width: 1200px;
+  }
 }
 
 .div2 table {
-  min-width: 2500px;
-  width: max-content;
+  min-width: 2800px;
+  width: 2800px;
+  table-layout: auto;
+  @media(max-width:767px){
+    min-width: 1200px;
+    width: 1200px;
+  }
 }
 
 .div2 th,

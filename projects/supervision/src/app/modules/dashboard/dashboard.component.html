@@ -131,19 +131,17 @@
                     <div class="total-gmv col-3 ">
                         <div class="row px-3 py-2 col-12 head-sect">
                             <div class="col-6 pl-0">
-                                <span class="f-15">Total GMV</span>
+                                <span class="f-15">Total GBV</span>
                             </div>
                             <div class="col-6 pr-0 d-flex justify-content-end">
-                                <select class="b-none">
-                                    <option>Today</option>
-                            <option>Last Day</option>
-                            <option>Last Week</option>
-                            <option>Last Month</option>
-                            <option>All</option>
+                                <select class="b-none" [(ngModel)]="grossBookingValueFilter" (change)="onGrossBookingValueFilterChange()">
+                                    <option *ngFor="let option of dashboardFilterOptions" [ngValue]="option.value">
+                                        {{ option.label }}
+                                    </option>
                                 </select>
                             </div>
 
-                            <span class="num-span">1000</span>
+                            <span class="num-span">{{ totalGrossBookingValue }}</span>
                         </div>
                     </div>
                     <div class="net-revenue col-3">
@@ -152,12 +150,10 @@
                                 <span class="f-15">Net Revenue</span>
                             </div>
                             <div class="col-6 pr-0 d-flex justify-content-end">
-                                <select class="b-none">
-                                    <option>Today</option>
-                            <option>Last Day</option>
-                            <option>Last Week</option>
-                            <option>Last Month</option>
-                            <option>All</option>
+                                <select class="b-none" [(ngModel)]="totalBookingFilter" (change)="onTotalBookingFilterChange()">
+                                    <option *ngFor="let option of dashboardFilterOptions" [ngValue]="option.value">
+                                        {{ option.label }}
+                                    </option>
                                 </select>
                             </div>
 
@@ -179,7 +175,7 @@
                                 </select>
                             </div>
 
-                            <span class="num-span">1000</span>
+                            <span class="num-span">{{ totalBooking }}</span>
                         </div>
                     </div>
                     <div class="bookings col-3">

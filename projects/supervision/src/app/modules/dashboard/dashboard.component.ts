@@ -51,6 +51,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
     primaryColour: any;
     secondaryColour: any;
     loadingTemplate: any;
+    totalGrossBookingValue: any = 0;
+    totalBooking: any = 0;
+    grossBookingValueData: any = {};
+    totalBookingData: any = {};
+    grossBookingValueFilter: string = 'today';
+    totalBookingFilter: string = 'today';
+    dashboardFilterOptions = [
+        { label: 'Today', value: 'today' },
+        { label: 'Yesterday', value: 'yesterday' },
+        { label: 'This Week', value: 'thisWeek' },
+        { label: 'This Month', value: 'thisMonth' },
+        { label: 'Last Month', value: 'lastMonth' },
+        { label: 'All', value: 'all' }
+    ];
     
     constructor(
         private apiHandlerService: ApiHandlerService,
@@ -72,6 +86,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       
             // Fetch data again when query param changes
             this.getModuleBookingCount();
+            this.getTotalGrossBookingValue();
+            this.getTotalBooking();
             this.getBookingCalender();
             this.getMonthlyRecapReport(); // Keep this here to ensure it updates
     
@@ -117,6 +133,110 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 this.loading = false;
                 this.moduleBookingCount = [];
             });
+    }
+
+    getTotalGrossBookingValue(): void {
+        this.subSunk.sink = this.apiHandlerService.apiHandler('totalGrossBookingValue', 'post', {}, {}, {})
+            .subscribe(resp => {
+                if (resp.statusCode == 200 || resp.statusCode == 201) {
+                    this.grossBookingValueData = this.getDashboardData(resp);
+                    this.updateGrossBookingValue();
+                    this.cdr.detectChanges();
+                }
+            }, () => {
+                this.grossBookingValueData = {};
+                this.totalGrossBookingValue = 0;
+            });
+    }
+
+    getTotalBooking(): void {
+        this.subSunk.sink = this.apiHandlerService.apiHandler('totalBooking', 'post', {}, {}, {})
+            .subscribe(resp => {
+                if (resp.statusCode == 200 || resp.statusCode == 201) {
+                    this.totalBookingData = this.getDashboardData(resp);
+                    this.updateTotalBooking();
+                    this.cdr.detectChanges();
+                }
+            }, () => {
+                this.totalBookingData = {};
+                this.totalBooking = 0;
+            });
+    }
+
+    getDashboardData(resp: any): any {
+        return resp && (resp.data !== undefined ? resp.data : resp.Data !== undefined ? resp.Data : resp);
+    }
+
+    onGrossBookingValueFilterChange(): void {
+        this.updateGrossBookingValue();
+    }
+
+    onTotalBookingFilterChange(): void {
+        this.updateTotalBooking();
+    }
+
+    updateGrossBookingValue(): void {
+        this.totalGrossBookingValue = this.extractDashboardValue(this.grossBookingValueData, this.grossBookingValueFilter, [
+            'totalGrossBookingValue',
+            'grossBookingValue',
+            'total_gross_booking_value',
+            'GBV',
+            'gbv',
+            'totalGBV',
+            'total'
+        ]);
+    }
+
+    updateTotalBooking(): void {
+        this.totalBooking = this.extractDashboardValue(this.totalBookingData, this.totalBookingFilter, [
+            'totalBooking',
+            'totalBookings',
+            'total_booking',
+            'bookingCount',
+            'count',
+            'total'
+        ]);
+    }
+
+    extractDashboardValue(source: any, selectedFilter: string, totalKeys: string[]): any {
+        const keys = selectedFilter === 'all' ? totalKeys : [selectedFilter];
+        const value = this.findDashboardValue(source, keys);
+        return value !== undefined && value !== null && value !== '' ? value : 0;
+    }
+
+    findDashboardValue(source: any, keys: string[]): any {
+        if (source === null || source === undefined) {
+            return undefined;
+        }
+
+        if (typeof source !== 'object') {
+            return source;
+        }
+
+        if (Array.isArray(source)) {
+            return source.length ? this.findDashboardValue(source[0], keys) : undefined;
+        }
+
+        for (const key of keys) {
+            if (source[key] !== undefined && source[key] !== null) {
+                return source[key];
+            }
+        }
+
+        for (const value of Object.values(source)) {
+            if (value !== null && value !== undefined && typeof value !== 'object') {
+                return value;
+            }
+        }
+
+        for (const value of Object.values(source)) {
+            const nestedValue = this.findDashboardValue(value, keys);
+            if (nestedValue !== undefined && nestedValue !== null && nestedValue !== '') {
+                return nestedValue;
+            }
+        }
+
+        return undefined;
     }
 
     getBookingCalender() {

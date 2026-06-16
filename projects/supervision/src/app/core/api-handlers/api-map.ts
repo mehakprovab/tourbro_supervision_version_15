@@ -22,6 +22,8 @@ export const apiMap = {
   deleteCurrencyConversion: `${baseUrl}/cms/service/deleteCurrencyConversion`,
   bankAccountDetails: baseUrl + "/cms/service/BankAccountDetails",
   bookingCalender: baseUrl + "/dashboard/report/travelCalendar",
+  totalGrossBookingValue: `${baseUrl}/dashboard/report/totalGrossBookingValue`,
+  totalBooking: `${baseUrl}/dashboard/report/totalBooking`,
   bookingDetails: baseUrl + "/transaction/service/BookingDetails",
   bookingReports: baseUrl + "/flight/service/BookingReports",
   cityList: baseUrl + "/common/service/CityList",

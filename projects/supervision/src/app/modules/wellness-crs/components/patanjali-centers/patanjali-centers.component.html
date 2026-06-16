@@ -35,22 +35,15 @@
 
         <div class="col-md-4">
           <div class="form-group">
-            <label for="contactEmail">Email</label>
-            <input type="email" id="contactEmail" class="form-control" formControlName="contact_email">
+            <label for="supplierName">Supplier Name</label>
+            <input type="text" id="supplierName" class="form-control" formControlName="supplier_name">
           </div>
         </div>
 
         <div class="col-md-4">
           <div class="form-group">
-            <label for="contactPhone">Phone</label>
-            <input type="text" id="contactPhone" class="form-control" formControlName="contact_phone">
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="countryName">Country</label>
-            <input type="text" id="countryName" class="form-control" formControlName="country_name">
+            <label for="supplierEmail">Supplier Email</label>
+            <input type="email" id="supplierEmail" class="form-control" formControlName="supplier_email">
           </div>
         </div>
 
@@ -96,9 +89,8 @@
             <th>SI No.</th>
             <th>Center Code</th>
             <th>Center Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Country</th>
+            <th>Supplier Name</th>
+            <th>Supplier Email</th>
             <th>City</th>
             <th>Status</th>
             <th class="text-right">Actions</th>
@@ -106,15 +98,14 @@
         </thead>
         <tbody>
           <tr *ngIf="!centers.length">
-            <td colspan="9" class="text-center text-muted">No Patanjali centers found.</td>
+            <td colspan="8" class="text-center text-muted">No Patanjali centers found.</td>
           </tr>
           <tr *ngFor="let center of centers; let i = index">
             <td>{{ ((page - 1) * pageSize) + i + 1 }}.</td>
             <td>{{ center.center_code }}</td>
             <td>{{ center.center_name || center.name }}</td>
-            <td>{{ center.contact_email || center.email || 'N/A' }}</td>
-            <td>{{ center.contact_phone || center.phone || 'N/A' }}</td>
-            <td>{{ center.country_name || 'N/A' }}</td>
+            <td>{{ center.supplier_name || 'N/A' }}</td>
+            <td>{{ center.supplier_email || 'N/A' }}</td>
             <td>{{ center.city_name || 'N/A' }}</td>
             <td>{{ center.status === true || center.status === 1 || center.status === '1' ? 'Active' : 'Inactive' }}</td>
             <td class="text-right text-nowrap">

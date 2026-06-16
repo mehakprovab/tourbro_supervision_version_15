@@ -36,9 +36,8 @@ export class PatanjaliCentersComponent implements OnInit {
     this.centerForm = this.formBuilder.group({
       center_code: ['', Validators.required],
       center_name: ['', Validators.required],
-      contact_email: [''],
-      contact_phone: [''],
-      country_name: [''],
+      supplier_name: [''],
+      supplier_email: [''],
       city_name: [''],
       address: [''],
       status: [true]
@@ -89,9 +88,8 @@ export class PatanjaliCentersComponent implements OnInit {
     const payload = {
       center_code: this.centerForm.value.center_code,
       center_name: this.centerForm.value.center_name,
-      contact_email: this.centerForm.value.contact_email,
-      contact_phone: this.centerForm.value.contact_phone,
-      country_name: this.centerForm.value.country_name,
+      supplier_name: this.centerForm.value.supplier_name,
+      supplier_email: this.centerForm.value.supplier_email,
       city_name: this.centerForm.value.city_name,
       address: this.centerForm.value.address,
       status: this.centerForm.value.status ? 1 : 0
@@ -120,7 +118,7 @@ export class PatanjaliCentersComponent implements OnInit {
           this.getCentersCount();
           return;
         }
-        this.swalService.alert.oops(response && (response.Message || response.message) || 'Patanjali center save failed.');
+        this.swalService.alert.oops(this.getResponseMessage(response, 'Patanjali center save failed.'));
       },
       (err: HttpErrorResponse) => {
         this.loading = false;
@@ -134,9 +132,8 @@ export class PatanjaliCentersComponent implements OnInit {
     this.centerForm.patchValue({
       center_code: center.center_code || '',
       center_name: center.center_name || center.name || '',
-      contact_email: center.contact_email || center.email || '',
-      contact_phone: center.contact_phone || center.phone || '',
-      country_name: center.country_name || '',
+      supplier_name: center.supplier_name || '',
+      supplier_email: center.supplier_email || '',
       city_name: center.city_name || '',
       address: center.address || '',
       status: center.status === true || center.status === 1 || center.status === '1'
@@ -165,7 +162,7 @@ export class PatanjaliCentersComponent implements OnInit {
             this.getCentersCount();
             return;
           }
-          this.swalService.alert.oops(response && (response.Message || response.message) || 'Patanjali center delete failed.');
+          this.swalService.alert.oops(this.getResponseMessage(response, 'Patanjali center delete failed.'));
         },
         (err: HttpErrorResponse) => {
           this.loading = false;
@@ -180,9 +177,8 @@ export class PatanjaliCentersComponent implements OnInit {
     this.centerForm.reset({
       center_code: '',
       center_name: '',
-      contact_email: '',
-      contact_phone: '',
-      country_name: '',
+      supplier_name: '',
+      supplier_email: '',
       city_name: '',
       address: '',
       status: true
@@ -240,7 +236,14 @@ export class PatanjaliCentersComponent implements OnInit {
     return response && (response.Status === true || response.statusCode === 200 || response.statusCode === 201 || response.success);
   }
 
+  private getResponseMessage(response: any, fallback: string): string {
+    if (!response) {
+      return fallback;
+    }
+    return response.Message || response.message || response.error || response.data && (response.data.Message || response.data.message) || fallback;
+  }
+
   private getErrorMessage(err: HttpErrorResponse, fallback: string): string {
-    return err && err.error && (err.error.Message || err.error.message) ? (err.error.Message || err.error.message) : fallback;
+    return err && err.error ? this.getResponseMessage(err.error, fallback) : fallback;
   }
 }

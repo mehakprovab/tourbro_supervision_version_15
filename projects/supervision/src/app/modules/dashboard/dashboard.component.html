@@ -150,14 +150,14 @@
                                 <span class="f-15">Net Revenue</span>
                             </div>
                             <div class="col-6 pr-0 d-flex justify-content-end">
-                                <select class="b-none" [(ngModel)]="totalBookingFilter" (change)="onTotalBookingFilterChange()">
+                                <select class="b-none" [(ngModel)]="netRevenueFilter" (change)="onNetRevenueFilterChange()">
                                     <option *ngFor="let option of dashboardFilterOptions" [ngValue]="option.value">
                                         {{ option.label }}
                                     </option>
                                 </select>
                             </div>
 
-                            <span class="num-span">₹1000</span>
+                            <span class="num-span">{{ netRevenue }}</span>
                         </div>
                     </div>
                     <div class="total-bookings col-3">
@@ -166,12 +166,10 @@
                                 <span class="f-15">Total Bookings</span>
                             </div>
                             <div class="col-6 pr-0 d-flex justify-content-end">
-                                <select class="b-none">
-                                    <option>Today</option>
-                            <option>Last Day</option>
-                            <option>Last Week</option>
-                            <option>Last Month</option>
-                            <option>All</option>
+                                <select class="b-none" [(ngModel)]="totalBookingFilter" (change)="onTotalBookingFilterChange()">
+                                    <option *ngFor="let option of dashboardFilterOptions" [ngValue]="option.value">
+                                        {{ option.label }}
+                                    </option>
                                 </select>
                             </div>
 
@@ -181,19 +179,10 @@
                     <div class="bookings col-3">
                         <div class="row px-3 py-3 col-12 head-sect">
                             <div class="col-6 px-0 py-1">
-                                <span class="f-15">Bookings</span>
-                            </div>
-                            <div class="col-6 pr-0 d-flex justify-content-end">
-                                <select class="b-none">
-                                    <option>Today</option>
-                            <option>Last Day</option>
-                            <option>Last Week</option>
-                            <option>Last Month</option>
-                            <option>All</option>
-                                </select>
+                                <span class="f-15">Payment Completed</span>
                             </div>
 
-                            <span class="num-span">1000</span>
+                            <span class="num-span">{{ paymentCompletedCount }}</span>
                         </div>
                     </div>
                 </div>
@@ -209,7 +198,7 @@
                                 <span class="f-15">Average Booking Value</span>
                             </div>
                             <div class="col-12">
-                                <span class="num-span">10</span>
+                                <span class="num-span">{{ averageBookingValue }}</span>
                             </div>
                         </div>
                     </div>
@@ -219,7 +208,7 @@
                                 <span class="f-15">Pending Vendor Confirmations</span>
                             </div>
                             <div class="col-12">
-                                <span class="num-span">10</span>
+                                <span class="num-span">{{ pendingVendorConfirmations }}</span>
                             </div>
                         </div>
                     </div>
@@ -229,7 +218,7 @@
                                 <span class="f-15">Pending Payments</span>
                             </div>
                             <div class="col-12">
-                                <span class="num-span">10</span>
+                                <span class="num-span">{{ paymentPendingCount }}</span>
                             </div>
                         </div>
                     </div>
@@ -239,7 +228,7 @@
                                 <span class="f-15">Refunds Pending</span>
                             </div>
                             <div class="col-12">
-                                <span class="num-span">10</span>
+                                <span class="num-span">{{ refundsPending }}</span>
                             </div>
                         </div>
                     </div>
@@ -249,7 +238,7 @@
                                 <span class="f-15">Open Customer Issues</span>
                             </div>
                             <div class="col-12">
-                                <span class="num-span">10</span>
+                                <span class="num-span">{{ openCustomerIssues }}</span>
                             </div>
                         </div>
                     </div>
@@ -257,15 +246,79 @@
                 
             </div>
         </div>
+
+        <!-- <div class="row mt-3">
+            <div class="col-12">
+                <div class="row px-3">
+                    <div class="avg-booking-value col-2 mr-4">
+                        <div class="row head-sect">
+                            <div class="col-12">
+                                <span class="f-15">Promo Discount Cost</span>
+                            </div>
+                            <div class="col-12">
+                                <span class="num-span">{{ totalPromoCodeDiscountCost }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pending-vendor-confirm col-2 mr-4 ml-2">
+                        <div class="row head-sect">
+                            <div class="col-12">
+                                <span class="f-15">Admin Markup</span>
+                            </div>
+                            <div class="col-12">
+                                <span class="num-span">{{ totalAdminMarkupAmount }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pending-payments col-2 mr-4 ml-2">
+                        <div class="row head-sect">
+                            <div class="col-12">
+                                <span class="f-15">Documents Not Issued</span>
+                            </div>
+                            <div class="col-12">
+                                <span class="num-span">{{ documentsNotIssuedCount }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="refund-pendings col-2 mr-4 ml-2">
+                        <div class="row head-sect py-2">
+                            <div class="col-12 py-1">
+                                <span class="f-15">Service Delivered</span>
+                            </div>
+                            <div class="col-12">
+                                <span class="num-span">{{ serviceDeliveredCount }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="open-cust-issues col-2 mr-4 ml-2">
+                        <div class="row head-sect">
+                            <div class="col-12">
+                                <span class="f-15">Service Cancelled</span>
+                            </div>
+                            <div class="col-12">
+                                <span class="num-span">{{ serviceCancelledCount }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div> -->
     </div>
 
     <app-revenue-finance></app-revenue-finance>
     <app-booking-operations></app-booking-operations>
-    <app-vendor-management></app-vendor-management>
+    <app-vendor-management
+        [totalVendors]="totalVendors"
+        [activeVendors]="activeVendors"
+        [pendingVendors]="pendingVendors"
+        [vendorCategoryData]="vendorsCategoryWiseData"
+        [vendorLocationData]="vendorLocationWiseData">
+    </app-vendor-management>
     <div class="col-12">
         <div class="row p-0">
             <div class="col-6 pl-0">
-                <app-customer></app-customer>
+                <app-customer [totalCustomersData]="totalCustomersData"></app-customer>
             </div>
             <div class="col-6 pr-0">
                 <app-geo-route></app-geo-route>

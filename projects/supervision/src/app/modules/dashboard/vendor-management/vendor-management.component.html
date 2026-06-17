@@ -11,29 +11,30 @@
                 <div class="col-6">
                     <div class="head-sect p-3 ">
                         <p class="f-15 mb-1">Total Vendors</p>
-                        <p class="num-span mb-0">100000</p>
+                        <p class="num-span mb-0">{{ totalVendors || 0 }}</p>
                     </div>
                 </div>
 
                 <div class="col-6">
                     <div class="head-sect p-3 ">
                         <p class="f-15 mb-1">Active Vendors</p>
-                        <p class="num-span mb-0">100000</p>
+                        <p class="num-span mb-0">{{ activeVendors || 0 }}</p>
                     </div>
                 </div>
 
                 <div class="col-6 mt-2">
                     <div class="head-sect p-3 ">
                         <p class="f-15 mb-1">Pending Vendors</p>
-                        <p class="num-span mb-0">100000</p>
+                        <p class="num-span mb-0">{{ pendingVendors || 0 }}</p>
                     </div>
                 </div>
 
-                <div class="col-6 mt-2">
+                <!-- <div class="col-6 mt-2">
                     <div class="head-sect p-3 ">
                         <div class="row align-items-center">
                             <div class="col-10">
                                 <span class="f-17">Vendor Location</span>
+                                <p class="num-span mb-0 mt-2">{{ vendorLocations.length || 0 }}</p>
                             </div>
 
                             <div class="col-2 text-end">
@@ -41,6 +42,41 @@
                             </div>
                         </div>
                     </div>
+                </div> -->
+
+            </div>
+
+            <!-- Vendor Location -->
+            <div class="head-sect mt-3 p-3">
+
+                <div
+                    class="row menu-trigger align-items-center"
+                    (click)="isLocationOpen = !isLocationOpen">
+
+                    <div class="col-8">
+                        <span class="f-17">Vendor Location</span>
+                    </div>
+
+                    <div class="col-4 text-end">
+                        <span
+                            class="rotate-span"
+                            [class.rotate-arrow-span]="isLocationOpen">
+                            >
+                        </span>
+                    </div>
+                </div>
+
+                <div
+                    class="menu mt-2"
+                    *ngIf="isLocationOpen"
+                    [@dropDownMenu]>
+
+                    <div
+                        echarts
+                        [options]="locationOptions"
+                        class="menu-item pie-chart-card content-scrooling">
+                    </div>
+
                 </div>
 
             </div>
@@ -92,21 +128,21 @@
                 <div class="col-4">
                     <div class="head-sect p-3 ">
                         <p class="f-15 mb-1">Total Active Packages</p>
-                        <p class="num-span mb-0">1000</p>
+                        <p class="num-span mb-0">{{ totalActivePackages || 0 }}</p>
                     </div>
                 </div>
 
                 <div class="col-4">
                     <div class="head-sect p-3 ">
                         <p class="f-15 mb-1">Inactive Packages</p>
-                        <p class="num-span mb-0">1000</p>
+                        <p class="num-span mb-0">{{ inactivePackages || 0 }}</p>
                     </div>
                 </div>
 
                 <div class="col-4">
                     <div class="head-sect p-3 ">
                         <p class="f-15 mb-1">Available Inventory</p>
-                        <p class="num-span mb-0">1000</p>
+                        <p class="num-span mb-0">{{ availableInventory || 0 }}</p>
                     </div>
                 </div>
 
@@ -130,7 +166,7 @@
                     </div>
 
                     <div class="col-12 mt-2">
-                        <span class="num-span">100</span>
+                        <span class="num-span">{{ packageRevenue || 0 }}</span>
                     </div>
                 </div>
             </div>
@@ -153,7 +189,7 @@
                     </div>
 
                     <div class="col-12 mt-2">
-                        <span class="num-span">100</span>
+                        <span class="num-span">{{ packageBookings || 0 }}</span>
                     </div>
                 </div>
             </div>

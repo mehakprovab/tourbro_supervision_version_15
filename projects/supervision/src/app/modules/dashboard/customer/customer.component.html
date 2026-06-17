@@ -14,17 +14,15 @@
         </div>
 
         <div class="col-4 text-end">
-            <select class="b-none">
-                <option>Today</option>
-                            <option>Last Day</option>
-                            <option>Last Week</option>
-                            <option>Last Month</option>
-                            <option>All</option>
+            <select class="b-none" [(ngModel)]="totalCustomersFilter" (change)="onTotalCustomersFilterChange()">
+                <option *ngFor="let option of dashboardFilterOptions" [ngValue]="option.value">
+                    {{ option.label }}
+                </option>
             </select>
         </div>
 
         <div class="col-12">
-            <span class="num-span">100</span>
+            <span class="num-span">{{ totalCustomers }}</span>
         </div>
     </div>
 

@@ -268,7 +268,21 @@
         [paymentFailedRate]="paymentFailedRate"
         [customerReceivables]="paymentPendingCount">
     </app-revenue-finance>
-    <app-booking-operations></app-booking-operations>
+    <app-booking-operations
+        [paymentPending]="paymentPendingCount"
+        [paymentReceived]="paymentCompletedCount"
+        [paymentFailed]="paymentFailedRate"
+        [paymentPendingData]="paymentPendingData"
+        [paymentCompletedData]="paymentCompletedData"
+        [serviceDeliveredCancelledCountData]="serviceDeliveredCancelledCountData"
+        [vendorConfirmationPending]="pendingVendorConfirmations"
+        [confirmed]="totalBooking"
+        [voucherTicketPending]="documentsNotIssuedCount"
+        [completed]="serviceDeliveredCount"
+        [cancelled]="serviceCancelledCount"
+        [refundInitiated]="refundsPending"
+        [refundCompleted]="refundAmount">
+    </app-booking-operations>
     <app-vendor-management
         [totalVendors]="totalVendors"
         [activeVendors]="activeVendors"

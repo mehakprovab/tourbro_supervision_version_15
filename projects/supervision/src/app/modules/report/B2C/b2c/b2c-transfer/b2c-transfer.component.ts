@@ -399,57 +399,63 @@ getBasePrice(value: string) {
     }
 
     exportExcel(): void {
+        const columns = this.displayColumn.filter(column => column.key !== 'Action');
         const fileToExport = this.respData.map((response: any, index: number) => {
-            // Safely access the first passenger's details if pax exists and is not empty
-            const leadPassenger = response.pax && response.pax.length > 0 ? response.pax[0] : {};
-    
-            return {
-                "Sl No.": index + 1,
-                "Status": response.status,
-                "Application Reference": response['app_reference'],
-                "Confirmation Reference": response['booking_reference'],
-                "Departure Point":this.getDeparture(response.attributes)|| 'N/A',
-                "Destination Point":this.getDestination(response.attributes)|| 'N/A',
-                "Lead Passenger Name": leadPassenger.first_name || '',
-                "Lead Passenger Email": leadPassenger.email || '',
-                "Phone": leadPassenger.phone || '',
-                "Transfer Name": response.product_name,
-                "Travel Date": response.itinerary && response.itinerary.length > 0 ? response.itinerary[0].travel_date : '',
-                "Promocode": response.promo_code || 'N/A',
-                "Base Fare": response.itinerary && response.itinerary.length > 0 ? response.itinerary[0].base_fare : '',
-                "Extras": response.itinerary && response.itinerary.length > 0 ? response.itinerary[0].extras_amount : '',
-                "Admin Markup": response.itinerary && response.itinerary.length > 0 ? response.itinerary[0].admin_markup : '',
-                // "Agent markup": response.itinerary && response.itinerary.length > 0 ? response.itinerary[0].agent_markup : '',
-                "Discount": response.discount,
-                "Currency": response.currency,
-                "Convenience Fee":response.itinerary && response.itinerary.length > 0 ? response.itinerary[0].Tax : '',
-                "Customer price": response.itinerary && response.itinerary.length > 0 ? response.itinerary[0].total_fare : '',
-                "BookedOn": response.created_at
-            };
+            return columns.reduce((row, column) => {
+                row[column.value] = this.getExportValue(response, column.key, index);
+                return row;
+            }, {});
         });
     
-        const columnWidths = [
-            { wch: 5 },
-            { wch: 20 },
-            { wch: 20 },
-            { wch: 30 },
-            { wch: 30 },
-            { wch: 10 },
-            { wch: 20 },
-            { wch: 15 },
-            { wch: 15 },
-            { wch: 15 },
-            { wch: 15 },
-            { wch: 20 },
-            { wch: 20 },
-            { wch: 20 }
-        ];
+        const columnWidths = columns.map(column => ({
+            wch: column.key === 'id' ? 8 : Math.max(column.value.length + 5, 20)
+        }));
     
         this.utility.exportToExcel(
             fileToExport,
             'B2C Transfer List',
             columnWidths
         );
+    }
+
+    getExportValue(response: any, key: string, index: number): any {
+        const itinerary = response && response.itinerary && response.itinerary.length ? response.itinerary[0] : {};
+        const leadPassenger = response && response.pax && response.pax.length ? response.pax[0] : {};
+        const attributes = this.parseAttributes(response && response.attributes);
+        const fareDetails = attributes && attributes.fare_details ? attributes.fare_details : {};
+        const markupDetails = fareDetails.markupDetails || {};
+
+        if (key.indexOf('location_') === 0) {
+            const routeIndex = Number(key.replace('location_', '')) - 1;
+            return response.route_name_list && response.route_name_list[routeIndex] ? response.route_name_list[routeIndex] : '-';
+        }
+
+        switch (key) {
+            case 'id': return index + 1;
+            case 'status': return response.booking_status || response.status || 'N/A';
+            case 'app_reference': return response.app_reference || 'N/A';
+            case 'car_name': return response.car_name || 'N/A';
+            case 'driver_name': return this.getDriver(response.attributes) || 'N/A';
+            case 'vehicle_reg_no': return this.getVehicle(response.attributes) || 'N/A';
+            case 'booking_reference': return response.booking_reference || 'N/A';
+            case 'departure_point': return this.getDeparture(response.attributes) || 'N/A';
+            case 'destination_point': return this.getDestination(response.attributes) || 'N/A';
+            case 'FirstName': return `${leadPassenger.title || ''} ${leadPassenger.first_name || ''} ${leadPassenger.last_name || ''}`.trim() || 'N/A';
+            case 'Email': return leadPassenger.email || 'N/A';
+            case 'Phone': return leadPassenger.phone || 'N/A';
+            case 'BaseFare': return this.getBasePrice(response.attributes) || 0;
+            case 'admin_markup': return markupDetails.AdminMarkup || 0;
+            case 'Discount': return fareDetails.discountAmount || 0;
+            case 'ConvienceFee': return fareDetails.convinenceFee || 0;
+            case 'cancellation_charges': return response.cancellation_charges || 0;
+            case 'Currency': return response.currency || 'N/A';
+            case 'CustomerPaidAmount': return itinerary.total_fare || 0;
+            case 'BookedOn': return response.created_at || 'N/A';
+            case 'paymentStatus': return response.payment_status || 'N/A';
+            case 'paymentMode': return response.payment_mode || 'N/A';
+            case 'PaidOn': return response.paid_on || 'N/A';
+            default: return response[key] !== undefined && response[key] !== null && response[key] !== '' ? response[key] : 'N/A';
+        }
     }
 
     showPaxProfile(data) {

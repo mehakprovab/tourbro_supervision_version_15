@@ -498,6 +498,21 @@ this.totalVendorsData = this.getDashboardData(resp.totalVendors);
             'pendingSupplierConfirmations',
             'pendingConfirmation'
         ]);
+        this.pendingVendorConfirmations = this.extractDashboardValue(this.pendingVendorConfirmationsData, 'all', [
+            'totalPendingAcrossAllVendors',
+            'pendingVendorConfirmations',
+            'pendingVendorConfirmation',
+            'pendingSupplierConfirmations',
+            'vendorConfirmationPending',
+            'vendorPending',
+            'count',
+            'total'
+        ]) || this.pendingVendorConfirmations;
+        this.pendingVendorConfirmations = this.getExactDashboardNumber(
+            this.pendingVendorConfirmationsData,
+            'totalPendingAcrossAllVendors',
+            this.pendingVendorConfirmations
+        );
         this.refundsPending = this.extractDashboardValue(this.bookingMetrics, 'all', [
             'refundsPending',
             'refundPending',
@@ -836,8 +851,8 @@ vendorCategories: any[] = [];
 updateTotalVendorData(): void {
   const data = this.totalVendorsData?.data || this.totalVendorsData || {};
 
-  this.totalVendors = data.totalvendorsOnboarded || 0;
-  this.activeVendors = data.totalActiveVendors || 0;
+  this.totalVendors = data.totalvendorsOnboarded ?? data.totalVendors ?? data.count ?? this.totalVendors ?? 0;
+  this.activeVendors = data.totalActiveVendors ?? data.activeVendors ?? this.activeVendors ?? 0;
 
   this.vendorCategories = Object.entries(data.categoryBreakdown || {}).map(
     ([name, count]) => ({

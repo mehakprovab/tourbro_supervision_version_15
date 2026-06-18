@@ -479,76 +479,17 @@ export class B2bFlightComponent implements OnInit, OnDestroy {
     
     exportExcel(): void {
         {
+            const columns = this.displayColumn.filter(column => column.key !== 'action');
             const fileToExport = this.respData.map((response: any,index:number) => {
-                return {
-                    "Sl No.":index+1,
-                    "Reservation Code": response.AppReference,
-                    "Status": response.BookingStatus,
-                    "Airline": response['FlightItineraries'][0]['airline_name'],
-                    "Agent Name": response.AgentDetails.first_name + " " + response.AgentDetails.middle_name + " " + response.AgentDetails.last_name,
-                    "Trip Type":response.TripType,
-                    "Booked On":  moment(response['FlightItineraries'][0]['created_at']).format("MMM DD, YYYY"),
-                    // "Issued On":  moment(response.TicketIssueDate).format("MMM DD, YYYY"),
-                    "Airline PNR": response['FlightItineraries'][0]['airline_pnr'],
-                    "GDS PNR": response['GDS_PNR'],
-                    "Lead Passenger Name": this.findLeaduserDetails(response.Passengers),
-                    "Supplier": response.DomainOrigin,
-                    "Base Fare": response['TotalFarePriceBreakUp']['PriceBreakup']['BasicFare'],
-                    "Tax": response['TotalFarePriceBreakUp']['PriceBreakup']['Tax'],
-                    "Grand Total": response['TotalFarePriceBreakUp']['TotalDisplayFare']+ response['TotalFarePriceBreakUp']['Currency'],
-                    "Agent Payable": response['TotalFarePriceBreakUp']['AgentNetFare'],
-                    "Last Date To Ticket": response['LastDateToTicket'],
-                    "Agency Name": response.AgentDetails.business_name,
-                    "UUID": response.AgentDetails.uuid,
-                    "Email": response.Email,
-                    "Phone": response.Phone,
-                    "Departing City": response.JourneyFrom,
-                    "Arriving City": response.JourneyTo,
-                    "Departure Date": moment(response.JourneyStart).format("MMM DD, YYYY"),
-                    "Arrival Date": moment(response.JourneyEnd).format("MMM DD, YYYY"),
-                    "Admin Markup": response.AdminMarkup,
-                    "Agent Markup": response.AgentMarkup,
-                    "Advance Tax": response.TotalFarePriceBreakUp.PriceBreakup.AdvanceTax,
-                    "Admin Commission": response.TotalFarePriceBreakUp.PriceBreakup.CommissionDetails.AdminCommission,
-                    "Agent Commission": response.TotalFarePriceBreakUp.PriceBreakup.CommissionDetails.AgentCommission,
-                    "Insurance Opted": response['BaggageInsurancesDetails'] && response['BaggageInsurancesDetails'][0] && response['BaggageInsurancesDetails'][0]['product_code']?response['BaggageInsurancesDetails'][0]['product_code']:'',
-                    "Insurance Price": response['BaggageInsurancesDetails'] && response['BaggageInsurancesDetails'][0] && response['BaggageInsurancesDetails'][0]['amount']?response['BaggageInsurancesDetails'][0]['amount']:'',
-                    "Currency": response.Currency,
-                    "Payment Mode": response.PaymentMode,
-                    "Cancellation Date": response.cancelation_date && response.cancelation_date.PriceBreakup && response.cancelation_date.PriceBreakup.AdvanceTax? response.cancelation_date.PriceBreakup.AdvanceTax:'',
-                }
+                return columns.reduce((row, column) => {
+                    row[column.value] = this.getExportValue(response, column.key, index);
+                    return row;
+                }, {});
             });
      
-            const columnWidths = [
-                { wch: 5 },
-                { wch: 20 },
-                { wch: 30 },
-                { wch: 30 },
-                { wch: 40 },
-                { wch: 15 },
-                { wch: 30 },
-                { wch: 30 },
-                { wch: 15 },
-                { wch: 15 },
-                { wch: 30 },
-                { wch: 10 },
-                { wch: 10 },
-                { wch: 10 },
-                { wch: 15},
-                { wch: 15},
-                { wch: 25},
-                { wch: 25},
-                { wch: 25},
-                { wch: 25},
-                { wch: 25},
-                { wch: 25},
-                { wch: 25},
-                { wch: 25},
-                { wch: 25},
-                { wch: 15},
-                { wch: 15},
-                { wch: 15},
-            ];
+            const columnWidths = columns.map(column => ({
+                wch: column.key === 'id' ? 8 : Math.max(column.value.length + 5, 20)
+            }));
 
             this.utility.exportToExcel(
                 fileToExport,
@@ -556,6 +497,55 @@ export class B2bFlightComponent implements OnInit, OnDestroy {
                 columnWidths
             );
         }
+    }
+
+    getExportValue(response: any, key: string, index: number): any {
+        const itinerary = response && response.FlightItineraries && response.FlightItineraries.length ? response.FlightItineraries[0] : {};
+        const agent = response && response.AgentDetails ? response.AgentDetails : {};
+        const fareBreakup = response && response.TotalFarePriceBreakUp ? response.TotalFarePriceBreakUp : {};
+        const priceBreakup = fareBreakup.PriceBreakup || {};
+        const commission = priceBreakup.CommissionDetails || {};
+
+        switch (key) {
+            case 'id': return index + 1;
+            case 'Status': return response.BookingStatus || 'N/A';
+            case 'BookingType': return response.BookingType || response.booking_type || 'N/A';
+            case 'Airline': return itinerary.airline_name || 'N/A';
+            case 'agentname': return `${agent.first_name || ''} ${agent.middle_name || ''} ${agent.last_name || ''}`.trim() || 'N/A';
+            case 'Currency': return response.TripType || 'N/A';
+            case 'CreatedDatetime': return this.formatExportDate(itinerary.created_at || response.CreatedDatetime);
+            case 'Airline_pnr': return itinerary.airline_pnr || response.Pnr || 'N/A';
+            case 'gds_pnr': return response.GDS_PNR || 'N/A';
+            case 'htb': return this.findLeaduserDetails(response.Passengers) || 'N/A';
+            case 'Supplier': return response.DomainOrigin || 'N/A';
+            case 'baseFare': return priceBreakup.BasicFare || 0;
+            case 'tax': return priceBreakup.Tax || 0;
+            case 'total_fare': return `${fareBreakup.TotalDisplayFare || 0} ${fareBreakup.Currency || response.Currency || ''}`.trim();
+            case 'agent_payable': return fareBreakup.AgentNetFare || 0;
+            case 'lastdateticket': return response.LastDateToTicket || 'N/A';
+            case 'agencyname': return agent.business_name || 'N/A';
+            case 'uuid': return agent.uuid || 'N/A';
+            case 'departure': return response.JourneyFrom || 'N/A';
+            case 'arriving': return response.JourneyTo || 'N/A';
+            case 'departureDateTime': return this.formatExportDate(response.JourneyStart);
+            case 'arrivalDateTime': return this.formatExportDate(response.JourneyEnd);
+            case 'admin_markup': return response.AdminMarkup || 0;
+            case 'agent_markup': return response.AgentMarkup || 0;
+            case 'admin_comm': return commission.AdminCommission || 0;
+            case 'Agent_comm': return commission.AgentCommission || 0;
+            case 'currency': return response.Currency || 'N/A';
+            case 'payment_mode': return response.PaymentMode || 'N/A';
+            case 'cancelation_date': return response.cancelation_date || 'N/A';
+            default: return response[key] !== undefined && response[key] !== null && response[key] !== '' ? response[key] : 'N/A';
+        }
+    }
+
+    private formatExportDate(value: any): string {
+        if (!value) {
+            return '';
+        }
+        const parsed = moment(value);
+        return parsed.isValid() ? parsed.format('MMM DD, YYYY') : value;
     }
     getCurrencyList() {
         const data = [{  }]

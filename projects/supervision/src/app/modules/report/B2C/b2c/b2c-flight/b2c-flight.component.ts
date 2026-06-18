@@ -458,71 +458,17 @@ export class B2cFlightComponent implements OnInit,OnDestroy {
 
     exportExcel(): void {
         {
+            const columns = this.displayColumn.filter(column => column.key !== 'action');
             const fileToExport = this.respData.map((response: any,index:number) => {
-                return {
-                    "Sl No.":index+1,
-                    "Reservation Code": response.AppReference,
-                    "Status": response.BookingStatus,
-                    "Airline": response['FlightItineraries'][0]['airline_name'],
-                    "Trip Type":response.TripType,
-                    "Booked On": moment(response.CreatedDatetime).format("MMM DD, YYYY"),
-                    "Issued On":  response.TicketIssueDate?moment(response.TicketIssueDate).format("MMM DD, YYYY"):'',
-                    "Airline PNR": response['Pnr'],
-                    "GDS PNR": response['GDS_PNR'],
-                    "Lead Passenger Name": this.findLeaduserDetails(response.Passengers),
-                    "Email": response.Email,
-                    "Phone": response.Phone,
-                    "Supplier": response.DomainOrigin,
-                    "Base Fare": response['TotalFarePriceBreakUp']['PriceBreakup']['BasicFare'],
-                    "Tax": response['TotalFarePriceBreakUp']['PriceBreakup']['Tax'],
-                    "Grand Total": response['TotalFarePriceBreakUp']['TotalDisplayFare']+ response['TotalFarePriceBreakUp']['Currency'],
-                    "Departing City":response.JourneyFrom,
-                    "Returning City": response.JourneyTo,
-                    "Departure Date": moment(response.JourneyStart).format("MMM DD, YYYY"),
-                    "Return Date": moment(response.JourneyEnd).format("MMM DD, YYYY"),
-                    "Admin Markup": response.AdminMarkup,
-                    "Advance Tax": response.TotalFarePriceBreakUp.PriceBreakup.AdvanceTax,
-                    "Convenience Fee": response['ConvinenceAmount'],
-                    "Promo Code": response['PromoCode'],
-                    "Discount Amount": response['Discount'],
-                    "Insurance Opted": response['BaggageInsurancesDetails'] && response['BaggageInsurancesDetails'][0] && response['BaggageInsurancesDetails'][0]['product_code']?response['BaggageInsurancesDetails'][0]['product_code']:'',
-                    "Insurance Price": response['BaggageInsurancesDetails'] && response['BaggageInsurancesDetails'][0] && response['BaggageInsurancesDetails'][0]['amount']?response['BaggageInsurancesDetails'][0]['amount']:'',
-                    "Currency": response.Currency,
-                    "Payment Mode": response.PaymentMode,
-                    "Cancellation Date": response.FinalCancellationDate,
-                }
+                return columns.reduce((row, column) => {
+                    row[column.value] = this.getExportValue(response, column.key, index);
+                    return row;
+                }, {});
             });
      
-            const columnWidths = [
-                { wch: 5 },
-                { wch: 20 },
-                { wch: 30 },
-                { wch: 30 },
-                { wch: 20 },
-                { wch: 30 },
-                { wch: 30 },
-                { wch: 10 },
-                { wch: 10 },
-                { wch: 30 },
-                { wch: 30 },
-                { wch: 15 },
-                { wch: 10 },
-                { wch: 10 },
-                { wch: 10},
-                { wch: 15},
-                { wch: 15},
-                { wch: 25},
-                { wch: 25},
-                { wch: 25},
-                { wch: 15},
-                { wch: 15},
-                { wch: 15},
-                { wch: 15},
-                { wch: 15},
-                { wch: 15},
-                { wch: 15},
-                { wch: 15}
-            ];
+            const columnWidths = columns.map(column => ({
+                wch: column.key === 'id' ? 8 : Math.max(column.value.length + 5, 20)
+            }));
 
             this.utility.exportToExcel(
                 fileToExport,
@@ -530,6 +476,37 @@ export class B2cFlightComponent implements OnInit,OnDestroy {
                 columnWidths
             );
         }
+    }
+
+    getExportValue(response: any, key: string, index: number): any {
+        const itinerary = response && response.FlightItineraries && response.FlightItineraries.length ? response.FlightItineraries[0] : {};
+        const fareBreakup = response && response.TotalFarePriceBreakUp ? response.TotalFarePriceBreakUp : {};
+        const priceBreakup = fareBreakup.PriceBreakup || {};
+        switch (key) {
+            case 'id': return index + 1;
+            case 'Airline': return itinerary.airline_name || 'N/A';
+            case 'LeadPassengerName': return this.findLeaduserDetails(response.Passengers) || 'N/A';
+            case 'BaseFare': return priceBreakup.BasicFare || 0;
+            case 'Tax': return priceBreakup.Tax || 0;
+            case 'TotalFare': return `${fareBreakup.TotalDisplayFare || 0} ${fareBreakup.Currency || response.Currency || ''}`.trim();
+            case 'gds_pnr': return response.GDS_PNR || 'N/A';
+            case 'ConvinenceValue': return response.ConvinenceAmount || 0;
+            case 'CreatedDatetime':
+            case 'JourneyStart':
+            case 'JourneyEnd':
+            case 'InitialCancellationDate':
+                return this.formatExportDate(response[key] || (key === 'InitialCancellationDate' ? response.FinalCancellationDate : ''));
+            default:
+                return response[key] !== undefined && response[key] !== null && response[key] !== '' ? response[key] : 'N/A';
+        }
+    }
+
+    private formatExportDate(value: any): string {
+        if (!value) {
+            return '';
+        }
+        const parsed = moment(value);
+        return parsed.isValid() ? parsed.format('MMM DD, YYYY') : value;
     }
 
 

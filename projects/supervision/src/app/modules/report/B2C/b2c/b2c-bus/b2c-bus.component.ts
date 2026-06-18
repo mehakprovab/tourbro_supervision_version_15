@@ -183,56 +183,17 @@ export class B2cBusComponent implements OnInit {
 
     exportExcel(): void {
         if (this.respData && this.respData.length > 0) {
+            const columns = this.displayColumn.filter(column => column.key !== 'action');
             const fileToExport = this.respData.map((response: any, index: number) => {
-                // Check if itinerary exists and has data
-                const itinerary = response.itinerary && response.itinerary[0];
-                const status = this.getFormtedStatus(response.status);
-                const departure_datetime = itinerary ? this.convertDatetime(itinerary.departure_datetime) : null;
-                const arrival_datetime = itinerary ? this.convertDatetime(itinerary.arrival_datetime) : null;
-                const created_at = itinerary ? this.convertDatetime(itinerary.created_at) : null;
-                return {
-                    "Sl No.": index + 1,
-                    "Application Reference": response.app_reference,
-                    "Trip Id": response.trip_id,
-                    "Trip Name": response.trip_name,
-                    "Booking Status": response.status,
-                    "Approvar Status": response.approvar_status || 'PENDING',
-                    "Approvar Name": response.approvar_name || 'N/A',
-                    "Corporate Name": response.corporate_name || 'N/A',
-                    "Departure Date": departure_datetime ? new Date(departure_datetime).toLocaleDateString("en-GB", {
-                        day: '2-digit',
-                        month: 'short',
-                        year: 'numeric'
-                    }) : '',
-                    "Arrival Date": arrival_datetime ? new Date(arrival_datetime).toLocaleDateString("en-GB", {
-                        day: '2-digit',
-                        month: 'short',
-                        year: 'numeric'
-                    }) : '',
-                    "Departure From": itinerary ? itinerary.departure_from : '',
-                    "Arrival To": itinerary ? itinerary.arrival_to : '',
-                    "Bus Type": itinerary ? itinerary.bus_type || 'N/A' : 'N/A',
-                    "Operator": itinerary ? itinerary.operator : '',
-                    "PNR": response.pnr || 'N/A',
-                    "Ticket": response.ticket || 'N/A',
-                    "Currency": response.currency,
-                    "TotalFare": response.total_fare,
-                    "Booked By": response.booked_by || 'N/A',
-                    "Booked On": created_at ? new Date(created_at).toLocaleDateString("en-GB", {
-                        day: '2-digit',
-                        month: 'short',
-                        year: 'numeric'
-                    }) : '',
-                }
+                return columns.reduce((row, column) => {
+                    row[column.value] = this.getExportValue(response, column.key, index);
+                    return row;
+                }, {});
             });
     
-            const columnWidths = [
-                { wch: 5 }
-            ];
-            const fieldsLength = this.respData.length;
-            for (let i = 0; i < fieldsLength; i++) {
-                columnWidths.push({ wch: 30 });
-            }
+            const columnWidths = columns.map(column => ({
+                wch: column.key === 'id' ? 8 : Math.max(column.value.length + 5, 20)
+            }));
             this.loggedInUser = JSON.parse(sessionStorage.getItem('currentSupervisionUser'));
             let value = this.loggedInUser.auth_role_id == 1 ? "Admin" : 'Staff'
             this.utility.exportToExcel(
@@ -241,6 +202,43 @@ export class B2cBusComponent implements OnInit {
                 columnWidths
             );
         }
+    }
+
+    getExportValue(data: any, key: string, index: number): any {
+        const itinerary = data && data.itinerary && data.itinerary.length ? data.itinerary[0] : {};
+        switch (key) {
+            case 'id': return index + 1;
+            case 'appReference': return data.app_reference || 'N/A';
+            case 'status': return data.status || 'N/A';
+            case 'departure_date': return this.formatExportDate(this.convertDatetime(itinerary.departure_datetime));
+            case 'arrival_date': return this.formatExportDate(this.convertDatetime(itinerary.arrival_datetime));
+            case 'departure_from': return itinerary.departure_from || 'N/A';
+            case 'arrival_to': return itinerary.arrival_to || 'N/A';
+            case 'bus_type': return itinerary.bus_type || 'N/A';
+            case 'operator': return itinerary.operator || 'N/A';
+            case 'pnr': return data.pnr || 'N/A';
+            case 'ticket': return data.ticket || 'N/A';
+            case 'currency': return data.currency || 'N/A';
+            case 'totalFare': return data.total_fare || 0;
+            case 'booked_by': return data.booked_by || 'N/A';
+            case 'created_at': return this.formatExportDate(itinerary.created_at);
+            default: return data[key] !== undefined && data[key] !== null && data[key] !== '' ? data[key] : 'N/A';
+        }
+    }
+
+    private formatExportDate(value: any): string {
+        if (!value) {
+            return '';
+        }
+        const date = new Date(value);
+        if (isNaN(date.getTime())) {
+            return value;
+        }
+        return date.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+        });
     }
     
 

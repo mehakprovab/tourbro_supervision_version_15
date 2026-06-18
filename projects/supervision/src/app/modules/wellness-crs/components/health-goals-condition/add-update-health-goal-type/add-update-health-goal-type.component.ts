@@ -26,13 +26,15 @@ export class AddUpdateHealthGoalTypeComponent implements OnInit {
   public fileToUpload: File = null;
   public imageSrc: any;
   public imageBaseUrl = 'http://tourbro.com/dev/node/dist/apps/supervision/';
+  private editHealthGoal: any;
 
   ngOnInit() {
 
     this.createForm();
     this.wellnessCrsService.getEditData.subscribe((resp) => {
-      if (resp) {
+      if (resp && Object.keys(resp).length > 0) {
         this.isEdit = true;
+        this.editHealthGoal = resp;
         this.addUpdateHealthGoalTypeListForm.patchValue({
           name: resp.name,
           description: resp.description || '',
@@ -42,6 +44,7 @@ export class AddUpdateHealthGoalTypeComponent implements OnInit {
         this.imageSrc = this.getImageUrl(resp.image_url || resp.image || '');
       } else {
         this.isEdit = false;
+        this.editHealthGoal = null;
       }
     });
     
@@ -100,6 +103,21 @@ export class AddUpdateHealthGoalTypeComponent implements OnInit {
     return `${this.imageBaseUrl}${imageUrl.replace(/^\/+/, '')}`;
   }
 
+  private getExistingImage(item: any): string {
+    if (!item) {
+      return '';
+    }
+
+    return item.image_url
+      || item.image
+      || item.imageUrl
+      || item.image_path
+      || item.imagePath
+      || item.file
+      || item.file_name
+      || '';
+  }
+
   resetForm() {
     this.addUpdateHealthGoalTypeListForm.reset({ status: true });
     this.fileToUpload = null;
@@ -129,6 +147,16 @@ export class AddUpdateHealthGoalTypeComponent implements OnInit {
 
       if (this.fileToUpload) {
         formData.append('image', this.fileToUpload, this.fileToUpload.name);
+      } else if (this.isEdit) {
+        const existingImage = this.addUpdateHealthGoalTypeListForm.value.image_url
+          || this.getExistingImage(this.editHealthGoal)
+          || '';
+
+        if (existingImage) {
+          formData.append('image', existingImage);
+          formData.append('image_url', existingImage);
+          formData.append('old_image', existingImage);
+        }
       }
 
       let data: any = [formData];

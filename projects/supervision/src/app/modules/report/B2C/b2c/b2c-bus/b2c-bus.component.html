@@ -127,8 +127,8 @@
                                                     {{'Action'}}
                                                 </button>
                                                 <div ngbDropdownMenu>
-                                                    <button (click)="eticket(data)" ngbDropdownItem>View Booking Details</button> 
-                                                    <button (click)="eticket(data)" ngbDropdownItem *ngIf="data?.status == 'BOOKING_CONFIRMED'">View Voucher</button> 
+                                                    <button (click)="viewBookingDetails(data)" ngbDropdownItem>View Booking Details</button> 
+                                                    <button (click)="viewVoucher(data)" ngbDropdownItem *ngIf="data?.status == 'BOOKING_CONFIRMED'">View Voucher</button> 
                                                     <button (click)="confirmCancel(data,'cancel')" ngbDropdownItem *ngIf="data?.status == 'BOOKING_CONFIRMED'">Cancel Ticket</button> 
                                                 </div>
                                             </div>

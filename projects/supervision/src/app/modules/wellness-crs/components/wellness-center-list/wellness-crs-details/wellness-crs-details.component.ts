@@ -114,6 +114,7 @@ export class WellnessCrsDetailsComponent implements OnInit, AfterViewInit {
         stay_options:['', [Validators.required]],
         ideal_duration: ['', [Validators.required]],
         inclusions: ['', [Validators.required]],
+        exclusions: [''],
         booking_method: ['', [Validators.required]],
         contract_expiry: [''],
         check_in_time: ['', [Validators.required]],
@@ -146,6 +147,7 @@ check_in_time: this.formatTimeWithSeconds(this.wellnessForm.value.check_in_time)
 check_out_time: this.formatTimeWithSeconds(this.wellnessForm.value.check_out_time),
 
 inclusions: [this.wellnessForm.value.inclusions],
+exclusions: [this.wellnessForm.value.exclusions],
 supplier_email: this.loggedUserData ? this.loggedUserData.email : this.wellnessForm.value.supplier_email,
 supplier_name: this.loggedUserData ? this.loggedUserData.first_name +' '+ this.loggedUserData.last_name : this.wellnessForm.value.supplier_name,
   therapy_types: this.wellnessForm.value.therapy_types.map(
@@ -279,6 +281,7 @@ console.log('Form Data to Submit:', formData);
       stay_options: data.stay_options || '',
       ideal_duration: data.ideal_duration || '',
       inclusions: Array.isArray(data.inclusions) ? data.inclusions.join(', ') : (data.inclusions || ''),
+      exclusions: Array.isArray(data.exclusions) ? data.exclusions.join(', ') : (data.exclusions || ''),
       booking_method: data.booking_method || '',
       contract_expiry: this.normalizeDate(data.contract_expiry || data.contract_expiry_date),
       check_in_time: this.normalizeTime(data.check_in_time),
@@ -552,7 +555,8 @@ onCityChange(event: any) {
             resp.Status === true &&
             (resp.statusCode === 200 || resp.statusCode === 201)
           ) {
-            this.treatmentList = resp.data || [];
+            const treatmentData = Array.isArray(resp.data) ? resp.data : (resp.data && resp.data.data) || [];
+            this.treatmentList = treatmentData.filter((item: any) => item.treatment_name);
             this.patchEditData();
           } else if (resp.statusCode === 404) {
             this.treatmentList = [];

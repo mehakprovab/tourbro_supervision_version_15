@@ -1,1 +1,97 @@
-<p>bus-voucher works!</p>
+<div class="text-center mb-3" *ngIf="voucherData">
+  <button class="btn btn-primary" type="button" (click)="printVoucher()">Print</button>
+</div>
+
+<div class="card adminInner bus-document" id="print_voucher" #print_voucher *ngIf="voucherData">
+  <div class="document-header">
+    <img src="assets/images/tour-bro.png" alt="Tourbro">
+    <div>
+      <h4>Bus Voucher</h4>
+      <p>Reservation Code: <strong>{{ voucherData?.app_reference || 'N/A' }}</strong></p>
+    </div>
+  </div>
+
+  <div class="section-grid">
+    <div>
+      <label>Status</label>
+      <strong>{{ voucherData?.status || 'N/A' }}</strong>
+    </div>
+    <div>
+      <label>PNR</label>
+      <strong>{{ voucherData?.pnr || 'N/A' }}</strong>
+    </div>
+    <div>
+      <label>Ticket</label>
+      <strong>{{ voucherData?.ticket || 'N/A' }}</strong>
+    </div>
+    <div>
+      <label>Booked By</label>
+      <strong>{{ voucherData?.booked_by || 'N/A' }}</strong>
+    </div>
+  </div>
+
+  <h5>Journey Details</h5>
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <th>From</th>
+        <td>{{ itinerary?.departure_from || 'N/A' }}</td>
+        <th>To</th>
+        <td>{{ itinerary?.arrival_to || 'N/A' }}</td>
+      </tr>
+      <tr>
+        <th>Departure</th>
+        <td>{{ itinerary?.departure_datetime | date:'dd/MM/yyyy HH:mm' }}</td>
+        <th>Arrival</th>
+        <td>{{ itinerary?.arrival_datetime | date:'dd/MM/yyyy HH:mm' }}</td>
+      </tr>
+      <tr>
+        <th>Operator</th>
+        <td>{{ itinerary?.operator || 'N/A' }}</td>
+        <th>Bus Type</th>
+        <td>{{ itinerary?.bus_type || 'N/A' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h5>Passenger Details</h5>
+  <table class="table table-bordered" *ngIf="passengers?.length; else noPassengers">
+    <thead>
+      <tr>
+        <th>Sl. No</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Gender</th>
+        <th>Seat</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let passenger of passengers; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ passenger?.name || passenger?.first_name || passenger?.FirstName || 'N/A' }}</td>
+        <td>{{ passenger?.age || passenger?.Age || 'N/A' }}</td>
+        <td>{{ passenger?.gender || passenger?.Gender || 'N/A' }}</td>
+        <td>{{ passenger?.seat_no || passenger?.seat || passenger?.SeatName || 'N/A' }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #noPassengers>
+    <p class="text-muted">No passenger details available.</p>
+  </ng-template>
+
+  <h5>Fare Details</h5>
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <th>Currency</th>
+        <td>{{ voucherData?.currency || 'N/A' }}</td>
+        <th>Total Fare</th>
+        <td>{{ voucherData?.total_fare | number:'1.2-2' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card adminInner text-center" *ngIf="!loading && !voucherData">
+  No voucher data found.
+</div>

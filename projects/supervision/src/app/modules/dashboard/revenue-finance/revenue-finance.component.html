@@ -47,7 +47,7 @@
               <span class="f-15">Gross Margin</span>
             </div>
 
-            <span class="num-span">1000</span>
+            <span class="num-span">{{ grossMargin | number:'1.2-2' }}</span>
           </div>
         </div>
         
@@ -97,7 +97,7 @@
               <span class="f-15">Refund Amount</span>
             </div>
 
-            <span class="num-span">1000</span>
+            <span class="num-span">{{ refundAmount | number:'1.2-2' }}</span>
           </div>
         </div>
       </div>
@@ -127,7 +127,7 @@
               </div>
             </div>
 
-            <span class="num-span">1000</span>
+            <span class="num-span">{{ paymentSuccessRate | number:'1.2-2' }}</span>
           </div>
         </div>
 
@@ -149,17 +149,17 @@
               </div>
             </div>
 
-            <span class="num-span">1000</span>
+            <span class="num-span">{{ paymentFailedRate | number:'1.2-2' }}</span>
           </div>
         </div>
 
         <div class="col-md-4">
           <div class="head-sect px-3 py-2 ">
             <div>
-              <span class="f-15">Outstanding Vendor Payables</span>
+              <span class="f-15">Convenience Fee</span>
             </div>
 
-            <span class="num-span">1000</span>
+            <span class="num-span">{{ convenienceFee | number:'1.2-2' }}</span>
           </div>
         </div>
 
@@ -174,7 +174,7 @@
               <span class="f-15">Customer Receivables</span>
             </div>
 
-            <span class="num-span">1000</span>
+            <span class="num-span">{{ customerReceivables | number:'1.2-2' }}</span>
           </div>
         </div>
 
@@ -196,7 +196,7 @@
               </div>
             </div>
 
-            <span class="num-span">1000</span>
+            <span class="num-span">{{ discountCost | number:'1.2-2' }}</span>
           </div>
         </div>
 
@@ -218,7 +218,7 @@
               </div>
             </div>
 
-            <span class="num-span">1000</span>
+            <span class="num-span">{{ markupEarned | number:'1.2-2' }}</span>
           </div>
         </div>
 

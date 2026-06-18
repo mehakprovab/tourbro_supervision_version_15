@@ -135,8 +135,8 @@ export class B2cBusComponent implements OnInit {
         let reqBody = {
             "status": this.regConfig.get('bus_status').value,
             "app_reference": this.regConfig.get('bus_app_reference').value,
-            "booked_from_date": this.regConfig.get('bus_booked_from_date').value ? formatDate(this.regConfig.get('booked_from_date').value, 'YYYY-MM-DD') : "",
-            "booked_to_date": this.regConfig.get('bus_booked_to_date').value ? formatDate(this.regConfig.get('booked_to_date').value, 'YYYY-MM-DD') : "",
+            "booked_from_date": this.regConfig.get('bus_booked_from_date').value ? formatDate(this.regConfig.get('bus_booked_from_date').value, 'YYYY-MM-DD') : "",
+            "booked_to_date": this.regConfig.get('bus_booked_to_date').value ? formatDate(this.regConfig.get('bus_booked_to_date').value, 'YYYY-MM-DD') : "",
             "email":'',
             'pnr':'',
             "corporate_id":this.corporateId
@@ -159,9 +159,26 @@ export class B2cBusComponent implements OnInit {
         });
     }
 
+    viewBookingDetails(data: any) {
+       this.navigateToBusDocument(data, 'invoice');
+    }
+
+    viewVoucher(data: any) {
+       this.navigateToBusDocument(data, 'voucher');
+    }
+
     eticket(data: any) {
+       this.viewVoucher(data);
+    }
+
+    private navigateToBusDocument(data: any, type: 'voucher' | 'invoice') {
        const appReference = data.app_reference;
-       this.router.navigate(['/report/voucher/bus'], { queryParams: { appReference:appReference,booking_source:data.booking_source } });
+       this.router.navigate([`/report/b2c-bus/${type}`], {
+           queryParams: {
+               appReference: appReference,
+               booking_source: data.booking_source
+           }
+       });
     }
 
     exportExcel(): void {

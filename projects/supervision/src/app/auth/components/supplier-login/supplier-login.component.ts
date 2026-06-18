@@ -71,10 +71,11 @@ const currentURL = window.location.href;
   } else {
     this.pageTitle = 'Supplier Login';
   }
-    if (sessionStorage.getItem('currentSupervisionUser') && this.otpVerifide ) 
+    if (sessionStorage.getItem('currentSupervisionUser') ) 
     {
          this.router.navigate(['/']);
     }
+
   }
   config = {
     allowNumbersOnly: true,
@@ -88,7 +89,13 @@ const currentURL = window.location.href;
     }
 };
   ngOnInit() {
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+   this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+
+  this.user_type = this.route.snapshot.data['user_type'] || 'supervision';
+
+  this.pageTitle = this.user_type === 'supplier'
+    ? 'Supplier Login'
+    : 'Supervision Login';
     this.createForm()
     this.submitOtp();
   }
@@ -139,20 +146,22 @@ console.log("this.returnUrl",this.returnUrl)
     if (this.loginForm.invalid) {
       return;
     }
-    if(this.returnUrl == '/#/' || this.returnUrl == '/supplier'){
-      this.user_type = "supplier"
-    }
+    // if(this.returnUrl == '/#/' || this.returnUrl == '/supplier'){
+    //   this.user_type = "supplier"
+    // }
     this.authService.onLogin(this.loginForm.get('email').value, this.loginForm.get('password').value,this.user_type)
       .subscribe(res => {
         if (res['statusCode'] == 200 && res['data']['access_token'] != undefined) {
-         if(res['data']['auth_role_id'] == 6 || res['data']['auth_role_id'] == 7){
-          this.loginId = res['data']['id'];
-          this.showOtpComponent = true;
-          // this.router.navigate(['hotels/hotel-crs-lists']);
-         }else{
-          this.router.navigate([this.returnUrl]);
-          this.swalService.alert.success("Login Successful.")
-         }
+        if (res['data']['auth_role_id'] == 6 || res['data']['auth_role_id'] == 7) {
+  // OTP temporarily disabled
+  this.router.navigate(['hotels/hotel-crs-lists'], {
+    queryParams: { tab: 'list_hotels' }
+  });
+  this.swalService.alert.success("Login Successful.");
+} else {
+  this.router.navigate([this.returnUrl]);
+  this.swalService.alert.success("Login Successful.");
+}
         } else {
           this.errorMessage = res.Message;
           this.swalService.alert.oops(this.errorMessage)

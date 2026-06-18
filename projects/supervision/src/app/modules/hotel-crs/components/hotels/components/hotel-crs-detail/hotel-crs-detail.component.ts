@@ -15,6 +15,7 @@ import * as moment from 'moment';
 export interface LocationI {
   cityId: string;
   cityName: string;
+  cityCode?: string;
   countryCode: string;
   status: boolean;
   source: string;
@@ -904,6 +905,10 @@ onCityChange(event: any) {
   this.selectedCityName = selectedCity.cityName;
   this.selectedCityCode = selectedCity.cityCode;
   this.toCityId = selectedCity.id;
+  this.hotelForm.patchValue({
+    city_name: this.selectedCityName,
+    city_code: this.selectedCityCode
+  });
 
   this.updateMapWithCityAndCountry(this.selectedCityName, 'CountryName');
 
@@ -950,6 +955,7 @@ this.hotelForm.value.hotel_hotel_amenities =
       this.hotelForm.value.room_view_ids = this.hotelForm.value.room_view_ids.map(v => v.views).join(",");
       this.hotelForm.value.weekend_days = this.hotelForm.value.weekend_days.map(v => v.item_text).join(",");
       this.hotelForm.value.city_code = this.selectedCityCode || this.hotelForm.value.city_code || '';
+      this.hotelForm.value.cityCode = this.hotelForm.value.city_code;
       this.hotelForm.value.checkInTime = this.hotelForm.value.checkInTime;
       this.hotelForm.value.checkOutTime = this.hotelForm.value.checkOutTime;
       // this.hotelForm.value.contract_expiry_date = this.hotelForm.value.contract_expiry_date ? `${(moment(this.hotelForm.value.contract_expiry_date)).format('YYYY-MM-DD')}` : null,
@@ -967,10 +973,12 @@ this.hotelForm.value.hotel_hotel_amenities =
           data['id'] = this.hotelOne['id'];
           if (this.selectedCityCode != '' && this.selectedCityName != '') {
             data['city_code'] = this.selectedCityCode;
+            data['cityCode'] = this.selectedCityCode;
             data['city_name'] = this.selectedCityName;
           }
           else {
             data['city_code'] = this.hotelOne.city_code || '';
+            data['cityCode'] = this.hotelOne.cityCode || this.hotelOne.city_code || '';
             data['city_name'] = this.hotelOne.city_name || this.hotelForm.value.city_name || '';
           }
           data = [data];
@@ -980,9 +988,11 @@ this.hotelForm.value.hotel_hotel_amenities =
           if (this.selectedCityCode != '' && this.selectedCityName != '') {
             data['city_name'] = this.selectedCityName;
             data['city_code'] = this.selectedCityCode;
+            data['cityCode'] = this.selectedCityCode;
           }
           else {
             data['city_code'] = this.hotelForm.value.city_code || '';
+            data['cityCode'] = this.hotelForm.value.cityCode || this.hotelForm.value.city_code || '';
             data['city_name'] = this.hotelForm.value.city_name || '';
           }
           data = [data];

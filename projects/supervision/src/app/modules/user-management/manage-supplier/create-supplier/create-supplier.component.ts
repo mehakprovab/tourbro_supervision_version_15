@@ -67,8 +67,67 @@ addOrUpdate: 'add' | 'update' = 'add';
 
   ngOnInit() {
     this.createForm();
+    this.getToUpdate();
    this.loadCountries();
     this.getTitleList();
+  }
+
+  resetSupplierForm(clearEditData: boolean = false) {
+    this.addOrUpdate = 'add';
+    this.submitted = false;
+    this.loading = false;
+    this.panDocument = null;
+    this.panDocumentName = '';
+    this.aadhaarDocument = null;
+    this.aadhaarDocumentName = '';
+    this.licenseDocument = null;
+    this.licenseDocumentName = '';
+    this.registerStates = [];
+    this.filteredStates = [];
+    this.registerCities = [];
+    this.filteredCities = [];
+
+    if (this.registerForm) {
+      this.registerForm.reset({
+        id: '',
+        title: '',
+        first_name: '',
+        last_name: '',
+        phone_number: '',
+        email: '',
+        registered_legal_name: '',
+        trade_name: '',
+        chain_name: '',
+        company_website: '',
+        services: [],
+        registration_number: '',
+        country_of_registration: '',
+        pan_number: '',
+        aadhaar_number: '',
+        license_number: '',
+        office_phone: '',
+        alt_company_email: '',
+        address_line1: '',
+        address_line2: '',
+        country: '',
+        state: '',
+        city: '',
+        zip_code: '',
+        accounting_email: '',
+        accounting_phone: '',
+        bank_name: '',
+        branch_address: '',
+        account_holder_name: '',
+        account_number: '',
+        ifsc_code: '',
+      });
+      this.registerForm.markAsPristine();
+      this.registerForm.markAsUntouched();
+    }
+
+    if (clearEditData) {
+      this.userManagementService.supplierUpdateData.next({});
+    }
   }
 
       getTitleList() {
@@ -386,8 +445,7 @@ onRegister() {
           if (resp.statusCode === 200 || resp.statusCode === 201) {
             this.swalService.alert.success("Supplier added successfully");
 
-            this.registerForm.reset();
-            this.submitted = false;
+            this.resetSupplierForm(true);
 
             this.b2cUserUpdate.emit({ tabId: 'supplier_list' });
           } else {
@@ -412,8 +470,7 @@ onRegister() {
           if (resp.statusCode === 200 || resp.statusCode === 201) {
             this.swalService.alert.success("Supplier updated successfully");
 
-            this.registerForm.reset();
-            this.submitted = false;
+            this.resetSupplierForm(true);
 
             this.b2cUserUpdate.emit({ tabId: 'supplier_list' });
           } else {
@@ -443,21 +500,55 @@ onServiceChange(event: any) {
   this.registerForm.get('services').setValue(services);
   this.registerForm.get('services').markAsTouched();
 }
+
+isServiceSelected(service: string): boolean {
+  const services = this.registerForm.get('services').value || [];
+  return services.includes(service);
+}
+
+private normalizeServices(data: any): string[] {
+  let services = data.services || data.selectedSuppliers || [];
+
+  if (typeof services === 'string') {
+    try {
+      services = JSON.parse(services);
+    } catch (e) {
+      services = services.split(',');
+    }
+  }
+
+  if (!Array.isArray(services)) {
+    return [];
+  }
+
+  return services.map((service) => {
+    const supplier = String(service).trim();
+    if (supplier === 'transfer') {
+      return 'cabs';
+    }
+    if (supplier === 'heli') {
+      return 'travel-heli';
+    }
+    return supplier;
+  }).filter((service) => service);
+}
+
 getToUpdate() {
   this.subSunk.sink = this.userManagementService.supplierUpdateData.subscribe(data => {
 
     if (data && Object.keys(data).length > 0) {
 
       this.addOrUpdate = 'update';
+      const services = this.normalizeServices(data);
 
       this.registerForm.patchValue({
-        id: data.id,
+        id: data.id || data.supplier_id,
         title: data.title ? Number(data.title) : '',
         first_name: data.first_name,
         last_name: data.last_name,
         phone_number: data.phone_number,
         email: data.email,
- services: data.services || [],
+ services: services,
         registered_legal_name: data.registered_legal_name,
         trade_name: data.trade_name,
         chain_name: data.chain_name,
@@ -489,10 +580,17 @@ getToUpdate() {
 
       });
 
+      if (data.country) {
+        this.loadStates(data.country);
+        this.loadCitiesByCountry(data.country);
+      }
+
       // ✅ Optional: patch files name (UI only)
       this.panDocumentName = data.pan_document_name || '';
       this.aadhaarDocumentName = data.aadhaar_document_name || '';
       this.licenseDocumentName = data.license_document_name || '';
+    } else {
+      this.resetSupplierForm(false);
     }
   });
 }

@@ -61,8 +61,7 @@ export class MealTypeListComponent implements OnInit {
     const data = {};
     data["topic"] = "updateMealPlan";
     data["0"] = {
-      id: data1.id,
-      name: data1.name,
+      ...data1,
       status: status,
     };
     this.wellnessCrsService.create(data).subscribe((resp) => {

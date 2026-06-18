@@ -560,7 +560,7 @@
         </fieldset>
         </form>
 
-        <div class="row" *ngIf="showOtpInput && !propertyForm">
+        <div class="row" *ngIf="enableSupplierOtp && showOtpInput && !propertyForm">
             <div class="col-md-12 mt-3">
             <form (ngSubmit)="onValidateOtp()" [formGroup]="otpForm" >
                 <fieldset form="hotelImage" class="supplier_form">

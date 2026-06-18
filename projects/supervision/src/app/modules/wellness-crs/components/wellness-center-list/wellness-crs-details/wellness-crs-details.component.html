@@ -309,18 +309,18 @@
 
             <!-- Contract Expiry -->
             <div class="col-md-6 mb-3">
-                <label>Contract Expiry Date <span class="text-danger">*</span></label>
+                <label>Contract Expiry Date</label>
 
                 <input
                     type="date"
                     class="form-control"
                     formControlName="contract_expiry">
 
-                <div *ngIf="submittedWellness && wellnessForm.get('contract_expiry')?.errors">
+                <!-- <div *ngIf="submittedWellness && wellnessForm.get('contract_expiry')?.errors">
                     <span class="invalid text-danger">
                         Contract Expiry Date is required
                     </span>
-                </div>
+                </div> -->
             </div>
 
         </div>
@@ -407,20 +407,31 @@
                 </div>
 
                 <!-- Inclusions -->
-                <div class="col-md-4 mb-3">
+                <div class="col-md-12 mb-3">
                     <label>What’s Included<span class="text-danger">*</span></label>
 
-                    <input
+                    <ckeditor
                         type="text"
-                        class="form-control"
-                        placeholder="Enter What’s Included"
-                        formControlName="inclusions">
+                        formControlName="inclusions"
+                        style="height: auto;">
+                    </ckeditor>
 
                         <div *ngIf="submittedWellness && wellnessForm.get('inclusions')?.errors">
                     <span class="invalid text-danger">
                         Inclusions is required
                     </span>
                 </div>
+                </div>
+
+                <!-- Exclusions -->
+                <div class="col-md-12 mb-3">
+                    <label>What’s Excluded</label>
+
+                    <ckeditor
+                        type="text"
+                        formControlName="exclusions"
+                        style="height: auto;">
+                    </ckeditor>
                 </div>
 
                 <!-- Booking Method -->

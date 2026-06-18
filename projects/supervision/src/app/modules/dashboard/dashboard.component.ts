@@ -60,21 +60,29 @@ export class DashboardComponent implements OnInit, OnDestroy {
     totalBooking: any = 0;
     grossBookingValueData: any = {};
     totalBookingData: any = {};
+    grossMarginData: any = {};
     grossBookingValueFilter: string = 'today';
     totalBookingFilter: string = 'today';
-    netRevenueFilter: string = 'today';
     bookingMetrics: any = {};
     totalGrossBookingValueModuleWiseData: any = {};
     totalPromoCodeDiscountCostData: any = {};
     totalAdminMarkupAmountData: any = {};
     totalMarkupConvenienceMinusDiscountData: any = {};
+    refundAmountData: any = {};
+    paymentSuccessRateData: any = {};
+    paymentFailedRateData: any = {};
     serviceDeliveredCancelledCountData: any = {};
     paymentPendingData: any = {};
     paymentCompletedData: any = {};
     documentsNotIssuedCountData: any = {};
     totalPromoCodeDiscountCost: any = 0;
     totalAdminMarkupAmount: any = 0;
-    netRevenue: any = 0;
+    grossMargin: any = 0;
+    markupEarned: any = 0;
+    convenienceFee: any = 0;
+    refundAmount: any = 0;
+    paymentSuccessRate: any = 0;
+    paymentFailedRate: any = 0;
     serviceDeliveredCount: any = 0;
     serviceCancelledCount: any = 0;
     paymentPendingCount: any = 0;
@@ -180,9 +188,13 @@ totalVendors: any = 0;
             totalPeriodBooking: this.safeDashboardRequest('totalPeriodBooking'),
             getBookingMetrics: this.safeDashboardRequest('getBookingMetrics'),
             totalGrossBookingValueModuleWise: this.safeDashboardRequest('totalGrossBookingValueModuleWise'),
+            GrossMargin: this.safeDashboardRequest('GrossMargin'),
             totalPromoCodeDiscountCost: this.safeDashboardRequest('totalPromoCodeDiscountCost'),
             totalAdminMarkupAmount: this.safeDashboardRequest('totalAdminMarkupAmount'),
             totalMarkupConvenienceMinusDiscount: this.safeDashboardRequest('totalMarkupConvenienceMinusDiscount'),
+            RefundAmount: this.safeDashboardRequest('RefundAmount'),
+            paymentSuccessRate: this.safeDashboardRequest('paymentSuccessRate'),
+            paymentFailedRate: this.safeDashboardRequest('paymentFailedRate'),
             serviceDeliveredCancelledCount: this.safeDashboardRequest('serviceDeliveredCancelledCount'),
             paymentPending: this.safeDashboardRequest('paymentPending'),
             paymentCompleted: this.safeDashboardRequest('paymentCompleted'),
@@ -200,9 +212,13 @@ totalVendors: any = 0;
             this.bookingMetrics = this.getDashboardData(resp.getBookingMetrics);
             this.grossBookingValueData = this.getDashboardData(resp.totalGrossBookingValueModuleWise);
             this.totalGrossBookingValueModuleWiseData = this.grossBookingValueData;
+            this.grossMarginData = this.getDashboardData(resp.GrossMargin);
             this.totalPromoCodeDiscountCostData = this.getDashboardData(resp.totalPromoCodeDiscountCost);
             this.totalAdminMarkupAmountData = this.getDashboardData(resp.totalAdminMarkupAmount);
             this.totalMarkupConvenienceMinusDiscountData = this.getDashboardData(resp.totalMarkupConvenienceMinusDiscount);
+            this.refundAmountData = this.getDashboardData(resp.RefundAmount);
+            this.paymentSuccessRateData = this.getDashboardData(resp.paymentSuccessRate);
+            this.paymentFailedRateData = this.getDashboardData(resp.paymentFailedRate);
             this.serviceDeliveredCancelledCountData = this.getDashboardData(resp.serviceDeliveredCancelledCount);
             this.paymentPendingData = this.getDashboardData(resp.paymentPending);
             this.paymentCompletedData = this.getDashboardData(resp.paymentCompleted);
@@ -332,10 +348,6 @@ this.totalVendorsData = this.getDashboardData(resp.totalVendors);
         this.updateDashboardKpis();
     }
 
-    onNetRevenueFilterChange(): void {
-        this.updateDashboardKpis();
-    }
-
     updateDashboardKpis(): void {
         this.totalGrossBookingValue = this.extractDashboardValue(this.grossBookingValueData, this.grossBookingValueFilter, [
             'totalGrossBookingValue',
@@ -355,14 +367,71 @@ this.totalVendorsData = this.getDashboardData(resp.totalVendors);
             'count',
             'total'
         ]);
-        this.netRevenue = this.extractDashboardValue(this.totalMarkupConvenienceMinusDiscountData, this.netRevenueFilter, [
+        this.grossMargin = this.extractDashboardValue(this.grossMarginData, 'all', [
+            'GrossMargin',
+            'grossMargin',
+            'grossMarginValue',
+            'gross_margin',
+            'margin',
+            'amount',
+            'total'
+        ]);
+        this.markupEarned = this.extractDashboardValue(this.totalMarkupConvenienceMinusDiscountData, 'all', [
+            'totalMarkupAmount',
             'totalMarkupConvenienceMinusDiscount',
             'markupConvenienceMinusDiscount',
+            'markupEarned',
+            'markup_earned',
             'netRevenue',
             'net_revenue',
             'amount',
             'total'
         ]);
+        this.convenienceFee = this.extractDashboardValue(this.totalMarkupConvenienceMinusDiscountData, 'all', [
+            'totalConvenienceFee',
+            'convenienceFee',
+            'convenience_fee',
+            'fee',
+            'amount',
+            'total'
+        ]);
+        this.grossMargin = this.getExactDashboardNumber(this.grossMarginData, 'grossMarginValue', this.grossMargin);
+        this.markupEarned = this.getExactDashboardNumber(this.totalMarkupConvenienceMinusDiscountData, 'totalMarkupAmount', this.markupEarned);
+        this.convenienceFee = this.getExactDashboardNumber(this.totalMarkupConvenienceMinusDiscountData, 'totalConvenienceFee', this.convenienceFee);
+        this.refundAmount = this.extractDashboardValue(this.refundAmountData, 'all', [
+            'refundAmount',
+            'RefundAmount',
+            'totalRefundAmount',
+            'totalRefundValue',
+            'total_refund_amount',
+            'refund',
+            'amount',
+            'total'
+        ]);
+        this.refundAmount = this.getExactDashboardNumber(this.refundAmountData, 'refundAmount', this.refundAmount);
+        this.refundAmount = this.getExactDashboardNumber(this.refundAmountData, 'totalRefundAmount', this.refundAmount);
+        this.refundAmount = this.getExactDashboardNumber(this.refundAmountData, 'totalRefundValue', this.refundAmount);
+        this.paymentSuccessRate = this.extractDashboardValue(this.paymentSuccessRateData, 'all', [
+            'paymentSuccessRate',
+            'successRate',
+            'payment_success_rate',
+            'rate',
+            'percentage',
+            'amount',
+            'total'
+        ]);
+        this.paymentSuccessRate = this.getExactDashboardNumber(this.paymentSuccessRateData, 'paymentSuccessRate', this.paymentSuccessRate);
+        this.paymentFailedRate = this.extractDashboardValue(this.paymentFailedRateData, 'all', [
+            'paymentFailedRate',
+            'failedPaymentRate',
+            'failureRate',
+            'payment_failed_rate',
+            'rate',
+            'percentage',
+            'amount',
+            'total'
+        ]);
+        this.paymentFailedRate = this.getExactDashboardNumber(this.paymentFailedRateData, 'paymentFailedRate', this.paymentFailedRate);
         this.totalPromoCodeDiscountCost = this.extractDashboardValue(this.totalPromoCodeDiscountCostData, 'all', [
             'totalPromoCodeDiscountCost',
             'promoCodeDiscountCost',
@@ -465,6 +534,7 @@ this.prepareVendorDashboardCards();
 
     resetDashboardKpis(): void {
         this.grossBookingValueData = {};
+        this.grossMarginData = {};
         this.totalBookingData = {};
         this.bookingMetrics = {};
         this.vendorDashboardCards = [];
@@ -472,13 +542,21 @@ this.prepareVendorDashboardCards();
         this.totalPromoCodeDiscountCostData = {};
         this.totalAdminMarkupAmountData = {};
         this.totalMarkupConvenienceMinusDiscountData = {};
+        this.refundAmountData = {};
+        this.paymentSuccessRateData = {};
+        this.paymentFailedRateData = {};
         this.serviceDeliveredCancelledCountData = {};
         this.paymentPendingData = {};
         this.paymentCompletedData = {};
         this.documentsNotIssuedCountData = {};
         this.totalGrossBookingValue = 0;
         this.totalBooking = 0;
-        this.netRevenue = 0;
+        this.grossMargin = 0;
+        this.markupEarned = 0;
+        this.convenienceFee = 0;
+        this.refundAmount = 0;
+        this.paymentSuccessRate = 0;
+        this.paymentFailedRate = 0;
         this.totalPromoCodeDiscountCost = 0;
         this.totalAdminMarkupAmount = 0;
         this.serviceDeliveredCount = 0;
@@ -510,6 +588,44 @@ this.totalVendors = 0;
             ? this.findDashboardValue(source, totalKeys)
             : this.findFilteredDashboardValue(source, selectedFilter, totalKeys);
         return value !== undefined && value !== null && value !== '' ? value : 0;
+    }
+
+    getExactDashboardNumber(source: any, key: string, fallback: any = 0): any {
+        const value = this.findExactDashboardValue(source, key);
+        return value !== undefined && value !== null && value !== '' ? value : fallback;
+    }
+
+    findExactDashboardValue(source: any, key: string): any {
+        if (source === null || source === undefined) {
+            return undefined;
+        }
+
+        if (typeof source !== 'object') {
+            return undefined;
+        }
+
+        if (Array.isArray(source)) {
+            for (const item of source) {
+                const value = this.findExactDashboardValue(item, key);
+                if (value !== undefined && value !== null && value !== '') {
+                    return value;
+                }
+            }
+            return undefined;
+        }
+
+        if (source[key] !== undefined && source[key] !== null) {
+            return source[key];
+        }
+
+        for (const value of Object.values(source)) {
+            const nestedValue = this.findExactDashboardValue(value, key);
+            if (nestedValue !== undefined && nestedValue !== null && nestedValue !== '') {
+                return nestedValue;
+            }
+        }
+
+        return undefined;
     }
 
     findFilteredDashboardValue(source: any, selectedFilter: string, valueKeys: string[]): any {
@@ -740,7 +856,13 @@ updateTotalVendorData(): void {
             .subscribe(resp => {
                 if (resp.statusCode == 200) {
                     this.bookingCalenderFound = true;
-                    const arr2 = resp.data.DayWise.map(x => ({...x,backgroundColor:'green',textColor:'white',classNames:classNames}));
+                    const dayWiseResponse = resp?.data?.DayWise || [];
+                    const dayWise = Array.isArray(dayWiseResponse)
+                        ? dayWiseResponse
+                        : Array.isArray(dayWiseResponse?.data)
+                            ? dayWiseResponse.data
+                            : Object.values(dayWiseResponse || {});
+                    const arr2 = dayWise.map((x: any) => ({...x,backgroundColor:'green',textColor:'white',classNames:classNames}));
                     this.calendarEvents = arr2;
                 }
                 else if (resp.statusCode == 404) {

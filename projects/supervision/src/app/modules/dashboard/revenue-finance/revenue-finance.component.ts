@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from "@angular/core";
+import { AfterViewInit, Component, Input, OnInit } from "@angular/core";
 import { EChartsOption  } from 'echarts';
 import { DropDownAnimation } from "../animation";
 
@@ -10,6 +10,15 @@ import { DropDownAnimation } from "../animation";
 })
 
 export class RevenueFinanceComponent implements OnInit , AfterViewInit {
+    @Input() grossMargin: any = 0;
+    @Input() markupEarned: any = 0;
+    @Input() convenienceFee: any = 0;
+    @Input() discountCost: any = 0;
+    @Input() refundAmount: any = 0;
+    @Input() paymentSuccessRate: any = 0;
+    @Input() paymentFailedRate: any = 0;
+    @Input() customerReceivables: any = 0;
+
     public options: EChartsOption;
     public pieChart: EChartsOption;
     public isOpen: boolean = false;

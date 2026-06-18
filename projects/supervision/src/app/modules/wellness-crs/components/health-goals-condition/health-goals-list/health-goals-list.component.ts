@@ -57,7 +57,7 @@ export class HealthGoalsListComponent implements OnInit {
   }
 
   getHealthGoalImageUrl(item: any) {
-    const imageUrl = item && (item.image_url || item.image);
+    const imageUrl = this.getExistingImage(item);
 
     if (!imageUrl) {
       return '';
@@ -70,16 +70,40 @@ export class HealthGoalsListComponent implements OnInit {
     return `${this.imageBaseUrl}${imageUrl.replace(/^\/+/, '')}`;
   }
 
+  private getExistingImage(item: any): string {
+    if (!item) {
+      return '';
+    }
+
+    return item.image_url
+      || item.image
+      || item.imageUrl
+      || item.image_path
+      || item.imagePath
+      || item.file
+      || item.file_name
+      || '';
+  }
+
   onStatusChange(event: any, data1: any) {
     const status = event.target.checked;
-    const data = {};
-    data["topic"] = "updateHealthGoalCondition";
-    data["0"] = {
+    const existingImage = this.getExistingImage(data1);
+    const payload: any = {
       id: data1.id,
       name: data1.name,
       description: data1.description,
-      status: status,
+      status: status ? 1 : 0,
     };
+
+    if (existingImage) {
+      payload.image = existingImage;
+      payload.image_url = existingImage;
+      payload.old_image = existingImage;
+    }
+
+    const data = {};
+    data["topic"] = "updateHealthGoalCondition";
+    data["0"] = payload;
     this.wellnessCrsService.create(data).subscribe((resp) => {
       if (
         resp.Status === true &&

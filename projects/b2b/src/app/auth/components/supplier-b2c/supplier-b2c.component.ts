@@ -24,6 +24,8 @@ export interface LocationI {
   styleUrls: ['./supplier-b2c.component.scss']
 })
 export class SupplierB2cComponent implements OnInit {
+  // Temporary supplier OTP bypass. Enable after June 19, 2026.
+  readonly enableSupplierOtp = false;
   // @ViewChild('multiSelect') multiSelect;
   @Output() b2cUserUpdate = new EventEmitter<any>();
   @ViewChild('departureCity', { static: false }) departureCity: ElementRef<HTMLElement>;
@@ -343,6 +345,14 @@ VerifyOtp(eamil:any){
 
   // Check if the `supplier` form group is valid before proceeding
   if (supplierGroup.valid) {
+    if (!this.enableSupplierOtp) {
+      this.emailVerified = true;
+      this.errorMessage = "";
+      this.showOtpInput = false;
+      this.onBackToLogin();
+      this.cdRef.detectChanges();
+      return;
+    }
   
   this.loading =true;
   const payload = {

@@ -409,6 +409,7 @@
       <label>
         <input type="checkbox"
                [value]="service.value"
+               [checked]="isServiceSelected(service.value)"
                (change)="onServiceChange($event)">
         {{ service.label }}
       </label>

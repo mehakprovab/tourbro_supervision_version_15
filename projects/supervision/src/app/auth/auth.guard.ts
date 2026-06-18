@@ -10,6 +10,69 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         private authenticationService: AuthService
     ) { }
 
+    private isSupplierPanelUser(currentUser: any): boolean {
+        return currentUser && (currentUser.auth_role_id === 6 || currentUser.auth_role_id === 7);
+    }
+
+    private selectedSupplierKeys(currentUser: any): string[] {
+        const suppliers = currentUser && currentUser.selectedSuppliers;
+        if (Array.isArray(suppliers)) {
+            return suppliers.map((supplier) => String(supplier).toLowerCase());
+        }
+        if (typeof suppliers === 'string') {
+            return suppliers.split(',').map((supplier) => supplier.trim().toLowerCase());
+        }
+        return [];
+    }
+
+    private hasSupplier(currentUser: any, supplier: string): boolean {
+        return this.selectedSupplierKeys(currentUser).includes(supplier.toLowerCase());
+    }
+
+    private redirectToSupplierHome(currentUser: any): void {
+        if (this.hasSupplier(currentUser, 'stays')) {
+            this.router.navigate(['/hotels/hotel-crs-lists'], { queryParams: { tab: 'list_hotels' } });
+            return;
+        }
+        if (this.hasSupplier(currentUser, 'wellness-retreat')) {
+            this.router.navigate(['/wellnesscrs/wellness-center-list'], { queryParams: { tab: 'list_wellness' } });
+            return;
+        }
+        if (this.hasSupplier(currentUser, 'experiences')) {
+            this.router.navigate(['/activity/activity-crs'], { queryParams: { tab: 'list_activitycrs_list' } });
+            return;
+        }
+        if (this.hasSupplier(currentUser, 'transfer')) {
+            this.router.navigate(['/transfers/car-management']);
+            return;
+        }
+        if (this.hasSupplier(currentUser, 'yatra-packages')) {
+            this.router.navigate(['/tour-crs/tour-list']);
+            return;
+        }
+        if (this.hasSupplier(currentUser, 'heli')) {
+            this.router.navigate(['/heli/heli-crs-list']);
+            return;
+        }
+        this.router.navigate(['/auth/login']);
+    }
+
+    private isSupplierRouteAllowed(currentUser: any, url: string): boolean {
+        const accessMap = [
+            { supplier: 'stays', prefixes: ['/hotels', '/report/b2c-hotel', '/report/b2b-hotel'] },
+            { supplier: 'wellness-retreat', prefixes: ['/wellnesscrs', '/report/b2c-wellness'] },
+            { supplier: 'experiences', prefixes: ['/activity', '/report/b2c-activity', '/report/b2b-activity'] },
+            { supplier: 'transfer', prefixes: ['/transfers', '/report/b2c-transfer', '/report/b2b-transfer'] },
+            { supplier: 'yatra-packages', prefixes: ['/tour-crs', '/report/b2c-tour', '/report/b2b-tour'] },
+            { supplier: 'heli', prefixes: ['/heli', '/report/b2c-heli'] },
+        ];
+
+        return accessMap.some((item) =>
+            this.hasSupplier(currentUser, item.supplier) &&
+            item.prefixes.some((prefix) => url.startsWith(prefix))
+        );
+    }
+
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         let currentPath = state.url;
         const currentUser = this.authenticationService.currentUserValue;
@@ -21,14 +84,11 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         //         return false;
         //     }
         // }
-        if (currentUser && currentUser['auth_role_id'] === 7 || currentUser && currentUser['auth_role_id'] === 6 ) {
-            if (state.url.startsWith('/hotels/hotel-crs-lists') || state.url.startsWith('/report/b2c-hotel') || state.url.startsWith('/report/b2b-hotel') || state.url.startsWith('/report/b2c-activity')
-                || state.url.startsWith('/report/b2c-transfer') || state.url.startsWith('/report/b2c-tour') || state.url.startsWith('/report/b2c-wellness') || state.url.startsWith('/report/b2c-heli') || state.url.startsWith('/report/b2c-hotel-enquiry')
-                || state.url.startsWith('/report/b2c-tour-enquiry') || state.url.startsWith('/report/b2b-activity') || state.url.startsWith('/report/b2b-transfer') || 
-                state.url.startsWith('/report/b2b-tour')) {
+        if (this.isSupplierPanelUser(currentUser)) {
+            if (this.isSupplierRouteAllowed(currentUser, state.url)) {
                 return true;
             } else {
-                // this.router.navigate(['/hotels/hotel-crs-lists'],{ queryParams: { tab: 'list_hotels' } });
+                this.redirectToSupplierHome(currentUser);
                 return false;
             }
         }

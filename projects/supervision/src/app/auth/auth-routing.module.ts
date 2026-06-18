@@ -19,7 +19,16 @@ const routes: Routes = [
             //    { path: 'login', component: LoginComponent, data: { extraParameter: '' } },
             { path: 'supplier', component: SupplierRegisterComponent, data: { extraParameter: '' } },
             { path: 'registration-form', component: RegistrationFormComponent, data: { extraParameter: '' } },
-              { path: 'login', component:  SupplierLoginComponent, data: { extraParameter: '' } },
+            { 
+  path: 'login', 
+  component: SupplierLoginComponent, 
+  data: { user_type: 'supervision' } 
+},
+{ 
+  path: 'supplier-login', 
+  component: SupplierLoginComponent, 
+  data: { user_type: 'supplier' } 
+},
             { path: 'forgot-password', component: ForgotPasswordComponent, data: { extraParameter: '' } },
             { path: 'recovery-password', component: RecoveryPasswordComponent, data: { extraParameter: '' } },
              { path: 'service-form', component: ServiceFormComponent, data: { extraParameter: '' } },

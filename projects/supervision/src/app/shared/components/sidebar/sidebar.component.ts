@@ -92,11 +92,42 @@ export class SidebarComponent implements OnInit {
 
   showActivityCrs: boolean = false;
   showHotelCrs: boolean = false;
+  showWellnessCrs: boolean = false;
+    showHeliCrs: boolean = false;
   showTourCrs: boolean = false;
   showTransferCrs: boolean = false;
 
   showB2CReports: boolean = false;
   showB2BReports: boolean = false;
+
+  private get selectedSupplierKeys(): string[] {
+    const suppliers = this.loggedInUser && this.loggedInUser.selectedSuppliers;
+    if (Array.isArray(suppliers)) {
+      return suppliers.map((supplier) => String(supplier).toLowerCase());
+    }
+    if (typeof suppliers === 'string') {
+      return suppliers.split(',').map((supplier) => supplier.trim().toLowerCase());
+    }
+    return [];
+  }
+
+  isSupplierPanelUser(): boolean {
+    return !!this.loggedInUser && (this.loggedInUser.auth_role_id === 6 || this.loggedInUser.auth_role_id === 7);
+  }
+
+  hasSupplier(supplier: string): boolean {
+    if (!this.isSupplierPanelUser()) {
+      return true;
+    }
+    return this.selectedSupplierKeys.includes(supplier.toLowerCase());
+  }
+
+  hasAnySupplier(suppliers: string[]): boolean {
+    if (!this.isSupplierPanelUser()) {
+      return true;
+    }
+    return suppliers.some((supplier) => this.hasSupplier(supplier));
+  }
 
 
   ngOnInit() {
@@ -140,29 +171,33 @@ console.log('SIDE BAR')
     
     // 
 const roleId = this.loggedInUser.auth_role_id;
-const suppliers = this.loggedInUser.selectedSuppliers;
 
 // ✅ SUPER ADMIN → show everything
 if (roleId === 1) {
   this.showHotelCrs = true;
   this.showActivityCrs = true;
+  this.showHeliCrs = true;
   this.showTransferCrs = true;
   this.showTourCrs = true;
+  this.showWellnessCrs = true;
 
 } 
 // ✅ Other users → apply supplier-based filtering
-else if (suppliers) {
-  const selectedServices = JSON.parse(suppliers);
-
-  this.showHotelCrs = selectedServices.includes('stay');
-  this.showActivityCrs = selectedServices.includes('experiences');
-  this.showTransferCrs = selectedServices.includes('Transfer');
-  this.showTourCrs = selectedServices.includes('yatra-packages');
+else if (this.selectedSupplierKeys.length) {
+this.showHotelCrs = this.hasSupplier('stays');
+this.showActivityCrs = this.hasSupplier('experiences');
+this.showTransferCrs = this.hasSupplier('transfer');
+this.showTourCrs = this.hasSupplier('yatra-packages');
+this.showWellnessCrs = this.hasSupplier('wellness-retreat');
+this.showHeliCrs = this.hasSupplier('heli');
 
 } 
 // ✅ No suppliers (but not super admin) → hide all OR choose default
 else {
   this.showHotelCrs = false;
+  this.showHeliCrs = false;
+  this.showTourCrs = false;
+  this.showWellnessCrs = false;
   this.showActivityCrs = false;
   this.showTransferCrs = false;
   this.showTourCrs = false;
@@ -225,6 +260,20 @@ else {
   }
 
   isMenuExists(menu) {
+    if (this.isSupplierPanelUser()) {
+      const allowedSupplierMenus = [
+        'B2C',
+        'Dashboard',
+        'B2C Hotel Report',
+        'Hotel CRS',
+        'Tour CRS',
+        'Activity CRS',
+        'Transfer CRS',
+        'Wellness CRS'
+      ];
+      return allowedSupplierMenus.includes(menu);
+    }
+
     if (this.navigationData && this.navigationData.length > 0) {
       if (this.navigationData.some((el) => el.description == menu))
         return true;
@@ -242,6 +291,10 @@ else {
   }
 
   isSubMenuExists(menu, parent_key = null) {
+    if (this.isSupplierPanelUser()) {
+      return true;
+    }
+
     if (this.navigationData && this.navigationData.length > 0) {
       if (this.navigationData.some((el) => el.description == menu && el.parent_key == parent_key))
         return true;

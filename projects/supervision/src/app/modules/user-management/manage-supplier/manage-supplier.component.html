@@ -3,11 +3,11 @@
     ngbNav
     #tabs="ngbNav"
     [(activeId)]="activeIdString"
-    (navChange)="beforeChange(false)"
+    (navChange)="beforeChange($event)"
     class="nav-tabs tabs-animated custom_tab">
 
     <li [ngbNavItem]="'add_update_b2bUser'">
-      <a ngbNavLink>Create Supplier</a>
+      <a ngbNavLink>Create/Update Supplier</a>
       <ng-template ngbNavContent>
         <app-create-supplier
           [propertyId]="propertyId"

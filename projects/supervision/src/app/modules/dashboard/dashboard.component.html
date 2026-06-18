@@ -266,7 +266,11 @@
         [refundAmount]="refundAmount"
         [paymentSuccessRate]="paymentSuccessRate"
         [paymentFailedRate]="paymentFailedRate"
-        [customerReceivables]="paymentPendingCount">
+        [customerReceivables]="paymentPendingCount"
+        [dashboardMetricsData]="dashboardMetricsData"
+        [paymentMetricsData]="paymentMetricsData"
+        [moduleRevenueData]="totalGrossBookingValueModuleWiseData"
+        [vendorRevenueData]="vendorWiseRevenueData">
     </app-revenue-finance>
     <app-booking-operations
         [paymentPending]="paymentPendingCount"

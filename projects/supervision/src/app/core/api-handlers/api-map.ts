@@ -22,11 +22,13 @@ export const apiMap = {
   deleteCurrencyConversion: `${baseUrl}/cms/service/deleteCurrencyConversion`,
   bankAccountDetails: baseUrl + "/cms/service/BankAccountDetails",
   bookingCalender: baseUrl + "/dashboard/report/travelCalendar",
+  dashboardMetrics: baseUrl + "/dashboard/report/dashboardMetrics",
   documentsNotIssuedCount: baseUrl + "/dashboard/report/documentsNotIssuedCount",
   getBookingMetrics: baseUrl + "/dashboard/report/getBookingMetrics",
   GrossMargin: `${baseUrl}/dashboard/report/GrossMargin`,
   paymentCompleted: baseUrl + "/dashboard/report/paymentCompleted",
   paymentFailedRate: `${baseUrl}/dashboard/report/paymentFailedRate`,
+  paymentMetrics: baseUrl + "/dashboard/report/paymentMetrics",
   paymentSuccessRate: `${baseUrl}/dashboard/report/paymentSuccessRate`,
 
   ActiveVendors: baseUrl + "/dashboard/report/ActiveVendors",

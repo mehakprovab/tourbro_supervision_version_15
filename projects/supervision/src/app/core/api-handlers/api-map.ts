@@ -24,6 +24,7 @@ export const apiMap = {
   bookingCalender: baseUrl + "/dashboard/report/travelCalendar",
   dashboardMetrics: baseUrl + "/dashboard/report/dashboardMetrics",
   documentsNotIssuedCount: baseUrl + "/dashboard/report/documentsNotIssuedCount",
+  enquiryGenerated: baseUrl + "/dashboard/report/enquiryGenerated",
   getBookingMetrics: baseUrl + "/dashboard/report/getBookingMetrics",
   GrossMargin: `${baseUrl}/dashboard/report/GrossMargin`,
   paymentCompleted: baseUrl + "/dashboard/report/paymentCompleted",

@@ -42,7 +42,7 @@
 
         <div class="col-12">
             <div class="row g-3">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="head-sect py-3 px-3">
                         <div class="row">
                             <div class="col-8">
@@ -50,12 +50,14 @@
                             </div>
 
                             <div class="col-4 text-end">
-                                <select class="b-none">
-                                    <option>Today</option>
-                                    <option>Last Day</option>
-                                    <option>Last Week</option>
-                                    <option>Last Month</option>
-                                    <option>All</option>
+                                <select class="b-none"
+                                    [value]="enquiryGeneratedFilter"
+                                    (change)="onEnquiryGeneratedFilterChange(getEventValue($event))">
+                                    <option value="today">Today</option>
+                                    <option value="yesterday">Last Day</option>
+                                    <option value="thisWeek">Last Week</option>
+                                    <option value="thisMonth">Last Month</option>
+                                    <option value="all">All</option>
                                 </select>
                             </div>
 
@@ -64,39 +66,13 @@
                             </div> -->
 
                             <div class="col-12 mt-2">
-                                <span class="num-span">1000</span>
+                                <span class="num-span">{{ enquiryGenerated | number:'1.2-2' }}</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-6">
-                    <div class="head-sect py-3 px-3">
-                        <div class="row">
-                            <div class="col-8">
-                                <span class="f-15">Booking Completed</span>
-                            </div>
-
-                            <div class="col-4 text-end">
-                                <select class="b-none">
-                                    <option>Today</option>
-                                    <option>Last Day</option>
-                                    <option>Last Week</option>
-                                    <option>Last Month</option>
-                                    <option>All</option>
-                                </select>
-                            </div>
-
-                            <!-- <div class="col-12 mt-2">
-                                <span>This is For Slider</span>
-                            </div> -->
-
-                            <div class="col-12 mt-2">
-                                <span class="num-span">1000</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            
 
             </div>
         </div>

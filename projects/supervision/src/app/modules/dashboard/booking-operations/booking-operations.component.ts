@@ -22,6 +22,8 @@ export class BookingOperationsComponent implements OnInit, OnChanges {
     @Input() cancelled: any = 0;
     @Input() refundInitiated: any = 0;
     @Input() refundCompleted: any = 0;
+    enquiryGenerated: any = 0;
+    enquiryGeneratedFilter = 'today';
 
     cardFilters = {
         paymentPending: 'today',
@@ -37,6 +39,7 @@ export class BookingOperationsComponent implements OnInit, OnChanges {
         { label: 'Yesterday', value: 'yesterday' },
         { label: 'This Week', value: 'thisWeek' },
         { label: 'This Month', value: 'thisMonth' },
+        { label: 'This Year', value: 'thisYear' },
         { label: 'All', value: 'all' }
     ];
 
@@ -122,6 +125,45 @@ export class BookingOperationsComponent implements OnInit, OnChanges {
         return (event.target as HTMLSelectElement).value;
     }
 
+    onEnquiryGeneratedFilterChange(value: string): void {
+        this.enquiryGeneratedFilter = value;
+        this.loadEnquiryGenerated();
+    }
+
+    private loadEnquiryGenerated(): void {
+        const payload = this.getLeadFilterPayload(this.enquiryGeneratedFilter);
+
+        this.apiHandlerService.apiHandler('enquiryGenerated', 'post', {}, {}, payload).subscribe(
+            (resp) => {
+                const responseData = resp && resp.data !== undefined ? resp.data : resp;
+                const value = this.getFilteredApiValue(responseData, this.enquiryGeneratedFilter, [
+                    'enquiryGenerated',
+                    'enquiry_generated',
+                    'enquiryGeneratedCount',
+                    'generatedEnquiry',
+                    'generatedEnquiries',
+                    'leadGenerated',
+                    'leadGeneratedCount',
+                    'leads',
+                    'count',
+                    'total'
+                ]);
+                this.enquiryGenerated = value !== undefined && value !== null && value !== '' ? value : 0;
+            },
+            () => {
+                this.enquiryGenerated = 0;
+            }
+        );
+    }
+
+    private getLeadFilterPayload(selectedFilter: string): any {
+        if (selectedFilter === 'all') {
+            return {};
+        }
+
+        return this.getFilterPayload(selectedFilter);
+    }
+
     private getCardValue(cardKey: string, source: any, totalKeys: string[], fallback: any = 0): any {
         if (this.cardValueOverrides[cardKey] !== undefined) {
             return this.cardValueOverrides[cardKey];
@@ -154,9 +196,7 @@ export class BookingOperationsComponent implements OnInit, OnChanges {
     }
 
     private getFilteredApiValue(source: any, selectedFilter: string, totalKeys: string[]): any {
-        const filteredValue = selectedFilter === 'all'
-            ? undefined
-            : this.findFilteredDashboardValue(source, selectedFilter, totalKeys);
+        const filteredValue = this.findFilteredDashboardValue(source, selectedFilter, totalKeys);
 
         if (filteredValue !== undefined && filteredValue !== null && filteredValue !== '') {
             return filteredValue;
@@ -211,6 +251,7 @@ export class BookingOperationsComponent implements OnInit, OnChanges {
             case 'yesterday': return 'Yesterday';
             case 'thisWeek': return 'This Week';
             case 'thisMonth': return 'This Month';
+            case 'thisYear': return 'This Year';
             default: return 'All';
         }
     }
@@ -233,6 +274,9 @@ export class BookingOperationsComponent implements OnInit, OnChanges {
             }
             case 'thisMonth':
                 from.setDate(1);
+                break;
+            case 'thisYear':
+                from.setMonth(0, 1);
                 break;
             default:
                 break;
@@ -339,6 +383,7 @@ export class BookingOperationsComponent implements OnInit, OnChanges {
             case 'yesterday': return ['yesterday', 'Yesterday', 'lastDay'];
             case 'thisWeek': return ['thisWeek', 'week', 'currentWeek'];
             case 'thisMonth': return ['thisMonth', 'month', 'currentMonth'];
+            case 'thisYear': return ['thisYear', 'year', 'currentYear'];
             default: return ['all', 'All', 'total'];
         }
     }
@@ -401,7 +446,7 @@ export class BookingOperationsComponent implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
-        
+        this.loadEnquiryGenerated();
     }
 
     ngOnChanges(): void {

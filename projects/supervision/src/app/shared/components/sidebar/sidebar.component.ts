@@ -100,10 +100,19 @@ export class SidebarComponent implements OnInit {
   showB2CReports: boolean = false;
   showB2BReports: boolean = false;
 
+  private get currentRoleId(): number {
+    return Number(this.loggedInUser && this.loggedInUser.auth_role_id);
+  }
+
   private get selectedSupplierKeys(): string[] {
-    const suppliers = this.loggedInUser && this.loggedInUser.selectedSuppliers;
+    const suppliers = this.loggedInUser && (
+      this.loggedInUser.selectedSuppliers ||
+      this.loggedInUser.selected_suppliers ||
+      this.loggedInUser.supplier ||
+      this.loggedInUser.suppliers
+    );
     if (Array.isArray(suppliers)) {
-      return suppliers.map((supplier) => String(supplier).toLowerCase());
+      return suppliers.map((supplier) => String(supplier).trim().toLowerCase());
     }
     if (typeof suppliers === 'string') {
       return suppliers.split(',').map((supplier) => supplier.trim().toLowerCase());
@@ -112,7 +121,7 @@ export class SidebarComponent implements OnInit {
   }
 
   isSupplierPanelUser(): boolean {
-    return !!this.loggedInUser && (this.loggedInUser.auth_role_id === 6 || this.loggedInUser.auth_role_id === 7);
+    return this.currentRoleId === 6 || this.currentRoleId === 7;
   }
 
   hasSupplier(supplier: string): boolean {
@@ -127,6 +136,185 @@ export class SidebarComponent implements OnInit {
       return true;
     }
     return suppliers.some((supplier) => this.hasSupplier(supplier));
+  }
+
+  private hasNavigationData(): boolean {
+    return Array.isArray(this.navigationData) && this.navigationData.length > 0;
+  }
+
+  private hasMenuDescription(menu: string): boolean {
+    return this.hasNavigationData() && this.navigationData.some((el) => el.description == menu);
+  }
+
+  private hasSubMenuDescription(menu: string, parent_key = null): boolean {
+    return this.hasNavigationData() && this.navigationData.some((el) => el.description == menu && el.parent_key == parent_key);
+  }
+
+  private hasAnySubMenu(parent_key: string): boolean {
+    return this.hasNavigationData() && this.navigationData.some((el) => el.parent_key == parent_key);
+  }
+
+  private hasSupplierMenuPermission(menu: string): boolean {
+    if (!this.hasNavigationData()) {
+      return true;
+    }
+
+    return this.hasMenuDescription(menu) || this.hasSupplierMenuSubPermission(menu);
+  }
+
+  private hasSupplierMenuSubPermission(menu: string): boolean {
+    if (menu == 'Hotel CRS') {
+      return this.hasAnySubMenu(this.HOTELCRS);
+    }
+    if (menu == 'Tour CRS') {
+      return this.hasAnySubMenu(this.TOUR_CRS);
+    }
+    if (menu == 'Activity CRS') {
+      return this.hasAnySubMenu(this.ACTIVITY_CRS);
+    }
+    if (menu == 'Transfer CRS') {
+      return this.hasAnySubMenu(this.TRANSFER_CRS) || this.hasAnySubMenu(this.DMCTRANSFERCRS);
+    }
+    if (menu == 'Wellness CRS') {
+      return this.hasAnySubMenu(this.WELLNESS_CRS);
+    }
+
+    return false;
+  }
+
+  private isSupplierMenuAllowed(menu: string): boolean {
+    if (!this.isSupplierPanelUser()) {
+      return true;
+    }
+
+    const supplierTypes = String(this.loggedInUser && this.loggedInUser.supplier_type || '')
+      .split(',')
+      .map((type) => type.trim().toUpperCase());
+
+    if (menu == 'B2C') {
+      return supplierTypes.includes('B2C');
+    }
+    if (menu == 'Dashboard') {
+      return true;
+    }
+    if (menu == 'B2C Hotel Report') {
+      return supplierTypes.includes('B2C') && this.hasAnySupplier(['stays', 'wellness-retreat', 'heli']);
+    }
+    if (menu == 'B2C Activity Report') {
+      return supplierTypes.includes('B2C') && this.hasSupplier('experiences');
+    }
+    if (menu == 'B2C Tour Report') {
+      return supplierTypes.includes('B2C') && this.hasSupplier('yatra-packages');
+    }
+    if (menu == 'B2C Transfer Report') {
+      return supplierTypes.includes('B2C') && this.hasSupplier('transfer');
+    }
+    if (menu == 'Hotel CRS') {
+      return this.showHotelCrs;
+    }
+    if (menu == 'Tour CRS') {
+      return this.showTourCrs;
+    }
+    if (menu == 'Activity CRS') {
+      return this.showActivityCrs;
+    }
+    if (menu == 'Transfer CRS') {
+      return this.showTransferCrs;
+    }
+    if (menu == 'Wellness CRS') {
+      return this.showWellnessCrs;
+    }
+
+    return false;
+  }
+
+  private isSupplierSubMenuAllowed(menu: string, parent_key = null): boolean {
+    if (!this.isSupplierPanelUser()) {
+      return true;
+    }
+
+    if (parent_key == this.REPORTS) {
+      if (menu == 'B2C Hotel Report') {
+        return this.showB2CReports && this.hasAnySupplier(['stays', 'wellness-retreat', 'heli']);
+      }
+      if (menu == 'B2C Activity Report') {
+        return this.showB2CReports && this.hasSupplier('experiences');
+      }
+      if (menu == 'B2C Tour Report') {
+        return this.showB2CReports && this.hasSupplier('yatra-packages');
+      }
+      if (menu == 'B2C Transfer Report') {
+        return this.showB2CReports && this.hasSupplier('transfer');
+      }
+
+      return false;
+    }
+    if (parent_key == this.REPORTS_B2B) {
+      return this.showB2BReports;
+    }
+    if (parent_key == this.HOTELCRS) {
+      return this.showHotelCrs;
+    }
+    if (parent_key == this.TOUR_CRS) {
+      return this.showTourCrs;
+    }
+    if (parent_key == this.ACTIVITY_CRS) {
+      return this.showActivityCrs;
+    }
+    if (parent_key == this.TRANSFER_CRS || parent_key == this.DMCTRANSFERCRS) {
+      return this.showTransferCrs;
+    }
+    if (parent_key == this.WELLNESS_CRS) {
+      return this.showWellnessCrs || this.showHeliCrs;
+    }
+    return false;
+  }
+
+  hasAnyCrsMenu(): boolean {
+    if (this.currentRoleId === 1) {
+      return true;
+    }
+
+    if (this.isSupplierPanelUser()) {
+      return this.isMenuExists('Hotel CRS') ||
+        this.isMenuExists('Tour CRS') ||
+        this.isMenuExists('Activity CRS') ||
+        this.isMenuExists('Transfer CRS') ||
+        this.isMenuExists('Wellness CRS') ||
+        this.hasAnyHeliMenu();
+    }
+
+    if (!this.hasNavigationData()) {
+      return this.loggedInUser && this.currentRoleId !== 3;
+    }
+
+    return this.isMenuExists('Hotel CRS') ||
+      this.isMenuExists('Tour CRS') ||
+      this.isMenuExists('Activity CRS') ||
+      this.isMenuExists('Transfer CRS') ||
+      this.isMenuExists('Wellness CRS') ||
+      this.hasAnyHeliMenu();
+  }
+
+  hasAnyHeliMenu(): boolean {
+    if (this.currentRoleId === 1) {
+      return true;
+    }
+
+    if (this.isSupplierPanelUser() && !this.showHeliCrs) {
+      return false;
+    }
+
+    const heliMenus = [
+      'Heli CRS',
+      'Heli CRS List',
+      'Helipads',
+      'Heli Routes',
+      'Heli Schedules',
+      'Heli Pricing'
+    ];
+
+    return !this.hasNavigationData() || this.navigationData.some((el) => heliMenus.includes(el.description));
   }
 
 
@@ -170,7 +358,7 @@ console.log('SIDE BAR')
 
     
     // 
-const roleId = this.loggedInUser.auth_role_id;
+const roleId = this.currentRoleId;
 
 // ✅ SUPER ADMIN → show everything
 if (roleId === 1) {
@@ -227,15 +415,15 @@ else {
         this.globals.toggleSidebar = true;
       }
     });
-    if (this.loggedInUser['auth_role_id'] == 3 ){
+    if (this.currentRoleId == 3 ){
       this.getPrevilegeForThisUser();
     }
-    if (this.loggedInUser['auth_role_id'] == 6 || this.loggedInUser['auth_role_id'] == 7 ){
+    if (this.currentRoleId == 6 || this.currentRoleId == 7 ){
       this.setNavigationData()
       this.getPrevilegeForThisUser();
     }
     
-    if (this.loggedInUser && this.loggedInUser['auth_role_id'] == 6 || this.loggedInUser['auth_role_id'] == 7) {
+    if (this.isSupplierPanelUser()) {
       this.extraParameter = ['hotelCrsMenus'];
 
     } else {
@@ -260,60 +448,60 @@ else {
   }
 
   isMenuExists(menu) {
-    if (this.isSupplierPanelUser()) {
-      const allowedSupplierMenus = [
-        'B2C',
-        'Dashboard',
-        'B2C Hotel Report',
-        'Hotel CRS',
-        'Tour CRS',
-        'Activity CRS',
-        'Transfer CRS',
-        'Wellness CRS'
-      ];
-      return allowedSupplierMenus.includes(menu);
-    }
-
-    if (this.navigationData && this.navigationData.length > 0) {
-      if (this.navigationData.some((el) => el.description == menu))
-        return true;
-      else
-        return false;
-    }
-    else {
-      if(this.loggedInUser['auth_role_id'] == 3 && !this.navigationData.length){
-        return false;
-      }else{
-        return true;
-      }
-    
-    }
-  }
-
-  isSubMenuExists(menu, parent_key = null) {
-    if (this.isSupplierPanelUser()) {
+    if (this.currentRoleId === 1) {
       return true;
     }
 
-    if (this.navigationData && this.navigationData.length > 0) {
-      if (this.navigationData.some((el) => el.description == menu && el.parent_key == parent_key))
-        return true;
-      else
-        return false;
+    if (this.isSupplierPanelUser()) {
+      return this.isSupplierMenuAllowed(menu);
     }
-    else {
-      if(this.loggedInUser['auth_role_id'] == 3 && !this.navigationData.length){
-        return false;
-      }else{
+
+    if (this.hasNavigationData()) {
+      if (this.hasMenuDescription(menu)) {
         return true;
       }
 
+      if (menu == 'Hotel CRS') {
+        return this.hasAnySubMenu(this.HOTELCRS);
+      }
+      if (menu == 'Tour CRS') {
+        return this.hasAnySubMenu(this.TOUR_CRS);
+      }
+      if (menu == 'Activity CRS') {
+        return this.hasAnySubMenu(this.ACTIVITY_CRS);
+      }
+      if (menu == 'Transfer CRS') {
+        return this.hasAnySubMenu(this.TRANSFER_CRS) || this.hasAnySubMenu(this.DMCTRANSFERCRS);
+      }
+      if (menu == 'Wellness CRS') {
+        return this.hasAnySubMenu(this.WELLNESS_CRS);
+      }
+
+      return false;
     }
+
+    return !this.isSupplierPanelUser() && this.loggedInUser && this.currentRoleId != 3;
+  }
+
+  isSubMenuExists(menu, parent_key = null) {
+    if (this.currentRoleId === 1) {
+      return true;
+    }
+
+    if (this.isSupplierPanelUser()) {
+      return this.isSupplierSubMenuAllowed(menu, parent_key);
+    }
+
+    if (this.hasNavigationData()) {
+      return this.hasSubMenuDescription(menu, parent_key);
+    }
+
+    return !this.isSupplierPanelUser() && this.loggedInUser && this.currentRoleId != 3;
   }
 
 
   getPrevilegeForThisUser() {
-    if(this.loggedInUser.auth_role_id == 6 || this.loggedInUser.auth_role_id == 7)
+    if(this.currentRoleId == 6 || this.currentRoleId == 7)
 {
   this.authService.navigationData.subscribe(res=>{
     this.navigationData = res;

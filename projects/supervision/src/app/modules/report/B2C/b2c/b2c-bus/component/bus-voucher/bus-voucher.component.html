@@ -1,4 +1,152 @@
-<div class="text-center mb-3" *ngIf="voucherData">
+<div class="table-responsive" style="width:90%; position:relative; padding: 50px 0px;margin: 0px auto;"
+  id="tickect_hotel">
+  <table cellpadding="0" cellspacing="0" width="100%" style="font-size:13px;width:100%;overflow:hidden;border-radius:16px;box-shadow:0 0 2px 0 rgba(0,0,0,.08),0 2px 8px 0 rgba(0,0,0,.16);background:#F3F3F3;margin:0 auto;-webkit-print-color-adjust:exact;" id="print_voucher" #print_voucher *ngIf="voucherData">
+      <tbody>
+          <tr>
+              <td style="padding:15px 15px 30px;border-top:unset;">
+                  <table class="header-table">
+                      <tbody>
+                          <tr>
+                              <td class="logo-cell"><img src="assets/images/login-images/l-logo.png" class="brand-logo"></td>
+                            <td style="padding: 0px; width: 30%; border-top: 1px solid transparent;">
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="border: none; padding: 30px 0px;"
+                                                        class="d-flex align-center justify-content-end">
+
+
+                                                        <a href="javascript:void(0);"
+                                                            style="font-size: 16px;-webkit-print-color-adjust: exact;padding: 12px 20px;display: block;font-weight: 600;border-radius: 8px;color: #FE4865;background: #FFF5F6;margin-left: 10px;">
+                                                            Print
+                                                        </a>
+                                                        <a (click)="downloadA4('pdf', 'potrait')" id="download"
+                                                            style="font-size: 16px; border: 1px solid #FE4865; background: #FE4865; -webkit-print-color-adjust: exact; padding: 12px 20px; display: block; border-radius: 8px; color: #fff; margin-left: 10px;font-weight: 600;">
+                                                            PDF Download
+                                                        </a>
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                          </tr>
+                      </tbody>
+                  </table>
+
+                  <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+                      <tbody>
+                          <tr>
+                              <td colspan="2" style="padding: 0px; border: none;">
+                                  <table style="width: 100%;">
+                                      <tr >
+                                          <td style="border: none; padding: 0px 0px 15px; line-height: 25px; font-size: 15px; width: 50%;">
+                                            <span style="font-size: 17px;"><b> MR. TEST TEST </b></span><br >
+                                            <span><img src="assets/images/telephone-ic.png"> 7784874542 </span><br >
+                                            <span><img src="assets/images/envelope-ic.png"> anbu345@yopmail.com </span>
+                                          </td>
+                                          <td style="border: none; padding: 0px 0px 15px; line-height: 25px; font-size: 15px; width: 50%; text-align: right;">
+                                              <span> Reservation Code:<strong >{{ voucherData?.app_reference || 'N/A' }}</strong><br></span>
+                                              <span> PNR <strong > {{ voucherData?.pnr || 'N/A' }}</strong></span><br>
+                                              <span> Ticket<strong > {{ voucherData?.ticket || 'N/A' }}</strong></span><br >
+                                              <span> Booked By <strong > {{ voucherData?.booked_by || 'N/A' }}</strong></span><br>
+                                              <span> Status <strong > {{ voucherData?.status || 'N/A' }}</strong></span><br>
+                                              
+                                              <!-- <span class="badge badge-success ng-star-inserted" style="font-size: 10px; padding: 8px; border-radius: 5px;background:#28a745;color:#fff;"> Booking Confirmed </span> -->
+                                          </td>
+                                      </tr>
+                                  </table>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+                
+                  <div style="margin-bottom:16px;padding:5px;border-radius:16px;border:1px solid #E8E8E8;box-shadow:20px 14px 18px 0 rgba(194,194,194,.15);background:#fff;">
+                      <table width="100%" cellpadding="5" cellspacing="2" style="font-size:15px;background:#fff;">
+                          <tbody>
+                              <tr>
+                                  <td colspan="4" style="padding:12px 16px;background:#F5F2FC;border-radius:8px;border:none;font-weight:600;color:#282828;font-size:20px;">Journey Details</td>
+                              </tr>
+                              <tr style="white-space:nowrap;color:#4B4B4B;font-weight:400;font-size:14px;">
+                                  <td>From</td>
+                                  <td>To</td>
+                                  <td>Departure</td>
+                                  <td>Arrival</td>
+                              </tr>
+                              <tr style="color:#4B4B4B;font-weight:600;font-size:16px;">
+                                  <td>{{ itinerary?.departure_from || 'N/A' }}</td>
+                                  <td>{{ itinerary?.arrival_to || 'N/A' }}</td>
+                                  <td>{{ itinerary?.departure_datetime | date:'dd/MM/yyyy HH:mm' }}</td>
+                                  <td>{{ itinerary?.arrival_datetime | date:'dd/MM/yyyy HH:mm' }}</td>
+                              </tr>
+                              <tr style="white-space:nowrap;color:#4B4B4B;font-weight:400;font-size:14px;">
+                                  <td>Operator</td>
+                                  <td>Bus Type</td>
+                                
+                              </tr>
+                              <tr style="color:#4B4B4B;font-weight:600;font-size:16px;">
+                                  <td>{{ itinerary?.operator || 'N/A' }}</td>
+                                <td>{{ itinerary?.bus_type || 'N/A' }}</td>
+                                  
+                              </tr>
+                            
+                          </tbody>
+                      </table>
+                  </div>
+                  <div style="margin-bottom:16px;padding:5px;border-radius:16px;border:1px solid #E8E8E8;box-shadow:20px 14px 18px 0 rgba(194,194,194,.15);background:#fff;">
+                      <table width="100%" cellpadding="5" cellspacing="2" style="font-size:15px;background:#fff;">
+                          <tbody>
+                              <tr>
+                                  <td colspan="6" style="padding:12px 16px;background:#F5F2FC;border-radius:8px;border:none;font-weight:600;color:#282828;font-size:20px;">Passenger Details</td>
+                              </tr>
+                              <tr style="white-space:nowrap;color:#4B4B4B;font-weight:400;font-size:14px;" *ngIf="passengers?.length; else noPassengers">
+                                  <td>Sl.No</td>
+                                  <td>Name</td>
+                                  <td>Age</td>
+                                  <td>Gender</td>
+                                  <td>Seat</td>
+                                
+                              </tr>
+                              <tr style="color:#4B4B4B;font-weight:600;font-size:16px;" *ngFor="let passenger of passengers; let i = index">
+                                  <td>{{ i + 1 }}</td>
+                                  <td>{{ passenger?.name || passenger?.first_name || passenger?.FirstName || 'N/A' }}</td>
+                                  <td>{{ passenger?.age || passenger?.Age || 'N/A' }}</td>
+                                  <td>{{ passenger?.gender || passenger?.Gender || 'N/A' }}</td>
+                                  <td>{{ passenger?.seat_no || passenger?.seat || passenger?.SeatName || 'N/A' }}</td>
+                                
+                              </tr>
+                          </tbody>
+                      </table>
+                    
+
+                  </div>
+                  <div style="margin-bottom:16px;padding:5px;border-radius:16px;border:1px solid #E8E8E8;box-shadow:20px 14px 18px 0 rgba(194,194,194,.15);background:#fff;">
+                      <table width="100%" cellpadding="5" cellspacing="2" style="font-size:15px;background:#fff;">
+                          <tbody>
+                              <tr>
+                                  <td colspan="2" style="padding:12px 16px;background:#F5F2FC;border-radius:8px;border:none;font-weight:600;color:#282828;font-size:20px;">Payment Details</td>
+                              </tr>
+                              <tr>
+                                  <td>Currency</td>
+                                  <td>{{ voucherData?.currency || 'N/A' }}</td>
+                              </tr>
+                            
+                              <tr class="total-row">
+                                  <td >Total Amount</td>
+                                  <td>{{ voucherData?.total_fare | number:'1.2-2' }}</td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+                
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</div>
+
+
+<!-- <div class="text-center mb-3" *ngIf="voucherData">
   <button class="btn btn-primary" type="button" (click)="printVoucher()">Print</button>
 </div>
 
@@ -94,4 +242,4 @@
 
 <div class="card adminInner text-center" *ngIf="!loading && !voucherData">
   No voucher data found.
-</div>
+</div> -->

@@ -64,12 +64,11 @@ export class BusVoucherComponent implements OnInit, OnDestroy {
       : {};
   }
 
-  get passengers() {
-    return this.voucherData && Array.isArray(this.voucherData.passengers)
-      ? this.voucherData.passengers
-      : (this.voucherData && Array.isArray(this.voucherData.pax_details) ? this.voucherData.pax_details : []);
-  }
-
+get passengers() {
+  return Array.isArray(this.voucherData?.pax)
+    ? this.voucherData.pax
+    : [];
+}
   printVoucher() {
     window.print();
   }

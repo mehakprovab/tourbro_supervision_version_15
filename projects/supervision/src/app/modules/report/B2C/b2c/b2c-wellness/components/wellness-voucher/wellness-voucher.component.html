@@ -1,50 +1,182 @@
-<div class="mb-3 container">
-  <a [routerLink]="['/report/b2c-wellness']"><button class="btnStyle">Back</button></a>&nbsp;
-  <button class="btnStyle" (click)="printVoucher()">Print</button>&nbsp;
-  <button class="btnStyle" (click)="downloadPdf()">Download Voucher</button>
-</div>
+<table cellpadding="0" cellspacing="0" width="100%" style="font-size:13px;width:100%;overflow:hidden;border-radius:16px;box-shadow:0 0 2px 0 rgba(0,0,0,.08),0 2px 8px 0 rgba(0,0,0,.16);background:#F3F3F3;margin:0 auto;-webkit-print-color-adjust:exact;" id="print_voucher" #print_voucher *ngIf="voucherData">
+    <tbody>
+        <tr>
+            <td style="padding:15px 15px 30px;border-top:unset;">
+                <table class="header-table">
+                    <tbody>
+                        <tr>
+                            <td class="logo-cell"><img src="assets/images/login-images/l-logo.png" class="brand-logo"></td>
+                            <td style="padding: 0px; width: 30%; border-top: 1px solid transparent;">
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="border: none; padding: 30px 0px;"
+                                                        class="d-flex align-center justify-content-end">
 
-<div id="wellness-voucher" #print_voucher class="voucher-card" *ngIf="voucherData">
-  <div class="voucher-header">
-    <div>
-      <h3>Wellness Voucher</h3>
-      <p>Application Reference: <strong>{{ booking.AppReference }}</strong></p>
-      <p>Status: <strong>{{ booking.Status }}</strong></p>
-    </div>
-    <img *ngIf="booking.CenterPhoto" [src]="booking.CenterPhoto" alt="Wellness Center">
-  </div>
 
-  <div class="section">
-    <h5>Center Details</h5>
-    <p><strong>{{ booking.WellnessCenterName }}</strong> ({{ booking.CenterCode }})</p>
-    <p>{{ booking.CenterAddress }}</p>
-    <p>Phone: {{ booking.PhoneNumber || 'N/A' }} | Email: {{ booking.Email || 'N/A' }}</p>
-    <p>Check-in: {{ booking.CenterCheckIn | date:'dd/MM/yyyy' }} {{ booking.CheckinTime }}</p>
-    <p>Check-out: {{ booking.CenterCheckOut | date:'dd/MM/yyyy' }} {{ booking.CheckOutTime }}</p>
-    <p>Duration: {{ center.NoOfDays || calculateDiff(booking.CenterCheckIn, booking.CenterCheckOut) }} Days</p>
-  </div>
+                                                        <a href="javascript:void(0);"
+                                                            style="font-size: 16px;-webkit-print-color-adjust: exact;padding: 12px 20px;display: block;font-weight: 600;border-radius: 8px;color: #FE4865;background: #FFF5F6;margin-left: 10px;">
+                                                            Print
+                                                        </a>
+                                                        <a (click)="downloadA4('pdf', 'potrait')" id="download"
+                                                            style="font-size: 16px; border: 1px solid #FE4865; background: #FE4865; -webkit-print-color-adjust: exact; padding: 12px 20px; display: block; border-radius: 8px; color: #fff; margin-left: 10px;font-weight: 600;">
+                                                            PDF Download
+                                                        </a>
 
-  <div class="section">
-    <h5>Package Details</h5>
-    <p><strong>{{ packageDetails.PackageName || 'N/A' }}</strong></p>
-    <p>Package Code: {{ packageDetails.PackageCode || 'N/A' }}</p>
-    <p>Package Type: {{ packageDetails.PackageType || 'N/A' }}</p>
-    <p>Duration: {{ packageDetails.DurationDays || 'N/A' }}</p>
-    <p>{{ packageDetails.Description || '' }}</p>
-  </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                           
+                        </tr>
+                    </tbody>
+                </table>
 
-  <div class="section">
-    <h5>Lead Passenger</h5>
-    <p>{{ leadPassenger.Title }} {{ leadPassenger.FirstName }} {{ leadPassenger.LastName }}</p>
-    <p>Pax Type: {{ leadPassenger.PaxType || 'N/A' }}</p>
-  </div>
+                 <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+                    <tbody>
+                        <tr>
+                            <td colspan="2" style="padding: 0px; border: none;">
+                                <table style="width: 100%;">
+                                    <tr >
+                                        <td style="border: none; padding: 0px 0px 15px; line-height: 25px; font-size: 15px; width: 50%;"><span><b> MR. TEST TEST </b></span><br >
+                                                <span><img src="assets/images/telephone-ic.png"> &nbsp;{{ booking.PhoneNumber || 'N/A' }}</span><br>
+                                                <span><img src="assets/images/envelope-ic.png"> &nbsp;{{ booking.Email || 'N/A' }} </span></td>
+                                        <td style="border: none; padding: 0px 0px 15px; line-height: 25px; font-size: 15px; width: 50%; text-align: right;">
+                                            <span> Application Reference:<strong >{{ booking.AppReference }}</strong><br></span>
+                                            
+                                           <span>Status: <span class="badge badge-success" style="font-size: 10px; padding: 8px; border-radius: 5px;background:#28a745;color:#fff;"> {{ booking.Status }} </span></span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
-  <div class="section">
-    <h5>Payment</h5>
-    <p>Payment Mode: {{ booking.PaymentMode || 'N/A' }}</p>
-    <p>Payment Status: {{ booking.PaymentStatus || 'N/A' }}</p>
-    <p>Total Amount: {{ booking.TotalAmount || 0 }} {{ booking.Currency }}</p>
-  </div>
-</div>
+                 <div style="margin-bottom: 16px; padding: 16px; border-radius: 16px; border: 1px solid #E8E8E8; box-shadow: 20px 14px 18px 0px rgba(194, 194, 194, 0.15); background: #fff;">
+                    <table style="width: 100%;">
+                        <tbody>
+                            <tr>
+                                <td colspan="2" style="padding: 0px; border: none;">
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <td style="padding: 10px 0px; width: 25%; border: none;"><img alt="" style="width: 100%; object-fit: cover; height: 125px; border-radius: 10px;" *ngIf="booking.CenterPhoto" [src]="booking.CenterPhoto" alt="Wellness Center"></td>
+                                            <td valign="top" style="padding: 15px 15px; border: none;">
+                                                <span style="line-height: normal; font-size: 17px; color: #2a2a2a; vertical-align: middle; font-weight: 700;">{{ booking.WellnessCenterName }} ({{ booking.CenterCode }})</span><br>
+                                                <span style="display: block; line-height: 25px; font-size: 15px; margin-top: 4px;"> {{ booking.CenterAddress }}</span>
+                                               
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                         </tbody>
+                    </table>
+                </div>
+                        
+               
+                <div style="margin-bottom:16px;padding:16px;border-radius:16px;border:1px solid #E8E8E8;box-shadow:20px 14px 18px 0 rgba(194,194,194,.15);background:#fff;">
+                    <table width="100%" cellpadding="5" cellspacing="2" style="font-size:10px;background:#fff;">
+                        <tbody>
+                            <tr>
+                                <td colspan="3" style="padding:12px 16px;background:#F5F2FC;border-radius:8px;border:none;font-weight:600;color:#282828;font-size:20px;">Center Booking Details</td>
+                            </tr>
+                            
+                            <tr style="white-space:nowrap;color:#4B4B4B;font-weight:400;font-size:14px;">
+                                
+                                <td>Check-InTime </td>
+                                <td>Check-OutTime </td>
+                                <td>No.Days</td>
+                               
+                            </tr>
+                            <tr style="color:#4B4B4B;font-weight:600;font-size:16px;">
+                               
+                                <td>{{ booking.CenterCheckIn | date:'dd/MM/yyyy' }} {{ booking.CheckinTime }}</td>
+                                <td>{{ booking.CenterCheckOut | date:'dd/MM/yyyy' }} {{ booking.CheckOutTime }}</td>
+                                <td>{{ center.NoOfDays || calculateDiff(booking.CenterCheckIn, booking.CenterCheckOut) }} Days</td>
+                            </tr>
+                           
+                        </tbody>
+                    </table>
+                </div>
+                <div style="margin-bottom:16px;padding:16px;border-radius:16px;border:1px solid #E8E8E8;box-shadow:20px 14px 18px 0 rgba(194,194,194,.15);background:#fff;">
+                    <table width="100%" cellpadding="5" cellspacing="2" style="font-size:10px;background:#fff;">
+                        <tbody>
+                            <tr>
+                                <td colspan="6" style="padding:12px 16px;background:#F5F2FC;border-radius:8px;border:none;font-weight:600;color:#282828;font-size:20px;">Package Details</td>
+                            </tr>
+                            <tr style="white-space:nowrap;color:#4B4B4B;font-weight:400;font-size:14px;">
+                                <td>Package Name</td>
+                                <td>Package Code</td>
+                                <td>Package Type</td>
+                                <td>Duration</td>
+                                <td>Description</td>
+                                
+                               
+                            </tr>
+                            <tr style="color:#4B4B4B;font-weight:600;font-size:16px;">
+                                <td>{{ packageDetails.PackageName || 'N/A' }}</td>
+                                <td>{{ packageDetails.PackageCode || 'N/A' }}</td>
+                                <td>{{ packageDetails.PackageType || 'N/A' }}</td>
+                                <td>{{ packageDetails.DurationDays || 'N/A' }}</td>
+                                <td>{{ packageDetails.Description || '' }}</td>
+                               
+                            </tr>
+                        </tbody>
+                    </table>
+                   
 
-<ngx-loading [show]="loading"></ngx-loading>
+                </div>
+
+                  <div style="margin-bottom:16px;padding:16px;border-radius:16px;border:1px solid #E8E8E8;box-shadow:20px 14px 18px 0 rgba(194,194,194,.15);background:#fff;">
+                    <table width="100%" cellpadding="5" cellspacing="2" style="font-size:10px;background:#fff;">
+                        <tbody>
+                            <tr>
+                                <td colspan="6" style="padding:12px 16px;background:#F5F2FC;border-radius:8px;border:none;font-weight:600;color:#282828;font-size:20px;">Lead Passenger</td>
+                            </tr>
+                            <tr style="white-space:nowrap;color:#4B4B4B;font-weight:400;font-size:14px;">
+                                <td>Passanger Name</td>
+                                <td>Pax Type</td>
+                              
+                                
+                               
+                            </tr>
+                            <tr style="color:#4B4B4B;font-weight:600;font-size:16px;">
+                                <td>{{ leadPassenger.Title }} {{ leadPassenger.FirstName }} {{ leadPassenger.LastName }}</td>
+                                <td>{{ leadPassenger.PaxType || 'N/A' }}</td>
+                                
+                               
+                            </tr>
+                        </tbody>
+                    </table>
+                   
+
+                </div>
+                <div style="margin-bottom:16px;padding:16px;border-radius:16px;border:1px solid #E8E8E8;box-shadow:20px 14px 18px 0 rgba(194,194,194,.15);background:#fff;">
+                    <table width="100%" cellpadding="5" cellspacing="2" style="font-size:15px;background:#fff;">
+                        <tbody>
+                            <tr>
+                                <td colspan="2" style="padding:12px 16px;background:#F5F2FC;border-radius:8px;border:none;font-weight:600;color:#282828;font-size:20px;">Payment Details</td>
+                            </tr>
+                            <tr>
+                                 <td>Payment Mode</td>
+                                 <td>{{ booking.PaymentMode || 'N/A' }}</td>
+                            </tr>
+                            <tr>
+                                 <td>Payment Status</td>
+                                 <td>{{ booking.PaymentStatus || 'N/A' }}</td>
+                            </tr>
+                           
+                            <tr class="total-row">
+                                <td>Total Amount</td>
+                                <td>2{{ booking.TotalAmount || 0 }} {{ booking.Currency }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+               
+            </td>
+        </tr>
+    </tbody>
+</table>

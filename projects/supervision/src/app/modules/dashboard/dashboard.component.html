@@ -270,6 +270,7 @@
         [dashboardMetricsData]="dashboardMetricsData"
         [paymentMetricsData]="paymentMetricsData"
         [moduleRevenueData]="totalGrossBookingValueModuleWiseData"
+        [averageBookingData]="packageBookingData"
         [vendorRevenueData]="vendorWiseRevenueData">
     </app-revenue-finance>
     <app-booking-operations
@@ -280,7 +281,7 @@
         [paymentCompletedData]="paymentCompletedData"
         [serviceDeliveredCancelledCountData]="serviceDeliveredCancelledCountData"
         [vendorConfirmationPending]="pendingVendorConfirmations"
-        [confirmed]="totalBooking"
+        [confirmed]="confirmedBookings"
         [voucherTicketPending]="documentsNotIssuedCount"
         [completed]="serviceDeliveredCount"
         [cancelled]="serviceCancelledCount"
@@ -292,7 +293,10 @@
         [activeVendors]="activeVendors"
         [pendingVendors]="pendingVendors"
         [vendorCategoryData]="vendorsCategoryWiseData"
-        [vendorLocationData]="vendorLocationWiseData">
+        [vendorLocationData]="vendorLocationWiseData"
+        [packageInventoryData]="packageInventoryData"
+        [packageRevenueData]="packageRevenueData"
+        [packageBookingData]="packageBookingData">
     </app-vendor-management>
     <div class="col-12">
         <div class="row p-0">

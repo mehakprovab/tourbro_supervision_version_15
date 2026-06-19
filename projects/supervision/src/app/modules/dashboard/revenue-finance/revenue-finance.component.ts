@@ -21,6 +21,7 @@ export class RevenueFinanceComponent implements OnInit, AfterViewInit, OnChanges
     @Input() dashboardMetricsData: any = {};
     @Input() paymentMetricsData: any = {};
     @Input() moduleRevenueData: any = {};
+    @Input() averageBookingData: any = {};
     @Input() vendorRevenueData: any = {};
 
     public options: EChartsOption;
@@ -87,8 +88,8 @@ export class RevenueFinanceComponent implements OnInit, AfterViewInit, OnChanges
 
     public getChart() {
         const moduleItems = this.getChartItems(
-            [this.dashboardMetricsData, this.moduleRevenueData],
-            ['moduleWiseRevenue', 'moduleRevenue', 'modules', 'totalGrossBookingValueModuleWise', 'module_wise_revenue']
+            [this.averageBookingData, this.dashboardMetricsData, this.moduleRevenueData],
+            ['moduleLevel', 'moduleWiseRevenue', 'moduleRevenue', 'modules', 'totalGrossBookingValueModuleWise', 'module_wise_revenue']
         );
         const vendorItems = this.getChartItems(
             [this.dashboardMetricsData, this.vendorRevenueData],

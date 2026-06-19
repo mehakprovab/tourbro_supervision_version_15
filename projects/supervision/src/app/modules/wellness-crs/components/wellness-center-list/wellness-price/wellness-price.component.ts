@@ -73,6 +73,7 @@ public packageId: any;
       isStayRequired: this.packageRateForm.value.isStayRequired === true ? 1 : 0,
       package_id: this.packageId,
       // duration_stay_discount: this.packageRateForm.value.isStayRequired === true ? this.packageRateForm.value.duration_stay_discount : {},
+      non_refundable_discount: this.packageRateForm.value.is_refundable === true ? this.packageRateForm.value.non_refundable_discount : 0,
       wellness_package_cancellation_policy: this.packageRateForm.value.is_refundable === true ? this.packageRateForm.value.wellness_package_cancellation_policy : [],
       
     };

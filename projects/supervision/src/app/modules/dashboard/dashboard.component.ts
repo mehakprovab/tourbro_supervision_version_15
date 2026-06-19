@@ -99,10 +99,15 @@ repeatedCustomersData: any = {};
 vendorWiseRevenueData: any = {};
 pendingVendorConfirmationsData: any = {};
 totalVendorsData: any = {};
+packageInventoryData: any = {};
+packageBookingData: any = {};
+packageRevenueData: any = {};
+confirmedBookingsData: any = {};
 
 activeVendors: any = 0;
 pendingVendors: any = 0;
 totalVendors: any = 0;
+confirmedBookings: any = 0;
     pendingVendorConfirmations: any = 0;
     refundsPending: any = 0;
     openCustomerIssues: any = 0;
@@ -210,7 +215,11 @@ totalVendors: any = 0;
     repeatedCustomers: this.safeDashboardRequest('RepeatedCustomers'),
     vendorWiseRevenue: this.safeDashboardRequest('VendorWiseRevenue'),
     pendingVendorConfirmations: this.safeDashboardRequest('PendingVendorConfirmations'),
-    totalVendors: this.safeDashboardRequest('totalVendors')
+    totalVendors: this.safeDashboardRequest('totalVendors'),
+    packageInventory: this.safeDashboardRequest('totalActiveInactivePackages'),
+    packageBooking: this.safeDashboardRequest('AverageBookingValue'),
+    packageRevenue: this.safeDashboardRequest('totalGrossBookingValuePackageWise'),
+    confirmedBookings: this.safeDashboardRequest('totalConfirmedBookings')
         }).subscribe((resp: any) => {
             this.totalBookingData = this.getDashboardData(resp.totalPeriodBooking);
             this.dashboardMetricsData = this.getDashboardData(resp.dashboardMetrics);
@@ -237,6 +246,10 @@ this.repeatedCustomersData = this.getDashboardData(resp.repeatedCustomers);
 this.vendorWiseRevenueData = this.getDashboardData(resp.vendorWiseRevenue);
 this.pendingVendorConfirmationsData = this.getDashboardData(resp.pendingVendorConfirmations);
 this.totalVendorsData = this.getDashboardData(resp.totalVendors);
+this.packageInventoryData = this.getDashboardData(resp.packageInventory);
+this.packageBookingData = this.getDashboardData(resp.packageBooking);
+this.packageRevenueData = this.getDashboardData(resp.packageRevenue);
+this.confirmedBookingsData = this.getDashboardData(resp.confirmedBookings);
             this.updateDashboardKpis();
             this.loading = false;
             this.cdr.detectChanges();
@@ -658,6 +671,20 @@ this.totalVendors = this.extractDashboardValue(
     'all',
     ['totalVendors', 'count', 'total']
 );
+this.confirmedBookings = this.extractDashboardValue(
+    this.confirmedBookingsData,
+    'all',
+    [
+        'totalConfirmedBookings',
+        'confirmedBookings',
+        'confirmedBooking',
+        'totalConfirmed',
+        'confirmed',
+        'bookingCount',
+        'count',
+        'total'
+    ]
+) || this.totalBooking;
 this.updateTotalVendorData();
 this.prepareVendorDashboardCards();
     }
@@ -709,10 +736,15 @@ this.repeatedCustomersData = {};
 this.vendorWiseRevenueData = {};
 this.pendingVendorConfirmationsData = {};
 this.totalVendorsData = {};
+this.packageInventoryData = {};
+this.packageBookingData = {};
+this.packageRevenueData = {};
+this.confirmedBookingsData = {};
 
 this.activeVendors = 0;
 this.pendingVendors = 0;
 this.totalVendors = 0;
+this.confirmedBookings = 0;
     }
 
     extractDashboardValue(source: any, selectedFilter: string, totalKeys: string[]): any {

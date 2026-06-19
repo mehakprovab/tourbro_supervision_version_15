@@ -24,6 +24,7 @@ export class BookingOperationsComponent implements OnInit, OnChanges {
     @Input() refundCompleted: any = 0;
     enquiryGenerated: any = 0;
     enquiryGeneratedFilter = 'today';
+    enquiryGeneratedData: any = {};
 
     cardFilters = {
         paymentPending: 'today',
@@ -127,41 +128,37 @@ export class BookingOperationsComponent implements OnInit, OnChanges {
 
     onEnquiryGeneratedFilterChange(value: string): void {
         this.enquiryGeneratedFilter = value;
-        this.loadEnquiryGenerated();
+        this.updateEnquiryGeneratedValue();
     }
 
     private loadEnquiryGenerated(): void {
-        const payload = this.getLeadFilterPayload(this.enquiryGeneratedFilter);
-
-        this.apiHandlerService.apiHandler('enquiryGenerated', 'post', {}, {}, payload).subscribe(
+        this.apiHandlerService.apiHandler('enquiryGenerated', 'post', {}, {}, {}).subscribe(
             (resp) => {
                 const responseData = resp && resp.data !== undefined ? resp.data : resp;
-                const value = this.getFilteredApiValue(responseData, this.enquiryGeneratedFilter, [
-                    'enquiryGenerated',
-                    'enquiry_generated',
-                    'enquiryGeneratedCount',
-                    'generatedEnquiry',
-                    'generatedEnquiries',
-                    'leadGenerated',
-                    'leadGeneratedCount',
-                    'leads',
-                    'count',
-                    'total'
-                ]);
-                this.enquiryGenerated = value !== undefined && value !== null && value !== '' ? value : 0;
+                this.enquiryGeneratedData = responseData || {};
+                this.updateEnquiryGeneratedValue();
             },
             () => {
+                this.enquiryGeneratedData = {};
                 this.enquiryGenerated = 0;
             }
         );
     }
 
-    private getLeadFilterPayload(selectedFilter: string): any {
-        if (selectedFilter === 'all') {
-            return {};
-        }
-
-        return this.getFilterPayload(selectedFilter);
+    private updateEnquiryGeneratedValue(): void {
+        const value = this.getFilteredApiValue(this.enquiryGeneratedData, this.enquiryGeneratedFilter, [
+            'enquiryGenerated',
+            'enquiry_generated',
+            'enquiryGeneratedCount',
+            'generatedEnquiry',
+            'generatedEnquiries',
+            'leadGenerated',
+            'leadGeneratedCount',
+            'leads',
+            'count',
+            'total'
+        ]);
+        this.enquiryGenerated = value !== undefined && value !== null && value !== '' ? value : 0;
     }
 
     private getCardValue(cardKey: string, source: any, totalKeys: string[], fallback: any = 0): any {

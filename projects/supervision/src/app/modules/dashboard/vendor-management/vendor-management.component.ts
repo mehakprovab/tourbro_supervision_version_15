@@ -42,16 +42,28 @@ export class VendorManagementComponent implements OnInit, OnChanges {
         this.vendorLocations = this.toChartItems(this.vendorLocationData);
         this.totalActivePackages = this.extractDashboardValue(this.packageInventoryData, [
             'totalActivePackages',
+            'total_active_packages',
+            'totalactivepackages',
             'activePackages',
+            'active_packages',
             'activePackage',
+            'activePackageCount',
             'totalActive',
-            'active'
+            'active',
+            'totalActivePackageCount',
+            'activeCount'
         ]);
         this.inactivePackages = this.extractDashboardValue(this.packageInventoryData, [
             'inactivePackages',
+            'totalInactivePackages',
+            'total_inactive_packages',
+            'inactive_packages',
             'inactivePackage',
+            'inactivePackageCount',
             'totalInactive',
-            'inactive'
+            'inactive',
+            'totalInactivePackageCount',
+            'inactiveCount'
         ]);
         this.availableInventory = this.extractDashboardValue(this.packageInventoryData, [
             'availableInventory',
@@ -60,17 +72,46 @@ export class VendorManagementComponent implements OnInit, OnChanges {
             'totalInventory'
         ]);
         this.packageRevenue = this.extractDashboardValue(this.packageRevenueData, [
+            'totalRevenue',
             'packageRevenue',
+            'packageWiseRevenue',
+            'totalGrossBookingValuePackageWise',
+            'totalGrossBookingValue',
+            'grossBookingValue',
+            'gross_booking_value',
             'revenue',
             'amount',
             'total'
         ]);
+        this.packageRevenue = this.packageRevenue || this.extractDashboardValue(this.packageBookingData, [
+            'totalRevenue',
+            'packageRevenue',
+            'packageWiseRevenue',
+            'totalGrossBookingValue',
+            'grossBookingValue',
+            'revenue',
+            'amount'
+        ]);
         this.packageBookings = this.extractDashboardValue(this.packageBookingData, [
+            'totalBookings',
             'packageBookings',
+            'packageBooking',
+            'averageBookingValue',
+            'avgBookingValue',
+            'average_booking_value',
+            'avg_booking_value',
             'bookings',
             'bookingCount',
             'count',
             'total'
+        ]);
+        this.packageBookings = this.packageBookings || this.extractDashboardValue(this.packageRevenueData, [
+            'totalBookings',
+            'packageBookings',
+            'packageBooking',
+            'bookings',
+            'bookingCount',
+            'count'
         ]);
         this.getLoadPieChart();
         this.getLoadLocationChart();

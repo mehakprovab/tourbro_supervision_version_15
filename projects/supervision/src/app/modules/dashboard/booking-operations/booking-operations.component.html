@@ -53,11 +53,9 @@
                                 <select class="b-none"
                                     [value]="enquiryGeneratedFilter"
                                     (change)="onEnquiryGeneratedFilterChange(getEventValue($event))">
-                                    <option value="today">Today</option>
-                                    <option value="yesterday">Last Day</option>
-                                    <option value="thisWeek">Last Week</option>
-                                    <option value="thisMonth">Last Month</option>
-                                    <option value="all">All</option>
+                                    <option *ngFor="let option of filterOptions" [value]="option.value">
+                                        {{ option.label }}
+                                    </option>
                                 </select>
                             </div>
 

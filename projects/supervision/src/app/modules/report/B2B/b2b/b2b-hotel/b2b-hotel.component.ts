@@ -301,16 +301,7 @@ export class B2bHotelComponent implements OnInit {
     }
 
     downloadPdf() {
-        const element = document.getElementById('b2b-hotel-report');
-        html2canvas(element).then(canvas => {
-            const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF('l', 'mm', 'a4');
-            const imgWidth = 297; // A4 width in mm
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
-            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-            pdf.save('B2B_Hotel_Report.pdf');
-            this.swalService.alert.success();
-        });
+        this.utility.downloadElementAsPdf('b2b-hotel-report', 'B2B_Hotel_Report', 'landscape');
     }
 
     getHotelApiList(): void {

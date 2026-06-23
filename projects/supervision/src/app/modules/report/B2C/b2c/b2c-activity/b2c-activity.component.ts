@@ -274,22 +274,8 @@ isExporting = false;
     this.isExporting = true;
 
     setTimeout(() => {
-        const element = document.getElementById('b2c-activity-report');
-
-        html2canvas(element).then(canvas => {
-            const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF('l', 'mm', 'a4');
-
-            const imgWidth = 297;
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-            pdf.save('b2c-ActivityReport.pdf');
-
-            this.isExporting = false;
-            this.swalService.alert.success();
-        });
-
+        this.utility.downloadElementAsPdf('b2c-activity-report', 'b2c-ActivityReport', 'landscape');
+        this.isExporting = false;
     }, 300);
 }
 

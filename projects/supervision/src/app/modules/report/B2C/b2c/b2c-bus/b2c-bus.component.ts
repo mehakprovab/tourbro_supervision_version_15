@@ -204,6 +204,10 @@ export class B2cBusComponent implements OnInit {
         }
     }
 
+    exportPdf(): void {
+        this.utility.downloadElementAsPdf('b2c-bus-report', 'B2C_Bus_Report', 'landscape');
+    }
+
     getExportValue(data: any, key: string, index: number): any {
         const itinerary = data && data.itinerary && data.itinerary.length ? data.itinerary[0] : {};
         switch (key) {

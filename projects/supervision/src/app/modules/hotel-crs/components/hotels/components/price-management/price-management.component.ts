@@ -1060,7 +1060,7 @@ if(onSubmitPrice == 'stopSale' || onSubmitPrice == 'topUpRate' ||  onSubmitPrice
                 resp.data[i + 1].status = 1;
               }
             }
-            this.priceList = resp.data;
+            this.priceList = resp.data.map(price => this.normalizePriceListItem(price));
             this.priceListData = data;
             const lastPriceList = this.priceList[this.priceList.length - 1] || [];
             const packageRateDates = lastPriceList.rate_type === "package_rate"  ? [lastPriceList.available_to] // Wrap it in an array to maintain consistency
@@ -1191,6 +1191,24 @@ getPriceListEdit(addEdit:string) {
       }
   );
 
+}
+
+normalizePriceListItem(price: any): any {
+  const firstPrice = price && price.prices && price.prices.length ? price.prices[0] : {};
+
+  return {
+    ...price,
+    meal_type: price.meal_type || firstPrice.meal_type || '',
+    room_view: price.room_view || firstPrice.room_view || '',
+    minimum_stay: price.minimum_stay || firstPrice.minimum_stay || '',
+    no_of_rooms: price.no_of_rooms || firstPrice.no_of_rooms || 0,
+    adult_price: price.adult_price || firstPrice.adult_extra_price || '',
+    child_price: price.child_price || firstPrice.child_extra_price || '',
+    infant_price: price.infant_price || firstPrice.infant_extra_price || '',
+    adult_extra_price: price.adult_extra_price || firstPrice.adult_extra_price || '',
+    child_extra_price: price.child_extra_price || firstPrice.child_extra_price || '',
+    infant_extra_price: price.infant_extra_price || firstPrice.infant_extra_price || ''
+  };
 }
 
 onDelete(pricedata){

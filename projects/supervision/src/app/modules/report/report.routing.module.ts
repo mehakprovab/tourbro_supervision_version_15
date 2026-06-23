@@ -55,6 +55,8 @@ import { BusVoucherComponent } from './B2C/b2c/b2c-bus/component/bus-voucher/bus
 import { BusInvoiceComponent } from './B2C/b2c/b2c-bus/component/bus-invoice/bus-invoice.component';
 import { GuideListComponent } from './B2C/guide-list/guide-list.component';
 import { ReviewListComponent } from './B2C/review-list/review-list.component';
+import { GuideReportComponent } from './B2C/guide-report/guide-report.component';
+import { GuideVoucherComponent } from './B2C/guide-report/guide-voucher/guide-voucher.component';
 
 
 const routes: Routes = [
@@ -110,10 +112,22 @@ const routes: Routes = [
         component: GuideListComponent,
         data: {extraParameter: 'b2c-reports-Menus'}
       },
-        {
+      {
         path: 'review-list',
         canActivate: [AuthGuard],
         component: ReviewListComponent,
+        data: {extraParameter: 'b2c-reports-Menus'}
+      },
+      {
+        path: 'guide-report',
+        canActivate: [AuthGuard],
+        component: GuideReportComponent,
+        data: {extraParameter: 'b2c-reports-Menus'}
+      },
+      {
+        path: 'guide-report/voucher',
+        canActivate: [AuthGuard],
+        component: GuideVoucherComponent,
         data: {extraParameter: 'b2c-reports-Menus'}
       },
       {

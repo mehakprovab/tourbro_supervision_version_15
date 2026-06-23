@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
 import { ThemeOptions } from '../../../../../theme-options';
 import { AuthService } from '../../../../../auth/auth.service';
 import { environment } from '../../../../../../environments/environment.prod';
@@ -17,8 +16,7 @@ imageURL: string = "./assets/images/avatars/1.jpg";
 showUser: boolean =true;
   constructor(
     public globals: ThemeOptions,
-    private authService: AuthService,
-    private router: Router
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -38,7 +36,6 @@ showUser: boolean =true;
 
   onLogout(){
     this.authService.logout();
-    this.router.navigate(['/auth/login']);
   }
 
 }

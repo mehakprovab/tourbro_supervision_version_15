@@ -238,6 +238,7 @@ export const apiMap = {
   domainLogo: `${baseUrl}/cms/service/uploadDomainLogo`,
   paymmentGateway: `${baseUrl}/ws-apis/getWsPaymentGateWays`, // get payment gateway
   paymmentGatewayRequest: `${baseUrl}/ws-apis/updateWsPaymentGateWays`, // update payment gateway request
+  getPaymentGateWays: `${B2C_URL}/webservice/paymentGateway/getPaymentGateWays`,
   updateAirlineList: `${baseUrl}/ws-apis/updateWsBlockAirline`, // update block airline list
   b2cHotelReport: `${baseUrl}/dashboard/report/b2cHotelReport`,
   b2cWellnessReport: `${baseUrl}/dashboard/report/b2cWellnessReport`,
@@ -728,6 +729,8 @@ export const apiMap = {
   guideList: `${baseUrl}/dashboard/report/guideRequestList`,
   updateGuideStatus: `${baseUrl}/dashboard/report/guideRequestStatus`,
   reviewList: `${baseUrl}/dashboard/report/guideReviewsList`,
+  guideReport: `${baseUrl}/dashboard/report/guidereport`,
+  guideVoucher: `${baseUrl}/dashboard/report/guidevoucher`,
   updateReviewStatus: `${baseUrl}/dashboard/report/guideReviewsStatus`,
   getGuideSections: `${baseUrl}/dashboard/report/listGuideMainContent`,
   addGuideSection: `${baseUrl}/dashboard/report/guideMainContent`,

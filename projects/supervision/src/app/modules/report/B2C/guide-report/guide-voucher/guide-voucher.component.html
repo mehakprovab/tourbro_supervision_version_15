@@ -1,0 +1,119 @@
+<div *ngIf="loading" class="card p-5">
+  <mat-spinner [diameter]="35" class="mx-auto"></mat-spinner>
+</div>
+
+<div *ngIf="!loading && !voucherData" class="card p-5 text-center text-muted">
+  <h4>Voucher data not found.</h4>
+</div>
+
+<div class="voucher-page" #voucher [class.pdf-export]="isExporting" *ngIf="voucherData">
+  <div class="printformClass voucher-document">
+    <div class="voucher-topbar">
+      <img class="brand-logo" src="assets/images/login-images/l-logo.png" alt="Tourbro">
+      <div class="voucher-actions no-print">
+        <button type="button" class="print-button" (click)="printVoucher()">Print</button>
+        <button type="button" class="download-button" (click)="downloadVoucher()" [disabled]="loading">
+          PDF Download
+        </button>
+      </div>
+    </div>
+
+    <div class="customer-summary">
+      <div class="customer-contact">
+        <strong>{{ customerName() || 'N/A' }}</strong>
+        <span><i class="fa fa-phone mr-2"></i>{{ detail('phone_code', 'PhoneCode') }} {{ detail('phone', 'mobile_number', 'PhoneNumber') || 'N/A' }}</span>
+        <span><i class="fa fa-envelope mr-2"></i>{{ detail('email', 'Email') || 'N/A' }}</span>
+      </div>
+      <div class="booking-reference">
+        <span>Application Ref: <strong>{{ detail('app_reference', 'AppReference', 'application_reference') || appReference }}</strong></span>
+        <span>Booked On: <strong>{{ detail('created_at', 'BookedOn', 'booked_on') | date:'dd/MM/yyyy' }}</strong></span>
+        <span>Status:
+          <strong class="badge" [ngClass]="getStatusClass(detail('status', 'booking_status'))">
+            {{ getStatusLabel(detail('status', 'booking_status')) }}
+          </strong>
+        </span>
+      </div>
+    </div>
+
+    <div class="voucher-title">Guide Voucher</div>
+
+    <div class="service-name">
+      <div>
+        <small>Service City</small>
+        <h3>{{ detail('city', 'City') || 'N/A' }}</h3>
+        <p>{{ detail('hotel', 'hotel_name', 'Hotel') || 'N/A' }}</p>
+      </div>
+      <div class="payment-state">
+        <small>Payment Status</small>
+        <strong>{{ detail('payment_status', 'paymentmode', 'PaymentStatus') || 'N/A' }}</strong>
+      </div>
+    </div>
+
+    <table class="service-summary">
+      <thead>
+        <tr>
+          <th>From Date</th>
+          <th>To Date</th>
+          <th>Language</th>
+          <th>Guide Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ detail('from_date', 'FromDate', 'travel_from_date') | date:'dd/MM/yyyy' }}</td>
+          <td>{{ detail('to_date', 'ToDate', 'travel_to_date') | date:'dd/MM/yyyy' }}</td>
+          <td>{{ detail('language', 'Language') || 'N/A' }}</td>
+          <td>
+            <span class="badge" [ngClass]="getStatusClass(detail('status', 'booking_status'))">
+              {{ getStatusLabel(detail('status', 'booking_status')) }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <section class="detail-card">
+    <h4>Traveller Details</h4>
+    <div class="detail-grid">
+      <div><label>Name</label><span>{{ customerName() || 'N/A' }}</span></div>
+      <div><label>Phone</label><span>{{ detail('phone_code', 'PhoneCode') }} {{ detail('phone', 'mobile_number', 'PhoneNumber') || 'N/A' }}</span></div>
+      <div><label>Email</label><span>{{ detail('email', 'Email') || 'N/A' }}</span></div>
+      <div><label>Language</label><span>{{ detail('language', 'Language') || 'N/A' }}</span></div>
+    </div>
+  </section>
+
+  <section class="detail-card">
+    <h4>Guide Details</h4>
+    <div class="detail-grid">
+      <div><label>Guide Name</label><span>{{ detail('guide_name', 'GuideName') || 'N/A' }}</span></div>
+      <div><label>Guide Mobile</label><span>{{ detail('guide_mobile', 'GuideMobile') || 'N/A' }}</span></div>
+      <div><label>City</label><span>{{ detail('city', 'City') || 'N/A' }}</span></div>
+      <div><label>Hotel</label><span>{{ detail('hotel', 'hotel_name', 'Hotel') || 'N/A' }}</span></div>
+    </div>
+    <div class="remarks" *ngIf="detail('message', 'notes', 'note', 'remarks')">
+      <label>Message / Notes</label>
+      <p>{{ detail('message', 'notes', 'note', 'remarks') }}</p>
+    </div>
+  </section>
+
+  <section class="detail-card payment-card">
+    <h4>Payment Details</h4>
+    <div class="payment-row">
+      <span>Payment Status</span>
+      <strong>{{ detail('payment_status', 'PaymentStatus') || 'N/A' }}</strong>
+    </div>
+    <div class="payment-row">
+      <span>Outstanding Status</span>
+      <strong>{{ detail('outpay_status') || 'N/A' }}</strong>
+    </div>
+    <div class="payment-row total-row">
+      <span>Total Amount</span>
+      <strong>{{ detail('currency', 'currency_code', 'Currency') }} {{ detail('price', 'amount', 'total_fare', 'TotalFare') || 'N/A' }}</strong>
+    </div>
+  </section>
+
+  <p class="generated-note">This is a system-generated voucher.</p>
+</div>
+
+<ngx-loading [show]="loading" [config]="{fullScreenBackdrop: true}"></ngx-loading>

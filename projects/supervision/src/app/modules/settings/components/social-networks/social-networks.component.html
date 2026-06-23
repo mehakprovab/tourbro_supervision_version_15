@@ -30,25 +30,34 @@
                             <td class="text-left text-muted">{{i+1}}.</td>
                             <td class="text-left text-capitalize"> {{data?.get('social_media_name')?.value}} </td>
                             <td class="text-left">
-                                <div class="input-group input-group-sm w-75">
-                                    <input type="text" class="form-control form-control-sm w-50" aria-label="Social Network Url"
+                                <div class="input-group input-group-sm social-url-group">
+                                    <input type="url" class="form-control form-control-sm w-50" aria-label="Social Network Url"
                                         aria-describedby="basic-addon2" formControlName="url">
                                     <div class="input-group-append">
-                                        <span class="input-group-text btn btn-primary btn-sm" id="basic-addon2" (click)="update(data)">
+                                        <button type="button" class="input-group-text btn btn-primary btn-sm" id="basic-addon2"
+                                            [disabled]="isUpdating(data)" (click)="update(data)">
                                             {{'Update'}}
-                                        </span>
+                                        </button>
                                     </div>
                                 </div>
+                                <small class="text-danger" *ngIf="data.get('url').touched && data.get('url').hasError('pattern')">
+                                    Enter a valid URL starting with http:// or https://.
+                                </small>
+                                <small class="text-danger" *ngIf="data.get('url').touched && isUrlRequired(data)">
+                                    URL is required when the network is active.
+                                </small>
                             </td>
                             <td scope="row" class="text-left">
                             <div class="form-group row">
                                 <span class="d-flex align-items-center" title="Slide for Active/Deactive">
-                                <input type="radio" [value]="'1'" id="plus{{i}}" formControlName="status" />
+                                <input type="radio" [value]="'1'" id="plus{{i}}" formControlName="status"
+                                    [disabled]="isUpdating(data)" (change)="onStatusChange(data)" />
                                 <label class="form-radio-label text-nowrap mb-0 mx-2" for="plus{{i}}">
                                     Active
                                 </label>
 
-                                <input type="radio" [value]="'0'" id="percentage{{i}}" formControlName="status" />
+                                <input type="radio" [value]="'0'" id="percentage{{i}}" formControlName="status"
+                                    [disabled]="isUpdating(data)" (change)="onStatusChange(data)" />
                                 <label class="form-radio-label text-nowrap mb-0 mx-2" for="percentage{{i}}">
                                     Deactive
                                 </label>

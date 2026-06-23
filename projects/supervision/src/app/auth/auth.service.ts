@@ -204,13 +204,13 @@ private tokenRefreshInterval: any;
       }
     private logoutUser() {
         console.log("User inactive for 30 minutes, logging out...");
+        const loginRoute = this.getLoginRoute();
         clearInterval(this.tokenRefreshInterval);
         clearTimeout(this.inactivityTimeout);
         sessionStorage.clear();
         // localStorage.clear();
         this.currentUserSubject.next(null);
-        // Redirect to login page
-        this.router.navigate(['/']);
+        this.router.navigate([loginRoute]);
     }
     onsupplierLogin(username: string): Observable<any> {
         return this.apiHandlerService.apiHandler('generateOTP', 'post', {}, {}, { email: username}).pipe(
@@ -242,12 +242,24 @@ private tokenRefreshInterval: any;
     }
 
     logout() {
-        // remove user from local storage to log user out
+        const loginRoute = this.getLoginRoute();
+        clearInterval(this.tokenRefreshInterval);
+        clearTimeout(this.inactivityTimeout);
         sessionStorage.removeItem('currentSupervisionUser');
         sessionStorage.removeItem('userPrevilige');
         localStorage.removeItem('currentDomainUser')
         this.currentUserSubject.next(null);
-        this.router.navigate(['/']);
+        this.router.navigate([loginRoute]);
+    }
+
+    private getLoginRoute(): string {
+        const currentUser: any = this.currentUserSubject.value
+            || JSON.parse(sessionStorage.getItem('currentSupervisionUser'));
+        const roleId = Number(currentUser && currentUser.auth_role_id);
+
+        return roleId === 6 || roleId === 7
+            ? '/auth/supplier-login'
+            : '/auth/login';
     }
 
     ngOnDestroy(): void {

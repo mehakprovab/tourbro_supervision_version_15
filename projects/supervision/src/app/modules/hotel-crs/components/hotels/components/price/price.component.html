@@ -91,13 +91,13 @@
                             </td> 
                         <!-- <td class="text-left">{{price.prices[0].room_view }}</td> -->
                         <td class="text-left">{{price.rate_type}}</td>
-                        <td class="text-left">{{price.prices[0].minimum_stay}}</td>
-                        <td class="text-left">{{price.prices[0].no_of_rooms}}</td>
+                        <td class="text-left">{{price.prices?.[0]?.minimum_stay || 0}}</td>
+                        <td class="text-left">{{price.prices?.[0]?.no_of_rooms || 0}}</td>
 
                         <td class="text-left">{{price.is_refundable == 1 ? 'Yes' : 'No'}}</td>
                         <!-- <td class="text-left">{{price.hotel_room_cancellation_policy[0].cancellation_type || 'N/A' }}</td> -->
             
-                        <td class="text-left">{{price.hotel_room_cancellation_policy[0].date_from || '0' }} Days &nbsp; {{price.hotel_room_cancellation_policy[0].charge || '0' }}<span *ngIf="price.hotel_room_cancellation_policy[0].charge">&nbsp;({{price.hotel_room_cancellation_policy[0].charge_type == 'Percentage' ? '%' : 'Plus' }})</span></td>
+                        <td class="text-left">{{price.hotel_room_cancellation_policy?.[0]?.date_from || '0' }} Days &nbsp; {{price.hotel_room_cancellation_policy?.[0]?.charge || '0' }}<span *ngIf="price.hotel_room_cancellation_policy?.[0]?.charge">&nbsp;({{price.hotel_room_cancellation_policy?.[0]?.charge_type == 'Percentage' ? '%' : 'Plus' }})</span></td>
                         <td class="text-left">{{price.early_bird_discount.days}} Days &nbsp;({{price.early_bird_discount.discount_value }}) %</td>
                         <td class="text-left"> {{price.duration_stay_discount.days }} Days &nbsp;({{price.duration_stay_discount.discount_value}}) %</td>
                         <td class="text-left">{{price.non_refundable_discount }}</td>

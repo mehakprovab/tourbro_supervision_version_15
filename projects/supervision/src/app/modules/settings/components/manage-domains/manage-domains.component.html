@@ -5,27 +5,45 @@
     
     <form class="" [formGroup]="regConfig" (ngSubmit)="onSubmit()">
         <div class="form-group row">
-            <label for="domainname" class="col-sm-3  col-form-label col-form-label-sm"> Domain Name <sup
+            <label for="domainName" class="col-sm-3  col-form-label col-form-label-sm"> Domain Name <sup
                     class="text-danger">*</sup> </label>
-            <input type="text" formControlName="domain_name" class="col-sm-5 form-control form-control-sm" id="domainName" placeholder="Domain Name">
+            <div class="col-sm-5 px-0">
+                <input type="text" formControlName="domain_name" class="form-control form-control-sm" id="domainName" placeholder="example.com"
+                    [class.is-invalid]="formControls.domain_name.touched && formControls.domain_name.invalid">
+                <div class="invalid-feedback" *ngIf="formControls.domain_name.hasError('required')">Domain name is required.</div>
+                <div class="invalid-feedback" *ngIf="formControls.domain_name.hasError('pattern')">Enter a valid domain, for example example.com.</div>
+            </div>
         </div>
         <div class="form-group row">
             <label for="email" class="col-sm-3  col-form-label col-form-label-sm"> Email Id </label>
-            <input type="text" formControlName="email" class="col-sm-5 form-control form-control-sm" id="email" placeholder="Email ID">
+            <div class="col-sm-5 px-0">
+                <input type="email" formControlName="email" class="form-control form-control-sm" id="email" placeholder="support@example.com"
+                    [class.is-invalid]="formControls.email.touched && formControls.email.invalid">
+                <div class="invalid-feedback">Enter a valid email address.</div>
+            </div>
         </div>
         <div class="form-group row">
             <label for="phone" class="col-sm-3  col-form-label col-form-label-sm"> Phone Number </label>
-            <input type="text" formControlName="phone" class="col-sm-5 form-control form-control-sm" id="phone" placeholder="Phone Number">
+            <div class="col-sm-5 px-0">
+                <input type="tel" formControlName="phone" class="form-control form-control-sm" id="phone" placeholder="Phone Number"
+                    [class.is-invalid]="formControls.phone.touched && formControls.phone.invalid">
+                <div class="invalid-feedback">Enter a valid phone number (7 to 20 characters).</div>
+            </div>
         </div>
         <div class="form-group row">
             <label for="address" class="col-sm-3  col-form-label col-form-label-sm"> Address <sup
                     class="text-danger">*</sup> </label>
-            <input type="text" formControlName="address" class="col-sm-5 form-control text-capitalize form-control-sm" id="address" placeholder="Address">
+            <div class="col-sm-5 px-0">
+                <textarea formControlName="address" class="form-control form-control-sm" id="address" rows="2" placeholder="Address"
+                    [class.is-invalid]="formControls.address.touched && formControls.address.invalid"></textarea>
+                <div class="invalid-feedback" *ngIf="formControls.address.hasError('required')">Address is required.</div>
+                <div class="invalid-feedback" *ngIf="formControls.address.hasError('maxlength')">Address cannot exceed 300 characters.</div>
+            </div>
         </div>
         <div class="form-group row">
             <div class="offset-sm-3">
                 <button type="submit" class="btn btn-md btn-primary"> Save </button> &nbsp;
-                <button type="reset" class="btn btn-md btn-secondary">Reset</button> 
+                <button type="reset" class="btn btn-md btn-secondary" (click)="submitted = false">Reset</button>
             </div>
         </div>
     </form>

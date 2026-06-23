@@ -1,0 +1,44 @@
+.report-actions {
+  display: flex;
+  align-items: center;
+}
+
+.nrm_input {
+  height: calc(2.5em + 0.75rem + 2px);
+  line-height: 1.7;
+}
+
+.btncontainer {
+  padding: 12px 0;
+  text-align: center;
+  width: 100%;
+}
+
+.table th,
+.table td {
+  min-width: 120px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.table th:first-child,
+.table td:first-child {
+  min-width: 65px;
+}
+
+.page-size {
+  height: 38px;
+  width: auto;
+}
+
+@media (max-width: 767px) {
+  .report-actions {
+    align-items: stretch;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .report-actions > * {
+    margin-bottom: 8px;
+  }
+}

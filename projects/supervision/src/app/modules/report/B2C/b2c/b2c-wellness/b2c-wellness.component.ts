@@ -44,6 +44,8 @@ export class B2cWellnessReportComponent implements OnInit, OnDestroy {
     showModal = false;
     currentRecord: any = [];
     paxDetails: any = {};
+    showPaymentDetails = false;
+    selectedPayment: any;
 
     displayColumn: { key: string, value: string }[] = [
         { key: 'id', value: 'Sl No.' },
@@ -253,6 +255,31 @@ export class B2cWellnessReportComponent implements OnInit, OnDestroy {
         }
     }
 
+    canPayNow(data: any): boolean {
+        const booking = this.getBooking(data);
+        const paymentStatus = String(booking.PaymentStatus || '').toLowerCase().replace('_', ' ');
+        const paymentMode = String(booking.PaymentMode || '').toLowerCase();
+        const eligibleStatuses = ['BOOKING_CONFIRMED', 'BOOKING_FAILED', 'BOOKING_VOIDED', 'BOOKING_HOLD', 'BOOKING_CANCELLED'];
+        return !!booking.AppReference &&
+            (paymentStatus === 'not paid' || paymentStatus === 'unpaid') &&
+            (!paymentMode || paymentMode === 'pay_later') &&
+            eligibleStatuses.includes(booking.Status);
+    }
+
+    openPayment(data: any): void {
+        const booking = this.getBooking(data);
+        const passenger = this.getLeadPassenger(data);
+        this.selectedPayment = {
+            appReference: booking.AppReference,
+            source: 'wellness',
+            name: this.findLeaduserDetails(data),
+            phone: booking.PhoneNumber || passenger.PhoneNumber || '',
+            email: booking.Email || passenger.Email || '',
+            amount: Number(booking.TotalAmount || 0)
+        };
+        this.showPaymentDetails = true;
+    }
+
     findLeaduserDetails(data: any) {
         const passenger = this.getLeadPassenger(data);
         const name = `${passenger.Title || ''} ${passenger.FirstName || ''} ${passenger.LastName || ''}`.trim();
@@ -298,16 +325,7 @@ export class B2cWellnessReportComponent implements OnInit, OnDestroy {
     }
 
     downloadPdf() {
-        const element = document.getElementById('b2c-wellness-report');
-        html2canvas(element).then(canvas => {
-            const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF('l', 'mm', 'a4');
-            const imgWidth = 297;
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
-            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-            pdf.save('B2C_Wellness_Report.pdf');
-            this.swalService.alert.success();
-        });
+        this.utility.downloadElementAsPdf('b2c-wellness-report', 'B2C_Wellness_Report', 'landscape');
     }
 
     calculateDiff(fromDate, toDate) {

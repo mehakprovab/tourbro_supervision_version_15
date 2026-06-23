@@ -1,0 +1,40 @@
+<div class="modal payment-modal" [style.display]="visible ? 'block' : 'none'" *ngIf="visible">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h5 class="modal-title">Payment Methods</h5>
+          <small>{{ payment?.appReference }} | Amount: {{ payment?.amount || 0 }}</small>
+        </div>
+        <button type="button" class="close" (click)="close()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="paymentForm">
+          <label class="payment-option" *ngIf="supportsGateway('barclay')">
+            <input type="radio" value="barclay" formControlName="paymentMethod">
+            <span class="payment-icon"><i class="fa fa-credit-card"></i></span>
+            <span><strong>Pay by Card</strong><small>Secure payment gateway</small></span>
+          </label>
+          <label class="payment-option" *ngIf="supportsGateway('wallet') && walletAvailable">
+            <input type="radio" value="wallet" formControlName="paymentMethod">
+            <img src="assets/images/wallet.png" alt="Wallet">
+            <span><strong>Deduct from Balance</strong><small>Use available wallet balance</small></span>
+          </label>
+          <div class="text-danger mt-2" *ngIf="submitted && paymentForm.get('paymentMethod').invalid">
+            Please select a payment method.
+          </div>
+          <p class="text-muted mb-0" *ngIf="!loading && !supportsGateway('barclay') && !(supportsGateway('wallet') && walletAvailable)">
+            No supported payment method is available.
+          </p>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="confirm()" [disabled]="loading">
+          {{ loading ? 'Please wait...' : 'Confirm' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop show" *ngIf="visible"></div>

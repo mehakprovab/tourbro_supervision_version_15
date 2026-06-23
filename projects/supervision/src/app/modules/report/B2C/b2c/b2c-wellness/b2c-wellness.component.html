@@ -131,6 +131,7 @@
                                                         (click)="onWellnessRedirect(getBooking(data).AppReference, 'invoice')">View
                                                         Invoice</button>
                                                     <button ngbDropdownItem (click)="showPaxProfile(data)">Pax Profile</button>
+                                                    <button ngbDropdownItem *ngIf="canPayNow(data)" (click)="openPayment(data)">Pay Now</button>
                                                 </div>
                                             </div>
                                         </td>
@@ -228,3 +229,5 @@
 <ngx-loading [show]="loading"
 [config]="{primaryColour: primaryColour, secondaryColour: secondaryColour, tertiaryColour: primaryColour, backdropBorderRadius: '3px',fullScreenBackdrop:true}"
 [template]="loadingTemplate"></ngx-loading>
+<app-report-payment-modal [(visible)]="showPaymentDetails" [payment]="selectedPayment"
+    (paymentSuccess)="getB2cWellnessReport()"></app-report-payment-modal>

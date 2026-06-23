@@ -381,6 +381,8 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
     core_country_id: this.hotelData['core_country_id'] || '',
     core_state_id: this.hotelData['core_state_id'] || '',
     city_name: this.hotelData['city_name'] || '',
+    city_id: this.hotelData['city_id'] || this.hotelData['core_city_id'] || '',
+    city_code: this.hotelData['city_code'] || '',
     address: this.hotelData['address'] || '',
     latitude: this.hotelData['latitude'] || '',
     longitude: this.hotelData['longitude'] || '',
@@ -667,9 +669,7 @@ initializeSearchBox() {
       return;
     }
 
-    // 🔥 EXTRA VALIDATION (MOST IMPORTANT FIX)
-    const address = place.formatted_address || '';
-    if (!address.toLowerCase().includes(this.selectedCityName.toLowerCase())) {
+    if (!this.isPlaceInSelectedCity(place)) {
       this.swalService.alert.oops(`Please select hotel only in ${this.selectedCityName}`);
       input.value = '';
       return;
@@ -692,6 +692,34 @@ initializeSearchBox() {
     this.getTimezoneOffset(location.lat(), location.lng());
   });
 }
+
+  isPlaceInSelectedCity(place: google.maps.places.PlaceResult): boolean {
+    if (!this.selectedCityName) {
+      return true;
+    }
+
+    const selectedCity = this.normalizeLocationName(this.selectedCityName);
+    const cityTypes = ['locality', 'administrative_area_level_2', 'administrative_area_level_3'];
+    const cityNames = (place.address_components || [])
+      .filter(component => component.types.some(type => cityTypes.includes(type)))
+      .reduce((names, component) => {
+        names.push(component.long_name, component.short_name);
+        return names;
+      }, [] as string[])
+      .map(name => this.normalizeLocationName(name))
+      .filter(Boolean);
+
+    if (cityNames.length) {
+      return cityNames.some(cityName => cityName === selectedCity || cityName.includes(selectedCity) || selectedCity.includes(cityName));
+    }
+
+    const address = this.normalizeLocationName(place.formatted_address || '');
+    return !address || address.includes(selectedCity);
+  }
+
+  normalizeLocationName(value: string): string {
+    return (value || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+  }
 
   getAddress(latLng: google.maps.LatLng) {
     this.geocoder = new google.maps.Geocoder();
@@ -871,6 +899,7 @@ initializeSearchBox() {
       beneficiary_name: [''],
       beneficiary_account_number: [''],
       ifsc_code: [''],
+      city_id: [''],
       city_code: [''],
       // fax_number:[''],
       // postal_code:[''],
@@ -899,6 +928,11 @@ onCityChange(event: any) {
     console.warn('City not found in list:', cityName);
     this.selectedCityName = '';
     this.selectedCityCode = '';
+    this.toCityId = '';
+    this.hotelForm.patchValue({
+      city_id: '',
+      city_code: ''
+    });
     return;
   }
 
@@ -907,6 +941,7 @@ onCityChange(event: any) {
   this.toCityId = selectedCity.id;
   this.hotelForm.patchValue({
     city_name: this.selectedCityName,
+    city_id: this.toCityId,
     city_code: this.selectedCityCode
   });
 
@@ -956,6 +991,7 @@ this.hotelForm.value.hotel_hotel_amenities =
       this.hotelForm.value.weekend_days = this.hotelForm.value.weekend_days.map(v => v.item_text).join(",");
       this.hotelForm.value.city_code = this.selectedCityCode || this.hotelForm.value.city_code || '';
       this.hotelForm.value.cityCode = this.hotelForm.value.city_code;
+      this.hotelForm.value.city_id = this.toCityId || this.hotelForm.value.city_id || '';
       this.hotelForm.value.checkInTime = this.hotelForm.value.checkInTime;
       this.hotelForm.value.checkOutTime = this.hotelForm.value.checkOutTime;
       // this.hotelForm.value.contract_expiry_date = this.hotelForm.value.contract_expiry_date ? `${(moment(this.hotelForm.value.contract_expiry_date)).format('YYYY-MM-DD')}` : null,
@@ -975,11 +1011,13 @@ this.hotelForm.value.hotel_hotel_amenities =
             data['city_code'] = this.selectedCityCode;
             data['cityCode'] = this.selectedCityCode;
             data['city_name'] = this.selectedCityName;
+            data['city_id'] = this.toCityId || data['city_id'] || '';
           }
           else {
             data['city_code'] = this.hotelOne.city_code || '';
             data['cityCode'] = this.hotelOne.cityCode || this.hotelOne.city_code || '';
             data['city_name'] = this.hotelOne.city_name || this.hotelForm.value.city_name || '';
+            data['city_id'] = this.hotelOne.city_id || this.hotelOne.core_city_id || this.hotelForm.value.city_id || '';
           }
           data = [data];
           data['topic'] = 'updateHotel';
@@ -989,11 +1027,13 @@ this.hotelForm.value.hotel_hotel_amenities =
             data['city_name'] = this.selectedCityName;
             data['city_code'] = this.selectedCityCode;
             data['cityCode'] = this.selectedCityCode;
+            data['city_id'] = this.toCityId || data['city_id'] || '';
           }
           else {
             data['city_code'] = this.hotelForm.value.city_code || '';
             data['cityCode'] = this.hotelForm.value.cityCode || this.hotelForm.value.city_code || '';
             data['city_name'] = this.hotelForm.value.city_name || '';
+            data['city_id'] = this.hotelForm.value.city_id || '';
           }
           data = [data];
           data['topic'] = 'addHotel';

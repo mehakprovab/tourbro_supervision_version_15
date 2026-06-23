@@ -2,25 +2,25 @@
     <div class="card-header mb-3">
      <h5>Domain Logo</h5>
      </div>
-  <form class="" [formGroup]="logoConfig">
+  <form [formGroup]="logoConfig" (ngSubmit)="onSubmit()">
     <div class="form-group row my-5 offset-lg-2 offset-md-2 col-md-8 col-lg-8 ">
       <label for="domain_logo" class="col-sm-3 col-form-label font-weight-bold"> Domain Logo <sup
           class="text-danger f-14"> * </sup> <br>
-        <p *ngIf="!imageSrc && submitted" class="text-danger" style="font-weight: 400;font-size: 80%;">Image
-          is required</p>
+        <p *ngIf="logoConfig.get('domain_logo').touched && logoConfig.get('domain_logo').hasError('required') && !fileError"
+          class="text-danger logo-error">Image is required.</p>
       </label>
       <div class="col-sm-9 custom-file" style="display: flex;">
         <img *ngIf="!imageSrc"class="align-baseline rounded" width="100" height="50" src="{{manageDomainData}}">
         <img *ngIf="imageSrc" height="50" width="100" class="rounded" [src]="imageSrc" alt="logo">
-        <input type="file" class="form-control-file p-2" id="logo" (change)="onFileSelected($event)" #theFile
-          accept=".png, .jpg, .jpeg" />
+        <input type="file" class="form-control-file p-2" id="domain_logo" (change)="onFileSelected($event)" #theFile
+          accept="image/png,image/jpeg" aria-describedby="logoHelp logoError" />
       </div>
-      <span class="text-danger col-sm-12 customCenter messagePadding">(Image file should be in PNG, JPG or JPEG format and no bigger than 100KB.) (200px * 200px)</span>
+      <span id="logoHelp" class="text-danger col-sm-12 customCenter messagePadding">Image must be PNG, JPG, or JPEG, no larger than 100 KB, and exactly 200px by 200px.</span>
+      <span id="logoError" class="text-danger col-sm-12 customCenter" *ngIf="fileError">{{ fileError }}</span>
     </div>
     <div class="form-group row mb-n2">
       <div class="col-sm-12 customCenter">
-        <button type="submit" class="btn btn-sm btn-primary mr-1" [disabled]="!logoConfig.valid"
-          (click)="onSubmit()">Submit</button>
+        <button type="submit" class="btn btn-sm btn-primary mr-1" [disabled]="isValidatingImage">Submit</button>
       </div>
     </div>
   </form>

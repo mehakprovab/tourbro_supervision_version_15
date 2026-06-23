@@ -175,6 +175,7 @@
                             <button ngbDropdownItem (click)="onHeliRedirect(data.app_reference, 'voucher')">View Voucher</button>
                             <button ngbDropdownItem (click)="onHeliRedirect(data.app_reference, 'invoice')">View Invoice</button>
                             <button ngbDropdownItem (click)="showPaxProfile(data)">Pax Profile</button>
+                            <button ngbDropdownItem *ngIf="canPayNow(data)" (click)="openPayment(data)">Pay Now</button>
                           </div>
                         </div>
                       </td>
@@ -239,6 +240,8 @@
     </div>
   </div>
 </div>
+<app-report-payment-modal [(visible)]="showPaymentDetails" [payment]="selectedPayment"
+  (paymentSuccess)="getB2cHeliReport()"></app-report-payment-modal>
 
 <div class="modal" id="paxProfile" [style.display]="showModal ? 'block' : 'none'">
   <div class="modal-dialog modal-lg">

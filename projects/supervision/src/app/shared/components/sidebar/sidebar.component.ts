@@ -112,12 +112,32 @@ export class SidebarComponent implements OnInit {
       this.loggedInUser.suppliers
     );
     if (Array.isArray(suppliers)) {
-      return suppliers.map((supplier) => String(supplier).trim().toLowerCase());
+      return suppliers.map((supplier) => this.normalizeSupplierKey(supplier));
     }
     if (typeof suppliers === 'string') {
-      return suppliers.split(',').map((supplier) => supplier.trim().toLowerCase());
+      try {
+        const parsedSuppliers = JSON.parse(suppliers);
+        if (Array.isArray(parsedSuppliers)) {
+          return parsedSuppliers.map((supplier) => this.normalizeSupplierKey(supplier));
+        }
+      } catch (_) {
+        // Older responses store the selected services as comma-separated text.
+      }
+      return suppliers.split(',').map((supplier) => this.normalizeSupplierKey(supplier));
     }
     return [];
+  }
+
+  private normalizeSupplierKey(supplier: any): string {
+    const key = String(supplier || '').trim().toLowerCase();
+    const aliases = {
+      cab: 'transfer',
+      cabs: 'transfer',
+      'travel-helicopter': 'heli',
+      'travel-heli': 'heli'
+    };
+
+    return aliases[key] || key;
   }
 
   isSupplierPanelUser(): boolean {
@@ -128,7 +148,7 @@ export class SidebarComponent implements OnInit {
     if (!this.isSupplierPanelUser()) {
       return true;
     }
-    return this.selectedSupplierKeys.includes(supplier.toLowerCase());
+    return this.selectedSupplierKeys.includes(this.normalizeSupplierKey(supplier));
   }
 
   hasAnySupplier(suppliers: string[]): boolean {
@@ -136,6 +156,29 @@ export class SidebarComponent implements OnInit {
       return true;
     }
     return suppliers.some((supplier) => this.hasSupplier(supplier));
+  }
+
+  shouldShowSupplierModule(supplier: string, currentVisibility: boolean): boolean {
+    return this.isSupplierPanelUser() ? this.hasSupplier(supplier) : currentVisibility;
+  }
+
+  hasAnyReportMenu(): boolean {
+    if (!this.isSupplierPanelUser()) {
+      return this.isMenuExists('B2C Hotel Report');
+    }
+
+    const supplierTypes = String(this.loggedInUser && this.loggedInUser.supplier_type || '')
+      .split(',')
+      .map((type) => type.trim().toUpperCase());
+
+    return supplierTypes.includes('B2C') && this.hasAnySupplier([
+      'stays',
+      'experiences',
+      'yatra-packages',
+      'cabs',
+      'wellness-retreat',
+      'travel-heli'
+    ]);
   }
 
   private hasNavigationData(): boolean {
@@ -210,7 +253,7 @@ export class SidebarComponent implements OnInit {
       return supplierTypes.includes('B2C') && this.hasSupplier('transfer');
     }
     if (menu == 'Hotel CRS') {
-      return this.showHotelCrs;
+      return this.hasSupplier('stays');
     }
     if (menu == 'Tour CRS') {
       return this.showTourCrs;
@@ -219,7 +262,7 @@ export class SidebarComponent implements OnInit {
       return this.showActivityCrs;
     }
     if (menu == 'Transfer CRS') {
-      return this.showTransferCrs;
+      return this.hasSupplier('transfer');
     }
     if (menu == 'Wellness CRS') {
       return this.showWellnessCrs;
@@ -253,7 +296,7 @@ export class SidebarComponent implements OnInit {
       return this.showB2BReports;
     }
     if (parent_key == this.HOTELCRS) {
-      return this.showHotelCrs;
+      return this.hasSupplier('stays');
     }
     if (parent_key == this.TOUR_CRS) {
       return this.showTourCrs;
@@ -262,10 +305,19 @@ export class SidebarComponent implements OnInit {
       return this.showActivityCrs;
     }
     if (parent_key == this.TRANSFER_CRS || parent_key == this.DMCTRANSFERCRS) {
-      return this.showTransferCrs;
+      return this.hasSupplier('transfer');
     }
     if (parent_key == this.WELLNESS_CRS) {
-      return this.showWellnessCrs || this.showHeliCrs;
+      const heliMenus = [
+        'Heli CRS List',
+        'Helipads',
+        'Heli Routes',
+        'Heli Schedules',
+        'Heli Pricing',
+        'Terms & Conditions'
+      ];
+
+      return heliMenus.includes(menu) ? this.hasSupplier('heli') : this.showWellnessCrs;
     }
     return false;
   }
@@ -301,8 +353,8 @@ export class SidebarComponent implements OnInit {
       return true;
     }
 
-    if (this.isSupplierPanelUser() && !this.showHeliCrs) {
-      return false;
+    if (this.isSupplierPanelUser()) {
+      return this.hasSupplier('heli');
     }
 
     const heliMenus = [
@@ -319,7 +371,8 @@ export class SidebarComponent implements OnInit {
 
 
   ngOnInit() {
-    this.loggedInUser = JSON.parse(sessionStorage.getItem('currentSupervisionUser'));
+    const storedUser = JSON.parse(sessionStorage.getItem('currentSupervisionUser'));
+    this.loggedInUser = storedUser && storedUser.data ? storedUser.data : storedUser;
     this.domainUser = JSON.parse(localStorage.getItem('currentDomainUser'));
     const currentDomainUser = sessionStorage.getItem('currentSupervisionUser');
 console.log(this.loggedInUser)

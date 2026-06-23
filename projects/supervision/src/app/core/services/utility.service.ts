@@ -232,17 +232,81 @@ export class UtilityService {
 
         const pdfOrientation = orientation === 'portrait' || orientation === 'p' ? 'p' : 'l';
         const pageWidth = pdfOrientation === 'p' ? 210 : 297;
+        const pageHeight = pdfOrientation === 'p' ? 297 : 210;
+        const margin = 5;
+        const printableWidth = pageWidth - (margin * 2);
+        const printableHeight = pageHeight - (margin * 2);
         window['html2canvas'] = html2canvas;
 
         html2canvas(element, {
             allowTaint: true,
-            useCORS: true
+            useCORS: true,
+            backgroundColor: '#ffffff',
+            width: element.scrollWidth,
+            height: element.scrollHeight,
+            windowWidth: element.scrollWidth,
+            windowHeight: element.scrollHeight,
+            onclone: (clonedDocument: Document) => {
+                const clonedElement = clonedDocument.getElementById(elementId);
+                if (!clonedElement) {
+                    return;
+                }
+
+                // Reports should contain data only, never UI controls.
+                clonedElement.querySelectorAll('button, [id="download"], .pdf-exclude')
+                    .forEach(control => control.remove());
+
+                clonedElement.style.overflow = 'visible';
+                clonedElement.style.maxWidth = 'none';
+                clonedElement.querySelectorAll('.wrapper1, .wrapper2, .div1, .div2, .table-responsive, .table-respons, .invisible-scrollbar')
+                    .forEach((wrapper: HTMLElement) => {
+                        wrapper.style.overflow = 'visible';
+                        wrapper.style.maxWidth = 'none';
+                        wrapper.style.width = 'max-content';
+                        wrapper.style.height = 'auto';
+                    });
+
+                const tables = clonedElement.matches('table')
+                    ? [clonedElement as HTMLTableElement]
+                    : Array.from(clonedElement.querySelectorAll('table'));
+
+                tables.forEach((table: HTMLTableElement) => {
+                    table.style.width = 'max-content';
+                    table.style.maxWidth = 'none';
+                    const headers = Array.from(table.querySelectorAll('thead th'));
+                    const actionColumns = headers
+                        .map((header, index) => ({ header, index }))
+                        .filter(({ header }) => /^(action|actions|download)$/i.test((header.textContent || '').trim()))
+                        .map(({ index }) => index)
+                        .reverse();
+
+                    actionColumns.forEach(index => {
+                        table.querySelectorAll('tr').forEach(row => {
+                            const cell = row.children.item(index);
+                            if (cell) {
+                                cell.remove();
+                            }
+                        });
+                    });
+                });
+            }
         }).then(canvas => {
             const imgData = canvas.toDataURL('image/png');
-            const imgHeight = (canvas.height * pageWidth) / canvas.width;
+            const imgHeight = (canvas.height * printableWidth) / canvas.width;
             const doc = new jsPDF(pdfOrientation, 'mm', 'a4');
+            let heightRemaining = imgHeight;
+            let position = margin;
 
-            doc.addImage(imgData, 'PNG', 0, 0, pageWidth, imgHeight);
+            doc.addImage(imgData, 'PNG', margin, position, printableWidth, imgHeight);
+            heightRemaining -= printableHeight;
+
+            while (heightRemaining > 0) {
+                position = margin - (imgHeight - heightRemaining);
+                doc.addPage();
+                doc.addImage(imgData, 'PNG', margin, position, printableWidth, imgHeight);
+                heightRemaining -= printableHeight;
+            }
+
             doc.save(`${fileName}.pdf`);
             this.swalService.alert.success();
         }).catch(() => {

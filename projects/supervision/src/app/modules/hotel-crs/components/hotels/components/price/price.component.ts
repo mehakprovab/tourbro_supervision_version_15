@@ -1150,7 +1150,7 @@ getPriceList(){
         resp => {
             if (resp.statusCode == 200) {
                 this.noData = false;
-                this.priceList = resp.data;
+                this.priceList = resp.data.map(price => this.normalizeRoomPriceItem(price));
                 // this.showRoomDetail.emit({data:this.priceList})
             }
             else if (resp.statusCode == 404) {
@@ -1158,6 +1158,31 @@ getPriceList(){
             }
         }
     ) 
+}
+
+normalizeRoomPriceItem(price: any): any {
+  const prices = price && Array.isArray(price.prices) && price.prices.length
+    ? price.prices
+    : [{
+      meal_type: price.meal_type || '',
+      room_view: price.room_view || '',
+      minimum_stay: price.minimum_stay || 0,
+      no_of_rooms: price.no_of_rooms || 0
+    }];
+
+  const hotelRoomCancellationPolicy = price && Array.isArray(price.hotel_room_cancellation_policy) && price.hotel_room_cancellation_policy.length
+    ? price.hotel_room_cancellation_policy
+    : [{
+      date_from: 0,
+      charge: 0,
+      charge_type: ''
+    }];
+
+  return {
+    ...price,
+    prices,
+    hotel_room_cancellation_policy: hotelRoomCancellationPolicy
+  };
 }
     
 goToRoomLists(){

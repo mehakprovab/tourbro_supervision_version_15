@@ -1,0 +1,157 @@
+<div class="card adminInner">
+  <div class="card-header mb-3">
+    <h5>Guide Report</h5>
+  </div>
+
+  <form [formGroup]="regConfig" (ngSubmit)="onSearchSubmit()">
+    <div class="form-row">
+      <div class="col-md-4 pr-md-0">
+        <div class="form-group">
+          <label for="guideAppReference">Application Reference</label>
+          <input formControlName="app_reference" type="text" class="form-control form-control-sm nrm_input"
+            placeholder="Application Reference" id="guideAppReference">
+        </div>
+      </div>
+      <div class="col-md-4 pr-md-0">
+        <div class="form-group">
+          <label for="guidePhone">Phone</label>
+          <input formControlName="phone_number" type="text" class="form-control form-control-sm nrm_input"
+            placeholder="Phone" id="guidePhone" (keypress)="numberOnly($event)"
+            [class.is-invalid]="regConfig.get('phone_number').touched && regConfig.get('phone_number').invalid">
+          <div class="invalid-feedback">Enter a valid phone number.</div>
+        </div>
+      </div>
+      <div class="col-md-4 pr-md-0">
+        <div class="form-group">
+          <label for="guideEmail">Email</label>
+          <input formControlName="email" type="email" class="form-control form-control-sm nrm_input"
+            placeholder="Email" id="guideEmail"
+            [class.is-invalid]="regConfig.get('email').touched && regConfig.get('email').invalid">
+          <div class="invalid-feedback">Enter a valid email address.</div>
+        </div>
+      </div>
+      <div class="col-md-4 pr-md-0">
+        <div class="form-group">
+          <label for="guideStatus">Status</label>
+          <select formControlName="status" id="guideStatus" class="form-control form-control-sm nrm_input">
+            <option value="ALL">ALL</option>
+            <option value="1">ACCEPTED</option>
+            <option value="2">REJECTED</option>
+            <option value="3">PENDING</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-4 pr-md-0">
+        <div class="form-group">
+          <label for="guideFromDate">Booked From Date</label>
+          <input formControlName="booked_from_date" type="text" id="guideFromDate" autocomplete="off"
+            class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy"
+            bsDatepicker [bsConfig]="bsDateConf" onkeydown="return false" [maxDate]="maxDate"
+            [class.is-invalid]="regConfig.get('booked_from_date').touched && regConfig.get('booked_from_date').invalid">
+          <div class="invalid-feedback">From date is required.</div>
+        </div>
+      </div>
+      <div class="col-md-4 pr-md-0">
+        <div class="form-group">
+          <label for="guideToDate">Booked To Date</label>
+          <input formControlName="booked_to_date" type="text" id="guideToDate" autocomplete="off"
+            class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy"
+            bsDatepicker [bsConfig]="bsDateConf" onkeydown="return false" [maxDate]="maxDate"
+            [class.is-invalid]="regConfig.get('booked_to_date').touched && regConfig.get('booked_to_date').invalid">
+          <div class="invalid-feedback">To date is required.</div>
+        </div>
+      </div>
+    </div>
+    <div class="btncontainer">
+      <button type="submit" class="btn btn-primary">Search</button>&nbsp;
+      <button type="button" class="btn btn-secondary" (click)="onReset()">Reset</button>
+    </div>
+  </form>
+</div>
+
+<div class="card adminInner mt-4">
+
+  <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+    <p class="mb-2">Total {{ reportData.length }} Bookings</p>
+    <div class="report-actions">
+      <button type="button" class="btnStyle mr-2" (click)="exportPdf()" [disabled]="!reportData.length">PDF</button>
+      <button type="button" class="btnStyle mr-2" (click)="exportExcel()" [disabled]="!reportData.length">Export to Excel</button>
+      <div class="form-group mb-0 has-search d-inline-block">
+        <span class="fa fa-search form-control-feedback"></span>
+        <input class="form-control" type="search" [(ngModel)]="searchText" placeholder="Search report" autocomplete="off">
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table id="guide-report-table" class="table table-borderless table-striped table-hover">
+      <thead>
+        <tr>
+          <th>S No.</th>
+          <th>Action</th>
+          <th>Application Reference</th>
+          <th>Status</th>
+          <th>Payment Status</th>
+          <th>Customer Name</th>
+          <th>City</th>
+          <th>Hotel</th>
+          <th>From Date</th>
+          <th>To Date</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Language</th>
+          <th>Guide Name</th>
+          <th>Guide Mobile</th>
+          <th>Price</th>
+          <th>Reported At</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="loading">
+          <td colspan="17"><mat-spinner [diameter]="30" class="mx-auto"></mat-spinner></td>
+        </tr>
+        <tr *ngIf="!loading && !(reportData | filter:searchText).length">
+          <td colspan="17"><h4 class="text-muted text-center">No Data Found!</h4></td>
+        </tr>
+        <tr *ngFor="let row of reportData | filter:searchText | slice:(page - 1) * pageSize:(page - 1) * pageSize + pageSize; let i = index">
+          <td>{{ (page - 1) * pageSize + i + 1 }}.</td>
+          <td>
+            <div ngbDropdown container="body">
+              <button type="button" class="btnStyle text-nowrap" ngbDropdownToggle>Action</button>
+              <div ngbDropdownMenu>
+                <button ngbDropdownItem (click)="viewVoucher(row)" [disabled]="!hasVoucher(row)">View Voucher</button>
+                <button ngbDropdownItem *ngIf="canPayNow(row)" (click)="openPayment(row)">Pay Now</button>
+              </div>
+            </div>
+          </td>
+          <td>{{ value(row, 'app_reference', 'AppReference', 'application_reference') || 'N/A' }}</td>
+          <td><span class="badge" [ngClass]="getStatusClass(row.status)">{{ getStatusLabel(row.status) }}</span></td>
+          <td>{{ value(row, 'payment_status', 'PaymentStatus') || 'N/A' }}</td>
+          <td>{{ customerName(row) || 'N/A' }}</td>
+          <td>{{ value(row, 'city', 'City') || 'N/A' }}</td>
+          <td>{{ value(row, 'hotel', 'hotel_name', 'Hotel') || 'N/A' }}</td>
+          <td>{{ value(row, 'from_date', 'FromDate', 'travel_from_date') | date:'dd-MMM-yyyy' }}</td>
+          <td>{{ value(row, 'to_date', 'ToDate', 'travel_to_date') | date:'dd-MMM-yyyy' }}</td>
+          <td>{{ phone(row) || 'N/A' }}</td>
+          <td>{{ value(row, 'email', 'Email') || 'N/A' }}</td>
+          <td>{{ value(row, 'language', 'Language') || 'N/A' }}</td>
+          <td>{{ value(row, 'guide_name', 'GuideName') || 'N/A' }}</td>
+          <td>{{ value(row, 'guide_mobile', 'GuideMobile') || 'N/A' }}</td>
+          <td>{{ value(row, 'currency', 'currency_code') }} {{ value(row, 'price', 'amount', 'total_fare', 'TotalFare') || 'N/A' }}</td>
+          <td>{{ value(row, 'created_at', 'BookedOn', 'booked_on') | date:'dd-MMM-yyyy, h:mm a' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card-footer d-flex justify-content-between" *ngIf="reportData.length">
+    <ngb-pagination [collectionSize]="(reportData | filter:searchText).length" [(page)]="page" [pageSize]="pageSize" [maxSize]="8" [boundaryLinks]="true"></ngb-pagination>
+    <select class="custom-select page-size" [(ngModel)]="pageSize" (ngModelChange)="page = 1">
+      <option [ngValue]="25">25 items per page</option>
+      <option [ngValue]="50">50 items per page</option>
+      <option [ngValue]="100">100 items per page</option>
+    </select>
+  </div>
+</div>
+<app-report-payment-modal [(visible)]="showPaymentDetails" [payment]="selectedPayment"
+  (paymentSuccess)="getGuideReport()"></app-report-payment-modal>

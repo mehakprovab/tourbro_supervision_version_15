@@ -41,15 +41,18 @@ export class ManageDomainsComponent implements OnInit, OnDestroy {
                 untilDestroyed(this),
             )
             .subscribe(resp => {
-                if (resp.statusCode == 200 || resp.statusCode == 201) {
-                    this.manageDomainData = resp.data[0];
-                    const { domain_name, email, address, phone } = this.manageDomainData;
+                if (this.isSuccessfulResponse(resp)) {
+                    const responseData = resp.data || resp.Data;
+                    this.manageDomainData = Array.isArray(responseData) ? responseData[0] : responseData;
+                    if (!this.manageDomainData) {
+                        return;
+                    }
                     this.regConfig.patchValue(
                         {
-                            domain_name,
-                            email,
-                            address,
-                            phone,
+                            domain_name: this.manageDomainData.domain_name || '',
+                            email: this.manageDomainData.email || this.manageDomainData.domain_email || '',
+                            address: this.manageDomainData.address || this.manageDomainData.domain_address || '',
+                            phone: this.manageDomainData.phone || this.manageDomainData.domain_phone || '',
                         });
                 }
 
@@ -59,6 +62,7 @@ export class ManageDomainsComponent implements OnInit, OnDestroy {
     onSubmit() {
         this.submitted = true;
         if (this.regConfig.invalid) {
+            this.regConfig.markAllAsTouched();
             return;
         }
         let data = Object.assign({}, {
@@ -75,7 +79,7 @@ export class ManageDomainsComponent implements OnInit, OnDestroy {
                 untilDestroyed(this),
             )
             .subscribe(resp => {
-                if (resp.statusCode == 200 || resp.statusCode == 201) {
+                if (this.isSuccessfulResponse(resp)) {
                     this.swalService.alert.update();
                 }
                 else {
@@ -86,11 +90,24 @@ export class ManageDomainsComponent implements OnInit, OnDestroy {
 
     createForm(): void {
         this.regConfig = this.fb.group({
-            domain_name: new FormControl('', [Validators.required, Validators.maxLength(120)]),
+            domain_name: new FormControl('', [Validators.required, Validators.maxLength(120), Validators.pattern(/^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}$/i)]),
             email: new FormControl('', [Validators.email, Validators.maxLength(120)]),
-            phone: new FormControl('', [Validators.minLength(10), Validators.maxLength(120), Validators.maxLength(13), Validators.pattern(this.util.regExp.phone)]),
+            phone: new FormControl('', [Validators.minLength(7), Validators.maxLength(20), Validators.pattern(this.util.regExp.phone)]),
             address: new FormControl('', [Validators.required, Validators.maxLength(300)]),
         })
+    }
+
+    get formControls() {
+        return this.regConfig.controls;
+    }
+
+    private isSuccessfulResponse(resp: any): boolean {
+        return !!resp && (
+            resp.Status === true ||
+            resp.status === true ||
+            resp.statusCode === 200 ||
+            resp.statusCode === 201
+        );
     }
 
     getCountries() {

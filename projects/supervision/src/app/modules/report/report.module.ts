@@ -68,6 +68,9 @@ import { BusInvoiceComponent } from './B2C/b2c/b2c-bus/component/bus-invoice/bus
 import { GuideListComponent } from './B2C/guide-list/guide-list.component';
 import { ReviewListComponent } from './B2C/review-list/review-list.component';
 import { NgxLoadingModule } from 'ngx-loading';
+import { GuideReportComponent } from './B2C/guide-report/guide-report.component';
+import { GuideVoucherComponent } from './B2C/guide-report/guide-voucher/guide-voucher.component';
+import { ReportPaymentModalComponent } from './components/report-payment-modal/report-payment-modal.component';
 
 
 @NgModule({
@@ -128,7 +131,10 @@ import { NgxLoadingModule } from 'ngx-loading';
         BusVoucherComponent,
         BusInvoiceComponent,
         GuideListComponent,
-        ReviewListComponent
+        ReviewListComponent,
+        GuideReportComponent,
+        GuideVoucherComponent,
+        ReportPaymentModalComponent
     ],
     imports: [
         CommonModule,

@@ -337,11 +337,13 @@ onStateChange(event: Event): void {
     input.value = input.value.toLowerCase();
   }
 
-openStaticPage(pageType: string) {
+openStaticPage(pageType: string): void {
     sessionStorage.setItem('static_title', pageType);
-    
-    // Navigate and preserve hash
-    this.router.navigateByUrl('/auth/static-content');
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree(['/auth/static-content'])
+    );
+
+    window.open(`#${url}`, '_blank', 'noopener,noreferrer');
 }
 
 onRegister(form: FormGroup) {
@@ -441,7 +443,7 @@ onRegister(form: FormGroup) {
           text: res.Message || res.message || 'Registration submitted successfully',
           showConfirmButton: true
         }).then(() => {
-          this.router.navigate(['/auth/login']);
+          this.router.navigate(['/auth/supplier-login']);
         });
       } else {
         Swal.fire({

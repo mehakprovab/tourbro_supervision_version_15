@@ -22,6 +22,8 @@ export class SocialNetworksComponent implements OnInit, OnDestroy {
     status: any;
     regConfig: FormGroup;
     noData:boolean=true ;
+    updatingIds = new Set<number>();
+    private readonly urlPattern = /^https?:\/\/[\w.-]+(?:\.[\w.-]+)+(?:[\/?#][^\s]*)?$/i;
 
     constructor(
         private apiHandlerService: ApiHandlerService,
@@ -38,17 +40,21 @@ export class SocialNetworksComponent implements OnInit, OnDestroy {
             )
             .subscribe(resp => {
                 log.debug(resp);
-                if (resp.Status) {
-                    this.socialNetworkData = resp.data;
+                const records = Array.isArray(resp && resp.data)
+                    ? resp.data
+                    : (Array.isArray(resp && resp.Data) ? resp.Data : []);
+                if (this.isSuccessfulResponse(resp) && records.length) {
+                    this.socialNetworkData = records;
                     this.noData=false;
                     let items = this.regConfig.get('items') as FormArray;
-                    for (let val of resp.data) {
+                    items.clear();
+                    for (let val of records) {
                         items.push(this.fb.group({
                             id: new FormControl(val.id),
                             social_media_name: new FormControl(val.social_media_name, [Validators.required]),
-                            url: new FormControl(val.url, [Validators.required]),
+                            url: new FormControl(val.url || '', [Validators.pattern(this.urlPattern)]),
                             created_by_id: new FormControl(val.created_by_id),
-                            status: new FormControl(val.status),
+                            status: new FormControl(String(val.status), [Validators.required]),
                         }));
                     }
                 }
@@ -62,19 +68,26 @@ export class SocialNetworksComponent implements OnInit, OnDestroy {
             });
     }
 
-    update(doc): void {
+    update(doc: FormGroup): void {
+        doc.get('url').markAsTouched();
+        doc.get('status').markAsTouched();
+        if (doc.invalid || (doc.value.status === '1' && !doc.value.url)) {
+            return;
+        }
+
         const data = {
             id: doc.value.id,
-            url: doc.value.url,
-            status: doc.value.status
+            url: (doc.value.url || '').trim(),
+            status: String(doc.value.status)
         }
+        this.updatingIds.add(data.id);
         this.apiHandlerService.apiHandler('updateManageSocialLink', 'post', {}, {}, data)
         .pipe(
-            finalize( () => this.isUpdated = true),
+            finalize(() => this.updatingIds.delete(data.id)),
             untilDestroyed(this),
         )
         .subscribe( resp => {
-            if(resp.statusCode == 200 || resp.statusCode == 201){
+            if (this.isSuccessfulResponse(resp)) {
                 this.isUpdated = true;
                 this.swalService.alert.update();
             } else {
@@ -85,10 +98,31 @@ export class SocialNetworksComponent implements OnInit, OnDestroy {
         });
     }
 
+    onStatusChange(doc: FormGroup): void {
+        this.update(doc);
+    }
+
+    isUpdating(doc: FormGroup): boolean {
+        return this.updatingIds.has(doc.get('id').value);
+    }
+
+    private isSuccessfulResponse(resp: any): boolean {
+        return !!resp && (
+            resp.Status === true ||
+            resp.status === true ||
+            resp.statusCode === 200 ||
+            resp.statusCode === 201
+        );
+    }
+
     createForm() {
         this.regConfig = this.fb.group({
             items: new FormArray([])
         });
+    }
+
+    isUrlRequired(doc: FormGroup): boolean {
+        return doc.get('status').value === '1' && !doc.get('url').value;
     }
 
     ngOnDestroy() {

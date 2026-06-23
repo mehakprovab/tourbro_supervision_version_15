@@ -134,7 +134,7 @@
 
 
                       <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" activeIds="">
-                        <ngb-panel id="UserManagement" *ngIf="isMenuExists('B2C Hotel Report')">
+                        <ngb-panel id="supplierReports" *ngIf="hasAnyReportMenu()">
                           <ng-template ngbPanelHeader>
                             <button ngbPanelToggle routerLinkActive="active-item"
                               [routerLinkActiveOptions]="{exact: true}" class="vsm-link">
@@ -144,6 +144,14 @@
                             </button>
                           </ng-template>
                           <ng-template ngbPanelContent>
+                            <div class="vsm-item">
+                              <a routerLinkActive="active-item" routerLink='/report/guide-report' class="vsm-link pl-10">
+                                <span class="vsm-title pl-10">
+                                  <i class="fa fa-id-card-o"></i>
+                                  Guide Report
+                                </span>
+                              </a>
+                            </div>
                             <!-- <div class="vsm-item" *ngIf="isSubMenuExists('B2C Flight Report',REPORTS)">
                             <a routerLinkActive="active-item" routerLink='/report/b2c-flight' class="vsm-link pl-10">
                               <span class="vsm-title pl-10">
@@ -550,7 +558,8 @@
                     <div class="vsm-list">
                       <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" activeIds="">
 
-                        <ngb-panel id="hotelCrsMenus" *ngIf="showHotelCrs && isMenuExists('Hotel CRS')">
+                        <ngb-panel id="hotelCrsMenus"
+                          *ngIf="shouldShowSupplierModule('stays', showHotelCrs) && isMenuExists('Hotel CRS')">
                           <ng-template ngbPanelHeader>
                             <button ngbPanelToggle class="vsm-link pl-2">
                               <i class="fa fa-bed pr-2 fs-19"></i>
@@ -568,43 +577,37 @@
                                       Stay List
                                     </span></a>
                                 </div>
-                                <div class="vsm-item"
-                                  *ngIf="isSubMenuExists('Hotel Type',HOTELCRS) && loggedInUser['auth_role_id'] != 6">
+                                <div class="vsm-item" *ngIf="isSubMenuExists('Hotel Type',HOTELCRS)">
                                   <a routerLinkActive="active-item" [routerLink]="['/hotels/hotel-types']"
                                     class="vsm-link pl-1"><span class="vsm-title pl-10">
                                       Stay Type
                                     </span></a>
                                 </div>
-                                <div class="vsm-item"
-                                  *ngIf="isSubMenuExists('Room Type',HOTELCRS) && loggedInUser['auth_role_id'] != 6">
+                                <div class="vsm-item" *ngIf="isSubMenuExists('Room Type',HOTELCRS)">
                                   <a routerLinkActive="active-item" [routerLink]="['/hotels/room-types']"
                                     class="vsm-link pl-1"><span class="vsm-title pl-10">
                                       Room Type
                                     </span></a>
                                 </div>
-                                <div class="vsm-item"
-                                  *ngIf="isSubMenuExists('Hotel Amenities',HOTELCRS) && loggedInUser['auth_role_id'] != 6">
+                                <div class="vsm-item" *ngIf="isSubMenuExists('Hotel Amenities',HOTELCRS)">
                                   <a routerLinkActive="active-item" [routerLink]="['/hotels/hotel-amenities']"
                                     class="vsm-link pl-1"><span class="vsm-title pl-10">
                                       Stay Amenities
                                     </span></a>
                                 </div>
-                                <div class="vsm-item"
-                                  *ngIf="isSubMenuExists('Room Amenitiess',HOTELCRS) && loggedInUser['auth_role_id'] != 6">
+                                <div class="vsm-item" *ngIf="isSubMenuExists('Room Amenitiess',HOTELCRS)">
                                   <a routerLinkActive="active-item" [routerLink]="['/hotels/room-amenities']"
                                     class="vsm-link pl-1"><span class="vsm-title pl-10">
                                       Room Amenities
                                     </span></a>
                                 </div>
-                                <div class="vsm-item"
-                                  *ngIf="isSubMenuExists('Meals',HOTELCRS) && loggedInUser['auth_role_id'] != 6">
+                                <div class="vsm-item" *ngIf="isSubMenuExists('Meals',HOTELCRS)">
                                   <a routerLinkActive="active-item" [routerLink]="['/hotels/hotel-meals']"
                                     class="vsm-link pl-1"><span class="vsm-title pl-10">
                                       Meals
                                     </span></a>
                                 </div>
-                                <div class="vsm-item"
-                                  *ngIf="isSubMenuExists('Room Views',HOTELCRS) && loggedInUser['auth_role_id'] != 6">
+                                <div class="vsm-item" *ngIf="isSubMenuExists('Room Views',HOTELCRS)">
                                   <a routerLinkActive="active-item" [routerLink]="['/hotels/hotel-view']"
                                     class="vsm-link pl-1"><span class="vsm-title pl-10">
                                       Room Views
@@ -720,7 +723,8 @@
                         </ngb-panel>
 
 
-                        <ngb-panel id="transferCrsMenus" *ngIf="showTransferCrs && isMenuExists('Transfer CRS')">
+                        <ngb-panel id="transferCrsMenus"
+                          *ngIf="shouldShowSupplierModule('cabs', showTransferCrs) && isMenuExists('Transfer CRS')">
                           <ng-template ngbPanelHeader>
                             <button ngbPanelToggle class="vsm-link pl-2">
                               <i class="fa fa-taxi  pr-2 fs-19"></i>
@@ -875,7 +879,8 @@
                           </ng-template>
                         </ngb-panel>
 
-                        <ngb-panel id="heliCrsMenus" *ngIf="showHeliCrs && hasAnyHeliMenu()">
+                        <ngb-panel id="heliCrsMenus"
+                          *ngIf="shouldShowSupplierModule('travel-heli', showHeliCrs) && hasAnyHeliMenu()">
                           <ng-template ngbPanelHeader>
                             <button ngbPanelToggle class="vsm-link pl-2">
                               <i class="fa fa-plane pr-2 fs-19"></i>
@@ -1063,49 +1068,24 @@
                     <i class="vsm-arrow"></i>
                   </button>
                 </ng-template>
-                <!-- <ng-template ngbPanelContent>
+                <ng-template ngbPanelContent>
                   <div class="vsm-dropdown">
                     <div class="vsm-list">
-                      <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" [activeIds]="extraParameter">
-                           <ngb-panel id="setting-Menus" *ngIf="isMenuExists('Settings')">
-                            <ng-template ngbPanelHeader>
-                              <div class="vsm-dropdown">
-                                <div class="vsm-list">
-                                  <div class="vsm-item" *ngIf="isSubMenuExists('Currency Conversion',SETTING)">
-                                    <a routerLinkActive="active-item" routerLink="/settings/currencyConversion"
-                                      class="vsm-link pl-1"><span class="vsm-title pl-10">Currency
-                                        Conversion</span></a>
-                                  </div>
-                                  <div class="vsm-item" *ngIf="isSubMenuExists('Social Networks',SETTING)">
-                                    <a routerLinkActive="active-item" routerLink="/settings/social-networks"
-                                      class="vsm-link pl-1"><span class="vsm-title pl-10">Social
-                                        Networks</span></a>
-                                  </div>
-                                  <div class="vsm-item" *ngIf="isSubMenuExists('Social Login',SETTINGS_G)">
-                                    <a routerLinkActive="active-item" routerLink="/settings/social-login"
-                                      class="vsm-link pl-1"><span class="vsm-title pl-10">Social
-                                        Login</span></a>
-                                  </div>
-                                  <div class="vsm-item" *ngIf="isSubMenuExists('Domain Logo',SETTING)">
-                                    <a routerLinkActive="active-item" routerLink="/settings/domain-logo" class="vsm-link pl-1"><span
-                                        class="vsm-title pl-10">Domain
-                                        Logo</span></a>
-                                  </div>
-                                  <div class="vsm-item" *ngIf="isSubMenuExists('Manage Domain',SETTING)">
-                                    <a routerLinkActive="active-item" routerLink="/settings/manage-domains"
-                                      class="vsm-link pl-1"><span class="vsm-title pl-10">Manage Domain
-                                      </span></a>
-                                  </div>
-                                </div>
-                              </div>
-                            </ng-template>
-                          </ngb-panel>
-     
-  
-                      </ngb-accordion>
+                      <div class="vsm-item">
+                        <a routerLinkActive="active-item" routerLink="/settings/social-networks"
+                          class="vsm-link pl-1"><span class="vsm-title pl-10">Social Networks</span></a>
+                      </div>
+                      <div class="vsm-item">
+                        <a routerLinkActive="active-item" routerLink="/settings/manage-domains"
+                          class="vsm-link pl-1"><span class="vsm-title pl-10">Manage Domain</span></a>
+                      </div>
+                      <div class="vsm-item">
+                        <a routerLinkActive="active-item" routerLink="/settings/domain-logo"
+                          class="vsm-link pl-1"><span class="vsm-title pl-10">Domain Logo</span></a>
+                      </div>
                     </div>
                   </div>
-                </ng-template> -->
+                </ng-template>
               </ngb-panel>
 
 

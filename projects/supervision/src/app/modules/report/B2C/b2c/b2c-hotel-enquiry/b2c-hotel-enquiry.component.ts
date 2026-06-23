@@ -229,16 +229,7 @@ pdfCallbackFn(pdf: any) {
 }
 
   downloadPdf() {
-    const element = document.getElementById('b2c-hotel-enquiry');
-    html2canvas(element).then(canvas => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('l', 'mm', 'a4');
-        const imgWidth = 297; // A4 width in mm
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-        pdf.save('B2C_Hotel_Enquiry_Report.pdf');
-        this.swalService.alert.success();
-    });
+    this.utility.downloadElementAsPdf('b2c-hotel-enquiry', 'B2C_Hotel_Enquiry_Report', 'landscape');
 }
 
   showEnquiryDetails(data){

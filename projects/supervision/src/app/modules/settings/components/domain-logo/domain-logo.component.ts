@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import {
   FormBuilder,
   FormControl,
@@ -17,7 +17,7 @@ const baseUrl = environment.baseUrl;
   templateUrl: "./domain-logo.component.html",
   styleUrls: ["./domain-logo.component.scss"],
 })
-export class DomainLogoComponent implements OnInit {
+export class DomainLogoComponent implements OnInit, OnDestroy {
   regConfig: FormGroup;
   bankLogo: string;
   imgObj = {
@@ -37,6 +37,8 @@ export class DomainLogoComponent implements OnInit {
   imageUrl: any;
   image: any;
   domainInformation: any;
+  fileError = "";
+  isValidatingImage = false;
 
   constructor(private fb: FormBuilder,
      private apiHandlerService: ApiHandlerService,
@@ -54,44 +56,75 @@ export class DomainLogoComponent implements OnInit {
   }
 
   imageSrc;
-  onFileSelected($event) {
-    const file = $event.target.files[0];
-    if (file && file.size) {
-        let result=this.validateFileSize( file.size);
-        if(!result){
-            this.bankLogo = "";
-            this.imageSrc=""
-            this.fileUploader.nativeElement.value = null;
-            this.logoConfig.reset();
-            this.imgObj.isLogoToUpdate = false;
-            return;
-        }
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files && input.files[0];
+    this.fileError = "";
+    this.resetSelectedLogo(false);
+
+    if (!file) {
+      return;
     }
 
-    if (file.name) {
-      this.bankLogo = "";
-      this.imgObj.isLogoToUpdate = true;
-      this.logoConfig.patchValue({ domain_logo: file });
-      const reader = new FileReader();
-      reader.onload = (e) => (this.imageSrc = reader.result);
-      reader.readAsDataURL(file);
-    } else {
-      this.imgObj.isLogoToUpdate = false;
+    const acceptedTypes = ["image/png", "image/jpeg"];
+    if (!acceptedTypes.includes(file.type)) {
+      this.rejectFile("Choose a PNG, JPG, or JPEG image.");
+      return;
+    }
+
+    if (file.size > 100 * 1024) {
+      this.rejectFile("The image must be no larger than 100 KB.");
+      return;
+    }
+
+    this.isValidatingImage = true;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const preview = new Image();
+      preview.onload = () => {
+        this.isValidatingImage = false;
+        if (preview.width !== 200 || preview.height !== 200) {
+          this.rejectFile("The image dimensions must be exactly 200px by 200px.");
+          return;
+        }
+
+        this.imageSrc = reader.result;
+        this.bankLogo = "";
+        this.imgObj.isLogoToUpdate = true;
+        this.logoConfig.patchValue({ domain_logo: file });
+        this.logoConfig.get("domain_logo").markAsTouched();
+      };
+      preview.onerror = () => {
+        this.isValidatingImage = false;
+        this.rejectFile("The selected image could not be read.");
+      };
+      preview.src = reader.result as string;
+    };
+    reader.onerror = () => {
+      this.isValidatingImage = false;
+      this.rejectFile("The selected image could not be read.");
+    };
+    reader.readAsDataURL(file);
+  }
+
+  private rejectFile(message: string): void {
+    this.fileError = message;
+    this.resetSelectedLogo(true);
+  }
+
+  private resetSelectedLogo(clearInput: boolean): void {
+    this.imageSrc = "";
+    this.imgObj.isLogoToUpdate = false;
+    this.logoConfig.reset();
+    if (clearInput && this.fileUploader) {
+      this.fileUploader.nativeElement.value = null;
     }
   }
 
-  validateFileSize(fileSize) {
-    if (fileSize > 100000) {
-        this.swalService.alert.oops("Maximum upload file size: 100KB");
-        return false;
-    }
-    else {
-        return true
-    }
-}
-
   onSubmit() {
+    this.submitted = true;
     if (this.logoConfig.invalid) {
+      this.logoConfig.markAllAsTouched();
       return;
     }
     const formData = new FormData();
@@ -100,7 +133,6 @@ export class DomainLogoComponent implements OnInit {
     this.subSunk.sink = this.apiHandlerService.apiHandler('domainLogo', 'post', {}, {}, formData)
       .subscribe(resp => {
         if (resp.statusCode == 200 || resp.statusCode == 201) {
-          this.submitted = true;
           this.swalService.alert.success("logo added successfully.");
           localStorage.setItem("currentUser", JSON.stringify(resp.data.url));
           let user = JSON.parse(localStorage.getItem('currentDomainUser'));
@@ -112,5 +144,9 @@ export class DomainLogoComponent implements OnInit {
           this.swalService.alert.oops(resp.msg);
         }
       });
+  }
+
+  ngOnDestroy(): void {
+    this.subSunk.unsubscribe();
   }
 }

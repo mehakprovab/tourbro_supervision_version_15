@@ -1,0 +1,266 @@
+.voucher-page {
+  margin: 0 auto;
+  padding: 40px 0;
+  position: relative;
+  width: 90%;
+}
+
+.voucher-document {
+  background: #f3f3f3;
+  border-radius: 16px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, .08), 0 2px 8px rgba(0, 0, 0, .16);
+  margin-bottom: 16px;
+  overflow: hidden;
+  padding: 30px 30px 0;
+}
+
+.voucher-topbar,
+.customer-summary,
+.service-name {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.brand-logo {
+  max-height: 58px;
+  max-width: 190px;
+  object-fit: contain;
+}
+
+.voucher-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.voucher-actions button {
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 11px 18px;
+}
+
+.print-button {
+  background: #fff5f6;
+  border: 0;
+  color: #fe4865;
+}
+
+.download-button {
+  background: #fe4865;
+  border: 1px solid #fe4865;
+  color: #fff;
+}
+
+.customer-summary {
+  line-height: 25px;
+  padding: 25px 0 18px;
+}
+
+.customer-contact strong,
+.customer-contact span,
+.booking-reference span {
+  display: block;
+}
+
+.customer-contact strong {
+  font-size: 17px;
+  text-transform: uppercase;
+}
+
+.booking-reference {
+  text-align: right;
+}
+
+.voucher-title {
+  background: #082e53;
+  color: #fff;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: 8px;
+  margin: 0 -30px;
+  padding: 17px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.service-name {
+  padding: 25px 0 15px;
+}
+
+.service-name small,
+.detail-grid label,
+.remarks label {
+  color: #777;
+  display: block;
+  font-size: 12px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.service-name h3 {
+  color: #282828;
+  font-size: 22px;
+  margin-bottom: 3px;
+}
+
+.service-name p {
+  margin: 0;
+}
+
+.payment-state {
+  text-align: right;
+}
+
+.payment-state strong {
+  color: #fe4865;
+  display: block;
+  font-size: 18px;
+}
+
+.service-summary {
+  background: #fff;
+  border-collapse: separate;
+  border-radius: 12px 12px 0 0;
+  margin: 0;
+  overflow: hidden;
+  width: 100%;
+}
+
+.service-summary th,
+.service-summary td {
+  border: 0;
+  padding: 13px 16px;
+  text-align: left;
+}
+
+.service-summary th {
+  color: #777;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.service-summary td {
+  color: #282828;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.detail-card {
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 16px;
+  box-shadow: 20px 14px 18px rgba(194, 194, 194, .15);
+  margin-bottom: 16px;
+  padding: 16px;
+}
+
+.detail-card h4 {
+  background: #f5f2fc;
+  border-radius: 8px;
+  color: #282828;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 18px;
+  padding: 12px 16px;
+}
+
+.detail-grid {
+  display: grid;
+  gap: 20px 30px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding: 0 16px 8px;
+}
+
+.detail-grid span {
+  color: #282828;
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.remarks {
+  border-top: 1px solid #eee;
+  margin: 10px 16px 0;
+  padding-top: 15px;
+}
+
+.payment-row {
+  color: #4b4b4b;
+  display: flex;
+  font-size: 16px;
+  justify-content: space-between;
+  padding: 10px 16px;
+}
+
+.total-row {
+  color: #fe4865;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.badge {
+  display: inline-block !important;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px;
+  text-align: center;
+}
+
+.generated-note {
+  color: #777;
+  font-size: 12px;
+  text-align: center;
+}
+
+.pdf-export .no-print {
+  display: none !important;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .voucher-page {
+    padding: 0;
+    width: 100%;
+  }
+
+  .voucher-document,
+  .detail-card,
+  .voucher-title,
+  .detail-card h4 {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+@media (max-width: 700px) {
+  .voucher-page {
+    width: 100%;
+  }
+
+  .voucher-topbar,
+  .customer-summary,
+  .service-name {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .booking-reference,
+  .payment-state {
+    text-align: left;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .service-summary {
+    display: block;
+    overflow-x: auto;
+  }
+}

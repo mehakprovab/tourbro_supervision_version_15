@@ -269,16 +269,7 @@ pdfCallbackFn(pdf: any) {
 }
 
   downloadPdf() {
-    const element = document.getElementById('b2c-bundle-report');
-    html2canvas(element).then(canvas => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('l', 'mm', 'a4');
-        const imgWidth = 297; // A4 width in mm
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-        pdf.save('B2C_Bundle_Report.pdf');
-        this.swalService.alert.success();
-    });
+    this.utility.downloadElementAsPdf('b2c-bundle-report', 'B2C_Bundle_Report', 'landscape');
 }
 
   cancelTicketPopup(data) {

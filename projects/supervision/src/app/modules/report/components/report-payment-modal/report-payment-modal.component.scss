@@ -1,0 +1,39 @@
+.payment-modal {
+  background: rgba(0, 0, 0, .15);
+  z-index: 1051;
+}
+
+.payment-modal .modal-dialog {
+  margin-top: 10vh;
+  max-width: 590px;
+}
+
+.payment-option {
+  align-items: center;
+  border: 1px solid #e1e5ea;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  gap: 14px;
+  margin-bottom: 12px;
+  padding: 14px;
+}
+
+.payment-option:hover {
+  border-color: #007bff;
+}
+
+.payment-option img,
+.payment-icon {
+  align-items: center;
+  display: flex;
+  font-size: 28px;
+  height: 42px;
+  justify-content: center;
+  width: 48px;
+}
+
+.payment-option strong,
+.payment-option small {
+  display: block;
+}

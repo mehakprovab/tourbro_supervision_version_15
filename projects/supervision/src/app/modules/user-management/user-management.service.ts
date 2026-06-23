@@ -157,9 +157,9 @@ export class UserManagementService {
         return this.apiHandlerService.apiHandler('updateSuppliers', 'post', {}, {}, data)
             .pipe(
                 map(resp => {
-                    if (resp.Status)
+                    if (resp.Status || resp.statusCode === 200 || resp.statusCode === 201)
                         return {
-                            statusCode: 200,
+                            statusCode: resp.statusCode || 200,
                             data: resp.data || [],
                             msg: resp.Message || 'OK'
                         }

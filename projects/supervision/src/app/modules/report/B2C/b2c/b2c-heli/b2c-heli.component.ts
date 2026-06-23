@@ -38,6 +38,8 @@ export class B2cHeliReportComponent implements OnInit, OnDestroy {
     respData: Array<any> = [];
     showModal = false;
     currentRecord: any;
+    showPaymentDetails = false;
+    selectedPayment: any;
 
     displayColumn: { key: string, value: string }[] = [
         { key: 'id', value: 'Sl No.' },
@@ -260,22 +262,36 @@ export class B2cHeliReportComponent implements OnInit, OnDestroy {
         this.router.navigate([path], { queryParams: { appReference } });
     }
 
+    canPayNow(data: any): boolean {
+        const paymentStatus = String(data && data.payment_status || '').toLowerCase().replace('_', ' ');
+        const paymentMode = String(data && (data.payment_mode || data.PaymentMode) || '').toLowerCase();
+        const eligibleStatuses = ['BOOKING_CONFIRMED', 'BOOKING_FAILED', 'BOOKING_VOIDED', 'BOOKING_HOLD', 'BOOKING_CANCELLED'];
+        return !!(data && data.app_reference) &&
+            (paymentStatus === 'not paid' || paymentStatus === 'unpaid') &&
+            (!paymentMode || paymentMode === 'pay_later') &&
+            eligibleStatuses.includes(data.status);
+    }
+
+    openPayment(data: any): void {
+        const passenger = this.getLeadPax(data);
+        this.selectedPayment = {
+            appReference: data.app_reference,
+            source: 'heli',
+            name: this.getLeadPaxName(data),
+            phone: passenger.mobile || data.phone || '',
+            email: passenger.email || data.email || '',
+            amount: Number(data.total_fare || 0)
+        };
+        this.showPaymentDetails = true;
+    }
+
     hide() {
         this.showModal = false;
         this.currentRecord = null;
     }
 
     downloadPdf() {
-        const element = document.getElementById('b2c-heli-report');
-        html2canvas(element).then(canvas => {
-            const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF('l', 'mm', 'a4');
-            const imgWidth = 297;
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
-            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-            pdf.save('B2C_Heli_Report.pdf');
-            this.swalService.alert.success();
-        });
+        this.utility.downloadElementAsPdf('b2c-heli-report', 'B2C_Heli_Report', 'landscape');
     }
 
     numberOnly(event): boolean {

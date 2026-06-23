@@ -200,7 +200,7 @@ export class ServiceFormComponent implements OnInit {
     setTimeout(() => {
       this.loading = false;
       Swal.fire('Success', 'Service details submitted successfully!', 'success').then(() => {
-        this.router.navigate(['/auth/login']);
+        this.router.navigate(['/auth/supplier-login']);
       });
     }, 1000);
   }

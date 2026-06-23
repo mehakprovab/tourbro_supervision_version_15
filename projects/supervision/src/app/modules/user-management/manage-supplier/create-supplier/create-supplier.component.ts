@@ -44,6 +44,8 @@ registerForm: FormGroup;
   ];
   
   selectedServices: string[] = [];
+  private supplierId: any;
+  private supplierUserId: any;
   
   // File variables
   panDocument: File | null = null;
@@ -82,6 +84,8 @@ addOrUpdate: 'add' | 'update' = 'add';
     this.aadhaarDocumentName = '';
     this.licenseDocument = null;
     this.licenseDocumentName = '';
+    this.supplierId = null;
+    this.supplierUserId = null;
     this.registerStates = [];
     this.filteredStates = [];
     this.registerCities = [];
@@ -417,14 +421,17 @@ onRegister() {
 
   // ✅ APPEND FORM VALUES
   Object.keys(formValues).forEach(key => {
+    if (key === 'id' || key === 'services') {
+      return;
+    }
     const value = formValues[key];
     if (value !== null && value !== undefined && value !== '') {
-      formData.append(key, value);
+      formData.append(key, String(value));
     }
   });
 
   // ✅ EXTRA DATA
-  formData.append('services', JSON.stringify(this.registerForm.value.services));
+  formData.append('services', JSON.stringify(formValues.services || []));
   if(this.propertyId)
   formData.append('property_id', this.propertyId);
 
@@ -460,7 +467,8 @@ onRegister() {
 
   } else {
     // ✅ UPDATE
-    formData.append('id', formValues.id);
+    formData.append('supplier_id', String(this.supplierId || formValues.id));
+    formData.append('user_id', String(this.supplierUserId || formValues.id));
 
     this.subSunk.sink = this.userManagementService.updateSupplier(formData)
       .subscribe({
@@ -540,9 +548,11 @@ getToUpdate() {
 
       this.addOrUpdate = 'update';
       const services = this.normalizeServices(data);
+      this.supplierId = data.supplier_id || data.id;
+      this.supplierUserId = data.user_id || data.id || data.supplier_id;
 
       this.registerForm.patchValue({
-        id: data.id || data.supplier_id,
+        id: this.supplierId,
         title: data.title ? Number(data.title) : '',
         first_name: data.first_name,
         last_name: data.last_name,

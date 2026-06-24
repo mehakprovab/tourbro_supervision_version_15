@@ -556,7 +556,7 @@
                         <option value="">Select</option>
 
                         <option
-                            *ngFor="let p of packageTypeList"
+                            *ngFor="let p of selectedPackageTypeList"
                             [ngValue]="p.name">
 
                             {{p.name}}
@@ -589,7 +589,7 @@
                         <option value="">Select</option>
 
                         <option
-                            *ngFor="let d of durationList"
+                            *ngFor="let d of selectedDurationList"
                             [ngValue]="d">
 
                             {{d}}

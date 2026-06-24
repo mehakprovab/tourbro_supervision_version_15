@@ -425,7 +425,7 @@ onRegister() {
       return;
     }
     const value = formValues[key];
-    if (value !== null && value !== undefined && value !== '') {
+    if (value !== null && value !== undefined) {
       formData.append(key, String(value));
     }
   });
@@ -468,7 +468,7 @@ onRegister() {
   } else {
     // ✅ UPDATE
     formData.append('supplier_id', String(this.supplierId || formValues.id));
-    formData.append('user_id', String(this.supplierUserId || formValues.id));
+    formData.append('user_id', String(this.supplierUserId || this.supplierId || formValues.id));
 
     this.subSunk.sink = this.userManagementService.updateSupplier(formData)
       .subscribe({
@@ -518,18 +518,16 @@ private normalizeServices(data: any): string[] {
   let services = data.services || data.selectedSuppliers || [];
 
   if (typeof services === 'string') {
-    try {
-      services = JSON.parse(services);
-    } catch (e) {
-      services = services.split(',');
-    }
+    services = this.parseServicesValue(services);
   }
 
   if (!Array.isArray(services)) {
     return [];
   }
 
-  return services.map((service) => {
+  return services.reduce((result, service) => {
+    return result.concat(this.parseServicesValue(service));
+  }, []).map((service) => {
     const supplier = String(service).trim();
     if (supplier === 'transfer') {
       return 'cabs';
@@ -538,7 +536,40 @@ private normalizeServices(data: any): string[] {
       return 'travel-heli';
     }
     return supplier;
-  }).filter((service) => service);
+  }).filter((service, index, list) => service && list.indexOf(service) === index);
+}
+
+private parseServicesValue(value: any): string[] {
+  if (Array.isArray(value)) {
+    return value;
+  }
+
+  if (value === null || value === undefined) {
+    return [];
+  }
+
+  const serviceValue = String(value).trim();
+  if (!serviceValue) {
+    return [];
+  }
+
+  try {
+    const parsed = JSON.parse(serviceValue);
+    if (Array.isArray(parsed)) {
+      return parsed;
+    }
+  } catch (e) {
+  }
+
+  return serviceValue.split(',');
+}
+
+private getDocumentName(documentUrl: string): string {
+  if (!documentUrl) {
+    return '';
+  }
+
+  return decodeURIComponent(documentUrl.split('/').pop() || '');
 }
 
 getToUpdate() {
@@ -549,44 +580,44 @@ getToUpdate() {
       this.addOrUpdate = 'update';
       const services = this.normalizeServices(data);
       this.supplierId = data.supplier_id || data.id;
-      this.supplierUserId = data.user_id || data.id || data.supplier_id;
+      this.supplierUserId = data.user_id || data.userId || data.id || data.supplier_id;
 
       this.registerForm.patchValue({
         id: this.supplierId,
         title: data.title ? Number(data.title) : '',
-        first_name: data.first_name,
-        last_name: data.last_name,
-        phone_number: data.phone_number,
-        email: data.email,
- services: services,
-        registered_legal_name: data.registered_legal_name,
-        trade_name: data.trade_name,
-        chain_name: data.chain_name,
-        company_website: data.company_website,
-        registration_number: data.registration_number,
-        country_of_registration: data.country_of_registration,
+        first_name: data.first_name || '',
+        last_name: data.last_name || '',
+        phone_number: data.phone_number || data.phone || '',
+        email: data.email || '',
+        services: services,
+        registered_legal_name: data.registered_legal_name || '',
+        trade_name: data.trade_name || '',
+        chain_name: data.chain_name || '',
+        company_website: data.company_website || '',
+        registration_number: data.registration_number || '',
+        country_of_registration: data.country_of_registration || '',
 
-        pan_number: data.pan_number,
-        aadhaar_number: data.aadhaar_number,
-        license_number: data.license_number,
-        office_phone: data.office_phone,
-        alt_company_email: data.alt_company_email,
+        pan_number: data.pan_number || '',
+        aadhaar_number: data.aadhaar_number || '',
+        license_number: data.license_number || '',
+        office_phone: data.office_phone || '',
+        alt_company_email: data.alt_company_email || '',
 
-        address_line1: data.address_line1,
-        address_line2: data.address_line2,
-        country: data.country,
-        state: data.state,
-        city: data.city,
-        zip_code: data.zip_code,
+        address_line1: data.address_line1 || '',
+        address_line2: data.address_line2 || '',
+        country: data.country || '',
+        state: data.state || '',
+        city: data.city || '',
+        zip_code: data.zip_code || '',
 
-        accounting_email: data.accounting_email,
-        accounting_phone: data.accounting_phone,
+        accounting_email: data.accounting_email || '',
+        accounting_phone: data.accounting_phone || '',
 
-        bank_name: data.bank_name,
-        branch_address: data.branch_address,
-        account_holder_name: data.account_holder_name,
-        account_number: data.account_number,
-        ifsc_code: data.ifsc_code,
+        bank_name: data.bank_name || '',
+        branch_address: data.branch_address || '',
+        account_holder_name: data.account_holder_name || '',
+        account_number: data.account_number || '',
+        ifsc_code: data.ifsc_code || '',
 
       });
 
@@ -596,9 +627,9 @@ getToUpdate() {
       }
 
       // ✅ Optional: patch files name (UI only)
-      this.panDocumentName = data.pan_document_name || '';
-      this.aadhaarDocumentName = data.aadhaar_document_name || '';
-      this.licenseDocumentName = data.license_document_name || '';
+      this.panDocumentName = data.pan_document_name || this.getDocumentName(data.pan_document);
+      this.aadhaarDocumentName = data.aadhaar_document_name || this.getDocumentName(data.aadhaar_document);
+      this.licenseDocumentName = data.license_document_name || this.getDocumentName(data.license_document);
     } else {
       this.resetSupplierForm(false);
     }

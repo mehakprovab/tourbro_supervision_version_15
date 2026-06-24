@@ -14,6 +14,7 @@ export const apiMap = {
     baseUrl + "/transaction/service/AgentCreditLimitManager",
   agentList: baseUrl + "/user/service/AgentList",
   supplierCreate: `${B2C_URL}/webservice/supplier/create`,
+  updateSupplierNeww: `${baseUrl}/user/service/updateSupplier`,
   agentDetails: baseUrl + "/user/service/AgentDetails",
   agentAccoutCredit: baseUrl + "/transaction/service/AgentAccoutCredit",
   agentAccoutDebit: `${baseUrl}/transaction/service/AgentAccoutDebit`,
@@ -499,6 +500,7 @@ export const apiMap = {
 
   supplierCityList: `${B2C_URL}/webservice/common/city/findAll`,
   updateSupplier: `${B2C_URL}/webservice/supplier/update`,
+  updateSupplierNew: `${B2C_URL}/sa/user/service/updateSupplier`,
   hotelCurrencyConverison: `${baseUrl}/cms/service/CurrencyConversion`,
   addIncludeMaster: `${baseUrl}/tour/includes_master/AddIncludesMasterList`,
   getPackageIncludeList: `${baseUrl}/tour/includes_master/IncludeMasterList`,

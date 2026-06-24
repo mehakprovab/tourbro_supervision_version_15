@@ -33,6 +33,7 @@ export class AdminProfileComponent implements OnInit, OnDestroy {
     profileForm: FormGroup;
     countries: any = [];
     currentUser: any = {};
+    submitted = false;
     protected subs = new SubSink();
 
     constructor(
@@ -68,7 +69,7 @@ export class AdminProfileComponent implements OnInit, OnDestroy {
                         user_id: res.data.user_id,
                         email: res.data.email,
                         business_name: res.data.business_name,
-                        business_number: res.data.business_number,
+                        business_number: res.data.business_number || '',
                         business_phone: res.data.business_phone,
                         status: res.data.status,
                         title: res.data.title,
@@ -96,24 +97,30 @@ export class AdminProfileComponent implements OnInit, OnDestroy {
     }
 
     createForm() {
+        const supplierOptionalValidators = this.isSupplierProfile() ? [] : [Validators.required];
+
         this.profileForm = this.fb.group({
             first_name: ['', [Validators.required]],
             last_name: ['', [Validators.required]],
             address: ['', [Validators.required, Validators.maxLength(120)]],
-            date_of_birth: ['', [Validators.required]],
+            date_of_birth: ['', supplierOptionalValidators],
             country_code: ['', [Validators.required]],
             phone: ['', [Validators.required, Validators.maxLength(14), Validators.pattern(this.utilityService.regExp.phone)]],
             business_phone: ['', [Validators.required]],
             business_name: ['', [Validators.required]],
-            business_number: ['', [Validators.required]],
+            business_number: ['', supplierOptionalValidators],
             importFile: [''],
         });
+    }
+
+    isSupplierProfile(): boolean {
+        return Number(this.currentUser && this.currentUser.auth_role_id) === 6;
     }
 
     setDataToForm(userInfo) {
         this.profileForm.patchValue({
             business_name: userInfo.business_name,
-            business_number: userInfo.business_number,
+            business_number: userInfo.business_number || '',
             first_name: userInfo.first_name,
             last_name: userInfo.last_name,
             country_code: userInfo.country,
@@ -134,20 +141,16 @@ export class AdminProfileComponent implements OnInit, OnDestroy {
     }
 
     onSubmit(data) {
+        this.submitted = true;
         if (this.profileForm.invalid) {
-            const invalid = [];
-            const controls = this.profileForm.controls;
-            for (const name in controls) {
-                if (controls[name].invalid) {
-                    invalid.push(name);
-                }
-            }
+            this.profileForm.markAllAsTouched();
+            this.swalService.alert.oops('Please fill all required profile fields.');
             return;
         }
         const jsonData = {
             id: this.currentUser.id,
             business_name: data.business_name,
-            business_number: data.business_number,
+            business_number: data.business_number || '',
             title: data.title,
             address: data.address,
             first_name: data.first_name,
@@ -160,11 +163,11 @@ export class AdminProfileComponent implements OnInit, OnDestroy {
         }
         this.subs.sink = this.apiHandlerService.apiHandler('updateProfile', 'POST', '', '', { ...jsonData })
             .subscribe(res => {
-                if (res.statusCode == 201) {
+                if (res.Status || res.status || res.statusCode == 200 || res.statusCode == 201) {
                     if (this.fileToUpload) {
                         this.uploadImage();
                         this.swalService.alert.success('Updated successfully! ..!');
-                        if(this.currentUser.auth_role_id == 6){
+                        if(this.isSupplierProfile()){
                             this.router.navigate(['/hotels/hotel-crs-lists']);
                         }
                         else{
@@ -172,7 +175,7 @@ export class AdminProfileComponent implements OnInit, OnDestroy {
                         }
                     } else {
                         this.swalService.alert.success('Updated successfully! ..!');
-                        if(this.currentUser.auth_role_id == 6){
+                        if(this.isSupplierProfile()){
                             this.router.navigate(['/hotels/hotel-crs-lists']);
                         }
                         else{
@@ -183,6 +186,8 @@ export class AdminProfileComponent implements OnInit, OnDestroy {
                 } else {
                     this.swalService.alert.oops(res.Message);
                 }
+            }, () => {
+                this.swalService.alert.oops('Unable to update profile. Please try again.');
             });
     }
 

@@ -13,7 +13,8 @@
                 <h5 class="title cust-fs">Update Profile</h5>
             </div>
         </div>
-        <form [formGroup]="profileForm" autocomplete="off" class="needs-validation px-4" novalidate>
+        <form [formGroup]="profileForm" autocomplete="off" class="needs-validation px-4" novalidate
+            (ngSubmit)="onSubmit(profileForm.value)">
             <div class="position-relative form-group">
                 <label for="first_name" class="col-form-label">First Name</label>
                 <input formControlName="first_name" placeholder="First Name" type="text" class="form-control"
@@ -77,7 +78,7 @@
             </div>
             <div class="position-relative form-group">
                 <div class="update-btn d-flex align-items-center">
-                    <button type="submit" class="btn btn-secondary" (click)="onSubmit(profileForm.value)">
+                    <button type="submit" class="btn btn-secondary">
                         Update
                     </button>
                 </div>

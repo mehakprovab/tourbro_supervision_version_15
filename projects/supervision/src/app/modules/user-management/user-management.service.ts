@@ -154,14 +154,14 @@ export class UserManagementService {
             );
     }
     updateSupplier(data): Observable<any> {
-        return this.apiHandlerService.apiHandler('updateSuppliers', 'post', {}, {}, data)
+        return this.apiHandlerService.apiHandler('updateSupplierNeww', 'post', {}, {}, data)
             .pipe(
                 map(resp => {
-                    if (resp.Status || resp.statusCode === 200 || resp.statusCode === 201)
+                    if (resp.Status || resp.status || resp.statusCode === 200 || resp.statusCode === 201)
                         return {
                             statusCode: resp.statusCode || 200,
                             data: resp.data || [],
-                            msg: resp.Message || 'OK'
+                            msg: resp.Message || resp.message || 'OK'
                         }
                     else
                         return {

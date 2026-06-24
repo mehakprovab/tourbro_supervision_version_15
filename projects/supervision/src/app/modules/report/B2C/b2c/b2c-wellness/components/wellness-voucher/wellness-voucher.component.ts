@@ -83,8 +83,38 @@ export class WellnessVoucherComponent implements OnInit, OnDestroy {
     window.print();
   }
 
+  downloadA4(type: any, orientation?: string): void {
+    const content = this.printVoucherRef && this.printVoucherRef.nativeElement;
+    if (!content) {
+      return;
+    }
+
+    window['html2canvas'] = html2canvas;
+    const doc = new jsPDF({
+      orientation: 'p',
+      unit: 'pt',
+      format: 'a4',
+    });
+
+    doc.html(content, {
+      html2canvas: {
+        allowTaint: true,
+        useCORS: true,
+        scale: 600 / content.scrollWidth
+      },
+      callback: async (pdf) => {
+        pdf.save(`${this.appReference || 'wellness-voucher'}.pdf`);
+        this.swalService.alert.success();
+      }
+    });
+  }
+
   downloadPdf() {
-    const element = document.getElementById('wellness-voucher');
+    const element = this.printVoucherRef && this.printVoucherRef.nativeElement;
+    if (!element) {
+      return;
+    }
+
     html2canvas(element).then(canvas => {
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');

@@ -115,6 +115,11 @@
                                   <td>{{ passenger?.seat_no || passenger?.seat || passenger?.SeatName || 'N/A' }}</td>
                                 
                               </tr>
+                              <ng-template #noPassengers>
+                                  <tr>
+                                      <td colspan="5">No passengers found</td>
+                                  </tr>
+                              </ng-template>
                           </tbody>
                       </table>
                     
@@ -144,4 +149,3 @@
       </tbody>
   </table>
 </div>
-

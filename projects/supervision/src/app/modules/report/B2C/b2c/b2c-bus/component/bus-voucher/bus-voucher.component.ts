@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { SubSink } from 'subsink';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-bus-voucher',
@@ -64,11 +66,38 @@ export class BusVoucherComponent implements OnInit, OnDestroy {
       : {};
   }
 
-get passengers() {
-  return Array.isArray(this.voucherData?.pax)
-    ? this.voucherData.pax
-    : [];
-}
+  get passengers() {
+    return Array.isArray(this.voucherData?.pax)
+      ? this.voucherData.pax
+      : [];
+  }
+
+  downloadA4(type: any, orientation?: string): void {
+    const content = this.printVoucherRef && this.printVoucherRef.nativeElement;
+    if (!content) {
+      return;
+    }
+
+    window['html2canvas'] = html2canvas;
+    const doc = new jsPDF({
+      orientation: 'p',
+      unit: 'pt',
+      format: 'a4',
+    });
+
+    doc.html(content, {
+      html2canvas: {
+        allowTaint: true,
+        useCORS: true,
+        scale: 600 / content.scrollWidth
+      },
+      callback: async (pdf) => {
+        pdf.save(`${this.appReference || 'bus-voucher'}.pdf`);
+        this.swalService.alert.success();
+      }
+    });
+  }
+
   printVoucher() {
     window.print();
   }

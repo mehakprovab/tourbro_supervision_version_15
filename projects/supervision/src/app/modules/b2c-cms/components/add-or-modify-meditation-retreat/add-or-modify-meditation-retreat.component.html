@@ -88,6 +88,14 @@
 
     <p>Total {{ respData?.length }} Retreats</p>
 
+    <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft"
+                    #scrollOne>
+                    <div class="div1"></div>
+                </div>
+
+                <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
+                    <div class="div2 invisible-scrollbar">
+ <div class="table-responsive">
     <table class="table table-borderless table-striped table-hover">
       <thead>
         <tr>
@@ -128,6 +136,9 @@
       </tbody>
 
     </table>
+    </div>
+    </div>
+    </div>
 
   </div>
 </div>

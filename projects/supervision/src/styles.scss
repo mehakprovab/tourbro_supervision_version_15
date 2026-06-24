@@ -153,9 +153,9 @@ perfect-scrollbar { max-height: 650px !important;}
     gap: 12px;
     align-items: center;
     list-style: none;
-    margin: 0 0 18px;
+    margin: 0 0 16px;
     padding: 0 0 12px;
-    border-bottom: 1px solid #e6e8ef;
+    // border-bottom: 1px solid #e6e8ef;
 }
 .crs-tab-ui li {
     margin: 0;
@@ -165,7 +165,7 @@ perfect-scrollbar { max-height: 650px !important;}
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 42px;
+    min-height: 48px;
     padding: 10px 18px !important;
     border: 1px solid #d8deea !important;
     border-radius: 6px !important;
@@ -182,10 +182,10 @@ perfect-scrollbar { max-height: 650px !important;}
 .crs-tab-ui .nav-link:focus,
 .crs-tab-ui > li > a:hover,
 .crs-tab-ui > li > a:focus {
-    border-color: #FE4865 !important;
-    color: #111827 !important;
-    text-decoration: none !important;
-    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
+    // border-color: #FE4865 !important;
+    // color: #111827 !important;
+    // text-decoration: none !important;
+    // box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
 }
 .crs-tab-ui .nav-link.active,
 .crs-tab-ui > li > a.active {
@@ -282,14 +282,21 @@ span.dropdown-multiselect__caret {height: 45px !important;}
 .cke_notification_warning {
     display: none;
 }
+.custom_tab .nav-tabs
+
+ {
+    border-bottom: 1px solid #fff!important;
+}
 .custom_tab .nav-tabs .nav-link {
        
-    padding: 10px 20px;
-    margin: 10px 10px 20px 0px;
-    border: 2px solid #D7CCF2;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 500;
+     padding: 10px 20px;
+    margin-right: 10px!important;
+    border: 2px solid #F5F2FC;;
+    border-radius: 8px!important;
+    font-size: 18px!important;
+    font-weight: 600!important;
+    background: #F5F2FC!important;
+    color: #4D1AC4!important;
 }
 .custom_tab .nav-tabs .nav-link.active {
     background-color: #3901BE !important;
@@ -307,4 +314,22 @@ span.dropdown-multiselect__caret {height: 45px !important;}
     .card{
     padding: 16px;
     font-family: "inter", sans-serif;
+}
+
+.crs-tab-ui .nav-link.active, .crs-tab-ui > li > a.active{
+    background-color: #4D1AC4!important;
+    border-color: #4D1AC4 !important;
+    color: #ffffff!important;
+}
+
+.crs-tab-ui .nav-link{
+    padding: 10px 20px;
+    // margin: 10px 10px 20px 0px;
+    border: 2px solid #F5F2FC;;
+    border-radius: 8px!important;
+    font-size: 18px!important;
+    font-weight: 600;
+    background: #F5F2FC!important;
+    color: #4D1AC4!important;
+    box-shadow: 0px 1px 2px 0px #0A0D120D!important;
 }

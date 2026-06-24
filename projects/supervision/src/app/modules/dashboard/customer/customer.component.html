@@ -1,90 +1,60 @@
-<div class="col-12 revenue-finance-top-sec mt-3 pt-2 pb-4 px-5">
+<div class="col-12 revenue-finance-top-sec mt-3 p-4">
 
     <!-- Header -->
-    <div class="row">
-        <div class="col-12 pl-0">
+    
+        <div class="pb-4">
             <span class="revenue-span">Customer</span>
         </div>
-    </div>
+   
 
     <!-- Total Registered Users -->
-    <div class="row head-sect p-2 mb-2">
-        <div class="col-8">
+    <div class="d-flex head-sect p-12 flex-column">
+        <div class="d-flex align-items-center justify-content-between mb-2">
             <span class="f-15">Total Registered Users</span>
-        </div>
-
-        <div class="col-4 text-end">
-            <select class="b-none" [(ngModel)]="totalCustomersFilter" (change)="onTotalCustomersFilterChange()">
+             <select class="b-none" [(ngModel)]="totalCustomersFilter" (change)="onTotalCustomersFilterChange()">
                 <option *ngFor="let option of dashboardFilterOptions" [ngValue]="option.value">
                     {{ option.label }}
                 </option>
             </select>
         </div>
-
-        <div class="col-12">
-            <span class="num-span">{{ totalCustomers }}</span>
-        </div>
+        <span class="num-span">{{ totalCustomers }}</span>
+        
     </div>
 
     <!-- Average Booking Value -->
-    <div class="row head-sect p-2 mb-2">
-        <div class="col-8">
+    <div class="d-flex head-sect p-12 flex-column">
+        <div class="d-flex align-items-center justify-content-between mb-2">
             <span class="f-15">Average Booking Value</span>
-        </div>
-
-        <div class="col-4 text-end">
             <select class="b-none">
                 <option>Today</option>
-                            <option>Last Day</option>
-                            <option>Last Week</option>
-                            <option>Last Month</option>
-                            <option>All</option>
+                <option>Last Day</option>
+                <option>Last Week</option>
+                <option>Last Month</option>
+                <option>All</option>
             </select>
         </div>
-
-        <div class="col-12">
-            <span class="num-span">100</span>
-        </div>
+         <span class="num-span">100</span>
+        
     </div>
 
-    <!-- New Users & Repeat Customers -->
-    <div class="row g-3">
-
-        <!-- New Users -->
-        <div class="col-md-6 pl-0">
-            <div class="head-sect p-2 ">
-                <div class="row">
-                    <div class="col-8">
-                        <span class="f-15">New Users</span>
-                    </div>
-
-                    <div class="col-4 text-end">
-                        <select class="b-none">
-                           <option>Today</option>
-                            <option>Last Day</option>
-                            <option>Last Week</option>
-                            <option>Last Month</option>
-                            <option>All</option>
-                        </select>
-                    </div>
-
-                    <div class="col-12 mt-2">
-                        <span class="num-span">100</span>
-                    </div>
-                </div>
+    <div class="d-flex head-sect p-12 flex-column">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+                <span class="f-15">New Users</span>
+                <select class="b-none">
+                    <option>Today</option>
+                    <option>Last Day</option>
+                    <option>Last Week</option>
+                    <option>Last Month</option>
+                    <option>All</option>
+                </select>
             </div>
-        </div>
-
-        <!-- Repeat Customers -->
-        <div class="col-md-6 pr-0">
-            <div class="head-sect p-2 ">
-                <div class="row">
-                    <div class="col-8">
+        <span class="num-span">100</span>
+            
+    </div>
+           <div class="d-flex head-sect p-12 flex-column">
+                   <div class="d-flex align-items-center justify-content-between mb-2">
                         <span class="f-15">Repeat Customers</span>
-                    </div>
-
-                    <div class="col-4 text-end">
-                        <select class="b-none">
+                         <select class="b-none">
                             <option>Today</option>
                             <option>Last Day</option>
                             <option>Last Week</option>
@@ -92,14 +62,11 @@
                             <option>All</option>
                         </select>
                     </div>
-
-                    <div class="col-12 mt-2">
-                        <span class="num-span">100</span>
-                    </div>
+                   <span class="num-span">100</span>
+                   
                 </div>
-            </div>
-        </div>
+            
 
-    </div>
+   
 
 </div>

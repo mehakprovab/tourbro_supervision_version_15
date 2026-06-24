@@ -114,148 +114,126 @@
 
 <!-- New Dashboard Start -->
 <div class="col-12">
-    <div class="top-level-kpi-sec px-3 py-2">
-        <div class="row">
-            <div class="col-12">
-                <div class="row px-3">
-                    <div class="p-0 d-flex justify-content-start col-6">
-                        <h5 class="top-level-head">Top-Level KPI</h5>
-                    </div>
-                    <div class="p-0 d-flex justify-content-end col-6">
+    <div class="top-level-kpi-sec p-4">
+        <div class="row mx-0">
+            <div class="col-12 px-0">
+                   <div class="pb-4 d-flex justify-content-between align-items-center">
+                        <h5 class="top-level-head mb-0">Top-Level KPI</h5>
                         <span class="quick-link-span">Quick Links</span>
                     </div>
-                </div>
             </div>
             <div class="col-12">
-                <div class="row px-3">
-                    <div class="total-gmv col">
-                        <div class="row px-3 py-2 col-12 head-sect">
-                            <div class="col-6 pl-0">
+                <div class="d-flex flex-wrap dashboard-cards">
+                    <div class="total-gmv">
+                        <div class="row p-3 head-sect flex-column ">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="f-15">Total GBV</span>
-                            </div>
-                            <div class="col-6 pr-0 d-flex justify-content-end">
+
                                 <select class="b-none" [(ngModel)]="grossBookingValueFilter" (change)="onGrossBookingValueFilterChange()">
                                     <option *ngFor="let option of dashboardFilterOptions" [ngValue]="option.value">
                                         {{ option.label }}
                                     </option>
                                 </select>
                             </div>
-
-                            <span class="num-span">{{ totalGrossBookingValue | number:'1.2-2' }}</span>
+                            
+                           <span class="num-span">{{ totalGrossBookingValue | number:'1.2-2' }}</span>
                         </div>
                     </div>
-                    <div class="net-revenue col">
-                        <div class="row px-3 py-2 col-12 head-sect">
-                            <div class="col-12 p-0">
+                    <div class="net-revenue">
+                        <div class="row p-3 head-sect flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="f-15">Gross Margin</span>
                             </div>
-
                             <span class="num-span">{{ grossMargin | number:'1.2-2' }}</span>
                         </div>
                     </div>
-                    <div class="net-revenue col">
-                        <div class="row px-3 py-2 col-12 head-sect">
-                            <div class="col-12 p-0">
+                    <div class="net-revenue">
+                        <div class="row p-3 head-sect flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="f-15">Markup Earned</span>
                             </div>
-
-                            <span class="num-span">{{ markupEarned | number:'1.2-2' }}</span>
+                         <span class="num-span">{{ markupEarned | number:'1.2-2' }}</span>
                         </div>
                     </div>
-                    <div class="net-revenue col">
-                        <div class="row px-3 py-2 col-12 head-sect">
-                            <div class="col-12 p-0">
+                    <div class="net-revenue">
+                        <div class="row p-3 head-sect flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="f-15">Convenience Fee</span>
                             </div>
-
                             <span class="num-span">{{ convenienceFee | number:'1.2-2' }}</span>
                         </div>
                     </div>
-                    <div class="total-bookings col">
-                        <div class="row px-3 py-2 col-12 head-sect">
-                            <div class="col-6 p-0">
+                    <div class="total-bookings">
+                       <div class="row p-3 head-sect flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="f-15">Total Bookings</span>
-                            </div>
-                            <div class="col-6 pr-0 d-flex justify-content-end">
                                 <select class="b-none" [(ngModel)]="totalBookingFilter" (change)="onTotalBookingFilterChange()">
                                     <option *ngFor="let option of dashboardFilterOptions" [ngValue]="option.value">
                                         {{ option.label }}
                                     </option>
                                 </select>
                             </div>
-
                             <span class="num-span">{{ totalBooking | number:'1.2-2' }}</span>
                         </div>
                     </div>
-                    <div class="bookings col">
-                        <div class="row px-3 py-3 col-12 head-sect">
-                            <div class="col-6 px-0 py-1">
+                    <div class="bookings">
+                        <div class="row p-3 head-sect flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="f-15">Payment Completed</span>
                             </div>
-
                             <span class="num-span">{{ paymentCompletedCount | number:'1.2-2' }}</span>
                         </div>
                     </div>
+                     <div class="avg-booking-value">
+                         <div class="row p-3 head-sect flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="f-15">Average Booking Value</span>
+                            </div>
+                           <span class="num-span">{{ averageBookingValue | number:'1.2-2' }}</span>
+                           
+                        </div>
+                    </div>
+                    <div class="pending-vendor-confirm">
+                         <div class="row p-3 head-sect flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="f-15">Pending Vendor Confirmations</span>
+                            </div>
+                            <span class="num-span">{{ pendingVendorConfirmations | number:'1.2-2' }}</span>
+                           
+                        </div>
+                    </div>
+                    <div class="pending-payments">
+                         <div class="row p-3 head-sect flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="f-15">Pending Payments</span>
+                            </div>
+                           <span class="num-span">{{ paymentPendingCount | number:'1.2-2' }}</span>
+                            
+                        </div>
+                    </div>
+                    <div class="refund-pendings">
+                         <div class="row p-3 head-sect flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="f-15">Refunds Pending</span>
+                            </div>
+                           <span class="num-span">{{ refundsPending | number:'1.2-2' }}</span>
+                          
+                        </div>
+                    </div>
+                    <div class="open-cust-issues">
+                         <div class="row p-3 head-sect flex-column">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="f-15">Open Customer Issues</span>
+                            </div>
+                             <span class="num-span">{{ openCustomerIssues | number:'1.2-2' }}</span>
+                           
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="row mt-3">
-            <div class="col-12">
-                <div class="row px-3">
-                    <div class="avg-booking-value col-2 mr-4">
-                        <div class="row head-sect">
-                            <div class="col-12">
-                                <span class="f-15">Average Booking Value</span>
-                            </div>
-                            <div class="col-12">
-                                <span class="num-span">{{ averageBookingValue | number:'1.2-2' }}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="pending-vendor-confirm col-2 mr-4 ml-2">
-                        <div class="row head-sect">
-                            <div class="col-12">
-                                <span class="f-15">Pending Vendor Confirmations</span>
-                            </div>
-                            <div class="col-12">
-                                <span class="num-span">{{ pendingVendorConfirmations | number:'1.2-2' }}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="pending-payments col-2 mr-4 ml-2">
-                        <div class="row head-sect">
-                            <div class="col-12">
-                                <span class="f-15">Pending Payments</span>
-                            </div>
-                            <div class="col-12">
-                                <span class="num-span">{{ paymentPendingCount | number:'1.2-2' }}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="refund-pendings col-2 mr-4 ml-2">
-                        <div class="row head-sect py-2">
-                            <div class="col-12 py-1">
-                                <span class="f-15">Refunds Pending</span>
-                            </div>
-                            <div class="col-12">
-                                <span class="num-span">{{ refundsPending | number:'1.2-2' }}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="open-cust-issues col-2 mr-4 ml-2">
-                        <div class="row head-sect">
-                            <div class="col-12">
-                                <span class="f-15">Open Customer Issues</span>
-                            </div>
-                            <div class="col-12">
-                                <span class="num-span">{{ openCustomerIssues | number:'1.2-2' }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
     </div>
 
     <app-revenue-finance

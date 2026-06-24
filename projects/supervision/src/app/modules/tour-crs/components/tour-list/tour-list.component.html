@@ -1,19 +1,20 @@
-<div class="card adminInner">
-<div class="tab-buttons crs-tab-buttons mb-3">
+<div class="tab-buttons crs-tab-buttons mb-3 custom_tab">
   <button 
-    class="tab-btn"
+    class="tab-btn nav-link"
     [ngClass]="activeTab === 'list' ? 'active' : 'inactive'"
     (click)="setTab('list')">
     List Yatra
   </button>
 
   <button 
-    class="tab-btn"
+    class="tab-btn nav-link"
     [ngClass]="activeTab === 'add' ? 'active' : 'inactive'"
     (click)="setTab('add')">
     Create Yatra
   </button>
 </div>
+<div class="card adminInner">
+
     <div class="card-header">
         <h5>Yatra List</h5> 
        

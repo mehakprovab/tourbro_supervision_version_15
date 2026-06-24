@@ -7,8 +7,7 @@
 }
 
 .booking-operations-title {
-    color: #4d1ac4;
-    font-family: Inter, sans-serif;
+    color: #4D1AC4;
     font-size: 22px;
     font-weight: 600;
     line-height: 32px;
@@ -18,16 +17,16 @@
 .booking-operations-grid {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: 8px;
+    gap: 12px;
 }
 
 .booking-operation-card {
     background: #fff;
     border: 1px solid #d6d6d6;
-    border-radius: 8px;
+    border-radius: 12px;
     grid-column: span 4;
     min-height: 80px;
-    padding: 8px 7px;
+    padding: 12px;
 }
 
 .booking-operation-card:nth-child(n + 7) {
@@ -36,11 +35,11 @@
 
 .booking-card-header {
     align-items: flex-start;
-    color: #4c4c4c;
+    color: #4b4b4b;
     display: flex;
     font-family: Inter, sans-serif;
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 500;
     justify-content: space-between;
     line-height: 20px;
     min-height: 24px;
@@ -56,14 +55,14 @@
 }
 
 .booking-card-value {
-    color: #050b18;
+    color: #030712;
     font-family: Inter, sans-serif;
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 700;
     line-height: 34px;
-    margin-top: 10px;
+    margin-top: 0px;
 }
-
+.gap-2{gap: 12px;}
 @media (max-width: 991px) {
     .booking-operation-card,
     .booking-operation-card:nth-child(n + 7) {

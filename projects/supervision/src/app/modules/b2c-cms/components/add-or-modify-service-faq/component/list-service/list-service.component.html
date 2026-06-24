@@ -4,6 +4,13 @@
             <div class="col-md-12 col-lg-12"> -->
                 <form class="clearfix">
                     <div class="row col-md-12 col-lg-12 m-0 p-0">
+                        <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft"
+                #scrollOne>
+                <div class="div1"></div>
+                </div>
+
+                <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
+                    <div class="div2 invisible-scrollbar">
                         <table style="table-layout: fixed; width: 100%;" id="active-users-report">
                             <tr>
                                 <td>
@@ -69,6 +76,9 @@
                                 </td>
                             </tr>
                         </table>
+                    </div>
+                </div>
+                        
                     </div>
                     <div class="card-footer pb-0">
                         <div class="d-flex w-100 justify-content-between">

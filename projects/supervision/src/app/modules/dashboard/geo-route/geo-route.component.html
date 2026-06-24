@@ -1,25 +1,19 @@
-<div class="col-12 revenue-finance-top-sec mt-3 pt-2 pb-4">
+<div class="col-12 revenue-finance-top-sec mt-3 p-4">
 
     <!-- Header -->
-    <div class="row">
-        <div class="col-12">
+     <div class="pb-4">
             <span class="revenue-span">Geo / Route</span>
         </div>
-    </div>
+   
 
-<div class="row p-3">
-  <div class="col-12 mb-2" *ngFor="let item of geoRoutes">
-    <div class="head-sect">
-      <div class="row p-2 align-items-center">
-        <div class="col-8">
+
+ 
+    <div class="head-sect h-64" *ngFor="let item of geoRoutes">
+      <div class="d-flex align-items-center justify-content-between mb-12 p-18">
           <span class="f-17">{{ item }}</span>
-        </div>
-
-        <div class="col-4 text-end">
-          <span class="f-17">></span>
-        </div>
-      </div>
+          <span class="f-17"><i class="fi fi-rr-angle-right"></i></span>
+       </div>
     </div>
-  </div>
-</div>
+ 
+
 </div>

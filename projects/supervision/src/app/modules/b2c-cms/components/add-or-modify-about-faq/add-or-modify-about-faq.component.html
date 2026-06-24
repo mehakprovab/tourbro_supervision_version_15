@@ -1,6 +1,6 @@
-<div class="">
 
-  <div class="">
+
+  <div class="custom_tab">
 
     <ul
       ngbNav
@@ -9,7 +9,7 @@
       [(activeId)]="activeIdString"
       (navChange)="beforeChange($event)">
 
-      <li [ngbNavItem]="'add_update_staticPage'">
+      <li class="nav-tabs" [ngbNavItem]="'add_update_staticPage'">
 
         <a ngbNavLink>
           About FAQ Page Content
@@ -23,7 +23,7 @@
 
       </li>
 
-      <li [ngbNavItem]="'staticpage_list'">
+      <li class="nav-tabs" [ngbNavItem]="'staticpage_list'">
 
         <a ngbNavLink>
           About FAQ Page List
@@ -43,4 +43,3 @@
 
   </div>
 
-</div>

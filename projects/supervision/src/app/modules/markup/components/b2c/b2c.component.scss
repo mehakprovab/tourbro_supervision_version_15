@@ -1,3 +1,25 @@
 table {
     width: 100%;
 }
+.custom_tab .nav-tabs
+
+ {
+    border-bottom: 1px solid #fff!important;
+}
+.custom_tab .nav-item .nav-link {
+       
+     padding: 10px 20px;
+    margin-right: 10px!important;
+    margin-bottom: 10px!important;
+    border: 2px solid #F5F2FC;;
+    border-radius: 8px!important;
+    font-size: 18px!important;
+    font-weight: 600!important;
+    background: #F5F2FC!important;
+    color: #4D1AC4!important;
+}
+.custom_tab .nav-item .nav-link.active {
+    background-color: #3901BE !important;
+    border-color: #3901BE !important;
+    color: #ffffff!important;
+}

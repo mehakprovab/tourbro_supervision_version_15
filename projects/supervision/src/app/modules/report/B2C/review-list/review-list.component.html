@@ -1,8 +1,11 @@
-<div class="container mt-3">
+<div class="card adminInner">
+  <div class="card-header mb-3">
+      <h5 class="mb-0">Review List</h5>
+  </div>
 
   <!-- HEADER -->
-  <div class="d-flex justify-content-between align-items-center mb-2">
-    <h5 class="mb-0">Review List</h5>
+  <div class="d-flex justify-content-end align-items-center mb-2">
+   
 
     <input
       class="form-control w-25"
@@ -12,6 +15,14 @@
       placeholder="Search by name / heading..."
     />
   </div>
+
+  <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft"
+                    #scrollOne>
+                    <div class="div1"></div>
+                </div>
+
+                <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
+                    <div class="div2 invisible-scrollbar">
 
   <!-- TABLE -->
   <div class="table-responsive">
@@ -106,6 +117,8 @@
       </tbody>
 
     </table>
+  </div>
+  </div>
   </div>
 
 </div>

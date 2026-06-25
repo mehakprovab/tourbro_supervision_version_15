@@ -410,7 +410,7 @@ export class HotelCrsDetailComponent implements OnInit, AfterViewInit {
     children_free_before: this.hotelData.children_free_before || 0,
     paid_children_from_age: this.hotelData.paid_children_from_age || 0,
     paid_children_to_age: this.hotelData.paid_children_to_age || 0,
-    local_timezone: this.hotelData.local_timezone,
+    local_timezone: this.hotelData.local_timezone || 'UTC+05:30',
     meal_price: this.hotelData.meal_price || 0,
     accomodation_or_meal: this.hotelData.accomodation_or_meal || '',
     channel: this.hotelData.channel,
@@ -851,6 +851,7 @@ initializeSearchBox() {
 
   this.hotelCrsService.fetch(data).subscribe(resp => {
     this.coreCityList = resp.data;
+    this.patchCityIdentifiersFromSelection(this.hotelForm.value.city_name);
   });
 }
   createHotelDetailForm(): void {
@@ -920,9 +921,7 @@ onCityChange(event: any) {
 
   if (!cityName) return;
 
-  const selectedCity = this.coreCityList.find(
-    city => city.cityName === cityName
-  );
+  const selectedCity = this.findCityByName(cityName);
 
   if (!selectedCity) {
     console.warn('City not found in list:', cityName);
@@ -936,9 +935,9 @@ onCityChange(event: any) {
     return;
   }
 
-  this.selectedCityName = selectedCity.cityName;
-  this.selectedCityCode = selectedCity.cityCode;
-  this.toCityId = selectedCity.id;
+  this.selectedCityName = this.getCityName(selectedCity);
+  this.selectedCityCode = this.getCityCode(selectedCity);
+  this.toCityId = this.getCityId(selectedCity);
   this.hotelForm.patchValue({
     city_name: this.selectedCityName,
     city_id: this.toCityId,
@@ -950,6 +949,43 @@ onCityChange(event: any) {
   setTimeout(() => {
     this.initializeSearchBox();
   }, 500);
+}
+
+findCityByName(cityName: string): any {
+  const selectedName = this.normalizeLocationName(cityName);
+  return (this.coreCityList || []).find(city => this.normalizeLocationName(this.getCityName(city)) === selectedName);
+}
+
+getCityName(city: any): string {
+  return city ? (city.cityName || city.city_name || city.name || city.CityName || '') : '';
+}
+
+getCityCode(city: any): string {
+  return city ? (city.cityCode || city.city_code || city.code || city.CityCode || '') : '';
+}
+
+getCityId(city: any): any {
+  return city ? (city.id || city.Id || city.cityId || city.CityId || city.city_id || city.core_city_id || '') : '';
+}
+
+patchCityIdentifiersFromSelection(cityName: string): void {
+  if (!cityName || !this.coreCityList || !this.coreCityList.length) {
+    return;
+  }
+
+  const selectedCity = this.findCityByName(cityName);
+  if (!selectedCity) {
+    return;
+  }
+
+  this.selectedCityName = this.getCityName(selectedCity);
+  this.selectedCityCode = this.getCityCode(selectedCity);
+  this.toCityId = this.getCityId(selectedCity);
+  this.hotelForm.patchValue({
+    city_name: this.selectedCityName,
+    city_id: this.toCityId,
+    city_code: this.selectedCityCode || this.hotelForm.value.city_code || ''
+  });
 }
   updateMapWithCityAndCountry(city: string, country: string) {
     console.log("city", city)
@@ -989,6 +1025,7 @@ this.hotelForm.value.hotel_hotel_amenities =
        this.hotelForm.value.stay_amenities = this.hotelForm.value.stay_amenities.map(v => v.stay_amenities).join(",");
       this.hotelForm.value.room_view_ids = this.hotelForm.value.room_view_ids.map(v => v.views).join(",");
       this.hotelForm.value.weekend_days = this.hotelForm.value.weekend_days.map(v => v.item_text).join(",");
+      this.patchCityIdentifiersFromSelection(this.hotelForm.value.city_name);
       this.hotelForm.value.city_code = this.selectedCityCode || this.hotelForm.value.city_code || '';
       this.hotelForm.value.cityCode = this.hotelForm.value.city_code;
       this.hotelForm.value.city_id = this.toCityId || this.hotelForm.value.city_id || '';
@@ -1002,38 +1039,43 @@ this.hotelForm.value.hotel_hotel_amenities =
       this.hotelForm.value.user_type = this.hotelForm.get('user_type').value || '';
       this.hotelForm.value.hotel_description = this.hotelForm.get('hotel_description').value || '';
       let data = Object.assign({}, this.hotelForm.value);
+      const resolvedCityId = this.toCityId || data['city_id'] || this.getCityId(this.findCityByName(data['city_name'])) || '';
+      const resolvedCityCode = this.selectedCityCode || data['city_code'] || this.getCityCode(this.findCityByName(data['city_name'])) || '';
+      data['city_id'] = resolvedCityId;
+      data['city_code'] = resolvedCityCode;
+      data['cityCode'] = resolvedCityCode;
       delete data['city'];
       try {
         if (this.hotelOne && !this.utilityService.isEmpty(this.hotelOne)) {
           console.log("hotelOne", this.hotelOne)
           data['id'] = this.hotelOne['id'];
-          if (this.selectedCityCode != '' && this.selectedCityName != '') {
-            data['city_code'] = this.selectedCityCode;
-            data['cityCode'] = this.selectedCityCode;
+          if (this.selectedCityName || resolvedCityId) {
+            data['city_code'] = resolvedCityCode;
+            data['cityCode'] = resolvedCityCode;
             data['city_name'] = this.selectedCityName;
-            data['city_id'] = this.toCityId || data['city_id'] || '';
+            data['city_id'] = resolvedCityId;
           }
           else {
             data['city_code'] = this.hotelOne.city_code || '';
             data['cityCode'] = this.hotelOne.cityCode || this.hotelOne.city_code || '';
             data['city_name'] = this.hotelOne.city_name || this.hotelForm.value.city_name || '';
-            data['city_id'] = this.hotelOne.city_id || this.hotelOne.core_city_id || this.hotelForm.value.city_id || '';
+            data['city_id'] = this.hotelOne.city_id || this.hotelOne.core_city_id || resolvedCityId;
           }
           data = [data];
           data['topic'] = 'updateHotel';
         }
         else {
-          if (this.selectedCityCode != '' && this.selectedCityName != '') {
+          if (this.selectedCityName || resolvedCityId) {
             data['city_name'] = this.selectedCityName;
-            data['city_code'] = this.selectedCityCode;
-            data['cityCode'] = this.selectedCityCode;
-            data['city_id'] = this.toCityId || data['city_id'] || '';
+            data['city_code'] = resolvedCityCode;
+            data['cityCode'] = resolvedCityCode;
+            data['city_id'] = resolvedCityId;
           }
           else {
             data['city_code'] = this.hotelForm.value.city_code || '';
             data['cityCode'] = this.hotelForm.value.cityCode || this.hotelForm.value.city_code || '';
             data['city_name'] = this.hotelForm.value.city_name || '';
-            data['city_id'] = this.hotelForm.value.city_id || '';
+            data['city_id'] = resolvedCityId;
           }
           data = [data];
           data['topic'] = 'addHotel';
@@ -1061,7 +1103,14 @@ this.hotelForm.value.hotel_hotel_amenities =
               }
             })
           }
-          this.hotelForm.reset();
+          this.hotelForm.reset({
+            core_country_id: 'India',
+            local_timezone: 'UTC+05:30',
+            channel: 'Extranet',
+            user_type: 'B2C',
+            currency: 'INR',
+            status: true
+          });
           this.isHotelDetail = false;
           if (data['topic'] == 'addHotel') {
             this.swalService.alert.success("Hotel detail added successfully!")
@@ -1212,19 +1261,19 @@ amenitiesList:any[] = []
 
           // Check if the formattedOffset exists in timezones array
           if (!this.timezones.includes(formattedOffset)) {
-            formattedOffset = 'UTC+00:00'; // Default if not found
+            formattedOffset = 'UTC+05:30'; // Default if not found
           }
 
           console.log("Final Timezone Selected:", formattedOffset);
           this.hotelForm.get('local_timezone').setValue(formattedOffset);
         } else {
           console.error('Error fetching timezone:', data.status);
-          this.hotelForm.get('local_timezone').setValue('UTC+00:00'); // Default
+          this.hotelForm.get('local_timezone').setValue('UTC+05:30'); // Default
         }
       })
       .catch(error => {
         console.error('Failed to fetch timezone:', error);
-        this.hotelForm.get('local_timezone').setValue('UTC+00:00'); // Default
+        this.hotelForm.get('local_timezone').setValue('UTC+05:30'); // Default
       });
   }
 

@@ -1,4 +1,172 @@
-<div *ngIf="loading" class="card p-5">
+<table cellpadding="0" cellspacing="0" width="100%" #voucher [class.pdf-export]="isExporting" *ngIf="voucherData" style="font-size: 13px; width: 100%; overflow: hidden; border-radius: 16px; box-shadow: 0 0 2px 0 rgba(0,0,0,.08),0 2px 8px 0 rgba(0,0,0,.16); background: #F3F3F3; margin: 0 auto; -webkit-print-color-adjust: exact;" >
+    <tbody>
+        <tr>
+            <td style="padding: 15px 15px 30px; border-top: unset;">
+                <table class="header-table">
+                    <tbody>
+                        <tr>
+                            <td class="logo-cell"><img src="assets/images/login-images/l-logo.png" class="brand-logo"></td>
+                            <td style="padding: 0px; width: 28%; border-top: 1px solid transparent;">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td class="d-flex align-center justify-content-end" style="border: none; padding: 30px 0px;">
+                                                 
+                                                <a href="javascript:void(0);" (click)="printVoucher()" style="font-size: 16px; -webkit-print-color-adjust: exact; padding: 12px 20px; display: block; font-weight: 600; border-radius: 8px; color: #FE4865; background: #FFF5F6; margin-left: 10px;"> Print </a>
+                                                <a id="download" (click)="downloadVoucher()" style="font-size: 16px; border: 1px solid #FE4865; background: #FE4865; -webkit-print-color-adjust: exact; padding: 12px 20px; display: block; border-radius: 8px; color: #fff; margin-left: 10px; font-weight: 600;"> PDF Download </a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+                    <tbody>
+                        <tr>
+                            <td colspan="2" style="padding: 0px; border: none;">
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td style="border: none; padding: 0px 0px 15px; line-height: 25px; font-size: 15px; width: 50%;"><span><b>{{ customerName() || 'N/A' }}</b></span>
+                                            <br>
+                                            <span><img src="assets/images/telephone-ic.png"> &nbsp;{{ detail('phone_code', 'PhoneCode') }} {{ detail('phone', 'mobile_number', 'PhoneNumber') || 'N/A' }}</span>
+                                            <br>
+                                            <span><img src="assets/images/envelope-ic.png"> &nbsp;{{ detail('email', 'Email') || 'N/A' }} </span>
+                                        </td>
+                                        <td style="border: none; padding: 0px 0px 15px; line-height: 25px; font-size: 15px; width: 50%; text-align: right;">
+                                            <span> Application Reference:<strong>{{ detail('app_reference', 'AppReference', 'application_reference') || appReference }}</strong><br></span>
+                                            <span> Booked On:<strong>{{ detail('created_at', 'BookedOn', 'booked_on') | date:'dd/MM/yyyy' }}</strong><br></span>
+                                            
+                                            <strong class="badge" tyle="font-size: 10px; padding: 8px; border-radius: 5px; background: #28a745; color: #fff;" [ngClass]="getStatusClass(detail('status', 'booking_status'))">
+            {{ getStatusLabel(detail('status', 'booking_status')) }}
+          </strong>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="margin-bottom: 16px; padding: 16px; border-radius: 16px; border: 1px solid #E8E8E8; box-shadow: 20px 14px 18px 0px rgba(194, 194, 194, 0.15); background: #fff;">
+                    <table style="width: 100%;">
+                        <tbody>
+                            <tr>
+                                <td colspan="2" style="padding: 0px; border: none;">
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <td style="padding: 10px 0px; width: 25%; border: none;"></td>
+                                            <td valign="top" style="padding: 15px 15px; border: none;">
+                                                <span style="line-height: normal; font-size: 17px; color: #2a2a2a; vertical-align: middle; font-weight: 700;">{{ detail('city', 'City') || 'N/A' }}</span>
+                                                <br>
+                                                <span style="display: block; line-height: 25px; font-size: 15px; margin-top: 4px;">{{ detail('hotel', 'hotel_name', 'Hotel') || 'N/A' }}</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="margin-bottom: 16px; padding: 16px; border-radius: 16px; border: 1px solid #E8E8E8; box-shadow: 20px 14px 18px 0 rgba(194,194,194,.15); background: #fff;">
+                    <table width="100%" cellpadding="5" cellspacing="2" style="font-size: 10px; background: #fff;">
+                        <tbody>
+                            <tr>
+                                <td colspan="4" style="padding: 12px 16px; background: #F5F2FC; border-radius: 8px; border: none; font-weight: 600; color: #282828; font-size: 20px;">Booking Details</td>
+                            </tr>
+                            <tr style="white-space: nowrap; color: #4B4B4B; font-weight: 400; font-size: 14px;">
+                                  <td>From Date</td>
+                                  <td>To Date</td>
+                                  <td>Language</td>
+                                  <td>Guide Status</td>
+                            </tr>
+                            <tr style="color: #4B4B4B; font-weight: 600; font-size: 16px;">
+                            <td>{{ detail('from_date', 'FromDate', 'travel_from_date') | date:'dd/MM/yyyy' }}</td>
+                          <td>{{ detail('to_date', 'ToDate', 'travel_to_date') | date:'dd/MM/yyyy' }}</td>
+                          <td>{{ detail('language', 'Language') || 'N/A' }}</td>
+                          <td>
+                            <span class="badge" [ngClass]="getStatusClass(detail('status', 'booking_status'))">
+                              {{ getStatusLabel(detail('status', 'booking_status')) }}
+                            </span>
+                          </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="margin-bottom: 16px; padding: 16px; border-radius: 16px; border: 1px solid #E8E8E8; box-shadow: 20px 14px 18px 0 rgba(194,194,194,.15); background: #fff;">
+                    <table width="100%" cellpadding="5" cellspacing="2" style="font-size: 10px; background: #fff;">
+                        <tbody>
+                            <tr>
+                                <td colspan="6" style="padding: 12px 16px; background: #F5F2FC; border-radius: 8px; border: none; font-weight: 600; color: #282828; font-size: 20px;">Traveller Details</td>
+                            </tr>
+                            <tr style="white-space: nowrap; color: #4B4B4B; font-weight: 400; font-size: 14px;">
+                                  <td>Name</td>
+                                  <td>Phone</td>
+                                  <td>Email</td>
+                                  <td>Language</td>
+                            </tr>
+                            <tr style="color: #4B4B4B; font-weight: 600; font-size: 16px;">
+                                <td>{{ customerName() || 'N/A' }}</td>
+                                <td>{{ detail('phone_code', 'PhoneCode') }} {{ detail('phone', 'mobile_number', 'PhoneNumber') || 'N/A' }}</td>
+                                <td>{{ detail('email', 'Email') || 'N/A' }}</td>
+                                <td>{{ detail('language', 'Language') || 'N/A' }}</td>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="margin-bottom: 16px; padding: 16px; border-radius: 16px; border: 1px solid #E8E8E8; box-shadow: 20px 14px 18px 0 rgba(194,194,194,.15); background: #fff;">
+                    <table width="100%" cellpadding="5" cellspacing="2" style="font-size: 10px; background: #fff;">
+                        <tbody>
+                            <tr>
+                                <td colspan="6" style="padding: 12px 16px; background: #F5F2FC; border-radius: 8px; border: none; font-weight: 600; color: #282828; font-size: 20px;">Guide Details</td>
+                            </tr>
+                            <tr style="white-space: nowrap; color: #4B4B4B; font-weight: 400; font-size: 14px;">
+                                 <td>Guide Name</td>
+                                  <td>Guide Mobile</td>
+                                  <td>City</td>
+                                  <td>Hotel</td>
+                            </tr>
+                            <tr style="color: #4B4B4B; font-weight: 600; font-size: 16px;">
+                                <td>{{ detail('guide_name', 'GuideName') || 'N/A' }}</td>
+                                <td>{{ detail('guide_mobile', 'GuideMobile') || 'N/A' }}</td>
+                                <td>{{ detail('city', 'City') || 'N/A' }}</td>
+                                <td>{{ detail('hotel', 'hotel_name', 'Hotel') || 'N/A' }}</td>
+                            </tr>
+                           <tr class="remarks" *ngIf="detail('message', 'notes', 'note', 'remarks')">
+                              <td style="white-space: nowrap; color: #4B4B4B; font-weight: 400; font-size: 14px;">Message / Notes</td>
+                              <td style="color: #4B4B4B; font-weight: 600; font-size: 16px;">{{ detail('message', 'notes', 'note', 'remarks') }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="margin-bottom: 16px; padding: 16px; border-radius: 16px; border: 1px solid #E8E8E8; box-shadow: 20px 14px 18px 0 rgba(194,194,194,.15); background: #fff;">
+                    <table width="100%" cellpadding="5" cellspacing="2" style="font-size: 15px; background: #fff;">
+                        <tbody>
+                            <tr>
+                                <td colspan="2" style="padding: 12px 16px; background: #F5F2FC; border-radius: 8px; border: none; font-weight: 600; color: #282828; font-size: 20px;">Payment Details</td>
+                            </tr>
+                            <tr>
+                                <td>Payment Status</td>
+                                <td>{{ detail('payment_status', 'PaymentStatus') || 'N/A' }}</td>
+                            </tr>
+                            <tr>
+                                <td>Outstanding Status</td>
+                                <td>{{ detail('outpay_status') || 'N/A' }}</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>Total Amount</td>
+                                <td>{{ detail('currency', 'currency_code', 'Currency') }} {{ detail('price', 'amount', 'total_fare', 'TotalFare') || 'N/A' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+<!-- <div *ngIf="loading" class="card p-5">
   <mat-spinner [diameter]="35" class="mx-auto"></mat-spinner>
 </div>
 
@@ -35,7 +203,7 @@
       </div>
     </div>
 
-    <div class="voucher-title">Guide Voucher</div>
+   
 
     <div class="service-name">
       <div>
@@ -113,7 +281,7 @@
     </div>
   </section>
 
-  <p class="generated-note">This is a system-generated voucher.</p>
+  
 </div>
 
-<ngx-loading [show]="loading" [config]="{fullScreenBackdrop: true}"></ngx-loading>
+<ngx-loading [show]="loading" [config]="{fullScreenBackdrop: true}"></ngx-loading> -->

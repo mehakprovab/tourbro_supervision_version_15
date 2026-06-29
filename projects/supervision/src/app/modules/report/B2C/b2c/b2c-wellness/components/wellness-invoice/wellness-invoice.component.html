@@ -1,10 +1,342 @@
 <div class="mb-3 container">
   <a [routerLink]="['/report/b2c-wellness']"><button class="btnStyle">Back</button></a>&nbsp;
-  <button class="btnStyle" (click)="printInvoice()">Print</button>&nbsp;
-  <button class="btnStyle" (click)="downloadPdf()">Download Invoice</button>
+  <!-- <button class="btnStyle" (click)="printInvoice()">Print</button>&nbsp; -->
+  <button class="btnStyle" (click)="downloadPdf()">Download PDF</button>
 </div>
 
-<div id="wellness-invoice" #print_invoice class="invoice-card" *ngIf="invoiceData">
+<table class="table" cellpadding="0" cellspacing="0" width="100%"
+        style="font-size:13px; width:100%; margin:0px auto;background-color:#ffffff; padding:50px 45px;margin-top: 20px; "
+        id="print_voucher" #print_voucher>
+        <tbody> 
+            <tr>
+                <td colspan="8" style="padding: 0px 14px; color: #fff; line-height: 31px;border-top:1px solid transparent;" class="logocvr">
+
+                    <table width="100%" style="border-collapse: collapse;" cellpadding="0" cellspacing="0">
+                        <tbody>
+
+                            <tr>
+                                <td style="padding: 0px; border-top: 1px solid transparent;width: 30%;">
+                                    <img style="width:155px; padding: 0px 0px; -webkit-print-color-adjust: exact;"
+                                        src="assets/images/login-images/l-logo.png"><br>
+
+                                    <span style="color:#4D1AC4;font-size: 13px;font-weight: 600;">Your Sarathi</span><br>
+                                    <span style="color:#000;font-size: 13px;font-weight: 600;">PATANJALI PARIVAHAN PRIVATE LIMITED</span><br>
+                                    <div style="font-size:13px;line-height:20px;color:#4b4b4b;">
+                                        <span>(Tour & Travel Division for TourBro project)</span><br>
+                                        <span>Address: Patanjali Yogpeeth, Shop Number 13, NH334 Maharishi<br>
+                                         Dayanand Gram, Shantershah, Haridwar, Uttarakhand - 249405</span><br>
+                                        <span>PAN: AAFCP1505P</span><br>
+                                        <span>GST: 05AAFCP1505P3ZB</span><br>
+                                        <span>CIN: U60231UR2009PTC032912</span><br>
+                                        <span>Mobile: +91 8679021482</span><br>
+                                        <span>Email: legal@patanjaliparivahan.com</span>
+                                    </div>
+                                </td>
+                                <td style="padding: 12px 12px;text-align:center;border: 1px solid transparent;border-right: 1px solid #e9ecef;width: 30%;border-left: 1px solid #e9ecef;">
+                                    <span style="font-size:18px;font-weight:600;color:#4D1AC4;text-align: center;">TAX INVOICE</span>
+                                    <br>
+                                    <span style="font-size:16px;font-weight:600;color:#4D1AC4;text-align: center;">(Booking Receipt cum Tax Invoice<br> for Convenience Fee)</span>
+                                    <br>
+                                   <span style="font-size:13px;font-weight:400;color:#4b4b4b;text-align: center;">(Marketplace / Booking Facilitation Model)</span>
+
+                                </td>
+                                <td style="padding: 12px 12px; width: 25%; margin: 10px 0px; border-top: 1px solid transparent; ">
+                                    <div style="line-height:40px;color: #4b4b4b;">
+                                        <span style="font-size:13px;font-weight:400;">Invoice No : TB/INV/24-25/0001</span><br>
+                                        <span style="font-size:13px;font-weight:400;">Invoice Date : 20-May-2024</span><br>
+                                        <span style="font-size:13px;font-weight:400;">Booking Ref : TBHS123456</span><br>
+                                        <span style="font-size:13px;font-weight:400;">Place of Supply : Uttarakhand (05)</span>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+
+            </tr>
+            <tr>
+
+
+                <td colspan="4" style="width: 100%; padding:0px 14px;border-top: 1px solid transparent; ">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style="border:none; padding-left:0px; line-height: 25px; font-size: 15px; width: 49%;vertical-align: top;">
+                                <div style=" padding: 0px; border-radius: 12px; border:1px solid #e9ecef;">
+                                    <table width="100%" cellpadding="10" cellspacing="0">
+                                    <tr>
+                                        <td style="color: #4D1AC4;font-size: 14px;font-weight: 600;border-top:1px solid transparent;">
+                                            BILL TO (CUSTOMER)
+                                        </td>
+                                        <td style="border-top:1px solid transparent;text-align: right;"><img src="assets/images/user-inv.png" width="28px" style="margin-right: 10px;"></td>
+                                    </tr>
+
+                                    <tr style="color: #4b4b4b;font-size: 13px;font-weight: 400;">
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">Name : </td>
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">Mr. Ronit Keshav</td>
+                                    </tr>
+                                    <tr style="color: #4b4b4b;font-size: 13px;font-weight: 400;padding: 4px 10px;">
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">Address :</td>
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">123, MG Road, New Delhi - 110001, India</td>
+                                    </tr>
+                                     <tr style="color: #4b4b4b;font-size: 13px;font-weight: 400;padding: 4px 10px;">
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">GSTIN : </td>
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">Unregistered</td>
+                                    </tr>
+                                    <tr style="color: #4b4b4b;font-size: 13px;font-weight: 400;padding: 4px 10px;">
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">Mobile :</td>
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">+91 9876543210</td>
+                                    </tr>
+                                     <tr style="color: #4b4b4b;font-size: 13px;font-weight: 400;padding: 4px 10px;">
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">Email : </td>
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">ronit.keshav@gmail.com</td>
+                                      </tr>
+
+                                    
+                                </table>
+
+                                </div>
+
+                           </td>
+
+                            <td style="border:none; padding-right:0px; line-height: 25px; font-size: 15px; width: 49%;">
+                           <div style="padding: 0px; border-radius: 12px; border:1px solid #e9ecef;">
+                                <table width="100%" cellpadding="10" cellspacing="0">
+                                    <tr style="">
+                                        <td style="color: #4D1AC4;font-size: 14px;font-weight: 600;border-top:1px solid transparent;">BOOKING DETAILS</td>
+                                        <td style="border-top:1px solid transparent;text-align: right;"><img src="assets/images/calender-inv.png" width="28px" style="margin-right: 10px;"></td>
+                                    </tr>
+
+                                    <tr style="color: #4b4b4b;font-size: 13px;font-weight: 400;">
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">Service Booked :</td>
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">Wellness Retreat</td>
+                                    </tr>
+                                     <tr style="color: #4b4b4b;font-size: 13px;font-weight: 400;">
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">Vendor / Service Provider :</td>
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">Yoggram Wellness</td>
+                                    </tr>
+                                    <tr style="color: #4b4b4b;font-size: 13px;font-weight: 400;">
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">Booking Date  :</td>
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">18-June-2026</td>
+                                    </tr>
+
+                                     <tr style="color: #4b4b4b;font-size: 13px;font-weight: 400;">
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">Check-In / Check-Out :</td>
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">20-June-2026 to 22-June-2026</td>
+                                    </tr>
+                                      <tr style="color: #4b4b4b;font-size: 13px;font-weight: 400;">
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">No. of Nights :</td>
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">2 Nights</td>
+                                    </tr>
+                                     <tr style="color: #4b4b4b;font-size: 13px;font-weight: 400;">
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">No. of Guests :</td>
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">2 Adults</td>
+                                    </tr>
+                                    <tr style="color: #4b4b4b;font-size: 13px;font-weight: 400;">
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">Guest Name :</td>
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">Mr. Ronit Keshav</td>
+                                    </tr>
+                                </table>
+                           </div>
+                            </td>
+                        </tr>
+
+                    </table>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td colspan="8" style="border-top:1px solid transparent;padding:0px 14px;">
+
+                    <!-- Invoice Table -->
+                    <table width="100%" cellpadding="10" cellspacing="0"
+                        style="border-collapse:collapse;border:1px solid #e9ecef;">
+                        <tr style="background:#4D1AC4;color:white;">
+                            <th style="border:1px solid #e9ecef;">S.No</th>
+                            <th style="border:1px solid #e9ecef;">Particulars</th>
+                            <th style="border:1px solid #e9ecef;">Amount (₹)</th>
+                        </tr>
+
+                        <tr>
+                            <td style="border:1px solid #e9ecef;text-align:center;">1</td>
+                            <td style="border:1px solid #e9ecef;">
+                                Booking Amount collected on behalf of Vendor<br>
+                                <span style="color: #4D1AC4;font-size: 13px;font-weight: 500;">(Including applicable taxes on services, collected on behalf of vendor)</span>
+                            </td>
+                            <td style="border:1px solid #e9ecef;text-align:right;">
+                                20,000.00
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="border:1px solid #e9ecef;text-align:center;">2</td>
+                            <td style="border:1px solid #e9ecef;">
+                                TourBro Platform Convenience Fees
+                            </td>
+                            <td style="border:1px solid #e9ecef;text-align:right;">
+                                600.00
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2" style="border:1px solid #e9ecef;text-align:right;">
+                                Taxable Value (Convenience Fee)
+                            </td>
+                            <td style="border:1px solid #e9ecef;text-align:right;">
+                                600.00
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2" style="border:1px solid #e9ecef;text-align:right;">
+                                CGST @ 9%
+                            </td>
+                            <td style="border:1px solid #e9ecef;text-align:right;">
+                                54.00
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2" style="border:1px solid #e9ecef;text-align:right;">
+                                SGST @ 9%
+                            </td>
+                            <td style="border:1px solid #e9ecef;text-align:right;">
+                                54.00
+                            </td>
+                        </tr>
+
+                        <tr style="background:#f8f8f8;font-weight:bold;">
+                            <td colspan="2" style="border:1px solid #e9ecef;text-align:right;background: #f5f2fc;color: #4b19bf;">
+                                Total Amount Payable
+                            </td>
+                            <td style="border:1px solid #e9ecef;text-align:right;background: #f5f2fc;color: #4b19bf;">
+                                ₹20,708.00
+                            </td>
+                        </tr>
+                        <tr style="font-weight:bold;">
+                            <td colspan="3" style="border:1px solid #e9ecef;text-align:left;background: #ffffff;color: #4b19bf;">
+                                 <b>Amount in Words:</b><br>
+                                Rupees Twenty Thousand Seven Hundred and Eight Rupees Only
+                            </td>
+                           
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+
+          
+            <!-- Important Note -->
+            <tr style="padding:15px;">
+                <td style="border-top:1px solid transparent;padding: 14px;">
+                    <table style="border:1px solid #e9ecef;width: 100%;">
+                        <tbody>
+                            <tr>
+                                <td style="border-top:1px solid #e9ecef;">
+                                    <h4 style="color: #4D1AC4; font-size: 14px; font-weight: 600;"><img src="assets/images/important-inv.png" width="28px" style="margin-right: 10px;">IMPORTANT NOTE</h4>
+
+                                    <ul style="margin:0;padding-left:18px;line-height:24px;color: #4b4b4b;font-weight: 400;">
+                                        <li>The main travel/tourism service is supplied by the respective vendor/service provider.</li>
+
+                                        <li>Patanjali Parivahan Private Limited (TourBro) acts only as a booking facilitation platform and
+                                            collects the booking amount on behalf of the vendor/service provider.</li>
+
+                                        <li>This tax invoice is issued only for the convenience/platform fee charged by TourBro.</li>
+                                    </ul>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table> 
+                </td>
+                
+            </tr>
+
+
+            <tr>
+                <td style="padding: 0px; border: none;padding: 0px 14px 14px;">
+                    <table style="width: 100%;border:1px solid #e9ecef;">
+                        <tr>
+                            <td style="width: 40%;border: none;line-height: 18px;font-size: 13px;color: #4b4b4b;padding: 0px;">
+                                <!-- Bank Details -->
+                                <table width="100%" cellpadding="10" cellspacing="0">
+                                    <tr>
+                                        <td colspan="2" style="color: #4D1AC4; font-size: 14px; font-weight: 600;border-top:1px solid transparent;">
+                                            <img src="assets/images/bank-inv.png"  width="28px" style="margin-right: 10px;">BANK DETAILS
+                                        </td>
+                                    </tr>
+
+                                    <tr style="color: #4b4b4b; font-size: 13px; font-weight: 400;">
+                                        <td style="padding: 4px 10px; line-height: 18px; border-top: 1px solid transparent;">Name :</td>
+                                        <td style="padding: 4px 10px; line-height: 18px; border-top: 1px solid transparent;">Patanjali Parivahan Private Limited</td>
+                                    </tr>
+                                    <tr style="color: #4b4b4b; font-size: 13px; font-weight: 400;">
+                                        <td style="padding: 4px 10px; line-height: 18px; border-top: 1px solid transparent;">Bank :</td>
+                                        <td style="padding: 4px 10px; line-height: 18px; border-top: 1px solid transparent;">SBI Bank</td>
+                                    </tr>
+
+                                    <tr style="color: #4b4b4b; font-size: 13px; font-weight: 400;">
+                                        <td style="padding: 4px 10px; line-height: 18px; border-top: 1px solid transparent;">Account No :</td>
+                                        <td style="padding: 4px 10px; line-height: 18px; border-top: 1px solid transparent;">44395938313</td>
+                                    </tr>
+                                    <tr style="color: #4b4b4b; font-size: 13px; font-weight: 400;">
+                                        <td style="padding: 4px 10px; line-height: 18px; border-top: 1px solid transparent;">IFSC :</td>
+                                        <td style="padding: 4px 10px; line-height: 18px; border-top: 1px solid transparent;">SBIN0000586</td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="width: 30%;text-align: center; border: none; padding: 0px;border-right: 1px solid #e9ecef;border-left: 1px solid #e9ecef;">
+                               
+                                <table width="100%">
+                                    <tr>
+                                         <td style="border-top:1px solid transparent;color: #282828; font-size: 13px; font-weight: 600;">
+                                            Patanjali Parivahan Private Limited
+                                        </td>
+                                    </tr>
+                                    <tr style="color: #4b4b4b; font-size: 13px; font-weight: 400;">
+                                        <td style="padding: 4px 10px; line-height: 18px;border-top:1px solid transparent;">GST: 05AAFCP1505P3ZB</td>
+                                    </tr>
+                                    <tr style="color: #4b4b4b; font-size: 13px; font-weight: 400;">
+                                        <td style="padding: 4px 10px; line-height: 18px;border-top:1px solid transparent;">CIN: U60231UR2009PTC032912</td>
+                                    </tr>
+                                     <tr style="color: #4b4b4b; font-size: 13px; font-weight: 400;">
+                                        <td style="padding: 4px 10px; line-height: 18px;border-top:1px solid transparent;">Phone: +91 8679021482</td>
+                                    </tr>
+                                     <tr style="color: #4b4b4b; font-size: 13px; font-weight: 400;">
+                                       <td style="padding: 4px 10px; line-height: 18px;border-top:1px solid transparent;">Email: legal@patanjaliparivahan.com</td>
+                                    </tr>
+                                    <tr style="color: #4b4b4b; font-size: 13px; font-weight: 400;">
+                                       <td style="padding: 4px 10px; line-height: 18px;border-top:1px solid transparent;">Website: www.tourbro.com</td>
+                                    </tr>
+                                </table>
+
+                            </td>
+                            <td style="width: 30%; border: none; padding: 0px;">
+                                
+                                <table width="100%">
+                                    <tr>
+
+
+                                        <td style="text-align:center;vertical-align:bottom;border-top:1px solid transparent">
+                                            <span style="color: #4D1AC4;font-size: 13px;font-weight: 600;">For Patanjali Parivahan Private Limited</span>
+                                            <div style="margin-top:80px;color: #4D1AC4;text-align: center;">
+                                                _______________________<br>
+                                             <span style="color: #4D1AC4;font-size: 13px;font-weight: 600;">Authorised Signatory</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+<!-- <div id="wellness-invoice" #print_invoice class="invoice-card" *ngIf="invoiceData">
   <div class="invoice-header">
     <div>
       <h3>Wellness Invoice</h3>
@@ -56,6 +388,6 @@
       </tr>
     </tbody>
   </table>
-</div>
+</div> -->
 
 <ngx-loading [show]="loading"></ngx-loading>

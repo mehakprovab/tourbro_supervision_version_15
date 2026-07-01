@@ -226,6 +226,7 @@ onSubmit() {
     ...this.regConfig.value, // start with all values
     auth_role_id: "4",
     promo_image: "",
+    use_type:'multiple',
     start_date: formatDate(this.regConfig.value.start_date, "YYYY-MM-DD"),
     expiry_date: formatDate(this.regConfig.value.expiry_date, "YYYY-MM-DD"),
   };

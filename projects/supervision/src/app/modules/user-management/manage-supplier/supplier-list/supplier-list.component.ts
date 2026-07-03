@@ -52,6 +52,7 @@ export class SupplierListComponent implements OnInit {
   regConfig:FormGroup;
   @Output() b2cUserUpdate = new EventEmitter<any>();
   supplierId:any;
+  supplierBeingLoaded: any;
   propertyId:number;
     countriesList: any;
     registerStates: any;
@@ -381,8 +382,61 @@ onSearchSubmit(user:any){
         });
 }
 updatesupplier(data) {
-    this.userMangementService.supplierUpdateData.next(data);
-    this.b2cUserUpdate.emit({ tabId: 'add_update_b2bUser', data });
+    const supplierId = data.supplier_id || data.id;
+    if (!supplierId || this.supplierBeingLoaded) {
+        return;
+    }
+
+    this.supplierBeingLoaded = supplierId;
+    this.subSunk.sink = this.apiHandlerService.apiHandler('supplierDetail', 'post', {}, {}, {
+        supplier_id: supplierId,
+        id: supplierId
+    }).subscribe({
+        next: (resp: any) => {
+            this.supplierBeingLoaded = null;
+            if (resp.statusCode !== 200 && resp.statusCode !== 201) {
+                this.swalService.alert.oops('Unable to load supplier details.');
+                return;
+            }
+
+            const supplierDetails = this.extractSupplierDetails(resp);
+            if (!supplierDetails) {
+                this.swalService.alert.oops('Supplier details were not found.');
+                return;
+            }
+
+            // Keep list-only values (such as status) while preferring the complete detail response.
+            const supplier = { ...data, ...supplierDetails };
+            this.userMangementService.supplierUpdateData.next(supplier);
+            this.b2cUserUpdate.emit({ tabId: 'add_update_b2bUser', data: supplier });
+        },
+        error: () => {
+            this.supplierBeingLoaded = null;
+            this.swalService.alert.oops('Unable to load supplier details.');
+        }
+    });
+}
+
+private extractSupplierDetails(resp: any): any | null {
+    let details = resp && resp.data;
+
+    while (details && !Array.isArray(details) && details.data) {
+        details = details.data;
+    }
+
+    if (Array.isArray(details)) {
+        details = details[0];
+    }
+
+    if (!details || typeof details !== 'object') {
+        return null;
+    }
+
+    return {
+        ...details,
+        ...(details.user || {}),
+        ...(details.supplier || {})
+    };
 }
 // updatesupplier(user) {
 //     this.subSunk.sink = this.apiHandlerService.apiHandler('updateSupplierList', 'post', {}, {},

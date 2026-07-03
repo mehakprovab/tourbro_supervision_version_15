@@ -101,9 +101,10 @@
                                                                                <!-- <button ngbDropdownItem (click)="onTransferProperty(user)">
                                                                                 Transfer Property</button>      -->
                                                                                 <button ngbDropdownItem
-                                                                (click)="updatesupplier(user)">
+                                                                (click)="updatesupplier(user)"
+                                                                [disabled]="!!supplierBeingLoaded">
                                                                 
-                                                                    {{'Update'}}
+                                                                    {{ supplierBeingLoaded === (user.supplier_id || user.id) ? 'Loading...' : 'Update' }}
                                         
                                                             </button>                                                                          
                                                                          

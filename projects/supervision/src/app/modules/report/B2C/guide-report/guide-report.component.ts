@@ -82,7 +82,9 @@ export class GuideReportComponent implements OnInit, OnDestroy {
     this.subSunk.sink = this.apiHandlerService.apiHandler('guideReport', 'post', {}, {}, payload)
       .subscribe((response: any) => {
         this.loading = false;
-        this.reportData = this.applyFilters(this.extractRows(response));
+        this.reportData = this.sortLatestFirst(
+  this.applyFilters(this.extractRows(response))
+);
       }, () => {
         this.loading = false;
         this.reportData = [];
@@ -254,4 +256,24 @@ export class GuideReportComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subSunk.unsubscribe();
   }
+  private sortLatestFirst(rows: any[]): any[] {
+  return [...rows].sort((a, b) => {
+    const dateA = this.getRowDate(a);
+    const dateB = this.getRowDate(b);
+    return dateB - dateA;
+  });
+}
+
+private getRowDate(row: any): number {
+  const dateValue = this.value(
+    row,
+    'created_at',
+    'booked_on',
+    'BookedOn',
+    'booking_date',
+    'request_date'
+  );
+
+  return dateValue ? new Date(dateValue).getTime() : 0;
+}
 }

@@ -39,6 +39,7 @@ registerForm: FormGroup;
     { label: 'Yatra Packages', value: 'yatra-packages' },
     { label: 'Experiences', value: 'experiences' },
     { label: 'Cabs', value: 'cabs' },
+    { label: 'Bus', value: 'bus' },
     { label: 'Travel & Heli Services', value: 'travel-heli' },
      { label: 'Wellness Retreat', value: 'wellness-retreat' },
   ];
@@ -394,10 +395,10 @@ onStateChange(event: Event): void {
 onRegister() {
   this.submitted = true;
 
+  const requiredDocumentsMissing = !this.panDocumentName || !this.aadhaarDocumentName;
 
-
-  // ✅ FORM VALIDATION
-    if (this.registerForm.invalid) {
+  // PAN and Aadhaar uploads are not form controls, so validate them explicitly.
+  if (this.registerForm.invalid || requiredDocumentsMissing) {
 
     const invalidControls = Object.keys(this.registerForm.controls)
       .filter(key => this.registerForm.get(key).invalid);
@@ -407,7 +408,7 @@ onRegister() {
     invalidControls.forEach(control => {
       console.log(control, this.registerForm.get(control).errors);
     });
-    const firstInvalid = document.querySelector('.ng-invalid');
+    const firstInvalid = document.querySelector('.ng-invalid, .required-document-error');
     if (firstInvalid) {
       firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }

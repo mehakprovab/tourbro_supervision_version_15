@@ -7,6 +7,7 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { environment } from 'projects/b2b/src/environments/environment.prod';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { resolveStaticUploadUrl } from 'projects/supervision/src/app/core/services/media-url';
 
 const baseUrl = environment.SA_URL;
 interface Country {
@@ -97,8 +98,7 @@ carAmenityList:any;
     this.destroy$.complete();
   }
   getImage(img) {
-    let url = 'http://tourbro.com/node/dist/apps/supervision/'
-    return `${ img}`;
+    return resolveStaticUploadUrl(img);
   }
 
 

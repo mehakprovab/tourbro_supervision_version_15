@@ -99,9 +99,19 @@ export class GuideVoucherComponent implements OnInit, OnDestroy {
     }
   }
 
-  printVoucher(): void {
+printVoucher(): void {
+  this.isExporting = true;
+  this.cdr.detectChanges();
+
+  setTimeout(() => {
     window.print();
-  }
+
+    setTimeout(() => {
+      this.isExporting = false;
+      this.cdr.detectChanges();
+    }, 500);
+  }, 100);
+}
 
   downloadVoucher(): void {
     if (!this.voucher || !this.voucher.nativeElement) {

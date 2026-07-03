@@ -8,6 +8,7 @@ import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handler
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { SubSink } from 'subsink';
+import { resolveStaticUploadUrl } from 'projects/supervision/src/app/core/services/media-url';
 
 @Component({
   selector: 'app-guide-last-section',
@@ -58,8 +59,7 @@ export class GuideLastSectionComponent implements OnInit {
      this.getGuideSections();
    }
    getImage(img) {
-    const url = 'http://tourbro.com/node/dist/apps/supervision/';
-    return `${url + img}`;
+    return resolveStaticUploadUrl(img);
   }
 
    createForm() {

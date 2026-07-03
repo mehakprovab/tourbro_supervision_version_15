@@ -159,13 +159,13 @@
                                             <label for="pan_document" class="required">PAN Document (Upload)</label>
                                             <div class="file-upload-wrapper">
                                                 <input type="file" id="pan_document" (change)="onFileSelected($event, 'pan_document')"
-                                                    accept=".pdf,.jpg,.jpeg,.png" class="file-input">
+                                                    accept=".pdf,.jpg,.jpeg,.png" class="file-input" required>
                                                 <label for="pan_document" class="file-label">
                                                     <span *ngIf="!panDocumentName">Choose PAN Document</span>
                                                     <span *ngIf="panDocumentName">{{panDocumentName}}</span>
                                                 </label>
                                             </div>
-                                            <div *ngIf="submitted && !panDocument" class="text-danger">
+                                            <div *ngIf="submitted && !panDocumentName" class="text-danger required-document-error">
                                                 PAN Document is required
                                             </div>
                                         </fieldset>
@@ -188,13 +188,13 @@
                                             <label for="aadhaar_document" class="required">Aadhaar Document (Upload)</label>
                                             <div class="file-upload-wrapper">
                                                 <input type="file" id="aadhaar_document" (change)="onFileSelected($event, 'aadhaar_document')"
-                                                    accept=".pdf,.jpg,.jpeg,.png" class="file-input">
+                                                    accept=".pdf,.jpg,.jpeg,.png" class="file-input" required>
                                                 <label for="aadhaar_document" class="file-label">
                                                     <span *ngIf="!aadhaarDocumentName">Choose Aadhaar Document</span>
                                                     <span *ngIf="aadhaarDocumentName">{{aadhaarDocumentName}}</span>
                                                 </label>
                                             </div>
-                                            <div *ngIf="submitted && !aadhaarDocument" class="text-danger">
+                                            <div *ngIf="submitted && !aadhaarDocumentName" class="text-danger required-document-error">
                                                 Aadhaar Document is required
                                             </div>
                                         </fieldset>

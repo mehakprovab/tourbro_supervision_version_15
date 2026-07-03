@@ -5,6 +5,7 @@ import { SubSink } from 'subsink';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { joinUrl, supervisionApiBaseUrl } from 'projects/supervision/src/app/core/services/media-url';
 
 @Component({
   selector: 'app-tour-itinerary',
@@ -12,7 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./tour-itinerary.component.scss']
 })
 export class TourItineraryComponent implements OnInit {
-imageBaseUrl = 'http://tourbro.com:3001/sa/tour/tours/getItineraryImages/';
+imageBaseUrl = joinUrl(supervisionApiBaseUrl(), 'tour/tours/getItineraryImages/');
   tourItinerayForm;
   inputFields: FormArray;
   tourDuration:string=''

@@ -3,6 +3,7 @@ import { WellnessCrsService } from '../../../wellness-crs.service';
 import { SwalService } from "projects/supervision/src/app/core/services/swal.service";
 import { Router } from "@angular/router";
 import { HttpErrorResponse } from "@angular/common/http";
+import { resolveStaticUploadUrl } from 'projects/supervision/src/app/core/services/media-url';
 
 @Component({
   selector: 'app-health-goals-list',
@@ -21,7 +22,6 @@ export class HealthGoalsListComponent implements OnInit {
   public healthGoalsList: any = [];
   public searchText = "";
   public filteredHealthGoalsList: any[] = [];
-  public imageBaseUrl = 'http://tourbro.com/dev/node/dist/apps/supervision/';
 
    ngOnInit() {
     this.getAllHealthGoals();
@@ -63,11 +63,7 @@ export class HealthGoalsListComponent implements OnInit {
       return '';
     }
 
-    if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
-      return imageUrl;
-    }
-
-    return `${this.imageBaseUrl}${imageUrl.replace(/^\/+/, '')}`;
+    return resolveStaticUploadUrl(imageUrl);
   }
 
   private getExistingImage(item: any): string {

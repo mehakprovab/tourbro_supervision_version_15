@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { ViewChild, ElementRef } from '@angular/core';
+import { resolveStaticUploadUrl } from 'projects/supervision/src/app/core/services/media-url';
 @Component({
   selector: 'app-guide-process-section',
   templateUrl: './guide-process-section.component.html',
@@ -202,6 +203,6 @@ fd.append('publishStatus', '0');
   }
 
   getImage(img){
-    return 'http://tourbro.com/node/dist/apps/supervision/' + img;
+    return resolveStaticUploadUrl(img);
   }
 }

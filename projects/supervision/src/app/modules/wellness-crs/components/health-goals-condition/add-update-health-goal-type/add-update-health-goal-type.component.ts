@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { resolveStaticUploadUrl } from 'projects/supervision/src/app/core/services/media-url';
 
 @Component({
   selector: 'app-add-update-health-goal-type',
@@ -25,7 +26,6 @@ export class AddUpdateHealthGoalTypeComponent implements OnInit {
   public isEdit: boolean = false;
   public fileToUpload: File = null;
   public imageSrc: any;
-  public imageBaseUrl = 'http://tourbro.com/dev/node/dist/apps/supervision/';
   private editHealthGoal: any;
 
   ngOnInit() {
@@ -96,11 +96,7 @@ export class AddUpdateHealthGoalTypeComponent implements OnInit {
       return '';
     }
 
-    if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://') || imageUrl.startsWith('data:')) {
-      return imageUrl;
-    }
-
-    return `${this.imageBaseUrl}${imageUrl.replace(/^\/+/, '')}`;
+    return resolveStaticUploadUrl(imageUrl);
   }
 
   private getExistingImage(item: any): string {

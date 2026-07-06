@@ -12,15 +12,15 @@
             <div class="d-flex align-items-center gap-2 vendor-head">
                     <div class="head-sect p-12 ">
                         <p class="f-15 mb-1">Total Vendors</p>
-                        <p class="num-span mb-0">{{ totalVendors || 0 }}</p>
+                        <p class="num-span mb-0">{{ (totalVendors || 0) | number:'1.2-2' }}</p>
                     </div>
                     <div class="head-sect p-12">
                         <p class="f-15 mb-1">Active Vendors</p>
-                        <p class="num-span mb-0">{{ activeVendors || 0 }}</p>
+                        <p class="num-span mb-0">{{ (activeVendors || 0) | number:'1.2-2' }}</p>
                     </div>
                      <div class="head-sect p-12">
                         <p class="f-15 mb-1">Pending Vendors</p>
-                        <p class="num-span mb-0">{{ pendingVendors || 0 }}</p>
+                        <p class="num-span mb-0">{{ (pendingVendors || 0) | number:'1.2-2' }}</p>
                     </div>
                 </div>
 
@@ -107,15 +107,15 @@
               <div class="d-flex align-items-center gap-2 vendor-head">
                     <div class="head-sect p-3 ">
                         <p class="f-15 mb-1">Total Active Packages</p>
-                        <p class="num-span mb-0">{{ totalActivePackages || 0 }}</p>
+                        <p class="num-span mb-0">{{ (totalActivePackages || 0) | number:'1.2-2' }}</p>
                     </div>
                     <div class="head-sect p-3 ">
                         <p class="f-15 mb-1">Inactive Packages</p>
-                        <p class="num-span mb-0">{{ inactivePackages || 0 }}</p>
+                        <p class="num-span mb-0">{{ (inactivePackages || 0) | number:'1.2-2' }}</p>
                     </div>
                      <div class="head-sect p-3 ">
                         <p class="f-15 mb-1">Available Inventory</p>
-                        <p class="num-span mb-0">{{ availableInventory || 0 }}</p>
+                        <p class="num-span mb-0">{{ (availableInventory || 0) | number:'1.2-2' }}</p>
                     </div>
                 </div>
             <!-- Package Revenue -->
@@ -136,7 +136,7 @@
                     </div>
 
                     <div class="col-12 mt-2">
-                        <span class="num-span">{{ packageRevenue || 0 }}</span>
+                        <span class="num-span">{{ (packageRevenue || 0) | number:'1.2-2' }}</span>
                     </div>
                 </div>
             </div>
@@ -159,7 +159,7 @@
                     </div>
 
                     <div class="col-12 mt-2">
-                        <span class="num-span">{{ packageBookings || 0 }}</span>
+                        <span class="num-span">{{ (packageBookings || 0) | number:'1.2-2' }}</span>
                     </div>
                 </div>
             </div>

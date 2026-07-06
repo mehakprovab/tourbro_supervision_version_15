@@ -11,7 +11,7 @@
       <div echarts [options]="options" class="pie-chart-card content-scrooling"></div>
       <div class="menu mt-2" *ngIf="isOpenRevenue" [@dropDownMenu]>
 
-        <div echarts [options]="pieChart" class="menu-item pie-chart-card content-scrooling">
+        <div echarts [options]="modulePieOptions" class="menu-item pie-chart-card content-scrooling">
         </div>
 
       </div>
@@ -23,7 +23,7 @@
 
       <div class="menu mt-2" *ngIf="isOpen" [@dropDownMenu]>
 
-        <div echarts [options]="pieChart" class="menu-item pie-chart-card content-scrooling">
+        <div echarts [options]="vendorPieOptions" class="menu-item pie-chart-card content-scrooling">
         </div>
 
       </div>

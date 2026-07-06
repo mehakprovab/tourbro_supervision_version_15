@@ -17,7 +17,7 @@
                 </option>
             </select>
         </div>
-        <span class="num-span">{{ totalCustomers }}</span>
+        <span class="num-span">{{ totalCustomers | number:'1.2-2' }}</span>
         
     </div>
 
@@ -33,7 +33,7 @@
                 <option>All</option>
             </select>
         </div>
-         <span class="num-span">100</span>
+         <span class="num-span">{{ 100 | number:'1.2-2' }}</span>
         
     </div>
 
@@ -48,7 +48,7 @@
                     <option>All</option>
                 </select>
             </div>
-        <span class="num-span">100</span>
+        <span class="num-span">{{ 100 | number:'1.2-2' }}</span>
             
     </div>
            <div class="d-flex head-sect p-12 flex-column">
@@ -62,7 +62,7 @@
                             <option>All</option>
                         </select>
                     </div>
-                   <span class="num-span">100</span>
+                   <span class="num-span">{{ 100 | number:'1.2-2' }}</span>
                    
                 </div>
             

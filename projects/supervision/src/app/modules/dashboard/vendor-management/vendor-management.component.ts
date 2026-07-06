@@ -128,7 +128,7 @@ export class VendorManagementComponent implements OnInit, OnChanges {
     buildPieChartOptions(seriesName: string, source: any): EChartsOption {
         const chartData = this.toChartItems(source)
             .map((item, index) => ({
-                value: this.toNumber(item.value),
+                value: this.roundToTwo(item.value),
                 name: item.name,
                 itemStyle: { color: this.getChartColor(index) }
             }))
@@ -136,7 +136,8 @@ export class VendorManagementComponent implements OnInit, OnChanges {
 
         return {
             tooltip: {
-                trigger: 'item'
+                trigger: 'item',
+                formatter: (params: any) => `${params.name}<br/>${this.formatNumber(params.value)}`
             },
             series: [
                 {
@@ -145,7 +146,7 @@ export class VendorManagementComponent implements OnInit, OnChanges {
                     radius: ['40%', '70%'],
                     label: {
                         show: true,
-                        formatter: '{b}\n{c}'
+                        formatter: (params: any) => `${params.name}\n${this.formatNumber(params.value)}`
                     },
                     data: chartData.length ? chartData : [{ value: 0, name: 'No Data' }],
                     emphasis: {
@@ -280,6 +281,14 @@ export class VendorManagementComponent implements OnInit, OnChanges {
         }
 
         return Number(value) || 0;
+    }
+
+    roundToTwo(value: any): number {
+        return Number(this.toNumber(value).toFixed(2));
+    }
+
+    formatNumber(value: any): string {
+        return this.roundToTwo(value).toFixed(2);
     }
 
     formatLabel(value: string): string {

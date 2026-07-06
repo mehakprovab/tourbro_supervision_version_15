@@ -1,6 +1,9 @@
 import { AfterViewInit, Component, Input, OnChanges, OnInit } from "@angular/core";
 import { EChartsOption  } from 'echarts';
 import { DropDownAnimation } from "../animation";
+import { ApiHandlerService } from "projects/supervision/src/app/core/api-handlers";
+import { forkJoin, of } from "rxjs";
+import { catchError } from "rxjs/operators";
 
 @Component({
     selector: 'app-revenue-finance',
@@ -26,79 +29,43 @@ export class RevenueFinanceComponent implements OnInit, AfterViewInit, OnChanges
 
     public options: EChartsOption;
     public vendorOptions: EChartsOption;
-    public pieChart: EChartsOption;
+    public modulePieOptions: EChartsOption;
+    public vendorPieOptions: EChartsOption;
     public isOpen: boolean = false;
     public isOpenRevenue: boolean = false;
+    public moduleWiseRevenueData: any = {};
+    public vendorWiseRevenueApiData: any = {};
+
+    constructor(
+        private apiHandlerService: ApiHandlerService
+    ) {}
 
     ngOnInit(): void {
-        // this.getChart();
-    }
-
-    public pieChartData() {
-      this.pieChart = {
-  title: {
-    text: 'Referer of a Website',
-    subtext: 'Fake Data',
-    left: 'center'
-  },
-  tooltip: {
-    trigger: 'item'
-  },
-  series: [
-    {
-      name: 'Access From',
-      type: 'pie',
-      radius: ['40%','70%'],
-       label: {
-        show: true,
-        formatter: '{b}\n{c}' // Name + Value
-      },
-      data: [
-        { value: 1048, name: 'Heli',itemStyle: { color: 'rgba(250, 46, 236, 1)' } },
-        { value: 735, name: 'Wellness',itemStyle: { color: 'rgba(168, 46, 250, 1)' } },
-        { value: 580, name: 'Char Dham',itemStyle: { color: 'rgba(22, 159, 59, 1)' } },
-        { value: 484, name: 'Vaishno Devi',itemStyle: { color: 'rgba(255, 180, 27, 1)' } },
-        { value: 300, name: 'Hotels',itemStyle: { color: 'rgba(203, 203, 52, 1)' } },
-         { value: 300, name: 'Transport',itemStyle: { color: 'rgba(97, 52, 203, 1)' } },
-          { value: 300, name: 'Experience',itemStyle: { color: 'rgba(46, 213, 250, 1)' } }
-      ],
-      emphasis: {
-        itemStyle: {
-          shadowBlur: 10,
-          shadowOffsetX: 0,
-          shadowColor: 'rgba(0, 0, 0, 0.5)'
-        }
-      }
-    }
-  ]
-};
-
-
+        this.getRevenueGraphData();
     }
 
     ngAfterViewInit() {
         this.getChart();
-        this.pieChartData();
     }
 
     ngOnChanges(): void {
         this.getChart();
-        this.pieChartData();
     }
 
     public getChart() {
         const moduleItems = this.getChartItems(
-            [this.averageBookingData, this.dashboardMetricsData, this.moduleRevenueData],
+            [this.moduleWiseRevenueData, this.averageBookingData, this.dashboardMetricsData, this.moduleRevenueData],
             ['moduleLevel', 'moduleWiseRevenue', 'moduleRevenue', 'modules', 'totalGrossBookingValueModuleWise', 'module_wise_revenue']
         );
         const vendorItems = this.getChartItems(
-            [this.dashboardMetricsData, this.vendorRevenueData],
-            ['vendorWiseRevenue', 'vendorRevenue', 'vendors', 'vendor_wise_revenue']
+            [this.vendorWiseRevenueApiData, this.dashboardMetricsData, this.vendorRevenueData],
+            ['data', 'vendorWiseRevenue', 'vendorRevenue', 'vendors', 'vendor_wise_revenue']
         );
 
         this.options = {
    tooltip: {
     trigger: 'axis',
+    valueFormatter: (value) => this.formatChartValue(value),
     axisPointer: {
       type: 'shadow'
     }
@@ -112,7 +79,7 @@ export class RevenueFinanceComponent implements OnInit, AfterViewInit, OnChanges
   },
   series: {
   type: 'bar',
-  data: moduleItems.map(item => item.value),
+  data: moduleItems.map(item => this.roundToTwo(item.value)),
   itemStyle: {
     color: function(params) {
       const colors = [
@@ -132,6 +99,7 @@ export class RevenueFinanceComponent implements OnInit, AfterViewInit, OnChanges
         this.vendorOptions = {
    tooltip: {
     trigger: 'axis',
+    valueFormatter: (value) => this.formatChartValue(value),
     axisPointer: {
       type: 'shadow'
     }
@@ -145,7 +113,7 @@ export class RevenueFinanceComponent implements OnInit, AfterViewInit, OnChanges
   },
   series: {
   type: 'bar',
-  data: vendorItems.map(item => item.value),
+  data: vendorItems.map(item => this.roundToTwo(item.value)),
   itemStyle: {
     color: function(params) {
       const colors = [
@@ -162,6 +130,76 @@ export class RevenueFinanceComponent implements OnInit, AfterViewInit, OnChanges
   }
 }
 };
+        this.modulePieOptions = this.getPieChartOptions(moduleItems, 'Module-wise Revenue');
+        this.vendorPieOptions = this.getPieChartOptions(vendorItems, 'Vendor-wise Revenue');
+    }
+
+    private getPieChartOptions(items: { name: string; value: number }[], title: string): EChartsOption {
+        const colors = [
+            'rgba(250, 46, 236, 1)',
+            'rgba(168, 46, 250, 1)',
+            'rgba(22, 159, 59, 1)',
+            'rgba(255, 180, 27, 1)',
+            'rgba(203, 203, 52, 1)',
+            'rgba(97, 52, 203, 1)',
+            'rgba(46, 213, 250, 1)'
+        ];
+
+        return {
+            title: {
+                text: title,
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: (params: any) => `${params.name}<br/>${this.formatChartValue(params.value)}`
+            },
+            series: [
+                {
+                    name: title,
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    label: {
+                        show: true,
+                        formatter: (params: any) => `${params.name}\n${this.formatChartValue(params.value)}`
+                    },
+                    data: items.map((item, index) => ({
+                        value: this.roundToTwo(item.value),
+                        name: item.name,
+                        itemStyle: {
+                            color: colors[index % colors.length]
+                        }
+                    })),
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+    }
+
+    public getRevenueGraphData(): void {
+        forkJoin({
+            moduleWiseRevenue: this.getSafeRevenueRequest('moduleWiseRevenue'),
+            vendorWiseRevenue: this.getSafeRevenueRequest('VendorWiseRevenue')
+        }).subscribe((resp: any) => {
+            this.moduleWiseRevenueData = this.getResponseData(resp.moduleWiseRevenue);
+            this.vendorWiseRevenueApiData = this.getResponseData(resp.vendorWiseRevenue);
+            this.getChart();
+        });
+    }
+
+    private getSafeRevenueRequest(topic: string) {
+        return this.apiHandlerService.apiHandler(topic, 'post', {}, {}, {})
+            .pipe(catchError(() => of({ statusCode: 500, data: {} })));
+    }
+
+    private getResponseData(resp: any): any {
+        return resp && (resp.data !== undefined ? resp.data : resp.Data !== undefined ? resp.Data : resp);
     }
 
     private getChartItems(sources: any[], preferredKeys: string[]): { name: string; value: number }[] {
@@ -247,9 +285,14 @@ export class RevenueFinanceComponent implements OnInit, AfterViewInit, OnChanges
             return '';
         }
 
+        const fullName = [item.first_name, item.last_name].filter(Boolean).join(' ');
         const value = item.module || item.module_name || item.moduleName || item.vendor || item.vendor_name
-            || item.vendorName || item.business_name || item.name || item.label || item.category;
-        return value ? this.formatName(value) : '';
+            || item.vendorName || item.business_name || fullName || item.email || item.name || item.label || item.category
+            || (item.vendor_id ? `Vendor ${item.vendor_id}` : '');
+        if (value) {
+            return this.formatName(value);
+        }
+        return '';
     }
 
     private getNumber(item: any): number {
@@ -261,7 +304,17 @@ export class RevenueFinanceComponent implements OnInit, AfterViewInit, OnChanges
             return this.toNumber(item);
         }
 
-        const keys = ['revenue', 'totalRevenue', 'grossBookingValue', 'totalGrossBookingValue', 'amount', 'total', 'value', 'count'];
+        const keys = [
+            'revenue',
+            'totalRevenue',
+            'total_revenue',
+            'grossBookingValue',
+            'totalGrossBookingValue',
+            'amount',
+            'total',
+            'value',
+            'count'
+        ];
         for (const key of keys) {
             if (item[key] !== undefined && item[key] !== null && item[key] !== '') {
                 return this.toNumber(item[key]);
@@ -281,6 +334,15 @@ export class RevenueFinanceComponent implements OnInit, AfterViewInit, OnChanges
         }
 
         return NaN;
+    }
+
+    private roundToTwo(value: any): number {
+        const numberValue = this.toNumber(value);
+        return isNaN(numberValue) ? 0 : Number(numberValue.toFixed(2));
+    }
+
+    private formatChartValue(value: any): string {
+        return this.roundToTwo(value).toFixed(2);
     }
 
     private formatName(value: any): string {

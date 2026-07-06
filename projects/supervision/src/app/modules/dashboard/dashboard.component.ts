@@ -111,6 +111,36 @@ confirmedBookings: any = 0;
     pendingVendorConfirmations: any = 0;
     refundsPending: any = 0;
     openCustomerIssues: any = 0;
+    dashboardApiFields = [
+        { responseKey: 'totalPeriodBooking', apiKey: 'totalPeriodBooking', dataFields: ['totalBookingData'] },
+        { responseKey: 'dashboardMetrics', apiKey: 'dashboardMetrics', dataFields: ['dashboardMetricsData'] },
+        { responseKey: 'paymentMetrics', apiKey: 'paymentMetrics', dataFields: ['paymentMetricsData'] },
+        { responseKey: 'getBookingMetrics', apiKey: 'getBookingMetrics', dataFields: ['bookingMetrics'] },
+        { responseKey: 'totalGrossBookingValueModuleWise', apiKey: 'totalGrossBookingValueModuleWise', dataFields: ['grossBookingValueData', 'totalGrossBookingValueModuleWiseData'] },
+        { responseKey: 'GrossMargin', apiKey: 'GrossMargin', dataFields: ['grossMarginData'] },
+        { responseKey: 'totalPromoCodeDiscountCost', apiKey: 'totalPromoCodeDiscountCost', dataFields: ['totalPromoCodeDiscountCostData'] },
+        { responseKey: 'totalAdminMarkupAmount', apiKey: 'totalAdminMarkupAmount', dataFields: ['totalAdminMarkupAmountData'] },
+        { responseKey: 'totalMarkupConvenienceMinusDiscount', apiKey: 'totalMarkupConvenienceMinusDiscount', dataFields: ['totalMarkupConvenienceMinusDiscountData'] },
+        { responseKey: 'RefundAmount', apiKey: 'RefundAmount', dataFields: ['refundAmountData'] },
+        { responseKey: 'paymentSuccessRate', apiKey: 'paymentSuccessRate', dataFields: ['paymentSuccessRateData'] },
+        { responseKey: 'paymentFailedRate', apiKey: 'paymentFailedRate', dataFields: ['paymentFailedRateData'] },
+        { responseKey: 'serviceDeliveredCancelledCount', apiKey: 'serviceDeliveredCancelledCount', dataFields: ['serviceDeliveredCancelledCountData'] },
+        { responseKey: 'paymentPending', apiKey: 'paymentPending', dataFields: ['paymentPendingData'] },
+        { responseKey: 'paymentCompleted', apiKey: 'paymentCompleted', dataFields: ['paymentCompletedData'] },
+        { responseKey: 'documentsNotIssuedCount', apiKey: 'documentsNotIssuedCount', dataFields: ['documentsNotIssuedCountData'] },
+        { responseKey: 'activeVendors', apiKey: 'ActiveVendors', dataFields: ['activeVendorsData'] },
+        { responseKey: 'pendingVendors', apiKey: 'pendingVendors', dataFields: ['pendingVendorsData'] },
+        { responseKey: 'vendorsCategoryWise', apiKey: 'VendorsCategoryWise', dataFields: ['vendorsCategoryWiseData'] },
+        { responseKey: 'vendorLocationWise', apiKey: 'VendorLocationWise', dataFields: ['vendorLocationWiseData'] },
+        { responseKey: 'repeatedCustomers', apiKey: 'RepeatedCustomers', dataFields: ['repeatedCustomersData'] },
+        { responseKey: 'vendorWiseRevenue', apiKey: 'VendorWiseRevenue', dataFields: ['vendorWiseRevenueData'] },
+        { responseKey: 'pendingVendorConfirmations', apiKey: 'PendingVendorConfirmations', dataFields: ['pendingVendorConfirmationsData'] },
+        { responseKey: 'totalVendors', apiKey: 'totalVendors', dataFields: ['totalVendorsData'] },
+        { responseKey: 'packageInventory', apiKey: 'totalActiveInactivePackages', dataFields: ['packageInventoryData'] },
+        { responseKey: 'packageBooking', apiKey: 'AverageBookingValue', dataFields: ['packageBookingData'] },
+        { responseKey: 'packageRevenue', apiKey: 'totalGrossBookingValuePackageWise', dataFields: ['packageRevenueData'] },
+        { responseKey: 'confirmedBookings', apiKey: 'totalConfirmedBookings', dataFields: ['confirmedBookingsData'] }
+    ];
     dashboardFilterOptions = [
         { label: 'Today', value: 'today' },
         { label: 'Yesterday', value: 'yesterday' },
@@ -191,65 +221,19 @@ confirmedBookings: any = 0;
 
     getDashboardKpis(): void {
         this.loading = true;
-        this.subSunk.sink = forkJoin({
-            totalPeriodBooking: this.safeDashboardRequest('totalPeriodBooking'),
-            dashboardMetrics: this.safeDashboardRequest('dashboardMetrics'),
-            paymentMetrics: this.safeDashboardRequest('paymentMetrics'),
-            getBookingMetrics: this.safeDashboardRequest('getBookingMetrics'),
-            totalGrossBookingValueModuleWise: this.safeDashboardRequest('totalGrossBookingValueModuleWise'),
-            GrossMargin: this.safeDashboardRequest('GrossMargin'),
-            totalPromoCodeDiscountCost: this.safeDashboardRequest('totalPromoCodeDiscountCost'),
-            totalAdminMarkupAmount: this.safeDashboardRequest('totalAdminMarkupAmount'),
-            totalMarkupConvenienceMinusDiscount: this.safeDashboardRequest('totalMarkupConvenienceMinusDiscount'),
-            RefundAmount: this.safeDashboardRequest('RefundAmount'),
-            paymentSuccessRate: this.safeDashboardRequest('paymentSuccessRate'),
-            paymentFailedRate: this.safeDashboardRequest('paymentFailedRate'),
-            serviceDeliveredCancelledCount: this.safeDashboardRequest('serviceDeliveredCancelledCount'),
-            paymentPending: this.safeDashboardRequest('paymentPending'),
-            paymentCompleted: this.safeDashboardRequest('paymentCompleted'),
-            documentsNotIssuedCount: this.safeDashboardRequest('documentsNotIssuedCount'),
-              activeVendors: this.safeDashboardRequest('ActiveVendors'),
-    pendingVendors: this.safeDashboardRequest('pendingVendors'),
-    vendorsCategoryWise: this.safeDashboardRequest('VendorsCategoryWise'),
-    vendorLocationWise: this.safeDashboardRequest('VendorLocationWise'),
-    repeatedCustomers: this.safeDashboardRequest('RepeatedCustomers'),
-    vendorWiseRevenue: this.safeDashboardRequest('VendorWiseRevenue'),
-    pendingVendorConfirmations: this.safeDashboardRequest('PendingVendorConfirmations'),
-    totalVendors: this.safeDashboardRequest('totalVendors'),
-    packageInventory: this.safeDashboardRequest('totalActiveInactivePackages'),
-    packageBooking: this.safeDashboardRequest('AverageBookingValue'),
-    packageRevenue: this.safeDashboardRequest('totalGrossBookingValuePackageWise'),
-    confirmedBookings: this.safeDashboardRequest('totalConfirmedBookings')
-        }).subscribe((resp: any) => {
-            this.totalBookingData = this.getDashboardData(resp.totalPeriodBooking);
-            this.dashboardMetricsData = this.getDashboardData(resp.dashboardMetrics);
-            this.paymentMetricsData = this.getDashboardData(resp.paymentMetrics);
-            this.bookingMetrics = this.getDashboardData(resp.getBookingMetrics);
-            this.grossBookingValueData = this.getDashboardData(resp.totalGrossBookingValueModuleWise);
-            this.totalGrossBookingValueModuleWiseData = this.grossBookingValueData;
-            this.grossMarginData = this.getDashboardData(resp.GrossMargin);
-            this.totalPromoCodeDiscountCostData = this.getDashboardData(resp.totalPromoCodeDiscountCost);
-            this.totalAdminMarkupAmountData = this.getDashboardData(resp.totalAdminMarkupAmount);
-            this.totalMarkupConvenienceMinusDiscountData = this.getDashboardData(resp.totalMarkupConvenienceMinusDiscount);
-            this.refundAmountData = this.getDashboardData(resp.RefundAmount);
-            this.paymentSuccessRateData = this.getDashboardData(resp.paymentSuccessRate);
-            this.paymentFailedRateData = this.getDashboardData(resp.paymentFailedRate);
-            this.serviceDeliveredCancelledCountData = this.getDashboardData(resp.serviceDeliveredCancelledCount);
-            this.paymentPendingData = this.getDashboardData(resp.paymentPending);
-            this.paymentCompletedData = this.getDashboardData(resp.paymentCompleted);
-            this.documentsNotIssuedCountData = this.getDashboardData(resp.documentsNotIssuedCount);
-            this.activeVendorsData = this.getDashboardData(resp.activeVendors);
-this.pendingVendorsData = this.getDashboardData(resp.pendingVendors);
-this.vendorsCategoryWiseData = this.getDashboardData(resp.vendorsCategoryWise);
-this.vendorLocationWiseData = this.getDashboardData(resp.vendorLocationWise);
-this.repeatedCustomersData = this.getDashboardData(resp.repeatedCustomers);
-this.vendorWiseRevenueData = this.getDashboardData(resp.vendorWiseRevenue);
-this.pendingVendorConfirmationsData = this.getDashboardData(resp.pendingVendorConfirmations);
-this.totalVendorsData = this.getDashboardData(resp.totalVendors);
-this.packageInventoryData = this.getDashboardData(resp.packageInventory);
-this.packageBookingData = this.getDashboardData(resp.packageBooking);
-this.packageRevenueData = this.getDashboardData(resp.packageRevenue);
-this.confirmedBookingsData = this.getDashboardData(resp.confirmedBookings);
+        const dashboardRequests = this.dashboardApiFields.reduce((requests, field) => {
+            requests[field.responseKey] = this.safeDashboardRequest(field.apiKey);
+            return requests;
+        }, {});
+
+        this.subSunk.sink = forkJoin(dashboardRequests).subscribe((resp: any) => {
+            this.dashboardApiFields.forEach(field => {
+                const data = this.getDashboardData(resp[field.responseKey]);
+                field.dataFields.forEach(dataField => {
+                    this[dataField] = data;
+                });
+            });
+
             this.updateDashboardKpis();
             this.loading = false;
             this.cdr.detectChanges();
@@ -1186,7 +1170,7 @@ function getChartOptions(respData) {
         "tooltip": {
             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                '<td style="padding:0"><b>{point.y:.2f}</b></td></tr>',
             footerFormat: '</table>',
             shared: true,
             useHTML: true
@@ -1239,7 +1223,7 @@ function getCartOptions2(respData) {
         "tooltip": {
             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                '<td style="padding:0"><b>{point.y:.2f}</b></td></tr>',
             footerFormat: '</table>',
             shared: true,
             useHTML: true

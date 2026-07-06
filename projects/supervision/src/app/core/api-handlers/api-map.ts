@@ -52,6 +52,8 @@ export const apiMap = {
   totalAdminMarkupAmount: `${baseUrl}/dashboard/report/totalAdminMarkupAmount`,
   totalCustomers: `${baseUrl}/dashboard/report/TotalCustomers`,
   totalBooking: `${baseUrl}/dashboard/report/totalBooking`,
+  moduleWiseRevenue: `${baseUrl}/dashboard/report/moduleWiseRevenue`,
+  vendorWiseRevenue: `${baseUrl}/dashboard/report/vendorWiseRevenue`,
   totalGrossBookingValueModuleWise: `${baseUrl}/dashboard/report/totalGrossBookingValueModuleWise`,
   totalMarkupConvenienceMinusDiscount: `${baseUrl}/dashboard/report/totalMarkupConvenienceMinusDiscount`,
   totalPeriodBooking: `${baseUrl}/dashboard/report/totalPeriodBooking`,

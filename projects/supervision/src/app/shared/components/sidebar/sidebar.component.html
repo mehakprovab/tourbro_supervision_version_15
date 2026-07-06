@@ -144,7 +144,7 @@
                             </button>
                           </ng-template>
                           <ng-template ngbPanelContent>
-                            <div class="vsm-item">
+                            <div class="vsm-item" *ngIf="!isSupplierPanelUser()">
                               <a routerLinkActive="active-item" routerLink='/report/guide-report' class="vsm-link pl-10">
                                 <span class="vsm-title pl-10">
                                   <i class="fa fa-id-card-o"></i>

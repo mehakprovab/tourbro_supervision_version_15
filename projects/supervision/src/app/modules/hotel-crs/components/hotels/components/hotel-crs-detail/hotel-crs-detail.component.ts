@@ -936,8 +936,8 @@ onCityChange(event: any) {
   }
 
   this.selectedCityName = this.getCityName(selectedCity);
-  this.selectedCityCode = this.getCityCode(selectedCity);
   this.toCityId = this.getCityId(selectedCity);
+  this.selectedCityCode = this.getCityCode(selectedCity) || String(this.toCityId || '');
   this.hotelForm.patchValue({
     city_name: this.selectedCityName,
     city_id: this.toCityId,
@@ -979,8 +979,8 @@ patchCityIdentifiersFromSelection(cityName: string): void {
   }
 
   this.selectedCityName = this.getCityName(selectedCity);
-  this.selectedCityCode = this.getCityCode(selectedCity);
   this.toCityId = this.getCityId(selectedCity);
+  this.selectedCityCode = this.getCityCode(selectedCity) || String(this.toCityId || '');
   this.hotelForm.patchValue({
     city_name: this.selectedCityName,
     city_id: this.toCityId,
@@ -1017,30 +1017,34 @@ patchCityIdentifiersFromSelection(cityName: string): void {
     this.submittedHotel = true;
     this.hotelForm.get('currency').enable();
     if (this.hotelForm.valid) {
-      // const dt = new Date(this.hotelForm.value.contract_expiry_date);
-      // this.hotelForm.value.contract_expiry_date = formatDate(dt, '');
-this.hotelForm.value.hotel_hotel_amenities =
-  this.hotelForm.value.stay_amenities.map(v => v.hotel_amenity_name).join(",") || '';
-      this.hotelForm.value.meal_plans = this.hotelForm.value.meal_plans.map(v => v.meals).join(",");
-       this.hotelForm.value.stay_amenities = this.hotelForm.value.stay_amenities.map(v => v.stay_amenities).join(",");
-      this.hotelForm.value.room_view_ids = this.hotelForm.value.room_view_ids.map(v => v.views).join(",");
-      this.hotelForm.value.weekend_days = this.hotelForm.value.weekend_days.map(v => v.item_text).join(",");
       this.patchCityIdentifiersFromSelection(this.hotelForm.value.city_name);
-      this.hotelForm.value.city_code = this.selectedCityCode || this.hotelForm.value.city_code || '';
-      this.hotelForm.value.cityCode = this.hotelForm.value.city_code;
-      this.hotelForm.value.city_id = this.toCityId || this.hotelForm.value.city_id || '';
-      this.hotelForm.value.checkInTime = this.hotelForm.value.checkInTime;
-      this.hotelForm.value.checkOutTime = this.hotelForm.value.checkOutTime;
-      // this.hotelForm.value.contract_expiry_date = this.hotelForm.value.contract_expiry_date ? `${(moment(this.hotelForm.value.contract_expiry_date)).format('YYYY-MM-DD')}` : null,
-      this.hotelForm.value.contract_expiry_date = this.hotelForm.value.contract_expiry_date ? moment(this.hotelForm.value.contract_expiry_date, "DD/MM/YYYY").format("YYYY-MM-DD") : null,
-      this.hotelForm.value.children_free_before = this.hotelForm.value.children_free_before || 0;
-      this.hotelForm.value.paid_children_from_age = this.hotelForm.value.paid_children_from_age || 0;
-      this.hotelForm.value.paid_children_to_age = this.hotelForm.value.paid_children_to_age || 0;
-      this.hotelForm.value.user_type = this.hotelForm.get('user_type').value || '';
-      this.hotelForm.value.hotel_description = this.hotelForm.get('hotel_description').value || '';
-      let data = Object.assign({}, this.hotelForm.value);
+      const formValue = this.hotelForm.getRawValue();
+      const joinSelection = (value: any, key: string): string => {
+        if (!Array.isArray(value)) {
+          return value || '';
+        }
+        return value
+          .map(item => typeof item === 'string' ? item : item && item[key])
+          .filter(item => item !== undefined && item !== null && item !== '')
+          .join(',');
+      };
+      let data = Object.assign({}, formValue, {
+        hotel_hotel_amenities: joinSelection(formValue.stay_amenities, 'hotel_amenity_name'),
+        meal_plans: joinSelection(formValue.meal_plans, 'meals'),
+        stay_amenities: joinSelection(formValue.stay_amenities, 'stay_amenities'),
+        room_view_ids: joinSelection(formValue.room_view_ids, 'views'),
+        weekend_days: joinSelection(formValue.weekend_days, 'item_text'),
+        contract_expiry_date: formValue.contract_expiry_date
+          ? moment(formValue.contract_expiry_date, 'DD/MM/YYYY').format('YYYY-MM-DD')
+          : null,
+        children_free_before: formValue.children_free_before || 0,
+        paid_children_from_age: formValue.paid_children_from_age || 0,
+        paid_children_to_age: formValue.paid_children_to_age || 0,
+        user_type: formValue.user_type || '',
+        hotel_description: formValue.hotel_description || ''
+      });
       const resolvedCityId = this.toCityId || data['city_id'] || this.getCityId(this.findCityByName(data['city_name'])) || '';
-      const resolvedCityCode = this.selectedCityCode || data['city_code'] || this.getCityCode(this.findCityByName(data['city_name'])) || '';
+      const resolvedCityCode = this.selectedCityCode || data['city_code'] || this.getCityCode(this.findCityByName(data['city_name'])) || resolvedCityId;
       data['city_id'] = resolvedCityId;
       data['city_code'] = resolvedCityCode;
       data['cityCode'] = resolvedCityCode;
@@ -1068,16 +1072,53 @@ this.hotelForm.value.hotel_hotel_amenities =
           if (this.selectedCityName || resolvedCityId) {
             data['city_name'] = this.selectedCityName;
             data['city_code'] = resolvedCityCode;
-            data['cityCode'] = resolvedCityCode;
-            data['city_id'] = resolvedCityId;
           }
           else {
             data['city_code'] = this.hotelForm.value.city_code || '';
-            data['cityCode'] = this.hotelForm.value.cityCode || this.hotelForm.value.city_code || '';
             data['city_name'] = this.hotelForm.value.city_name || '';
-            data['city_id'] = resolvedCityId;
           }
-          data = [data];
+          const addHotelPayload = {
+            hotel_name: data['hotel_name'],
+            star_rating: data['star_rating'],
+            hotel_hotel_type_id: data['hotel_hotel_type_id'],
+            core_country_id: data['core_country_id'],
+            city_name: data['city_name'],
+            address: data['address'],
+            latitude: data['latitude'],
+            longitude: data['longitude'],
+            meal_plans: data['meal_plans'],
+            weekend_days: data['weekend_days'],
+            room_view_ids: data['room_view_ids'],
+            local_timezone: data['local_timezone'],
+            check_in_time: data['check_in_time'],
+            check_out_time: data['check_out_time'],
+            hotel_policy: data['hotel_policy'],
+            country_code: data['country_code'],
+            contract_expiry_date: data['contract_expiry_date'],
+            children_free_before: data['children_free_before'],
+            paid_children_from_age: data['paid_children_from_age'],
+            paid_children_to_age: data['paid_children_to_age'],
+            meal_price: data['meal_price'],
+            channel: data['channel'],
+            user_type: data['user_type'],
+            currency: data['currency'],
+            status: data['status'],
+            hotel_description: data['hotel_description'],
+            hotel_hotel_amenities: data['hotel_hotel_amenities'],
+            phone_number: data['phone_number'],
+            xl_hotel_code: data['xl_hotel_code'],
+            gst_state: data['gst_state'],
+            gst_number: data['gst_number'],
+            location: data['location'],
+            bank_name: data['bank_name'],
+            beneficiary_name: data['beneficiary_name'],
+            beneficiary_account_number: data['beneficiary_account_number'],
+            ifsc_code: data['ifsc_code'],
+            city_code: data['city_code'],
+            email: data['email'],
+            accomodation_or_meal: data['accomodation_or_meal']
+          };
+          data = [addHotelPayload];
           data['topic'] = 'addHotel';
         }
       } catch (error) {

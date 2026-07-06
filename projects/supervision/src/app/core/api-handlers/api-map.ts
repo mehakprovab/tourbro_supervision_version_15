@@ -862,45 +862,45 @@ export const apiMap = {
   deletePackagePrice: `${baseUrl}/wellness/package-prices/deletePackagePrice`,
 
   //Heli crs
-  addHeliOperator: `${baseUrl}/dashboard/report/addHeliOperator`,
-  updateHeliOperator: `${baseUrl}/dashboard/report/editHeliOperator`,
-  listHeliOperator: `${baseUrl}/dashboard/report/listHeliOperator`,
-  updateHelioperatorStatus: `${baseUrl}/dashboard/report/updateHelioperatorStatus`,
-  deleteHeliOperator: `${baseUrl}/dashboard/report/deleteHeliOperator`,
+  addHeliOperator: `${baseUrl}/rotorcraft/addHeliOperator`,
+  updateHeliOperator: `${baseUrl}/rotorcraft/editHeliOperator`,
+  listHeliOperator: `${baseUrl}/rotorcraft/listHeliOperator`,
+  updateHelioperatorStatus: `${baseUrl}/rotorcraft/updateHelioperatorStatus`,
+  deleteHeliOperator: `${baseUrl}/rotorcraft/deleteHeliOperator`,
 
   //heli pad
-  addHelipad: `${baseUrl}/dashboard/report/addHelipad`,
-  updateHelipad: `${baseUrl}/dashboard/report/updateHelipad`,
-  listHeliPad: `${baseUrl}/dashboard/report/listHeliPad`,
-  updateHelipadStatus: `${baseUrl}/dashboard/report/updateHelipadStatus`,
-  deleteHelipad: `${baseUrl}/dashboard/report/deleteHelipad`,
+  addHelipad: `${baseUrl}/rotorcraft/addHelipad`,
+  updateHelipad: `${baseUrl}/rotorcraft/updateHelipad`,
+  listHeliPad: `${baseUrl}/rotorcraft/listHeliPad`,
+  updateHelipadStatus: `${baseUrl}/rotorcraft/updateHelipadStatus`,
+  deleteHelipad: `${baseUrl}/rotorcraft/deleteHelipad`,
 
   // routes
-  addHeliRoute: `${baseUrl}/dashboard/report/addHeliRoutes`,
-  updateHeliRoute: `${baseUrl}/dashboard/report/updateHeliRoutes`,
-  listHeliRoutes: `${baseUrl}/dashboard/report/listHeliRoutes`,
-  updateHeliRouteStatus: `${baseUrl}/dashboard/report/editHeliRoutesStatus`,
-  deleteHeliRoute: `${baseUrl}/dashboard/report/deleteHeliRoutes`,
+  addHeliRoute: `${baseUrl}/rotorcraft/addHeliRoutes`,
+  updateHeliRoute: `${baseUrl}/rotorcraft/updateHeliRoutes`,
+  listHeliRoutes: `${baseUrl}/rotorcraft/listHeliRoutes`,
+  updateHeliRouteStatus: `${baseUrl}/rotorcraft/editHeliRoutesStatus`,
+  deleteHeliRoute: `${baseUrl}/rotorcraft/deleteHeliRoutes`,
 
         //Child Policies
       childrenPolicyList: `${baseUrl}/wellness/childrenPolicyList`,
       saveChildPolicy: `${baseUrl}/wellness/saveChildrenPolicy`,
       deleteChildPolicy: `${baseUrl}/wellness/deleteChildrenPolicy`,
 
-  addHeliSchedule: `${baseUrl}/dashboard/report/addHeliSchedules`,
-  updateHeliSchedule: `${baseUrl}/dashboard/report/updateHeliSchedules`,
-  listHeliSchedule: `${baseUrl}/dashboard/report/listHeliSchedules`,
-  updateHeliScheduleStatus: `${baseUrl}/dashboard/report/editHeliSchedulesStatus`,
-  deleteHeliSchedule: `${baseUrl}/dashboard/report/deleteHeliSchedules`,
+  addHeliSchedule: `${baseUrl}/rotorcraft/addHeliSchedules`,
+  updateHeliSchedule: `${baseUrl}/rotorcraft/updateHeliSchedules`,
+  listHeliSchedule: `${baseUrl}/rotorcraft/listHeliSchedules`,
+  updateHeliScheduleStatus: `${baseUrl}/rotorcraft/editHeliSchedulesStatus`,
+  deleteHeliSchedule: `${baseUrl}/rotorcraft/deleteHeliSchedules`,
 
-  addPricingRule: `${baseUrl}/dashboard/report/addHeliPricing`,
-  updatePricingRule: `${baseUrl}/dashboard/report/updateHeliPricing`,
-  listPricingRules: `${baseUrl}/dashboard/report/listHeliPricing`,
-  updatePricingStatus: `${baseUrl}/dashboard/report/editHeliPricingStatus`,
-  deletePricingRule: `${baseUrl}/dashboard/report/deleteHeliPricing`,
+  addPricingRule: `${baseUrl}/rotorcraft/addHeliPricing`,
+  updatePricingRule: `${baseUrl}/rotorcraft/updateHeliPricing`,
+  listPricingRules: `${baseUrl}/rotorcraft/listHeliPricing`,
+  updatePricingStatus: `${baseUrl}/rotorcraft/editHeliPricingStatus`,
+  deletePricingRule: `${baseUrl}/rotorcraft/deleteHeliPricing`,
 
 
-  addHeliTermsAndConditions: `${baseUrl}/dashboard/report/updateTermsConditions`,
-  getHeliTermsConditions: `${baseUrl}/dashboard/report/getTermsConditions`,
-  addHeliTransferImage: `${baseUrl}/dashboard/report/uploadImage`,
+  addHeliTermsAndConditions: `${baseUrl}/rotorcraft/updateTermsConditions`,
+  getHeliTermsConditions: `${baseUrl}/rotorcraft/getTermsConditions`,
+  addHeliTransferImage: `${baseUrl}/rotorcraft/uploadImage`,
 };

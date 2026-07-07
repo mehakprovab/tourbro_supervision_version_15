@@ -86,7 +86,10 @@
       <div class="col-md-4 mb-3">
         <label class="form-label">Hourly Rental <span class="text-danger">*</span></label>
         <div class="d-flex align-items-center">
-          <mat-slide-toggle formControlName="hourly_rental"></mat-slide-toggle>
+          <mat-slide-toggle
+            formControlName="hourly_rental"
+            (change)="onHourlyRentalChange($event)"
+          ></mat-slide-toggle>
           <span class="ml-2">
             {{ cityForm.get('hourly_rental').value ? 'Yes' : 'No' }}
           </span>
@@ -145,7 +148,7 @@
     <div class="form-row">
       <div class="col-12">
         <div class="saveButton my-3">
-          <button type="submit" class="btn btn-primary px-4" [disabled]="cityForm.invalid">
+          <button type="submit" class="btn btn-primary px-4">
           Save
           </button>
           <button type="button" class="btn btn-secondary ml-2 px-4" routerLink="/tour-crs/city">

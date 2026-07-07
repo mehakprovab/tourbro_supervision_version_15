@@ -36,6 +36,7 @@ export class B2cTransferVoucherComponent implements OnInit {
   itinerary: any
   pax: any = []
   BookingItineraryDetails
+  termsAndConditions = '';
   constructor(
     private activatedRoute: ActivatedRoute,
     private apiHandlerService: ApiHandlerService,
@@ -91,6 +92,7 @@ export class B2cTransferVoucherComponent implements OnInit {
           this.pax = this.voucherData.BookingPaxDetails;
 
           this.attributes = JSON.parse(this.voucherData.BookingDetails.attributes);
+          this.termsAndConditions = this.getTransferTermsAndConditions();
           console.log(this.pax, "pax")
           /* ---------------- Booking Details ---------------- */
           // let bookingAttributes = {};
@@ -165,6 +167,39 @@ export class B2cTransferVoucherComponent implements OnInit {
     } catch (e) {
       return null;
     }
+  }
+
+  getTransferTermsAndConditions(): string {
+    const itineraryAttributes = this.parseAttributes(
+      this.voucherData && this.voucherData.BookingItineraryDetails
+        ? this.voucherData.BookingItineraryDetails.attributes
+        : null
+    );
+
+    return this.getValidText(
+      this.bookingDetails && this.bookingDetails.TermsAndConditions,
+      this.bookingDetails && this.bookingDetails.TermsAndCondition,
+      this.attributes && this.attributes.TermsAndConditions,
+      this.attributes && this.attributes.TermsAndCondition,
+      this.attributes && this.attributes.data && this.attributes.data.TermsAndConditions,
+      this.attributes && this.attributes.data && this.attributes.data.TermsAndCondition,
+      itineraryAttributes && itineraryAttributes.term_conditions,
+      itineraryAttributes && itineraryAttributes.TermsAndConditions,
+      itineraryAttributes && itineraryAttributes.TermsAndCondition
+    );
+  }
+
+  private getValidText(...values: any[]): string {
+    const value = values.find(item => {
+      if (item === null || item === undefined) {
+        return false;
+      }
+
+      const text = String(item).trim();
+      return !!text && text.toLowerCase() !== 'null' && text.toLowerCase() !== 'undefined';
+    });
+
+    return value ? String(value).trim() : '';
   }
 
   // getVoucher() {

@@ -1,13 +1,13 @@
 <div class="card adminInner">
      <div class="card-header mb-3">
-        <h5>Tour Activities</h5>
+        <h5>Yatra Activities</h5>
     </div>
     <div>
         <form [formGroup]="activitiesForm" (ngSubmit)="onActivitiesSave()">
             <div class="form-row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="activities" class="" > Tour Activities</label>
+                        <label for="activities" class="" > Yatra Activities</label>
                         <input type="text" class="form-control ml-0" placeholder="Enter Package Activities"  formControlName="activitiesName" maxlength="150"
                         (input)="validateInput()">
                     </div>

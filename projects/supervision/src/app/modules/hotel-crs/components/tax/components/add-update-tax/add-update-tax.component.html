@@ -16,10 +16,15 @@
                             </label>
                             <div class="col-sm-8">
                                 <input formControlName="tax" type="text" placeholder="Eg : VAT"
-                                    class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tax.errors }" required />
+                                    class="form-control"
+                                    [ngClass]="{ 'is-invalid': (submitted || f.tax.touched) && f.tax.errors }"
+                                    (keydown)="alphaNumericOnly($event)"
+                                    (input)="removeSpecialCharacters('tax', $event)" required />
                             </div>
-                            <div *ngIf="submitted && f.tax.errors" class="invalid-feedback">
-                                <div *ngIf="f.tax.errors.required">Hotel Type Name is required</div>
+                            <div *ngIf="(submitted || f.tax.touched) && f.tax.errors" class="invalid-feedback">
+                                <div *ngIf="f.tax.errors.required">Tax Type is required</div>
+                                <div *ngIf="f.tax.errors.pattern">Special characters are not allowed</div>
+                                <div *ngIf="f.tax.errors.maxlength">Tax Type cannot exceed 80 characters</div>
                             </div>
                         </div> <br>
 

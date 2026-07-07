@@ -48,12 +48,42 @@ export class AddUpdateMealsComponent implements OnInit {
 
     createForm(): void {
         this.mealTypeForm = this.fb.group({
-          meals: new FormControl('', [Validators.required, Validators.maxLength(80)]),
+          meals: new FormControl('', [
+              Validators.required,
+              Validators.maxLength(80),
+              Validators.pattern(/^(?!\s*$)[A-Za-z0-9 ]+$/)
+          ]),
             status: new FormControl(1),
         });
     }
 
     get f() { return this.mealTypeForm.controls; }
+
+    alphaNumericOnly(event: KeyboardEvent): boolean {
+        const pattern = /^[A-Za-z0-9 ]$/;
+        const inputChar = event.key;
+
+        if (inputChar.length > 1) {
+            return true;
+        }
+
+        if (!pattern.test(inputChar)) {
+            event.preventDefault();
+            return false;
+        }
+
+        return true;
+    }
+
+    removeSpecialCharacters(controlName: string, event: Event): void {
+        const input = event.target as HTMLInputElement;
+        const sanitizedValue = input.value.replace(/[^A-Za-z0-9 ]/g, '');
+
+        if (input.value !== sanitizedValue) {
+            input.value = sanitizedValue;
+            this.mealTypeForm.get(controlName).setValue(sanitizedValue);
+        }
+    }
 
     patchHotelType(): void {
         console.log("hotelType",this.hotelTypeOne)
@@ -76,10 +106,7 @@ export class AddUpdateMealsComponent implements OnInit {
         
         let data = Object.assign({}, this.mealTypeForm.value);
               if (data['meals']) {
-        data['meals'] = data['meals']
-            .trim()
-            .toLowerCase()
-            .replace(/^\w/, c => c.toUpperCase());
+        data['meals'] = data['meals'].trim()
     }
         if (data['status']) {
             data['status'] = 1;
@@ -105,7 +132,7 @@ export class AddUpdateMealsComponent implements OnInit {
             .subscribe(resp => {
                 if (resp.statusCode == 200) {
                     this.swalService.alert.success('Your data updated successfully ..!');
-                    this.someEvent.next({ tabId: 'list_hotel_types', hotel_type: '' })
+                    this.someEvent.next({ tabId: 'list_meals', hotel_type: '' })
                     this.mealTypeForm.reset();
                 } else if (resp.statusCode == 400) {
                     this.swalService.alert.oops(resp.msg)

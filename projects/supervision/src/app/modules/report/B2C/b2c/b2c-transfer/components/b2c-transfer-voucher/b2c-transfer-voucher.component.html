@@ -494,12 +494,12 @@
                     <tbody>
                       <tr>
                         <td style="padding: 5px 10px; width: 100%; font-size: 14px;"
-                          *ngIf="!bookingDetails?.TermsAndConditions">
+                          *ngIf="!termsAndConditions">
                           No Terms and conditions
                         </td>
                         <td style="padding: 5px 10px; width: 100%; font-size: 14px;"
-                          *ngIf="bookingDetails?.TermsAndConditions!='null'">
-                          {{bookingDetails?.TermsAndConditions}}
+                          *ngIf="termsAndConditions"
+                          [innerHTML]="termsAndConditions">
                         </td>
                       </tr>
                     </tbody>

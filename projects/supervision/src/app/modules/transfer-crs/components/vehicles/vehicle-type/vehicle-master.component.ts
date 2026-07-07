@@ -188,7 +188,7 @@ export class VehicleTypeComponent implements OnInit {
             const isAsc = sort.direction === 'asc';
             switch (sort.active) {
                 case 'Sl. No.': return this.compare(+a.id, +b.id, isAsc);
-                case 'Tour Theme': return this.compare(a.tour_subtheme.toLowerCase(), b.tour_subtheme.toLowerCase(), isAsc);
+                case 'Yatra Theme': return this.compare(a.tour_subtheme.toLowerCase(), b.tour_subtheme.toLowerCase(), isAsc);
                 case 'Current State': return this.compare(a.status, b.status, isAsc);
                 case 'State Change': return this.compare(a.status, b.status, isAsc);
                 default: return 0;

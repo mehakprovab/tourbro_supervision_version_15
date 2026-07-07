@@ -59,12 +59,42 @@ export class AddUpdateRoomAmenityComponent implements OnInit {
 
     createForm(): void {
         this.roomAmenityForm = this.fb.group({
-            room_amenity_name: new FormControl('', [Validators.required, Validators.maxLength(80)]),
+            room_amenity_name: new FormControl('', [
+                Validators.required,
+                Validators.maxLength(80),
+                Validators.pattern(/^(?!\s*$)[A-Za-z0-9 ]+$/)
+            ]),
             status: new FormControl(''),
         });
     }
 
     get f() { return this.roomAmenityForm.controls; }
+
+    alphaNumericOnly(event: KeyboardEvent): boolean {
+        const pattern = /^[A-Za-z0-9 ]$/;
+        const inputChar = event.key;
+
+        if (inputChar.length > 1) {
+            return true;
+        }
+
+        if (!pattern.test(inputChar)) {
+            event.preventDefault();
+            return false;
+        }
+
+        return true;
+    }
+
+    removeSpecialCharacters(controlName: string, event: Event): void {
+        const input = event.target as HTMLInputElement;
+        const sanitizedValue = input.value.replace(/[^A-Za-z0-9 ]/g, '');
+
+        if (input.value !== sanitizedValue) {
+            input.value = sanitizedValue;
+            this.roomAmenityForm.get(controlName).setValue(sanitizedValue);
+        }
+    }
 
     patchRoomAmenity(): void {
         this.roomAmenityForm.patchValue({

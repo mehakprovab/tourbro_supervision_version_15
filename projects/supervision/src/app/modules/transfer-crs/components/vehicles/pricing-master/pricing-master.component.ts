@@ -295,6 +295,9 @@ onSubmit() {
           this.swalService.alert.success(
             this.editId ? 'Updated successfully' : 'Added successfully'
           );
+          if (!this.editId) {
+            this.page = 1;
+          }
           this.resetForm();
           this.getPriceList();
         } else {
@@ -315,7 +318,7 @@ getPriceList() {
     .subscribe(
       (res: any) => {
         if (res.Status && Array.isArray(res.data)) {
-          this.priceList = res.data.map(item => ({
+          this.priceList = this.sortNewestPriceFirst(res.data).map(item => ({
             ...item,
             price_details_obj: item.price_details
               ? JSON.parse(item.price_details)
@@ -334,6 +337,26 @@ getPriceList() {
         this.searchSpin = false;
       }
     );
+}
+
+private sortNewestPriceFirst(list: any[]): any[] {
+  return [...list].sort((a, b) => {
+    const aDate = this.getRecordTime(a);
+    const bDate = this.getRecordTime(b);
+
+    if (aDate !== bDate) {
+      return bDate - aDate;
+    }
+
+    return Number(b.id || 0) - Number(a.id || 0);
+  });
+}
+
+private getRecordTime(record: any): number {
+  const dateValue = record.created_at || record.createdAt || record.inserted_at || record.updated_at || record.updatedAt;
+  const time = dateValue ? new Date(dateValue).getTime() : 0;
+
+  return Number.isNaN(time) ? 0 : time;
 }
 
 
@@ -435,6 +458,8 @@ onEdit(item: any) {
       'night_bata'
     ]);
   }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 

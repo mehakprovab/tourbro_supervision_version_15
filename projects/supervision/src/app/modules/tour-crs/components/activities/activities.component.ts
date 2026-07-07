@@ -26,7 +26,7 @@ export class ActivitiesComponent implements OnInit {
   tourActivitiesDataListForSort:any[]=[];
   searchSpin:boolean=true;
 loggedInUserData: any;
-  displayColumn:string[]=['Sl. No.','Tour Activities','Current State',]
+  displayColumn:string[]=['Sl. No.','Yatra Activities','Current State',]
 
   constructor( private fb:FormBuilder, private swalService:SwalService, private apiHandlerService:ApiHandlerService) { 
   }
@@ -80,7 +80,7 @@ loggedInUserData: any;
             {"ActivityId":inputRecordToDeleted.id})
             .subscribe(response => {
               if (response.statusCode == 200 || response.statusCode == 201 && response.data) {
-                    this.swalService.alert.success("Tour Activity has been deleted successfully");
+                    this.swalService.alert.success("Yatra Activity has been deleted successfully");
                     this.getTourActivitiesData();
                   }
             },(err: HttpErrorResponse) => {
@@ -104,7 +104,7 @@ loggedInUserData: any;
         const isAsc = sort.direction === 'asc';
         switch (sort.active) {
             case 'Sl. No.': return this.compare(+a.id, +b.id, isAsc);
-            case 'Tour Activities': return this.compare(a.tour_activity.toLowerCase(), b.tour_activity.toLowerCase(), isAsc);
+            case 'Yatra Activities': return this.compare(a.tour_activity.toLowerCase(), b.tour_activity.toLowerCase(), isAsc);
             case 'Current State': return this.compare(a.status, b.status, isAsc);
             case 'State Change': return this.compare(a.status, b.status, isAsc);
             default: return 0;

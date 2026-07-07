@@ -86,7 +86,7 @@ export class AddThemeTypeComponent implements OnInit {
                 if (response.statusCode == 200 || response.statusCode == 201 && response.data) {
                   this.themeImage = '';
                   this.imageSrc = '';
-                  this.swalService.alert.success("Tour Theme  data has been saved successfully");
+                  this.swalService.alert.success("Yatra Theme  data has been saved successfully");
                   this.insertedRecord.emit(response.data);
                   this.themeTypeForm.reset();
                 }

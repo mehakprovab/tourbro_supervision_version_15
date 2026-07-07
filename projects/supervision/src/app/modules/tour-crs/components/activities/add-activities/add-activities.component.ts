@@ -38,7 +38,7 @@ export class AddActivitiesComponent implements OnInit {
               {"TourActivity":saveContinentData.tour_activity})
               .subscribe(response => {
                 if (response.statusCode == 200 || response.statusCode == 201 && response.data) {
-                      this.swalService.alert.success("Tour Activity  data has been saved successfully");
+                      this.swalService.alert.success("Yatra Activity  data has been saved successfully");
                       this.insertedRecord.emit(response.data);
                       this.activitiesForm.reset();
                     }

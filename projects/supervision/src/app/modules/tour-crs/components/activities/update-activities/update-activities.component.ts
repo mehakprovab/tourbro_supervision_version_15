@@ -43,7 +43,7 @@ export class UpdateActivitiesComponent implements OnInit {
                 "TourActivity":updatedActivities 
               }).subscribe(response => {
                 if (response.statusCode == 200 || response.statusCode == 201 && response.Status) {
-                      this.swalService.alert.success("Tour Activity has been updated successfully");
+                      this.swalService.alert.success("Yatra Activity has been updated successfully");
                       this.router.navigate(["tour-crs/activities"]);
                 }
               },(err: HttpErrorResponse) => {

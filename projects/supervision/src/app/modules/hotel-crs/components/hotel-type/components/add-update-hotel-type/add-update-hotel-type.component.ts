@@ -61,12 +61,42 @@ export class AddUpdateHotelTypeComponent implements OnInit {
 
     createForm(): void {
         this.hotelTypeForm = this.fb.group({
-            hotel_type_name: new FormControl('', [Validators.required, Validators.maxLength(80)]),
+            hotel_type_name: new FormControl('', [
+                Validators.required,
+                Validators.maxLength(80),
+                Validators.pattern(/^(?!\s*$)[A-Za-z0-9 ]+$/)
+            ]),
             status: new FormControl(''),
         });
     }
 
     get f() { return this.hotelTypeForm.controls; }
+
+    alphaNumericOnly(event: KeyboardEvent): boolean {
+        const pattern = /^[A-Za-z0-9 ]$/;
+        const inputChar = event.key;
+
+        if (inputChar.length > 1) {
+            return true;
+        }
+
+        if (!pattern.test(inputChar)) {
+            event.preventDefault();
+            return false;
+        }
+
+        return true;
+    }
+
+    removeSpecialCharacters(event: Event): void {
+        const input = event.target as HTMLInputElement;
+        const sanitizedValue = input.value.replace(/[^A-Za-z0-9 ]/g, '');
+
+        if (input.value !== sanitizedValue) {
+            input.value = sanitizedValue;
+            this.hotelTypeForm.get('hotel_type_name').setValue(sanitizedValue);
+        }
+    }
 
     patchHotelType(): void {
         this.hotelTypeForm.patchValue({
@@ -88,16 +118,11 @@ export class AddUpdateHotelTypeComponent implements OnInit {
 
     let data = Object.assign({}, this.hotelTypeForm.value);
 
-    // ✅ Trim + Capitalize first letter
-    if (data['hotel_type_name']) {
-        data['hotel_type_name'] = data['hotel_type_name']
-            .trim()
-            .toLowerCase()
-            .replace(/^\w/, c => c.toUpperCase());
-    }
+  if (data['hotel_type_name']) {
+  data['hotel_type_name'] = data['hotel_type_name'].trim();
+}
 
-    // ✅ Ensure boolean status
-    data['status'] = !!data['status'];
+data['status'] = !!data['status'];
 
     try {
         if (!this.utilityService.isEmpty(this.hotelTypeOne)) {

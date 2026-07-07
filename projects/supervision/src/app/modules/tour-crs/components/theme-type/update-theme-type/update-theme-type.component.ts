@@ -44,7 +44,7 @@ export class UpdateThemeTypeComponent implements OnInit {
                 "TourSubtheme":updatedThemeType
               }).subscribe(response => {
                 if (response.statusCode == 200 || response.statusCode == 201 && response.Status) {
-                  this.swalService.alert.success("Tour Theme Type has been updated successfully");
+                  this.swalService.alert.success("Yatra Theme Type has been updated successfully");
                   this.router.navigate(["tour-crs/theme-type"]);
                 }
               },(err: HttpErrorResponse) => {

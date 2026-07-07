@@ -743,6 +743,32 @@ initializeSearchBox() {
     return true;
   }
 
+  alphaNumericOnly(event: KeyboardEvent): boolean {
+    const pattern = /^[A-Za-z0-9 ]$/;
+    const inputChar = event.key;
+
+    if (inputChar.length > 1) {
+      return true;
+    }
+
+    if (!pattern.test(inputChar)) {
+      event.preventDefault();
+      return false;
+    }
+
+    return true;
+  }
+
+  removeSpecialCharacters(controlName: string, event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const sanitizedValue = input.value.replace(/[^A-Za-z0-9 ]/g, '');
+
+    if (input.value !== sanitizedValue) {
+      input.value = sanitizedValue;
+      this.hotelForm.get(controlName).setValue(sanitizedValue);
+    }
+  }
+
   getHotelTypeList(): void {
     const data = [{ offset: 0, limit: 10 }]
     data['topic'] = 'hotelTypeList';
@@ -856,7 +882,11 @@ initializeSearchBox() {
 }
   createHotelDetailForm(): void {
     this.hotelForm = this.fb.group({
-      hotel_name: ['', Validators.required],
+      hotel_name: ['', [
+        Validators.required,
+        Validators.maxLength(80),
+        Validators.pattern(/^(?!\s*$)[A-Za-z0-9 ]+$/)
+      ]],
       star_rating: ['', [Validators.required]],
       hotel_hotel_type_id: ['', Validators.required],
       core_country_id: ['India', Validators.required],

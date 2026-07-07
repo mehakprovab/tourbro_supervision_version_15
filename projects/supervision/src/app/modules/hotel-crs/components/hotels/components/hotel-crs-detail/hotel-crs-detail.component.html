@@ -30,9 +30,13 @@
                             <span class="text-danger">*</span>
                         </label>
                         <input type="text" formControlName="hotel_name" class="form-control"
-                            [ngClass]="{ 'is-invalid': submittedHotel && hotel.hotel_name.errors }" />
-                        <div *ngIf="submittedHotel && hotel.hotel_name.errors" class="invalid-feedback">
+                            [ngClass]="{ 'is-invalid': (submittedHotel || hotel.hotel_name.touched) && hotel.hotel_name.errors }"
+                            (keydown)="alphaNumericOnly($event)"
+                            (input)="removeSpecialCharacters('hotel_name', $event)" />
+                        <div *ngIf="(submittedHotel || hotel.hotel_name.touched) && hotel.hotel_name.errors" class="invalid-feedback">
                             <div *ngIf="hotel.hotel_name.errors.required">Stay Name is required</div>
+                            <div *ngIf="hotel.hotel_name.errors.pattern">Special characters are not allowed</div>
+                            <div *ngIf="hotel.hotel_name.errors.maxlength">Stay Name cannot exceed 80 characters</div>
                         </div>
                     </div>
 

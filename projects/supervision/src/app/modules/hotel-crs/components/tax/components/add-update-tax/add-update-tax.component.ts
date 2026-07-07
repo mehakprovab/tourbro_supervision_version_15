@@ -51,7 +51,11 @@ export class AddUpdateTaxComponent implements OnInit {
         this.hotelTypeForm = this.fb.group({
             paidTax: [true],
             payUponArrival: [false],
-            tax: new FormControl({ value: '', disabled: false }, [Validators.required, Validators.maxLength(80)]),
+            tax: new FormControl({ value: '', disabled: false }, [
+                Validators.required,
+                Validators.maxLength(80),
+                Validators.pattern(/^(?!\s*$)[A-Za-z0-9 ]+$/)
+            ]),
             tax_value: new FormControl({ value: '0', disabled: false }, [Validators.maxLength(80)]), // Initially disabled
             tax_type: new FormControl('percent', [Validators.required]),
             arrival_tax_type: new FormControl('plus', [Validators.required]),
@@ -104,7 +108,11 @@ export class AddUpdateTaxComponent implements OnInit {
     
             if (value) {
                 tax.enable();
-                tax.setValidators([Validators.required]);
+                tax.setValidators([
+                    Validators.required,
+                    Validators.maxLength(80),
+                    Validators.pattern(/^(?!\s*$)[A-Za-z0-9 ]+$/)
+                ]);
                 tax_value.enable();
                 tax_value.setValidators([Validators.required, Validators.maxLength(80)]);
             } else {
@@ -124,6 +132,32 @@ export class AddUpdateTaxComponent implements OnInit {
     
 
     get f() { return this.hotelTypeForm.controls; }
+
+    alphaNumericOnly(event: KeyboardEvent): boolean {
+        const pattern = /^[A-Za-z0-9 ]$/;
+        const inputChar = event.key;
+
+        if (inputChar.length > 1) {
+            return true;
+        }
+
+        if (!pattern.test(inputChar)) {
+            event.preventDefault();
+            return false;
+        }
+
+        return true;
+    }
+
+    removeSpecialCharacters(controlName: string, event: Event): void {
+        const input = event.target as HTMLInputElement;
+        const sanitizedValue = input.value.replace(/[^A-Za-z0-9 ]/g, '');
+
+        if (input.value !== sanitizedValue) {
+            input.value = sanitizedValue;
+            this.hotelTypeForm.get(controlName).setValue(sanitizedValue);
+        }
+    }
 
     getCurrencyList() {
         const data = [{}]
@@ -230,5 +264,4 @@ export class AddUpdateTaxComponent implements OnInit {
     }
 
 }
-
 

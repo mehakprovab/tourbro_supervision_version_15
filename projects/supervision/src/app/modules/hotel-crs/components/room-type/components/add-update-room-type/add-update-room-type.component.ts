@@ -59,12 +59,42 @@ export class AddUpdateRoomTypeComponent implements OnInit {
 
     createForm(): void {
         this.roomTypeForm = this.fb.group({
-            room_type_name: new FormControl('', [Validators.required, Validators.maxLength(80)]),
+            room_type_name: new FormControl('', [
+                Validators.required,
+                Validators.maxLength(80),
+                Validators.pattern(/^(?!\s*$)[A-Za-z0-9 ]+$/)
+            ]),
             status: new FormControl(''),
         });
     }
 
     get f() { return this.roomTypeForm.controls; }
+
+    alphaNumericOnly(event: KeyboardEvent): boolean {
+        const pattern = /^[A-Za-z0-9 ]$/;
+        const inputChar = event.key;
+
+        if (inputChar.length > 1) {
+            return true;
+        }
+
+        if (!pattern.test(inputChar)) {
+            event.preventDefault();
+            return false;
+        }
+
+        return true;
+    }
+
+    removeSpecialCharacters(controlName: string, event: Event): void {
+        const input = event.target as HTMLInputElement;
+        const sanitizedValue = input.value.replace(/[^A-Za-z0-9 ]/g, '');
+
+        if (input.value !== sanitizedValue) {
+            input.value = sanitizedValue;
+            this.roomTypeForm.get(controlName).setValue(sanitizedValue);
+        }
+    }
 
     patchRoomType(): void {
         this.roomTypeForm.patchValue({

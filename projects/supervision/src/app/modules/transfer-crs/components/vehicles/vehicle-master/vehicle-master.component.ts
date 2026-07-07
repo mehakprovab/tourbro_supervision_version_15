@@ -390,6 +390,7 @@ onVehicleMasterSave() {
   this.api.apiHandler('addVehicleMaster', 'POST', {}, {}, formData)
     .subscribe(res => {
       if (res.Status) {
+        this.page = 1;
         this.getVehicleMasterList();
         this.onCancel();
         this.swal.alert.success(res.Message);
@@ -589,7 +590,7 @@ getVehicleMasterList() {
     .subscribe(
       (res: any) => {
         if (res.Status && Array.isArray(res.data)) {
-          this.vehicleMasterDataList = res.data.map(item => ({
+          this.vehicleMasterDataList = this.sortNewestVehicleMasterFirst(res.data).map(item => ({
             ...item
            
           }));
@@ -606,6 +607,26 @@ getVehicleMasterList() {
         this.searchSpin = false;
       }
     );
+}
+
+private sortNewestVehicleMasterFirst(list: any[]): any[] {
+  return [...list].sort((a, b) => {
+    const aDate = this.getRecordTime(a);
+    const bDate = this.getRecordTime(b);
+
+    if (aDate !== bDate) {
+      return bDate - aDate;
+    }
+
+    return Number(b.id || 0) - Number(a.id || 0);
+  });
+}
+
+private getRecordTime(record: any): number {
+  const dateValue = record.created_at || record.createdAt || record.inserted_at || record.updated_at || record.updatedAt;
+  const time = dateValue ? new Date(dateValue).getTime() : 0;
+
+  return Number.isNaN(time) ? 0 : time;
 }
 
 

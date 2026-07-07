@@ -14,11 +14,15 @@
                                 </label>
                                 <div class="p-0">
                                     <input value="" formControlName="hotel_amenity_name" type="text" placeholder="Hotel Amenity Name"
-                                        class="form-control" [ngClass]="{ 'is-invalid': submitted && f.hotel_amenity_name.errors }"
-                                        required />
+                                        class="form-control"
+                                        [ngClass]="{ 'is-invalid': (submitted || f.hotel_amenity_name.touched) && f.hotel_amenity_name.errors }"
+                                        (keydown)="alphaNumericOnly($event)"
+                                        (input)="removeSpecialCharacters('hotel_amenity_name', $event)" required />
                                 </div>
-                                <div *ngIf="submitted && f.hotel_amenity_name.errors" class="invalid-feedback">
+                                <div *ngIf="(submitted || f.hotel_amenity_name.touched) && f.hotel_amenity_name.errors" class="invalid-feedback">
                                     <div *ngIf="f.hotel_amenity_name.errors.required">Hotel Amenity Name is required</div>
+                                    <div *ngIf="f.hotel_amenity_name.errors.pattern">Special characters are not allowed</div>
+                                    <div *ngIf="f.hotel_amenity_name.errors.maxlength">Hotel Amenity Name cannot exceed 80 characters</div>
                                 </div>
                             </div>
                         </div>

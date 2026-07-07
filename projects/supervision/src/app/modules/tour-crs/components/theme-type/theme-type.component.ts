@@ -17,7 +17,7 @@ export class ThemeTypeComponent implements OnInit {
   enabledForm:boolean=false;
   editForm:boolean=false;
   tourThemeDataList:any[]=[];
-  displayColumn:string[]=['Sl. No.','Tour Theme','Current State',]
+  displayColumn:string[]=['Sl. No.','Yatra Theme','Current State',]
   subSunk=new SubSink();
   pageSize = 100;
   page = 1;
@@ -62,7 +62,7 @@ export class ThemeTypeComponent implements OnInit {
                 "Status":Number(inputRecordStateChange.status) == 1 ? 0 : 1
               }).subscribe(response => {
                 if (response.statusCode == 200 || response.statusCode == 201 && response.Status) {
-                  this.swalService.alert.success("Tour theme type status has been changed successfully");
+                  this.swalService.alert.success("Yatra theme type status has been changed successfully");
                   this.getTourThemeData();
                 }
               },(err: HttpErrorResponse) => {
@@ -102,7 +102,7 @@ export class ThemeTypeComponent implements OnInit {
         const isAsc = sort.direction === 'asc';
         switch (sort.active) {
             case 'Sl. No.': return this.compare(+a.id, +b.id, isAsc);
-            case 'Tour Theme': return this.compare(a.tour_subtheme.toLowerCase(), b.tour_subtheme.toLowerCase(), isAsc);
+            case 'Yatra Theme': return this.compare(a.tour_subtheme.toLowerCase(), b.tour_subtheme.toLowerCase(), isAsc);
             case 'Current State': return this.compare(a.status, b.status, isAsc);
             case 'State Change': return this.compare(a.status, b.status, isAsc);
             default: return 0;

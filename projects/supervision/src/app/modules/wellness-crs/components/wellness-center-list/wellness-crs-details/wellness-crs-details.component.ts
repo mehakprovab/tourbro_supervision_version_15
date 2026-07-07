@@ -44,7 +44,7 @@ export class WellnessCrsDetailsComponent implements OnInit, AfterViewInit {
     center!: google.maps.LatLngLiteral;
     searchBox!: google.maps.places.SearchBox;
 
-    currencyList: any;
+    currencyList: any[] = [{ currency: 'INR', status: 1 }];
     timezones: string[] = [
     'UTC-12:00', 'UTC-11:00', 'UTC-10:00', 'UTC-09:00', 'UTC-08:00',
     'UTC-07:00', 'UTC-06:00', 'UTC-05:00', 'UTC-04:00', 'UTC-03:00',
@@ -140,6 +140,7 @@ if(this.wellnessForm.invalid) {
     
     const formData = {
   ...this.wellnessForm.value,
+currency: 'INR',
 ...(this.isEdit && this.editWellnessData.id && { id: this.editWellnessData.id }),
 ...(this.isEdit && this.editWellnessData.center_code && { center_code: this.editWellnessData.center_code }),
 contract_expiry: this.wellnessForm.value.contract_expiry || null,
@@ -276,7 +277,7 @@ console.log('Form Data to Submit:', formData);
       address: data.address || '',
       latitude: data.latitude || '',
       longitude: data.longitude || '',
-      currency: data.currency || 'INR',
+      currency: 'INR',
       local_timezone: data.local_timezone || 'UTC+05:30',
       stay_options: data.stay_options || '',
       ideal_duration: data.ideal_duration || '',
@@ -459,15 +460,8 @@ onCityChange(event: any) {
 }
 
   getCurrencyList() {
-    const data = [{}]
-    data['topic'] = 'hotelCurrencyConverison';
-    this.wellnessCrsService.fetch(data).subscribe(resp => {
-      if (resp.Status && resp.data) {
-        this.currencyList = resp.data.filter(t => t.status == 1);
-      }
-    }, (err: HttpErrorResponse) => {
-      console.log(err.error);
-    })
+    this.currencyList = [{ currency: 'INR', status: 1 }];
+    this.wellnessForm.patchValue({ currency: 'INR' });
   }
 
   getPackageTypeList() {

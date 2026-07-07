@@ -45,12 +45,42 @@ export class AddUpdateRoomViewComponent implements OnInit {
 
     createForm(): void {
         this.hotelTypeForm = this.fb.group({
-            views: new FormControl('', [Validators.required, Validators.maxLength(80)]),
+            views: new FormControl('', [
+                Validators.required,
+                Validators.maxLength(80),
+                Validators.pattern(/^(?!\s*$)[A-Za-z0-9 ]+$/)
+            ]),
             status: new FormControl(''),
         });
     }
 
     get f() { return this.hotelTypeForm.controls; }
+
+    alphaNumericOnly(event: KeyboardEvent): boolean {
+        const pattern = /^[A-Za-z0-9 ]$/;
+        const inputChar = event.key;
+
+        if (inputChar.length > 1) {
+            return true;
+        }
+
+        if (!pattern.test(inputChar)) {
+            event.preventDefault();
+            return false;
+        }
+
+        return true;
+    }
+
+    removeSpecialCharacters(controlName: string, event: Event): void {
+        const input = event.target as HTMLInputElement;
+        const sanitizedValue = input.value.replace(/[^A-Za-z0-9 ]/g, '');
+
+        if (input.value !== sanitizedValue) {
+            input.value = sanitizedValue;
+            this.hotelTypeForm.get(controlName).setValue(sanitizedValue);
+        }
+    }
 
     patchHotelType(): void {
         this.hotelTypeForm.patchValue({
@@ -73,8 +103,6 @@ export class AddUpdateRoomViewComponent implements OnInit {
          if (data['views']) {
         data['views'] = data['views']
             .trim()
-            .toLowerCase()
-            .replace(/^\w/, c => c.toUpperCase());
     }
         if (data['status']) {
             data['status'] = 1;

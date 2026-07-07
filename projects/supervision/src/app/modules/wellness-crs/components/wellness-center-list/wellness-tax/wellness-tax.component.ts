@@ -22,7 +22,7 @@ export class WellnessTaxComponent implements OnInit {
     @Input() wellnessOne: any;
     hotelTypeForm!: FormGroup;
     public submitted: boolean = false;
-    public currencyList: any;
+    public currencyList: any[] = [{ currency: 'INR', status: 1 }];
     public wellnessTaxList: any;
     public editTax: any;
 
@@ -61,7 +61,7 @@ export class WellnessTaxComponent implements OnInit {
             arrival_tax_type: new FormControl('plus', [Validators.required]),
             arrival_tax_value: new FormControl({ value: '0', disabled: true }, [Validators.maxLength(80)]), // Initially disabled
             description: new FormControl({ value: '', disabled: true }),
-            currency: new FormControl({ value: '', disabled: true }),
+            currency: new FormControl({ value: 'INR', disabled: true }),
             status: new FormControl(true),
         });
 
@@ -82,6 +82,7 @@ export class WellnessTaxComponent implements OnInit {
 
                 description.enable();
                 currency.enable();
+                currency.setValue('INR');
                 arrival_tax_value.enable();
             } else {
                 description.clearValidators();
@@ -90,6 +91,7 @@ export class WellnessTaxComponent implements OnInit {
 
                 description.setValue('');
                 arrival_tax_value.setValue('0');
+                currency.setValue('INR');
 
                 description.disable();
                 currency.disable();
@@ -127,15 +129,8 @@ export class WellnessTaxComponent implements OnInit {
     }
 
     getCurrencyList() {
-        const data = [{}]
-        data['topic'] = 'hotelCurrencyConverison';
-        this.hotelCrsService.fetch(data).subscribe(resp => {
-            if (resp.Status && resp.data) {
-                this.currencyList = resp.data.filter(t => t.status == 1);
-            }
-        }, (err: HttpErrorResponse) => {
-            console.log(err.error);
-        })
+        this.currencyList = [{ currency: 'INR', status: 1 }];
+        this.hotelTypeForm.patchValue({ currency: 'INR' });
     }
 
     resetForm() {
@@ -150,7 +145,7 @@ export class WellnessTaxComponent implements OnInit {
             arrival_tax_type: 'plus',
             arrival_tax_value: '',
             description: '',
-            currency: '',
+            currency: 'INR',
             status: true,
         });
 
@@ -178,6 +173,7 @@ export class WellnessTaxComponent implements OnInit {
         }
 
         let data = { ...this.hotelTypeForm.getRawValue() }; // Get all values, including disabled ones
+        data.currency = 'INR';
 
         // Convert status to "1" or "0"
         data.status = data.status ? "1" : "0";

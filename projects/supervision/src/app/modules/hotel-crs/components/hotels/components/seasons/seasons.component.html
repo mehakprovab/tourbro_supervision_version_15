@@ -62,9 +62,13 @@
                             <span class="text-danger">*</span>
                         </label>
                         <input type="text" formControlName="season_name" class="form-control"
-                            [ngClass]="{ 'is-invalid': submittedRoomSeason && hotelRoomSeason?.season_name?.errors }" />
-                        <div *ngIf="submittedRoomSeason && hotelRoomSeason?.season_name?.errors" class="invalid-feedback">
+                            [ngClass]="{ 'is-invalid': (submittedRoomSeason || hotelRoomSeason?.season_name?.touched) && hotelRoomSeason?.season_name?.errors }"
+                            (keydown)="alphaNumericOnly($event)"
+                            (input)="removeSpecialCharacters('season_name', $event)" />
+                        <div *ngIf="(submittedRoomSeason || hotelRoomSeason?.season_name?.touched) && hotelRoomSeason?.season_name?.errors" class="invalid-feedback">
                             <div *ngIf="hotelRoomSeason?.season_name?.errors.required">Season Name is required</div>
+                            <div *ngIf="hotelRoomSeason?.season_name?.errors.pattern">Special characters are not allowed</div>
+                            <div *ngIf="hotelRoomSeason?.season_name?.errors.maxlength">Season Name cannot exceed 80 characters</div>
                         </div>
                     </div>
                 </div>

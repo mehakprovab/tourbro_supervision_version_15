@@ -1,6 +1,6 @@
 <div class="card adminInner">
     <div class="card-header mb-3">
-       <h5>Tax Type</h5> 
+       <h5>Room View</h5> 
     </div>
     <form [formGroup]="hotelTypeForm" (ngSubmit)="handleValidSubmit()" class="needs-validation btop pt-0" novalidate>
     
@@ -15,11 +15,15 @@
                         </label>
                         <div class="">
                             <input value="" formControlName="views" type="text" placeholder="View name"
-                                class="form-control" [ngClass]="{ 'is-invalid': submitted && f.view.errors }"
-                                required />
+                                class="form-control"
+                                [ngClass]="{ 'is-invalid': (submitted || f.views.touched) && f.views.errors }"
+                                (keydown)="alphaNumericOnly($event)"
+                                (input)="removeSpecialCharacters('views', $event)" required />
                         </div>
-                        <div *ngIf="submitted && f.view.errors" class="invalid-feedback">
-                            <div *ngIf="f.view.errors.required">Hotel Type Name is required</div>
+                        <div *ngIf="(submitted || f.views.touched) && f.views.errors" class="invalid-feedback">
+                            <div *ngIf="f.views.errors.required">Room View Name is required</div>
+                            <div *ngIf="f.views.errors.pattern">Special characters are not allowed</div>
+                            <div *ngIf="f.views.errors.maxlength">Room View Name cannot exceed 80 characters</div>
                         </div>
                     </div>
                         </div>
@@ -54,4 +58,3 @@
         
     </form>
 </div>
-

@@ -340,7 +340,9 @@ onStateChange(event: Event): void {
 openStaticPage(pageType: string): void {
     sessionStorage.setItem('static_title', pageType);
     const url = this.router.serializeUrl(
-      this.router.createUrlTree(['/auth/static-content'])
+      this.router.createUrlTree(['/auth/static-content'], {
+        queryParams: { page_title: pageType }
+      })
     );
 
     window.open(`#${url}`, '_blank', 'noopener,noreferrer');

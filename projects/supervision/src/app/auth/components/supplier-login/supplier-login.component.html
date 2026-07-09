@@ -31,15 +31,21 @@
                                             <label>Username</label>
                                             <input placeholder="Username" id="exampleEmail" formControlName="email" name="email" type="email"
                                          class="form-control">
+                                            <div *ngIf="f.email.invalid && (submitted || f.email.dirty || f.email.touched)"
+                                                class="alert alert-danger">
+                                                <div *ngIf="f.email.errors?.required">Username is required</div>
+                                                <div *ngIf="f.email.errors?.email">Please enter a valid email</div>
+                                            </div>
                                         </div>
                                         <div class="form-field">
                                             <label>Password</label>
                                             <input type="password" placeholder="Password"      formControlName="password" id="examplePassword" name="password"
                                            class="form-control">
+                                            <div *ngIf="f.password.invalid && (submitted || f.password.dirty || f.password.touched)"
+                                                class="alert alert-danger">
+                                                <div *ngIf="f.password.errors?.required">Password is required</div>
+                                            </div>
                                         </div>
-                                        <div *ngIf="loginForm.get('password').invalid && (loginForm.get('password').dirty || loginForm.get('password').touched) && errorMessage"
-                                        class="alert alert-danger">
-                                    </div>
                                         <div class="login-footer">
                                             <div class="forgot-password">
                                                 <a class="c-pointer" routerLink="/auth/forgot-password">Forgot Password ?</a>
@@ -94,6 +100,5 @@
         </div>
     </div>
  </div>
-
 
 

@@ -9,6 +9,10 @@
     <script>
         (function () {
             var currentPath = window.location.pathname.replace(/\/+$/, '');
+            var currentHash = window.location.hash || '';
+            if (/\/supplier$/i.test(currentPath) || /supplier-login/i.test(currentHash)) {
+                document.title = 'Supplier';
+            }
             if (!window.location.hash && /\/supplier$/i.test(currentPath)) {
                 window.location.replace(window.location.pathname.replace(/\/?$/, '/') + window.location.search + '#/auth/supplier-login');
             }

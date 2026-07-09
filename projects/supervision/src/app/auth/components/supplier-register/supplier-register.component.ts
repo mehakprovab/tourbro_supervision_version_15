@@ -9,12 +9,58 @@ export type ServiceModule =
   |'wellness-retreat'
   | 'travel-heli';
 
+interface ServiceModuleOption {
+  value: ServiceModule;
+  title: string;
+  description: string;
+  iconClass: string;
+}
+
 @Component({
   selector: 'app-supplier-register',
   templateUrl: './supplier-register.component.html',
   styleUrls: ['./supplier-register.component.scss']
 })
 export class SupplierRegisterComponent  {
+  moduleOptions: ServiceModuleOption[] = [
+    {
+      value: 'stays',
+      title: 'Stays',
+      description: 'Hotels, Resorts & Accommodations',
+      iconClass: 'fa fa-bed'
+    },
+    {
+      value: 'yatra-packages',
+      title: 'Yatra Packages',
+      description: 'Complete holiday packages',
+      iconClass: 'fa fa-tree'
+    },
+    {
+      value: 'experiences',
+      title: 'Experiences',
+      description: 'Activities, Tours & Attractions',
+      iconClass: 'fa fa-binoculars'
+    },
+    {
+      value: 'cabs',
+      title: 'Cabs',
+      description: 'City & Outstation Taxi Services',
+      iconClass: 'fa fa-taxi'
+    },
+    {
+      value: 'wellness-retreat',
+      title: 'Wellness Retreat',
+      description: 'Wellness Retreat',
+      iconClass: 'fa fa-leaf'
+    },
+    {
+      value: 'travel-heli',
+      title: 'Travel & Heli Services',
+      description: 'Helicopter & Premium Travel Services',
+      iconClass: 'fa fa-plane'
+    }
+  ];
+
     // Store multiple selected modules in an array
   selectedModules: ServiceModule[] = [];
   

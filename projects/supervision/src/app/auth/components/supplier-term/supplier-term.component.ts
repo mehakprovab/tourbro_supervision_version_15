@@ -3,6 +3,7 @@ import { SubSink } from 'subsink';
 import { AuthService } from '../../../auth/auth.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ApiHandlerService } from '../../../core/api-handlers';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-supplier-term',
@@ -19,7 +20,8 @@ export class SupplierTermComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private sanitizer: DomSanitizer,
-    private apiHandlerService: ApiHandlerService
+    private apiHandlerService: ApiHandlerService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -27,7 +29,7 @@ export class SupplierTermComponent implements OnInit, OnDestroy {
   }
 
   loadStaticContent(): void {
-    const staticTitle = sessionStorage.getItem('static_title');
+    const staticTitle = this.route.snapshot.queryParamMap.get('page_title') || sessionStorage.getItem('static_title');
     if (!staticTitle) {
       console.error('Static title is not available in session storage.');
       this.errorMessage = 'Unable to load content. Please try again later.';
@@ -42,7 +44,7 @@ export class SupplierTermComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         
         // Check if response has the expected structure from your JSON
-        if (res.Status === true && res.statusCode === 201 && res.data) {
+        if (res.Status === true && (res.statusCode === 201 || res.statusCode === 200) && res.data && !Array.isArray(res.data)) {
           // Your response shows a single object in data, not an array
           this.staticData = {
             page_title: res.data.page_title || '',

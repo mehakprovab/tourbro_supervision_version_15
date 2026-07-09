@@ -91,6 +91,11 @@
   transform: scale(1.05);
 }
 
+.option-icon i {
+  font-size: 38px;
+  line-height: 1;
+}
+
 .option-title {
   font-size: 20px;
   font-weight: 700;
@@ -216,9 +221,8 @@
     height: 48px;
   }
 
-  .option-icon svg {
-    width: 32px;
-    height: 32px;
+  .option-icon i {
+    font-size: 28px;
   }
 
   .option-title {

@@ -127,8 +127,11 @@ export class AddUpdateRoomViewComponent implements OnInit {
         this.hotelCrsService.update(data)
             .subscribe(resp => {
                 if (resp.statusCode == 200) {
-                    this.swalService.alert.success('Your data added successfully ..!');
-                    this.someEvent.next({ tabId: 'list_hotel_types', hotel_type: '' })
+                    const message = this.utilityService.isEmpty(this.hotelTypeOne)
+                        ? 'Room Views added successfully.'
+                        : 'Room Views updated successfully.';
+                    this.swalService.alert.success(message);
+                    this.someEvent.next({ tabId: 'list_room_views', hotel_type: '' })
                     this.hotelTypeForm.reset();
                 } else if (resp.statusCode == 400) {
                     this.swalService.alert.oops(resp.msg)

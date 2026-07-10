@@ -27,8 +27,9 @@ tabs!: NgbNav;
     if (data.hotel_type)
       this.hotelTypeData = data.hotel_type;
     console.log("hotelTypeData",this.hotelTypeData)
-    
-    this.tabs.select(data.tabId);
+
+    const tabId = ['list_meals', 'add_meal_type'].includes(data.tabId) ? data.tabId : 'list_meals';
+    this.tabs.select(tabId);
   }
 
 }

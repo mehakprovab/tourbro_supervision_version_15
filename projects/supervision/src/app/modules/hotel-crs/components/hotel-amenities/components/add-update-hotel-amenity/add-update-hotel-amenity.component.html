@@ -1,6 +1,6 @@
 <div class="card adminInner">
     <div class="card-header mb-3">
-       <h5>Hotel Amenity</h5>
+       <h5>Stay Amenity</h5>
     </div>
     <form [formGroup]="hotelAmenityForm" (ngSubmit)="handleValidSubmit()" class="needs-validation btop pt-4" novalidate>
             <div class="card-body p-0 mt-3">
@@ -9,20 +9,20 @@
                         <div class="col-3 pr-0">
                              <div class="form-group">
                                 <label class="p-0 control-label" for="hotel_amenity_name">
-                                    Hotel Amenity Name
+                                    Stay Amenity Name
                                     <span class="text-danger">*</span>
                                 </label>
                                 <div class="p-0">
-                                    <input value="" formControlName="hotel_amenity_name" type="text" placeholder="Hotel Amenity Name"
+                                    <input value="" formControlName="hotel_amenity_name" type="text" placeholder="Stay Amenity Name"
                                         class="form-control"
                                         [ngClass]="{ 'is-invalid': (submitted || f.hotel_amenity_name.touched) && f.hotel_amenity_name.errors }"
                                         (keydown)="alphaNumericOnly($event)"
                                         (input)="removeSpecialCharacters('hotel_amenity_name', $event)" required />
                                 </div>
                                 <div *ngIf="(submitted || f.hotel_amenity_name.touched) && f.hotel_amenity_name.errors" class="invalid-feedback">
-                                    <div *ngIf="f.hotel_amenity_name.errors.required">Hotel Amenity Name is required</div>
+                                    <div *ngIf="f.hotel_amenity_name.errors.required">Stay Amenity Name is required</div>
                                     <div *ngIf="f.hotel_amenity_name.errors.pattern">Special characters are not allowed</div>
-                                    <div *ngIf="f.hotel_amenity_name.errors.maxlength">Hotel Amenity Name cannot exceed 80 characters</div>
+                                    <div *ngIf="f.hotel_amenity_name.errors.maxlength">Stay Amenity Name cannot exceed 80 characters</div>
                                 </div>
                             </div>
                         </div>

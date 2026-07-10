@@ -10,7 +10,7 @@ const log = new Logger('hotel-crs/HotelTypeComponent')
 export class RoomViewComponent implements OnInit {
   @ViewChild('tabs', { static: true })
 tabs!: NgbNav;
-  activeId = 'list_hotel_types';
+  activeId = 'list_room_views';
 
   hotelTypeData: any;
 
@@ -24,9 +24,14 @@ tabs!: NgbNav;
   }
 
   triggerTab(data: any) {
-    if (data.hotel_type)
+    if (data.hotel_type && data.hotel_type.id) {
       this.hotelTypeData = data.hotel_type;
-    this.tabs.select(data.tabId);
+    } else {
+      this.hotelTypeData = null;
+    }
+
+    const tabId = ['list_room_views', 'add_room_views'].includes(data.tabId) ? data.tabId : 'list_room_views';
+    this.tabs.select(tabId);
   }
 OnInit() {
   }

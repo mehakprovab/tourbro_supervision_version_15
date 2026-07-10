@@ -90,7 +90,7 @@ export class ListRoomViewComponent implements OnInit {
 
 
   updateHotelType(data) {
-      this.toUpdate.emit({ tabId: 'add_hotel_type', hotel_type: data });
+      this.toUpdate.emit({ tabId: 'add_room_views', hotel_type: data });
   }
 
   applyFilter(text: string) {

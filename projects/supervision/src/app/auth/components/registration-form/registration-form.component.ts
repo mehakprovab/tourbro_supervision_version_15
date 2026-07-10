@@ -23,6 +23,7 @@ registerForm: FormGroup;
     { id: 4, name: 'Dr' }
   ];
   registerCountries: any[] = [];
+  phoneCodes: any[] = [];
   registerCities: any[] = [];
   registerStates: any[] = [];
   filteredStates: any[] = [];
@@ -63,6 +64,7 @@ registerForm: FormGroup;
   ngOnInit() {
     this.createForm();
     this.loadCountries();
+    this.loadPhoneCodes();
     // this.loadCities();
      this.getSelectedServicesFromQueryParams();
   }
@@ -117,6 +119,7 @@ registerForm: FormGroup;
       title: ['', Validators.required],
       first_name: ['', [Validators.required, Validators.minLength(3)]],
       last_name: ['', Validators.required],
+      manager_country_code: ['91', Validators.required],
       phone_number: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       email: ['', [Validators.required, Validators.email]],
       
@@ -167,6 +170,51 @@ loadCountries() {
             console.error(err);
         }
     });
+}
+
+loadPhoneCodes() {
+    this.apiHandlerServices.apiHandler('phoneCodeList', 'POST').subscribe({
+        next: (res: any) => {
+            if (res && Array.isArray(res.data) && res.data.length) {
+                this.phoneCodes = res.data;
+                this.setDefaultManagerCountryCode();
+            }
+        },
+        error: (err) => {
+            console.error(err);
+        }
+    });
+}
+
+setDefaultManagerCountryCode(): void {
+    const currentCode = this.registerForm && this.registerForm.controls['manager_country_code'].value;
+    if (currentCode || !this.phoneCodes.length) {
+        return;
+    }
+
+    const indiaPhoneCode = this.phoneCodes.find((p) =>
+        p.code === 'IN' ||
+        p.country_code === 'IN' ||
+        p.sortname === 'IN' ||
+        this.normalizePhoneCode(p.phone_code) === '91'
+    );
+
+    if (indiaPhoneCode) {
+        this.registerForm.controls['manager_country_code'].setValue(this.normalizePhoneCode(indiaPhoneCode.phone_code));
+    }
+}
+
+normalizePhoneCode(phoneCode: any): string {
+    return String(phoneCode || '').replace('+', '').trim();
+}
+
+getPhoneCodeDisplay(phoneCode: any): string {
+    const normalizedCode = this.normalizePhoneCode(phoneCode);
+    return normalizedCode ? `+${normalizedCode}` : '';
+}
+
+trackByPhoneCode(index: number, item: any) {
+  return item.phone_code || item.country_code || item.code || index;
 }
 
 trackByCountry(index: number, item: any) {
@@ -395,6 +443,11 @@ onRegister(form: FormGroup) {
       formData.append(key, value.toString());
     }
   });
+
+  if (formValues.manager_country_code) {
+    formData.append('PhoneCode', this.getPhoneCodeDisplay(formValues.manager_country_code));
+    formData.append('phone_code', this.getPhoneCodeDisplay(formValues.manager_country_code));
+  }
 
   // Append services as array - try different formats based on backend expectation
   // Option 1: As JSON string

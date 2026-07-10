@@ -54,7 +54,21 @@
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-2">
+                                        <fieldset class="form-group">
+                                            <label for="manager_country_code" class="required">Country Code</label>
+                                            <select id="manager_country_code" formControlName="manager_country_code" class="form-control">
+                                                <option value="" disabled>Select Code</option>
+                                                <option *ngFor="let p of phoneCodes; trackBy: trackByPhoneCode" [value]="normalizePhoneCode(p.phone_code)">
+                                                    {{ getPhoneCodeDisplay(p.phone_code) }}
+                                                </option>
+                                            </select>
+                                            <div *ngIf="submitted && registerForm.get('manager_country_code')?.errors?.required" class="text-danger">
+                                                Country Code is required
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-4">
                                         <fieldset class="form-group">
                                             <label for="phone_number" class="required">Phone Number</label>
                                             <input formControlName="phone_number" type="tel" placeholder="Phone Number"

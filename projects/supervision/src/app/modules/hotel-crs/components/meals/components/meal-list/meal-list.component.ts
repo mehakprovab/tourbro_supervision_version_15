@@ -92,7 +92,7 @@ export class MealListComponent implements OnInit {
 
     updateHotelType(data) {
         console.log("data",data)
-        this.toUpdate.emit({ tabId: 'add_hotel_type', hotel_type: data });
+        this.toUpdate.emit({ tabId: 'add_meal_type', hotel_type: data });
     }
 
     applyFilter(text: string) {

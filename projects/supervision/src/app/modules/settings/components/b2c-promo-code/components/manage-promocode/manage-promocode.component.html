@@ -41,12 +41,16 @@
             type="checkbox"
             [value]="cat"
             [checked]="isCategorySelected(cat)"
+            [disabled]="isCategoryDisabled(cat)"
             (change)="onCategoryChange($event)"
           />
           {{ cat }}
         </label>
       </div>
     </div>
+    <small class="form-text text-muted">
+      Note: You cannot select other modules with Discover.
+    </small>
     <div *ngIf="regConfig.get('category').invalid && regConfig.get('category').touched" class="text-danger">
       Category is required
     </div>
@@ -244,4 +248,3 @@
         </div>
     </div>
 </div>
-

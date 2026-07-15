@@ -39,7 +39,6 @@ registerForm: FormGroup;
     { label: 'Yatra Packages', value: 'yatra-packages' },
     { label: 'Experiences', value: 'experiences' },
     { label: 'Cabs', value: 'cabs' },
-    { label: 'Bus', value: 'bus' },
     { label: 'Travel & Heli Services', value: 'travel-heli' },
      { label: 'Wellness Retreat', value: 'wellness-retreat' },
   ];

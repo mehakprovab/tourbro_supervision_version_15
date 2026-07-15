@@ -29,6 +29,7 @@ import { formatDate } from "ngx-bootstrap/chronos";
   styleUrls: ["./manage-promocode.component.scss"],
 })
 export class ManagePromocodeComponent implements OnInit, OnDestroy {
+  readonly discoverCategory = "Discover";
   categoryList = [
     "Stay",
     "Experience",
@@ -37,6 +38,7 @@ export class ManagePromocodeComponent implements OnInit, OnDestroy {
     "Cab",
     "Bus",
     "Heli Service",
+    this.discoverCategory,
   ];
   @Output() updatePromoCode = new EventEmitter<any>();
   @ViewChild("labelImport", { static: false })
@@ -159,18 +161,28 @@ setCategoryValues(categories: any) {
     this.categoryArray.removeAt(0);
   }
   
-  // Add new values
-  if (categories && Array.isArray(categories)) {
-    categories.forEach(cat => {
-      this.categoryArray.push(new FormControl(cat));
-    });
-  } else if (categories && typeof categories === 'string') {
-    // If categories come as a comma-separated string
-    const catArray = categories.split(',').map(c => c.trim());
-    catArray.forEach(cat => {
-      this.categoryArray.push(new FormControl(cat));
-    });
+  let categoryValues: string[] = [];
+
+  if (Array.isArray(categories)) {
+    categoryValues = categories;
+  } else if (typeof categories === "string") {
+    // Categories can also be returned as a comma-separated string.
+    categoryValues = categories.split(",").map(category => category.trim());
   }
+
+  categoryValues = categoryValues.filter((category, index, values) =>
+    category && values.indexOf(category) === index
+  );
+
+  // Discover promos are exclusive, including when an older record being edited
+  // contains Discover together with another module.
+  if (categoryValues.includes(this.discoverCategory)) {
+    categoryValues = [this.discoverCategory];
+  }
+
+  categoryValues.forEach(category => {
+    this.categoryArray.push(new FormControl(category));
+  });
   
   // Mark as touched to trigger validation display if needed
   this.categoryArray.markAsTouched();
@@ -179,6 +191,11 @@ setCategoryValues(categories: any) {
 isCategorySelected(category: string): boolean {
   const categoryArray = this.regConfig.get('category') as FormArray;
   return categoryArray.controls.some(control => control.value === category);
+}
+
+isCategoryDisabled(category: string): boolean {
+  return category !== this.discoverCategory &&
+    this.isCategorySelected(this.discoverCategory);
 }
   valueChanges(): void {
     // const usetypeControl = this.regConfig.get("useType");
@@ -230,6 +247,12 @@ onSubmit() {
     start_date: formatDate(this.regConfig.value.start_date, "YYYY-MM-DD"),
     expiry_date: formatDate(this.regConfig.value.expiry_date, "YYYY-MM-DD"),
   };
+
+  // Keep the API payload safe even if category values were changed
+  // programmatically instead of through the checkboxes.
+  if (req.category.includes(this.discoverCategory)) {
+    req.category = [this.discoverCategory];
+  }
 
   // Remove promo_type from payload
   delete req.promo_type;
@@ -296,7 +319,16 @@ onCategoryChange(event: any) {
   const categories = this.regConfig.get("category") as FormArray;
   const value = event.target.value;
 
-  if (event.target.checked) {
+  if (event.target.checked && value === this.discoverCategory) {
+    categories.clear();
+    categories.push(new FormControl(this.discoverCategory));
+  } else if (event.target.checked) {
+    // Other modules cannot be combined with Discover.
+    if (this.isCategorySelected(this.discoverCategory)) {
+      event.target.checked = false;
+      return;
+    }
+
     // Check if not already added to prevent duplicates
     const exists = categories.controls.some(control => control.value === value);
     if (!exists) {

@@ -37,13 +37,15 @@ import { SupplierNewListingComponent } from './manage-supplier/manage-supplier-n
 import { ManageAgentNewListingComponent } from './manage-agent/b2b/manageAgent/b2-b-active/manage-agent-new-listing/manage-agent-new-listing.component';
 import { AgentNewListingComponent } from './manage-agent/b2b/manageAgent/b2-b-active/manage-agent-new-listing/agent-new-listing/agent-new-listing.component';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { SupplierDetailsModalComponent } from './manage-supplier/supplier-details-modal/supplier-details-modal.component';
 
 
 @NgModule({
     declarations: [CreateB2cComponent, ManageListComponent, ManageB2cInactiveComponent, InactiveListComponent, ManageB2cActiveComponent, B2BActiveComponent, ManageActiveCreateB2BComponent,
         AdminProfileComponent, ChangePasswordComponent,B2bActiveListComponent,SubAdminActiveComponent,CreateSubAdminComponent,SubAdminActiveListComponent,PrivilegesComponent,ManageSupplierComponent,CreateSupplierComponent,
         SupplierListComponent,ManageSupplierInactiveComponent,SupplierInactiveListComponent,ManageAgentGroupingComponent,CreateAgentGroupingComponent,ManageInactiveAgentGroupingComponent,AgentGroupingListComponent,
-        SupplierNewListingComponent,InactiveAgentGroupListComponent,AgentNewListingComponent,ManageSupplierNewlistingComponent,ManageAgentNewListingComponent
+        SupplierNewListingComponent,InactiveAgentGroupListComponent,AgentNewListingComponent,ManageSupplierNewlistingComponent,ManageAgentNewListingComponent,
+        SupplierDetailsModalComponent
 
     ],
     imports: [

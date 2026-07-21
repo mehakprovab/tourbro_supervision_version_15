@@ -42,6 +42,8 @@ export class SupplierInactiveListComponent implements OnInit {
   userTypeList: Array<any> = [];
   respDataProperty:Array<any> = [];
   showModal : boolean;
+  selectedSupplier: any;
+  showSupplierDetails = false;
   supplier_Type:any;
     countriesList: any;
   constructor(
@@ -102,6 +104,16 @@ export class SupplierInactiveListComponent implements OnInit {
   }
   userProfile() {
       this.router.navigate(['/administrator/agencyUserDetails'])
+  }
+
+  viewSupplierDetails(supplier: any) {
+      this.selectedSupplier = supplier;
+      this.showSupplierDetails = true;
+  }
+
+  closeSupplierDetails() {
+      this.showSupplierDetails = false;
+      this.selectedSupplier = null;
   }
 
   

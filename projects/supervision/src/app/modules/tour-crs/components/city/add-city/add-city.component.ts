@@ -36,8 +36,8 @@ createCityForm() {
     stateId: ['', Validators.required],
     cityName: ['', [Validators.required, this.inputValidator]],
     status: [1, Validators.required],
-    CityImage: ['', Validators.required],           // ✅ New field
-    discription: ['', [Validators.required, Validators.minLength(5)]],  // ✅ New field
+    CityImage: [''],           // ✅ New field
+    discription: [''],  // ✅ New field
     hourly_rental: [false],    // ✅ New field
     hourly_durations: ['']     // ✅ New field
   });

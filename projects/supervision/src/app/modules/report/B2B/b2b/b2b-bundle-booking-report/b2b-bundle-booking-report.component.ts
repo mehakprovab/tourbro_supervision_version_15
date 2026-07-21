@@ -158,7 +158,8 @@ export class B2bBundleBookingReportComponent implements OnInit {
 
   cancelTicket(appReference) {
     const reqBody = {
-      AppReference: appReference
+      AppReference: appReference,
+      UserId: JSON.parse(sessionStorage.getItem('currentSupervisionUser')).id
     }
     this.subSunk.sink = this.apiHandlerService.apiHandler('cancelTour', 'post', {}, {}, reqBody).subscribe(resp => {
       if (resp.statusCode == 200 || resp.statusCode == 201) {

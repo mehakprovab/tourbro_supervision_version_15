@@ -190,7 +190,8 @@ loggedInUser: any;
   cancelTicket(){
     const reqBody = {
         AppReference : this.cancelData.bookingDetails[0].App_Reference,
-        booking_source: this.cancelData.bookingDetails[0].BookingSource
+        booking_source: this.cancelData.bookingDetails[0].BookingSource,
+        UserId: JSON.parse(sessionStorage.getItem('currentSupervisionUser')).id
     }
     this.subSunk.sink = this.apiHandlerService.apiHandler('cancelTour', 'post', {}, {}, reqBody).subscribe(resp => {
         if (resp.statusCode == 200 || resp.statusCode == 201) {

@@ -93,9 +93,8 @@
                                                                     </button>
                                                                     <div ngbDropdownMenu>
                         
-                                                                        <!-- (click)="showPropertyProfile(user)" -->
-                                                                        <button ngbDropdownItem>
-                                                                            View Detail</button>
+                                                                        <button ngbDropdownItem (click)="viewSupplierDetails(user)">
+                                                                            View Details</button>
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -130,6 +129,11 @@
         </div>
     </div>
 </div>
+<app-supplier-details-modal
+    [visible]="showSupplierDetails"
+    [supplier]="selectedSupplier"
+    (closed)="closeSupplierDetails()">
+</app-supplier-details-modal>
 <div class="modal" id="paxProfile" [style.display]="showModal ? 'block' : 'none'">
     <div class="modal-dialog">
         <div class="modal-content" style="min-width: 910px;">

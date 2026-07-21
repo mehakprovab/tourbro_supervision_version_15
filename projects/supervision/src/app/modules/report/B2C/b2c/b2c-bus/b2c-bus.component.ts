@@ -265,6 +265,7 @@ export class B2cBusComponent implements OnInit {
         let payload={
             booking_source: this.deleteData.booking_source,
             AppReference:this.deleteData.app_reference,
+            UserId: JSON.parse(sessionStorage.getItem('currentSupervisionUser')).id
         }
         this.apiHandlerService.apiHandler('buscancel', 'POST', '', '', payload).subscribe(res => {
             if (res && ([200, 201].includes(res.statusCode)) && res.data) {

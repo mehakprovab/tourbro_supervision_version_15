@@ -19,7 +19,7 @@ export class CityComponent implements OnInit {
   enabledForm:boolean=false;
   editForm:boolean=false;
   tourCounrtyCityDataList:any[]=[];
-  displayColumn:string[]=['Sl. No.','Country','City',]
+  displayColumn:string[]=['Sl. No.','Country','City','Status']
   pageSize = 100;
   page = 1;
   collectionSize: number; 
@@ -82,6 +82,35 @@ export class CityComponent implements OnInit {
             });
         }
     })
+  }
+
+  onStatusChange(event: any, item: any) {
+    const previousStatus = Number(item.status) === 1 ? 1 : 0;
+    const status = event.checked ? 1 : 0;
+    item.status = status;
+
+    const payload = {
+      id: item.cityId || item.id,
+      status,
+      type: 'City'
+    };
+
+    this.subSunk.sink = this.apiHandlerService
+      .apiHandler('editMasterCity', 'post', {}, {}, payload)
+      .subscribe(
+        (response: any) => {
+          if (response.statusCode === 200 || response.statusCode === 201) {
+            this.swalService.alert.success(`City marked as ${status === 1 ? 'active' : 'inactive'}`);
+          } else {
+            item.status = previousStatus;
+            this.swalService.alert.error(response.Message || 'Status update failed');
+          }
+        },
+        (err: HttpErrorResponse) => {
+          item.status = previousStatus;
+          this.swalService.alert.error(err.error.Message || 'Status update failed');
+        }
+      );
   }
 
   insertedRecordReceived(newlyInsertedRecord){

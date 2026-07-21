@@ -1,0 +1,59 @@
+.supplier-details-modal {
+  z-index: 1051;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.supplier-details-modal .modal-dialog {
+  height: calc(100vh - 160px);
+  margin-top: 90px;
+  margin-bottom: 70px;
+}
+
+.supplier-details-modal .modal-content {
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.supplier-details-modal .modal-header,
+.supplier-details-modal .modal-footer {
+  flex-shrink: 0;
+}
+
+.supplier-details-modal .modal-body {
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.detail-row {
+  display: flex;
+  padding: 10px 15px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.detail-label {
+  width: 42%;
+  flex-shrink: 0;
+  font-weight: 600;
+  color: #495057;
+}
+
+.detail-value {
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.section-title {
+  padding-bottom: 8px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.document-card {
+  height: 100%;
+  padding: 15px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  background: #f8f9fa;
+}

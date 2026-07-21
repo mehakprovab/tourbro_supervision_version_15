@@ -47,6 +47,7 @@ import { B2bActivityInvoiceComponent } from './B2B/b2b/voucher/b2b-activity-invo
 import { B2CTransferInvoiceComponent } from './B2C/b2c/b2c-transfer/b2-ctransfer-invoice/b2-ctransfer-invoice.component';
 import { B2bTransferInvoiceComponent } from './B2B/b2b/voucher/b2b-transfer-invoice/b2b-transfer-invoice.component';
 import { B2cBundleBookingReportComponent } from './B2C/b2c/b2c-bundle-booking-report/b2c-bundle-booking-report.component';
+import { B2cDynamicPackageReportComponent } from './B2C/b2c/b2c-dynamic-package-report/b2c-dynamic-package-report.component';
 import { B2bBundleBookingReportComponent } from './B2B/b2b/b2b-bundle-booking-report/b2b-bundle-booking-report.component';
 import { B2cHotelEnquiryComponent } from './B2C/b2c/b2c-hotel-enquiry/b2c-hotel-enquiry.component';
 import { B2bHotelEnquiryComponent } from './B2B/b2b/b2b-hotel-enquiry/b2b-hotel-enquiry.component';
@@ -351,6 +352,12 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         component: B2cBundleBookingReportComponent,
         data: {extraParameter: 'b2b-reports-Menus'}
+      },
+      {
+        path: 'b2c-dynamic-package-report',
+        canActivate: [AuthGuard],
+        component: B2cDynamicPackageReportComponent,
+        data: {extraParameter: 'b2c-reports-Menus'}
       },
       {
         path: 'b2b-bundle-booking-report',

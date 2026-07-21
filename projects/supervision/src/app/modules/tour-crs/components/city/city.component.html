@@ -44,10 +44,22 @@
                         <tr *ngFor="let item of tourCounrtyCityDataList | filter:searchText | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index">
                                 <td class="text-left text-muted">{{(i+1) }}</td>
                                 <td class="text-left">{{ item.countryName }}</td>
-                                <td class="text-left">{{ item.cityName }}</td><td class="text-left buttontdsize">
+                                <td class="text-left">{{ item.cityName }}</td>
+                                <td class="text-left">
+                                    <mat-slide-toggle
+                                        [checked]="item.status === true || item.status === 1 || item.status === '1'"
+                                        [disabled]="loggedInUserData.auth_role_id === 7"
+                                        (change)="onStatusChange($event, item)">
+                                    </mat-slide-toggle>
+                                    <span class="ml-2">
+                                        {{ item.status === true || item.status === 1 || item.status === '1' ? 'Active' : 'Inactive' }}
+                                    </span>
+                                </td>
+                                <td *ngIf="loggedInUserData.auth_role_id !== 7" class="text-left buttontdsize">
                                     <button class="btn btn-sm btn-primary mr-2" routerLink="/tour-crs/city/update" [queryParams]="item">{{'Edit'}}
                                     </button>
-                                    <button class="btn btn-sm btn-secondary" (click)="onDeletedRecord(item)"> {{'Delete'}}  </button>
+                                    <!-- Delete option intentionally disabled. City status is managed using the toggle. -->
+                                    <!-- <button class="btn btn-sm btn-secondary" (click)="onDeletedRecord(item)"> {{'Delete'}}  </button> -->
                                 </td>
                         </tr>
                     </tbody>

@@ -422,7 +422,8 @@ export class B2bHotelComponent implements OnInit {
         console.log("hotelData", hotelData,)
         let reqBody = {
             "AppReference": hotelData.BookingDetails.AppReference,
-            "booking_source": hotelData.BookingDetails.booking_source
+            "booking_source": hotelData.BookingDetails.booking_source,
+            "UserId": JSON.parse(sessionStorage.getItem('currentSupervisionUser')).id
         }
         this.subSunk.sink = this.apiHandlerService.apiHandler('cancelHotelBooking', 'post', '', '', reqBody).subscribe(res => {
             if (res) {

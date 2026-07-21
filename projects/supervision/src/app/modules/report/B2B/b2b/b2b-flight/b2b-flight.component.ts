@@ -408,7 +408,8 @@ export class B2bFlightComponent implements OnInit, OnDestroy {
 
         let reqBody = {
             "AppReference": data.AppReference,
-            "booking_source": data.ApiCode
+            "booking_source": data.ApiCode,
+            "UserId": JSON.parse(sessionStorage.getItem('currentSupervisionUser')).id
         }
         this.subSunk.sink = this.apiHandlerService.apiHandler('cancelFlightBooking', 'post', '', '', reqBody).subscribe(res => {
             if (res && res.data) {

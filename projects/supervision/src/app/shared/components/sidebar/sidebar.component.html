@@ -214,6 +214,14 @@
                                 </span>
                               </a>
                             </div>
+                            <div class="vsm-item" *ngIf="isSubMenuExists('B2C Tour Report',REPORTS) && hasSupplier('yatra-packages')">
+                              <a routerLinkActive="active-item" routerLink='/report/b2c-dynamic-package-report' class="vsm-link pl-10">
+                                <span class="vsm-title pl-10">
+                                  <i class="fa fa-suitcase"></i>
+                                  Dynamic Packages
+                                </span>
+                              </a>
+                            </div>
                             <div class="vsm-item" *ngIf="isSubMenuExists('B2C Bus Report',REPORTS) && hasSupplier('buses')">
                               <a routerLinkActive="active-item" routerLink='/report/b2c-bus' class="vsm-link pl-10">
                                 <span class="vsm-title pl-10">

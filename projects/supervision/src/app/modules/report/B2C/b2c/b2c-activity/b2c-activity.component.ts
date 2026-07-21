@@ -322,7 +322,8 @@ isExporting = false;
         let reqBody = {
             "AppReference": data.BookingDetails.AppReference,
             "UserType": "B2C",
-            "booking_source": this.booking_source
+            "booking_source": this.booking_source,
+            "UserId": JSON.parse(sessionStorage.getItem('currentSupervisionUser')).id
         }
         this.subSunk.sink = this.apiHandlerService.apiHandler('cancelActivityBooking', 'post', '', '', reqBody).subscribe(res => {
             if (res && res.data) {

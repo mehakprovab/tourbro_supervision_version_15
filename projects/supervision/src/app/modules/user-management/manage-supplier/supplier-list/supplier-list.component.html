@@ -93,7 +93,8 @@
                                                                         {{'Action'}}
                                                                     </button>
                                                                     <div ngbDropdownMenu>
-                        
+                                                                        <button ngbDropdownItem (click)="viewSupplierDetails(user)">
+                                                                            View Details</button>
                                                                         <button ngbDropdownItem>
                                                                             View Linked Properties</button>
                                                                             <button ngbDropdownItem (click)="onSubmitMail(user)">
@@ -143,6 +144,11 @@
         </div>
     </div>
 </div>
+<app-supplier-details-modal
+    [visible]="showSupplierDetails"
+    [supplier]="selectedSupplier"
+    (closed)="closeSupplierDetails()">
+</app-supplier-details-modal>
 <div class="modal" id="paxProfile" [style.display]="showModal ? 'block' : 'none'">
     <div class="modal-dialog">
         <div class="modal-content" style="min-width: 910px;">

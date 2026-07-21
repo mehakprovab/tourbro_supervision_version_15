@@ -574,6 +574,7 @@ export const apiMap = {
 
   activityRefund: `${baseUrl}/sa/dashboard/report/activityRefund`,
   b2cBundleBookingReport: `${B2C_URL}/webservice/bundle-booking/bundleReport`,
+  b2cDynamicPackageReport: `${baseUrl}/dashboard/report/b2cDynamicPackageReport`,
   familyDeals: `${baseUrl}/hotel/hotels/familyDeals`,
   tourType: `${baseUrl}/tour/tours/tourType`,
   updateTourTypeStatus: `${baseUrl}/tour/tours/updateTourTypeStatus`,

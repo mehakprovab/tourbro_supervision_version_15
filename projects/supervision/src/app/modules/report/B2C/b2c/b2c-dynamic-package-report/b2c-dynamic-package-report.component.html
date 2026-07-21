@@ -1,0 +1,92 @@
+<div class="card adminInner">
+  <div class="card-header mb-3"><h5>B2C Dynamic Package Report</h5></div>
+  <form [formGroup]="regConfig" (ngSubmit)="fetchReport()">
+    <div class="form-row">
+      <div class="col-md-4"><div class="form-group">
+        <label for="dynamicAppReference">Application Reference</label>
+        <input id="dynamicAppReference" formControlName="app_reference" class="form-control form-control-sm nrm_input text-uppercase" placeholder="Application Reference">
+      </div></div>
+      <div class="col-md-4"><div class="form-group">
+        <label for="dynamicPhone">Phone</label>
+        <input id="dynamicPhone" formControlName="phone_number" class="form-control form-control-sm nrm_input" placeholder="Phone" (keypress)="numberOnly($event)">
+      </div></div>
+      <div class="col-md-4"><div class="form-group">
+        <label for="dynamicEmail">Email</label>
+        <input id="dynamicEmail" type="email" formControlName="email" class="form-control form-control-sm nrm_input" placeholder="Email">
+      </div></div>
+      <div class="col-md-4"><div class="form-group">
+        <label for="dynamicStatus">Status</label>
+        <select id="dynamicStatus" formControlName="status" class="form-control form-control-sm nrm_input">
+          <option value="ALL">ALL</option>
+          <option value="BOOKING_CONFIRMED">CONFIRMED</option>
+          <option value="BOOKING_HOLD">BOOKING HOLD</option>
+          <option value="BOOKING_CANCELLED">CANCELLED</option>
+          <option value="BOOKING_FAILED">FAILED</option>
+          <option value="BOOKING_INPROGRESS">IN PROGRESS</option>
+        </select>
+      </div></div>
+      <div class="col-md-4"><div class="form-group">
+        <label for="dynamicFromDate">Booked From Date</label>
+        <input id="dynamicFromDate" formControlName="booked_from_date" class="form-control form-control-sm nrm_input" autocomplete="off" placeholder="dd/mm/yyyy" bsDatepicker [bsConfig]="bsDateConf" [maxDate]="maxDate" [isOpen]="isFromDateOpen">
+      </div></div>
+      <div class="col-md-4"><div class="form-group">
+        <label for="dynamicToDate">Booked To Date</label>
+        <input id="dynamicToDate" formControlName="booked_to_date" class="form-control form-control-sm nrm_input" autocomplete="off" placeholder="dd/mm/yyyy" bsDatepicker [bsConfig]="bsDateConf" [maxDate]="maxDate" [isOpen]="isToDateOpen">
+      </div></div>
+    </div>
+    <div class="btncontainer">
+      <button type="submit" class="btnStyle" [disabled]="loading">Search</button>&nbsp;
+      <button type="button" class="btnStyle" (click)="onReset()" [disabled]="loading">Reset</button>
+    </div>
+  </form>
+</div>
+
+<div class="card adminInner mt-4">
+  <div class="card-body">
+    <div class="report-actions">
+      <p>Total {{collectionSize}} Bookings</p>
+      <button class="btnStyle" type="button" (click)="download('pdf')" [disabled]="!rows.length">PDF</button>&nbsp;
+      <button class="btnStyle" type="button" (click)="download('xlsx')" [disabled]="!rows.length">Export to Excel</button>
+      <div class="form-group mb-0 col-sm-3 p-0 float-right has-search">
+        <span class="fa fa-search form-control-feedback"></span>
+        <input class="form-control" [(ngModel)]="searchText" (ngModelChange)="applyFilter()" [ngModelOptions]="{standalone: true}" autocomplete="off" placeholder="Search">
+      </div>
+    </div>
+    <div class="table-responsive mt-3">
+      <table id="b2c-dynamic-package-report" class="table table-borderless table-striped table-hover">
+        <thead><tr><th>S No.</th><th *ngFor="let column of columns" class="text-nowrap">{{column.label}}</th></tr></thead>
+        <tbody>
+          <tr *ngIf="loading"><td [attr.colspan]="columns.length + 1"><mat-spinner [diameter]="30" class="mx-auto"></mat-spinner></td></tr>
+          <tr *ngIf="!loading && !rows.length"><td [attr.colspan]="columns.length + 1"><h4 class="text-muted text-center">No Data Found!</h4></td></tr>
+          <tr *ngFor="let row of rows | slice: (page - 1) * pageSize : page * pageSize; let i = index">
+            <td>{{(page - 1) * pageSize + i + 1}}.</td>
+            <td *ngFor="let column of columns" class="text-nowrap" [ngSwitch]="column.type">
+              <ng-container *ngSwitchCase="'date'">{{row[column.key] ? (row[column.key] | date:'dd/MM/yyyy') : 'N/A'}}</ng-container>
+              <ng-container *ngSwitchCase="'amount'">{{row[column.key] != null && row[column.key] !== '' ? ((row[column.key] | number:'1.2-2') + ' ' + row.currency) : 'N/A'}}</ng-container>
+              <ng-container *ngSwitchCase="'status'">
+                <span *ngIf="row[column.key]; else noStatus" class="badge"
+                  [ngClass]="{'badge-success': row[column.key] === 'BOOKING_CONFIRMED' || row[column.key] === 'Paid',
+                    'badge-danger': row[column.key] === 'BOOKING_CANCELLED' || row[column.key] === 'BOOKING_FAILED' || row[column.key] === 'Failed',
+                    'badge-warning': row[column.key] === 'BOOKING_HOLD',
+                    'badge-info': row[column.key] === 'BOOKING_INPROGRESS' || row[column.key] === 'PROCESSING'}">
+                  {{row[column.key] | uppercase}}
+                </span>
+                <ng-template #noStatus>N/A</ng-template>
+              </ng-container>
+              <ng-container *ngSwitchDefault>{{row[column.key] == null || row[column.key] === '' ? 'N/A' : row[column.key]}}</ng-container>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-footer pb-0" *ngIf="collectionSize">
+      <div class="d-flex w-100 justify-content-between">
+        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"></ngb-pagination>
+        <select class="custom-select page-size" [(ngModel)]="pageSize" (ngModelChange)="page = 1">
+          <option [ngValue]="50">50 items per page</option><option [ngValue]="100">100 items per page</option>
+          <option [ngValue]="250">250 items per page</option><option [ngValue]="500">500 items per page</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>

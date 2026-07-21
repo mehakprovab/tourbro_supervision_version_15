@@ -53,6 +53,8 @@ export class SupplierListComponent implements OnInit {
   @Output() b2cUserUpdate = new EventEmitter<any>();
   supplierId:any;
   supplierBeingLoaded: any;
+  selectedSupplier: any;
+  showSupplierDetails = false;
   propertyId:number;
     countriesList: any;
     registerStates: any;
@@ -271,6 +273,16 @@ getCountryName(countryId: number): string | null {
 
   updatePrivileges(data) {
       this.router.navigate(['/user/privileges'],{ queryParams: data})
+  }
+
+  viewSupplierDetails(supplier: any) {
+      this.selectedSupplier = supplier;
+      this.showSupplierDetails = true;
+  }
+
+  closeSupplierDetails() {
+      this.showSupplierDetails = false;
+      this.selectedSupplier = null;
   }
 
   onStatusChange(data) {

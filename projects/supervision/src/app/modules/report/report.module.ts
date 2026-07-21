@@ -59,6 +59,7 @@ import { B2CTransferInvoiceComponent } from './B2C/b2c/b2c-transfer/b2-ctransfer
 import { B2bTransferInvoiceComponent } from './B2B/b2b/voucher/b2b-transfer-invoice/b2b-transfer-invoice.component';
 import { NumberToWordsPipe } from '../../shared/pipes/number-to-words.pipe';
 import { B2cBundleBookingReportComponent } from './B2C/b2c/b2c-bundle-booking-report/b2c-bundle-booking-report.component';
+import { B2cDynamicPackageReportComponent } from './B2C/b2c/b2c-dynamic-package-report/b2c-dynamic-package-report.component';
 import { B2bBundleBookingReportComponent } from './B2B/b2b/b2b-bundle-booking-report/b2b-bundle-booking-report.component';
 import { B2cHotelEnquiryComponent } from './B2C/b2c/b2c-hotel-enquiry/b2c-hotel-enquiry.component';
 import { B2bHotelEnquiryComponent } from './B2B/b2b/b2b-hotel-enquiry/b2b-hotel-enquiry.component';
@@ -124,6 +125,7 @@ import { ReportPaymentModalComponent } from './components/report-payment-modal/r
         B2bActivityInvoiceComponent,
         NumberToWordsPipe,
         B2cBundleBookingReportComponent,
+        B2cDynamicPackageReportComponent,
         B2bBundleBookingReportComponent,
         B2cHotelEnquiryComponent,
         B2bHotelEnquiryComponent,

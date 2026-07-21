@@ -44,6 +44,8 @@ export class SupplierNewListingComponent implements OnInit {
   userTypeList: Array<any> = [];
   respDataProperty:Array<any> = [];
   showModal : boolean;
+  selectedSupplier: any;
+  showSupplierDetails = false;
   showConfirm:boolean=false;
   cancelData:any;
   reason:any;
@@ -109,6 +111,16 @@ export class SupplierNewListingComponent implements OnInit {
   }
   userProfile() {
       this.router.navigate(['/administrator/agencyUserDetails'])
+  }
+
+  viewSupplierDetails(supplier: any) {
+      this.selectedSupplier = supplier;
+      this.showSupplierDetails = true;
+  }
+
+  closeSupplierDetails() {
+      this.showSupplierDetails = false;
+      this.selectedSupplier = null;
   }
 
   getSupplierRows(resp: any): Array<any> {

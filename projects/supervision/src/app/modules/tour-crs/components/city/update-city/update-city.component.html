@@ -63,6 +63,56 @@
   </div>
 </div>
 </div>
+
+<div class="form-row mt-3">
+  <div class="col-md-4 mb-3">
+    <label>City Image</label>
+    <div class="custom-file">
+      <input type="file" class="custom-file-input" id="editCityImage" accept="image/*"
+        (change)="onImageSelected($event)">
+      <label class="custom-file-label" for="editCityImage">
+        {{ selectedImageFile ? selectedImageFile.name : 'Choose file' }}
+      </label>
+    </div>
+    <div *ngIf="imagePreviewUrl" class="mt-2">
+      <img [src]="imagePreviewUrl" alt="City image" class="img-thumbnail"
+        style="max-width: 100px; max-height: 100px;">
+    </div>
+  </div>
+
+  <div class="col-md-4 mb-3">
+    <label>Hourly Rental</label>
+    <div class="d-flex align-items-center">
+      <mat-slide-toggle formControlName="hourly_rental" (change)="onHourlyRentalChange($event)">
+      </mat-slide-toggle>
+      <span class="ml-2">{{ cityForm.get('hourly_rental').value ? 'Yes' : 'No' }}</span>
+    </div>
+  </div>
+
+  <div class="col-md-4 mb-3" *ngIf="cityForm.get('hourly_rental').value">
+    <label>Hourly Durations</label>
+    <select class="form-control" formControlName="hourly_durations">
+      <option value="" disabled>Select duration</option>
+      <option value="2 hours">2 hours</option>
+      <option value="4 hours">4 hours</option>
+      <option value="6 hours">6 hours</option>
+      <option value="8 hours">8 hours</option>
+      <option value="12 hours">12 hours</option>
+      <option value="24 hours">24 hours</option>
+    </select>
+    <small *ngIf="f.hourly_durations.touched && f.hourly_durations.errors?.required" class="errorMessage">
+      *Please select hourly duration
+    </small>
+  </div>
+</div>
+
+<div class="form-row">
+  <div class="col-md-12 mb-3">
+    <label>Description</label>
+    <textarea class="form-control" formControlName="discription" placeholder="Enter city description"
+      rows="4" maxlength="500"></textarea>
+  </div>
+</div>
     <!-- Buttons -->
     <div class="saveButton mt-3">
       <button type="submit" class="btn btn-primary mr-2">Update</button>

@@ -18,6 +18,8 @@ export class UpdateCityComponent implements OnInit, OnDestroy {
   cityId: number;
   stateList: any[] = [];
   subSunk = new SubSink();
+  selectedImageFile: File | null = null;
+  imagePreviewUrl: string | ArrayBuffer | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -50,10 +52,49 @@ export class UpdateCityComponent implements OnInit, OnDestroy {
     this.cityForm = this.fb.group({
       state_id: ['', Validators.required],
       city_name: ['', [Validators.required, this.inputValidator]],
-      // latitude: ['', [Validators.pattern(/^-?\d+(\.\d+)?$/)]],
-      // longitude: ['', [Validators.pattern(/^-?\d+(\.\d+)?$/)]],
       status: [1, Validators.required],
+      CityImage: [''],
+      discription: [''],
+      hourly_rental: [false],
+      hourly_durations: ['']
     });
+
+    this.setHourlyDurationValidation(this.cityForm.get('hourly_rental').value);
+    this.subSunk.sink = this.cityForm.get('hourly_rental').valueChanges.subscribe((enabled: boolean) => {
+      this.setHourlyDurationValidation(enabled);
+    });
+  }
+
+  setHourlyDurationValidation(enabled: boolean) {
+    const durationControl = this.cityForm.get('hourly_durations');
+
+    if (enabled) {
+      durationControl.setValidators(Validators.required);
+    } else {
+      durationControl.clearValidators();
+      durationControl.setValue('', { emitEvent: false });
+    }
+
+    durationControl.updateValueAndValidity({ emitEvent: false });
+  }
+
+  onImageSelected(event: any) {
+    const file = event.target.files[0];
+    if (!file) {
+      return;
+    }
+
+    this.selectedImageFile = file;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      this.imagePreviewUrl = (e.target as FileReader).result as string;
+    };
+    reader.readAsDataURL(file);
+    this.cityForm.get('CityImage').setValue(file.name);
+  }
+
+  onHourlyRentalChange(event: any) {
+    this.cityForm.get('hourly_rental').setValue(event.checked);
   }
 
   // ✅ Get State List
@@ -82,10 +123,13 @@ export class UpdateCityComponent implements OnInit, OnDestroy {
             this.cityForm.patchValue({
               city_name: data.city_name,
               state_id: data.state_id,
-              // latitude: data.latitude,
-              // longitude: data.longitude,
-              status:data.status
+              status: Number(data.status),
+              CityImage: data.CityImage || data.city_image || '',
+              discription: data.discription || '',
+              hourly_rental: data.hourly_rental === true || Number(data.hourly_rental) === 1,
+              hourly_durations: data.hourly_durations || ''
             });
+            this.imagePreviewUrl = data.CityImage || data.city_image || null;
           }
         },
         (err: HttpErrorResponse) => {
@@ -94,7 +138,7 @@ export class UpdateCityComponent implements OnInit, OnDestroy {
       );
   }
 onStatusChange(event: any) {
-  const isChecked = event.target.checked;
+  const isChecked = event.checked;
   this.cityForm.get('status').setValue(isChecked ? 1 : 0);
 }
   // ✅ Update City
@@ -106,15 +150,19 @@ onStatusChange(event: any) {
 
     const form = this.cityForm.value;
 
-    const payload = {
-      id: this.cityId,   // ✅ REQUIRED
-      city_name: form.city_name,
-      state_id: form.state_id,
-      // latitude: form.latitude,
-      // longitude: form.longitude,
-      status:form.status,
-      type: "City"
-    };
+    const payload = new FormData();
+    payload.append('id', String(this.cityId));
+    payload.append('city_name', form.city_name);
+    payload.append('state_id', String(form.state_id));
+    payload.append('status', String(form.status));
+    payload.append('discription', form.discription || '');
+    payload.append('hourly_rental', form.hourly_rental ? '1' : '0');
+    payload.append('hourly_durations', form.hourly_rental ? String(form.hourly_durations) : '');
+    payload.append('type', 'City');
+
+    if (this.selectedImageFile) {
+      payload.append('CityImage', this.selectedImageFile, this.selectedImageFile.name);
+    }
 
     this.subSunk.sink = this.apiHandlerService
       .apiHandler('editMasterCity', 'post', {}, {}, payload)

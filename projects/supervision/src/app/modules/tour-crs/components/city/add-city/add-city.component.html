@@ -61,7 +61,7 @@
       
       <!-- City Image -->
       <div class="col-md-4 mb-3">
-        <label class="form-label">City Image <span class="text-danger">*</span></label>
+        <label class="form-label">City Image </label>
         <div class="custom-file">
           <input
             type="file"
@@ -74,9 +74,9 @@
             {{ selectedImageFile ? selectedImageFile.name : 'Choose file' }}
           </label>
         </div>
-        <div *ngIf="cityForm.get('CityImage').touched && cityForm.get('CityImage').errors?.required" class="text-danger mt-1">
+        <!-- <div *ngIf="cityForm.get('CityImage').touched && cityForm.get('CityImage').errors?.required" class="text-danger mt-1">
           <small>*Please select an image.</small>
-        </div>
+        </div> -->
         <div *ngIf="imagePreviewUrl" class="mt-2">
           <img [src]="imagePreviewUrl" alt="Preview" class="img-thumbnail" style="max-width: 100px; max-height: 100px;" />
         </div>
@@ -84,7 +84,7 @@
 
       <!-- Hourly Rental Toggle -->
       <div class="col-md-4 mb-3">
-        <label class="form-label">Hourly Rental <span class="text-danger">*</span></label>
+        <label class="form-label">Hourly Rental </label>
         <div class="d-flex align-items-center">
           <mat-slide-toggle
             formControlName="hourly_rental"
@@ -98,7 +98,7 @@
 
       <!-- Hourly Durations -->
       <div class="col-md-4 mb-3" *ngIf="cityForm.get('hourly_rental').value">
-        <label class="form-label">Hourly Durations <span class="text-danger">*</span></label>
+        <label class="form-label">Hourly Durations </label>
         <select class="form-control" formControlName="hourly_durations">
           <option value="" disabled selected>Select duration</option>
           <option value="2 hours">2 hours</option>
@@ -108,9 +108,9 @@
           <option value="12 hours">12 hours</option>
           <option value="24 hours">24 hours</option>
         </select>
-        <div *ngIf="cityForm.get('hourly_durations').touched && cityForm.get('hourly_durations').errors?.required">
+        <!-- <div *ngIf="cityForm.get('hourly_durations').touched && cityForm.get('hourly_durations').errors?.required">
           <small class="text-danger">*Please select hourly duration.</small>
-        </div>
+        </div> -->
       </div>
 
     </div>
@@ -119,7 +119,7 @@
       
       <!-- Description -->
       <div class="col-md-12 mb-3">
-        <label class="form-label">Description <span class="text-danger">*</span></label>
+        <label class="form-label">Description</label>
         <textarea
           class="form-control"
           formControlName="discription"
@@ -127,19 +127,19 @@
           rows="4"
           maxlength="500"
         ></textarea>
-        <div class="d-flex justify-content-between">
-          <div *ngIf="cityForm.get('discription').touched && cityForm.get('discription').errors">
+        <!-- <div class="d-flex justify-content-between"> -->
+          <!-- <div *ngIf="cityForm.get('discription').touched && cityForm.get('discription').errors">
             <small *ngIf="cityForm.get('discription').errors?.required" class="text-danger">
               *Please enter description.
             </small>
             <small *ngIf="cityForm.get('discription').errors?.minlength" class="text-danger">
               *Description must be at least 5 characters.
             </small>
-          </div>
-          <small class="text-muted">
+          </div> -->
+          <!-- <small class="text-muted">
             {{ cityForm.get('discription')?.value?.length || 0 }}/500 characters
           </small>
-        </div>
+        </div> -->
       </div>
 
     </div>

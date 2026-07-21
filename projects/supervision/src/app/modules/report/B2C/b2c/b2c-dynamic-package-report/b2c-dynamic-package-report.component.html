@@ -54,12 +54,26 @@
     </div>
     <div class="table-responsive mt-3">
       <table id="b2c-dynamic-package-report" class="table table-borderless table-striped table-hover">
-        <thead><tr><th>S No.</th><th *ngFor="let column of columns" class="text-nowrap">{{column.label}}</th></tr></thead>
+        <thead><tr><th>S No.</th><th>Action</th><th *ngFor="let column of columns" class="text-nowrap">{{column.label}}</th></tr></thead>
         <tbody>
-          <tr *ngIf="loading"><td [attr.colspan]="columns.length + 1"><mat-spinner [diameter]="30" class="mx-auto"></mat-spinner></td></tr>
-          <tr *ngIf="!loading && !rows.length"><td [attr.colspan]="columns.length + 1"><h4 class="text-muted text-center">No Data Found!</h4></td></tr>
+          <tr *ngIf="loading"><td [attr.colspan]="columns.length + 2"><mat-spinner [diameter]="30" class="mx-auto"></mat-spinner></td></tr>
+          <tr *ngIf="!loading && !rows.length"><td [attr.colspan]="columns.length + 2"><h4 class="text-muted text-center">No Data Found!</h4></td></tr>
           <tr *ngFor="let row of rows | slice: (page - 1) * pageSize : page * pageSize; let i = index">
             <td>{{(page - 1) * pageSize + i + 1}}.</td>
+            <td class="text-left">
+              <div ngbDropdown container="body">
+                <button class="btnStyle" type="button" ngbDropdownToggle>Action</button>
+                <div ngbDropdownMenu>
+                  <button ngbDropdownItem type="button" (click)="openAction(row, 'voucher')">View Voucher</button>
+                  <button ngbDropdownItem type="button" (click)="openAction(row, 'invoice')">View Invoice</button>
+                  <button ngbDropdownItem type="button" (click)="openAction(row, 'pax')">Pax Profile</button>
+                  <button *ngIf="canCancel(row)" ngbDropdownItem type="button"
+                    [disabled]="cancellingReference === row.ref_number" (click)="cancelBooking(row)">
+                    {{ cancellingReference === row.ref_number ? 'Cancelling...' : 'Cancel' }}
+                  </button>
+                </div>
+              </div>
+            </td>
             <td *ngFor="let column of columns" class="text-nowrap" [ngSwitch]="column.type">
               <ng-container *ngSwitchCase="'date'">{{row[column.key] ? (row[column.key] | date:'dd/MM/yyyy') : 'N/A'}}</ng-container>
               <ng-container *ngSwitchCase="'amount'">{{row[column.key] != null && row[column.key] !== '' ? ((row[column.key] | number:'1.2-2') + ' ' + row.currency) : 'N/A'}}</ng-container>
@@ -90,3 +104,130 @@
     </div>
   </div>
 </div>
+
+<div class="modal dynamic-action-modal" [style.display]="showActionModal ? 'block' : 'none'">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">
+          Dynamic Package {{ actionView === 'voucher' ? 'Voucher' : actionView === 'invoice' ? 'Invoice' : 'Pax Profile' }}
+        </h4>
+        <button type="button" class="close" (click)="closeActionModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="dynamic-package-action-document" *ngIf="selectedBooking">
+        <div *ngIf="actionView === 'voucher'" class="dynamic-voucher">
+          <div class="voucher-header">
+            <img src="assets/images/login-images/l-logo.png" alt="TourBro" class="voucher-logo">
+            <div class="voucher-reference">
+              <div>Booking Ref: <strong>{{ selectedBooking.ref_number }}</strong></div>
+              <div>Booking Date: <strong>{{ selectedBooking.created_at | date:'dd/MM/yyyy' }}</strong></div>
+              <span class="badge mt-2"
+                [ngClass]="{'badge-success': selectedBooking.booking_status === 'BOOKING_CONFIRMED',
+                  'badge-danger': selectedBooking.booking_status === 'BOOKING_CANCELLED' || selectedBooking.booking_status === 'BOOKING_FAILED',
+                  'badge-warning': selectedBooking.booking_status === 'BOOKING_HOLD',
+                  'badge-info': selectedBooking.booking_status === 'BOOKING_INPROGRESS'}">
+                {{ selectedBooking.booking_status || 'N/A' }}
+              </span>
+            </div>
+          </div>
+
+          <div class="voucher-customer">
+            <div>
+              <strong class="customer-name">{{ selectedBooking.customer_name || 'Guest' }}</strong>
+              <div><i class="fa fa-phone mr-2"></i>{{ selectedBooking.customer_phone || 'N/A' }}</div>
+              <div><i class="fa fa-envelope mr-2"></i>{{ selectedBooking.customer_email || 'N/A' }}</div>
+            </div>
+            <div class="text-right">
+              <strong>{{ selectedBooking.title || 'Dynamic Package' }}</strong>
+              <div>{{ selectedBooking.destinations || 'N/A' }}</div>
+            </div>
+          </div>
+
+          <div class="voucher-card">
+            <h5 class="voucher-section-title">Package Details</h5>
+            <div class="row voucher-grid">
+              <div class="col-md-3"><span>Travel From</span><strong>{{ selectedBooking.from_date | date:'dd/MM/yyyy' }}</strong></div>
+              <div class="col-md-3"><span>Travel To</span><strong>{{ selectedBooking.to_date | date:'dd/MM/yyyy' }}</strong></div>
+              <div class="col-md-3"><span>Duration</span><strong>{{ selectedBooking.duration_days || 0 }} Days</strong></div>
+              <div class="col-md-3"><span>Payment Status</span><strong>{{ selectedBooking.payment_status || 'N/A' }}</strong></div>
+            </div>
+          </div>
+
+          <div class="voucher-card" *ngIf="getVoucherItems('itinerary').length">
+            <h5 class="voucher-section-title">Itinerary</h5>
+            <div class="itinerary-day" *ngFor="let day of getVoucherItems('itinerary'); let dayIndex = index">
+              <span class="day-number">Day {{ day.day || day.day_number || dayIndex + 1 }}</span>
+              <strong>{{ day.title || day.destination?.city_name || day.destination || 'Package itinerary' }}</strong>
+              <div class="text-muted mt-1">{{ day.description || day.details || '' }}</div>
+            </div>
+          </div>
+
+          <div class="voucher-card">
+            <h5 class="voucher-section-title">Booked Services</h5>
+            <table class="table voucher-services mb-0">
+              <thead><tr><th>Service</th><th>Details</th><th>Booking Reference</th></tr></thead>
+              <tbody>
+                <tr *ngFor="let stay of getVoucherItems('hotels')">
+                  <td>Stay</td><td>{{ getServiceName(stay, 'Stay Booking') }}</td><td>{{ getServiceReference(stay) }}</td>
+                </tr>
+                <tr *ngFor="let activity of getVoucherItems('activities')">
+                  <td>Activity</td><td>{{ getServiceName(activity, 'Activity Booking') }}</td><td>{{ getServiceReference(activity) }}</td>
+                </tr>
+                <tr *ngFor="let transfer of getVoucherItems('transfers')">
+                  <td>Transfer</td><td>{{ getServiceName(transfer, 'Transfer Booking') }}</td><td>{{ getServiceReference(transfer) }}</td>
+                </tr>
+                <tr *ngIf="!getVoucherItems('hotels').length && !getVoucherItems('activities').length && !getVoucherItems('transfers').length">
+                  <td>Stay</td><td>Stay Booking</td><td>{{ selectedBooking.hotel_references || 'N/A' }}</td>
+                </tr>
+                <tr *ngIf="!getVoucherItems('hotels').length && !getVoucherItems('activities').length && !getVoucherItems('transfers').length">
+                  <td>Activity</td><td>Activity Booking</td><td>{{ selectedBooking.activity_references || 'N/A' }}</td>
+                </tr>
+                <tr *ngIf="!getVoucherItems('hotels').length && !getVoucherItems('activities').length && !getVoucherItems('transfers').length">
+                  <td>Transfer</td><td>Transfer Booking</td><td>{{ selectedBooking.transfer_references || 'N/A' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="voucher-card payment-card">
+            <h5 class="voucher-section-title">Payment Details</h5>
+            <div class="payment-line"><span>Package Amount</span><strong>{{ selectedBooking.total_price | number:'1.2-2' }} {{ selectedBooking.currency }}</strong></div>
+            <div class="payment-line"><span>Convenience Fee</span><strong>{{ selectedBooking.convenience_fee | number:'1.2-2' }} {{ selectedBooking.currency }}</strong></div>
+            <div class="payment-line" *ngIf="selectedBooking.discount_value"><span>Discount</span><strong>- {{ selectedBooking.discount_value | number:'1.2-2' }} {{ selectedBooking.currency }}</strong></div>
+            <div class="payment-line total"><span>Total Paid</span><strong>{{ selectedBooking.total_after_discount | number:'1.2-2' }} {{ selectedBooking.currency }}</strong></div>
+          </div>
+        </div>
+
+        <table class="table table-bordered mb-3" *ngIf="actionView !== 'voucher'">
+          <tbody>
+            <tr><th>Booking Status</th><td>{{ selectedBooking.booking_status || 'N/A' }}</td></tr>
+            <tr><th>Customer Name</th><td>{{ selectedBooking.customer_name || 'N/A' }}</td></tr>
+            <tr><th>Email</th><td>{{ selectedBooking.customer_email || 'N/A' }}</td></tr>
+            <tr><th>Phone</th><td>{{ selectedBooking.customer_phone || 'N/A' }}</td></tr>
+            <tr *ngIf="actionView !== 'pax'"><th>Destinations</th><td>{{ selectedBooking.destinations || 'N/A' }}</td></tr>
+            <tr *ngIf="actionView !== 'pax'"><th>Travel Dates</th><td>{{ selectedBooking.from_date | date:'dd/MM/yyyy' }} - {{ selectedBooking.to_date | date:'dd/MM/yyyy' }}</td></tr>
+            <tr *ngIf="actionView !== 'pax'"><th>Duration</th><td>{{ selectedBooking.duration_days || 0 }} Days</td></tr>
+          </tbody>
+        </table>
+
+        <table class="table table-bordered" *ngIf="actionView === 'invoice'">
+          <tbody>
+            <tr><th>Package Amount</th><td>{{ selectedBooking.total_price | number:'1.2-2' }} {{ selectedBooking.currency }}</td></tr>
+            <tr><th>Convenience Fee</th><td>{{ selectedBooking.convenience_fee | number:'1.2-2' }} {{ selectedBooking.currency }}</td></tr>
+            <tr><th>Promo Code</th><td>{{ selectedBooking.promo_code || 'N/A' }}</td></tr>
+            <tr><th>Discount</th><td>{{ selectedBooking.discount_value | number:'1.2-2' }} {{ selectedBooking.currency }}</td></tr>
+            <tr><th>Customer Paid Amount</th><td><strong>{{ selectedBooking.total_after_discount | number:'1.2-2' }} {{ selectedBooking.currency }}</strong></td></tr>
+            <tr><th>Payment Status</th><td>{{ selectedBooking.payment_status || 'N/A' }}</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button *ngIf="actionView !== 'pax'" type="button" class="btn btn-primary" (click)="downloadActionPdf()">
+          Download PDF
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="closeActionModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="showActionModal" class="modal-backdrop show"></div>

@@ -3,6 +3,7 @@ import { environment } from "../../../environments/environment.prod";
 const baseUrl = environment.baseUrl;
 const B2B_URL = environment.b2b_url;
 const B2C_URL = environment.b2c_url;
+const ITINERARY_BOOKING_URL = environment.b2c_url;
 const proj2 = "/supervision";
 
 /* please maintain Ascending Order of the keys*/
@@ -575,6 +576,7 @@ export const apiMap = {
   activityRefund: `${baseUrl}/sa/dashboard/report/activityRefund`,
   b2cBundleBookingReport: `${B2C_URL}/webservice/bundle-booking/bundleReport`,
   b2cDynamicPackageReport: `${baseUrl}/dashboard/report/b2cDynamicPackageReport`,
+  dynamicPackageVoucher: `${ITINERARY_BOOKING_URL}/webservice/itinerary/dynamicPackageVoucher`,
   familyDeals: `${baseUrl}/hotel/hotels/familyDeals`,
   tourType: `${baseUrl}/tour/tours/tourType`,
   updateTourTypeStatus: `${baseUrl}/tour/tours/updateTourTypeStatus`,

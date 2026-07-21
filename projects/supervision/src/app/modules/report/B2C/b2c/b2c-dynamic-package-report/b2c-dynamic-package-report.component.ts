@@ -4,6 +4,8 @@ import { formatDate } from 'ngx-bootstrap/chronos';
 import { SubSink } from 'subsink';
 import { ApiHandlerService } from '../../../../../core/api-handlers';
 import { UtilityService } from '../../../../../core/services/utility.service';
+import { SwalService } from '../../../../../core/services/swal.service';
+import { Router } from '@angular/router';
 
 interface ReportColumn {
   key: string;
@@ -52,6 +54,10 @@ export class B2cDynamicPackageReportComponent implements OnInit, OnDestroy {
   maxDate = new Date();
   isFromDateOpen = false;
   isToDateOpen = false;
+  showActionModal = false;
+  actionView: 'voucher' | 'invoice' | 'pax' = 'voucher';
+  selectedBooking: any;
+  cancellingReference: string;
   bsDateConf = {
     isAnimated: true,
     dateInputFormat: 'DD/MM/YYYY',
@@ -63,7 +69,9 @@ export class B2cDynamicPackageReportComponent implements OnInit, OnDestroy {
   constructor(
     private apiHandlerService: ApiHandlerService,
     private fb: FormBuilder,
-    private utility: UtilityService
+    private utility: UtilityService,
+    private swalService: SwalService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -151,6 +159,101 @@ export class B2cDynamicPackageReportComponent implements OnInit, OnDestroy {
     this.utility.downloadElementAsPdf('b2c-dynamic-package-report', 'B2C_Dynamic_Package_Report', 'landscape');
   }
 
+  openAction(row: any, view: 'voucher' | 'invoice' | 'pax') {
+    if (view === 'voucher') {
+      const reference = row.dynamic_package_ref || row.ref_number;
+      if (!reference) {
+        this.swalService.alert.oops('Dynamic package reference is missing.');
+        return;
+      }
+      this.router.navigate(['/report/b2c-dynamic-package/voucher'], {
+        queryParams: { dynamic_package_ref: reference }
+      });
+      return;
+    }
+    this.selectedBooking = row;
+    this.actionView = view;
+    this.showActionModal = true;
+  }
+
+  getVoucherItems(type: 'itinerary' | 'hotels' | 'activities' | 'transfers'): any[] {
+    if (!this.selectedBooking) { return []; }
+    const voucher = this.selectedBooking.voucherData || {};
+    const source = this.selectedBooking.source || {};
+    const keys = type === 'itinerary'
+      ? ['itinerary_snapshot', 'itinerary', 'Itinerary']
+      : [type, type.charAt(0).toUpperCase() + type.slice(1)];
+
+    for (const container of [voucher, voucher.bookingDetails, voucher.BookingDetails, source]) {
+      if (!container) { continue; }
+      for (const key of keys) {
+        if (Array.isArray(container[key])) { return container[key]; }
+      }
+    }
+    return [];
+  }
+
+  getServiceReference(service: any): string {
+    return service && (service.app_reference || service.AppReference || service.ref_number ||
+      service.booking_reference || service.confirmation_reference) || 'N/A';
+  }
+
+  getServiceName(service: any, fallback: string): string {
+    return service && (service.name || service.title || service.hotel_name || service.activity_name ||
+      service.transfer_name || service.property_name || service.destination) || fallback;
+  }
+
+  closeActionModal() {
+    this.showActionModal = false;
+    this.selectedBooking = null;
+  }
+
+  downloadActionPdf() {
+    if (!this.selectedBooking || this.actionView === 'pax') { return; }
+    const name = this.actionView === 'voucher' ? 'Voucher' : 'Invoice';
+    this.utility.downloadElementAsPdf(
+      'dynamic-package-action-document',
+      `Dynamic_Package_${name}_${this.selectedBooking.ref_number}`,
+      'portrait'
+    );
+  }
+
+  cancelBooking(row: any) {
+    this.swalService.alert.delete((confirmed: boolean) => {
+      if (!confirmed) { return; }
+
+      const reference = row.ref_number;
+      this.cancellingReference = reference;
+      const currentUser = JSON.parse(sessionStorage.getItem('currentSupervisionUser') || '{}');
+      const payload = {
+        AppReference: reference,
+        booking_source: row.booking_source || (row.source && row.source.booking_source) || '',
+        UserId: currentUser.id
+      };
+
+      this.subSunk.sink = this.apiHandlerService
+        .apiHandler('cancelTour', 'post', {}, {}, payload)
+        .subscribe((response: any) => {
+          this.cancellingReference = null;
+          if (response.statusCode === 200 || response.statusCode === 201) {
+            this.swalService.alert.success('Dynamic package cancelled successfully.');
+            this.fetchReport();
+          } else {
+            this.swalService.alert.oops(response.Message || 'Dynamic package cancellation failed.');
+          }
+        }, (error: any) => {
+          this.cancellingReference = null;
+          this.swalService.alert.oops(error.error && error.error.Message
+            ? error.error.Message : 'Dynamic package cancellation failed.');
+        });
+    });
+  }
+
+  canCancel(row: any): boolean {
+    return ['BOOKING_CONFIRMED', 'BOOKING_FAILED', 'BOOKING_VOIDED', 'BOOKING_HOLD']
+      .includes(row && row.booking_status);
+  }
+
   numberOnly(event: KeyboardEvent) {
     const key = event.key;
     if (key.length === 1 && !/[0-9+\- ]/.test(key)) {
@@ -165,7 +268,8 @@ export class B2cDynamicPackageReportComponent implements OnInit, OnDestroy {
       .filter(Boolean);
 
     return {
-      ref_number: record.ref_number,
+      ref_number: record.dynamic_package_ref || record.dynamicPackageRef || record.ref_number || record.app_reference,
+      dynamic_package_ref: record.dynamic_package_ref || record.dynamicPackageRef || record.ref_number || record.app_reference,
       booking_status: record.booking_status,
       title: record.title,
       customer_name: [record.first_name, record.last_name].filter(Boolean).join(' '),
@@ -185,7 +289,11 @@ export class B2cDynamicPackageReportComponent implements OnInit, OnDestroy {
       discount_value: record.discount_value,
       total_after_discount: record.total_after_discount,
       payment_status: record.payment_status,
-      created_at: record.created_at
+      created_at: record.created_at,
+      booking_source: record.booking_source,
+      first_name: record.first_name,
+      last_name: record.last_name,
+      source: record
     };
   }
 

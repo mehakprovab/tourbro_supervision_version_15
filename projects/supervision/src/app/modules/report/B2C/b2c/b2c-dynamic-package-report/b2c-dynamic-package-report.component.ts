@@ -222,29 +222,34 @@ export class B2cDynamicPackageReportComponent implements OnInit, OnDestroy {
     this.swalService.alert.delete((confirmed: boolean) => {
       if (!confirmed) { return; }
 
-      const reference = row.ref_number;
+      const reference = row.dynamic_package_ref || row.ref_number;
+      if (!reference) {
+        this.swalService.alert.oops('Dynamic package reference is missing.');
+        return;
+      }
       this.cancellingReference = reference;
-      const currentUser = JSON.parse(sessionStorage.getItem('currentSupervisionUser') || '{}');
+      const currentUser: any = this.utility.readStorage('currentSupervisionUser', sessionStorage);
       const payload = {
-        AppReference: reference,
-        booking_source: row.booking_source || (row.source && row.source.booking_source) || '',
+        dynamic_package_ref: reference,
         UserId: currentUser.id
       };
 
       this.subSunk.sink = this.apiHandlerService
-        .apiHandler('cancelTour', 'post', {}, {}, payload)
+        .apiHandler('cancelDynamicPackage', 'post', {}, {}, payload)
         .subscribe((response: any) => {
           this.cancellingReference = null;
-          if (response.statusCode === 200 || response.statusCode === 201) {
+          if (response && (response.statusCode === 200 || response.statusCode === 201 || response.Status === true)) {
             this.swalService.alert.success('Dynamic package cancelled successfully.');
             this.fetchReport();
           } else {
-            this.swalService.alert.oops(response.Message || 'Dynamic package cancellation failed.');
+            this.swalService.alert.oops((response && (response.Message || response.message || response.msg))
+              || 'Dynamic package cancellation failed.');
           }
         }, (error: any) => {
           this.cancellingReference = null;
-          this.swalService.alert.oops(error.error && error.error.Message
-            ? error.error.Message : 'Dynamic package cancellation failed.');
+          const apiError = error && error.error;
+          this.swalService.alert.oops((apiError && (apiError.Message || apiError.message || apiError.msg))
+            || 'Dynamic package cancellation failed.');
         });
     });
   }

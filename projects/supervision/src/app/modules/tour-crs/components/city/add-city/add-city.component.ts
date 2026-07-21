@@ -36,10 +36,10 @@ createCityForm() {
     stateId: ['', Validators.required],
     cityName: ['', [Validators.required, this.inputValidator]],
     status: [1, Validators.required],
-    CityImage: [''],           // ✅ New field
-    discription: [''],  // ✅ New field
-    hourly_rental: [false],    // ✅ New field
-    hourly_durations: ['']     // ✅ New field
+    CityImage: [''],           
+    discription: [''],  
+    hourly_rental: [false],   
+    hourly_durations: ['']    
   });
 
   this.setHourlyDurationValidation(this.cityForm.get('hourly_rental').value);

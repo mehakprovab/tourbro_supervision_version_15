@@ -55,71 +55,86 @@ export class DomainLogoComponent implements OnInit, OnDestroy {
       });
   }
 
-  imageSrc;
-  onFileSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    const file = input.files && input.files[0];
-    this.fileError = "";
-    this.resetSelectedLogo(false);
 
-    if (!file) {
-      return;
-    }
+  imageSrc: string | ArrayBuffer | null = null;
 
-    const acceptedTypes = ["image/png", "image/jpeg"];
-    if (!acceptedTypes.includes(file.type)) {
-      this.rejectFile("Choose a PNG, JPG, or JPEG image.");
-      return;
-    }
+onFileSelected(event: any) {
 
-    if (file.size > 100 * 1024) {
-      this.rejectFile("The image must be no larger than 100 KB.");
-      return;
-    }
+  this.fileError = '';
 
-    this.isValidatingImage = true;
-    const reader = new FileReader();
-    reader.onload = () => {
-      const preview = new Image();
-      preview.onload = () => {
-        this.isValidatingImage = false;
-        if (preview.width !== 200 || preview.height !== 200) {
-          this.rejectFile("The image dimensions must be exactly 200px by 200px.");
-          return;
-        }
+  const file = event.target.files[0];
 
-        this.imageSrc = reader.result;
-        this.bankLogo = "";
-        this.imgObj.isLogoToUpdate = true;
-        this.logoConfig.patchValue({ domain_logo: file });
-        this.logoConfig.get("domain_logo").markAsTouched();
-      };
-      preview.onerror = () => {
-        this.isValidatingImage = false;
-        this.rejectFile("The selected image could not be read.");
-      };
-      preview.src = reader.result as string;
+  if (!file) {
+    return;
+  }
+
+  // Preview immediately
+  const reader = new FileReader();
+
+  reader.onload = (e: any) => {
+
+    this.imageSrc = e.target.result;
+
+    const img = new Image();
+
+    img.onload = () => {
+
+      if (file.size > 100 * 1024) {
+        this.rejectFile('Image must be less than 100 KB');
+        return;
+      }
+
+      if (!['image/png', 'image/jpeg'].includes(file.type)) {
+        this.rejectFile('Only PNG, JPG and JPEG are allowed');
+        return;
+      }
+
+      if (img.width !== 200 || img.height !== 200) {
+        this.rejectFile('Image must be exactly 200 × 200 pixels');
+        return;
+      }
+
+      this.logoConfig.patchValue({
+        domain_logo: file
+      });
+
+      this.logoConfig.get('domain_logo')?.updateValueAndValidity();
     };
-    reader.onerror = () => {
-      this.isValidatingImage = false;
-      this.rejectFile("The selected image could not be read.");
-    };
-    reader.readAsDataURL(file);
-  }
 
-  private rejectFile(message: string): void {
-    this.fileError = message;
-    this.resetSelectedLogo(true);
-  }
+    img.src = e.target.result;
+  };
 
-  private resetSelectedLogo(clearInput: boolean): void {
-    this.imageSrc = "";
-    this.imgObj.isLogoToUpdate = false;
-    this.logoConfig.reset();
-    if (clearInput && this.fileUploader) {
-      this.fileUploader.nativeElement.value = null;
-    }
+  reader.readAsDataURL(file);
+}
+private rejectFile(message: string): void {
+  this.fileError = message;
+  this.imageSrc = null;
+  this.imgObj.isLogoToUpdate = false;
+
+  this.logoConfig.patchValue({
+    domain_logo: null
+  });
+
+  this.logoConfig.get('domain_logo')?.markAsTouched();
+  this.logoConfig.get('domain_logo')?.updateValueAndValidity();
+
+  if (this.fileUploader) {
+    this.fileUploader.nativeElement.value = '';
   }
+}
+private resetSelectedLogo(clearInput: boolean): void {
+  this.imageSrc = null;
+  this.imgObj.isLogoToUpdate = false;
+  this.fileError = "";
+
+  this.logoConfig.patchValue({
+    domain_logo: null
+  });
+
+  if (clearInput && this.fileUploader) {
+    this.fileUploader.nativeElement.value = '';
+  }
+}
 
   onSubmit() {
     this.submitted = true;

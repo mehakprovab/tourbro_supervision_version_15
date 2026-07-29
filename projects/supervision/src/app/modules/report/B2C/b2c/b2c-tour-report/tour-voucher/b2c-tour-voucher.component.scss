@@ -75,3 +75,9 @@
   font-size: 14px;
   color: #555;
 }
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}

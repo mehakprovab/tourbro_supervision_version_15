@@ -1,10 +1,7 @@
 <div class="table-responsive" style="width:90%; position:relative; padding: 50px 0px;margin: 0px auto;"
   id="tickect_hotel">
-  <table cellpadding="0" cellspacing="0" width="100%" style="font-size:13px;width:100%;overflow:hidden;border-radius:16px;box-shadow:0 0 2px 0 rgba(0,0,0,.08),0 2px 8px 0 rgba(0,0,0,.16);background:#F3F3F3;margin:0 auto;-webkit-print-color-adjust:exact;" id="print_voucher" #print_voucher *ngIf="voucherData">
-      <tbody>
-          <tr>
-              <td style="padding:15px 15px 30px;border-top:unset;">
-                  <table class="header-table">
+  <div class="voucher-actions no-print">
+     <table class="header-table">
                       <tbody>
                           <tr>
                               <td class="logo-cell"><img src="assets/images/login-images/l-logo.png" class="brand-logo"></td>
@@ -17,6 +14,7 @@
 
 
                                                         <a href="javascript:void(0);"
+                                                        (click)="printVoucher()"
                                                             style="font-size: 16px;-webkit-print-color-adjust: exact;padding: 12px 20px;display: block;font-weight: 600;border-radius: 8px;color: #FE4865;background: #FFF5F6;margin-left: 10px;">
                                                             Print
                                                         </a>
@@ -33,6 +31,12 @@
                           </tr>
                       </tbody>
                   </table>
+                  </div>
+  <table cellpadding="0" cellspacing="0" width="100%" style="font-size:13px;width:100%;overflow:hidden;border-radius:16px;box-shadow:0 0 2px 0 rgba(0,0,0,.08),0 2px 8px 0 rgba(0,0,0,.16);background:#F3F3F3;margin:0 auto;-webkit-print-color-adjust:exact;" id="print_voucher" #print_voucher *ngIf="voucherData">
+      <tbody>
+          <tr>
+              <td style="padding:15px 15px 30px;border-top:unset;">
+               
 
                   <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
                       <tbody>

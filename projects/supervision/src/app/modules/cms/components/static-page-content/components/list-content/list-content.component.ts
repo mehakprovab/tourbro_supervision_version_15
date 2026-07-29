@@ -81,7 +81,11 @@ export class ListContentComponent implements OnInit, OnDestroy {
         this.subSunk.sink = this.cmsService.getStaticContent(data).subscribe(resp => {
             if ((resp.statusCode == 200 || resp.statusCode == 201) && resp.data && resp.data.length>0) {
                 this.noData = false;
-                this.respData = resp.data || [];
+                this.respData = (resp.data || []).slice().sort((a: any, b: any) => {
+                    const aId = Number(a?.id ?? 0);
+                    const bId = Number(b?.id ?? 0);
+                    return bId - aId;
+                });
                 respDataCopy = [...this.respData];
                 this.collectionSize = respDataCopy.length;
             }

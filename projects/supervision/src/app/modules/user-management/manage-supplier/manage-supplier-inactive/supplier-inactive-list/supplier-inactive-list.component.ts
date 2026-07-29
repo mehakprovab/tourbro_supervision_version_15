@@ -144,6 +144,82 @@ getCountryName(countryId: number): string | null {
       return [];
   }
 
+  private getExportFileName(): string {
+      if (this.listType === 1) {
+          return 'Active Supplier List';
+      }
+      if (this.listType === 2) {
+          return 'New Supplier List';
+      }
+      return 'Inactive Supplier List';
+  }
+
+  private getExportStatusLabel(response: any): string {
+      if (response?.status === 1 || response?.status === true) {
+          return 'Active';
+      }
+      if (response?.status === 2) {
+          return 'Under Verification';
+      }
+      return 'Inactive';
+  }
+
+  private buildExportRows(): any[] {
+      return this.respData.map((response: any, index: number) => ({
+          'Sl No.': index + 1,
+          'ID': response.uuid || response.supplier_id || response.id,
+          'Name': `${response.first_name || ''} ${response.last_name || ''}`.trim(),
+          'Contact': response.phone_number || response.phone || '',
+          'Email': response.email || '',
+          'City': response.city || '',
+          'State': response.state || '',
+          'Country': response.country || '',
+          'Activated On': response.activated_at || response.activted || '',
+          'Status': this.getExportStatusLabel(response),
+          'Action': 'Available'
+      }));
+  }
+
+  private buildExportTableHtml(rows: any[]): string {
+      const headers = Object.keys(rows[0] || {});
+      const rowsHtml = rows.map((row: any) => {
+          return `<tr>${headers.map((header: string) => `<td style="border:1px solid #ddd; padding:6px;">${row[header] ?? ''}</td>`).join('')}</tr>`;
+      }).join('');
+
+      return `
+          <table style="width:100%; border-collapse:collapse; font-family:Arial, sans-serif;">
+              <thead>
+                  <tr>
+                      ${headers.map((header: string) => `<th style="border:1px solid #ddd; padding:6px; text-align:left; background:#f5f5f5;">${header}</th>`).join('')}
+                  </tr>
+              </thead>
+              <tbody>${rowsHtml}</tbody>
+          </table>
+      `;
+  }
+
+  private downloadExportPdf(fileName: string, orientation?: string): void {
+      const exportRows = this.buildExportRows();
+      if (!exportRows.length) {
+          this.swalService.alert.oops();
+          return;
+      }
+
+      const exportContainer = document.createElement('div');
+      exportContainer.id = 'supplier-export-table';
+      exportContainer.style.position = 'fixed';
+      exportContainer.style.left = '-9999px';
+      exportContainer.style.top = '0';
+      exportContainer.style.width = '100%';
+      exportContainer.style.background = '#ffffff';
+      exportContainer.style.padding = '16px';
+      exportContainer.innerHTML = this.buildExportTableHtml(exportRows);
+      document.body.appendChild(exportContainer);
+
+      this.utility.downloadElementAsPdf('supplier-export-table', fileName, orientation || 'landscape');
+      exportContainer.remove();
+  }
+
   getUsersList(type) {
       this.noData=true;
       this.respData=[];
@@ -206,14 +282,12 @@ getCountryName(countryId: number): string | null {
       });
   }
   download(type: any, orientation?: string) {
-      // if (type)
-      let filename = this.listType == 1 ? "Active Supplier List" : "Inactive Supplier List";
+      const filename = this.getExportFileName();
       this.config.type = type;
       if (orientation) {
           this.config.options.jsPDF.orientation = orientation;
       }
-      const date = new Date().toDateString();
-    this.utility.downloadElementAsPdf(this.config.elementIdOrContent, filename, orientation || (this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation));
+      this.downloadExportPdf(filename, orientation || (this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation));
   }
 
   pdfCallbackFn(pdf: any) {
@@ -259,32 +333,26 @@ getCountryName(countryId: number): string | null {
   }
 
   exportExcel(): void {
-      {
-          const fileToExport = this.respData.map((response: any,index:number) => {
-              return {
-                  "Sl No.":index+1,
-                  "ID": response.uuid || response.supplier_id,
-                  "Name": response['first_name'] + '' +response['last_name'],
-                  "Contact": response['phone_number'] || response['phone'],
-                  "Email": response.email,
-                  "Status": response.status==0 ?'Inactive':'Active'
-              }
-          });
-          const columnWidths = [
-              { wch: 5 },
-              { wch: 20 },
-              { wch: 20 },
-              { wch: 30 },
-              { wch: 30 },
-              { wch: 10 },
-          ];
+      const fileToExport = this.buildExportRows();
+      const columnWidths = [
+          { wch: 5 },
+          { wch: 15 },
+          { wch: 25 },
+          { wch: 20 },
+          { wch: 30 },
+          { wch: 15 },
+          { wch: 15 },
+          { wch: 15 },
+          { wch: 20 },
+          { wch: 12 },
+          { wch: 10 },
+      ];
 
-          this.utility.exportToExcel(
-              fileToExport,
-              'Supplier Inactive List',
-              columnWidths
-          );
-      }
+      this.utility.exportToExcel(
+          fileToExport,
+          this.getExportFileName(),
+          columnWidths
+      );
   }
   showPropertyProfile(id:any){
     this.showModal = true;

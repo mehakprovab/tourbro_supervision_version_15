@@ -44,16 +44,10 @@
                                                 <tr class="p-2"
                                                 *ngFor="let data of respData; let i=index;">
                                                 <td class="text-left text-muted">{{i+1}}.</td>
-                                                <td class="text-left"> {{data['question']}}
-                                                    <td class="text-left text-capitalize">
+                                                <td class="text-left"> {{data['question']}}</td>
+                                                    <td class="text-left text-capitalize answer-column">
                                                        {{data.answer}}  </td>   
-                                                     <!-- <td class="text-left text-capitalize"> {{data['module']}} </td> -->
-                                                     <!-- <td class="text-left">
-                                                        <select class="w-100 m-auto cust-select" (change)='onStatusChange(data)'>
-                                                            <option [selected]="data['status'] == 0">Inactive</option>
-                                                            <option [selected]="data['status'] == 1">Active</option>
-                                                        </select>
-                                                    </td>   -->
+                                                    
                                                     <td class="text-left" style="display:flex; float:left;"> 
                                                         <button class="btn btn-sm btn-primary"
                                                         (click)="updateContent(data)">

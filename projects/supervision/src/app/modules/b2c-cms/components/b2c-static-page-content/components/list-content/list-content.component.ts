@@ -68,31 +68,36 @@ export class ListContentComponent implements OnInit, OnDestroy {
             }
             );
     }
+getContentList() {
+    this.noData = true;
+    this.respData = [];
 
-    getContentList() {
-        this.noData=true;
-        this.respData=[];
-        let data = {
-            data_source: "b2c",
-            module: "",
-            id: ""
-        }
-        this.subSunk.sink = this.cmsService.getStaticContent(data).subscribe(resp => {
-            if ((resp.statusCode == 200 || resp.statusCode == 201) && resp.data && resp.data.length>0) {
+    const data = {
+        data_source: "b2c",
+        module: "",
+        id: ""
+    };
+
+    this.subSunk.sink = this.cmsService.getStaticContent(data).subscribe(
+        resp => {
+            if ((resp.statusCode == 200 || resp.statusCode == 201) && resp.data && resp.data.length > 0) {
                 this.noData = false;
-                this.respData = resp.data || [];
+
+                this.respData = (resp.data || []).sort((a, b) => b.id - a.id);
+
                 respDataCopy = [...this.respData];
                 this.collectionSize = respDataCopy.length;
-            }
-            else {
+            } else {
                 this.noData = false;
-                this.respData=[];
+                this.respData = [];
             }
-        }, (err) => {
+        },
+        err => {
             this.noData = false;
             this.respData = [];
-        });
-    }
+        }
+    );
+}
 
     sortData(sort: Sort) {
         console.log(sort)

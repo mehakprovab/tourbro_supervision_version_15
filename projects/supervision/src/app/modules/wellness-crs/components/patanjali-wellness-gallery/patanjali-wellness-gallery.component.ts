@@ -71,7 +71,7 @@ export class PatanjaliWellnessGalleryComponent implements OnInit {
     }
 
     const formData = new FormData();
-    formData.append('id', String(this.galleryId));
+    formData.append('Id', String(this.galleryId));
     formData.append('is_trending', String(this.isTrending));
     this.selectedFiles.forEach((file) => formData.append('Gallery', file, file.name));
 
@@ -117,7 +117,7 @@ export class PatanjaliWellnessGalleryComponent implements OnInit {
     }
 
     const formData = new FormData();
-    formData.append('id', String(this.galleryId));
+    formData.append('Id', String(this.galleryId));
     formData.append('index', String(this.editingIndex));
     formData.append('image_url', this.getImageValue(this.editingImage));
     formData.append('is_trending', String(this.isTrending));

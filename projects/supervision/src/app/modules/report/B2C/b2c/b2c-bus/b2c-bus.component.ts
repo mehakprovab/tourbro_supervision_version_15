@@ -159,7 +159,7 @@ export class B2cBusComponent implements OnInit {
         });
     }
 
-    viewBookingDetails(data: any) {
+    viewInvoice(data: any) {
        this.navigateToBusDocument(data, 'invoice');
     }
 
@@ -318,6 +318,7 @@ export class B2cBusComponent implements OnInit {
     onReset(){
         this.corporateId='';
         this.initialize();
+        this.getBusReport();
     }
 
     voidTicket(){

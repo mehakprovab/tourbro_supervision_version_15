@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
+import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { SubSink } from 'subsink';
 
 @Component({
@@ -19,6 +20,7 @@ export class BusInvoiceComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private apiHandlerService: ApiHandlerService,
     private swalService: SwalService,
+    private utility: UtilityService,
   ) { }
 
   ngOnInit() {
@@ -65,6 +67,10 @@ export class BusInvoiceComponent implements OnInit, OnDestroy {
     return this.bookingData && Array.isArray(this.bookingData.passengers)
       ? this.bookingData.passengers
       : (this.bookingData && Array.isArray(this.bookingData.pax_details) ? this.bookingData.pax_details : []);
+  }
+
+  downloadPdf(): void {
+    this.utility.downloadElementAsPdf('print_voucher', `Bus Invoice - ${this.appReference || 'booking'}`, 'portrait');
   }
 
   ngOnDestroy(): void {

@@ -59,6 +59,7 @@ export class AddOrUpdateBannerImagesComponent implements OnInit, OnDestroy {
             id: new FormControl(''),
             title: new FormControl('', [Validators.required]),
             description: new FormControl(''),
+              banner_type: new FormControl('home', Validators.required)
         });
         this.logoConfig = this.fb.group({
             banner_logo: new FormControl('', Validators.required)
@@ -126,6 +127,7 @@ export class AddOrUpdateBannerImagesComponent implements OnInit, OnDestroy {
         formData.append('image', this.logoConfig.get('banner_logo').value);
         formData.append('title',this.regConfig.value.title);
         formData.append('description',this.regConfig.value.description); 
+        formData.append('banner_type', this.regConfig.value.banner_type);
       
 
         this.subSunk.sink = this.apiHandlerService.apiHandler('uploadImage', 'post', {}, {}, formData)
@@ -152,6 +154,7 @@ export class AddOrUpdateBannerImagesComponent implements OnInit, OnDestroy {
         this.regConfig.reset();
         this.bannerLogo = '';
         this.imageSrc = '';
+        this.regConfig.patchValue({ banner_type: 'home' });
         //this.fileToUpload = null;
         this.submitted = false;
     }

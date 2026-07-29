@@ -72,32 +72,39 @@ export class BusVoucherComponent implements OnInit, OnDestroy {
       : [];
   }
 
-  downloadA4(type: any, orientation?: string): void {
-    const content = this.printVoucherRef && this.printVoucherRef.nativeElement;
-    if (!content) {
-      return;
-    }
+downloadA4() {
 
-    window['html2canvas'] = html2canvas;
-    const doc = new jsPDF({
-      orientation: 'p',
-      unit: 'pt',
-      format: 'a4',
+    const content = this.printVoucherRef.nativeElement;
+
+    html2canvas(content,{
+        scale:2,
+        useCORS:true,
+        backgroundColor:'#ffffff'
+    }).then(canvas=>{
+
+        const imgData = canvas.toDataURL('image/png');
+
+        const pdf = new jsPDF('p','mm','a4');
+
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+
+        const pdfHeight =
+            (canvas.height * pdfWidth) / canvas.width;
+
+        pdf.addImage(
+            imgData,
+            'PNG',
+            0,
+            0,
+            pdfWidth,
+            pdfHeight
+        );
+
+        pdf.save(`${this.appReference}.pdf`);
+
     });
 
-    doc.html(content, {
-      html2canvas: {
-        allowTaint: true,
-        useCORS: true,
-        scale: 600 / content.scrollWidth
-      },
-      callback: async (pdf) => {
-        pdf.save(`${this.appReference || 'bus-voucher'}.pdf`);
-        this.swalService.alert.success();
-      }
-    });
-  }
-
+}
   printVoucher() {
     window.print();
   }

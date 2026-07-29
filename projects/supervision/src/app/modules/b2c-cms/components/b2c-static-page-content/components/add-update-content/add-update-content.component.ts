@@ -30,9 +30,9 @@ export class AddUpdateContentComponent implements OnInit, OnDestroy {
         { id: 3, name: "Connect With Us" },
     ]
     moduleList = [
-        { id: 1, name1: "Quick Links" ,name:"Hotel"},
-        { id: 2, name1: "Legal & Support",name:"Flight" },
-        // { id: 3, name1: "Contact",name:"Activity" },
+        { id: 1, name1: "Quick Links" ,name:"Quick Links"},
+        { id: 2, name1: "Legal & Support",name:"Legal & Support" },
+        // { id: 3, name1: "Contact",name:"Contact" },
     ]
     public model = {
         editorData: ''

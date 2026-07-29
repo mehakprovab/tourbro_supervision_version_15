@@ -10,7 +10,7 @@
                         <th>Image</th>
                         <th>Title</th>
                         <th>Description</th>
-                        <!-- <th>Sequence</th> -->
+                        <th>Banner Type</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -42,12 +42,9 @@
                         <td class="text-left">
                             <p>{{data.description}}</p>
                         </td>
-                        <!-- <td class="text-left">
-                            <select class="w-100 m-auto cust-select" (change)='onSequenceChange($event,data.id)'>
-                                <option *ngFor="let seq of sequenceList" [selected]="data['sequence'] == seq.name"
-                                    [value]="seq.name">{{seq.name}}</option>
-                            </select>
-                        </td> -->
+                        <td class="text-left">
+                           <p>{{data.banner_type}}</p>
+                        </td>
                         <td class="text-left"> <button class="btn btn-sm btn-primary"
                                 (click)="deleteBannerImage(data.id)">
                               
@@ -63,7 +60,18 @@
     <div class="my-5 col-md-12 col-lg-12">
         <form class="" [formGroup]="regConfig">
             <div class="form-group row">
-                <div class="col-6 pr-0">
+                <div class="col-4 pr-0">
+    <div class="form-group">
+        <label>Banner Type <span class="text-danger">*</span></label>
+
+        <select class="form-control form-control-sm"
+                formControlName="banner_type">
+            <option value="home">Home Banner Image</option>
+            <option value="wellness">Wellness Banner Image</option>
+        </select>
+    </div>
+</div>
+                <div class="col-4 pr-0">
                     <div class="form-group">
                         <label for="bookedBy">Title</label>
                         <input  formControlName="title" type="text" id="page_title" autocomplete="off"
@@ -73,7 +81,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-6 pr-0">
+                <div class="col-4 pr-0">
                     <div class="form-group">
                         <label for="bookedBy">Description</label>
                         <input  formControlName="description" type="text" id="page_seo_description" autocomplete="off"

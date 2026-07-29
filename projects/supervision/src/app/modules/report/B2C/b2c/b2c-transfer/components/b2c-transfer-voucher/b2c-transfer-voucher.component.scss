@@ -58,3 +58,13 @@
      vertical-align: middle;
      display: inline-block;
  }
+
+ @media print {
+
+  .no-print,
+  button,
+  #download {
+    display: none !important;
+  }
+
+}

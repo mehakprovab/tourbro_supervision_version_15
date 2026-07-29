@@ -118,7 +118,12 @@ getTermsList(): string[] {
             allowTaint: true,
             useCORS: true,
             scale: 2,
-            logging: false
+            logging: false,
+            onclone: (clonedDocument: Document) => {
+              clonedDocument.querySelectorAll('.no-print').forEach(element => {
+                (element as HTMLElement).style.display = 'none';
+              });
+            }
         }).then(canvas => {
             const imgWidth = 210; // A4 width in mm
             const pageHeight = 297; // A4 height in mm (standard)
@@ -193,6 +198,61 @@ getTermsList(): string[] {
     }, 1000);
 }
 
+  printVoucher(): void {
+    const voucher = this.print_voucher && this.print_voucher.nativeElement;
+
+    if (!voucher) {
+      return;
+    }
+
+    const printableVoucher = voucher.cloneNode(true) as HTMLElement;
+    printableVoucher.querySelectorAll('.no-print').forEach(element => element.remove());
+
+    const popup = window.open('', '_blank', 'width=900,height=650');
+
+    if (!popup) {
+      this.swalService.alert.error('Please allow popups to print the voucher');
+      return;
+    }
+
+    popup.document.open();
+    popup.document.write(`
+      <!doctype html>
+      <html>
+        <head>
+          <title>Tour Voucher - ${this.app_reference}</title>
+          <style>
+            body {
+              margin: 0;
+              padding: 24px;
+              background: #ffffff;
+              font-family: Arial, sans-serif;
+            }
+            table {
+              border-collapse: collapse;
+            }
+            img {
+              max-width: 100%;
+            }
+            .no-print {
+              display: none !important;
+            }
+            @media print {
+              body {
+                padding: 0;
+              }
+            }
+          </style>
+        </head>
+        <body>${printableVoucher.outerHTML}</body>
+      </html>
+    `);
+    popup.document.close();
+    popup.onafterprint = () => popup.close();
+    popup.focus();
+    setTimeout(() => popup.print(), 300);
+  }
+
   commonBadgeStyle = {
     fontSize: '13px',
     padding: '8px',
@@ -255,4 +315,3 @@ getItenary(data) {
   }
 }
 }
-

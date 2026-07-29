@@ -52,3 +52,19 @@ h5 {
     max-width: none;
   }
 }
+
+
+.no-print {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+@media print {
+
+    .no-print {
+        display: none !important;
+    }
+
+}

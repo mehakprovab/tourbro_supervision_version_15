@@ -909,4 +909,9 @@ export const apiMap = {
   addHeliTermsAndConditions: `${baseUrl}/rotorcraft/updateTermsConditions`,
   getHeliTermsConditions: `${baseUrl}/rotorcraft/getTermsConditions`,
   addHeliTransferImage: `${baseUrl}/rotorcraft/uploadImage`,
+
+  uploadDoctorImage:
+`${baseUrl}/wellness/uploadDoctorImage`,
+
+buscancel:`${B2C_URL}/webservice/bus/bus/cancelBooking`,
 };

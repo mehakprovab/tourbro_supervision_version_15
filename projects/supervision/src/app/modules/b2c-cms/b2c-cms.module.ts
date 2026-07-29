@@ -37,6 +37,7 @@ import { ListserviceComponent } from './components/add-or-modify-service-faq/com
 import { AddUpdateserviceFaqComponent } from './components/add-or-modify-service-faq/component/add-update-service-faq/add-update-service-faq.component';
 import { ListAboutComponent } from './components/add-or-modify-about-faq/component/list-about/list-about.component';
 import { AddUpdateAboutFaqComponent } from './components/add-or-modify-about-faq/component/add-update-about-faq/add-update-about-faq.component';
+import { SupplierLegalComponent } from './components/supplier-legal/supplier-legal.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { AddUpdateAboutFaqComponent } from './components/add-or-modify-about-faq
   AddUpdateserviceFaqComponent,
   AddOrModifyAboutFaqComponent,
   ListAboutComponent,
-  AddUpdateAboutFaqComponent
+  AddUpdateAboutFaqComponent,
+  SupplierLegalComponent
 ],
   imports: [
     CommonModule,

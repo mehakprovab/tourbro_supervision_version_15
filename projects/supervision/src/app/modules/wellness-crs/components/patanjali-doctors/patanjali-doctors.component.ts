@@ -14,6 +14,8 @@ export class PatanjaliDoctorsComponent implements OnInit {
   doctors: any[] = [];
   editingDoctor: any = null;
   loading = false;
+  selectedImage: File = null;
+imagePreview: any = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -78,16 +80,54 @@ export class PatanjaliDoctorsComponent implements OnInit {
 
     this.loading = true;
     this.apiHandlerService.apiHandler(topic, 'post', {}, {}, payload).subscribe(
-      (response) => {
-        this.loading = false;
-        if (response && (response.statusCode === 200 || response.statusCode === 201 || response.success)) {
-          this.swalService.alert.success(isEdit ? 'Doctor data updated successfully.' : 'Doctor data uploaded successfully.');
-          this.resetForm();
-          this.getDoctors();
-          return;
-        }
-        this.swalService.alert.oops(response && (response.Message || response.message) || 'Doctor data save failed.');
-      },
+(response) => {
+
+  this.loading = false;
+
+  if (
+    response &&
+    (response.statusCode === 200 ||
+      response.statusCode === 201 ||
+      response.success)
+  ) {
+
+    // get doctor id
+
+    const doctorId =
+      response.data?.id ||
+      response.data?._id ||
+      response.data.insertId ||
+      response.insertId ||
+      response.doctor_id;
+console.log('Doctor saved successfully with id:', doctorId);  
+console.log('Selected image:', this.selectedImage);
+    if (this.selectedImage && doctorId) {
+
+      this.uploadDoctorImage(doctorId);
+
+    } else {
+
+      this.swalService.alert.success(
+        isEdit
+          ? 'Doctor updated successfully.'
+          : 'Doctor uploaded successfully.'
+      );
+
+      this.resetForm();
+
+      this.getDoctors();
+    }
+
+    return;
+  }
+
+  this.swalService.alert.oops(
+    response?.Message ||
+      response?.message ||
+      'Doctor data save failed.'
+  );
+
+},
       (err: HttpErrorResponse) => {
         this.loading = false;
         this.swalService.alert.error(this.getErrorMessage(err, 'Doctor data save failed.'));
@@ -95,16 +135,23 @@ export class PatanjaliDoctorsComponent implements OnInit {
     );
   }
 
-  editDoctor(doctor: any): void {
-    this.editingDoctor = doctor;
-    this.doctorForm.patchValue({
-      name: doctor.name || '',
-      specialization: doctor.specialization || '',
-      opd_days: doctor.opd_days || '',
-      opd_start_time: this.toTimeInput(doctor.opd_start_time),
-      opd_end_time: this.toTimeInput(doctor.opd_end_time)
-    });
-  }
+editDoctor(doctor: any): void {
+
+  this.editingDoctor = doctor;
+
+  this.imagePreview = doctor.doctor_image || null;
+
+  this.selectedImage = null;
+
+  this.doctorForm.patchValue({
+    name: doctor.name,
+    specialization: doctor.specialization,
+    opd_days: doctor.opd_days,
+    opd_start_time: this.toTimeInput(doctor.opd_start_time),
+    opd_end_time: this.toTimeInput(doctor.opd_end_time)
+  });
+
+}
 
   deleteDoctor(doctor: any): void {
     const id = this.getDoctorId(doctor);
@@ -139,6 +186,10 @@ export class PatanjaliDoctorsComponent implements OnInit {
 
   resetForm(): void {
     this.editingDoctor = null;
+
+  this.selectedImage = null;
+
+  this.imagePreview = null;
     this.doctorForm.reset({
       name: '',
       specialization: '',
@@ -182,4 +233,71 @@ export class PatanjaliDoctorsComponent implements OnInit {
   private getErrorMessage(err: HttpErrorResponse, fallback: string): string {
     return err && err.error && (err.error.Message || err.error.message) ? (err.error.Message || err.error.message) : fallback;
   }
+
+  onImageSelected(event: any): void {
+
+  if (!event.target.files.length) {
+    return;
+  }
+
+  const file = event.target.files[0];
+
+  if (!file.type.startsWith('image/')) {
+    this.swalService.alert.oops('Please select a valid image.');
+    return;
+  }
+
+  this.selectedImage = file;
+
+  const reader = new FileReader();
+
+  reader.onload = () => {
+    this.imagePreview = reader.result;
+  };
+
+  reader.readAsDataURL(file);
+}
+uploadDoctorImage(id: number): void {
+console.log('Uploading doctor image for doctor id:', id);
+  if (!this.selectedImage) {
+    this.getDoctors();
+    return;
+  }
+
+  const formData = new FormData();
+
+  formData.append('id', id.toString());
+  formData.append('DoctorImage', this.selectedImage);
+
+  this.apiHandlerService
+    .apiHandler(
+      'uploadDoctorImage',
+      'post',
+      {},
+      {},
+      formData
+    )
+    .subscribe(
+      () => {
+
+        this.swalService.alert.success('Doctor data uploaded successfully.');
+
+        this.resetForm();
+
+        this.getDoctors();
+
+      },
+      () => {
+
+        this.swalService.alert.oops(
+          'Doctor saved successfully, but image upload failed.'
+        );
+
+        this.resetForm();
+
+        this.getDoctors();
+
+      }
+    );
+}
 }

@@ -290,7 +290,51 @@ export class B2cTransferVoucherComponent implements OnInit {
     }
 
   }
+printVoucher() {
+  const printContents = this.print_voucher.nativeElement.outerHTML;
 
+  const popup = window.open('', '_blank', 'width=1000,height=800');
+
+  popup.document.write(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Voucher</title>
+      <style>
+        body{
+          margin:20px;
+          font-family: Arial, sans-serif;
+        }
+
+        table{
+          width:100%;
+          border-collapse:collapse;
+        }
+
+        img{
+          max-width:100%;
+        }
+
+        @page{
+          size:A4;
+          margin:10mm;
+        }
+      </style>
+    </head>
+    <body>
+      ${printContents}
+    </body>
+    </html>
+  `);
+
+  popup.document.close();
+
+  popup.onload = () => {
+    popup.focus();
+    popup.print();
+    popup.close();
+  };
+}
   commonBadgeStyle = {
     fontSize: '13px',
     padding: '8px',

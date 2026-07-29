@@ -7,7 +7,7 @@ import jsPDF from 'jspdf';
 import { SwalService } from './swal.service';
 
 type SupportedExtensions = 'pdf' | 'png' | 'xlsx' | 'xls' | 'docx' | 'doc' | 'txt' | 'csv' | 'json' | 'xml';
-type PdfOrientation = 'portrait' | 'landscape' | 'p' | 'l';
+export type PdfOrientation = 'portrait' | 'landscape' | 'p' | 'l';
 
 @Injectable({
     providedIn: 'root'
@@ -223,7 +223,7 @@ export class UtilityService {
     
     }
 
-    downloadElementAsPdf(elementId: string, fileName: string, orientation: PdfOrientation = 'landscape'): void {
+    downloadElementAsPdf(elementId: string, fileName: string, orientation: PdfOrientation | string = 'landscape'): void {
         const element = document.getElementById(elementId);
         if (!element) {
             this.swalService.alert.oops();

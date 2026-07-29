@@ -23,6 +23,7 @@ import { GeneralModalImageComponent } from "./components/general-modal-image/gen
 import { GuideLastSectionComponent } from "./components/guide-last-section/guide-last-section.component";
 import { AddOrModifyServiceFaqComponent } from "./components/add-or-modify-service-faq/add-or-modify-service-faq.component";
 import { AddOrModifyAboutFaqComponent } from "./components/add-or-modify-about-faq/add-or-modify-about-faq.component";
+import { SupplierLegalComponent } from "./components/supplier-legal/supplier-legal.component";
 
 const routes: Routes = [
   {
@@ -160,6 +161,12 @@ const routes: Routes = [
         path: "homepage-banner/general-modal-image",
         canActivate: [AuthGuard],
         component: GeneralModalImageComponent,
+        data: { extraParameter: "" },
+      },
+      {
+        path: "homepage/supplier-legal",
+        canActivate: [AuthGuard],
+        component: SupplierLegalComponent,
         data: { extraParameter: "" },
       },
     ],

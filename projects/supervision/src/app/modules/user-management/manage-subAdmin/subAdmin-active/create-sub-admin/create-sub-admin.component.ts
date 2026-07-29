@@ -223,11 +223,11 @@ export class CreateSubAdminComponent implements OnInit, OnDestroy {
                             this.regConfig.reset();
                             this.staffUpdate.emit({ tabId: 'staff_list' });
                         } else {
-                            this.swalService.alert.oops();
+                            this.swalService.alert.oops(resp.Message ? resp.Message : "Something went wrong. Please try again later.");
                         }
                     }, (err: HttpErrorResponse) => {
                         console.error(err);
-                        this.swalService.alert.oops();
+                        this.swalService.alert.oops(err.message ? err.message : "Something went wrong. Please try again later.");
                     })
                 break;
             case 'update':
@@ -241,12 +241,12 @@ export class CreateSubAdminComponent implements OnInit, OnDestroy {
                             this.swalService.alert.success("Sub Admin updated successfully.");
                             this.regConfig.reset();
                             this.staffUpdate.emit({ tabId: 'staff_list' });
-                        } else {
-                            this.swalService.alert.oops();
+                     } else {
+                            this.swalService.alert.oops(resp.Message ? resp.Message : "Something went wrong. Please try again later.");
                         }
                     }, (err: HttpErrorResponse) => {
                         console.error(err);
-                        this.swalService.alert.oops();
+                        this.swalService.alert.oops(err.message ? err.message : "Something went wrong. Please try again later.");
                     })
                 break;
             default:

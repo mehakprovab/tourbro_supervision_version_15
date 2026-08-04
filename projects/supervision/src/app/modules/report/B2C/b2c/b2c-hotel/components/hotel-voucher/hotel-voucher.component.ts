@@ -45,7 +45,8 @@ export class HotelVoucherComponent implements OnInit, OnDestroy {
           private location : Location
     ) { }
 printVoucher() {
-  window.print();
+  const element = this.print_voucher && this.print_voucher.nativeElement;
+  this.utility.printElement(element, `${this.app_reference || 'Hotel Voucher'}`);
 }
     ngOnInit() {
         this.subSunk.sink = this.activatedRoute.queryParams.subscribe(queryParams => {
@@ -237,7 +238,8 @@ printVoucher() {
           format: 'a4',
         });
         const content = this.print_voucher.nativeElement;
-        doc.html(content, {
+        const exportContent = this.utility.prepareExportElement(content);
+        doc.html(exportContent, {
           html2canvas: {
             allowTaint: true,
             useCORS: true,

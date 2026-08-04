@@ -80,7 +80,8 @@ export class WellnessVoucherComponent implements OnInit, OnDestroy {
   }
 
   printVoucher() {
-    window.print();
+    const element = this.printVoucherRef && this.printVoucherRef.nativeElement;
+    this.utility.printElement(element, `Wellness Voucher - ${this.appReference}`);
   }
 
   downloadA4(type: any, orientation?: string): void {
@@ -96,7 +97,8 @@ export class WellnessVoucherComponent implements OnInit, OnDestroy {
       format: 'a4',
     });
 
-    doc.html(content, {
+    const exportContent = this.utility.prepareExportElement(content);
+    doc.html(exportContent, {
       html2canvas: {
         allowTaint: true,
         useCORS: true,
@@ -115,7 +117,8 @@ export class WellnessVoucherComponent implements OnInit, OnDestroy {
       return;
     }
 
-    html2canvas(element).then(canvas => {
+    const exportElement = this.utility.prepareExportElement(element);
+    html2canvas(exportElement).then(canvas => {
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');
       const imgWidth = 210;

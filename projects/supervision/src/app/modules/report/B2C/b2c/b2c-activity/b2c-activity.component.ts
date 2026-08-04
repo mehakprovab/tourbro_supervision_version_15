@@ -256,7 +256,7 @@ isExporting = false;
     setTimeout(() => {
         this.config.type = type;
         if (type === 'xlsx' || type === 'xls') {
-            this.utility.downloadElementAsExcel(this.config.elementIdOrContent, 'b2c-activity');
+            this.exportExcel();
             this.isExporting = false;
             return;
         }
@@ -264,8 +264,8 @@ isExporting = false;
             this.config.options.jsPDF.orientation = orientation;
         }
 
-        this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2c-ActivityReport`, orientation || (this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation));
-         
+        this.exportPdf(orientation || (this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation));
+        this.isExporting = false;
 
     }, 300);
 }
@@ -274,10 +274,100 @@ isExporting = false;
     this.isExporting = true;
 
     setTimeout(() => {
-        this.utility.downloadElementAsPdf('b2c-activity-report', 'b2c-ActivityReport', 'landscape');
+        this.exportPdf('landscape');
         this.isExporting = false;
     }, 300);
 }
+
+    exportExcel(): void {
+        const columns = this.getExportColumns();
+        const fileToExport = this.respData.map((response: any, index: number) => {
+            return columns.reduce((row, column) => {
+                row[column.value] = this.getExportValue(response, column.key, index);
+                return row;
+            }, {});
+        });
+        const columnWidths = columns.map(column => {
+            return { wch: column.key === 'id' ? 8 : Math.max(column.value.length + 5, 20) };
+        });
+
+        this.utility.exportToExcel(fileToExport, 'B2C_Experience_Report', columnWidths);
+    }
+
+    exportPdf(orientation: string = 'landscape'): void {
+        const columns = this.getExportColumns();
+        const rows = this.respData.map((response: any, index: number) => {
+            return columns.map(column => this.getExportValue(response, column.key, index));
+        });
+        this.utility.exportTableDataAsPdf(columns.map(column => column.value), rows, 'B2C_Experience_Report', orientation);
+    }
+
+    getExportColumns(): { key: string, value: string }[] {
+        return this.displayColumn.filter(column => column.key !== 'Action');
+    }
+
+    getExportValue(data: any, key: string, index: number): any {
+        const booking = data && data.BookingDetails ? data.BookingDetails : {};
+        const itinerary = data && data.BookingItenaryDetails ? data.BookingItenaryDetails : {};
+        const pax = data && Array.isArray(data.BookingPaxDetails) && data.BookingPaxDetails.length ? data.BookingPaxDetails[0] : {};
+        const searchPax = booking.searchData && Array.isArray(booking.searchData.paxes) && booking.searchData.paxes.length ? booking.searchData.paxes[0] : {};
+
+        switch (key) {
+            case 'id': return index + 1;
+            case 'status': return this.getBookingStatusLabel(booking.Status);
+            case 'app_reference': return this.cleanExportValue(booking.AppReference);
+            case 'booking_reference': return this.cleanExportValue(booking.ConfirmationReference);
+            case 'paymentmode': return this.cleanExportValue(booking.PaymentMode);
+            case 'supplier_name': return this.cleanExportValue(booking.supplierName);
+            case 'FirstName': return this.cleanExportValue(`${pax.Title || ''} ${pax.FirstName || ''} ${pax.LastName || ''}`.trim());
+            case 'Email': return this.cleanExportValue(booking.Email);
+            case 'PhoneNumber': return this.cleanExportValue(booking.PhoneNumber);
+            case 'noofpax': return this.cleanExportValue(this.getPaxData(searchPax));
+            case 'modality': return this.cleanExportValue(booking.ModalityName);
+            case 'ProductName': return this.cleanExportValue(booking.ProductName);
+            case 'duration': return this.cleanExportValue(itinerary.attributes && itinerary.attributes.Duration);
+            case 'City': return this.cleanExportValue(itinerary.city);
+            case 'country': return this.cleanExportValue(itinerary.attributes && itinerary.attributes.AddressDetails && itinerary.attributes.AddressDetails.Country);
+            case 'TravelDatetimeFrom': return this.formatExportDate(booking.travelDate);
+            case 'TravelDatetimeTo': return this.formatExportDate(booking.toDate);
+            case 'supplier_net_fare': return `${booking.supplier_total_price || 0} ${booking.supplier_currency || ''}`.trim();
+            case 'admin_markup': return booking.AdminMarkup || 0;
+            case 'ConvenienceFee': return booking.ConvienceFees || 0;
+            case 'discount': return booking.Discount || 0;
+            case 'CustomerPaidAmount': return this.cleanExportValue(booking.TotalNet);
+            case 'Currency': return this.cleanExportValue(booking.Currency);
+            case 'BookedOn': return this.formatExportDate(booking.CreatedDatetime);
+            case 'guide_info': return this.cleanExportValue(`${booking.GuideName || ''}${booking.GuideContact ? ` (${booking.GuideContact})` : ''}`.trim());
+            case 'PaidOn': return this.cleanExportValue(booking.PaidOn);
+            case 'cancellationDeadline': return this.cleanExportValue(booking.cancellation_deadline || booking.API_cancellation_deadline);
+            case 'cancelledOn': return booking.Status === 'BOOKING_CANCELLED' ? this.formatExportDate(booking.cancelled_datetime) : 'N/A';
+            case 'cancelledamt': return booking.CancelAmount || 0;
+            default: return this.cleanExportValue(booking[key]);
+        }
+    }
+
+    getBookingStatusLabel(status: string): string {
+        switch (status) {
+            case 'BOOKING_FAILED': return 'Booking Failed';
+            case 'BOOKING_CONFIRMED': return 'Booking Confirmed';
+            case 'BOOKING_CANCELLED': return 'Booking Cancelled';
+            case 'BOOKING_INPROGRESS': return 'Booking Inprogress';
+            case 'BOOKING_HOLD': return 'Booking Hold';
+            default: return status || 'N/A';
+        }
+    }
+
+    cleanExportValue(value: any): any {
+        return value !== undefined && value !== null && value !== 'undefined' && value !== '' ? value : 'N/A';
+    }
+
+    formatExportDate(value: any): string {
+        if (!value) {
+            return 'N/A';
+        }
+        const date = new Date(value);
+        return isNaN(date.getTime()) ? this.cleanExportValue(value) : date.toLocaleDateString('en-GB');
+    }
 
     pdfCallbackFn(pdf: any) {
         // example to add page number as footer to every page of pdf

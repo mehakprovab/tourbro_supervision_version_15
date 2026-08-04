@@ -191,9 +191,10 @@ export class HotelComponent implements OnInit {
             await this.waitForImageToLoad(imgEl); // ensure image is rendered
           }
           const data = document.getElementById('print_voucher');
+          const exportData = data ? this.utility.prepareExportElement(data) : null;
       const date = new Date().toDateString();
           setTimeout(() => {
-            html2canvas(data!, {
+            html2canvas(exportData!, {
                 allowTaint: true,
                 useCORS: true,
                 scale: 2 // Better resolution

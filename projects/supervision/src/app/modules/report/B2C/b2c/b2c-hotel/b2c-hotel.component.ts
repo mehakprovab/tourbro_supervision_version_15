@@ -337,7 +337,7 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
         if (orientation) {
             this.config.options.jsPDF.orientation = orientation;
         }
-        this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2c-HotelReport`, orientation || (this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation));
+        this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `B2C_Stay_Report`, orientation || (this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation));
     }
 
     exportExcel(): void {
@@ -353,7 +353,7 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
             return { wch: column.key === 'id' ? 8 : Math.max(column.value.length + 5, 20) };
         });
 
-        this.utility.exportToExcel(fileToExport, 'B2C_Hotel_Report', columnWidths);
+        this.utility.exportToExcel(fileToExport, 'B2C_Stay_Report', columnWidths);
     }
 
     isSupplierUser(): boolean {
@@ -439,7 +439,7 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
     }
 
     downloadPdf() {
-        this.utility.downloadElementAsPdf('b2c-hotel-report', 'B2C_Hotel_Report', 'landscape');
+        this.utility.downloadElementAsPdf('b2c-hotel-report', 'B2C_Stay_Report', 'landscape');
     }
 
     calculateDiff(fromDate, toDate) {

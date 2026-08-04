@@ -9,6 +9,7 @@ import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handler
 import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 // Testing for pdf generation
 
 const baseUrl = environment.baseUrl;
@@ -59,7 +60,8 @@ export class TourDetailsComponent implements OnInit {
                 private swalService:SwalService,
                 private apiHandlerService:ApiHandlerService,
                 private route:ActivatedRoute,
-                private fb:FormBuilder
+                private fb:FormBuilder,
+                private utility:UtilityService
     ) { }
   
     ngOnInit() {
@@ -153,7 +155,8 @@ export class TourDetailsComponent implements OnInit {
             format: 'a4',
         });
         const content = this.print_voucher.nativeElement;
-        doc.html(content, {
+        const exportContent = this.utility.prepareExportElement(content);
+        doc.html(exportContent, {
             html2canvas: {
                 allowTaint: true,
                 useCORS: true,

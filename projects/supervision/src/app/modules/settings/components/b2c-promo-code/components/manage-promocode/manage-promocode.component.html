@@ -11,16 +11,22 @@
                     <div class="col-sm-4">
                         <input type="text" class="form-control text-capitalize" id="promo_code" maxlength="20" 
                         formControlName="promo_code">
+                        <div *ngIf="regConfig.get('promo_code').hasError('required') && regConfig.get('promo_code').touched" class="text-danger">
+                            Promo Code is required
+                        </div>
                     </div>
                 </div>
                 <div class="form-group required row">
                     <label for="promo_code"class="required" class="col-sm-2 col-form-label">Image</label>
                     <div class="col-sm-4">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input form-control " accept=".png, .jpg, .jpeg" formControlName="promo_image" id="promo_image"
+                            <input type="file" class="custom-file-input form-control " accept=".png, .jpg, .jpeg" #promoImageInput id="promo_image"
                                 (change)="onFileChange($event.target.files)">
                     <label class="custom-file-label" #labelImport for="promo_image">Upload Image</label>
                     <span class="text-danger">(Maximum upload file size: 1 MB)</span>
+                    <div *ngIf="existingPromoImage && !fileToUpload" class="mt-2">
+                        <img [src]="getPromoImageUrl()" alt="Promo Code Image" style="max-width: 120px; max-height: 80px;">
+                    </div>
                 </div>
                     </div>
                 </div>
@@ -28,6 +34,9 @@
                     <label for="description" class="col-sm-2 col-form-label">Description</label>
                     <div class="col-sm-4">
                         <textarea type="text" class="form-control text-capitalize" id="description" maxlength="120" formControlName="description" rows="4"></textarea>
+                        <div *ngIf="regConfig.get('description').hasError('required') && regConfig.get('description').touched" class="text-danger">
+                            Description is required
+                        </div>
                     </div>
                 </div>
  <div class="form-group required row">
@@ -99,6 +108,9 @@
       min="0"
       formControlName="min_value"
     />
+    <div *ngIf="regConfig.get('min_value').hasError('required') && regConfig.get('min_value').touched" class="text-danger">
+      Min Value is required
+    </div>
   </div>
 
   <div class="col-sm-2">
@@ -109,6 +121,9 @@
       min="0"
       formControlName="max_value"
     />
+    <div *ngIf="regConfig.get('max_value').hasError('required') && regConfig.get('max_value').touched" class="text-danger">
+      Max Value is required
+    </div>
   </div>
 
 </div>
@@ -130,12 +145,18 @@
                       </label>
                     </div>
                     </div>
+                    <div class="col-sm-4 offset-sm-2" *ngIf="regConfig.get('discount_type').hasError('required') && regConfig.get('discount_type').touched">
+                        <div class="text-danger">Discount Type is required</div>
+                    </div>
                 </div>
                 <div class="form-group required row">
                     <label for="discount_value"class="required" class="col-sm-2 col-form-label">Discount Value</label>
                     <div class="col-sm-4">
                         <input type="text" class="form-control text-capitalize" id="discount_value" maxlength="20" 
                         formControlName="discount_value">    
+                        <div *ngIf="regConfig.get('discount_value').hasError('required') && regConfig.get('discount_value').touched" class="text-danger">
+                            Discount Value is required
+                        </div>
                     </div>
                 </div>
                <!-- <div class="form-group row cust-radio-group">
@@ -171,8 +192,14 @@
                         <span class="icon return_date" (click)="isOpen= !isOpen"></span>
                         <input type="text" id="start_date" formControlName="start_date"
                         class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy"
-                        bsDatepicker [bsConfig]="bsDateConf"  [minDate]="minDate"
+                        bsDatepicker [bsConfig]="bsDateConf"  [minDate]="startDateMinDate"
                         [isOpen]="isOpen" onkeydown="return false">
+                        <div *ngIf="regConfig.get('start_date').hasError('required') && regConfig.get('start_date').touched" class="text-danger">
+                            Start Date is required
+                        </div>
+                        <div *ngIf="!regConfig.get('start_date').hasError('required') && regConfig.get('start_date').invalid && regConfig.get('start_date').touched" class="text-danger">
+                            Start Date is invalid
+                        </div>
                     </div>
                 </div>
                 <div class="form-group required row">
@@ -183,6 +210,12 @@
                         class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy"
                         bsDatepicker [bsConfig]="bsDateConf" 
                         [isOpen]="isExpDateOpen" onkeydown="return false">
+                        <div *ngIf="regConfig.get('expiry_date').hasError('required') && regConfig.get('expiry_date').touched" class="text-danger">
+                            Expiry Date is required
+                        </div>
+                        <div *ngIf="!regConfig.get('expiry_date').hasError('required') && regConfig.get('expiry_date').invalid && regConfig.get('expiry_date').touched" class="text-danger">
+                            Expiry Date is invalid
+                        </div>
                     </div>
                 </div>
                <div class="form-group required row">
@@ -194,7 +227,7 @@
       <option value="Existing">Existing</option>
       <option value="All">All</option>
     </select>
-    <div *ngIf="regConfig.get('userType').invalid && regConfig.get('userType').touched" class="text-danger">
+    <div *ngIf="regConfig.get('userType').hasError('required') && regConfig.get('userType').touched" class="text-danger">
       User Type is required
     </div>
   </div>

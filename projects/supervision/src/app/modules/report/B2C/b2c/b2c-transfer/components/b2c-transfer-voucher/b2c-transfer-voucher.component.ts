@@ -9,6 +9,7 @@ import { Location } from '@angular/common';
 import { environment } from 'projects/supervision/src/environments/environment.prod';
 import { ReportService } from '../../../../../report.service';
 import { finalize } from 'rxjs/operators';
+import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 const baseUrl = environment.baseUrl;
 @Component({
   selector: 'app-b2c-transfer-voucher',
@@ -43,7 +44,8 @@ export class B2cTransferVoucherComponent implements OnInit {
     private swalService: SwalService,
     private cdr: ChangeDetectorRef,
     private location: Location,
-    private reportService: ReportService
+    private reportService: ReportService,
+    private utility: UtilityService
   ) { }
 
   ngOnInit(): void {
@@ -271,7 +273,8 @@ export class B2cTransferVoucherComponent implements OnInit {
         format: 'a4',
       });
       const content = this.print_voucher.nativeElement;
-      doc.html(content, {
+      const exportContent = this.utility.prepareExportElement(content);
+      doc.html(exportContent, {
         html2canvas: {
           allowTaint: true,
           useCORS: true,

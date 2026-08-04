@@ -4,6 +4,7 @@ import * as XLSX from 'xlsx';
 const EXCEL_EXTENSION = '.xlsx'; // excel file extension
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 import { SwalService } from './swal.service';
 
 type SupportedExtensions = 'pdf' | 'png' | 'xlsx' | 'xls' | 'docx' | 'doc' | 'txt' | 'csv' | 'json' | 'xml';
@@ -192,6 +193,40 @@ export class UtilityService {
         XLSX.writeFile(workbook, `${fileName}${EXCEL_EXTENSION}`);
     }
 
+    public exportTableDataAsPdf(columns: string[], rows: any[][], fileName: string, orientation: PdfOrientation | string = 'landscape'): void {
+        const pdfOrientation = orientation === 'portrait' || orientation === 'p' ? 'p' : 'l';
+        const doc = new jsPDF(pdfOrientation, 'mm', 'a4');
+
+        autoTable(doc, {
+            head: [columns],
+            body: rows,
+            styles: {
+                fontSize: columns.length > 20 ? 5 : 7,
+                overflow: 'linebreak',
+                cellPadding: 1.5,
+                lineColor: [230, 230, 230],
+                lineWidth: 0.1
+            },
+            headStyles: {
+                fillColor: [245, 245, 245],
+                textColor: [0, 0, 0],
+                fontStyle: 'bold'
+            },
+            margin: { top: 10, right: 5, bottom: 10, left: 5 },
+            tableWidth: 'auto'
+        });
+
+        doc.save(`${fileName}.pdf`);
+        this.swalService.alert.success();
+    }
+
+    public prepareExportElement(element: HTMLElement): HTMLElement {
+        const clonedElement = element.cloneNode(true) as HTMLElement;
+        clonedElement.querySelectorAll('button, [id="download"], .pdf-exclude, .no-print, .doc-btn, .btnStyle')
+            .forEach(control => control.remove());
+        return clonedElement;
+    }
+
     checkSeatSelection(passengers) {
         let hasValue = false;
         for (const passenger of passengers) {
@@ -230,6 +265,14 @@ export class UtilityService {
             return;
         }
 
+        const table = element.tagName.toLowerCase() === 'table'
+            ? element as HTMLTableElement
+            : element.querySelector('table') as HTMLTableElement;
+        if (table) {
+            this.downloadTableAsPdf(table, fileName, orientation);
+            return;
+        }
+
         const pdfOrientation = orientation === 'portrait' || orientation === 'p' ? 'p' : 'l';
         const pageWidth = pdfOrientation === 'p' ? 210 : 297;
         const pageHeight = pdfOrientation === 'p' ? 297 : 210;
@@ -253,7 +296,7 @@ export class UtilityService {
                 }
 
                 // Reports should contain data only, never UI controls.
-                clonedElement.querySelectorAll('button, [id="download"], .pdf-exclude')
+                clonedElement.querySelectorAll('button, [id="download"], .pdf-exclude, .no-print, .doc-btn, .btnStyle')
                     .forEach(control => control.remove());
 
                 clonedElement.style.overflow = 'visible';
@@ -314,6 +357,45 @@ export class UtilityService {
         });
     }
 
+    private downloadTableAsPdf(table: HTMLTableElement, fileName: string, orientation: PdfOrientation | string = 'landscape'): void {
+        const clonedTable = table.cloneNode(true) as HTMLTableElement;
+        const actionColumns = Array.from(clonedTable.querySelectorAll('thead th'))
+            .map((header, index) => ({ header, index }))
+            .filter(({ header }) => /^(action|actions|download)$/i.test((header.textContent || '').trim()))
+            .map(({ index }) => index)
+            .reverse();
+
+        actionColumns.forEach(index => {
+            clonedTable.querySelectorAll('tr').forEach(row => {
+                const cell = row.children.item(index);
+                if (cell) {
+                    cell.remove();
+                }
+            });
+        });
+
+        clonedTable.querySelectorAll('button, [id="download"], .pdf-exclude, .no-print, .doc-btn, .btnStyle')
+            .forEach(control => control.remove());
+
+        const columns = Array.from(clonedTable.querySelectorAll('thead th'))
+            .map(header => this.cleanExportText(header.textContent));
+        const rows = Array.from(clonedTable.querySelectorAll('tbody tr'))
+            .map(row => Array.from(row.children).map(cell => this.cleanExportText(cell.textContent)))
+            .filter(row => row.length && !row.join('').match(/No Data Found|^$/i));
+
+        if (!columns.length || !rows.length) {
+            this.swalService.alert.oops();
+            return;
+        }
+
+        this.exportTableDataAsPdf(columns, rows, fileName, orientation);
+    }
+
+    private cleanExportText(value: string): string {
+        const text = (value || '').replace(/\s+/g, ' ').trim();
+        return text && text !== 'undefined' && text !== 'null' ? text : 'N/A';
+    }
+
     downloadA4(type: any,app_reference, print_voucher:any,orientation?: string): void {
         let fileName = app_reference;
         window['html2canvas'] = html2canvas;
@@ -334,6 +416,74 @@ export class UtilityService {
                 doc.save(`${fileName}.pdf`);
                 this.swalService.alert.success();
             }
+        });
+    }
+
+    printElement(element: HTMLElement, title: string = 'Print'): void {
+        if (!element) {
+            this.swalService.alert.oops();
+            return;
+        }
+
+        const printWindow = window.open('', '_blank', 'width=900,height=700');
+        if (!printWindow) {
+            this.swalService.alert.oops('Unable to open print preview.');
+            return;
+        }
+
+        const clonedElement = this.prepareExportElement(element);
+
+        const styles = Array.from(document.querySelectorAll('link[rel="stylesheet"], style'))
+            .map((node: HTMLLinkElement | HTMLStyleElement) => node.outerHTML)
+            .join('');
+        const baseHref = `${window.location.origin}/`;
+
+        printWindow.document.open();
+        printWindow.document.write(`
+            <!doctype html>
+            <html>
+                <head>
+                    <title>${title}</title>
+                    <base href="${baseHref}">
+                    ${styles}
+                    <style>
+                        body { margin: 0; padding: 16px; background: #ffffff; }
+                        img { max-width: 100%; }
+                        @page { margin: 10mm; }
+                    </style>
+                </head>
+                <body>${clonedElement.outerHTML}</body>
+            </html>
+        `);
+        printWindow.document.close();
+
+        const printWhenReady = () => {
+            printWindow.focus();
+            printWindow.print();
+            setTimeout(() => printWindow.close(), 500);
+        };
+
+        const images = Array.from(printWindow.document.images || []);
+        if (!images.length) {
+            setTimeout(printWhenReady, 300);
+            return;
+        }
+
+        let loadedImages = 0;
+        const markImageLoaded = () => {
+            loadedImages++;
+            if (loadedImages === images.length) {
+                setTimeout(printWhenReady, 300);
+            }
+        };
+
+        images.forEach(image => {
+            if (image.complete) {
+                markImageLoaded();
+                return;
+            }
+            image.onload = markImageLoaded;
+            image.onerror = markImageLoaded;
         });
     }
     

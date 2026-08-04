@@ -60,7 +60,8 @@ export class B2cFlightVocherComponent implements OnInit, OnDestroy {
             format: 'a4',
         });
         const content = this.print_voucher.nativeElement;
-        doc.html(content, {
+        const exportContent = this.utility.prepareExportElement(content);
+        doc.html(exportContent, {
             html2canvas: {
                 allowTaint: true,
                 useCORS: true,

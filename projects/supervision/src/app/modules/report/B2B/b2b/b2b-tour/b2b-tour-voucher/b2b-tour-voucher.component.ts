@@ -7,6 +7,7 @@ import { environment } from 'projects/supervision/src/environments/environment.p
 import { SwalService } from 'projects/b2b/src/app/core/services/swal.service';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { Router } from '@angular/router';
+import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 
 const baseUrl = environment.baseUrl;
 
@@ -42,7 +43,8 @@ export class B2bTourVoucherComponent implements OnInit {
     private apiHandlerService: ApiHandlerService,
     private swalService: SwalService,
     private cdr: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private utility: UtilityService
   ) { }
 
   ngOnInit(): void {
@@ -144,9 +146,10 @@ export class B2bTourVoucherComponent implements OnInit {
     this.loading = true;
     window.scrollTo(0, 0);
     const data = document.getElementById('print_voucher');
+    const exportData = data ? this.utility.prepareExportElement(data) : null;
 
     setTimeout(() => {
-        html2canvas(data!, {
+        html2canvas(exportData!, {
             allowTaint: true,
             useCORS: true,
             scale: 2,
@@ -295,4 +298,3 @@ export class B2bTourVoucherComponent implements OnInit {
     }
   }
 }
-

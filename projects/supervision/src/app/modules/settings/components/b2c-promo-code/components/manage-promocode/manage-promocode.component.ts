@@ -22,6 +22,7 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { UtilityService } from "../../../../../../core/services/utility.service";
 import { ApiHandlerService } from "../../../../../../core/api-handlers";
 import { formatDate } from "ngx-bootstrap/chronos";
+import { environment } from "../../../../../../../environments/environment";
 
 @Component({
   selector: "app-manage-promocode",
@@ -43,6 +44,8 @@ export class ManagePromocodeComponent implements OnInit, OnDestroy {
   @Output() updatePromoCode = new EventEmitter<any>();
   @ViewChild("labelImport", { static: false })
   labelImport: ElementRef;
+  @ViewChild("promoImageInput", { static: false })
+  promoImageInput: ElementRef<HTMLInputElement>;
   onFileChange(files: FileList) {
     this.labelImport.nativeElement.innerText = Array.from(files)
       .map((f) => f.name)
@@ -51,8 +54,11 @@ export class ManagePromocodeComponent implements OnInit, OnDestroy {
     if (file && file.size) {
       let result = this.validateFileSize(file.size);
       if (!result) {
-        this.labelImport.nativeElement.value = null;
+        if (this.promoImageInput) {
+          this.promoImageInput.nativeElement.value = "";
+        }
         this.labelImport.nativeElement.innerText = "Upload Image";
+        this.fileToUpload = null;
         return;
       }
     }
@@ -60,6 +66,7 @@ export class ManagePromocodeComponent implements OnInit, OnDestroy {
   }
   private subSunk = new SubSink();
   fileToUpload: File = null;
+  existingPromoImage = "";
   userTitleList: Array<any> = [];
   userTypeList: Array<any> = [];
   phoneCodeList: Array<any> = [];
@@ -75,7 +82,7 @@ export class ManagePromocodeComponent implements OnInit, OnDestroy {
     containerClass: "theme-blue",
     showWeekNumbers: false,
   };
-  minDate = new Date();
+  minDate = new Date(new Date().setHours(0, 0, 0, 0));
 
   constructor(
     private router: Router,
@@ -121,6 +128,16 @@ getToUpdate() {
       console.log(data);
       if (!this.utility.isEmpty(data)) {
         this.addOrUpdate = "update";
+        this.fileToUpload = null;
+        this.existingPromoImage = data.promo_image ? data.promo_image : "";
+
+        if (this.promoImageInput) {
+          this.promoImageInput.nativeElement.value = "";
+        }
+
+        if (this.labelImport) {
+          this.labelImport.nativeElement.innerText = "Upload Image";
+        }
         
         // First patch the basic form controls
         this.regConfig.patchValue(
@@ -128,7 +145,7 @@ getToUpdate() {
             id: data.id ? data.id : "",
             promo_code: data.promo_code ? data.promo_code : "",
             promo_visibility: data.promo_visibility ? data.promo_visibility : false,
-            promo_image: data.promo_image ? data.promo_image : "",
+            promo_image: "",
             description: data.description ? data.description : "",
             userType: data.userType ? data.userType : "", // This should work now
             discount_type: data.discount_type ? data.discount_type : "",
@@ -148,6 +165,8 @@ getToUpdate() {
         
       } else {
         this.addOrUpdate = "add";
+        this.fileToUpload = null;
+        this.existingPromoImage = "";
         // Clear the category FormArray when adding new
         this.categoryArray.clear();
       }
@@ -235,6 +254,8 @@ isCategoryDisabled(category: string): boolean {
 
 onSubmit() {
   if (this.regConfig.invalid) {
+    this.regConfig.markAllAsTouched();
+    this.categoryArray.markAsTouched();
     return;
   }
 
@@ -242,7 +263,7 @@ onSubmit() {
   let req: any = {
     ...this.regConfig.value, // start with all values
     auth_role_id: "4",
-    promo_image: "",
+    promo_image: this.existingPromoImage,
     use_type:'multiple',
     start_date: formatDate(this.regConfig.value.start_date, "YYYY-MM-DD"),
     expiry_date: formatDate(this.regConfig.value.expiry_date, "YYYY-MM-DD"),
@@ -315,6 +336,23 @@ onSubmit() {
   get categoryArray() {
     return this.regConfig.get("category") as FormArray;
   }
+
+  get startDateMinDate(): Date | null {
+    return this.addOrUpdate === "add" ? this.minDate : null;
+  }
+
+  getPromoImageUrl(): string {
+    if (!this.existingPromoImage) {
+      return "";
+    }
+
+    if (/^https?:\/\//i.test(this.existingPromoImage)) {
+      return this.existingPromoImage;
+    }
+
+    return `${environment.baseUrl}${this.existingPromoImage}`;
+  }
+
 onCategoryChange(event: any) {
   const categories = this.regConfig.get("category") as FormArray;
   const value = event.target.value;
@@ -367,6 +405,16 @@ onCategoryChange(event: any) {
  onReset() {
   this.settingService.promoCodeUpdateData.next({});
   this.regConfig.reset();
+  this.fileToUpload = null;
+  this.existingPromoImage = "";
+
+  if (this.promoImageInput) {
+    this.promoImageInput.nativeElement.value = "";
+  }
+
+  if (this.labelImport) {
+    this.labelImport.nativeElement.innerText = "Upload Image";
+  }
   
   // Clear category FormArray
   while (this.categoryArray.length) {

@@ -35,7 +35,8 @@ export class ActivityVoucherComponent implements OnInit {
     private apiHandlerService: ApiHandlerService,
     private swalService: SwalService,
     private cdr: ChangeDetectorRef,
-    private loc: Location
+    private loc: Location,
+    private utility: UtilityService
   ) { }
 
   ngOnInit(): void {
@@ -97,7 +98,8 @@ export class ActivityVoucherComponent implements OnInit {
       format: 'a4',
     });
     const content = this.print_voucher.nativeElement;
-    doc.html(content, {
+    const exportContent = this.utility.prepareExportElement(content);
+    doc.html(exportContent, {
       html2canvas: {
         allowTaint: true,
         useCORS: true,
@@ -111,6 +113,11 @@ export class ActivityVoucherComponent implements OnInit {
         this.cdr.detectChanges();
       }
     });
+  }
+
+  printVoucher(): void {
+    const element = this.print_voucher && this.print_voucher.nativeElement;
+    this.utility.printElement(element, `Activity Voucher - ${this.app_reference}`);
   }
 
 

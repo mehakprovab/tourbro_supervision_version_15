@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild 
 import { ActivatedRoute } from '@angular/router';
 import { ApiHandlerService } from '../../../../../core/api-handlers';
 import { SwalService } from '../../../../../core/services/swal.service';
+import { UtilityService } from '../../../../../core/services/utility.service';
 import { SubSink } from 'subsink';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -24,7 +25,8 @@ export class GuideVoucherComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private apiHandlerService: ApiHandlerService,
     private swalService: SwalService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private utility: UtilityService
   ) {}
 
   ngOnInit(): void {
@@ -104,7 +106,8 @@ printVoucher(): void {
   this.cdr.detectChanges();
 
   setTimeout(() => {
-    window.print();
+    const element = this.voucher && this.voucher.nativeElement;
+    this.utility.printElement(element, `Guide Voucher - ${this.appReference}`);
 
     setTimeout(() => {
       this.isExporting = false;
@@ -120,7 +123,8 @@ printVoucher(): void {
     this.loading = true;
     this.isExporting = true;
     this.cdr.detectChanges();
-    setTimeout(() => html2canvas(this.voucher.nativeElement, { useCORS: true, scale: 2, logging: false })
+    const exportElement = this.utility.prepareExportElement(this.voucher.nativeElement);
+    setTimeout(() => html2canvas(exportElement, { useCORS: true, scale: 2, logging: false })
       .then(canvas => {
         const pdf = new jsPDF('p', 'mm', 'a4');
         const margin = 10;

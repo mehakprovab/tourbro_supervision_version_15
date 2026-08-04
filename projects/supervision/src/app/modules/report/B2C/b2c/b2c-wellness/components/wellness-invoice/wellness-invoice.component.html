@@ -1,12 +1,12 @@
 <div class="mb-3 container">
   <a [routerLink]="['/report/b2c-wellness']"><button class="btnStyle">Back</button></a>&nbsp;
-  <!-- <button class="btnStyle" (click)="printInvoice()">Print</button>&nbsp; -->
+  <button class="btnStyle" (click)="printInvoice()">Print</button>&nbsp;
   <button class="btnStyle" (click)="downloadPdf()">Download PDF</button>
 </div>
 
 <table class="table" cellpadding="0" cellspacing="0" width="100%"
         style="font-size:13px; width:100%; margin:0px auto;background-color:#ffffff; padding:50px 45px;margin-top: 20px; "
-        id="print_voucher" #print_voucher>
+        id="wellness-invoice" #print_invoice *ngIf="invoiceData">
         <tbody> 
             <tr>
                 <td colspan="8" style="padding: 0px 14px; color: #fff; line-height: 31px;border-top:1px solid transparent;" class="logocvr">

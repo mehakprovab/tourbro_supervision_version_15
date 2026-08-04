@@ -301,17 +301,15 @@ onReset() {
   }
 
   download(type: any, orientation?: string) {
-    // if (type)
     this.config.type = type;
         if (type === 'xlsx' || type === 'xls') {
-            this.utility.downloadElementAsExcel(this.config.elementIdOrContent, 'b2c-tour-report');
+            this.exportExcel();
             return;
         }
         if (orientation) {
         this.config.options.jsPDF.orientation = orientation;
     }
-    const date = new Date().toDateString();
-    this.utility.downloadElementAsPdf(this.config.elementIdOrContent, `b2c-tour-report`, orientation || (this.config.options && this.config.options.jsPDF && this.config.options.jsPDF.orientation));
+    this.downloadPdf();
 }
 
 pdfCallbackFn(pdf: any) {
@@ -324,150 +322,129 @@ pdfCallbackFn(pdf: any) {
 }
 
 downloadPdf() {
-          if (!this.respData || !this.respData.length) {
+    if (!this.respData || !this.respData.length) {
         return;
-      }
-    
-      const doc = new jsPDF('l', 'mm', 'a3'); // A3 for many columns
-    
-      // Build table headers from displayColumn array
-      const headers = [[
-        "S.No", "Status", "Application Ref",
-        "Confirmation Ref", "Lead Passenger Name","Lead Passenger Email",
-        "Lead Passenger Phone", "DMC Company Name", 
-        "Tour Name", "City",
-        "Country", "Travel Date", "No Of Adult", "No Of Child", "Optional Tours",
-        "Optional Price", "Supplier Net Fare", "Total Display Fare",
-        "Admin Markup", "Convenience Fee", "PromoCode", "Discount", "Booking Currency",
-        "Customer Paid", "Payment Status", "Booked On",
-        "Cancellation  Deadline", "Cancelled On", "Cancellation Fee"]
-      ];
-    
-      // Prepare full row data from API
-      const rows = this.respData.map((data: any, index: number) => {
-    
-        const row: any[] = [];
-    
-        row.push(index + 1); // SL No
-        
-        row.push(data.bookingDetails[0].Status);
-        row.push(data.bookingDetails[0].App_Reference);
-        row.push(data.bookingDetails[0].BookingReference || 'N/A');
-        row.push(data.paxDetails[0].Title + ' ' + data.paxDetails[0].FirstName + ' ' + data.paxDetails[0].LastName);
-        row.push(data.paxDetails[0].Email || 'N/A');
-        row.push('+' + data.paxDetails[0].PhoneCode + '-' + (data.paxDetails[0].Contact || 'N/A'));
-        row.push(data.bookingDetails[0].supplier_business_name || 'N/A');
-        row.push(data.bookingDetails[0].PackageName);
-        row.push(data.bookingDetails[0].StartCity);
-        row.push(data.bookingDetails[0].tour_country);
-        row.push((data.bookingDetails[0].DepartureDate));
-        row.push(data.bookingDetails[0].AdultCount);
-        row.push(data.bookingDetails[0].ChildCount);
-    
-        // Optional Tours
-         let optTours = '';
-        if (data.bookingDetails[0].OptionalTours) {
-            optTours = this.getOptionalTours(data.bookingDetails[0].OptionalTours)
-          .map((t: any, i: number) => `${i + 1}. ${t.name} (${t.price})`)
-          .join('\n');
-        }
-       
-    
-        row.push(optTours);
-    
-        row.push(data.bookingDetails[0].SupplierOptionalToursPrice);
-        row.push(data.bookingDetails[0].SupplierTotalFare);
-    
-          row.push(data.bookingDetails[0].TotalFare);
-          row.push(data.bookingDetails[0].Markup || 0);
-          row.push(data.bookingDetails[0].Convenience_fee || 0);
-          row.push(data.bookingDetails[0].PromoCode || 0);
-          row.push(data.bookingDetails[0].Discount || 0);
-          row.push(data.bookingDetails[0].Currency_Code);
-          row.push(data.bookingDetails[0].TotalFare);
-        
-        row.push(data.bookingDetails[0].Paymnet_Status);
-        row.push((data.bookingDetails[0].created_at));
-        row.push(this.getCancellationDeadLine(data.bookingDetails[0].canc_attributes, data.bookingDetails[0].cancel_deadline));
-        row.push((data.bookingDetails[0].cancelled_on));
-    
-        const cancelFee = 
-          data.bookingDetails[0].Status === 'CANCELLED' ||
-          data.bookingDetails[0].Status === 'BOOKING_CANCELLED'
-            ? this.getCancellationFee(data.bookingDetails[0].canc_attributes, data.bookingDetails[0].cancel_deadline)
-            : '';
-        row.push(cancelFee);
-    
-        return row;
-      });
-    
-     // --- COLUMN WIDTHS FOR ALL 31 COLUMNS ---
-       const columnWidths: any = {
-         0: { cellWidth: 10 },   // S.No
-         1: { cellWidth: 12 },   // Action
-         2: { cellWidth: 18 },   // Status
-         3: { cellWidth: 35 },   // Application Ref
-         4: { cellWidth: 35 },   // Confirmation Ref
-         5: { cellWidth: 35 },   // Supplier Name
-         6: { cellWidth: 30 },   // Agent Name
-         7: { cellWidth: 35 },   // Passenger Name
-         8: { cellWidth: 35 },   // Email
-         9: { cellWidth: 25 },   // Phone
-         10: { cellWidth: 35 },  // Tour Name
-         11: { cellWidth: 20 },  // City
-         12: { cellWidth: 20 },  // Country
-         13: { cellWidth: 22 },  // Travel Date
-         14: { cellWidth: 12 },  // Adult
-         15: { cellWidth: 12 },  // Child
-         16: { cellWidth: 25 },  // Optional Tours
-         17: { cellWidth: 40 },  // Supplier Opt Price
-         18: { cellWidth: 25 },  // Supplier Total
-         19: { cellWidth: 25 },  // Total Fare
-         20: { cellWidth: 18 },  // Markup
-         21: { cellWidth: 18 },  // Agent Markup
-         22: { cellWidth: 25 },  // Agent Net Fare
-         23: { cellWidth: 15 },  // Currency
-         24: { cellWidth: 25 },  // TotalFareDup
-         25: { cellWidth: 22 },  // Payment Status
-         26: { cellWidth: 25 },  // Created At
-         27: { cellWidth: 25 },  // Deadline
-         28: { cellWidth: 25 },  // Cancelled On
-         29: { cellWidth: 20 },  // Cancel Fee
-       };
-     
-     
-     
-     autoTable(doc, {
-       head: headers,
-       body: rows,
-     
-       styles: {
-         fontSize: 4,
-         cellWidth: 12,
-         overflow: 'linebreak',
-         lineWidth: 0,       // ❗ NO BORDER ANYWHERE
-       },
-     
-       headStyles: {
-         fillColor: [245, 245, 245],  // ≈ rgba(0,0,0,0.03)
-         textColor: [0, 0, 0],        // black text
-         fontSize: 5,
-         fontStyle: 'bold',
-         lineWidth: 0                 // ❗ HEADER ALSO HAS NO BORDER
-       },
-     
-       columnStyles: {
-         7: { cellWidth: 25 },
-         16: { cellWidth: 40 }
-       },
-     
-       tableWidth: 'auto',
-       margin: { top: 15 }
-     });
-    
-      doc.save('Booking247_Tour_Report.pdf');
-    
+    }
+
+    const columns = this.getExportColumns();
+    const rows = this.respData.map((data: any, index: number) => {
+        return columns.map(column => this.getTourExportValue(data, column.key, index));
+    });
+    const doc = new jsPDF('l', 'mm', 'a3');
+
+    autoTable(doc, {
+        head: [columns.map(column => column.value)],
+        body: rows,
+        styles: {
+            fontSize: columns.length > 24 ? 4 : 5,
+            cellPadding: 1.2,
+            overflow: 'linebreak',
+            lineWidth: 0.1,
+            lineColor: [230, 230, 230],
+        },
+        headStyles: {
+            fillColor: [245, 245, 245],
+            textColor: [0, 0, 0],
+            fontStyle: 'bold',
+        },
+        margin: { top: 12, right: 5, bottom: 10, left: 5 },
+        tableWidth: 'auto',
+    });
+
+    doc.save('B2C_Yatra_Report.pdf');
 }
+
+exportExcel(): void {
+    const columns = this.getExportColumns();
+    const rows = this.respData.map((data: any, index: number) => {
+        return columns.reduce((row, column) => {
+            row[column.value] = this.getTourExportValue(data, column.key, index);
+            return row;
+        }, {});
+    });
+    const columnWidths = columns.map(column => {
+        return { wch: column.key === 'id' ? 8 : Math.max(column.value.length + 5, 20) };
+    });
+
+    this.utility.exportToExcel(rows, 'B2C_Yatra_Report', columnWidths);
+}
+
+private getExportColumns(): { key: string, value: string }[] {
+    return this.displayColumn.filter(column => column.key !== 'Action');
+}
+
+private getTourExportValue(data: any, key: string, index: number): any {
+    const booking = this.getBookingDetail(data);
+    const pax = this.getLeadPaxDetail(data);
+
+    switch (key) {
+        case 'id': return index + 1;
+        case 'status': return this.getBadgeText(booking.Status);
+        case 'app_reference': return booking.App_Reference || 'N/A';
+        case 'booking_reference': return booking.BookingReference || 'N/A';
+        case 'FirstName': return this.cleanExportText(`${pax.Title || ''} ${pax.FirstName || ''} ${pax.LastName || ''}`);
+        case 'Email': return pax.Email || 'N/A';
+        case 'PhoneNumber': return this.cleanExportText(`${pax.PhoneCode ? '+' + pax.PhoneCode + '-' : ''}${pax.Contact || ''}`);
+        case 'dmcCompanyName': return booking.supplier_business_name || 'N/A';
+        case 'ProductName': return booking.PackageName || 'N/A';
+        case 'City': return booking.StartCity || 'N/A';
+        case 'Country': return booking.tour_country || 'N/A';
+        case 'TravelDatetime': return this.formatExportDate(booking.DepartureDate);
+        case 'NoOfAdults': return booking.AdultCount || 0;
+        case 'NoOfChild': return this.cleanExportText(`${booking.ChildCount || 0}${booking.ChildAge ? ' (' + booking.ChildAge + ' Yrs)' : ''}`);
+        case 'SupplierNetFare': return this.formatAmount(booking.SupplierTotalFare, booking.ApiCurrency);
+        case 'AdminNetFare': return this.formatAmount(booking.TotalFare);
+        case 'admin_markup': return booking.Markup || 0;
+        case 'ConvenienceFee': return booking.Convenience_fee || 0;
+        case 'PromoCode': return booking.PromoCode && booking.PromoCode !== 'null' ? booking.PromoCode : 'N/A';
+        case 'Discount': return booking.Discount || 0;
+        case 'Currency': return booking.Currency_Code || 'N/A';
+        case 'CustomerPaidAmount': return booking.TotalFare || 0;
+        case 'PaymentStatus': return booking.Paymnet_Status || 'N/A';
+        case 'BookedOn': return this.formatExportDate(booking.created_at);
+        case 'CancellationDeadLine': return this.getCancellationDeadLine(booking.canc_attributes, booking.cancel_deadline) || 'N/A';
+        case 'CancelledOn': return this.formatExportDate(booking.cancelled_on);
+        case 'Cancellationfee':
+            return booking.Status === 'CANCELLED' || booking.Status === 'BOOKING_CANCELLED'
+                ? this.getCancellationFee(booking.canc_attributes, booking.cancel_deadline) || 0
+                : 'N/A';
+        default: return booking[key] || data[key] || 'N/A';
+    }
+}
+
+private getBookingDetail(data: any): any {
+    return data && Array.isArray(data.bookingDetails) && data.bookingDetails.length ? data.bookingDetails[0] : {};
+}
+
+private getLeadPaxDetail(data: any): any {
+    return data && Array.isArray(data.paxDetails) && data.paxDetails.length ? data.paxDetails[0] : {};
+}
+
+private formatExportDate(value: any): string {
+    return value ? moment(value).format('DD/MM/YYYY') : 'N/A';
+}
+
+private formatAmount(amount: any, currency?: string): string {
+    const value = amount !== undefined && amount !== null && amount !== '' ? amount : 0;
+    return currency ? `${value} ${currency}` : value;
+}
+
+    private cleanExportText(value: string): string {
+        const text = (value || '').replace(/\s+/g, ' ').trim();
+        return text || 'N/A';
+    }
+
+    private getBadgeText(status: string): string {
+        switch (status) {
+            case 'BOOKING_FAILED': return 'Booking Failed';
+            case 'BOOKING_CONFIRMED': return 'Booking Confirmed';
+            case 'CANCELLED':
+            case 'BOOKING_CANCELLED': return 'Booking Cancelled';
+            case 'PROCESSING': return 'Booking Inprogress';
+            case 'BOOKING_HOLD': return 'Booking Hold';
+            default: return status || 'N/A';
+        }
+    }
 
   cancelTicketPopup(data) {
       this.subjectName = 'Cancel';

@@ -2,7 +2,7 @@
     <a (click)="goBackToPrevPage()">
         <button class="text-white btn btn-sm btn-primary m-1">Back</button>
     </a>&nbsp;&nbsp;
-    <a onclick="window.print()"><button class="text-white btn btn-sm btn-primary m-1">Print</button></a>
+    <a (click)="printVoucher()"><button class="text-white btn btn-sm btn-primary m-1">Print</button></a>
 </div>
 <div style="background:#ccc; width:100%; padding:40px 0px; position:relative" id="print_voucher"
     *ngIf="voucherData;else notShow" #print_voucher>

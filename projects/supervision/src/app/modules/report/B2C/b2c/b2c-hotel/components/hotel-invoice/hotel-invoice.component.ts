@@ -123,8 +123,9 @@ export class HotelInvoiceComponent implements OnInit,OnDestroy {
          });
  
       const content = this.print_voucher.nativeElement;
+      const exportContent = this.utility.prepareExportElement(content);
       
-      doc.html(content, {
+      doc.html(exportContent, {
           html2canvas: {
               allowTaint: true,
               useCORS: true,

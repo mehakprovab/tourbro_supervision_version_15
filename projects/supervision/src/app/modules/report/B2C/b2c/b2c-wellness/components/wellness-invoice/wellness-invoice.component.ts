@@ -72,12 +72,26 @@ export class WellnessInvoiceComponent implements OnInit, OnDestroy {
   }
 
   printInvoice() {
-    window.print();
+    const element = this.printInvoiceRef && this.printInvoiceRef.nativeElement;
+    this.utility.printElement(element, `Wellness Invoice - ${this.appReference}`);
   }
 
   downloadPdf() {
-    const element = document.getElementById('wellness-invoice');
-    html2canvas(element).then(canvas => {
+    const element = this.printInvoiceRef && this.printInvoiceRef.nativeElement;
+    if (!element) {
+      return;
+    }
+    window['html2canvas'] = html2canvas;
+    const exportElement = this.utility.prepareExportElement(element);
+    html2canvas(exportElement, {
+      allowTaint: true,
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      width: element.scrollWidth,
+      height: element.scrollHeight,
+      windowWidth: element.scrollWidth,
+      windowHeight: element.scrollHeight
+    }).then(canvas => {
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');
       const imgWidth = 210;

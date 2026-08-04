@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@an
 import { ActivatedRoute } from '@angular/router';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers/api-handlers.service';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
+import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { SubSink } from 'subsink/dist/subsink';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -27,6 +28,7 @@ export class B2bTransferInvoiceComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private apiHandlerService: ApiHandlerService,
     private swalService: SwalService,
+    private utility: UtilityService,
     private cdr: ChangeDetectorRef
   ) {
     this.subSunk.sink = this.activatedRoute.queryParams.subscribe(queryParams => {
@@ -61,7 +63,7 @@ export class B2bTransferInvoiceComponent implements OnInit {
 
   downloadA4(type: any, orientation: string = 'portrait'): void {
     let fileName = this.voucherData['BookingDetails']['app_reference'];
-    const content = this.print_voucher.nativeElement;
+    const content = this.utility.prepareExportElement(this.print_voucher.nativeElement);
 
     // Ensure html2canvas is available
     window['html2canvas'] = html2canvas;

@@ -6,6 +6,7 @@ import jsPDF from 'jspdf';
 import { environment } from 'projects/supervision/src/environments/environment.prod';
 import { SwalService } from 'projects/b2b/src/app/core/services/swal.service';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
+import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 
 
 const baseUrl = environment.baseUrl;
@@ -32,7 +33,8 @@ export class B2cTourVoucherComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private apiHandlerService: ApiHandlerService,
     private swalService: SwalService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private utility: UtilityService
   ) { }
 
   ngOnInit(): void {
@@ -112,9 +114,10 @@ getTermsList(): string[] {
     this.loading = true;
     window.scrollTo(0, 0);
     const data = document.getElementById('print_voucher');
+    const exportData = data ? this.utility.prepareExportElement(data) : null;
 
     setTimeout(() => {
-        html2canvas(data!, {
+        html2canvas(exportData!, {
             allowTaint: true,
             useCORS: true,
             scale: 2,
@@ -201,56 +204,12 @@ getTermsList(): string[] {
   printVoucher(): void {
     const voucher = this.print_voucher && this.print_voucher.nativeElement;
 
-    if (!voucher) {
+    if (!voucher || this.loading || !this.voucherData) {
+      this.swalService.alert.oops();
       return;
     }
 
-    const printableVoucher = voucher.cloneNode(true) as HTMLElement;
-    printableVoucher.querySelectorAll('.no-print').forEach(element => element.remove());
-
-    const popup = window.open('', '_blank', 'width=900,height=650');
-
-    if (!popup) {
-      this.swalService.alert.error('Please allow popups to print the voucher');
-      return;
-    }
-
-    popup.document.open();
-    popup.document.write(`
-      <!doctype html>
-      <html>
-        <head>
-          <title>Tour Voucher - ${this.app_reference}</title>
-          <style>
-            body {
-              margin: 0;
-              padding: 24px;
-              background: #ffffff;
-              font-family: Arial, sans-serif;
-            }
-            table {
-              border-collapse: collapse;
-            }
-            img {
-              max-width: 100%;
-            }
-            .no-print {
-              display: none !important;
-            }
-            @media print {
-              body {
-                padding: 0;
-              }
-            }
-          </style>
-        </head>
-        <body>${printableVoucher.outerHTML}</body>
-      </html>
-    `);
-    popup.document.close();
-    popup.onafterprint = () => popup.close();
-    popup.focus();
-    setTimeout(() => popup.print(), 300);
+    this.utility.printElement(voucher, `Tour Voucher - ${this.app_reference}`);
   }
 
   commonBadgeStyle = {

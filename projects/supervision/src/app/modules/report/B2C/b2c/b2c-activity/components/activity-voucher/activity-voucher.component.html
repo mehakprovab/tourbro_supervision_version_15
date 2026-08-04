@@ -22,11 +22,11 @@
                                                         class="d-flex align-center justify-content-end">
 
 
-                                                        <a href="javascript:void(0);"
+                                                        <a href="javascript:void(0);" (click)="printVoucher()" class="no-print"
                                                             style="font-size: 16px;-webkit-print-color-adjust: exact;padding: 12px 20px;display: block;font-weight: 600;border-radius: 8px;color: #FE4865;background: #FFF5F6;margin-left: 10px;">
                                                             Print
                                                         </a>
-                                                        <a (click)="downloadA4('pdf', 'potrait')" id="download"
+                                                        <a (click)="downloadA4('pdf', 'potrait')" id="download" class="no-print"
                                                             style="font-size: 16px; border: 1px solid #FE4865; background: #FE4865; -webkit-print-color-adjust: exact; padding: 12px 20px; display: block; border-radius: 8px; color: #fff; margin-left: 10px;font-weight: 600;">
                                                             PDF Download
                                                         </a>

@@ -86,9 +86,6 @@ export class B2cHeliReportComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit() {
-        const date = new Date();
-        const fromDate = new Date(date.valueOf() - (30 * 24 * 60 * 60 * 1000));
-
         this.regConfig = this.fb.group({
             booked_from_date: new FormControl('', [Validators.maxLength(120)]),
             booked_to_date: new FormControl('', [Validators.maxLength(120)]),
@@ -96,11 +93,6 @@ export class B2cHeliReportComponent implements OnInit, OnDestroy {
             phone_number: new FormControl('', [Validators.maxLength(50)]),
             email: new FormControl('', [Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]),
             status: new FormControl('ALL'),
-        });
-
-        this.regConfig.patchValue({
-            booked_from_date: fromDate,
-            booked_to_date: this.utility.setToDate()
         });
 
         this.getB2cHeliReport();
@@ -113,9 +105,7 @@ export class B2cHeliReportComponent implements OnInit, OnDestroy {
     onReset() {
         this.regConfig.reset();
         this.regConfig.patchValue({
-            status: 'ALL',
-            booked_from_date: this.utility.setFromDate(),
-            booked_to_date: this.utility.setToDate()
+            status: 'ALL'
         });
         this.searchText = '';
         this.getB2cHeliReport();
@@ -126,8 +116,8 @@ export class B2cHeliReportComponent implements OnInit, OnDestroy {
         this.respData = [];
 
         const payload = {
-            booked_from_date: formatDate(this.regConfig.value.booked_from_date, 'YYYY-MM-DD'),
-            booked_to_date: formatDate(this.regConfig.value.booked_to_date, 'YYYY-MM-DD'),
+            booked_from_date: this.formatOptionalDate(this.regConfig.value.booked_from_date),
+            booked_to_date: this.formatOptionalDate(this.regConfig.value.booked_to_date),
             status: this.regConfig.value.status || 'ALL',
             app_reference: this.regConfig.value.app_reference || '',
             phone_number: this.regConfig.value.phone_number || '',
@@ -311,6 +301,10 @@ export class B2cHeliReportComponent implements OnInit, OnDestroy {
         } catch (error) {
             return {};
         }
+    }
+
+    private formatOptionalDate(value: any): string {
+        return value ? formatDate(value, 'YYYY-MM-DD') : '';
     }
 
     ngOnDestroy() {

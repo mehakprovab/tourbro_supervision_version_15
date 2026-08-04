@@ -76,9 +76,10 @@ downloadA4() {
         if (downloadButton) downloadButton.style.display = "none";
        try{
           const data = document.getElementById('print_voucher');
+          const exportData = data ? this.utility.prepareExportElement(data) : null;
       const date = new Date().toDateString();
           setTimeout(() => {
-            html2canvas(data!, {
+            html2canvas(exportData!, {
                 allowTaint: true,
                 useCORS: true,
                 scale: 2 // Better resolution

@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@an
 import { ActivatedRoute } from '@angular/router';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
+import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { SubSink } from 'subsink';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -28,7 +29,8 @@ export class ActivityComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private apiHandlerService: ApiHandlerService,
     private swalService: SwalService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private utility: UtilityService
   ) { }
 
   ngOnInit(): void {
@@ -89,9 +91,10 @@ export class ActivityComponent implements OnInit {
       await this.waitForImageToLoad(imgEl); // ensure image is rendered
     }
     const data = document.getElementById('print_voucher');
+    const exportData = data ? this.utility.prepareExportElement(data) : null;
     const date = new Date().toDateString();
         setTimeout(() => {
-          html2canvas(data!, {
+          html2canvas(exportData!, {
               allowTaint: true,
               useCORS: true,
               scale: 2 // Better resolution

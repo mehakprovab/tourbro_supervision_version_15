@@ -2,6 +2,7 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { ActivatedRoute } from '@angular/router';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
+import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { SubSink } from 'subsink';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -24,6 +25,7 @@ export class HeliVoucherComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private apiHandlerService: ApiHandlerService,
     private swalService: SwalService,
+    private utility: UtilityService,
   ) { }
 
   ngOnInit() {
@@ -41,6 +43,7 @@ export class HeliVoucherComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.subSunk.sink = this.apiHandlerService.apiHandler('heliVoucher', 'post', {}, {}, {
       AppReference: this.appReference,
+      app_reference: this.appReference,
     }).subscribe(resp => {
       this.loading = false;
       if (resp.statusCode === 200 || resp.statusCode === 201) {
@@ -155,12 +158,21 @@ export class HeliVoucherComponent implements OnInit, OnDestroy {
   }
 
   printVoucher() {
-    window.print();
+    const element = this.printVoucherRef && this.printVoucherRef.nativeElement;
+    if (!element || this.loading || !this.voucherData) {
+      this.swalService.alert.oops();
+      return;
+    }
+    this.utility.printElement(element, `Heli Voucher - ${this.appReference}`);
   }
 
   downloadPdf() {
-    const element = document.getElementById('heli-voucher');
-    html2canvas(element).then(canvas => {
+    const element = this.printVoucherRef && this.printVoucherRef.nativeElement;
+    if (!element) {
+      return;
+    }
+    const exportElement = this.utility.prepareExportElement(element);
+    html2canvas(exportElement).then(canvas => {
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');
       const imgWidth = 210;

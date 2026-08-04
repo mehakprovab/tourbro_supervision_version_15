@@ -58,6 +58,11 @@ export class UpdatePnrTicketComponent implements OnInit, OnDestroy {
         this.createTicketForm()
     }
 
+    printVoucher(): void {
+        const element = this.print_voucher && this.print_voucher.nativeElement;
+        this.utility.printElement(element, `${this.app_reference || 'Ticket'}`);
+    }
+
     createPnrForm() {
         this.pnrForm = this.fb.group({
             pnr: new FormControl('', [Validators.pattern(this.utility.regExp.alphaNum)]),

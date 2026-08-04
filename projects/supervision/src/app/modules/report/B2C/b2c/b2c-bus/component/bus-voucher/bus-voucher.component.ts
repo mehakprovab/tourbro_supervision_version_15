@@ -2,6 +2,7 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { ActivatedRoute } from '@angular/router';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
+import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 import { SubSink } from 'subsink';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -23,6 +24,7 @@ export class BusVoucherComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private apiHandlerService: ApiHandlerService,
     private swalService: SwalService,
+    private utility: UtilityService,
   ) { }
 
   ngOnInit() {
@@ -74,7 +76,7 @@ export class BusVoucherComponent implements OnInit, OnDestroy {
 
 downloadA4() {
 
-    const content = this.printVoucherRef.nativeElement;
+    const content = this.utility.prepareExportElement(this.printVoucherRef.nativeElement);
 
     html2canvas(content,{
         scale:2,
@@ -106,7 +108,8 @@ downloadA4() {
 
 }
   printVoucher() {
-    window.print();
+    const element = this.printVoucherRef && this.printVoucherRef.nativeElement;
+    this.utility.printElement(element, `Bus Voucher - ${this.appReference}`);
   }
 
   ngOnDestroy(): void {

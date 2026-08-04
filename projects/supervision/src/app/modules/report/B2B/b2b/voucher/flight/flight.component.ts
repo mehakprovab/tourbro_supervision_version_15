@@ -58,20 +58,8 @@ export class FlightComponent implements OnInit {
 }
 
 onPrint(): void {
-    let printContents, popupWin;
-    printContents = document.getElementById('print_voucher').innerHTML;
-    popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
-    popupWin.document.open();
-    popupWin.document.write(`
-      <html>
-        <head>
-          <title>Print tab</title>
-          
-        </head>
-    <body onload="window.print();window.close()">${printContents}</body>
-      </html>`
-    );
-    popupWin.document.close();
+    const element = this.print_voucher && this.print_voucher.nativeElement;
+    this.utility.printElement(element, `${this.app_reference || 'Flight Voucher'}`);
 }
 
     ngOnInit() {
@@ -163,7 +151,8 @@ onPrint(): void {
             format: 'a4',
         });
         const content = this.print_voucher.nativeElement;
-        doc.html(content, {
+        const exportContent = this.utility.prepareExportElement(content);
+        doc.html(exportContent, {
             html2canvas: {
                 allowTaint: true,
                 useCORS: true,

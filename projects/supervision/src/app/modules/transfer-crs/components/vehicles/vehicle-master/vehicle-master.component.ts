@@ -65,6 +65,7 @@ pageSize = 20;
 collectionSize: number;
   vehiclesType: any[] = [];
   vehicleMasterDataList: any[] = [];
+  filteredVehicleMasterDataList: any[] = [];
 combustionList: any[] = [];
   private destroy$ = new Subject<void>();
   seatCapacity = Array.from({ length: 71 }, (_, i) => i + 1);
@@ -589,24 +590,77 @@ getVehicleMasterList() {
   this.api.apiHandler('listVehicleMaster', 'POST', {}, {}, {})
     .subscribe(
       (res: any) => {
-        if (res.Status && Array.isArray(res.data)) {
-          this.vehicleMasterDataList = this.sortNewestVehicleMasterFirst(res.data).map(item => ({
+        const vehicleList = this.getVehicleListFromResponse(res);
+
+        if (vehicleList.length) {
+          this.vehicleMasterDataList = this.sortNewestVehicleMasterFirst(vehicleList).map(item => ({
             ...item
-           
           }));
         } else {
           this.vehicleMasterDataList = [];
         }
 
-        this.collectionSize = this.vehicleMasterDataList.length;
+        this.applyVehicleMasterFilter();
         this.searchSpin = false;
       },
       () => {
         this.vehicleMasterDataList = [];
+        this.filteredVehicleMasterDataList = [];
         this.collectionSize = 0;
         this.searchSpin = false;
       }
     );
+}
+
+onSearchTextChange(search: string) {
+  this.searchText = search;
+  this.page = 1;
+  this.applyVehicleMasterFilter();
+}
+
+onPageSizeChange(size: number) {
+  this.pageSize = size;
+  this.page = 1;
+}
+
+private applyVehicleMasterFilter() {
+  const search = (this.searchText || '').toString().trim().toLowerCase();
+
+  if (!search) {
+    this.filteredVehicleMasterDataList = [...this.vehicleMasterDataList];
+  } else {
+    this.filteredVehicleMasterDataList = this.vehicleMasterDataList.filter(item =>
+      Object.keys(item || {}).some(key => {
+        const value = item[key];
+        return value !== null &&
+          value !== undefined &&
+          value.toString().toLowerCase().includes(search);
+      })
+    );
+  }
+
+  this.collectionSize = this.filteredVehicleMasterDataList.length;
+
+  const lastPage = Math.max(Math.ceil(this.collectionSize / this.pageSize), 1);
+  if (this.page > lastPage) {
+    this.page = lastPage;
+  }
+}
+
+private getVehicleListFromResponse(response: any): any[] {
+  const candidates = [
+    response && response.data,
+    response && response.data && response.data.data,
+    response && response.data && response.data.rows,
+    response && response.data && response.data.result,
+    response && response.data && response.data.results,
+    response && response.rows,
+    response && response.result,
+    response && response.results
+  ];
+
+  const list = candidates.find(candidate => Array.isArray(candidate));
+  return list || [];
 }
 
 private sortNewestVehicleMasterFirst(list: any[]): any[] {

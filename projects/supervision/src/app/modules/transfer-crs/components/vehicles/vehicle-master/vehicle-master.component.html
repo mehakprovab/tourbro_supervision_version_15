@@ -352,7 +352,7 @@
 <div class="entireScreen">
   <div class="form-group col-sm-3 p-0 mb-3 float-right has-search">
       Full text search:
-      <input class="form-control ml-0" type="text" name="Search" [(ngModel)]="searchText"  autocomplete="off" placeholder="Search">
+      <input class="form-control ml-0" type="text" name="Search" [ngModel]="searchText" (ngModelChange)="onSearchTextChange($event)" autocomplete="off" placeholder="Search">
     </div>
   <div class="wrapper1" id="notifications-list" (scroll)="scrollTwo.scrollLeft = scrollOne.scrollLeft" #scrollOne >
         <div class="div1"></div>
@@ -377,14 +377,14 @@
 
             <!-- LOADER -->
             <tr *ngIf="searchSpin">
-              <td colspan="10" class="text-center">
+              <td colspan="14" class="text-center">
                 <mat-spinner [diameter]="30"></mat-spinner>
               </td>
             </tr>
 
             <!-- NO DATA -->
-            <tr *ngIf="!searchSpin && !vehicleMasterDataList.length">
-              <td colspan="10" class="text-center text-muted">
+            <tr *ngIf="!searchSpin && !filteredVehicleMasterDataList.length">
+              <td colspan="14" class="text-center text-muted">
                 No Data Found!
               </td>
             </tr>
@@ -392,8 +392,7 @@
             <!-- DATA ROWS -->
             <tr
               *ngFor="
-                let item of vehicleMasterDataList
-                  | filter: searchText
+                let item of filteredVehicleMasterDataList
                   | slice:
                       (page - 1) * pageSize :
                       (page - 1) * pageSize + pageSize;
@@ -401,7 +400,7 @@
               "
             >
               <!-- SL NO -->
-              <td>{{ i + 1 }}</td>
+              <td>{{ ((page - 1) * pageSize) + i + 1 }}</td>
 
               <!-- STATUS -->
               <td>
@@ -465,7 +464,8 @@
             <select
               class="custom-select"
               style="width: auto"
-              [(ngModel)]="pageSize"
+              [ngModel]="pageSize"
+              (ngModelChange)="onPageSizeChange($event)"
             >
               <option [ngValue]="20">20</option>
               <option [ngValue]="50">50</option>

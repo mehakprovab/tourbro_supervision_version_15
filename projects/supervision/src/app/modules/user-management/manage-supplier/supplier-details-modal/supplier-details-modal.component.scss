@@ -2,11 +2,17 @@
   z-index: 1051;
   overflow-x: hidden;
   overflow-y: auto;
+  top: 50px;
+  left: 0;
+  right: 0;
+  width: 720px;
+  margin: 10px auto;
+   
 }
 
 .supplier-details-modal .modal-dialog {
   height: calc(100vh - 160px);
-  margin-top: 90px;
+  margin-top: 55px;
   margin-bottom: 70px;
 }
 

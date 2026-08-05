@@ -1,4 +1,6 @@
-<div class="modal supplier-details-modal" [style.display]="visible ? 'block' : 'none'">
+<div class="modal-dis">
+  <div class="container">
+    <div class="modal supplier-details-modal" [style.display]="visible ? 'block' : 'none'">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
@@ -43,10 +45,14 @@
         </div>
       </div>
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="close()">Close</button>
-      </div>
+    
     </div>
   </div>
 </div>
 <div *ngIf="visible" class="modal-backdrop show"></div>
+
+  </div>
+</div>
+
+
+

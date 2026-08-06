@@ -112,6 +112,9 @@
                                                                 {{location.location_name}} 
                                                             </li>
                                                         </ul>
+                                                        <small class="text-danger" *ngIf="policy.get('route_name')?.errors?.invalidLocationName && policy.get('route_name')?.touched">
+                                                            Special characters are not allowed
+                                                        </small>
                                                         <button type="button" class="btnStyle ml-2 add-routes" (click)="addRoutes()" *ngIf="i===0">Add</button>
                                                         <button type="button" class="btnStyle ml-2 remove-reset-btn add-routes" (click)="removeRoutes(i)" *ngIf="i>0">Remove</button>
                                                     </div>
@@ -538,6 +541,9 @@
                                                         {{location.location_name}} 
                                                     </li>
                                                 </ul>
+                                                <small class="text-danger" *ngIf="policy.get('route_name')?.errors?.invalidLocationName && policy.get('route_name')?.touched">
+                                                    Special characters are not allowed
+                                                </small>
                                                 <button type="button" class="btnStyle ml-2 add-routes" (click)="addRoutes()" *ngIf="i===0">Add</button>
                                                 <button type="button" class="btnStyle ml-2 remove-reset-btn add-routes" (click)="removeRoutes(i)" *ngIf="i>0">Remove</button>
                                             </div>

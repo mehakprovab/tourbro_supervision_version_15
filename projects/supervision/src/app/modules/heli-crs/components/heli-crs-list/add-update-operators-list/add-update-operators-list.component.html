@@ -26,6 +26,12 @@
                     Operator Name is required
 
                 </small>
+                <small class="text-danger" *ngIf="
+                        addUpdateOperatorsForm.get('operatorName')?.errors?.invalidLocationName &&
+                        (addUpdateOperatorsForm.get('operatorName')?.touched || submitted)
+                    ">
+                    Special characters are not allowed
+                </small>
 
             </div>
 

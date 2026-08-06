@@ -64,6 +64,12 @@
                 ">
                     Helipad Name is required
                 </small>
+                <small class="text-danger" *ngIf="
+                    addUpdateHelipadForm.get('helipadName')?.errors?.invalidLocationName &&
+                    (addUpdateHelipadForm.get('helipadName')?.touched || submitted)
+                ">
+                    Special characters are not allowed
+                </small>
 
             </div>
 

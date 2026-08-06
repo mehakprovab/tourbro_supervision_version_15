@@ -58,6 +58,12 @@
                     Route Name is required
 
                 </small>
+                <small class="text-danger" *ngIf="
+                    addUpdateRoutesForm.get('routeName')?.errors?.invalidLocationName &&
+                    (addUpdateRoutesForm.get('routeName')?.touched || submitted)
+                ">
+                    Special characters are not allowed
+                </small>
 
             </div>
 

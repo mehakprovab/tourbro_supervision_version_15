@@ -59,8 +59,11 @@ export class AddUpdateSchedulesListComponent implements OnInit {
             route_id:
               resp.route_id,
 
-            travel_date:
-              resp.travel_date,
+            from_date:
+              resp.from_date,
+
+            to_date:
+              resp.to_date,
 
             departure_time:
               resp.departure_time,
@@ -127,7 +130,11 @@ export class AddUpdateSchedulesListComponent implements OnInit {
           [Validators.required]
         ),
 
-        travel_date: new FormControl(
+        from_date: new FormControl(
+          "",
+          [Validators.required]
+        ),
+          to_date: new FormControl(
           "",
           [Validators.required]
         ),

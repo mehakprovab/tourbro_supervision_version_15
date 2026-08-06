@@ -123,7 +123,8 @@
                             <th>Status</th>
                             <th>Operator Name</th>
                             <th>Route</th>
-                            <th>Travel Date</th>
+                            <th>From Date</th>
+                            <th>To Date</th>
                             <th>Departure Time</th>
                             <th>Arrival Time</th>
                             <th>Duration</th>
@@ -170,9 +171,13 @@
                             </td>
 
                             <td>
-                                {{ item.travel_date }}
+                                {{ item.from_date | date:
+                                                'dd/MM/yyyy' }}
                             </td>
-
+  <td>
+                                {{ item.to_date | date:
+                                                'dd/MM/yyyy' }}
+                            </td>
                             <td>
                                 {{ item.departure_time }}
                             </td>

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
+import { cityLocationNameValidator, locationNameValidator } from 'projects/supervision/src/app/shared/validators/location-name.validator';
 
 @Component({
   selector: 'app-patanjali-centers',
@@ -35,10 +36,10 @@ export class PatanjaliCentersComponent implements OnInit {
   createForm(): void {
     this.centerForm = this.formBuilder.group({
       center_code: ['', Validators.required],
-      center_name: ['', Validators.required],
+      center_name: ['', [Validators.required, locationNameValidator()]],
       supplier_name: [''],
       supplier_email: [''],
-      city_name: [''],
+      city_name: ['', cityLocationNameValidator()],
       address: [''],
       status: [true]
     });

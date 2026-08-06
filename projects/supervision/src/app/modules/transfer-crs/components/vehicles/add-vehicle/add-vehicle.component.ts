@@ -8,6 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { Router } from '@angular/router';
 import { debounceTime } from 'rxjs/operators';
+import { locationNameValidator } from 'projects/supervision/src/app/shared/validators/location-name.validator';
 const log = new Logger('transfer-crs/TransferVehicleAddComponent');
 
 @Component({
@@ -228,7 +229,7 @@ onVehicleSelect(event) {
       country_id: ['', Validators.required],
       end_point: ['', Validators.required],
       route: [''],
-      route_name:[''],
+      route_name: ['', locationNameValidator()],
       duration_hours: ['', Validators.required],
       duration_minutes: ['', Validators.required],
       routes: this.fb.array([]),
@@ -246,7 +247,7 @@ onVehicleSelect(event) {
   addRoutes() {
     const addingRoutes = this.fb.group({
       route: [''],
-      route_name: ['']
+      route_name: ['', locationNameValidator()]
     });
     this.multipleRoutes.push(addingRoutes);
   }
@@ -506,9 +507,9 @@ onEndDateChange(event: Date, seasonIndex: number) {
     if (routesArray && routesArray.at(index)) {
       const routeGroup = routesArray.at(index) as FormGroup;
       if (inpValue && inpValue.trim() !== '') {
-        routeGroup.get('route_name').setValidators([Validators.required]);
+        routeGroup.get('route_name').setValidators([Validators.required, locationNameValidator()]);
       } else {
-        routeGroup.get('route_name').clearValidators();
+        routeGroup.get('route_name').setValidators([locationNameValidator()]);
       }
       routeGroup.get('route_name').updateValueAndValidity();
     }

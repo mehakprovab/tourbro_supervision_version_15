@@ -6,6 +6,7 @@ import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handler
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { Sort } from '@angular/material/sort';
 import { HttpErrorResponse } from '@angular/common/http';
+import { locationNameValidator } from 'projects/supervision/src/app/shared/validators/location-name.validator';
 
 let filterArray:Array<any>=[];
 
@@ -31,6 +32,7 @@ export class ActivityTypeComponent implements OnInit {
   public activityTypeId: number;
   public saveTextTitle: string = 'Save';
   public loggedInUser: any;
+  public submitted = false;
 
   constructor( private fb:FormBuilder, private swalService:SwalService,private apiHandlerService:ApiHandlerService) { 
   }
@@ -45,12 +47,18 @@ export class ActivityTypeComponent implements OnInit {
 
   createTypeForm() {
     this.activityTypeForm = this.fb.group({
-        activity_type_name: ['', Validators.required],
+        activity_type_name: ['', [Validators.required, locationNameValidator()]],
         status:[false]
     })
   };
 
   onActivityTypeSave() {
+    this.submitted = true;
+    if (!this.activityTypeForm.valid) {
+      this.activityTypeForm.markAllAsTouched();
+      return;
+    }
+
     if (this.activityTypeId) {
       const req = {...this.activityTypeForm.value, id: this.activityTypeId, updated_by_id: this.loggedInUser['id']};
       this.apiHandlerService.apiHandler('updateActivityType','POST',{},{},req).subscribe({
@@ -70,7 +78,6 @@ export class ActivityTypeComponent implements OnInit {
           }
       })
     } else {
-      if (!this.activityTypeForm.valid) return;
       this.activityTypeForm.value.status = false;
       const req = {...this.activityTypeForm.value, created_by_id: this.loggedInUser['id']};
       this.apiHandlerService.apiHandler('addActivityType','POST',{},{},req).subscribe({
@@ -96,6 +103,7 @@ export class ActivityTypeComponent implements OnInit {
   onAddButtonClicked(){
     this.saveTextTitle = 'Save';
     this.activityTypeForm.reset();
+    this.submitted = false;
     this.enabledForm=!this.enabledForm;
   }
 

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { WellnessCrsService } from '../../../wellness-crs.service';
 import { FormBuilder, FormControl, FormArray, Validators, FormGroup } from '@angular/forms';
+import { locationNameValidator } from 'projects/supervision/src/app/shared/validators/location-name.validator';
 @Component({
   selector: 'app-wellness-crs-details',
   templateUrl: './wellness-crs-details.component.html',
@@ -98,7 +99,7 @@ export class WellnessCrsDetailsComponent implements OnInit, AfterViewInit {
         facilities: ['', [Validators.required]],
         meal_plans: ['', [Validators.required]],
         status: [true],
-        center_name: ['', [Validators.required]],
+        center_name: ['', [Validators.required, locationNameValidator()]],
         supplier_name: [''],
         supplier_email: [''],
         country_code: ['', [Validators.required]],

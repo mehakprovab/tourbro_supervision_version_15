@@ -30,6 +30,9 @@
             <small class="text-danger" *ngIf="centerForm.get('center_name').touched && centerForm.get('center_name').hasError('required')">
               Center name is required.
             </small>
+            <small class="text-danger" *ngIf="centerForm.get('center_name').touched && centerForm.get('center_name').hasError('invalidLocationName')">
+              Special characters are not allowed.
+            </small>
           </div>
         </div>
 
@@ -51,6 +54,9 @@
           <div class="form-group">
             <label for="cityName">City</label>
             <input type="text" id="cityName" class="form-control" formControlName="city_name">
+            <small class="text-danger" *ngIf="centerForm.get('city_name').touched && centerForm.get('city_name').hasError('invalidLocationName')">
+              Special characters are not allowed.
+            </small>
           </div>
         </div>
 

@@ -37,6 +37,9 @@
           <small *ngIf="cityForm.get('cityName').errors?.startOrEndSpace" class="text-danger">
             *No space at start or end.
           </small>
+          <small *ngIf="cityForm.get('cityName').errors?.invalidLocationName" class="text-danger">
+            *Special characters are not allowed.
+          </small>
         </div>
       </div>
 

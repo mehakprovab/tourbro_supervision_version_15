@@ -48,6 +48,11 @@
                         *ngIf="wellnessForm.get('center_name')?.errors?.maxlength">
                         Maximum 100 characters allowed
                     </span>
+
+                    <span class="invalid text-danger"
+                        *ngIf="wellnessForm.get('center_name')?.errors?.invalidLocationName">
+                        Special characters are not allowed
+                    </span>
                 </div>
             </div>
 

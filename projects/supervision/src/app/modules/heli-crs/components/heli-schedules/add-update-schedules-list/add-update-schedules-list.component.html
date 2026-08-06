@@ -102,28 +102,49 @@
             <div class="col-md-4 mb-3 pl-0">
 
                 <label>
-                    Travel Date
+                    From Date
                     <span class="text-danger">*</span>
                 </label>
 
-                <input type="date" class="form-control" formControlName="travel_date">
+                <input type="date" class="form-control" formControlName="from_date">
 
                 <small class="text-danger" *ngIf="
-                            addUpdateScheduleForm.get('travel_date')?.errors?.required &&
+                            addUpdateScheduleForm.get('from_date')?.errors?.required &&
                             (
-                                addUpdateScheduleForm.get('travel_date')?.touched ||
+                                addUpdateScheduleForm.get('from_date')?.touched ||
                                 submitted
                             )
                        ">
 
-                    Travel Date is required
+                    From Date is required
 
                 </small>
 
             </div>
+      <div class="col-md-4 mb-3 pr-0">
 
+                <label>
+                    To Date
+                    <span class="text-danger">*</span>
+                </label>
+
+                <input type="date" class="form-control" formControlName="to_date">
+
+                <small class="text-danger" *ngIf="
+                            addUpdateScheduleForm.get('to_date')?.errors?.required &&
+                            (
+                                addUpdateScheduleForm.get('to_date')?.touched ||
+                                submitted
+                            )
+                       ">
+
+                    To Date is required
+
+                </small>
+
+            </div>
             <!-- DEPARTURE -->
-            <div class="col-md-4 mb-3 pr-0">
+            <div class="col-md-4 mb-3">
 
                 <label>
                     Departure Time
@@ -147,7 +168,7 @@
             </div>
 
             <!-- ARRIVAL -->
-            <div class="col-md-4 mb-3">
+            <div class="col-md-4 mb-3 pl-0">
 
                 <label>
                     Arrival Time
@@ -171,7 +192,7 @@
             </div>
 
             <!-- DURATION -->
-            <div class="col-md-4 mb-3 pl-0">
+            <div class="col-md-4 mb-3 pr-0">
 
                 <label>
                     Duration (Minutes)
@@ -195,7 +216,7 @@
             </div>
 
             <!-- HELICOPTER TYPE -->
-            <div class="col-md-4 mb-3 pr-0">
+            <div class="col-md-4 mb-3">
 
                 <label>
                     Helicopter Type
@@ -220,7 +241,7 @@
             </div>
 
             <!-- HELICOPTER MODEL -->
-            <div class="col-md-4 mb-3">
+            <div class="col-md-4 mb-3 pl-0">
 
                 <label>
                     Helicopter Model
@@ -245,7 +266,7 @@
             </div>
 
             <!-- TOTAL SEATS -->
-            <div class="col-md-4 mb-3 pl-0">
+            <div class="col-md-4 mb-3 pr-0">
 
                 <label>
                     Total Seats
@@ -269,7 +290,7 @@
             </div>
 
             <!-- AVAILABLE SEATS -->
-            <div class="col-md-4 mb-3 pr-0">
+            <div class="col-md-4 mb-3">
 
                 <label>
                     Available Seats
@@ -294,7 +315,7 @@
             </div>
 
             <!-- BLOCKED SEATS -->
-            <div class="col-md-4 mb-3">
+            <div class="col-md-4 mb-3 pl-0">
 
                 <label>
                     Blocked Seats
@@ -319,7 +340,7 @@
             </div>
 
             <!-- BAGGAGE -->
-            <div class="col-md-4 mb-3 pl-0">
+            <div class="col-md-4 mb-3 pr-0">
 
                 <label>
                     Baggage Allowance
@@ -344,7 +365,7 @@
             </div>
 
             <!-- WEIGHT LIMIT -->
-            <div class="col-md-4 mb-3 pr-0">
+            <div class="col-md-4 mb-3">
 
                 <label>
                     Weight Limit
@@ -368,7 +389,7 @@
             </div>
 
             <!-- CANCELLATION POLICY -->
-            <div class="col-md-4 mb-3">
+            <div class="col-md-4 mb-3 pl-0">
 
                 <label>
                     Cancellation Policy

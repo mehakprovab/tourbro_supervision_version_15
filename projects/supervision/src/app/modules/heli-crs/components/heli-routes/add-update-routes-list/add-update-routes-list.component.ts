@@ -25,6 +25,7 @@ import { ApiHandlerService } from "projects/supervision/src/app/core/api-handler
 import { SwalService } from "projects/supervision/src/app/core/services/swal.service";
 
 import { HeliCrsService } from "../../../heli-crs.service";
+import { locationNameValidator } from "projects/supervision/src/app/shared/validators/location-name.validator";
 
 interface Country {
   id?: number;
@@ -278,7 +279,7 @@ this.getCityListByCountry(
 
         routeName: new FormControl(
           "",
-          [Validators.required]
+          [Validators.required, locationNameValidator()]
         ),
 
         country: [

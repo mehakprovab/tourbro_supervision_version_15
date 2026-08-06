@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SubSink } from 'subsink';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { HttpErrorResponse } from '@angular/common/http';
+import { cityLocationNameValidator } from 'projects/supervision/src/app/shared/validators/location-name.validator';
 
 
 @Component({
@@ -51,7 +52,7 @@ export class UpdateCityComponent implements OnInit, OnDestroy {
   createForm() {
     this.cityForm = this.fb.group({
       state_id: ['', Validators.required],
-      city_name: ['', [Validators.required, this.inputValidator]],
+      city_name: ['', [Validators.required, cityLocationNameValidator(), this.inputValidator]],
       status: [1, Validators.required],
       CityImage: [''],
       discription: [''],

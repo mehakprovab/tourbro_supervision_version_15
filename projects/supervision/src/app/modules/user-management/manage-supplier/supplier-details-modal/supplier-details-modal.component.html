@@ -35,7 +35,21 @@
           </div>
         </div>
 
-        <div *ngIf="!loading && !errorMessage" class="row">
+        <div *ngIf="!loading && !errorMessage && detailSections.length">
+          <div class="details-section mb-4" *ngFor="let section of detailSections">
+            <h5 class="section-title">{{ section.title }}</h5>
+            <div class="row">
+              <div class="col-md-6 detail-row" *ngFor="let field of section.fields">
+                <div class="detail-label">{{ field.label }}</div>
+                <div class="detail-value">
+                  {{ field.value }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="!loading && !errorMessage && detailFields.length" class="row">
           <div class="col-md-6 detail-row" *ngFor="let field of detailFields">
             <div class="detail-label">{{ field.label }}</div>
             <div class="detail-value">

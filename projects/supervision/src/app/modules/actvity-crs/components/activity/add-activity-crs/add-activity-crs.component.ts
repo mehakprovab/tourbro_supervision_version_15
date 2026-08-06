@@ -895,6 +895,8 @@ getActivityCityList(country: any) {
     const normalizedPayload = { ...payload };
     normalizedPayload.seasonPricing = (payload.seasonPricing || []).map((season: any) => ({
       ...season,
+      StartDate: this.formatDateOnly(season.StartDate),
+      EndDate: this.formatDateOnly(season.EndDate),
       cancellationPolicies: (season.cancellationPolicies || []).map((policy: any) => ({
         ...policy,
         refundablebeforedays: policy.refundablebeforedays === '' || policy.refundablebeforedays === null || policy.refundablebeforedays === undefined
@@ -903,6 +905,25 @@ getActivityCityList(country: any) {
       }))
     }));
     return normalizedPayload;
+  }
+
+  private formatDateOnly(date: any): any {
+    if (!date) {
+      return date;
+    }
+
+    if (date instanceof Date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    if (typeof date === 'string') {
+      return date.split('T')[0].split(' ')[0];
+    }
+
+    return date;
   }
 backToListPage() {
   this.showUpdateForm = false;
@@ -1007,7 +1028,7 @@ backToListPage() {
     this.seasonPricingForm.patchValue({
       activity_id: this.insertedActivityId,
     });
-    const payLoad = this.seasonPricingForm.value;
+    const payLoad = this.normalizeSeasonPricingPayload(this.seasonPricingForm.value);
     this.apiHandlerServices.apiHandler('updateSeasonPricing', 'POST', {}, {}, payLoad).subscribe({
       next: (res) => {
         if (res.Status === true && (res.statusCode === 201 || res.statusCode === 200)) {

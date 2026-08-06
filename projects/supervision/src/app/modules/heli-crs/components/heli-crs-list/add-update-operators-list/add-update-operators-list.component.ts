@@ -22,6 +22,7 @@ import {
   ViewChild
 } from "@angular/core"
 import { ApiHandlerService } from "projects/supervision/src/app/core/api-handlers";
+import { locationNameValidator } from "projects/supervision/src/app/shared/validators/location-name.validator";
 
 interface Country {
   id?: number;
@@ -472,6 +473,7 @@ export class AddUpdateOperatorsListComponent implements OnInit {
 
       operatorName: new FormControl("", [
         Validators.required,
+        locationNameValidator()
       ]),
 
       companyName: new FormControl("", [

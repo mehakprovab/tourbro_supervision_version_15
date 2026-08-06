@@ -4,6 +4,7 @@ import { SwalService } from 'projects/supervision/src/app/core/services/swal.ser
 import { SubSink } from 'subsink';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { HttpErrorResponse } from '@angular/common/http';
+import { cityLocationNameValidator } from 'projects/supervision/src/app/shared/validators/location-name.validator';
 
 @Component({
   selector: 'app-add-city',
@@ -34,7 +35,7 @@ imagePreviewUrl: string | ArrayBuffer | null = null;
 createCityForm() {
   this.cityForm = this.fb.group({
     stateId: ['', Validators.required],
-    cityName: ['', [Validators.required, this.inputValidator]],
+    cityName: ['', [Validators.required, cityLocationNameValidator({ allowCommaSeparated: true }), this.inputValidator]],
     status: [1, Validators.required],
     CityImage: [''],           
     discription: [''],  
@@ -178,7 +179,7 @@ onHourlyRentalChange(event: any) {
     if (value && /\d+/.test(value)) {
       return { invalidString: true };
     }
-
+    
     return null;
   }
 

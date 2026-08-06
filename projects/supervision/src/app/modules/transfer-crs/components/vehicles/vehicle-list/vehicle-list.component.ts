@@ -13,6 +13,7 @@ import { SubSink } from 'subsink';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { locationNameValidator } from 'projects/supervision/src/app/shared/validators/location-name.validator';
 let filterArray: Array<any> = [];
 let respDataCopy: Array<any> = [];
 
@@ -169,7 +170,7 @@ loggedUserCurrency: any;
             starting_point: ['', Validators.required],
             end_point: ['', Validators.required],
             route: [''],
-            route_name: [''],
+            route_name: ['', locationNameValidator()],
             routes: this.fb.array([]),
         })
         this.multipleRoutes = this.vehicleListForm.get('routes') as FormArray;
@@ -182,7 +183,7 @@ loggedUserCurrency: any;
     addRoutes() {
         const addingRoutes = this.fb.group({
             route: [''],
-            route_name: ['']
+            route_name: ['', locationNameValidator()]
         });
         this.multipleRoutes.push(addingRoutes);
     }
@@ -645,9 +646,9 @@ loggedUserCurrency: any;
         if (routesArray && routesArray.at(index)) {
             const routeGroup = routesArray.at(index) as FormGroup;
             if (inpValue && inpValue.trim() !== '') {
-                routeGroup.get('route_name').setValidators([Validators.required]);
+                routeGroup.get('route_name').setValidators([Validators.required, locationNameValidator()]);
             } else {
-                routeGroup.get('route_name').clearValidators();
+                routeGroup.get('route_name').setValidators([locationNameValidator()]);
             }
             routeGroup.get('route_name').updateValueAndValidity();
         }

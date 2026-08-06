@@ -43,6 +43,7 @@
                     </div>
                     <div *ngIf="submittedVehicle && f.city_name.errors" class="invalid-feedback">
                         <div *ngIf="f.city_name.errors.required">City is required</div>
+                        <div *ngIf="f.city_name.errors.invalidLocationName">Special characters are not allowed</div>
                     </div>
                 </div>
                 <div class="col-4 pr-0">

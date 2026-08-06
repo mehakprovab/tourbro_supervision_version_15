@@ -29,6 +29,7 @@
       <small *ngIf="f.city_name.errors.required" class="errorMessage">*Required</small>
       <small *ngIf="f.city_name.errors.invalidString" class="errorMessage">*Numbers not allowed</small>
       <small *ngIf="f.city_name.errors.startOrEndSpace" class="errorMessage">*No space at start/end</small>
+      <small *ngIf="f.city_name.errors.invalidLocationName" class="errorMessage">*Special characters are not allowed</small>
     </div>
     </div>
 

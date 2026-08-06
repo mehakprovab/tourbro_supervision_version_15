@@ -5,6 +5,7 @@ import { SubSink } from 'subsink';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { Sort } from '@angular/material/sort';
 import { HttpErrorResponse } from '@angular/common/http';
+import { cityLocationNameValidator } from 'projects/supervision/src/app/shared/validators/location-name.validator';
 
 let filterArray: Array<any> = [];
 @Component({
@@ -53,12 +54,18 @@ export class ActivityCityComponent implements OnInit {
 
     createTypeForm() {
         this.addCityForm = this.fb.group({
-            city_name: ['', Validators.required],
+            city_name: ['', [Validators.required, cityLocationNameValidator()]],
             country_name: ['', Validators.required]
         })
     };
 
     onActivityCitySave() {
+        this.submittedVehicle = true;
+        if (this.addCityForm.invalid) {
+            this.addCityForm.markAllAsTouched();
+            return;
+        }
+
         const req = this.addCityForm.value;
         const payLoad = {
             "CityName": req.city_name,
@@ -166,6 +173,12 @@ export class ActivityCityComponent implements OnInit {
     }
 
     updateCity() {
+        this.submittedVehicle = true;
+        if (this.addCityForm.invalid) {
+            this.addCityForm.markAllAsTouched();
+            return;
+        }
+
         const req = this.addCityForm.value;
         const payLoad = {
             "origin": req.city_name,

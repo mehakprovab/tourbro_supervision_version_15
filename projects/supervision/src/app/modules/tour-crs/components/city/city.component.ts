@@ -54,7 +54,7 @@ export class CityComponent implements OnInit {
 
   getTourCityData(){
     //api to fetch data from DB
-    this.subSunk.sink = this.apiHandlerService.apiHandler('getMasterCityList', 'post', {}, {},{})
+    this.subSunk.sink = this.apiHandlerService.apiHandler('getMasterCityList', 'post', {}, {},{id:'101'})
               .subscribe(response => {
                   if (response.statusCode == 200 || response.statusCode == 201 && response.data) {
                       this.tourCounrtyCityDataList = response.data.data || [];

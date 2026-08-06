@@ -1027,7 +1027,7 @@ updateTotalVendorData(): void {
             "booked_from_date": moment(calDate.date).format('YYYY-MM-DD'),
             "booked_to_date": moment(calDate.date).format('YYYY-MM-DD'),
         }
-        this.getb2bFlightReport(reqBody)
+        // this.getb2bFlightReport(reqBody)
     }
 
     eventClicked(eventData?) {
@@ -1046,7 +1046,7 @@ updateTotalVendorData(): void {
                 "booked_to_date": moment(new Date()).format('YYYY-MM-DD'),
             }
         }
-        this.getb2bFlightReport(reqBody);
+        // this.getb2bFlightReport(reqBody);
     }
 
     calenderNext() {
@@ -1075,7 +1075,7 @@ updateTotalVendorData(): void {
             "booked_from_date": moment(new Date(this.selectedDate)).format('YYYY-MM-DD'),
             "booked_to_date": moment(new Date(this.selectedDate)).format('YYYY-MM-DD'),
         }
-        this.getb2bFlightReport(reqBody)
+        // this.getb2bFlightReport(reqBody)
     }
 
     getb2bFlightReport(reqBody){

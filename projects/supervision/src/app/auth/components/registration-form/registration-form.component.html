@@ -167,7 +167,8 @@
                                         <fieldset class="form-group">
                                             <label for="pan_number" class="required">PAN Number</label>
                                             <input formControlName="pan_number" type="text" placeholder="PAN Number"
-                                                class="form-control" (keypress)="alphaNumericOnly($event)" maxlength="10">
+                                                class="form-control" (keypress)="alphaNumericOnly($event)"
+                                                (input)="onPanNumberInput()" maxlength="10">
                                             <div *ngIf="submitted && registerForm.get('pan_number')?.errors" class="text-danger">
                                                 <span *ngIf="registerForm.get('pan_number')?.errors?.required">PAN Number is required</span>
                                                 <span *ngIf="registerForm.get('pan_number')?.errors?.pattern">Valid PAN number required (ABCDE1234F)</span>

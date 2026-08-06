@@ -371,6 +371,20 @@ onStateChange(event: Event): void {
     return true;
   }
 
+  onPanNumberInput(): void {
+    const control = this.registerForm.get('pan_number');
+    const value = control && control.value;
+
+    if (!value) {
+      return;
+    }
+
+    const upperValue = String(value).toUpperCase();
+    if (value !== upperValue) {
+      control.setValue(upperValue, { emitEvent: false });
+    }
+  }
+
   omitSpecialCharacters(event: KeyboardEvent): boolean {
     const charCode = event.which ? event.which : event.keyCode;
     const isValid = (charCode > 64 && charCode < 91) || 
@@ -393,6 +407,7 @@ onStateChange(event: Event): void {
 
 onRegister() {
   this.submitted = true;
+  this.onPanNumberInput();
 
   const requiredDocumentsMissing = !this.panDocumentName || !this.aadhaarDocumentName;
 

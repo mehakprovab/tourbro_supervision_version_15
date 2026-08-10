@@ -15,19 +15,52 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     }
 
     private selectedSupplierKeys(currentUser: any): string[] {
-        const suppliers = currentUser && currentUser.selectedSuppliers;
+        const suppliers = currentUser && (
+            currentUser.selectedSuppliers ||
+            currentUser.selected_suppliers ||
+            currentUser.supplier ||
+            currentUser.suppliers
+        );
         if (Array.isArray(suppliers)) {
-            return suppliers.map((supplier) => String(supplier).toLowerCase());
+            return suppliers.map((supplier) => this.normalizeSupplierKey(supplier));
         }
         if (typeof suppliers === 'string') {
-            return suppliers.split(',').map((supplier) => supplier.trim().toLowerCase());
+            try {
+                const parsedSuppliers = JSON.parse(suppliers);
+                if (Array.isArray(parsedSuppliers)) {
+                    return parsedSuppliers.map((supplier) => this.normalizeSupplierKey(supplier));
+                }
+            } catch (_) {
+                // Older responses store the selected services as comma-separated text.
+            }
+            return suppliers.split(',').map((supplier) => this.normalizeSupplierKey(supplier));
         }
         return [];
     }
 
-    private hasSupplier(currentUser: any, supplier: string): boolean {
-        return this.selectedSupplierKeys(currentUser).includes(supplier.toLowerCase());
+    private normalizeSupplierKey(supplier: any): string {
+        const key = String(supplier || '').trim().toLowerCase();
+        const aliases = {
+            activity: 'experiences',
+            cab: 'transfer',
+            cabs: 'transfer',
+            hotel: 'stays',
+            tour: 'yatra-packages',
+            'travel-helicopter': 'heli',
+            'travel-heli': 'heli'
+        };
+
+        return aliases[key] || key;
     }
+
+    private hasSupplier(currentUser: any, supplier: string): boolean {
+        return this.selectedSupplierKeys(currentUser).includes(this.normalizeSupplierKey(supplier));
+    }
+
+    private isDashboardRoute(url: string): boolean {
+        return url === '/' || url.startsWith('/?') || url.startsWith('/dashboard') || url.startsWith('/b2b-dashboard');
+    }
+
 
     private redirectToSupplierHome(currentUser: any): void {
         if (this.hasSupplier(currentUser, 'stays')) {
@@ -85,6 +118,9 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         //     }
         // }
         if (this.isSupplierPanelUser(currentUser)) {
+            if (this.isDashboardRoute(state.url)) {
+                return true;
+            }
             if (this.isSupplierRouteAllowed(currentUser, state.url)) {
                 return true;
             } else {

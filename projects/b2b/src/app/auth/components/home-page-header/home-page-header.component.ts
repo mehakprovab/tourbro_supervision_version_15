@@ -58,7 +58,7 @@ export class HomePageHeaderComponent implements OnInit, OnDestroy {
             window.open(dmclogin, '_blank')
         }
         if (type === 'b2b-direct') {
-            dmclogin = 'https://booking247.com/supplier/#/auth/login'
+            dmclogin = 'https://booking247.com/supplier/#/auth/supplier-login'
             window.open(dmclogin, '_blank')
         }
 

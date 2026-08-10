@@ -152,16 +152,8 @@ console.log("this.returnUrl",this.returnUrl)
     this.authService.onLogin(this.loginForm.get('email').value, this.loginForm.get('password').value,this.user_type)
       .subscribe(res => {
         if (res['statusCode'] == 200 && res['data']['access_token'] != undefined) {
-        if (res['data']['auth_role_id'] == 6 || res['data']['auth_role_id'] == 7) {
-  // OTP temporarily disabled
-  this.router.navigate(['hotels/hotel-crs-lists'], {
-    queryParams: { tab: 'list_hotels' }
-  });
-  this.swalService.alert.success("Login Successful.");
-} else {
-  this.router.navigate([this.returnUrl]);
-  this.swalService.alert.success("Login Successful.");
-}
+          this.router.navigate(['/dashboard']);
+          this.swalService.alert.success("Login Successful.");
         } else {
           this.errorMessage = res.Message;
           this.swalService.alert.oops(this.errorMessage)
@@ -196,7 +188,7 @@ otpverify(value) {
               // this.showOtpComponent = true;
             
               setTimeout(() => {
-              this.router.navigate(['hotels/hotel-crs-lists'],{ queryParams: { tab: 'list_hotels' } });
+              this.router.navigate(['/dashboard']);
               }, 250)
               this.alertService.success('Login successfull!');
               this.otpVerifide =true;

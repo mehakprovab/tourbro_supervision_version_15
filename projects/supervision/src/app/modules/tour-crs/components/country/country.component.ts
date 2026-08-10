@@ -54,7 +54,7 @@ export class CountryComponent implements OnInit {
       if (response && (response.statusCode === 200 || response.statusCode === 201)) {
           
           // Safe navigation to handle nested data
-          const countriesData = response.data.data.countries;
+          const countriesData = response.data.data.countries.filter((country: any) => country.status !== 0); // Filter out countries with status 2
           
           if (countriesData && Array.isArray(countriesData)) {
               this.tourRegionCounrtyDataList = countriesData;

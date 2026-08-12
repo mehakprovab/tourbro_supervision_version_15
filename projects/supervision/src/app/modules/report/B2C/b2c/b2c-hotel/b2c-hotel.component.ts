@@ -468,11 +468,12 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
     }
     isBundleBooking(data) {
         const bookingDetails = data && data.BookingDetails ? data.BookingDetails : {};
-        const bundleBooking = bookingDetails.bundle_booking || data && data.bundle_booking;
-        return bundleBooking === 1 || bundleBooking === '1';
+        const bundleBooking = bookingDetails.bundle_booking !== undefined ? bookingDetails.bundle_booking : data && data.bundle_booking;
+        return Number(bundleBooking) === 1;
     }
 
     cancelTicketPopup(data) {
+        console.log('B2C Stay bundle_booking:', data && data.BookingDetails ? data.BookingDetails.bundle_booking : data && data.bundle_booking, data);
         if (this.isBundleBooking(data)) {
             this.swalService.alert.oops('This belongs to dynamic package, you cannot cancel this.');
             return;

@@ -54,7 +54,7 @@
                                         <div>
                                             <button type="submit" class="btn srch_btn">Login</button>
                                         </div>
-                                        <div class="login-footer">
+                                        <div class="login-footer" *ngIf="showSupplierRegisterLink">
                                             <div class="register-here">
                                                 <!-- <a class="c-pointer" href="http://54.92.243.81/tourbro/supplier/general/register_supplier" target="_blank" rel="noopener noreferrer">New User? Register here</a> -->
                                                 <a class="c-pointer" routerLink="/auth/supplier">
@@ -100,5 +100,4 @@
         </div>
     </div>
  </div>
-
 

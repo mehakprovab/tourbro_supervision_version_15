@@ -55,6 +55,7 @@ export class SupplierLoginComponent implements OnInit {
   @ViewChild('ngOtpInput', { static: false }) ngOtpInput: any;
   user_type:any;
   pageTitle: string = 'Supervision Login';
+  showSupplierRegisterLink = false;
   constructor(
     private fb: FormBuilder,
     private apiHandlerService: ApiHandlerService,
@@ -96,9 +97,18 @@ const currentURL = window.location.href;
   this.pageTitle = this.user_type === 'supplier'
     ? 'Supplier Login'
     : 'Supervision Login';
+  this.showSupplierRegisterLink = this.user_type === 'supplier' || this.isSupplierUrl();
     this.createForm()
     this.submitOtp();
   }
+
+  private isSupplierUrl(): boolean {
+    const routerUrl = (this.router.url || '').toLowerCase();
+    const browserUrl = `${window.location.pathname}${window.location.hash}`.toLowerCase();
+
+    return routerUrl.indexOf('supplier') > -1 || browserUrl.indexOf('supplier') > -1;
+  }
+
   createForm(){
     if (!this.isSupplierLogin) {
     this.loginForm = this.fb.group({

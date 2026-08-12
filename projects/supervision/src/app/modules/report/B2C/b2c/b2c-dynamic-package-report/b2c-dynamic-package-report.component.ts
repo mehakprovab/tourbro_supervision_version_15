@@ -219,7 +219,7 @@ export class B2cDynamicPackageReportComponent implements OnInit, OnDestroy {
   }
 
   cancelBooking(row: any) {
-    this.swalService.alert.delete((confirmed: boolean) => {
+    this.swalService.alert.cancel((confirmed: boolean) => {
       if (!confirmed) { return; }
 
       const reference = row.dynamic_package_ref || row.ref_number;

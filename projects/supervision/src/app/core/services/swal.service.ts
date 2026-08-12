@@ -61,6 +61,23 @@ export class SwalService {
                         return cb(false);
                     }
                 }),
+                            cancel: (cb) =>
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'Once cancelled could not be undo',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, cancel it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        console.log('cb');
+                        return cb(true);
+                    } else {
+                        return cb(false);
+                    }
+                }),
             error: (text) =>
                 Swal.fire({
                     title: 'Oops..!',

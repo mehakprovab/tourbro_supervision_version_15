@@ -481,7 +481,17 @@ getBasePrice(value: string) {
             return false;
     }
 
+    isBundleBooking(data) {
+        const bookingDetails = data && data.BookingDetails ? data.BookingDetails : {};
+        const bundleBooking = data && data.bundle_booking || bookingDetails.bundle_booking;
+        return bundleBooking === 1 || bundleBooking === '1';
+    }
+
     cancelTicketPopup(data) {
+        if (this.isBundleBooking(data)) {
+            this.swalService.alert.oops('This belongs to dynamic package, you cannot cancel this.');
+            return;
+        }
         this.subjectName = 'Cancel';
         this.showConfirm = true;
         this.cancelData = data;

@@ -243,13 +243,13 @@
                                             <!-- <td class="text-left"  *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7">
                                                 {{data['GTANumber'] || 'N/A'}} </td> -->
                                             <td class="text-left text-uppercase">
-                                                {{findLeaduserDetails(data.BookingPaxDetails)}} </td>
+                                                {{data.leadUserName}} </td>
                                             <td class="text-left"> {{data['BookingDetails']['HotelCheckIn'] | date:
                                                 'dd/MM/yyyy'}} </td>
                                             <td class="text-left"> {{data['BookingDetails']['HotelCheckOut'] | date:
                                                 'dd/MM/yyyy'}} </td>
                                             <td class="text-left">
-                                                {{calculateDiff(data['BookingDetails']['HotelCheckIn'],data['BookingDetails']['HotelCheckOut'])}}
+                                                {{data.stayDuration}}
                                                 {{' Days'}}</td>
                                             <td class="text-left"> {{data['BookingDetails']['NoOfRoomsBooked'] || 0}}
                                             </td>
@@ -274,8 +274,8 @@
                                                 }} </td>
                                             <td class="text-left"> {{data.BookingDetails?.CancellationReason.hotelBody.SupplierPrice || 0
                                                 }} {{data.BookingDetails?.API_Currency}}</td>
-                                            <td class="text-left"> {{ getPricingTaxes(data) }} </td>
-                                            <td class="text-left"> {{ getPricingCommissions(data) }} </td>
+                                            <td class="text-left"> {{ data.pricingTaxes }} </td>
+                                            <td class="text-left"> {{ data.pricingCommissions }} </td>
                                             <!-- <td class="text-left"> {{data.BookingDetails?.API_Payable_Price || 0 }}
                                                 {{data.BookingDetails?.API_Currency}}</td> -->
                                             <!-- <td class="text-left"  *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7"> {{data.BookingDetails?.API_Commission || '' }} </td> -->
@@ -314,8 +314,8 @@
                                             </ng-container>
                                          </td> -->
                                             <td class="text-left" *ngIf="data?.BookingDetails.DomainOrigin == 'CRS'">
-                                                <ng-container *ngIf="getEarliestCancellationDate(data); else noPolicy">
-                                                    <b>{{ getEarliestCancellationDate(data) | date: 'dd/MM/yyyy' }}</b>
+                                                <ng-container *ngIf="data.earliestCancellationDate; else noPolicy">
+                                                    <b>{{ data.earliestCancellationDate | date: 'dd/MM/yyyy' }}</b>
                                                     &nbsp;
                                                     {{ data?.BookingDetails.CancellationReason.hotelBody.LocalTimeZone
                                                     }}
@@ -357,9 +357,9 @@
                                             </td> -->
                                             <!-- <td class="text-left"> {{ data?.cancelled_datetime | date: 'dd/MM/yyyy' }} </td> -->
                                             <td class="text-left" *ngIf="data?.BookingDetails.DomainOrigin == 'CRS' && loggedInUser['auth_role_id'] !== 6 " >
-                                                <ng-container *ngIf="getTotalAmountAndCharge(data)">
-                                                    <b> {{ getTotalAmountAndCharge(data)?.amount }} {{
-                                                        getTotalAmountAndCharge(data)?.currency }}</b>
+                                                <ng-container>
+                                                    <b> {{ data.cancellationAmount }} {{
+                                                        data.cancellationCurrency }}</b>
                                                 </ng-container>
                                             </td>
 

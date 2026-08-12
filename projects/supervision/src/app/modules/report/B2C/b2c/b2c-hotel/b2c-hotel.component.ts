@@ -238,7 +238,7 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
             .subscribe(resp => {
                 if (resp.data && resp.data.length > 0 && Array.isArray(resp.data)) {
                     this.noData = false;
-                    this.respData = resp.data || [];
+                    this.respData = (resp.data || []).map(data => this.prepareHotelReportRow(data));
                     respDataCopy = [...this.respData];
                     this.collectionSize = respDataCopy.length;
                     if ((this.regConfig.value.Api_id && this.regConfig.value.Api_id !== '') ||
@@ -257,6 +257,20 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
                 this.noData = false;
                 this.respData = [];
             });
+    }
+
+    prepareHotelReportRow(data: any): any {
+        const cancellation = this.getTotalAmountAndCharge(data);
+        return {
+            ...data,
+            leadUserName: this.findLeaduserDetails(data.BookingPaxDetails || []),
+            stayDuration: this.calculateDiff(data.BookingDetails && data.BookingDetails.HotelCheckIn, data.BookingDetails && data.BookingDetails.HotelCheckOut),
+            pricingTaxes: this.getPricingTaxes(data),
+            pricingCommissions: this.getPricingCommissions(data),
+            earliestCancellationDate: this.getEarliestCancellationDate(data),
+            cancellationAmount: cancellation.amount,
+            cancellationCurrency: cancellation.currency
+        };
     }
 
     calculateTotalAPIPayablePrice() {
@@ -425,8 +439,11 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
             let leadUser = data.filter(x => {
                 return x.LeadPax == true
             });
-            return `${leadUser[0].Title} ${leadUser[0].FirstName} ${leadUser[0].LastName}`;
+            if (leadUser.length) {
+                return `${leadUser[0].Title} ${leadUser[0].FirstName} ${leadUser[0].LastName}`;
+            }
         }
+        return 'N/A';
     }
 
     onActivityRedirect(appRef, type) {
@@ -449,7 +466,17 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
     numberOnly(event): boolean {
         return this.utility.numberOnly(event);
     }
+    isBundleBooking(data) {
+        const bookingDetails = data && data.BookingDetails ? data.BookingDetails : {};
+        const bundleBooking = bookingDetails.bundle_booking || data && data.bundle_booking;
+        return bundleBooking === 1 || bundleBooking === '1';
+    }
+
     cancelTicketPopup(data) {
+        if (this.isBundleBooking(data)) {
+            this.swalService.alert.oops('This belongs to dynamic package, you cannot cancel this.');
+            return;
+        }
         this.subjectName = 'Cancel';
         this.showConfirm = true;
         this.cancelData = data;

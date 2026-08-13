@@ -54,6 +54,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     primaryColour: any;
     secondaryColour: any;
     loadingTemplate: any;
+    isSupplierUser: boolean = false;
+    hasYatraModuleAccess: boolean = true;
     totalGrossBookingValue: any = 0;
     totalCustomersData: any = {};
     totalCustomers: any = 0;
@@ -163,8 +165,10 @@ confirmedBookings: any = 0;
     }
 
     ngOnInit() {
+         this.setSupplierUserState();
          this.selectedDate = new Date();
         this.route.queryParams.subscribe(params => {
+            this.setSupplierUserState();
             this.type = params['type'] || 'B2C'; // Default to 'B2C' if not present
             console.log('Query Param - type:', this.type);
       
@@ -179,6 +183,60 @@ confirmedBookings: any = 0;
     
             this.eventClicked();
         });
+    }
+
+    private setSupplierUserState(): void {
+        const currentUser = JSON.parse(sessionStorage.getItem('currentSupervisionUser') || '{}');
+        const roleId = Number(currentUser && currentUser['auth_role_id']);
+        this.isSupplierUser = roleId === 6 || roleId === 7;
+        this.hasYatraModuleAccess = !this.isSupplierUser || this.hasSupplier(currentUser, 'yatra-packages');
+    }
+
+    private selectedSupplierKeys(currentUser: any): string[] {
+        const suppliers = currentUser && (
+            currentUser.selectedSuppliers ||
+            currentUser.selected_suppliers ||
+            currentUser.supplier ||
+            currentUser.suppliers
+        );
+
+        if (Array.isArray(suppliers)) {
+            return suppliers.map((supplier) => this.normalizeSupplierKey(supplier));
+        }
+
+        if (typeof suppliers === 'string') {
+            try {
+                const parsedSuppliers = JSON.parse(suppliers);
+                if (Array.isArray(parsedSuppliers)) {
+                    return parsedSuppliers.map((supplier) => this.normalizeSupplierKey(supplier));
+                }
+            } catch (_) {
+                // Some supplier responses store selected services as comma-separated text.
+            }
+
+            return suppliers.split(',').map((supplier) => this.normalizeSupplierKey(supplier));
+        }
+
+        return [];
+    }
+
+    private normalizeSupplierKey(supplier: any): string {
+        const key = String(supplier || '').trim().toLowerCase();
+        const aliases = {
+            activity: 'experiences',
+            cab: 'transfer',
+            cabs: 'transfer',
+            hotel: 'stays',
+            tour: 'yatra-packages',
+            'travel-helicopter': 'heli',
+            'travel-heli': 'heli'
+        };
+
+        return aliases[key] || key;
+    }
+
+    private hasSupplier(currentUser: any, supplier: string): boolean {
+        return this.selectedSupplierKeys(currentUser).includes(this.normalizeSupplierKey(supplier));
     }
     
 
@@ -262,7 +320,7 @@ confirmedBookings: any = 0;
             class: 'pending-payments'
         },
         {
-            title: 'Pending Vendor Confirmations',
+            title: 'Cab Confirmation Pending',
             value: this.pendingVendorConfirmations,
             class: 'pending-vendor-confirm'
         },

@@ -2,7 +2,7 @@
     <div class="row">
 
         <!-- Vendor Management -->
-        <div class="col-md-6">
+        <div class="col-md-6" *ngIf="!supplierView">
             <div class="pb-4">
                 <span class="revenue-span ">Vendor Management</span>
             </div>
@@ -98,7 +98,7 @@
         </div>
 
         <!-- Package & Inventory -->
-        <div class="col-md-6">
+        <div [ngClass]="supplierView ? 'col-md-12' : 'col-md-6'">
             <div class="pb-4">
                <span class="revenue-span">Package & Inventory</span>
             </div>
@@ -113,13 +113,13 @@
                         <p class="f-15 mb-1">Inactive Packages</p>
                         <p class="num-span mb-0">{{ (inactivePackages || 0) | number:'1.2-2' }}</p>
                     </div>
-                     <div class="head-sect p-3 ">
+                     <div class="head-sect p-3 " *ngIf="!supplierView">
                         <p class="f-15 mb-1">Available Inventory</p>
                         <p class="num-span mb-0">{{ (availableInventory || 0) | number:'1.2-2' }}</p>
                     </div>
                 </div>
             <!-- Package Revenue -->
-            <div class="head-sect mt-3 p-3">
+            <div class="head-sect mt-3 p-3" *ngIf="!supplierView">
                 <div class="row">
                     <div class="col-8">
                         <span class="f-15">Package Revenue</span>
@@ -142,7 +142,7 @@
             </div>
 
             <!-- Package Bookings -->
-            <div class="head-sect mt-3 p-3">
+            <div class="head-sect mt-3 p-3" *ngIf="!supplierView">
                 <div class="row">
                     <div class="col-8">
                         <span class="f-15">Package Bookings</span>

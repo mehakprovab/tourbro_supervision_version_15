@@ -139,7 +139,7 @@
                            <span class="num-span">{{ totalGrossBookingValue | number:'1.2-2' }}</span>
                         </div>
                     </div>
-                    <div class="net-revenue">
+                    <div class="net-revenue" *ngIf="!isSupplierUser">
                         <div class="row p-3 head-sect flex-column">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="f-15">Gross Margin</span>
@@ -147,7 +147,7 @@
                             <span class="num-span">{{ grossMargin | number:'1.2-2' }}</span>
                         </div>
                     </div>
-                    <div class="net-revenue">
+                    <div class="net-revenue" *ngIf="!isSupplierUser">
                         <div class="row p-3 head-sect flex-column">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="f-15">Markup Earned</span>
@@ -155,7 +155,7 @@
                          <span class="num-span">{{ markupEarned | number:'1.2-2' }}</span>
                         </div>
                     </div>
-                    <div class="net-revenue">
+                    <div class="net-revenue" *ngIf="!isSupplierUser">
                         <div class="row p-3 head-sect flex-column">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="f-15">Convenience Fee</span>
@@ -166,7 +166,7 @@
                     <div class="total-bookings">
                        <div class="row p-3 head-sect flex-column">
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="f-15">Total Bookings</span>
+                                <span class="f-15">Total Booking</span>
                                 <select class="b-none" [(ngModel)]="totalBookingFilter" (change)="onTotalBookingFilterChange()">
                                     <option *ngFor="let option of dashboardFilterOptions" [ngValue]="option.value">
                                         {{ option.label }}
@@ -193,16 +193,16 @@
                            
                         </div>
                     </div>
-                    <div class="pending-vendor-confirm">
+                    <div class="pending-vendor-confirm" *ngIf="!isSupplierUser">
                          <div class="row p-3 head-sect flex-column">
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="f-15">Pending Vendor Confirmations</span>
+                                <span class="f-15">Cab Confirmation Pending</span>
                             </div>
                             <span class="num-span">{{ pendingVendorConfirmations | number:'1.2-2' }}</span>
                            
                         </div>
                     </div>
-                    <div class="pending-payments">
+                    <div class="pending-payments" *ngIf="!isSupplierUser">
                          <div class="row p-3 head-sect flex-column">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="f-15">Pending Payments</span>
@@ -211,7 +211,7 @@
                             
                         </div>
                     </div>
-                    <div class="refund-pendings">
+                    <div class="refund-pendings" *ngIf="!isSupplierUser">
                          <div class="row p-3 head-sect flex-column">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="f-15">Refunds Pending</span>
@@ -220,7 +220,7 @@
                           
                         </div>
                     </div>
-                    <div class="open-cust-issues">
+                    <div class="open-cust-issues" *ngIf="!isSupplierUser">
                          <div class="row p-3 head-sect flex-column">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="f-15">Open Customer Issues</span>
@@ -249,7 +249,8 @@
         [paymentMetricsData]="paymentMetricsData"
         [moduleRevenueData]="totalGrossBookingValueModuleWiseData"
         [averageBookingData]="packageBookingData"
-        [vendorRevenueData]="vendorWiseRevenueData">
+        [vendorRevenueData]="vendorWiseRevenueData"
+        [supplierView]="isSupplierUser">
     </app-revenue-finance>
     <app-booking-operations
         [paymentPending]="paymentPendingCount"
@@ -264,9 +265,12 @@
         [completed]="serviceDeliveredCount"
         [cancelled]="serviceCancelledCount"
         [refundInitiated]="refundsPending"
-        [refundCompleted]="refundAmount">
+        [refundCompleted]="refundAmount"
+        [supplierView]="isSupplierUser"
+        [showLeadSalesFunnel]="hasYatraModuleAccess">
     </app-booking-operations>
     <app-vendor-management
+        *ngIf="!isSupplierUser || hasYatraModuleAccess"
         [totalVendors]="totalVendors"
         [activeVendors]="activeVendors"
         [pendingVendors]="pendingVendors"
@@ -274,9 +278,10 @@
         [vendorLocationData]="vendorLocationWiseData"
         [packageInventoryData]="packageInventoryData"
         [packageRevenueData]="packageRevenueData"
-        [packageBookingData]="packageBookingData">
+        [packageBookingData]="packageBookingData"
+        [supplierView]="isSupplierUser">
     </app-vendor-management>
-    <div class="col-12">
+    <div class="col-12" *ngIf="!isSupplierUser">
         <div class="row p-0">
             <div class="col-6 pl-0">
                 <app-customer [totalCustomersData]="totalCustomersData"></app-customer>

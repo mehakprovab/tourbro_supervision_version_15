@@ -18,6 +18,7 @@ export class VendorManagementComponent implements OnInit, OnChanges {
     @Input() packageInventoryData: any = {};
     @Input() packageRevenueData: any = {};
     @Input() packageBookingData: any = {};
+    @Input() supplierView: boolean = false;
 
     public options: EChartsOption;
     public locationOptions: EChartsOption;

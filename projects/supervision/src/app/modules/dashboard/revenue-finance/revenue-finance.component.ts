@@ -26,6 +26,7 @@ export class RevenueFinanceComponent implements OnInit, AfterViewInit, OnChanges
     @Input() moduleRevenueData: any = {};
     @Input() averageBookingData: any = {};
     @Input() vendorRevenueData: any = {};
+    @Input() supplierView: boolean = false;
 
     public options: EChartsOption;
     public vendorOptions: EChartsOption;

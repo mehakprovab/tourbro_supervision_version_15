@@ -7,7 +7,7 @@
     </div>
 
     <!-- Left Section -->
-    <div class="col-md-6">
+    <div [ngClass]="supplierView ? 'col-md-12' : 'col-md-6'">
       <div echarts [options]="options" class="pie-chart-card content-scrooling"></div>
       <div class="menu mt-2" *ngIf="isOpenRevenue" [@dropDownMenu]>
 
@@ -18,7 +18,7 @@
     </div>
 
     <!-- Right Section -->
-    <div class="col-md-6">
+    <div class="col-md-6" *ngIf="!supplierView">
       <div echarts [options]="vendorOptions" class="pie-chart-card content-scrooling"></div>
 
       <div class="menu mt-2" *ngIf="isOpen" [@dropDownMenu]>
@@ -32,8 +32,8 @@
 
 
 
-    <div class="d-flex px-3 g-3">
-      <div class="d-flex align-items-center dashboard-cards1">
+    <div class="col-12 mt-3">
+      <div class="d-flex flex-wrap align-items-center dashboard-cards1 revenue-action-cards">
         <div class="head-sect p-12">
           <div class="row align-items-center" (click)="isOpenRevenue = !isOpenRevenue">
             <div class="col-10">
@@ -46,7 +46,7 @@
             </div>
           </div>
         </div>
-        <div class="head-sect p-12">
+        <div class="head-sect p-12" *ngIf="!supplierView">
           <div class="row align-items-center" (click)="isOpen = !isOpen">
             <div class="col-10">
               <span class="f-17">Vendor-wise Revenue</span>
@@ -58,11 +58,11 @@
             </div>
           </div>
         </div>
-        <div class="head-sect p-12">
+        <div class="head-sect p-12" *ngIf="!supplierView">
            <p class="f-15 mb-2">Gross Margin</p>
            <span class="num-span">{{ grossMargin | number:'1.2-2' }}</span>
         </div>
-        <div class="head-sect p-12">
+        <div class="head-sect p-12" *ngIf="!supplierView">
            <p class="f-15 mb-2">Refund Amount</p>
            <span class="num-span">{{ refundAmount | number:'1.2-2' }}</span>
         </div>
@@ -77,7 +77,7 @@
       <!-- Row 1 -->
        <div class="d-flex flex-wrap dashboard-cards">
          
-             <div class="p-12 head-sect flex-column">
+             <div class="p-12 head-sect flex-column" *ngIf="!supplierView">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                   <span class="f-15">Payment Success Rate</span>
                   <select class="b-none">
@@ -90,7 +90,7 @@
                </div>
                 <span class="num-span">{{ paymentSuccessRate | number:'1.2-2' }}</span>
              </div>
-            <div class="p-12 head-sect flex-column">
+            <div class="p-12 head-sect flex-column" *ngIf="!supplierView">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                   <span class="f-15">Failed Payment Rate</span>
                   <select class="b-none">
@@ -106,14 +106,14 @@
 
             </div>
 
-           <div class="p-12 head-sect flex-column">
+           <div class="p-12 head-sect flex-column" *ngIf="!supplierView">
             <div class="d-flex justify-content-between align-items-center mb-2">
               <span class="f-15">Convenience Fee</span>
             </div>
 
             <span class="num-span">{{ convenienceFee | number:'1.2-2' }}</span>
           </div>
-           <div class="p-12 head-sect flex-column">
+           <div class="p-12 head-sect flex-column" *ngIf="!supplierView">
                 <div class="d-flex justify-content-between align-items-center mb-2">
               <span class="f-15">Customer Receivables</span>
             </div>
@@ -121,7 +121,7 @@
             <span class="num-span">{{ customerReceivables | number:'1.2-2' }}</span>
           </div>
           
-          <div class="p-12 head-sect flex-column">
+          <div class="p-12 head-sect flex-column" *ngIf="!supplierView">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                 <span class="f-15">Discount Cost</span>
                  <select class="b-none">
@@ -134,7 +134,7 @@
               </div>
               <span class="num-span">{{ discountCost | number:'1.2-2' }}</span>
           </div>
-          <div class="p-12 head-sect flex-column">
+          <div class="p-12 head-sect flex-column" *ngIf="!supplierView">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                 <span class="f-15">Markup Earned</span>
                  <select class="b-none">

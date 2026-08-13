@@ -22,6 +22,8 @@ export class BookingOperationsComponent implements OnInit, OnChanges {
     @Input() cancelled: any = 0;
     @Input() refundInitiated: any = 0;
     @Input() refundCompleted: any = 0;
+    @Input() supplierView: boolean = false;
+    @Input() showLeadSalesFunnel: boolean = true;
     enquiryGenerated: any = 0;
     enquiryGeneratedFilter = 'today';
     enquiryGeneratedData: any = {};
@@ -49,7 +51,7 @@ export class BookingOperationsComponent implements OnInit, OnChanges {
     ) {}
 
     get bookingOperationCards() {
-        return [
+        const cards = [
             {
                 key: 'paymentPending',
                 label: 'Payment Pending',
@@ -76,7 +78,7 @@ export class BookingOperationsComponent implements OnInit, OnChanges {
                 ], this.paymentReceived),
                 filter: true
             },
-            { label: 'Vendor Confirmation Pending', value: this.vendorConfirmationPending, filter: false },
+            { label: 'Cab Confirmation Pending', value: this.vendorConfirmationPending, filter: false },
             { label: 'Confirmed', value: this.confirmed, filter: false },
             { label: 'Voucher / Ticket Pending', value: this.voucherTicketPending, filter: false },
             { label: 'Travel Upcoming', value: this.travelUpcoming, filter: false },
@@ -108,6 +110,19 @@ export class BookingOperationsComponent implements OnInit, OnChanges {
             { label: 'Refund Initiated', value: this.refundInitiated, filter: false },
             { label: 'Refund Completed', value: this.refundCompleted, filter: false },
         ];
+
+        if (this.supplierView) {
+            return cards.filter(card => [
+                'Payment Received',
+                'Cab Confirmation Pending',
+                'Confirmed',
+                'Travel Upcoming',
+                'Completed',
+                'Cancelled'
+            ].indexOf(card.label) !== -1);
+        }
+
+        return cards;
     }
 
     onCardFilterChange(cardKey: string, value: string): void {

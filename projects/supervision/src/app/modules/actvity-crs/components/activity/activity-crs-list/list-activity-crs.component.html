@@ -43,11 +43,11 @@
                     <tr
                         *ngFor="let data of respData | filter:searchText | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
                         <td class="text-left text-muted">{{i+1}}.</td>
-                        <td class="text-left"> {{data?.activity_name}} </td>
+                        <td class="text-left experience-name-col"> {{data?.activity_name}} </td>
                         <td class="text-left"> {{data?.supplier_name}} </td>
                         <td class="text-left"> {{data?.prime_user_name}} </td>
                         <!-- <td class="text-left"> {{data?.distribution_channel}} </td> -->
-                        <td class="text-left"> 
+                        <td class="text-left experience-type-col"> 
                             <span *ngFor="let data of data?.activity_types_name; let last = last">
                                 {{data}}<span *ngIf="!last">, </span>
                             </span>    

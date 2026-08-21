@@ -3,6 +3,7 @@ import { ApiHandlerService } from '../../../core/api-handlers';
 import { SubSink } from 'subsink';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SwalService } from '../../../core/services/swal.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-forgot-password',
@@ -23,17 +24,21 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     forgotPasswordForm: FormGroup;
     errorMessage = '';
     successMessage = '';
+    loginRoute = '/auth/login';
     get user_name() { return this.forgotPasswordForm.get('user_name'); }
     protected subs = new SubSink();
     
     constructor(
         private apiHandlerService: ApiHandlerService,
         private fb: FormBuilder,
-        private swalService:SwalService
+        private swalService:SwalService,
+        private route: ActivatedRoute
     ) {
     }
 
     ngOnInit() {
+        const from = this.route.snapshot.queryParams['from'];
+        this.loginRoute = from === 'supplier' ? '/auth/supplier-login' : '/auth/login';
         this.forgotPasswordForm = this.fb.group({
             email: ['', [Validators.required,Validators.pattern]],
            // phone: ['', [Validators.required]],

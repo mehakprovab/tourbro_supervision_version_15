@@ -212,7 +212,53 @@ perfect-scrollbar { max-height: 650px !important;}
 }
 .v-sidebar-menu .vsm-dropdown::before { left:10px !important;}
 .nrm_input { padding: 10px 15px !important;}
-.table-striped tbody tr { white-space: nowrap;}
+.table-responsive,
+.table-respons {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table-responsive > .table,
+.table-respons > .table,
+.table-responsive > table,
+.table-respons > table {
+    width: max-content;
+    min-width: 100%;
+}
+
+.table th,
+.table td,
+table.mat-table th,
+table.mat-table td,
+.mat-header-cell,
+.mat-cell,
+.mat-footer-cell,
+.mat-mdc-header-cell,
+.mat-mdc-cell,
+.mat-mdc-footer-cell {
+    max-width: none;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+.table th:last-child,
+.table td:last-child,
+table.mat-table th:last-child,
+table.mat-table td:last-child {
+    min-width: 120px;
+}
+
+.table td .btn,
+.table td button,
+table.mat-table td .btn,
+table.mat-table td button {
+    white-space: nowrap;
+}
 .capitalize{
     text-transform: uppercase;
 }
@@ -332,4 +378,29 @@ span.dropdown-multiselect__caret {height: 45px !important;}
     background: #F5F2FC!important;
     color: #4D1AC4!important;
     box-shadow: 0px 1px 2px 0px #0A0D120D!important;
+}
+
+.wrapper2 {
+    max-width: 100%;
+    overflow-x: auto !important;
+    overflow-y: hidden;
+}
+
+.wrapper2 > .div2 {
+    overflow: visible !important;
+}
+
+.wrapper2 > .div2 > .table-responsive,
+.wrapper2 > .div2 > .table-respons {
+    display: block;
+    width: max-content;
+    min-width: 100%;
+    max-width: none;
+    overflow: visible !important;
+}
+
+.wrapper2 > .div2 > .table-responsive > table,
+.wrapper2 > .div2 > .table-respons > table {
+    width: max-content;
+    min-width: 100%;
 }

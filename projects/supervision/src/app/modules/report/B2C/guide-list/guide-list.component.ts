@@ -61,7 +61,7 @@ onStatusChange(item: any) {
   this.selectedItem = item;
 
   // ✅ OPEN MODAL ONLY FOR APPROVED
-  if (item.status == 2) {
+  if (item.status == 1) {
     this.showModal = true;
 
     // optional prefill

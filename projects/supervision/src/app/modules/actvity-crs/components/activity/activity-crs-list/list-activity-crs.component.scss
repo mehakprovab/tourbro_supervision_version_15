@@ -35,6 +35,28 @@
   }
   
 .div2 .table-responsive {overflow: inherit;}
+
+.div2 table {
+    width: 2500px;
+    table-layout: fixed;
+}
+
+.div2 th,
+.div2 td {
+    vertical-align: middle;
+}
+
+.div2 .experience-name-col,
+.div2 .experience-type-col {
+    max-width: 520px;
+    white-space: normal;
+    word-break: break-word;
+}
+
+.div2 .experience-type-col {
+    max-width: 680px;
+}
+
 .invisible-scrollbar::-webkit-scrollbar {
     display: none;
   }

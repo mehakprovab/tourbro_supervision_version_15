@@ -124,14 +124,7 @@ syncChildInclusionAcrossSeasons(seasonIndex: number) {
       // Update all other seasons to match the first season
       if (otherIsChildIncluded.value !== isChildIncluded) {
         otherIsChildIncluded.setValue(isChildIncluded, { emitEvent: false });
-        
-        // If enabling child inclusion, set up validators and form arrays
-        if (isChildIncluded === true) {
-          this.onCheckboxChange({ target: { value: true } }, true, i);
-        } else {
-          // If disabling child inclusion, clear validators and values
-          this.onCheckboxChange({ target: { value: false } }, false, i);
-        }
+        this.applyChildInclusionToSeason(i, isChildIncluded);
       }
     }
   }
@@ -410,13 +403,7 @@ getUpdateData() {
   // Add child policy only if is_child_included is true
   if (isFirstSeasonChildIncluded) {
     const childArray = seasonGroup.get('pricing') as FormArray;
-    childArray.push(this.createChildPolicy());
-    
-    // Set validators for the child policy
-    const childGroup = childArray.at(0);
-    childGroup.get('childFromAge').setValidators([Validators.required]);
-    childGroup.get('ChildbeforeAge').setValidators([Validators.required]);
-    childGroup.get('ChildPrice').setValidators([Validators.required]);
+    childArray.push(this.createChildPolicy(true));
   }
   
   (seasonGroup.get('cancellationPolicies') as FormArray).push(this.createRefundPolicy());
@@ -460,12 +447,13 @@ getUpdateData() {
     });
   }
 
-  createChildPolicy(): FormGroup {
+  createChildPolicy(required = false): FormGroup {
+    const validators = required ? [Validators.required] : [];
     return this.fb.group({
       id:[''],
-      childFromAge: [''],
-      ChildbeforeAge: [''],
-      ChildPrice: ['']
+      childFromAge: ['', validators],
+      ChildbeforeAge: ['', validators],
+      ChildPrice: ['', validators]
     });
   }
 
@@ -489,7 +477,8 @@ getUpdateData() {
 
   addChildPolicies(seasonIndex: number) {
     const pricingArray = this.getChildPolicies(seasonIndex);
-    pricingArray.push(this.createChildPolicy());
+    const season = this.seasonsPricingForm.at(seasonIndex);
+    pricingArray.push(this.createChildPolicy(season.get('is_child_included').value === true));
   }
 
   removeChildPolicies(seasonIndex: number, policyIndex: number) {
@@ -509,18 +498,7 @@ getUpdateData() {
   }
 
 
-onCheckboxChange(event, check, seasonIndex) {
-  // Check if the control is disabled
-  const season = this.seasonsPricingForm.at(seasonIndex);
-  const isChildIncludedControl = season.get('is_child_included');
-  
-  // If the control is disabled, don't allow changes
-  if (isChildIncludedControl.disabled) {
-    console.log('Child inclusion cannot be changed for this season');
-    return;
-  }
-  
-  const isChildIncluded = check === 'true' || check === true;
+private applyChildInclusionToSeason(seasonIndex: number, isChildIncluded: boolean) {
   const pricingArray = this.getChildPolicies(seasonIndex);
   
   console.log('Checkbox changed:', { isChildIncluded, seasonIndex, currentPricingLength: pricingArray.length });
@@ -528,7 +506,6 @@ onCheckboxChange(event, check, seasonIndex) {
   if (isChildIncluded) {
     // If switching to Yes, ensure we have at least one child policy form group
     if (pricingArray.length === 0) {
-      console.log('Adding child policy form array');
       this.addChildPolicies(seasonIndex);
     }
     
@@ -546,7 +523,6 @@ onCheckboxChange(event, check, seasonIndex) {
       childbeforeAge.updateValueAndValidity({ onlySelf: true, emitEvent: false });
       childPrice.updateValueAndValidity({ onlySelf: true, emitEvent: false });
       
-      console.log(`Set validators for child policy ${index}`);
     });
   } else {
     // If switching to No, clear validators and values
@@ -565,9 +541,21 @@ onCheckboxChange(event, check, seasonIndex) {
       childbeforeAge.updateValueAndValidity({ onlySelf: true, emitEvent: false });
       childPrice.updateValueAndValidity({ onlySelf: true, emitEvent: false });
       
-      console.log(`Cleared validators for child policy ${index}`);
     });
   }
+}
+
+onCheckboxChange(event, check, seasonIndex) {
+  const season = this.seasonsPricingForm.at(seasonIndex);
+  const isChildIncludedControl = season.get('is_child_included');
+  
+  // Only Season 1 can be manually changed. Other seasons follow Season 1.
+  if (isChildIncludedControl.disabled && seasonIndex !== 0) {
+    return;
+  }
+  
+  const isChildIncluded = check === 'true' || check === true;
+  this.applyChildInclusionToSeason(seasonIndex, isChildIncluded);
 
   // Force update the form validity
   this.seasonPricingForm.updateValueAndValidity();
@@ -608,7 +596,7 @@ onCheckboxChange(event, check, seasonIndex) {
     this.seasonPricingForm.patchValue({
       activity_id: this.insertedActivityId
     })
-    const req = this.normalizeSeasonPricingPayload(this.seasonPricingForm.value);
+    const req = this.normalizeSeasonPricingPayload(this.seasonPricingForm.getRawValue());
     if (!this.seasonPricingForm.valid) {
       return;
     }
@@ -1028,7 +1016,7 @@ backToListPage() {
     this.seasonPricingForm.patchValue({
       activity_id: this.insertedActivityId,
     });
-    const payLoad = this.normalizeSeasonPricingPayload(this.seasonPricingForm.value);
+    const payLoad = this.normalizeSeasonPricingPayload(this.seasonPricingForm.getRawValue());
     this.apiHandlerServices.apiHandler('updateSeasonPricing', 'POST', {}, {}, payLoad).subscribe({
       next: (res) => {
         if (res.Status === true && (res.statusCode === 201 || res.statusCode === 200)) {

@@ -43,7 +43,7 @@
                                     </div>
                                         <div class="login-footer">
                                             <div class="forgot-password">
-                                                <a class="c-pointer" routerLink="/auth/forgot-password">Forgot Password ?</a>
+                                                <a class="c-pointer" routerLink="/auth/forgot-password" [queryParams]="{ from: 'supplier' }">Forgot Password ?</a>
                                             </div>
                                         </div>
                                         <div>
@@ -89,7 +89,6 @@
         </div>
     </div>
  </div>
-
 
 
 

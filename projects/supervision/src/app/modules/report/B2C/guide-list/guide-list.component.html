@@ -37,7 +37,7 @@
           <th>Language</th>
           <th>Email</th>
           <th>Message</th>
-        
+             <th>Guide Price</th>
           <th>Guide Name</th>
           <th>Guide Mobile</th>
           <th>Reported At</th>
@@ -80,6 +80,7 @@
           <td>{{ item.email }}</td>
 
           <td>{{ item.message }}</td>
+          <td>{{ item.price || '-' }}</td>
  <td>{{ item.guide_name || '-' }}</td>
 
           <td>{{ item.guide_mobile || '-' }}</td>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Logger } from 'projects/supervision/src/app/core/logger/logger.service';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
@@ -14,6 +14,9 @@ const log = new Logger('transfer-crs/TransferVehicleListComponent');
   styleUrls: ['./list-activity-crs.component.scss']
 })
 export class ActivityCRSListComponent implements OnInit {
+  @ViewChild('scrollOne') scrollOne: ElementRef<HTMLElement>;
+  @ViewChild('scrollTwo') scrollTwo: ElementRef<HTMLElement>;
+
   pageSize = 10;
   page = 1;
   collectionSize: number;
@@ -76,13 +79,27 @@ export class ActivityCRSListComponent implements OnInit {
           this.respData = [];
           this.noData = false;
         }
+        this.resetHorizontalScroll();
         console.log(res)
       }, error: (err) => {
         this.respData = [];
         this.noData = false;
         this.swalService.alert.error(err.Message)
+        this.resetHorizontalScroll();
       }
     })
+  }
+
+  resetHorizontalScroll(): void {
+    setTimeout(() => {
+      if (this.scrollOne && this.scrollOne.nativeElement) {
+        this.scrollOne.nativeElement.scrollLeft = 0;
+      }
+
+      if (this.scrollTwo && this.scrollTwo.nativeElement) {
+        this.scrollTwo.nativeElement.scrollLeft = 0;
+      }
+    });
   }
 
 

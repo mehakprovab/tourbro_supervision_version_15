@@ -7,8 +7,6 @@ import { SubSink } from 'subsink';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-b2c-tour-enquiry',
@@ -33,7 +31,6 @@ export class B2cTourEnquiryComponent implements OnInit {
     collectionSize: number;
     displayColumn: { key: string, value: string }[] = [
         { key: 'id', value: 'SL No' },
-        { key: 'action', value: 'Action' },
         { key: 'status', value: 'Status' },
         // { key: 'name', value: 'Name' },
         // { key: 'phone', value: 'Contact Number' },
@@ -49,7 +46,7 @@ export class B2cTourEnquiryComponent implements OnInit {
         { key: 'adults', value: 'Adults' },
         { key: 'children', value: 'Children' },
         // { key: 'childAges', value: 'ChildAges' },
-        { key: 'title', value: 'Title' },
+        // { key: 'title', value: 'Title' },
         { key: 'firstName', value: 'First Name' },
         { key: 'lastName', value: 'Last Name' },
         { key: 'email', value: 'Email' },
@@ -180,16 +177,23 @@ export class B2cTourEnquiryComponent implements OnInit {
             .subscribe(resp => {
                 console.log(resp);
                 if (resp.statusCode == 200 || resp.statusCode == 201) {
-                    this.respData=resp.data;
-                    this.respDataTemp = resp.data;
+                    this.respData=resp.data || [];
+                    this.respDataTemp = resp.data || [];
+                    this.collectionSize = this.respData.length;
                     this.searchSpin=false;
                 }
                 else {
                     this.searchSpin = false;
+                    this.respData = [];
+                    this.respDataTemp = [];
+                    this.collectionSize = 0;
                     this.swalService.alert.error(resp.msg || '');
                 }
             },(err: HttpErrorResponse) => {
                 this.searchSpin = false;
+                this.respData = [];
+                this.respDataTemp = [];
+                this.collectionSize = 0;
                 this.swalService.alert.error(err['error']['Message']);
             });
     }

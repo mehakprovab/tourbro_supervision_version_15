@@ -214,6 +214,14 @@
                                 </span>
                               </a>
                             </div>
+                            <div class="vsm-item" *ngIf="isSubMenuExists('B2C Tour Report',REPORTS) && hasSupplier('yatra-packages')">
+                              <a routerLinkActive="active-item" routerLink='/report/b2c-tour-enquiry' class="vsm-link pl-10">
+                                <span class="vsm-title pl-10">
+                                  <i class="fa fa-comment"></i>
+                                  Yatra Enquiry List
+                                </span>
+                              </a>
+                            </div>
                             <div class="vsm-item" *ngIf="isSubMenuExists('B2C Tour Report',REPORTS) && hasSupplier('discover')">
                               <a routerLinkActive="active-item" routerLink='/report/b2c-dynamic-package-report' class="vsm-link pl-10">
                                 <span class="vsm-title pl-10">
@@ -239,15 +247,7 @@
                                 </span>
                               </a>
                             </div>
-                            <!-- <div class="vsm-item" *ngIf="isSubMenuExists('B2C Tour Report',REPORTS)">
-                              <a routerLinkActive="active-item" routerLink='/report/b2c-tour-enquiry' class="vsm-link pl-10">
-                                <span class="vsm-title pl-10">
-                                  <i class="fa fa-comment"></i>
-                                  Tour Enquiry
-                                </span>
-                              </a>
-                            </div>
-                            <div class="vsm-item" *ngIf="isSubMenuExists('B2C Bundle Booking Report',REPORTS)">
+                            <!-- <div class="vsm-item" *ngIf="isSubMenuExists('B2C Bundle Booking Report',REPORTS)">
                               <a routerLinkActive="active-item" routerLink='/report/b2c-bundle-booking-report' class="vsm-link pl-10">
                                 <span class="vsm-title pl-10">
                                   <i class="fa fa-list-alt"></i>
@@ -502,13 +502,32 @@
                           </ng-template>
                         </ngb-panel>
 
-                        <ngb-panel id="b2c-subscribedemails-Menus" *ngIf="isMenuExists('B2C Subscribed Emails')">
+                        <ngb-panel id="support-Menus"
+                          *ngIf="isMenuExists('Support') || isMenuExists('B2C Subscribed Emails') || isMenuExists('Talk to Expert')">
                           <ng-template ngbPanelHeader>
-                            <button ngbPanelToggle routerLink="/B2C-Subscribed/email" routerLinkActive="active-item"
-                              [routerLinkActiveOptions]="{exact: true}" class="vsm-link">
-                              <i class="vsm-icon pe-7s-mail-open-file"></i>
-                              <span class="vsm-title pl-10">B2C Subscribed Emails</span>
+                            <button ngbPanelToggle class="vsm-link">
+                              <i class="vsm-icon pe-7s-headphones"></i>
+                              <span class="vsm-title pl-10">Support</span>
+                              <i class="vsm-arrow"></i>
                             </button>
+                          </ng-template>
+                          <ng-template ngbPanelContent>
+                            <div class="vsm-dropdown">
+                              <div class="vsm-list">
+                                <div class="vsm-item" *ngIf="isMenuExists('B2C Subscribed Emails')">
+                                  <a routerLinkActive="active-item" routerLink="/B2C-Subscribed/email"
+                                    class="vsm-link pl-1">
+                                    <span class="vsm-title pl-10">B2C Subscribed Emails</span>
+                                  </a>
+                                </div>
+                                <div class="vsm-item" *ngIf="isMenuExists('Talk to Expert') || isMenuExists('Support')">
+                                  <a routerLinkActive="active-item" routerLink="/B2C-Subscribed/talk-to-expert"
+                                    class="vsm-link pl-1">
+                                    <span class="vsm-title pl-10">Talk to Expert</span>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
                           </ng-template>
                         </ngb-panel>
 

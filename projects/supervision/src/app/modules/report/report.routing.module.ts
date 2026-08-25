@@ -328,7 +328,7 @@ const routes: Routes = [
         path: 'b2c-tour-enquiry',
         canActivate: [AuthGuard],
         component: B2cTourEnquiryComponent,
-        data: {extraParameter: 'b2b-reports-Menus'}
+        data: {extraParameter: 'b2c-reports-Menus'}
       },
       {
         path: 'b2c-hotel-enquiry',

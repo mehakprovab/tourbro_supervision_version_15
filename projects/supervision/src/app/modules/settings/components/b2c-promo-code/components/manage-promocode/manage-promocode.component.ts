@@ -97,6 +97,7 @@ export class ManagePromocodeComponent implements OnInit, OnDestroy {
     this.createForm();
     this.getToUpdate();
     this.valueChanges();
+    this.applyPromoTypeRules(this.regConfig.get("promo_type").value);
   }
 
   createForm() {
@@ -159,6 +160,7 @@ getToUpdate() {
           },
           { emitEvent: false },
         );
+        this.applyPromoTypeRules(this.regConfig.get("promo_type").value);
 
         // Handle category separately
         this.setCategoryValues(data.category);
@@ -236,6 +238,7 @@ isCategoryDisabled(category: string): boolean {
     const maxValue = this.regConfig.get("max_value");
 
     promoType.valueChanges.subscribe((value) => {
+      this.applyPromoTypeRules(value);
       if (value === "range") {
         minValue.setValidators([Validators.required]);
         maxValue.setValidators([Validators.required]);
@@ -252,21 +255,45 @@ isCategoryDisabled(category: string): boolean {
     });
   }
 
+applyPromoTypeRules(value: string) {
+  const userType = this.regConfig.get("userType");
+  if (!userType) {
+    return;
+  }
+
+  if (value === "normal") {
+    userType.setValue("Existing", { emitEvent: false });
+    userType.disable({ emitEvent: false });
+  } else if (value === "newuser") {
+    userType.setValue("New", { emitEvent: false });
+    userType.disable({ emitEvent: false });
+  } else if (value === "range") {
+    userType.setValue("All", { emitEvent: false });
+    userType.disable({ emitEvent: false });
+  } else {
+    userType.enable({ emitEvent: false });
+  }
+  userType.updateValueAndValidity({ emitEvent: false });
+}
+
 onSubmit() {
+  this.applyPromoTypeRules(this.regConfig.get("promo_type").value);
+
   if (this.regConfig.invalid) {
     this.regConfig.markAllAsTouched();
     this.categoryArray.markAsTouched();
     return;
   }
 
-  // Create a clean payload without promo_type
+  const formValue = this.regConfig.getRawValue();
+
   let req: any = {
-    ...this.regConfig.value, // start with all values
+    ...formValue,
     auth_role_id: "4",
     promo_image: this.existingPromoImage,
     use_type:'multiple',
-    start_date: formatDate(this.regConfig.value.start_date, "YYYY-MM-DD"),
-    expiry_date: formatDate(this.regConfig.value.expiry_date, "YYYY-MM-DD"),
+    start_date: formatDate(formValue.start_date, "YYYY-MM-DD"),
+    expiry_date: formatDate(formValue.expiry_date, "YYYY-MM-DD"),
   };
 
   // Keep the API payload safe even if category values were changed
@@ -275,11 +302,8 @@ onSubmit() {
     req.category = [this.discoverCategory];
   }
 
-  // Remove promo_type from payload
-  delete req.promo_type;
-
   // Only keep min_value and max_value if promo_type was 'range'
-  if (this.regConfig.get("promo_type").value !== "range") {
+  if (formValue.promo_type !== "range") {
     delete req.min_value;
     delete req.max_value;
   }
@@ -426,6 +450,7 @@ onCategoryChange(event: any) {
     status: "1",
     promo_type: "normal"
   });
+  this.applyPromoTypeRules("normal");
   
   this.addOrUpdate = "add";
 }

@@ -1,67 +1,19 @@
-<div class="card-header text-uppercase bg-dark text-white">
-    <h5 style="border-bottom: 0;">B2C Tour Enquiry</h5>
-</div>
-<div class="card">
-    <form [formGroup]="regConfig">
-      <div class="row">
-          <div class="col-4 pr-0">
-             <div class="form-group">
-                <label for="phone">Phone</label>
-                <input formControlName="phone" type="text" class="form-control form-control-sm nrm_input"
-                   placeholder="contact Number" id="phone">
-             </div>
-          </div>
-          <div class="col-4 pr-0">
-             <div class="form-group">
-                <label for="email">Email</label>
-                <input formControlName="email" type="email" class="form-control form-control-sm nrm_input"
-                   placeholder="Email" id="email">
-             </div>
-          </div>
-          <div class="col-4 pr-0">
-            <div class="form-group">
-               <label for="bookedBy">Status</label>
-               <select formControlName="status" name="cars" id="bookedBy"
-                  class="form-control form-control-sm nrm_input">
-                  <option value="ALL">ALL</option>
-                  <option value=1>Enquiry Open</option>
-                  <option value=0>Enquiry Closed</option>
-               </select>
-            </div>
-         </div>
-          <div class="col-4 pr-0">
-            <div class="form-group">
-               <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
-               <label for="fromDate">Enquiry From Date</label>
-               <input formControlName="fromDate" type="text" id="fromDate" autocomplete="off"
-               class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy"
-               bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen">
-            </div>
-         </div>
-          <div class="col-4 pr-0">
-             <div class="form-group">
-                <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
-                <label for="toDate">Enquiry To Date</label>
-                <input formControlName="toDate" type="text" id="toDate" autocomplete="off" 
-                class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy"
-                bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen">
-             </div>
-          </div>
-       </div>
-       <div class="btncontainer">
-          <button type="submit" class="btnStyle" (click)="onSearchSubmit()">Search</button> &nbsp;
-          <button type="button" class="btnStyle" (click)="onReset()">Reset</button>
-       </div>
-    </form>
+<div class="card adminInner">
+    <div class="card-header mb-3">
+        <h5>B2C Yatra Enquiry List</h5>
+    </div>
  </div>
- <div class="card w-100" style="margin-top: 30px;">
+ <div class="card adminInner" style="margin-top: 30px;">
     <div class="card-body">
+        <div style="padding-bottom: 15px;">
         <p>Total {{respData?.length}} Enquiry</p>
         <button class="btnStyle" (click)="downloadPdf()">PDF</button>&nbsp;
-        <button class="btnStyle" (click)="download('xlsx', 'portrait')">Export to excel</button>
-        <div class="form-group mb-0 col-sm-3 p-0 float-right">
+        <button class="btnStyle" (click)="download('xlsx', 'portrait')">Export to Excel</button>
+        <div class="form-group mb-0 col-sm-3 p-0 float-right has-search">
+            <span class="fa fa-search form-control-feedback"></span>
             <input class="form-control" type="text" name="Search" [(ngModel)]="searchText" autocomplete="off"
                 placeholder="Search">
+        </div>
         </div>
        <div class="mb-3">
           <form>
@@ -70,7 +22,7 @@
             </div>
             <div class="wrapper2" #scrollTwo (scroll)="scrollOne.scrollLeft = scrollTwo.scrollLeft">
                 <div class="div2 invisible-scrollbar">
-                    <div class="table-responsive">
+                    <div class="table-respons">
                         <table class="table table-borderless table-striped table-hover" matSort
                         (matSortChange)="sortData($event)" id="b2c-tour-enquiry">
                         <thead>
@@ -83,13 +35,13 @@
                         </thead>
                         <tbody>
                             <tr *ngIf="searchSpin">
-                                <td colspan="12">
+                                <td colspan="18">
                                     <mat-spinner [diameter]="30" style="margin:0 auto;"
                                         mode="indeterminate"></mat-spinner>
                                 </td>
                             </tr>
                             <tr *ngIf="!searchSpin && !respData.length">
-                                <td colspan="11">
+                                <td colspan="18">
                                     <h4 class="text-muted text-center">
                                         No Data Found!
                                     </h4>
@@ -98,18 +50,6 @@
                             <tr
                                 *ngFor="let data of respData | filter:searchText | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
                                 <td class="text-left text-muted">#{{i+1}}</td>
-                                <td class="text-left overflow-hidden"> 
-                                <div ngbDropdown container="body"><button class="btnStyle" ngbDropdownToggle>
-                                    {{'Action'}}
-                                    </button>
-                                    <div ngbDropdownMenu>
-                                        <!-- <button ngbDropdownItem (click)="showEnquiryDetails(data)">View Enquiry</button> -->
-                                        <button ngbDropdownItem (click)="openEnquiry(data)" *ngIf="data['status'] == 0">Open Enquiry</button>
-                                        <button ngbDropdownItem (click)="closeEnquiry(data)" *ngIf="data['status'] == 1">Close Enquiry</button>
-                                        <!-- <button ngbDropdownItem (click)="tourBrochure(data)">Tour Brochure</button> -->
-                                    </div>
-                                </div>
-                                </td>
                                 <td class="text-left"> 
                                         <span *ngIf="data['status'] == 1" class="badge badge-danger">
                                             Enquiry Open
@@ -135,7 +75,7 @@
                                 <td class="text-left">{{data['adults']}} </td>
                                 <td class="text-left">{{data['children']}} </td> 
                                 <!-- <td class="text-left">{{data['child_ages']}} </td> -->
-                                <td class="text-left">{{data['title']}} </td>
+                                <!-- <td class="text-left">{{data['title']}} </td> -->
                                 <td class="text-left">{{data['name']}} </td>
                                 <td class="text-left">{{data['lname']}} </td>
                                 <td class="text-left">{{data['email']}} </td>

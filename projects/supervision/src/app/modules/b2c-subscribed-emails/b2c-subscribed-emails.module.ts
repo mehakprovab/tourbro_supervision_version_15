@@ -6,11 +6,13 @@ import { LayoutsModule } from '../../layout/layout.module';
 import { NewsletterSubscriptionComponent } from './components/newsletter-subscription/newsletter-subscription.component';
 import { DealsSubscriptionComponent } from './components/deals-subscription/deals-subscription.component';
 import { SharedModule } from '../../shared/shared.module';
+import { TalkToExpertComponent } from './components/talk-to-expert/talk-to-expert.component';
 
 @NgModule({
   declarations: [B2cSubscribedEmailsComponent,
   NewsletterSubscriptionComponent,
-  DealsSubscriptionComponent],
+  DealsSubscriptionComponent,
+  TalkToExpertComponent],
   imports: [
     CommonModule,
     B2cSubscribedEmailsRoutingModule,

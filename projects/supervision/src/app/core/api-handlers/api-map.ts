@@ -277,6 +277,7 @@ export const apiMap = {
   updatePromocode: `${baseUrl}/core/core-promocodes/updatePromocode`,
   uploadPromoImage: `${baseUrl}/core/core-promocodes/uploadPromoImage`,
   emailSubscriptionsList: `${baseUrl}/core/core-subscribed-emails/emailSubscriptionsList`,
+  enquiryList: `${baseUrl}/dashboard/report/enquiryList`,
   corePaymentChargeList: `${baseUrl}/core/core-payment-charges/corePaymentChargeList`,
   updatePaymentCharge: `${baseUrl}/core/core-payment-charges/updatePaymentCharge`,
   getAllHotelGroupBooking: `${baseUrl}/hotel/group-bookings/getAllHotelGroupBooking`,

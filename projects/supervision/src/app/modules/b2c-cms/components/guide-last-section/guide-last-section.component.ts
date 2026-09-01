@@ -108,9 +108,9 @@ export class GuideLastSectionComponent implements OnInit {
    const file = files.item(0);
  this.selectedFileName = file.name;
    // ✅ File type validation
-   const allowedTypes = ['image/jpeg', 'image/png'];
+   const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
    if (!allowedTypes.includes(file.type)) {
-     this.swalService.alert.error("Only JPG and PNG images are allowed.");
+     this.swalService.alert.error("Only JPG, PNG and WEBP images are allowed.");
      this.fileInput.nativeElement.value = '';
      return;
    }

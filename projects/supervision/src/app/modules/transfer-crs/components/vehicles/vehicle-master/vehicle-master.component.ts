@@ -536,11 +536,11 @@ onFileSelected(event: any) {
 
   const file = input.files[0];
 
-  const allowedTypes = ['image/jpeg', 'image/png'];
+  const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
 
   // ❌ Type validation
   if (!allowedTypes.includes(file.type)) {
-    this.swal.alert.oops('Only JPEG and PNG images are allowed');
+    this.swal.alert.oops('Only JPEG, PNG and WEBP images are allowed');
     input.value = '';
     this.imageFile = null;
     this.vehicleImage = null;

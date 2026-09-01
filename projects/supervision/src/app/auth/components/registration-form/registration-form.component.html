@@ -181,7 +181,7 @@
                                             <label for="pan_document" class="required">PAN Document (Upload)</label>
                                             <div class="file-upload-wrapper">
                                                 <input type="file" id="pan_document" (change)="onFileSelected($event, 'pan_document')"
-                                                    accept=".pdf,.jpg,.jpeg,.png" class="file-input">
+                                                    accept=".pdf,.jpg,.jpeg,.png,.webp" class="file-input">
                                                 <label for="pan_document" class="file-label">
                                                     <span *ngIf="!panDocumentName">Choose PAN Document</span>
                                                     <span *ngIf="panDocumentName">{{panDocumentName}}</span>
@@ -210,7 +210,7 @@
                                             <label for="aadhaar_document" class="required">Aadhaar Document (Upload)</label>
                                             <div class="file-upload-wrapper">
                                                 <input type="file" id="aadhaar_document" (change)="onFileSelected($event, 'aadhaar_document')"
-                                                    accept=".pdf,.jpg,.jpeg,.png" class="file-input">
+                                                    accept=".pdf,.jpg,.jpeg,.png,.webp" class="file-input">
                                                 <label for="aadhaar_document" class="file-label">
                                                     <span *ngIf="!aadhaarDocumentName">Choose Aadhaar Document</span>
                                                     <span *ngIf="aadhaarDocumentName">{{aadhaarDocumentName}}</span>
@@ -235,7 +235,7 @@
                                             <label for="license_document">License Document (Upload)</label>
                                             <div class="file-upload-wrapper">
                                                 <input type="file" id="license_document" (change)="onFileSelected($event, 'license_document')"
-                                                    accept=".pdf,.jpg,.jpeg,.png" class="file-input">
+                                                    accept=".pdf,.jpg,.jpeg,.png,.webp" class="file-input">
                                                 <label for="license_document" class="file-label">
                                                     <span *ngIf="!licenseDocumentName">Choose License Document</span>
                                                     <span *ngIf="licenseDocumentName">{{licenseDocumentName}}</span>

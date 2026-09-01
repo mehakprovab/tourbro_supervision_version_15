@@ -124,7 +124,7 @@
                         <td class="text-left"> {{data['city_name']}} </td>
                         <td class="text-left"> {{data['currency']}} </td>
                         <td class="text-left"> {{data['star_rating']}} </td>
-                         <td class="text-left" style="white-space:break-spaces;"> {{data['address']}} </td>
+                         <td class="text-left" style="width:18%"> {{data['address']}} </td>
                          <td class="text-left"> {{data['contract_expiry_date'] | date: 'dd/MM/yyyy'}} </td>
                          <ng-container *ngIf="loggedInUser?.auth_role_id !== 6 && loggedInUser?.auth_role_id !== 7">
                             <ng-container *ngIf="data?.currency_request || data?.usertype_request; else emptyTd">

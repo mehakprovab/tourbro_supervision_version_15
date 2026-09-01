@@ -51,9 +51,9 @@ regConfig: FormGroup;
     const file = files[0];
     if (!file) return;
 
-    const allowed = ['image/jpeg','image/png'];
+    const allowed = ['image/jpeg','image/png','image/webp'];
     if (!allowed.includes(file.type)) {
-      this.swal.alert.error("Only JPG/PNG allowed");
+      this.swal.alert.error("Only JPG/PNG/WEBP allowed");
       return;
     }
 

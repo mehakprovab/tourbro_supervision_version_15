@@ -340,7 +340,7 @@
                     KYC Documents <span class="text-danger">*</span>
                 </label>
 
-                <input #kycFileInput type="file" class="form-control" accept=".pdf,.jpg,.jpeg,.png"
+                <input #kycFileInput type="file" class="form-control" accept=".pdf,.jpg,.jpeg,.png,.webp"
                     (change)="onFileSelect($event)">
 
                 <small class="text-danger" *ngIf="submitted && !selectedKycFile">

@@ -23,7 +23,7 @@
         <img *ngIf="!imageSrc"class="align-baseline rounded" width="100" height="50" src="{{manageDomainData}}">
         <img *ngIf="imageSrc" height="50" width="100" class="rounded" [src]="imageSrc" alt="logo">
         <input type="file" class="form-control-file p-2" id="domain_logo" (change)="onFileSelected($event)" #theFile
-          accept="image/png,image/jpeg" aria-describedby="logoHelp logoError" />
+          accept="image/png,image/jpeg,image/webp" aria-describedby="logoHelp logoError" />
       </div>
       <span id="logoHelp" class="text-danger col-sm-12 customCenter messagePadding">Image must be PNG, JPG, or JPEG, no larger than 100 KB, and exactly 200px by 200px.</span>
       <span id="logoError" class="text-danger col-sm-12 customCenter" *ngIf="fileError">{{ fileError }}</span>

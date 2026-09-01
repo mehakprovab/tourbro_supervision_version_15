@@ -681,7 +681,7 @@ onImageSelect(event: any) {
     const maxSize = 1 * 1024 * 1024; // ✅ 1 MB
 
     if (!allowedTypes.includes(file.type)) {
-      this.swalService.alert.oops("Only JPG, JPEG and PNG formats are allowed.");
+      this.swalService.alert.oops("Only JPG, JPEG, PNG, GIF and WEBP formats are allowed.");
       event.target.value = '';
       return;
     }

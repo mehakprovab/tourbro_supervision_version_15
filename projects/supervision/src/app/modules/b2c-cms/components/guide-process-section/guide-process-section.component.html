@@ -25,7 +25,7 @@
       <!-- IMAGE 1 -->
       <div class="col-6">
         <label>Image 1*</label>
-        <input type="file" accept=".png,.jpg,.jpeg"  #fileInput1
+        <input type="file" accept=".png,.jpg,.jpeg,.webp"  #fileInput1
                (change)="onFileChange($event.target.files,'image_1')">
 
         <img *ngIf="preview.image1" [src]="preview.image1" width="100" class="mt-2">
@@ -34,7 +34,7 @@
       <!-- IMAGE 2 -->
       <div class="col-6">
         <label>Image 2*</label>
-        <input type="file" accept=".png,.jpg,.jpeg"  #fileInput2
+        <input type="file" accept=".png,.jpg,.jpeg,.webp"  #fileInput2
                (change)="onFileChange($event.target.files,'image_2')">
 
         <img *ngIf="preview.image2" [src]="preview.image2" width="100" class="mt-2">

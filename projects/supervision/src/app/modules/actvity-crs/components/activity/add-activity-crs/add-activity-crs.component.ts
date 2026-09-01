@@ -788,7 +788,7 @@ isChildInclusionDisabled(seasonIndex: number): boolean {
       }
 
       if (validFiles.length === 0) {
-        this.swalService.alert.oops("Only JPG, JPEG and PNG formats are allowed.");
+        this.swalService.alert.oops("Only JPG, JPEG, PNG, GIF and WEBP formats are allowed.");
         event.target.value = ''; // Reset file input
         return;
       }

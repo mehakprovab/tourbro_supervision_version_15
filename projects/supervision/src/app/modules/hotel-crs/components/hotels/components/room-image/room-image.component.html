@@ -52,7 +52,7 @@
                 </div>
               </div>
         </div>
-          <span><b>Note:</b> Only JPG, JPEG & PNG formats and 500Kb size are allowed.</span><br>
+          <span><b>Note:</b> Only JPG, JPEG, PNG & WEBP formats and 500Kb size are allowed.</span><br>
               
         <form [formGroup]="hotelImageForm" (ngSubmit)="onSubmitHotelImage()" class="needs-validation btop pt-4"
             novalidate>
@@ -68,7 +68,7 @@
 
                 <div class="form-group">
                     <div class="file-input">
-                    <input #file type="file" accept='.jpeg,.jpg'
+                    <input #file type="file" accept='.jpeg,.jpg,.png,.webp'
                         (change)="previewRoomImage($event)" class="btn btn-sm" multiple>
                     <div *ngIf="submittedHotelImage && hotelImage?.image_url?.errors" class="invalid-feedback">
                         <div *ngIf="hotelImage.image_url.errors.required">Images are required</div>

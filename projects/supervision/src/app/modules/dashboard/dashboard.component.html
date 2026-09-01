@@ -136,7 +136,7 @@
                                 </select>
                             </div>
                             
-                           <span class="num-span">{{ totalGrossBookingValue | number:'1.2-2' }}</span>
+                           <span class="num-span">{{ displayNumber(totalGrossBookingValue) | number:'1.2-2' }}</span>
                         </div>
                     </div>
                     <div class="net-revenue" *ngIf="!isSupplierUser">
@@ -144,7 +144,7 @@
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="f-15">Gross Margin</span>
                             </div>
-                            <span class="num-span">{{ grossMargin | number:'1.2-2' }}</span>
+                            <span class="num-span">{{ displayNumber(grossMargin) | number:'1.2-2' }}</span>
                         </div>
                     </div>
                     <div class="net-revenue" *ngIf="!isSupplierUser">
@@ -152,7 +152,7 @@
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="f-15">Markup Earned</span>
                             </div>
-                         <span class="num-span">{{ markupEarned | number:'1.2-2' }}</span>
+                         <span class="num-span">{{ displayNumber(markupEarned) | number:'1.2-2' }}</span>
                         </div>
                     </div>
                     <div class="net-revenue" *ngIf="!isSupplierUser">
@@ -160,7 +160,7 @@
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="f-15">Convenience Fee</span>
                             </div>
-                            <span class="num-span">{{ convenienceFee | number:'1.2-2' }}</span>
+                            <span class="num-span">{{ displayNumber(convenienceFee) | number:'1.2-2' }}</span>
                         </div>
                     </div>
                     <div class="total-bookings">
@@ -173,7 +173,7 @@
                                     </option>
                                 </select>
                             </div>
-                            <span class="num-span">{{ totalBooking | number:'1.2-2' }}</span>
+                            <span class="num-span">{{ displayNumber(totalBooking) | number:'1.2-2' }}</span>
                         </div>
                     </div>
                     <div class="bookings">
@@ -181,7 +181,7 @@
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="f-15">Payment Completed</span>
                             </div>
-                            <span class="num-span">{{ paymentCompletedCount | number:'1.2-2' }}</span>
+                            <span class="num-span">{{ displayNumber(paymentCompletedCount) | number:'1.2-2' }}</span>
                         </div>
                     </div>
                      <div class="avg-booking-value">
@@ -189,7 +189,7 @@
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="f-15">Average Booking Value</span>
                             </div>
-                           <span class="num-span">{{ averageBookingValue | number:'1.2-2' }}</span>
+                           <span class="num-span">{{ displayNumber(averageBookingValue) | number:'1.2-2' }}</span>
                            
                         </div>
                     </div>
@@ -198,7 +198,7 @@
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="f-15">Cab Confirmation Pending</span>
                             </div>
-                            <span class="num-span">{{ pendingVendorConfirmations | number:'1.2-2' }}</span>
+                            <span class="num-span">{{ displayNumber(pendingVendorConfirmations) | number:'1.2-2' }}</span>
                            
                         </div>
                     </div>
@@ -207,7 +207,7 @@
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="f-15">Pending Payments</span>
                             </div>
-                           <span class="num-span">{{ paymentPendingCount | number:'1.2-2' }}</span>
+                           <span class="num-span">{{ displayNumber(paymentPendingCount) | number:'1.2-2' }}</span>
                             
                         </div>
                     </div>
@@ -216,7 +216,7 @@
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="f-15">Refunds Pending</span>
                             </div>
-                           <span class="num-span">{{ refundsPending | number:'1.2-2' }}</span>
+                           <span class="num-span">{{ displayNumber(refundsPending) | number:'1.2-2' }}</span>
                           
                         </div>
                     </div>
@@ -225,7 +225,7 @@
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="f-15">Open Customer Issues</span>
                             </div>
-                             <span class="num-span">{{ openCustomerIssues | number:'1.2-2' }}</span>
+                             <span class="num-span">{{ displayNumber(openCustomerIssues) | number:'1.2-2' }}</span>
                            
                         </div>
                     </div>

@@ -238,7 +238,7 @@ saveFaqs() {
         this.bannerImage = file;
         this.logoConfig.get('banner_logo').patchValue(file);
     } else {
-      this.swalService.alert.oops("Only JPG, JPEG and PNG formats are allowed.");
+      this.swalService.alert.oops("Only JPG, JPEG, PNG, GIF and WEBP formats are allowed.");
         event.target.value = ''; // Reset file input
     }
 }
@@ -253,7 +253,7 @@ onGallerySelect(event: any) {
       if (allowedTypes.includes(selectedFiles[i].type)) {
           validFiles.push(selectedFiles[i]);
       } else {
-        this.swalService.alert.oops("Only JPG, JPEG and PNG formats are allowed.");
+        this.swalService.alert.oops("Only JPG, JPEG, PNG, GIF and WEBP formats are allowed.");
       }
   }
 

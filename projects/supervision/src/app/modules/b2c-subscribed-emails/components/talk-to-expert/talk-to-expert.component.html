@@ -13,7 +13,7 @@
             (matSortChange)="sortData($event)" id="talk-to-expert-list">
             <thead>
               <tr>
-                <th scope="col" class="text-left text-nowrap" *ngFor="let header of displayColumn;">
+                <th scope="col" class="text-left text-nowrap" [ngClass]="header.key === 'message' ? 'message-column' : ''" *ngFor="let header of displayColumn;">
                   {{header.value}}
                 </th>
               </tr>
@@ -34,7 +34,7 @@
                 <td class="text-left">{{getValue(data, ['full_name', 'first_name', 'customer_name'])}}</td>
                 <td class="text-left">{{getValue(data, ['email', 'email_id'])}}</td>
                 <td class="text-left">{{getValue(data, ['phone', 'phone_number', 'mobile', 'mobile_number'])}}</td>
-                <td class="text-left">{{getValue(data, ['message', 'remarks', 'description', 'comments'])}}</td>
+                <td class="text-left message-cell">{{getValue(data, ['message', 'remarks', 'description', 'comments'])}}</td>
                 <!-- <td class="text-left">{{formatDate(getValue(data, ['created_at', 'requested_date', 'created_datetime']))}}</td> -->
               </tr>
             </tbody>

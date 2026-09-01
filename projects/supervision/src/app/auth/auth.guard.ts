@@ -163,7 +163,9 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         if (currentUser) {
             return true;
         }
-        this.router.navigate(['/auth/login'], {});
+        const browserUrl = `${window.location.pathname}${window.location.hash}`.toLowerCase();
+        const loginRoute = browserUrl.indexOf('/supplier') > -1 ? '/auth/supplier-login' : '/auth/login';
+        this.router.navigate([loginRoute], {});
         return false;
     }
 

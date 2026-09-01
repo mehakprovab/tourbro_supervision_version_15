@@ -33,7 +33,7 @@
             <label for="image" class="mb-2">Image</label>
                <div class="form-group">
                   
-                  <input type="file" accept=".png, .jpg, .jpeg" class="col-12 p-0" formControlName="image" id="image"
+                  <input type="file" accept=".png, .jpg, .jpeg, .webp" class="col-12 p-0" formControlName="image" id="image"
                               (change)="onFileChange($event.target.files)">
                   <label class="custom-file-label" #labelImport style="display: none;" for="image">Upload Image</label> 
                   <span class="col-sm-12 text-danger px-0">(Maximum upload file size: 1 MB)</span>

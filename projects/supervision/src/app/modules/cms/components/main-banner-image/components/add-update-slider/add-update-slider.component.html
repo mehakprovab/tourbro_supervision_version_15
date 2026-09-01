@@ -23,7 +23,7 @@
                     <img *ngIf="imageSrc" height="50" width="100" class="rounded" [src]="imageSrc" alt="logo">
                     &nbsp;&nbsp;&nbsp;
                     <input type="file" class="form-control-file" id="logo" (change)="onFileSelected($event)" #theFile
-                        style="margin-top: 15px;margin-bottom: -4px;" accept=".png, .jpg, .jpeg">
+                        style="margin-top: 15px;margin-bottom: -4px;" accept=".png, .jpg, .jpeg, .webp">
                         <span>
                             <p *ngIf="error" class="text-danger" style="font-weight: 400;font-size: 80%;">{{error}}</p>
                         </span>

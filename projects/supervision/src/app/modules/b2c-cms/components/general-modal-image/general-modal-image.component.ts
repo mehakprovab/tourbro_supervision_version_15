@@ -54,8 +54,8 @@ fileInput!: ElementRef<HTMLInputElement>;
     this.selectedFileName = file.name;
 
     // Type validation
-    if (!['image/jpeg', 'image/png'].includes(file.type)) {
-      this.swalService.alert.error("Only JPG/PNG allowed");
+    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+      this.swalService.alert.error("Only JPG/PNG/WEBP allowed");
       this.resetFile();
       return;
     }

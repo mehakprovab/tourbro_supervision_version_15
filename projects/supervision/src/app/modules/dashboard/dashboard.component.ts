@@ -1036,6 +1036,11 @@ this.confirmedBookings = 0;
 
         return NaN;
     }
+
+    displayNumber(value: any): number {
+        const numberValue = this.toNumber(value);
+        return isNaN(numberValue) ? 0 : Number(numberValue.toFixed(2));
+    }
     totalVendorResponse: any = {};
 vendorCategories: any[] = [];
 

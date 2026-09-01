@@ -11,9 +11,9 @@ export const environment = {
     // b2b_url: 'https://booking247.com:4019',
     // b2c_url: 'https://booking247.com:4017'
 
-      baseUrl:'https://tourbro.com:3001/sa',
+      baseUrl:'https://tourbro.com:2001/sa',
     b2b_url: 'https://54.92.243.81:3003',
-    b2c_url: 'https://tourbro.com:3002'
+    b2c_url: 'https://tourbro.com:2002'
 
     
     // baseUrl:'https://tourbro.com:2001/sa',

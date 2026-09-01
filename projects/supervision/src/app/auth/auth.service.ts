@@ -254,10 +254,13 @@ private tokenRefreshInterval: any;
 
     private getLoginRoute(): string {
         const currentUser: any = this.currentUserSubject.value
-            || JSON.parse(sessionStorage.getItem('currentSupervisionUser'));
+            || JSON.parse(sessionStorage.getItem('currentSupervisionUser') || '{}');
         const roleId = Number(currentUser && currentUser.auth_role_id);
+        const routerUrl = (this.router.url || '').toLowerCase();
+        const browserUrl = `${window.location.pathname}${window.location.hash}`.toLowerCase();
+        const isSupplierContext = routerUrl.indexOf('supplier') > -1 || browserUrl.indexOf('/supplier') > -1;
 
-        return roleId === 6 || roleId === 7
+        return roleId === 6 || roleId === 7 || isSupplierContext
             ? '/auth/supplier-login'
             : '/auth/login';
     }

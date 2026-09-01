@@ -325,9 +325,9 @@ onStateChange(event: Event): void {
       }
       
       // Validate file type
-      const allowedTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
+      const allowedTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
       if (!allowedTypes.includes(file.type)) {
-        Swal.fire('Error', 'Only PDF, JPEG, JPG, PNG files are allowed', 'error');
+        Swal.fire('Error', 'Only PDF, JPEG, JPG, PNG, WEBP files are allowed', 'error');
         return;
       }
       

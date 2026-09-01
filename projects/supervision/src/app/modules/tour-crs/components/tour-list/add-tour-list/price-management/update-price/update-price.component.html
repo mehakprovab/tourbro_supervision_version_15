@@ -18,7 +18,7 @@
                        
                     </div>
                     <div class="col-4 p-0">
-                        <label for="adultPrice" class="">Adult Price ({{currentUser?.currency ? currentUser?.currency : 'GBP'}})  <sup
+                        <label for="adultPrice" class="">Adult Price ({{currentUser?.currency ? currentUser?.currency : 'INR'}})  <sup
                             class="text-danger f-16"> * </sup> </label> 
                         <input type="number" [min]="0" class="form-control" id="adultPrice" formControlName="adultPrice">
                         
@@ -29,7 +29,7 @@
 
             <div class="form-group required row" >
                 <label for="childPrice" style="margin-bottom: 0px !important;" class="col-sm-4 col-form-label font-weight-bold">
-                Child Price <sup class="text-danger f-16"> * </sup> ({{currentUser?.currency ? currentUser?.currency : 'GBP'}})
+                Child Price <sup class="text-danger f-16"> * </sup> ({{currentUser?.currency ? currentUser?.currency : 'INR'}})
                 </label>
                 <div class="col-sm-12">
                 <div formArrayName="childPrice" class=" col-12 pr-0 mt-0">

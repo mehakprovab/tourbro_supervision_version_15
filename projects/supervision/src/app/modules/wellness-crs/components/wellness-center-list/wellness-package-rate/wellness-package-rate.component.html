@@ -96,9 +96,9 @@
                                             </button>
                                             <div class="multi-select-menu" *ngIf="isDropdownOpen('package_types')">
                                                 <label class="multi-select-option" *ngFor="let packageType of packageList">
-                                                    <input type="radio" name="package_type"
+                                                    <input type="checkbox"
                                                         [checked]="isSelected('package_types', packageType.name)"
-                                                        (change)="selectSingle('package_types', packageType.name)">
+                                                        (change)="toggleSelection('package_types', packageType.name)">
                                                     <span>{{ packageType.name }}</span>
                                                 </label>
                                             </div>
@@ -301,8 +301,8 @@
                             <!-- File Input -->
                             <div class="form-group">
                                 <div class="file-input">
-                                    <span><b>Note:</b> Only JPG, JPEG & PNG formats and 500Kb size are allowed.</span><br>
-                                    <input #file type="file" accept=".jpeg,.jpg,.png" (change)="previewRoomImage($event)"
+                                    <span><b>Note:</b> Only JPG, JPEG, PNG & WEBP formats and 500Kb size are allowed.</span><br>
+                                    <input #file type="file" accept=".jpeg,.jpg,.png,.webp" (change)="previewRoomImage($event)"
                                         class="btn btn-sm mt-2" multiple>
                                     <div *ngIf="hotelImageForm.get('image_url')?.errors" class="invalid-feedback">
                                         <div *ngIf="hotelImageForm.get('image_url')?.errors?.required">Images are required</div>

@@ -51,8 +51,11 @@ export class AuthInterceptorService implements HttpInterceptor {
       (error: HttpErrorResponse) => {
         const isLoginRequest = (error.url || req.url || '').indexOf('/auth/service/userLogin') > -1;
         if (error.status === 401 && !isLoginRequest) {
-          const isSupplierUser = currentUser['auth_role_id'] === 6 || currentUser['auth_role_id'] === 7;
-          const isSupplierRoute = (this.router.url || '').indexOf('supplier-login') > -1;
+          const roleId = Number(currentUser['auth_role_id']);
+          const routerUrl = (this.router.url || '').toLowerCase();
+          const browserUrl = `${window.location.pathname}${window.location.hash}`.toLowerCase();
+          const isSupplierUser = roleId === 6 || roleId === 7;
+          const isSupplierRoute = routerUrl.indexOf('supplier') > -1 || browserUrl.indexOf('/supplier') > -1;
           const loginRoute = isSupplierUser || isSupplierRoute ? '/auth/supplier-login' : '/auth/login';
 
           sessionStorage.removeItem('currentSupervisionUser');

@@ -60,11 +60,11 @@
         </div>
         <div class="head-sect p-12" *ngIf="!supplierView">
            <p class="f-15 mb-2">Gross Margin</p>
-           <span class="num-span">{{ grossMargin | number:'1.2-2' }}</span>
+           <span class="num-span">{{ displayNumber(grossMargin) | number:'1.2-2' }}</span>
         </div>
         <div class="head-sect p-12" *ngIf="!supplierView">
            <p class="f-15 mb-2">Refund Amount</p>
-           <span class="num-span">{{ refundAmount | number:'1.2-2' }}</span>
+           <span class="num-span">{{ displayNumber(refundAmount) | number:'1.2-2' }}</span>
         </div>
       </div>
     </div>
@@ -88,7 +88,7 @@
                     <option>All</option>
                   </select>
                </div>
-                <span class="num-span">{{ paymentSuccessRate | number:'1.2-2' }}</span>
+                <span class="num-span">{{ displayNumber(paymentSuccessRate) | number:'1.2-2' }}</span>
              </div>
             <div class="p-12 head-sect flex-column" *ngIf="!supplierView">
                 <div class="d-flex justify-content-between align-items-center mb-2">
@@ -102,7 +102,7 @@
                   </select>
                </div>
 
-              <span class="num-span">{{ paymentFailedRate | number:'1.2-2' }}</span>
+              <span class="num-span">{{ displayNumber(paymentFailedRate) | number:'1.2-2' }}</span>
 
             </div>
 
@@ -111,14 +111,14 @@
               <span class="f-15">Convenience Fee</span>
             </div>
 
-            <span class="num-span">{{ convenienceFee | number:'1.2-2' }}</span>
+            <span class="num-span">{{ displayNumber(convenienceFee) | number:'1.2-2' }}</span>
           </div>
            <div class="p-12 head-sect flex-column" *ngIf="!supplierView">
                 <div class="d-flex justify-content-between align-items-center mb-2">
               <span class="f-15">Customer Receivables</span>
             </div>
 
-            <span class="num-span">{{ customerReceivables | number:'1.2-2' }}</span>
+            <span class="num-span">{{ displayNumber(customerReceivables) | number:'1.2-2' }}</span>
           </div>
           
           <div class="p-12 head-sect flex-column" *ngIf="!supplierView">
@@ -132,7 +132,7 @@
                   <option>All</option>
                 </select>
               </div>
-              <span class="num-span">{{ discountCost | number:'1.2-2' }}</span>
+              <span class="num-span">{{ displayNumber(discountCost) | number:'1.2-2' }}</span>
           </div>
           <div class="p-12 head-sect flex-column" *ngIf="!supplierView">
                 <div class="d-flex justify-content-between align-items-center mb-2">
@@ -146,7 +146,7 @@
                   </select>
               </div>
 
-              <span class="num-span">{{ markupEarned | number:'1.2-2' }}</span>
+              <span class="num-span">{{ displayNumber(markupEarned) | number:'1.2-2' }}</span>
           </div>
 
       </div>

@@ -337,6 +337,10 @@ export class RevenueFinanceComponent implements OnInit, AfterViewInit, OnChanges
         return NaN;
     }
 
+    public displayNumber(value: any): number {
+        return this.roundToTwo(value);
+    }
+
     private roundToTwo(value: any): number {
         const numberValue = this.toNumber(value);
         return isNaN(numberValue) ? 0 : Number(numberValue.toFixed(2));

@@ -106,10 +106,10 @@ this.existingImages = [
 
   // ✅ IMAGE VALIDATION
   validateFile(file: File) {
-    const allowedTypes = ['image/jpeg', 'image/png'];
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
 
     if (!allowedTypes.includes(file.type)) {
-      this.swalService.alert.oops("Only JPG/PNG allowed");
+      this.swalService.alert.oops("Only JPG/PNG/WEBP allowed");
       return false;
     }
 

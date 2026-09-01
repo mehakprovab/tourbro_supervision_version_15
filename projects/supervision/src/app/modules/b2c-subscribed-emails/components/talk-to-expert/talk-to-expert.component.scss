@@ -1,1 +1,16 @@
+.table {
+  table-layout: fixed;
+  width: 100%;
+}
 
+.message-column,
+.message-cell {
+  min-width: 280px;
+  width: 45%;
+}
+
+.message-cell {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}

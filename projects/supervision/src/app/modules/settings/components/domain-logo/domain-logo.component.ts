@@ -84,8 +84,8 @@ onFileSelected(event: any) {
         return;
       }
 
-      if (!['image/png', 'image/jpeg'].includes(file.type)) {
-        this.rejectFile('Only PNG, JPG and JPEG are allowed');
+      if (!['image/png', 'image/jpeg', 'image/webp'].includes(file.type)) {
+        this.rejectFile('Only PNG, JPG, JPEG and WEBP are allowed');
         return;
       }
 

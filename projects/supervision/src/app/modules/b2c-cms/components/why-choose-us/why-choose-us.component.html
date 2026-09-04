@@ -78,37 +78,22 @@
       </div>
     </div>
 
-    <!-- IMAGE -->
     <div class="form-group mt-3">
-      <label>Upload Images (Max 2, JPG/PNG, 1MB)</label>
-      <input type="file" (change)="onFileSelected($event)" multiple />
+      <label>Upload Images (Max 2, JPG/PNG/WEBP, 1MB)</label>
+      <input type="file" (change)="onFileSelected($event)" multiple accept="image/jpeg,image/png,image/webp" />
     </div>
-<!-- IMAGE PREVIEW -->
-<div class="mt-3 d-flex">
 
-  <!-- ✅ Existing Images -->
-  <div *ngFor="let img of existingImages" class="mr-2 text-center">
-    <p class="mb-1">Existing</p>
-    <img 
-      [src]="img" 
-      width="120" 
-      height="80" 
-      style="object-fit: cover; border: 1px solid #ccc;"
-    />
-  </div>
-
-  <!-- ✅ New Selected Images -->
-  <div *ngFor="let img of imagePreviews" class="mr-2 text-center">
-    <p class="mb-1">New</p>
-    <img 
-      [src]="img" 
-      width="120" 
-      height="80" 
-      style="object-fit: cover; border: 1px solid #28a745;"
-    />
-  </div>
-
-</div>
+    <div class="mt-3 d-flex">
+      <div *ngFor="let image of getDisplayImages()" class="mr-2 text-center">
+        <p class="mb-1">{{ image.label }}</p>
+        <img
+          [src]="image.src"
+          width="120"
+          height="80"
+          style="object-fit: cover; border: 1px solid #ccc;"
+        />
+      </div>
+    </div>
     <!-- BUTTONS -->
     <div class="text-center mt-3">
       <button type="button" class="btn btn-primary" (click)="onSubmit()">Submit</button>

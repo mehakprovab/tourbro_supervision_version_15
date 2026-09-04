@@ -6,6 +6,7 @@ import { CmsService } from '../../../cms/cms.service';
 import { UtilityService } from 'projects/b2b/src/app/core/services/utility.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
+import { resolveStaticUploadUrl } from 'projects/supervision/src/app/core/services/media-url';
 
 @Component({
   selector: 'app-why-choose-us',
@@ -18,6 +19,7 @@ export class WhyChooseUsComponent implements OnInit {
   selectedImages: File[] = [];
 existingImages: string[] = [];
 imagePreviews: string[] = [];
+readonly maxImages = 2;
   constructor(
     private fb: FormBuilder,
     private apiHandlerService: ApiHandlerService,
@@ -37,11 +39,10 @@ getWhyChooseData() {
       if ((res.statusCode === 200 || res.statusCode === 201) && res.data) {
 
         this.whyChooseData = res.data[0];
-// ✅ store existing images
 this.existingImages = [
   this.whyChooseData.image1,
   this.whyChooseData.image2
-].filter(img => !!img); // remove empty/null
+].filter(img => !!img).map(img => resolveStaticUploadUrl(img));
         this.regConfig.patchValue({
           main_heading: this.whyChooseData.main_heading || '',
           sub_heading: this.whyChooseData.sub_heading || '',
@@ -125,9 +126,13 @@ onFileSelected(event) {
   const files: FileList = event.target.files;
 
   this.selectedImages = [];
-  this.imagePreviews = []; // reset previews
+  this.imagePreviews = [];
 
-  for (let i = 0; i < files.length && i < 2; i++) {
+  if (files.length > this.maxImages) {
+    this.swalService.alert.oops("Maximum 2 images allowed");
+  }
+
+  for (let i = 0; i < files.length && i < this.maxImages; i++) {
     if (this.validateFile(files[i])) {
 
       this.selectedImages.push(files[i]);
@@ -165,11 +170,11 @@ uploadImages(): Promise<any[]> {
 
           if (res.statusCode === 200 || res.statusCode === 201) {
 
-            // ✅ HANDLE DIFFERENT RESPONSE FORMATS
-            const images = (res.data || []).map(item => {
+            const uploadData = Array.isArray(res.data) ? res.data : (res.data ? [res.data] : []);
+            const images = uploadData.map(item => {
               if (typeof item === 'string') return item;
-              return item.image_url || item.url || item.path || '';
-            });
+              return item.image_url || item.url || item.path || item.filename || '';
+            }).filter(img => !!img);
 
             resolve(images);
 
@@ -232,8 +237,18 @@ uploadImages(): Promise<any[]> {
   }
 }
 
+  getDisplayImages(): { label: string, src: string }[] {
+    const selectedPreviews = this.imagePreviews.map(src => ({ label: 'New', src }));
+    const remainingExistingImages = this.existingImages
+      .slice(this.selectedImages.length, this.maxImages)
+      .map(src => ({ label: 'Existing', src }));
+
+    return selectedPreviews.concat(remainingExistingImages).slice(0, this.maxImages);
+  }
+
   onReset() {
     this.regConfig.reset();
     this.selectedImages = [];
+    this.imagePreviews = [];
   }
 }

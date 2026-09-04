@@ -290,10 +290,19 @@
 </div>
     <!-- IMAGE -->
     <div class="col-md-4 mb-3">
-      <label>Image  <small class="text-muted d-block">
-    Allowed: JPEG, PNG | Max size: 200KB
+      <label>Image <span class="text-danger">*</span> <small class="text-muted d-block">
+    Allowed: JPEG, PNG, WEBP | Max size: 200KB
   </small></label>
-      <input type="file" class="form-control-file" (change)="onFileSelected($event)">
+      <input
+        type="file"
+        class="form-control-file"
+        accept=".jpg,.jpeg,.png,.webp"
+        [class.is-invalid]="f.image.invalid && (f.image.dirty || f.image.touched || isSubmitted)"
+        (change)="onFileSelected($event)">
+      <div class="invalid-feedback d-block"
+           *ngIf="f.image.errors?.required && (f.image.dirty || f.image.touched || isSubmitted)">
+        Image is required
+      </div>
       <img *ngIf="vehicleImage" class="rounded mt-2" width="100" height="50"  [src]="vehicleImage">
     </div>
 

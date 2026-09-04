@@ -323,7 +323,7 @@ getCityListByCountry(
       duration_minutes: [''],
      cancellation_rule:['',Validators.required],
       combustion_type:['',Validators.required],
-      image: [''],
+      image: ['', Validators.required],
       status: [true],
       amenities:[null],
       
@@ -408,6 +408,13 @@ onVehicleMasterSave() {
       });
   }
 upateVehicleMaster() {
+   this.isSubmitted = true;
+   if (this.addUpdateVehcleForm.invalid) {
+    this.addUpdateVehcleForm.markAllAsTouched();
+    this.swal.alert.oops('Please fill all required fields');
+    return;
+  }
+
    let features = {
   vehicle:this.f.amenities.value.map(v => v.amenties),
   driver: [],
@@ -491,7 +498,8 @@ const selectedAmenities = this.carAmenityList.filter(a =>
     duration_hours: v.duration_hours,
     duration_minutes: v.duration_minutes,
     status: v.status === 1 || v.status === true,
-    amenities: selectedAmenities
+    amenities: selectedAmenities,
+    image: v.image || ''
   });
 
   // ❌ REMOVE THIS COMPLETELY
@@ -544,6 +552,8 @@ onFileSelected(event: any) {
     input.value = '';
     this.imageFile = null;
     this.vehicleImage = null;
+    this.f.image.setValue('');
+    this.f.image.markAsTouched();
     return;
   }
 
@@ -553,11 +563,16 @@ onFileSelected(event: any) {
     input.value = '';
     this.imageFile = null;
     this.vehicleImage = null;
+    this.f.image.setValue('');
+    this.f.image.markAsTouched();
     return;
   }
 
   // ✅ Valid file
   this.imageFile = file;
+  this.f.image.setValue(file);
+  this.f.image.markAsDirty();
+  this.f.image.updateValueAndValidity();
 
   const reader = new FileReader();
   reader.onload = (e: any) => {
@@ -574,9 +589,11 @@ onFileSelected(event: any) {
   }
 
   onCancel() {
-    this.addUpdateVehcleForm.reset({ ride_type: 'private', country: 'India' });
+    this.addUpdateVehcleForm.reset({ ride_type: 'private', country: 'India', image: '' });
     this.saveTextName = 'Save';
     this.vehicleImage = '';
+    this.imageFile = null;
+    this.isSubmitted = false;
   }
 
   getVehicleTypeList() {

@@ -21,6 +21,7 @@ import { GuideMainSectionComponent } from "./components/guide-main-section/guide
 import { GuideProcessSectionComponent } from "./components/guide-process-section/guide-process-section.component";
 import { GeneralModalImageComponent } from "./components/general-modal-image/general-modal-image.component";
 import { GuideLastSectionComponent } from "./components/guide-last-section/guide-last-section.component";
+import { GuideLanguageMasterComponent } from "./components/guide-language-master/guide-language-master.component";
 import { AddOrModifyServiceFaqComponent } from "./components/add-or-modify-service-faq/add-or-modify-service-faq.component";
 import { AddOrModifyAboutFaqComponent } from "./components/add-or-modify-about-faq/add-or-modify-about-faq.component";
 import { SupplierLegalComponent } from "./components/supplier-legal/supplier-legal.component";
@@ -155,6 +156,12 @@ const routes: Routes = [
         path: "book-my-guide-cms/last-section",
         canActivate: [AuthGuard],
         component: GuideLastSectionComponent,
+        data: { extraParameter: "" },
+      },
+      {
+        path: "book-my-guide-cms/language-master",
+        canActivate: [AuthGuard],
+        component: GuideLanguageMasterComponent,
         data: { extraParameter: "" },
       },
       {

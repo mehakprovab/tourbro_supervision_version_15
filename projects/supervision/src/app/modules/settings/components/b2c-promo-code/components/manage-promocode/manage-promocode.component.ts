@@ -13,6 +13,8 @@ import {
   FormControl,
   Validators,
   FormArray,
+  AbstractControl,
+  ValidationErrors,
 } from "@angular/forms";
 import { Router } from "@angular/router";
 import { SettingService } from "../../../../setting.service";
@@ -100,6 +102,18 @@ export class ManagePromocodeComponent implements OnInit, OnDestroy {
     this.applyPromoTypeRules(this.regConfig.get("promo_type").value);
   }
 
+  validatePromoDate(control: AbstractControl): ValidationErrors | null {
+    if (!control.value) {
+      return null;
+    }
+    const date = control.value;
+    if (!(date instanceof Date) || isNaN(date.getTime())) {
+      return { invalidDate: true };
+    }
+    const today = new Date().setHours(0, 0, 0, 0);
+    return date.getTime() < today ? { pastDate: true } : null;
+  }
+
   createForm() {
     this.regConfig = this.fb.group({
       id: new FormControl(""),
@@ -116,8 +130,8 @@ export class ManagePromocodeComponent implements OnInit, OnDestroy {
       discount_type: new FormControl("", [Validators.required]),
       discount_value: new FormControl("", [Validators.required]),
       // use_type: new FormControl("", [Validators.required]),
-      start_date: new FormControl("", [Validators.required]),
-      expiry_date: new FormControl("", [Validators.required]),
+      start_date: new FormControl("", [Validators.required, this.validatePromoDate]),
+      expiry_date: new FormControl("", [Validators.required, this.validatePromoDate]),
       // limitation: new FormControl(""),
       status: new FormControl("1", [Validators.required]),
     });
@@ -277,6 +291,9 @@ applyPromoTypeRules(value: string) {
 }
 
 onSubmit() {
+  this.minDate = new Date(new Date().setHours(0, 0, 0, 0));
+  this.regConfig.get("start_date").updateValueAndValidity();
+  this.regConfig.get("expiry_date").updateValueAndValidity();
   this.applyPromoTypeRules(this.regConfig.get("promo_type").value);
 
   if (this.regConfig.invalid) {
@@ -359,10 +376,6 @@ onSubmit() {
 }
   get categoryArray() {
     return this.regConfig.get("category") as FormArray;
-  }
-
-  get startDateMinDate(): Date | null {
-    return this.addOrUpdate === "add" ? this.minDate : null;
   }
 
   getPromoImageUrl(): string {

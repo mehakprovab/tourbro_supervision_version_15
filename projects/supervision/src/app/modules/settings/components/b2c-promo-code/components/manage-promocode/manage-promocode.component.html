@@ -192,28 +192,34 @@
                         <span class="icon return_date" (click)="isOpen= !isOpen"></span>
                         <input type="text" id="start_date" formControlName="start_date"
                         class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy"
-                        bsDatepicker [bsConfig]="bsDateConf"  [minDate]="startDateMinDate"
+                        bsDatepicker [bsConfig]="bsDateConf"  [minDate]="minDate"
                         [isOpen]="isOpen" onkeydown="return false">
                         <div *ngIf="regConfig.get('start_date').hasError('required') && regConfig.get('start_date').touched" class="text-danger">
                             Start Date is required
                         </div>
-                        <div *ngIf="!regConfig.get('start_date').hasError('required') && regConfig.get('start_date').invalid && regConfig.get('start_date').touched" class="text-danger">
+                        <div *ngIf="regConfig.get('start_date').hasError('pastDate') && regConfig.get('start_date').touched" class="text-danger">
+                            Start Date cannot be before today
+                        </div>
+                        <div *ngIf="!regConfig.get('start_date').hasError('required') && !regConfig.get('start_date').hasError('pastDate') && regConfig.get('start_date').invalid && regConfig.get('start_date').touched" class="text-danger">
                             Start Date is invalid
                         </div>
                     </div>
                 </div>
                 <div class="form-group required row">
-                    <label for="start_date" class="col-sm-2 col-form-label">Expiry Date</label>
+                    <label for="expiry_date" class="col-sm-2 col-form-label">Expiry Date</label>
                     <div class="col-sm-4">
                         <span class="icon return_date" (click)="isExpDateOpen= !isExpDateOpen"></span>
-                        <input type="text" id="start_date" formControlName="expiry_date"
+                        <input type="text" id="expiry_date" formControlName="expiry_date"
                         class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy"
-                        bsDatepicker [bsConfig]="bsDateConf" 
+                        bsDatepicker [bsConfig]="bsDateConf" [minDate]="minDate"
                         [isOpen]="isExpDateOpen" onkeydown="return false">
                         <div *ngIf="regConfig.get('expiry_date').hasError('required') && regConfig.get('expiry_date').touched" class="text-danger">
                             Expiry Date is required
                         </div>
-                        <div *ngIf="!regConfig.get('expiry_date').hasError('required') && regConfig.get('expiry_date').invalid && regConfig.get('expiry_date').touched" class="text-danger">
+                        <div *ngIf="regConfig.get('expiry_date').hasError('pastDate') && regConfig.get('expiry_date').touched" class="text-danger">
+                            Expiry Date cannot be before today
+                        </div>
+                        <div *ngIf="!regConfig.get('expiry_date').hasError('required') && !regConfig.get('expiry_date').hasError('pastDate') && regConfig.get('expiry_date').invalid && regConfig.get('expiry_date').touched" class="text-danger">
                             Expiry Date is invalid
                         </div>
                     </div>
@@ -261,7 +267,7 @@
         type="checkbox"
         formControlName="promo_visibility"
       />
-      Enable PromoCode
+      Enable Private PromoCode
     </label>
 
     <!-- <div *ngIf="regConfig.get('promo_visibility')?.invalid && regConfig.get('promo_visibility')?.touched" class="text-danger">

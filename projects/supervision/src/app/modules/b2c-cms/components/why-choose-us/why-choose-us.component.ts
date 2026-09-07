@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild, OnDestroy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SwalService } from 'projects/b2b/src/app/core/services/swal.service';
 import { SubSink } from 'subsink';
@@ -13,13 +13,16 @@ import { resolveStaticUploadUrl } from 'projects/supervision/src/app/core/servic
   templateUrl: './why-choose-us.component.html',
   styleUrls: ['./why-choose-us.component.scss']
 })
-export class WhyChooseUsComponent implements OnInit {
+export class WhyChooseUsComponent implements OnInit, OnDestroy {
  regConfig: FormGroup;
- whyChooseData:any
+ whyChooseData: any = {};
   selectedImages: File[] = [];
 existingImages: string[] = [];
 imagePreviews: string[] = [];
+previewError = "";
 readonly maxImages = 2;
+private selectionVersion = 0;
+@ViewChild('imageInput') imageInput: ElementRef<HTMLInputElement>;
   constructor(
     private fb: FormBuilder,
     private apiHandlerService: ApiHandlerService,
@@ -38,7 +41,7 @@ getWhyChooseData() {
 
       if ((res.statusCode === 200 || res.statusCode === 201) && res.data) {
 
-        this.whyChooseData = res.data[0];
+        this.whyChooseData = res.data[0] || {};
 this.existingImages = [
   this.whyChooseData.image1,
   this.whyChooseData.image2
@@ -110,7 +113,7 @@ this.existingImages = [
     const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
 
     if (!allowedTypes.includes(file.type)) {
-      this.swalService.alert.oops("Only JPG/PNG/WEBP allowed");
+      this.swalService.alert.oops("Only JPG/JPEG/PNG/WEBP allowed");
       return false;
     }
 
@@ -122,32 +125,77 @@ this.existingImages = [
     return true;
   }
 
-onFileSelected(event) {
-  const files: FileList = event.target.files;
-
-  this.selectedImages = [];
-  this.imagePreviews = [];
+async onFileSelected(event: Event) {
+  const input = event.target as HTMLInputElement;
+  const files = Array.from(input.files || []);
+  if (!files.length) return;
 
   if (files.length > this.maxImages) {
     this.swalService.alert.oops("Maximum 2 images allowed");
+    input.value = '';
+    return;
+  }
+  if (!files.every(file => this.validateFile(file))) {
+    input.value = '';
+    return;
   }
 
-  for (let i = 0; i < files.length && i < this.maxImages; i++) {
-    if (this.validateFile(files[i])) {
-
-      this.selectedImages.push(files[i]);
-
-      // ✅ generate preview
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.imagePreviews.push(e.target.result);
-      };
-      reader.readAsDataURL(files[i]);
+  const selectionVersion = ++this.selectionVersion;
+  try {
+    for (const file of files) {
+      const bytes = new Uint8Array(await file.slice(0, 12).arrayBuffer());
+      if (selectionVersion !== this.selectionVersion) return;
+      const jpeg = bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff;
+      const png = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]
+        .every((value, index) => bytes[index] === value);
+      const webp = String.fromCharCode(...bytes.slice(0, 4)) === 'RIFF'
+        && String.fromCharCode(...bytes.slice(8, 12)) === 'WEBP';
+      if (!jpeg && !png && !webp) {
+        input.value = '';
+        this.swalService.alert.oops(`"${file.name}" does not contain JPG, JPEG, PNG or WEBP image data. Download the actual image, not the webpage.`);
+        return;
+      }
     }
+  } catch {
+    if (selectionVersion !== this.selectionVersion) return;
+    input.value = '';
+    this.swalService.alert.oops('Unable to read the selected file. Please select it again.');
+    return;
   }
 
-  console.log('Selected Images:', this.selectedImages);
+  this.clearSelectedImages();
+  const version = this.selectionVersion;
+  this.selectedImages = files;
+  this.imagePreviews = files.map(file => URL.createObjectURL(file));
+  this.imagePreviews.forEach((src, index) => {
+    const image = new Image();
+    image.onerror = () => {
+      if (version === this.selectionVersion) {
+        const filename = files[index].name;
+        this.previewError = `Preview unavailable for "${filename}". The file is still selected and can be uploaded.`;
+      }
+    };
+    image.src = src;
+  });
 }
+
+private clearSelectedImages() {
+  this.selectionVersion++;
+  this.previewError = "";
+  this.imagePreviews.forEach(src => URL.revokeObjectURL(src));
+  this.selectedImages = [];
+  this.imagePreviews = [];
+  if (this.imageInput) this.imageInput.nativeElement.value = '';
+}
+
+ngOnDestroy() {
+  this.clearSelectedImages();
+}
+
+trackImage(index: number): number {
+  return index;
+}
+
 uploadImages(): Promise<any[]> {
   return new Promise((resolve, reject) => {
 
@@ -170,12 +218,19 @@ uploadImages(): Promise<any[]> {
 
           if (res.statusCode === 200 || res.statusCode === 201) {
 
-            const uploadData = Array.isArray(res.data) ? res.data : (res.data ? [res.data] : []);
+            const imageData = res.data && res.data.images;
+            const uploadData = imageData
+              ? (Array.isArray(imageData) ? imageData : [imageData.image1, imageData.image2])
+              : (Array.isArray(res.data) ? res.data : (res.data ? [res.data] : []));
             const images = uploadData.map(item => {
               if (typeof item === 'string') return item;
-              return item.image_url || item.url || item.path || item.filename || '';
+              return item && (item.image_url || item.url || item.path || item.filename) || '';
             }).filter(img => !!img);
 
+            if (images.length !== this.selectedImages.length) {
+              reject(new Error('Upload response did not include all image paths'));
+              return;
+            }
             resolve(images);
 
           } else {
@@ -218,7 +273,7 @@ uploadImages(): Promise<any[]> {
             this.swalService.alert.success("Saved successfully");
 
             this.regConfig.reset();
-            this.selectedImages = [];
+            this.clearSelectedImages();
 
             this.getWhyChooseData(); // reload data
           } else {
@@ -238,7 +293,7 @@ uploadImages(): Promise<any[]> {
 }
 
   getDisplayImages(): { label: string, src: string }[] {
-    const selectedPreviews = this.imagePreviews.map(src => ({ label: 'New', src }));
+    const selectedPreviews = this.imagePreviews.filter(src => !!src).map(src => ({ label: 'New', src }));
     const remainingExistingImages = this.existingImages
       .slice(this.selectedImages.length, this.maxImages)
       .map(src => ({ label: 'Existing', src }));
@@ -248,7 +303,6 @@ uploadImages(): Promise<any[]> {
 
   onReset() {
     this.regConfig.reset();
-    this.selectedImages = [];
-    this.imagePreviews = [];
+    this.clearSelectedImages();
   }
 }

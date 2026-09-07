@@ -32,6 +32,7 @@ export class AddOrUpdateBannerImagesComponent implements OnInit, OnDestroy {
     noData: boolean = true;
     respData: Array<any> = [];
     seqId;
+    editingBanner: any = null;
 
     sequenceList: Array<any> = [
         { name: 1 },
@@ -90,13 +91,43 @@ export class AddOrUpdateBannerImagesComponent implements OnInit, OnDestroy {
             });
     }
 
+    getBannerType(banner): string {
+        for (const value of [banner.banner_type, banner.type]) {
+            const type = String(value || '').trim().toLowerCase();
+            if (type === 'home' || type === 'home banner image') {
+                return 'home';
+            }
+            if (type === 'wellness' || type === 'wellness banner image') {
+                return 'wellness';
+            }
+        }
+        return '';
+    }
+
+    editBannerImage(banner) {
+        this.onReset();
+        this.editingBanner = banner;
+        this.regConfig.patchValue({
+            id: banner.id,
+            title: banner.title,
+            description: banner.description,
+            banner_type: this.getBannerType(banner)
+        });
+        this.imageSrc = this.logoBannerUri + banner.image_url;
+        this.logoConfig.get('banner_logo').clearValidators();
+        this.logoConfig.get('banner_logo').updateValueAndValidity();
+        this.fileUploader.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
     imageSrc;
     onFileSelected($event) {
         const file = $event.target.files[0];
-        if (file && file.size) {
+        if (!file) {
+            return;
+        }
+        if (file.size) {
             let result=this.validateFileSize(file.size);
             if(!result){
-               this.onReset();
                this.fileUploader.nativeElement.value = null;
                 return;
             }
@@ -114,7 +145,7 @@ export class AddOrUpdateBannerImagesComponent implements OnInit, OnDestroy {
     }
 
     onSubmit() {
-        if (this.respData.length == 10) {
+        if (!this.editingBanner && this.respData.length >= 10) {
             this.swalService.alert.oops("you have exceeded the maximum banners.");
             return;
         }
@@ -124,17 +155,27 @@ export class AddOrUpdateBannerImagesComponent implements OnInit, OnDestroy {
         }
 
         const formData = new FormData();
-        formData.append('image', this.logoConfig.get('banner_logo').value);
+        const isUpdate = !!this.editingBanner;
+        const image = this.logoConfig.get('banner_logo').value;
+        if (image) {
+            formData.append('image', image);
+        }
+        if (isUpdate) {
+            formData.append('id', this.editingBanner.id);
+            if (this.editingBanner.sequence != null) {
+                formData.append('sequence', this.editingBanner.sequence);
+            }
+        }
         formData.append('title',this.regConfig.value.title);
         formData.append('description',this.regConfig.value.description); 
         formData.append('banner_type', this.regConfig.value.banner_type);
       
 
-        this.subSunk.sink = this.apiHandlerService.apiHandler('uploadImage', 'post', {}, {}, formData)
+        this.subSunk.sink = this.apiHandlerService.apiHandler(isUpdate ? 'updateMainBannerImage' : 'uploadImage', 'post', {}, {}, formData)
             .subscribe(resp => {
                 if (resp.statusCode == 200 || resp.statusCode == 201) {
                     this.submitted = false;
-                    this.swalService.alert.success("Banner added successfully.");
+                    this.swalService.alert.success(isUpdate ? "Banner updated successfully." : "Banner added successfully.");
                     this.onReset();
                     const fileInput = document.getElementById('logo') as HTMLInputElement;
                     if (fileInput) {
@@ -150,7 +191,13 @@ export class AddOrUpdateBannerImagesComponent implements OnInit, OnDestroy {
     }
 
     onReset() {
+        this.editingBanner = null;
         this.logoConfig.reset();
+        this.logoConfig.get('banner_logo').setValidators(Validators.required);
+        this.logoConfig.get('banner_logo').updateValueAndValidity();
+        if (this.fileUploader) {
+            this.fileUploader.nativeElement.value = '';
+        }
         this.regConfig.reset();
         this.bannerLogo = '';
         this.imageSrc = '';
@@ -188,6 +235,9 @@ export class AddOrUpdateBannerImagesComponent implements OnInit, OnDestroy {
                     .subscribe(resp => {
                         if (resp.statusCode == 200 || resp.statusCode == 201) {
                             this.respData.splice(this.respData.findIndex(data => data['id'] == id), 1);
+                            if (this.editingBanner && this.editingBanner.id == id) {
+                                this.onReset();
+                            }
                             this.swalService.alert.success('Your record has been deleted successfully!');
                         } else {
                             this.swalService.alert.oops('Something went wrong! Please retry later.');

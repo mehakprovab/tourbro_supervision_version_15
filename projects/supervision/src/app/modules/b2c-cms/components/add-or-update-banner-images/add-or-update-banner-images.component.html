@@ -45,7 +45,10 @@
                         <td class="text-left">
                            <p>{{data.type}}</p>
                         </td>
-                        <td class="text-left"> <button class="btn btn-sm btn-primary"
+                        <td class="text-left">
+                            <button type="button" class="btn btn-sm btn-primary mr-2"
+                                (click)="editBannerImage(data)">Update</button>
+                            <button type="button" class="btn btn-sm btn-primary"
                                 (click)="deleteBannerImage(data.id)">
                               
                                     {{'Delete'}}
@@ -94,7 +97,7 @@
                 <div class="col-12 pr-0">
                     <div class="form-group">
                 <label for="logo" class="col-sm-3 col-form-label font-weight-bold"> Change Banner Image<sup
-                        class="text-danger f-14"> * </sup> <br>
+                        class="text-danger f-14" *ngIf="!editingBanner"> * </sup> <br>
                     <p *ngIf="!imageSrc && submitted" class="text-danger" style="font-weight: 400;font-size: 80%;">Image
                         is required</p>
                 </label>
@@ -109,8 +112,8 @@
             </div>
             <div class="form-group row mb-n2">
                 <div class="col-sm-12 customCenter">
-                    <button type="submit" class="btn btn-sm btn-primary mr-2" (click)="onSubmit()">Submit</button>
-                    <button type="reset" class="btn btn-sm btn-secondary" (click)="onReset()">Reset</button>
+                    <button type="submit" class="btn btn-sm btn-primary mr-2" (click)="onSubmit()">{{ editingBanner ? 'Update' : 'Submit' }}</button>
+                    <button type="button" class="btn btn-sm btn-secondary" (click)="onReset()">{{ editingBanner ? 'Cancel' : 'Reset' }}</button>
                 </div>
             </div>
         </form>

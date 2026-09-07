@@ -96,8 +96,11 @@
                                                     <td class="text-left"> {{user['start_date'] | date: 'dd/MM/yyyy'}}    
                                                     </td>
                                                     <td class="text-left">
-                                                        <span *ngIf="!findPromoExpired(user['expiry_date'])">{{'Validity Expired'}}</span>
-                                                        <span *ngIf="findPromoExpired(user['expiry_date'])">{{'Valid'}}</span>
+                                                        <span
+                                                            class="badge"
+                                                            [ngClass]="user['promo_visibility'] ? 'badge-success' : 'badge-secondary'">
+                                                            {{getPromoVisibilityLabel(user['promo_visibility'])}}
+                                                        </span>
                                                     </td>
                                                     <td class="text-left" style="display:flex; float:right;"> 
                                                         <button class="btn btn-sm btn-primary"
@@ -133,4 +136,3 @@
             </div>
         </div>
     </div>
-

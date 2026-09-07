@@ -64,7 +64,7 @@ export class PromocodeListComponent implements OnInit,OnDestroy {
         { key: 'category', value: 'Module' },
         { key: 'status', value: 'Status' },
         { key: 'start_date', value: 'Created On' },
-        { key: 'Coupon_Validity', value: 'Promo Validity' },
+        { key: 'promo_visibility', value: 'Promo Visibility' },
         { key: 'action', value: 'Action' },
     ];
 
@@ -163,6 +163,10 @@ export class PromocodeListComponent implements OnInit,OnDestroy {
         }
     }
 
+    getPromoVisibilityLabel(promoVisibility: boolean): string {
+        return promoVisibility ? 'Visible' : 'Hidden';
+    }
+
     displayImage(img){
         return `${baseUrl+''+img}`
     }
@@ -208,7 +212,7 @@ export class PromocodeListComponent implements OnInit,OnDestroy {
                 "Module": response.category,
                 "Status": response.status== 1?'Active':'In Active',
                 "Created On": response.start_date,
-                "Promo Validity":!this.findPromoExpired(response['expiry_date'])?'Validity Expired':'Valid'
+                "Promo Visibility": this.getPromoVisibilityLabel(response.promo_visibility)
             }
         });
         const columnWidths = [

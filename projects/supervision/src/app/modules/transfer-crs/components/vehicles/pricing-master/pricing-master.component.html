@@ -29,9 +29,8 @@
         <select class="form-control"
                 formControlName="trip_type"
                 [class.is-invalid]="addUpdateVendorForm.get('trip_type').invalid && (isSubmitted || addUpdateVendorForm.get('trip_type').touched)">
-          <option value="Pickup">Pickup</option>
-          <option value="Dropoff">Dropoff</option>
-          <option value="Both Same">Both Same</option>
+          <option value="One Way">One Way</option>
+          <option value="Round Trip">Round Trip</option>
         </select>
         <div class="invalid-feedback">Trip type is required</div>
       </div>
@@ -317,5 +316,4 @@
             </select>
           </div>
         </div>
-
 

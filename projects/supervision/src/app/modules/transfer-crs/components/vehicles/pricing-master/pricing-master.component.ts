@@ -55,7 +55,7 @@ getVehicleName(id: number): string {
 createForm() {
   this.addUpdateVendorForm = this.fb.group({
     type: ['Airport', Validators.required],
-    trip_type: ['Pickup', Validators.required],
+    trip_type: ['One Way', Validators.required],
     commute_supplier_vehicle_id: [null, Validators.required],
    
 
@@ -222,7 +222,7 @@ getVehicleMasterList() {
 resetForm() {
   this.addUpdateVendorForm.reset({
     type: 'Airport',
-    trip_type: 'Pickup',
+    trip_type: 'One Way',
     commute_supplier_vehicle_id: null,
     
     buffer_km: 0,

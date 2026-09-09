@@ -116,34 +116,44 @@ export class B2CTransferInvoiceComponent implements OnInit {
     	return str.replace(/\d(?=\d{4})/g, "*");
     }
 
-    downloadA4(type: any, orientation?: string): void {
-      const fileName = this.voucherData?.BookingDetails?.app_reference || this.app_reference
-         window['html2canvas'] = html2canvas;
-         const date = new Date().toDateString();
-         const doc = new jsPDF({
-             orientation: 'p',
-             unit: 'pt',
-             format: 'a4',
-         });
- 
-      const content = this.print_voucher.nativeElement;
-      const exportContent = this.utility.prepareExportElement(content);
-      
-      doc.html(exportContent, {
-          html2canvas: {
-              allowTaint: true,
-              useCORS: true,
-              scale: 600 / content.scrollWidth
-          },
-          
-          callback: async (doc) => {
-              doc.save(`${fileName}.pdf`);
-              this.swalService.alert.success();
-              
-          }
-      });
-  
-  }
+
+
+  downloadA4(type: any, orientation?: string): void {
+  let fileName = this.voucherData['AppReference'];
+  window['html2canvas'] = html2canvas;
+
+  const doc = new jsPDF({
+    orientation: 'p',
+    unit: 'pt',
+    format: 'a4',
+  });
+
+  const content = this.print_voucher.nativeElement;
+  const exportContent = this.utility.prepareExportElement(content);
+
+  // actual rendered width of your invoice markup, in px
+  const sourceWidth = exportContent.scrollWidth || content.scrollWidth;
+
+  const pageWidth = doc.internal.pageSize.getWidth();   // ~595pt for A4 portrait
+  const margin = 20;
+  const targetWidth = pageWidth - margin * 2;
+
+  doc.html(exportContent, {
+    x: margin,
+    y: margin,
+    width: targetWidth,        // width the content is scaled INTO on the PDF page
+    windowWidth: sourceWidth,  // width the content is laid out AT before scaling — this is the key fix
+    html2canvas: {
+      allowTaint: true,
+      useCORS: true,
+      scale: targetWidth / sourceWidth, // now this scale factor actually matches windowWidth
+    },
+    callback: async (doc) => {
+      doc.save(`${fileName}.pdf`);
+      this.swalService.alert.success();
+    }
+  });
+}
  
  
    pdfCallbackFn(pdf: any) {

@@ -182,7 +182,7 @@
                   (ngModelChange)="onStatusChange(item, $event)"
                   [disabled]="item.statusUpdating"
                   [name]="'status_' + i"
-                  style="width: 56%;"
+                  style="width: 75%;"
                 >
                   <option value="2">Pending</option>
                   <option value="1">Accepted</option>
@@ -190,7 +190,11 @@
                 </select>
                 </ng-container>
                 <ng-container *ngIf="item.bookinStatus === 'BOOKING_CANCELLED'">
-              <span style="color: red;">Booking Cancelled</span>
+              <span style="color: red;background: #fff !important;
+    padding: 10px 16px !important;
+    border: 1px solid red !important;
+    border-radius: 8px !important;
+    height: 45px;">Booking Cancelled</span>
                 </ng-container>
               </td>
               <td>

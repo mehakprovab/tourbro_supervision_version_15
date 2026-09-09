@@ -67,7 +67,7 @@
 
                               <span *ngIf="pax[0]?.phone">
                                 <img src="assets/images/telephone-ic.png">
-                                {{ pax[0]?.phone }}
+                                {{ formatPassengerPhone(pax[0]) }}
                               </span><br>
 
                               <span *ngIf="pax[0]?.email">
@@ -136,7 +136,7 @@
                 <td valign="top" style="padding:0px; border: none; padding-left: 15px;">
                   <span *ngIf="voucherData?.BookingDetails?.car_name"
                     style="line-height:normal;font-size:22px;color:#282828;vertical-align:middle;font-weight: 600;">
-                    Product Type: {{voucherData?.BookingDetails?.car_name}}
+                  {{voucherData?.BookingDetails?.car_name}}
                   </span>
 
                   <span *ngIf="voucherData?.BookingDetails?.car_pickup_address"
@@ -157,10 +157,7 @@
                   </ng-container>
 
                 
-                  <span *ngIf="voucherData?.BookingDetails?.car_supplier_name"
-                    style="display: block;line-height:22px;font-size: 16px;font-weight: 400;color: #4B4B4B;">
-                    Supplier Name: {{voucherData?.BookingDetails?.car_supplier_name || 'N/A'}}
-                  </span>
+
 
                   <span *ngIf="voucherData?.BookingDetails?.max_capacity"
                     style="display: block;line-height:22px;font-size: 16px;font-weight: 400;color: #4B4B4B;">
@@ -172,9 +169,9 @@
                     No Of Pax: {{voucherData?.BookingDetails?.NoOfPax || 1}}
                   </span>
 
-                  <span *ngIf="voucherData?.BookingDetails?.TripType"
+                  <span
                     style="display: block;line-height:22px;font-size: 16px;font-weight: 400;color: #4B4B4B;">
-                    Trip Type: {{voucherData?.BookingDetails?.TripType || 'N/A'}}
+                    Trip Type: {{ getTripType() }}
                   </span>
                 </td>
               </tr>
@@ -227,7 +224,7 @@
                   </td>
 
                   <td style="padding:10px 15px;">
-                    <span *ngIf="pax.phone">{{ pax.phone }}</span>
+                    <span *ngIf="pax.phone">{{ formatPassengerPhone(pax) }}</span>
                   </td>
 
                   <td style="padding:10px 15px;">
@@ -260,41 +257,47 @@
                                 Details</span></td>
                       </tr>
 
-                      <!-- Base Fare -->
-                      <tr *ngIf="attributes?.fare_details?.base_fare" style="white-space:nowrap; color: #4B4B4B; font-weight: 500;font-size: 16px;">
-                        <td style="padding:10px 15px; width: 25%;">Base Fare</td>
-                        <td style="text-align: right; padding:10px 15px;">
-                          {{ voucherData?.BookingDetails?.currency }}
-                          {{ attributes?.fare_details?.base_fare | number:'1.2-2' }}
-                        </td>
-                      </tr>
-
-                      <!-- Driver Charges -->
-                      <tr *ngIf="attributes?.fare_details?.total_driver_charges" style="white-space:nowrap; color: #4B4B4B; font-weight: 500;font-size: 16px;">
-                        <td style="padding:10px 15px; width: 25%;">Driver Charges</td>
-                        <td style="text-align: right; padding:10px 15px;">
-                          {{ voucherData?.BookingDetails?.currency }}
-                          {{ attributes?.fare_details?.total_driver_charges | number:'1.2-2' }}
-                        </td>
-                      </tr>
-
-                      <!-- Discount -->
-                      <tr *ngIf="attributes?.fare_details?.seller_discount" style="white-space:nowrap; color: #4B4B4B; font-weight: 500;font-size: 16px;">
-                        <td style="padding:10px 15px; width: 25%;">Discount</td>
-                        <td style="text-align: right; padding:10px 15px;">
-                          {{ voucherData?.BookingDetails?.currency }}
-                          {{ attributes?.fare_details?.seller_discount | number:'1.2-2' }}
-                        </td>
-                      </tr>
-
-                      <!-- Total -->
-                      <tr style="white-space:nowrap; color: #4B4B4B; font-weight: 500;font-size: 16px;">
-                        <td style="padding:10px 15px; padding:10px 15px;color: #FE4865; font-weight: 600; font-size: 18px;">Total Amount</td>
-                        <td style="text-align: right; padding:10px 15px; padding:10px 15px;color: #FE4865; font-weight: 600; font-size: 18px;">
-                          {{ voucherData?.BookingDetails?.currency }}
-                          {{ attributes?.fare_details?.base_fare | number:'1.2-2' }}
-                        </td>
-                      </tr>
+                      <ng-container *ngIf="showAdminReportFields; else supplierTotal">
+                        <tr style="white-space:nowrap; color: #4B4B4B; font-weight: 500;font-size: 16px;">
+                          <td style="padding:10px 15px; width: 50%;">Base Fare</td>
+                          <td style="padding:10px 15px;">
+                            {{ bookingDetails?.currency }} {{ (bookingDetails?.base_fare ?? 0) | number:'1.2-2' }}
+                          </td>
+                        </tr>
+                        <tr style="white-space:nowrap; color: #4B4B4B; font-weight: 500;font-size: 16px;">
+                          <td style="padding:10px 15px;">Convenience Fee</td>
+                          <td style="padding:10px 15px;">
+                            {{ bookingDetails?.currency }} {{ (bookingDetails?.convinence_fee ?? 0) | number:'1.2-2' }}
+                          </td>
+                        </tr>
+                        <tr style="white-space:nowrap; color: #4B4B4B; font-weight: 500;font-size: 16px;">
+                          <td style="padding:10px 15px;">Promo Discount</td>
+                          <td style="padding:10px 15px;">
+                            {{ bookingDetails?.currency }} {{ -(bookingDetails?.discount_amount ?? 0) | number:'1.2-2' }}
+                          </td>
+                        </tr>
+                        <tr style="white-space:nowrap; color: #4B4B4B; font-weight: 500;font-size: 16px;">
+                          <td style="padding:10px 15px;">Reward Discount</td>
+                          <td style="padding:10px 15px;">
+                            {{ bookingDetails?.currency }} {{ -(bookingDetails?.reward_discount ?? 0) | number:'1.2-2' }}
+                          </td>
+                        </tr>
+                        <tr style="white-space:nowrap; color: #FE4865; font-weight: 600; font-size: 18px;">
+                          <td style="padding:10px 15px; border-top:1px solid #ccbaff;">Paid Amount</td>
+                          <td style="padding:10px 15px; border-top:1px solid #ccbaff;">
+                            {{ bookingDetails?.currency }} {{ (bookingDetails?.grand_total ?? 0) | number:'1.2-2' }}
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <ng-template #supplierTotal>
+                        <tr style="white-space:nowrap; color: #FE4865; font-weight: 600; font-size: 18px;">
+                          <td style="padding:10px 15px; width:50%;">Total Amount</td>
+                          <td style="padding:10px 15px;">
+                            {{ attributes?.data?.Price?.Currency || bookingDetails?.currency }}
+                            {{ attributes?.data?.Price?.TotalDisplayFare != null ? (attributes.data.Price.TotalDisplayFare | number:'1.2-2') : 'N/A' }}
+                          </td>
+                        </tr>
+                      </ng-template>
 
                     </tbody>
                   </table>
@@ -331,7 +334,7 @@
               <!-- <tr>
                                 <td colspan="7" style="line-height:1px; font-size:14px; background: #fff; padding: 15px; color:#555"
                                  >
-                                 Arrival Date:{{voucherData?.BookingDetails?.booking_details?.OutboundTransferDetails?.DepartureInfo?.ArrivalDate}}
+                                 Arrival Date:{{ voucherData?.BookingDetails?.booking_details?.OutboundTransferDetails?.DepartureInfo?.ArrivalDate | date: 'dd/MM/yyyy' }}
                                 </td>
                               </tr>
                               <tr>
@@ -343,7 +346,7 @@
               <tr>
                 <td colspan="7" style="line-height: 20px; font-size: 14px; padding: 15px; color: #282828; font-weight: 400;border-top:none;">
                   Pickup
-                  Date:{{voucherData?.BookingDetails?.booking_details?.OutboundTransferDetails?.DepartureInfo?.PickupDate}}
+                  Date:{{ voucherData?.BookingDetails?.booking_details?.OutboundTransferDetails?.DepartureInfo?.PickupDate | date: 'dd/MM/yyyy' }}
                 </td>
               </tr>
               <tr>
@@ -380,7 +383,7 @@
               <!-- <tr>
                             <td colspan="7" style="line-height:1px; font-size:14px; background: #fff; padding: 15px; color:#555"
                              >
-                             Arrival Date:{{voucherData?.BookingDetails?.booking_details?.ReturnTransferDetails?.ReturnInfo?.ArrivalDate}}
+                             Arrival Date:{{ voucherData?.BookingDetails?.booking_details?.ReturnTransferDetails?.ReturnInfo?.ArrivalDate | date: 'dd/MM/yyyy' }}
                             </td>
                           </tr>
                           <tr>
@@ -392,7 +395,7 @@
               <tr>
                 <td colspan="7" style="line-height: 20px; font-size: 14px; padding: 15px; color: #282828; font-weight: 400;border-top:none;">
                   Pickup
-                  Date:{{voucherData?.BookingDetails?.booking_details?.ReturnTransferDetails?.ReturnInfo?.PickupDate}}
+                  Date:{{ voucherData?.BookingDetails?.booking_details?.ReturnTransferDetails?.ReturnInfo?.PickupDate | date: 'dd/MM/yyyy' }}
                 </td>
               </tr>
               <tr>

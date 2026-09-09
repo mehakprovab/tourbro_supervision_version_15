@@ -253,7 +253,7 @@
                                         <td class="text-left"> {{data['JourneyTo'] ? data['JourneyTo'] : ''}} </td>
                                         <td class="text-left"> {{data['JourneyStart']  | date: 'dd/MM/yyyy'}} </td>
                                         <td class="text-left"> {{data['JourneyEnd']  | date: 'dd/MM/yyyy'}} </td>
-                                        <td class="text-left"> {{data['AdminMarkup'] }} </td>
+                                        <td class="text-left" *ngIf="showAdminReportFields"> {{data['AdminMarkup'] }} </td>
                                         <td class="text-left"> {{ data['AgentMarkup']}} </td>
                                         <!-- <td class="text-left"> {{data.TotalFarePriceBreakUp.PriceBreakup.AdvanceTax?
                                             data.TotalFarePriceBreakUp.PriceBreakup.AdvanceTax: '0'}} </td> -->
@@ -271,7 +271,7 @@
                                             data['BaggageInsurancesDetails'][0]['amount']+' '+
                                             data['BaggageInsurancesDetails'][0]['currency'] : ""}} </td> -->
                                         <td class="text-left"> {{data['Currency'] ? data['Currency'] : ""}} </td>
-                                        <td class="text-left text-capitalize"> {{data['PaymentMode'] ? (data['PaymentMode'] | lowercase): ""}} </td>
+                                        <td class="text-left text-capitalize" *ngIf="showAdminReportFields"> {{data['PaymentMode'] ? (data['PaymentMode'] | lowercase): ""}} </td>
                                         <td class="text-left"> {{data['cancelation_date'] ? data['cancelation_date'] :
                                             ""  | date: 'dd/MM/yyyy'}}
                                         </td>
@@ -334,11 +334,11 @@
                             <td class="text-left"> {{paxDetail?.first_name}}</td>
                             <td class="text-left"> {{paxDetail?.last_name}}</td>
                             <td class="text-left"> {{paxDetail?.gender}}</td>
-                            <td class="text-left"> {{paxDetail?.date_of_birth}}</td>
+                            <td class="text-left"> {{ paxDetail?.date_of_birth | date: 'dd/MM/yyyy' }}</td>
                             <td class="text-left"> {{paxDetail?.passenger_nationality}}</td>
                             <td class="text-left"> {{paxDetail?.passport_number}}</td>
                             <td class="text-left"> {{paxDetail?.passport_issuing_country}}</td>
-                            <td class="text-left"> {{paxDetail?.passport_expiry_date}}</td>
+                            <td class="text-left"> {{ paxDetail?.passport_expiry_date | date: 'dd/MM/yyyy' }}</td>
                         </tr>
                     </tbody>
                 </table>

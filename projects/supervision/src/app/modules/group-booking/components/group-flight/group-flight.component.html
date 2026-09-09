@@ -70,15 +70,15 @@
                                         <td class="text-left">{{data['trip_type'] || 'N/A'}}</td>
                                         <td class="text-left">{{data['from'] || 'N/A'}}</td>
                                         <td class="text-left">{{data['to'] }}</td>
-                                        <td class="text-left">{{data['departure_date'] | date}}</td>
-                                        <td class="text-left"> {{data['return_date'] | date}} </td>
+                                        <td class="text-left">{{data['departure_date'] | date: 'dd/MM/yyyy'}}</td>
+                                        <td class="text-left"> {{data['return_date'] | date: 'dd/MM/yyyy'}} </td>
                                         <td class="text-left"> {{data['adult'] || 'N/A'}} </td>
                                         <td class="text-left"> {{data['child'] || 'N/A'}} </td>
                                         <td class="text-left"> {{data['infant'] || 'N/A'}} </td>
                                         <td class="text-left"> {{data['total_pax'] || 'N/A'}} </td>
                                         <td class="text-left"> {{data['class'] }} </td>
                                         <td class="text-left"> {{data['carrier'] || 'N/A'}} </td>
-                                        <td class="text-left"> {{data['recieved_on'] | date}} </td>
+                                        <td class="text-left"> {{data['recieved_on'] | date: 'dd/MM/yyyy'}} </td>
                                         <td class="text-left"> {{data['comments'] || 'N/A'}} </td>
                                     </tr>
                                 </tbody>

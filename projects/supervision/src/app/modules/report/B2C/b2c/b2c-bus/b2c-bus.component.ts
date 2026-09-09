@@ -25,7 +25,7 @@ export class B2cBusComponent implements OnInit {
     loadingTemplate: any;
     bsDateConf = {
         isAnimated: true,
-        dateInputFormat: 'YYYY-MM-DD',
+        dateInputFormat: 'DD/MM/YYYY',
         rangeInputFormat: 'YYYY-MM-DD',
         containerClass: 'theme-blue',
         showWeekNumbers: false
@@ -240,7 +240,7 @@ export class B2cBusComponent implements OnInit {
         }
         return date.toLocaleDateString('en-GB', {
             day: '2-digit',
-            month: 'short',
+            month: '2-digit',
             year: 'numeric'
         });
     }

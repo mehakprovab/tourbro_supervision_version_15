@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, Inject, LOCALE_ID, OnInit, OnDestroy } from '@angular/core';
+import { formatDate } from '@angular/common';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
-import { Subject } from 'rxjs';
+import { forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -26,8 +27,41 @@ secondaryColour=''
 
   constructor(
     private apiHandler: ApiHandlerService,
-    private swal: SwalService
+    private swal: SwalService,
+    @Inject(LOCALE_ID) private locale: string
   ) {}
+
+  get filteredCars(): any[] {
+    const terms = this.searchText.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    if (!terms.length) {
+      return this.carTypeList;
+    }
+    return this.carTypeList.filter((item, index) => {
+      const status = item.bookinStatus === 'BOOKING_CANCELLED'
+        ? 'Booking Cancelled'
+        : ({ '2': 'Pending', '1': 'Accepted', '0': 'Rejected' }[String(item.status ?? item.booking_status)] || '');
+      const values = [
+        index + 1, status, item.car_name, item.car_model, item.capacity, item.fuel,
+        item.booked_on, this.formatSearchDate(item.booked_on),
+        item.travel_date, this.formatSearchDate(item.travel_date),
+        item.car_number, item.supplierName, item.driver_name || '-', item.driver_phone,
+        // item.reassigned_by, item.pickup, item.drop, item.total, `₹ ${item.total ?? ''}`
+      ];
+      const text = values.filter(value => value != null).join(' ').toLowerCase().replace(/\s+/g, ' ');
+      return terms.every(term => text.includes(term));
+    });
+  }
+
+  private formatSearchDate(value: any): string {
+    if (!value) {
+      return '';
+    }
+    try {
+      return formatDate(value, 'short', this.locale);
+    } catch {
+      return '';
+    }
+  }
 
   ngOnInit(): void {
     this.getCarList();
@@ -86,14 +120,15 @@ const apiStatus =
               travel_date: parsedAttr.car_from_date,
               car_number: innerAttr.vehicle_reg_no || '-',
               driver_name: innerAttr.driver_name || '-',
-              reassigned_by: item.carassigned_by || '-',
+              // reassigned_by: item.carassigned_by || '-',
               driver_phone: innerAttr.driver_mobile || '-',
-Maintype:innerAttr.searchRequest.type,
+Maintype:innerAttr.searchRequest?.type,
               // IMPORTANT
               vehicle_id: dataAttr.vehicle_id,
 bookinStatus: item.booking_status,
               // ✅ DEFAULT STATUS
-booking_status: this.statusMap[apiStatus] ?this.statusMap[apiStatus]: '2'
+status: this.normalizeCarStatus(item.status ?? apiStatus),
+booking_status: this.normalizeCarStatus(item.status ?? apiStatus)
             }
           });
         },
@@ -104,28 +139,96 @@ booking_status: this.statusMap[apiStatus] ?this.statusMap[apiStatus]: '2'
       });
   }
 
-  onStatusChange(item: any) {
-  const payload = {
-    id: item.id,
-    status: item.booking_status   // ✅ correct field
-  };
+  private normalizeCarStatus(value: any): string {
+    const status = String(value);
+    return ['0', '1', '2'].includes(status) ? status : (this.statusMap[status] ?? '2');
+  }
 
-  this.apiHandler.apiHandler('carStatusChange', 'POST', {}, {}, payload)
-    .pipe(takeUntil(this.destroy$))
-    .subscribe(() => {
-      this.swal.alert.success('Status updated');
-    });
-}
+  onStatusChange(item: any, selectedStatus: string) {
+    if (item.statusUpdating || item.bookinStatus === 'BOOKING_CANCELLED') {
+      return;
+    }
+    const previousStatus = item.status;
+    const status = this.normalizeCarStatus(selectedStatus);
+    item.status = status;
+    item.statusUpdating = true;
+
+    this.apiHandler.apiHandler('carStatusChange', 'POST', {}, {}, { id: item.id, status })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (res: any) => {
+          item.statusUpdating = false;
+          if (res.Status) {
+            item.booking_status = status;
+            this.swal.alert.success('Status updated');
+          } else {
+            item.status = previousStatus;
+            this.swal.alert.oops(res.Message || 'Failed to update status');
+          }
+        },
+        error: () => {
+          item.statusUpdating = false;
+          item.status = previousStatus;
+          this.swal.alert.oops('Failed to update status');
+        }
+      });
+  }
 
 
   showReassignForm = false;
 selectedItem: any = null;
+driverList: any[] = [];
+vendorList: any[] = [];
+selectedDriver: any = null;
+driversLoading = false;
+driverLoadError = '';
+
+getDriverList() {
+  this.driversLoading = true;
+  this.driverLoadError = '';
+  this.driverList = [];
+  this.vendorList = [];
+  forkJoin({
+    drivers: this.apiHandler.apiHandler('driverMasterDetails', 'POST', {}, {}, {}),
+    vendors: this.apiHandler.apiHandler('vendorList', 'POST', {}, {}, {})
+  }).pipe(takeUntil(this.destroy$)).subscribe({
+    next: ({ drivers, vendors }: any) => {
+      this.driversLoading = false;
+      if (!drivers.Status || !vendors.Status) {
+        this.driverLoadError = 'Failed to load drivers and suppliers. Please retry.';
+        return;
+      }
+      this.driverList = drivers.data || [];
+      this.vendorList = vendors.data || [];
+    },
+    error: () => {
+      this.driversLoading = false;
+      this.driverLoadError = 'Failed to load drivers and suppliers. Please retry.';
+    }
+  });
+}
+
+getDriverSupplierName(driver: any): string {
+  const vendor = this.vendorList.find(item => String(item.id) === String(driver.vendor_id));
+  return driver.first_name + ' ' + driver.last_name || driver.supplierName || vendor?.name || '';
+}
+
+onDriverChange(driver: any) {
+  this.selectedDriver = driver;
+  this.reassignForm = {
+    driver_name: driver?.name || '',
+    driver_phone: String(driver?.mobile ?? ''),
+    car_name: driver?.car_name || driver?.vehicle_name || '',
+    car_number: driver?.car_number || driver?.vehicle_reg_no || ''
+    // reassigned_by: driver?.reassigned_by || '
+  };
+}
 
 reassignForm = {
   car_name: '',
   car_number: '',
   driver_name: '',
-  reassigned_by:'',
+  // reassigned_by:'',
   driver_phone: ''
 };
 
@@ -136,13 +239,8 @@ onReassign(item: any) {
   this.showReassignForm = true;
   this.submitted = false;
 
-  this.reassignForm = {
-    car_name: item.car_name || '',
-    car_number: item.car_number || '',
-    driver_name: item.driver_name || '',   // ✅ FIXED
-    reassigned_by: item.reassigned_by || '',
-    driver_phone: item.driver_phone || ''
-  };
+  this.onDriverChange(null);
+  this.getDriverList();
 
   window.scroll({ top: 0, behavior: 'smooth' });
 }
@@ -152,12 +250,13 @@ submitReassign() {
   this.submitted = true;
 
   
-  // ✅ VALIDATION CHECK
+  // Require a driver from the list and complete API-provided details.
   if (
+    this.loading || this.driversLoading || !this.selectedDriver ||
     !this.reassignForm.car_name ||
     !this.reassignForm.car_number ||
     !this.reassignForm.driver_name ||
-     !this.reassignForm.reassigned_by ||
+    //  !this.reassignForm.reassigned_by ||
     !this.reassignForm.driver_phone ||
     this.reassignForm.driver_phone.length !== 10
   ) {
@@ -172,7 +271,7 @@ this.loading = true;
     vehicle_name: this.reassignForm.car_name,
     vehicle_reg_no: this.reassignForm.car_number,
     driver_name: this.reassignForm.driver_name,
-    reassigned_by:this.reassignForm.reassigned_by,
+    // reassigned_by:this.reassignForm.reassigned_by,
     driver_mobile: this.reassignForm.driver_phone
   };
 
@@ -201,5 +300,6 @@ this.loading = true;
 cancelReassign() {
   this.showReassignForm = false;
   this.selectedItem = null;
+  this.onDriverChange(null);
 }
 }

@@ -227,7 +227,7 @@ export class ManageListComponent implements OnInit, OnDestroy {
                     "Agent Name": (response['first_name'] + ' ' + response['last_name']).toUpperCase(),
                     "Contact": response.phone,
                     "Email": response.email,
-                    "Registered Date":  moment(response.created_at).format("MMM DD, YYYY"),
+                    "Registered Date":  moment(response.created_at).format("DD/MM/YYYY"),
                     "City" : response.city,
                     "State" : response.state,
                     "Country" : this.getCountryName(response.country),

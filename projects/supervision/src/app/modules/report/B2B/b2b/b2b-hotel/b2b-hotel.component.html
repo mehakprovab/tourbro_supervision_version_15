@@ -66,7 +66,7 @@
                             placeholder="dd/mm/yyyy" bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen" onkeydown="return false">
                     </div>
                 </div>
-                <div class="col-4 pr-0" *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7">
+                <div class="col-4 pr-0" *ngIf="showAdminReportFields">
                     <div class="form-group">
                         <label for="bookedBy">Suppliers</label>
                         <select formControlName="Api_id" id="bookedBy" 
@@ -112,7 +112,7 @@
                             <div id="b2b-hotel-report">
                             <table class="table table-borderless table-striped table-hover" matSort
                                 (matSortChange)="sortData($event)">
-                                <thead *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7">
+                                <thead *ngIf="showAdminReportFields">
                                     <tr>
                                         <th scope="col" class="text-left text-nowrap"
                                             *ngFor="let header of displayColumn;">
@@ -120,7 +120,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <thead *ngIf="loggedInUser['auth_role_id'] == 6 || loggedInUser['auth_role_id'] == 7">
+                                <thead *ngIf="!showAdminReportFields">
                                     <tr>
                                         <th scope="col" class="text-left text-nowrap"
                                             *ngFor="let header of displaySupplierColumn;">
@@ -153,7 +153,7 @@
                                                     <a [routerLink]="['/report/b2b/voucher/hotel']"
                                                         [queryParams]="{appReference: data['BookingDetails']['AppReference']}"><button
                                                             ngbDropdownItem>View Voucher</button></a>
-                                                    <a *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7" [routerLink]="['/report/b2b-hotel/invoice']"
+                                                    <a *ngIf="showAdminReportFields" [routerLink]="['/report/b2b-hotel/invoice']"
                                                         [queryParams]="{appReference: data['BookingDetails']['AppReference']}"><button
                                                             ngbDropdownItem>View Invoice</button></a>
                                                     <button ngbDropdownItem (click)="showPaxProfile(data)">Pax
@@ -208,15 +208,15 @@
                                         <td class="text-left">
                                             {{(data?.BookingDetails?.bundle_booking === '1' || data?.BookingDetails?.bundle_booking === 1) ? "Bundle Booking" : "Normal Booking"}}
                                     </td>
-                                        <td *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7" claszs="text-left"> {{data.BookingDetails.PaymentMode  !== '' ? data.BookingDetails.PaymentMode : 'N/A'   }} 
+                                        <td *ngIf="showAdminReportFields" claszs="text-left"> {{data.BookingDetails.PaymentMode  !== '' ? data.BookingDetails.PaymentMode : 'N/A'   }}
                                             <span *ngIf="data?.BookingDetails.PaymentStatus == 'Paid' && data.BookingDetails.PaymentMode !== 'wallet'"> - {{data?.BookingDetails?.PaidMode ? data?.BookingDetails?.PaidMode : 'N/A'}}</span>
                                         </td>
-                                        <td *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7"  class="text-left"> {{data?.BookingDetails.PaidOn || 'N/A'}} </td>
+                                        <td *ngIf="showAdminReportFields"  class="text-left"> {{data?.BookingDetails.PaidOn || 'N/A'}} </td>
                                         
-                            <td *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7"  class="text-left"> {{data.BookingDetails.PaymentStatus}} 
+                            <td *ngIf="showAdminReportFields"  class="text-left"> {{data.BookingDetails.PaymentStatus}}
                                         </td>
-                                        <td *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7"  class="text-left text-capitalize">{{data['BookingDetails']['business_name']}} </td>
-                                        <td class="text-left"  *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7">
+                                        <td *ngIf="showAdminReportFields"  class="text-left text-capitalize">{{data['BookingDetails']['business_name']}} </td>
+                                        <td class="text-left"  *ngIf="showAdminReportFields">
                                             <ng-container *ngIf="data.BookingDetails.DomainOrigin === 'CRS'; else apiOrigin">
                                                 {{ data.BookingDetails.CancellationReason?.hotelBody?.supplierType }}    ({{ data.BookingDetails.CancellationReason?.hotelBody?.supplierName }}) <br>
                                               {{ data.BookingDetails.CancellationReason?.hotelBody?.supplierEmail }}
@@ -226,7 +226,7 @@
                                             </ng-template>
                                           </td>
                                             
-                                        <td class="text-left"  *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7">
+                                        <td class="text-left"  *ngIf="showAdminReportFields">
                                             {{ data.BookingDetails.DomainOrigin === 'CRS' ? 'CRS' : 'API' }}
                                           </td>                                          
                                         <td class="text-left">
@@ -237,8 +237,8 @@
                                         <td class="text-left"> {{data['BookingDetails']['HotelName']}} </td>
                                         <td class="text-left"> {{data['BookingDetails']['HotelAddress']}} </td>
                                         <td class="text-left"> {{ loggedInUser['auth_role_id'] === 1 ? (data['BookingDetails']['AgentNumber'] || 'N/A') : (data['BookingDetails']['PhoneNumber'] || 'N/A') }} </td>
-                                        <td *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7" class="text-left">{{ data['BookingDetails']['Email']!="undefined" ? data['BookingDetails']['Email'] : 'N/A' }}</td>
-                                        <!-- <td *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7" class="text-left"> {{data['GTANumber'] || 'N/A'}} </td> -->
+                                        <td *ngIf="showAdminReportFields" class="text-left">{{ data['BookingDetails']['Email']!="undefined" ? data['BookingDetails']['Email'] : 'N/A' }}</td>
+                                        <!-- <td *ngIf="showAdminReportFields" class="text-left"> {{data['GTANumber'] || 'N/A'}} </td> -->
                                         <td class="text-left text-uppercase">
                                             <ng-container *ngFor="let item of data['BookingPaxDetails']">
                                                 <span *ngIf="item.LeadPax">
@@ -252,15 +252,15 @@
                                             data['BookingDetails']['HotelCheckOut']) }} </td>
                                         <td class="text-left"> {{data['BookingItineraryDetails'].length}} </td>
                                         <!-- <td class="text-left"> {{data.BookingItineraryDetails[0]?.RoomPrice}} </td> -->
-                                        <td class="text-left" *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7"> {{data['BookingDetails']['BaseFare'] || 0}}
+                                        <td class="text-left" *ngIf="showAdminReportFields"> {{data['BookingDetails']['BaseFare'] || 0}}
                                         </td>
-                                        <td class="text-left" *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7"> {{data.BookingDetails?.AdminMarkup}} </td>
-                                        <td class="text-left" *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7"> {{data.BookingDetails?.AgentMarkup}} </td>
+                                        <td class="text-left" *ngIf="showAdminReportFields"> {{data.BookingDetails?.AdminMarkup}} </td>
+                                        <td class="text-left" *ngIf="showAdminReportFields"> {{data.BookingDetails?.AgentMarkup}} </td>
                                         
                                         <td class="text-left"> {{ data.BookingDetails.DomainOrigin === 'CRS' ? data.BookingDetails?.API_Payable_Price || 0 : data.BookingDetails?.Netfare_In_API_Currency || 0 }}  {{data.BookingDetails?.API_Currency}}</td>
                                         <!-- <td class="text-left"> {{data.BookingDetails?.API_Payable_Price || 0 }}  {{data.BookingDetails?.API_Currency}}</td> -->
-                                        <!-- <td class="text-left"  *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7"> {{data.BookingDetails?.API_Commission || '' }} </td> -->
-                                        <td *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7" class="text-left"> {{data['BookingDetails']['TotalAmount'] || 0}}
+                                        <!-- <td class="text-left"  *ngIf="showAdminReportFields"> {{data.BookingDetails?.API_Commission || '' }} </td> -->
+                                        <td *ngIf="showAdminReportFields" class="text-left"> {{data['BookingDetails']['TotalAmount'] || 0}}
                                         </td>
                                         <td class="text-left"> {{data.BookingItineraryDetails[0]?.Currency }} </td>
                                         <td class="text-left"> {{data['BookingDetails']['created_at']  | date: 'dd/MM/yyyy'}} </td>

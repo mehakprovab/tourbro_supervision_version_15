@@ -24,7 +24,7 @@ export class InactiveAddEditComponent implements OnInit {
     isOpen = false as boolean;
     bsDateConf = {
         isAnimated: true,
-        dateInputFormat: 'YYYY-MM-DD',
+        dateInputFormat: 'DD/MM/YYYY',
         containerClass: 'theme-green'
     };
     submitted: boolean = false;

@@ -57,7 +57,7 @@ import { ThemeOptions } from "./theme-options";
 import { ArchitectUIState, rootReducer } from "./ThemeOptions/store";
 import { ConfigActions } from "./ThemeOptions/store/config.actions";
 import { TourCRSModule } from "./modules/tour-crs/tour-crs.module";
-import { HashLocationStrategy, LocationStrategy } from "@angular/common";
+import { DATE_PIPE_DEFAULT_OPTIONS, HashLocationStrategy, LocationStrategy } from "@angular/common";
 import { ActivityCrsModule } from "./modules/actvity-crs/activity-crs.module";
 import { TransferCrsModule } from "./modules/transfer-crs/transfer-crs.module";
 import { WellnessCrsModule } from "./modules/wellness-crs/wellness-crs.module";
@@ -123,6 +123,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     
   ],
   providers: [
+    { provide: DATE_PIPE_DEFAULT_OPTIONS, useValue: { dateFormat: 'dd/MM/yyyy' } },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,

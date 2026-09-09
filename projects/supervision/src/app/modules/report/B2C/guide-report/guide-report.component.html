@@ -91,7 +91,7 @@
           <th>Action</th>
           <th>Application Reference</th>
           <th>Status</th>
-          <th>Payment Status</th>
+          <th *ngIf="showAdminReportFields">Payment Status</th>
           <th>Customer Name</th>
           <th>City</th>
           <th>Hotel</th>
@@ -126,19 +126,19 @@
           </td>
           <td>{{ value(row, 'app_reference', 'AppReference', 'application_reference') || 'N/A' }}</td>
           <td><span class="badge" [ngClass]="getStatusClass(row.status)">{{ getStatusLabel(row.status) }}</span></td>
-          <td>{{ value(row, 'payment_status', 'PaymentStatus') || 'N/A' }}</td>
+          <td *ngIf="showAdminReportFields">{{ value(row, 'payment_status', 'PaymentStatus') || 'N/A' }}</td>
           <td>{{ customerName(row) || 'N/A' }}</td>
           <td>{{ value(row, 'city', 'City') || 'N/A' }}</td>
           <td>{{ value(row, 'hotel', 'hotel_name', 'Hotel') || 'N/A' }}</td>
-          <td>{{ value(row, 'from_date', 'FromDate', 'travel_from_date') | date:'dd-MMM-yyyy' }}</td>
-          <td>{{ value(row, 'to_date', 'ToDate', 'travel_to_date') | date:'dd-MMM-yyyy' }}</td>
+          <td>{{ value(row, 'from_date', 'FromDate', 'travel_from_date') | date:'dd/MM/yyyy' }}</td>
+          <td>{{ value(row, 'to_date', 'ToDate', 'travel_to_date') | date:'dd/MM/yyyy' }}</td>
           <td>{{ phone(row) || 'N/A' }}</td>
           <td>{{ value(row, 'email', 'Email') || 'N/A' }}</td>
           <td>{{ value(row, 'language', 'Language') || 'N/A' }}</td>
           <td>{{ value(row, 'guide_name', 'GuideName') || 'N/A' }}</td>
           <td>{{ value(row, 'guide_mobile', 'GuideMobile') || 'N/A' }}</td>
           <td>{{ value(row, 'currency', 'currency_code') }} {{ value(row, 'price', 'amount', 'total_fare', 'TotalFare') || 'N/A' }}</td>
-          <td>{{ value(row, 'created_at', 'BookedOn', 'booked_on') | date:'dd-MMM-yyyy, h:mm a' }}</td>
+          <td>{{ value(row, 'created_at', 'BookedOn', 'booked_on') | date:'dd/MM/yyyy, h:mm a' }}</td>
         </tr>
       </tbody>
     </table>

@@ -178,37 +178,37 @@
                                     </span>
                                         {{data['BookingDetails']['Status'] ? '' : 'N/A'}}
                                     </td>
-                                    <td class="text-left" *ngIf="loggerUserAuthId !== 7">
+                                    <td class="text-left" *ngIf="showAdminReportFields">
                                         {{(data?.BookingDetails?.bundle_booking === '1' || data?.BookingDetails?.bundle_booking === 1) ? "Bundle Booking" : "Normal Booking"}}
                                     </td>
                            
                                     <td class="text-left"> {{data?.BookingDetails.AppReference}} </td>
                                     <td class="text-left">{{data?.BookingDetails.ConfirmationReference || 'N/A'}} </td>
                                     <td class="text-left">{{data?.BookingDetails.supplierName || 'N/A'}} </td>
-                                    <td class="text-left"  *ngIf="loggerUserAuthId !== 7">{{data?.BookingDetails.AgentName || 'N/A'}} </td>
-                                    <td class="text-left"> {{data.BookingDetails.PaymentMode  !== '' ? data.BookingDetails.PaymentMode : 'N/A'   }} 
+                                    <td class="text-left"  *ngIf="showAdminReportFields">{{data?.BookingDetails.AgentName || 'N/A'}} </td>
+                                    <td class="text-left" *ngIf="showAdminReportFields"> {{data.BookingDetails.PaymentMode  !== '' ? data.BookingDetails.PaymentMode : 'N/A'   }}
                                         <span *ngIf="data?.BookingDetails.PaymentStatus == 'Paid' && data.BookingDetails.PaymentMode !== 'wallet'"> - {{data?.BookingDetails.PaidMode || 'N/A'}}</span>
                                     </td>
-                                    <td class="text-left"> {{data?.BookingDetails.PaidOn || 'N/A'}} </td>
+                                    <td class="text-left" *ngIf="showAdminReportFields"> {{data?.BookingDetails.PaidOn || 'N/A'}} </td>
                                     
-                        <td class="text-left"> {{data.BookingDetails.PaymentStatus}} 
+                        <td class="text-left" *ngIf="showAdminReportFields"> {{data.BookingDetails.PaymentStatus}}
                                     </td>
                                     <td class="text-left">{{data.BookingPaxDetails[0]?.Title}} {{data.BookingPaxDetails[0]?.FirstName}}
                                         {{data.BookingPaxDetails[0]?.LastName}} </td>
                                     <!-- <td class="text-left" >{{data.BookingDetails?.Email || 'N/A'}} </td> -->
-                                    <td class="text-left"  *ngIf="loggerUserAuthId !== 7">{{data.BookingDetails?.Email || 'N/A'}} </td>
-                                    <td class="text-left"  *ngIf="loggerUserAuthId !== 7">{{data.BookingDetails?.AgentNumber || 'N/A'}} </td>
+                                    <td class="text-left"  *ngIf="showAdminReportFields">{{data.BookingDetails?.Email || 'N/A'}} </td>
+                                    <td class="text-left"  *ngIf="showAdminReportFields">{{data.BookingDetails?.AgentNumber || 'N/A'}} </td>
                                     <td class="text-left">{{getPaxData(data.BookingDetails?.searchData?.paxes[0]) || 'N/A'}} </td>
                                     <td class="text-left">{{data.BookingItenaryDetails?.attributes?.ProductName || 'N/A'}} </td>
-                                    <td class="text-left"  *ngIf="loggerUserAuthId !== 7">{{data.BookingDetails?.ModalityName || 'N/A'}} </td>
+                                    <td class="text-left"  *ngIf="showAdminReportFields">{{data.BookingDetails?.ModalityName || 'N/A'}} </td>
                                     <td class="text-left">{{data.BookingItenaryDetails?.city || 'N/A'}} </td>
                                     <td class="text-left">{{data.BookingItenaryDetails?.country || 'N/A'}} </td>
                                     <td class="text-left">{{data.BookingDetails?.travelDate | date: 'dd/MM/yyyy'}} </td>
                                     <td class="text-left">{{data.BookingDetails?.toDate | date: 'dd/MM/yyyy'}} </td>
-                                    <td class="text-left"  *ngIf="loggerUserAuthId !== 7">{{data.BookingDetails?.TotalNet || 'N/A'}} </td>
-                                    <td class="text-left"  *ngIf="loggerUserAuthId !== 7">{{data.BookingDetails?.AdminMarkup || 'N/A'}} </td>
-                                    <td class="text-left"  *ngIf="loggerUserAuthId !== 7">{{data.BookingDetails?.AgentMarkup || 'N/A'}} </td>
-                                    <td class="text-left"  *ngIf="loggerUserAuthId !== 7"> {{data?.BookingDetails.Currency  }} </td>
+                                    <td class="text-left"  *ngIf="showAdminReportFields">{{data.BookingDetails?.TotalNet || 'N/A'}} </td>
+                                    <td class="text-left"  *ngIf="showAdminReportFields">{{data.BookingDetails?.AdminMarkup || 'N/A'}} </td>
+                                    <td class="text-left"  *ngIf="showAdminReportFields">{{data.BookingDetails?.AgentMarkup || 'N/A'}} </td>
+                                    <td class="text-left"  *ngIf="showAdminReportFields"> {{data?.BookingDetails.Currency  }} </td>
                                     <td class="text-left"> {{data?.BookingDetails?.supplier_total_price  || 0 }} {{data?.BookingDetails?.supplier_currency || ''}} </td>
                                     <td class="text-left"> {{data?.BookingDetails.CreatedDatetime | date: 'dd/MM/yyyy'}} </td>
                                     <td class="text-left"> {{data?.BookingDetails?.GuideName ?  data?.BookingDetails?.GuideName : ''}} {{data?.BookingDetails?.GuideContact ? '('+ data?.BookingDetails?.GuideContact + ')' : ''}}</td>

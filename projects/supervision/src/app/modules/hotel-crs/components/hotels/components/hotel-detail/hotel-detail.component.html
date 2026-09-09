@@ -34,7 +34,7 @@
                             </h4>
                             <h4>
                                 <b>Contract Expiry</b> :
-                                {{hotelDetail['contract_expiry_date'] | date}}
+                                {{hotelDetail['contract_expiry_date'] | date: 'dd/MM/yyyy'}}
                             </h4>
                             <h4>
                                 <b>Phone</b> :
@@ -140,11 +140,11 @@
                                     </h4>
                                     <h4>
                                         <b>Season From (Date)</b> :
-                                        {{roomSeason['from_date'] | date}}
+                                        {{roomSeason['from_date'] | date: 'dd/MM/yyyy'}}
                                     </h4>
                                     <h4>
                                         <b>Season To (Date)</b> :
-                                        {{roomSeason['To_date'] | date}}
+                                        {{roomSeason['To_date'] | date: 'dd/MM/yyyy'}}
                                     </h4>
                                 </div>
                             </div>

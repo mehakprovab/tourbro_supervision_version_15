@@ -54,7 +54,7 @@
                                     </td>
                                     <td style="text-align: right;">
                                         <span
-                                            *ngIf="importPNRData?.LastDateToTicket">{{importPNRData?.LastDateToTicket}}</span>
+                                            *ngIf="importPNRData?.LastDateToTicket">{{ importPNRData?.LastDateToTicket | date: 'dd/MM/yyyy' }}</span>
                                         <span *ngIf="!importPNRData?.LastDateToTicket">RUN RETRIEVE</span>
                                     </td>
                                 </tr>
@@ -180,7 +180,7 @@
                                                                 </strong>
                                                                 <br>
                                                                 <div style="margin-left: 35px;">
-                                                                    {{ f.departure_datetime | date: 'EEE, d MMM y'}}
+                                                                    {{ f.departure_datetime | date: 'dd/MM/yyyy'}}
                                                                     {{f.departure_datetime | date:'HH:mm'}}
                                                                     <br>
                                                                     <span *ngIf="f.departure_terminal">
@@ -216,7 +216,7 @@
                                                                 </strong>
                                                                 <br>
                                                                 <div style="margin-left: 35px;">
-                                                                    {{ f.arrival_datetime | date: 'EEE, d MMM y'}}
+                                                                    {{ f.arrival_datetime | date: 'dd/MM/yyyy'}}
                                                                     {{f.arrival_datetime | date: 'HH:mm'}}
                                                                     <br>
                                                                     <span *ngIf="f.arrival_terminal">

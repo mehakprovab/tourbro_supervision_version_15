@@ -1,3 +1,4 @@
+import { canViewAdminReportFields } from '../../../../../utils/report-column-visibility';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import html2canvas from 'html2canvas';
@@ -17,6 +18,7 @@ const baseUrl = environment.baseUrl;
   styleUrls: ['./b2c-transfer-voucher.component.scss']
 })
 export class B2cTransferVoucherComponent implements OnInit {
+  readonly showAdminReportFields = canViewAdminReportFields();
 
   @ViewChild('print_voucher', { static: false }) print_voucher: ElementRef;
   private subSunk = new SubSink();
@@ -158,6 +160,15 @@ export class B2cTransferVoucherComponent implements OnInit {
         }
       );
   }
+  formatPassengerPhone(passenger: any): string {
+    const phone = String(passenger?.phone || '').trim();
+    const code = String(passenger?.phone_code || this.bookingDetails?.phone_code || '').trim();
+    if (!phone || !code || phone.startsWith('+')) {
+      return phone;
+    }
+    return `+${code.replace(/^\+/, '')} ${phone}`;
+  }
+
   parseAttributes(value: any): any {
     if (!value) {
       return null;
@@ -443,19 +454,21 @@ printVoucher() {
   }
 
 
-  getTripType(value) {
-    // console.log('Original value:', value);
-    let values = value.replace(/'/g, '"');
-    try {
-      let attributes = JSON.parse(values);
-      // console.log("attributes",attributes)
-      let tripType;
-      tripType = attributes.body.IsReturn;
-      return tripType === 1 ? 'Round Trip' : 'One Way';
-    } catch (error) {
-      // console.error('Error parsing JSON:', error, 'Input:', values);
-      return null;
+  getTripType(): string {
+    const search = this.attributes?.searchRequest;
+    const category = search?.type || this.attributes?.data?.type || this.bookingDetails?.TripType;
+    const tripType = String(search?.trip_type || '').trim().toUpperCase().replace(/[ -]/g, '_');
+    let journey = '';
+    if (tripType === 'ROUND_TRIP' || tripType === 'ROUND_WAY') {
+      journey = 'Round Trip';
+    } else if (tripType === 'ONE_WAY') {
+      journey = 'One Way';
+    } else if (tripType) {
+      journey = tripType.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, letter => letter.toUpperCase());
+    } else if (this.attributes?.body?.IsReturn != null) {
+      journey = Number(this.attributes.body.IsReturn) === 1 ? 'Round Trip' : 'One Way';
     }
+    return [category, journey].filter(Boolean).join(' - ') || 'N/A';
   }
 
   getImage(imagePath: string): Promise<string> {

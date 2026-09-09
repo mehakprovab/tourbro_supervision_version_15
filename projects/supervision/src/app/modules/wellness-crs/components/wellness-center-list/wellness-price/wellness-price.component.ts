@@ -107,7 +107,7 @@ public priceId: any;
   onCheckIn(event) {
     if (event) {
       //  const eventDate = new Date(event);
-      const eventDate = moment(event, 'DD-MM-YYYY').toDate();
+      const eventDate = moment(event, 'DD/MM/YYYY').toDate();
       console.log("eventDate", eventDate)
       eventDate.setDate(eventDate.getDate() + 1);
       this.setMinDate = eventDate;

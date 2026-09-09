@@ -91,9 +91,9 @@
                                                 <span *ngIf="balance['status'] == 'rejected'" class="badge badge-danger"> {{balance['status'] | uppercase}} </span>    
                                             </td>
                                             <td class="text-left"> {{balance['transaction_type']}} </td>
-                                            <td class="text-left"> {{balance['requeston']*1000 | date: 'medium'}} </td>
+                                            <td class="text-left"> {{balance['requeston']*1000 | date: 'dd/MM/yyyy, h:mm:ss a'}} </td>
                                             <td class="text-left"> {{balance['update_remarks']}} </td>
-                                            <td class="text-left"> {{balance['updated_datetime']*1000 | date: 'medium'}} </td>
+                                            <td class="text-left"> {{balance['updated_datetime']*1000 | date: 'dd/MM/yyyy, h:mm:ss a'}} </td>
                                             <td class="text-left text-nowrap"> {{balance['remarks']}} </td>
                                         </tr>
                                     </tbody>

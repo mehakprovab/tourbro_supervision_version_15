@@ -176,8 +176,8 @@
                                         </td>
                                         <td class="text-left"> {{data.bookingDetails[0]?.App_Reference}} </td>
                                         <td class="text-left">{{data.bookingDetails[0]?.BookingReference || 'N/A'}} </td>
-                                        <td class="text-left" *ngIf="loggedInUser?.auth_role_id !==7">{{data.bookingDetails[0]?.supplier_business_name || 'N/A'}} </td>
-                                        <td class="text-left" *ngIf="loggedInUser?.auth_role_id !==7">{{data.bookingDetails[0]?.agent_business_name || 'N/A'}} </td>
+                                        <td class="text-left" *ngIf="showAdminReportFields">{{data.bookingDetails[0]?.supplier_business_name || 'N/A'}} </td>
+                                        <td class="text-left" *ngIf="showAdminReportFields">{{data.bookingDetails[0]?.agent_business_name || 'N/A'}} </td>
                                         <td class="text-left">{{data.paxDetails[0]?.Title}} {{data.paxDetails[0]?.FirstName}}
                                             {{data.paxDetails[0]?.LastName}} </td>
                                         <td class="text-left">{{data.paxDetails[0]?.Email || 'N/A'}} </td>
@@ -200,22 +200,22 @@
                                         </td>
                                         <td class="text-left">{{data.bookingDetails[0]?.SupplierOptionalToursPrice }} {{data.bookingDetails[0]?.ApiCurrency }}  </td>
                                         <td class="text-left" >{{data.bookingDetails[0]?.SupplierTotalFare }} {{data.bookingDetails[0]?.ApiCurrency }}  </td>
-                                        <td class="text-left" *ngIf="loggedInUser?.auth_role_id !==7">{{data.bookingDetails[0]?.TotalFare | number:'1.0-2' }} </td>
+                                        <td class="text-left" *ngIf="showAdminReportFields">{{data.bookingDetails[0]?.TotalFare | number:'1.0-2' }} </td>
                                         
                                         <!-- <td class="text-left" *ngIf="loggedInUser?.auth_role_id === 7">{{data.bookingDetails[0]?.SuppierAdultPrice }} {{data.bookingDetails[0]?.ApiCurrency }}  </td>
                                         <td class="text-left" *ngIf="loggedInUser?.auth_role_id === 7">{{data.bookingDetails[0]?.SupplierChildPrice }} {{data.bookingDetails[0]?.ApiCurrency }}  </td> -->
-                                        <td class="text-left" *ngIf="loggedInUser?.auth_role_id !==7"> {{data.bookingDetails[0]?.Markup ? (data.bookingDetails[0]?.Markup | number:'1.0-2') : 0 }} </td>
-                                        <td class="text-left" *ngIf="loggedInUser?.auth_role_id !==7"> {{data.bookingDetails[0]?.AgentMarkup ? (data.bookingDetails[0]?.AgentMarkup | number:'1.0-2') : 0 }} </td>
-                                        <td class="text-left" *ngIf="loggedInUser?.auth_role_id !==7"> {{data.bookingDetails[0]?.AgentNetFare ? (data.bookingDetails[0]?.AgentNetFare | number:'1.0-2') : 0 }} </td>
+                                        <td class="text-left" *ngIf="showAdminReportFields"> {{data.bookingDetails[0]?.Markup ? (data.bookingDetails[0]?.Markup | number:'1.0-2') : 0 }} </td>
+                                        <td class="text-left" *ngIf="showAdminReportFields"> {{data.bookingDetails[0]?.AgentMarkup ? (data.bookingDetails[0]?.AgentMarkup | number:'1.0-2') : 0 }} </td>
+                                        <td class="text-left" *ngIf="showAdminReportFields"> {{data.bookingDetails[0]?.AgentNetFare ? (data.bookingDetails[0]?.AgentNetFare | number:'1.0-2') : 0 }} </td>
                                         <!-- <td class="text-left"> {{data?.itinerary[0]?.agent_markup || 0 }} </td> -->
                                         <!-- <td class="text-left"> {{data.bookingDetails[0]?.Tax || 0 }}</td> -->
                                         <!-- <td class="text-left"> {{data.bookingDetails[0]?.Gst_value || 'N/A'}} </td> -->
                                         <!-- <td class="text-left">{{data.bookingDetails[0]?.PromoCode !== 'undefined' ?
                                             data.bookingDetails[0]?.PromoCode : 'N/A'}}</td>
                                         <td class="text-left"> {{data.bookingDetails[0]?.Discount }} </td> -->
-                                        <td class="text-left"  *ngIf="loggedInUser?.auth_role_id !==7"> {{data.bookingDetails[0]?.Currency_Code}} </td>
-                                        <td class="text-left"  *ngIf="loggedInUser?.auth_role_id !==7">{{data.bookingDetails[0]?.TotalFare | number:'1.0-2' }} </td>
-                                        <td class="text-left"> {{data.bookingDetails[0]?.Paymnet_Status}} </td>
+                                        <td class="text-left"  *ngIf="showAdminReportFields"> {{data.bookingDetails[0]?.Currency_Code}} </td>
+                                        <td class="text-left"  *ngIf="showAdminReportFields">{{data.bookingDetails[0]?.TotalFare | number:'1.0-2' }} </td>
+                                        <td class="text-left" *ngIf="showAdminReportFields"> {{data.bookingDetails[0]?.Paymnet_Status}} </td>
                                         <td class="text-left"> {{ data.bookingDetails[0]?.created_at  | date: 'dd/MM/yyyy' }} </td>
                                         <td class="text-left"> {{ getCancellationDeadLine(data.bookingDetails[0]?.canc_attributes, data.bookingDetails[0]?.cancel_deadline ) }} </td>
                                         <td class="text-left"> {{ data.bookingDetails[0]?.cancelled_on  | date: 'dd/MM/yyyy' }} </td>

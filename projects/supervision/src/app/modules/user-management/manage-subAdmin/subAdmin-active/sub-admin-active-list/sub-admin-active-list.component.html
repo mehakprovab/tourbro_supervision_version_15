@@ -58,7 +58,7 @@
                                                             *ngFor="let user of respData | filter:searchText | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
                                                             <td class="text-left text-muted">{{i+1}}.</td>
                                                             <!-- <td (mouseenter)="onHover(user)"
-                                                        ngbTooltip="Last Login: {{hoverData | date :'dd-MM-yyyy hh:mm:ss'}}" container="body"
+                                                        ngbTooltip="Last Login: {{hoverData | date :'dd/MM/yyyy hh:mm:ss'}}" container="body"
                                                         class="text-left"> 
                                                         <i class="fa fa-circle text-danger"
                                                             *ngIf="!findUserLogin(user['last_login'],user['logout_date_time'])"></i>

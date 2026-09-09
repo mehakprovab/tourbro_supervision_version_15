@@ -149,7 +149,7 @@
               <div class="col-md-3"><span>Travel From</span><strong>{{ selectedBooking.from_date | date:'dd/MM/yyyy' }}</strong></div>
               <div class="col-md-3"><span>Travel To</span><strong>{{ selectedBooking.to_date | date:'dd/MM/yyyy' }}</strong></div>
               <div class="col-md-3"><span>Duration</span><strong>{{ selectedBooking.duration_days || 0 }} Days</strong></div>
-              <div class="col-md-3"><span>Payment Status</span><strong>{{ selectedBooking.payment_status || 'N/A' }}</strong></div>
+              <div class="col-md-3" *ngIf="showAdminReportFields"><span>Payment Status</span><strong>{{ selectedBooking.payment_status || 'N/A' }}</strong></div>
             </div>
           </div>
 
@@ -189,7 +189,7 @@
             </table>
           </div>
 
-          <div class="voucher-card payment-card">
+          <div class="voucher-card payment-card" *ngIf="showAdminReportFields">
             <h5 class="voucher-section-title">Payment Details</h5>
             <div class="payment-line"><span>Package Amount</span><strong>{{ selectedBooking.total_price | number:'1.2-2' }} {{ selectedBooking.currency }}</strong></div>
             <div class="payment-line"><span>Convenience Fee</span><strong>{{ selectedBooking.convenience_fee | number:'1.2-2' }} {{ selectedBooking.currency }}</strong></div>
@@ -213,11 +213,11 @@
         <table class="table table-bordered" *ngIf="actionView === 'invoice'">
           <tbody>
             <tr><th>Package Amount</th><td>{{ selectedBooking.total_price | number:'1.2-2' }} {{ selectedBooking.currency }}</td></tr>
-            <tr><th>Convenience Fee</th><td>{{ selectedBooking.convenience_fee | number:'1.2-2' }} {{ selectedBooking.currency }}</td></tr>
+            <tr *ngIf="showAdminReportFields"><th>Convenience Fee</th><td>{{ selectedBooking.convenience_fee | number:'1.2-2' }} {{ selectedBooking.currency }}</td></tr>
             <tr><th>Promo Code</th><td>{{ selectedBooking.promo_code || 'N/A' }}</td></tr>
-            <tr><th>Discount</th><td>{{ selectedBooking.discount_value | number:'1.2-2' }} {{ selectedBooking.currency }}</td></tr>
-            <tr><th>Customer Paid Amount</th><td><strong>{{ selectedBooking.total_after_discount | number:'1.2-2' }} {{ selectedBooking.currency }}</strong></td></tr>
-            <tr><th>Payment Status</th><td>{{ selectedBooking.payment_status || 'N/A' }}</td></tr>
+            <tr *ngIf="showAdminReportFields"><th>Discount</th><td>{{ selectedBooking.discount_value | number:'1.2-2' }} {{ selectedBooking.currency }}</td></tr>
+            <tr *ngIf="showAdminReportFields"><th>Customer Paid Amount</th><td><strong>{{ selectedBooking.total_after_discount | number:'1.2-2' }} {{ selectedBooking.currency }}</strong></td></tr>
+            <tr *ngIf="showAdminReportFields"><th>Payment Status</th><td>{{ selectedBooking.payment_status || 'N/A' }}</td></tr>
           </tbody>
         </table>
       </div>

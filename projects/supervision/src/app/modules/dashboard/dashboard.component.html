@@ -63,7 +63,7 @@
         </full-calendar>
     </div>
     <div class="col-md-7 booking_list_data" *ngIf="bookingDetailsFound">
-        <h5>Bookings Confirmed On {{selectedDate | date}}</h5>
+        <h5>Bookings Confirmed On {{selectedDate | date: 'dd/MM/yyyy'}}</h5>
         <div class="booking_li" *ngFor="let  booking of bookingDetails">
             <span *ngIf="booking?.AppReference"><strong>AppReference:</strong> {{ booking?.AppReference}} <i class="fa fa-copy" (click)="copyMessage(booking?.AppReference)"></i></span>&nbsp;
             <span *ngIf="booking?.Pnr"><strong>PNR.No:</strong> {{booking?.Pnr}}</span>&nbsp;

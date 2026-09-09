@@ -42,7 +42,7 @@
                                 *ngFor="let data of respData | slice: (page - 1) * pageSize : (page - 1) * pageSize + pageSize; let i=index;">
                                 <td class="text-left text-muted">{{i+1}}.</td>
                                 <td class="text-left"> {{data['transaction_date'] | date:
-                                    "d-MMM-y"}} </td>
+                                    "dd/MM/yyyy"}} </td>
                                 <td class="text-left"> {{data['reference_number']}} </td>
                                 <td class="text-left"> {{data['payment_type']}} </td>
                                 <td class="text-left">{{data['opening_balance']}} </td>

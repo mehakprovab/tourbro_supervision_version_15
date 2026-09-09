@@ -1,3 +1,4 @@
+import { canViewAdminReportFields, filterAdminReportColumns } from '../../../utils/report-column-visibility';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Sort } from '@angular/material/sort';
@@ -20,6 +21,7 @@ let respDataCopy: Array<any> = [];
   styleUrls: ['./b2c-bundle-booking-report.component.scss']
 })
 export class B2cBundleBookingReportComponent implements OnInit {
+    readonly showAdminReportFields = canViewAdminReportFields();
 
   private subSunk = new SubSink();
   regConfig: FormGroup;
@@ -90,6 +92,7 @@ export class B2cBundleBookingReportComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+        this.displayColumn = filterAdminReportColumns(this.displayColumn, this.showAdminReportFields);
     let date = new Date(),
       fromDate = new Date(date.valueOf() - (30 * 24 * 60 * 60 * 1000));
     let tommorow = date;

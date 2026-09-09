@@ -623,9 +623,9 @@ onSubmitPrice(onSubmitPrice?) {
     }
     if (this.roomPriceForm.valid) {
         const dt1 = new Date(this.roomPriceForm.value.from_date);
-        this.roomPriceForm.value.from_date =  moment(this.roomPriceForm.value.from_date, 'DD-MM-YYYY').format('YYYY-MM-DD');
+        this.roomPriceForm.value.from_date =  moment(this.roomPriceForm.value.from_date, 'DD/MM/YYYY').format('YYYY-MM-DD');
         const dt2 = new Date(this.roomPriceForm.value.to_date);
-        this.roomPriceForm.value.to_date =  moment(this.roomPriceForm.value.to_date, 'DD-MM-YYYY').format('YYYY-MM-DD');
+        this.roomPriceForm.value.to_date =  moment(this.roomPriceForm.value.to_date, 'DD/MM/YYYY').format('YYYY-MM-DD');
         const changedValues = {};
         const statusChanged = this.roomPriceForm.value.status !== this.initialValues['status'];
         changedValues['status'] = this.roomPriceForm.value.status !== null ? this.roomPriceForm.value.status : false;
@@ -1093,7 +1093,7 @@ seOpenSaleDate(seasonStartDate, seasonEndDate) {
   const fieldArray = this.openSaleForm.get('fieldGroup') as FormArray;
   fieldArray.clear();
     const group = this.fb.group({
-      from_date: [seasonStartDate ? moment(seasonStartDate).format('DD/MM/YY') : '', Validators.required  ],
+      from_date: [seasonStartDate ? moment(seasonStartDate).format('DD/MM/YYYY') : '', Validators.required  ],
       to_date: [seasonEndDate ? moment(seasonEndDate).format('DD/MM/YYYY') : '', Validators.required  ],
       inventory: [ Validators.required]
     })

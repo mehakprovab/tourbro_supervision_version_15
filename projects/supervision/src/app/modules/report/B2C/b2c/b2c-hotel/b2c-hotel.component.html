@@ -66,7 +66,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4 pr-0 p-0"  *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7">
+            <div class="col-4 pr-0 p-0"  *ngIf="showAdminReportFields">
                 <div class="form-group">
                     <label for="bookedBy">Suppliers</label>
                     <select formControlName="Api_id" id="bookedBy" class="form-control form-control-sm nrm_input">
@@ -110,7 +110,7 @@
                             <div id="b2c-hotel-report">
                                 <table class="table table-borderless table-striped table-hover" matSort
                                     (matSortChange)="sortData($event)">
-                                    <thead  *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7">
+                                    <thead  *ngIf="showAdminReportFields">
                                         <tr>
                                             <th scope="col" class="text-left text-nowrap"
                                                 *ngFor="let header of displayColumn;">
@@ -118,7 +118,7 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <thead  *ngIf="loggedInUser['auth_role_id'] === 6 || loggedInUser['auth_role_id'] === 7">
+                                    <thead  *ngIf="!showAdminReportFields">
                                         <tr>
                                             <th scope="col" class="text-left text-nowrap"
                                                 *ngFor="let header of displaySupplierColumn;">
@@ -160,7 +160,7 @@
                                                             Profile</button>
                                                                      <button
                                                         *ngIf="data.BookingDetails.Status === 'BOOKING_CONFIRMED' && 
-                                                               
+
                                                                (data.BookingDetails.hcn_number === '' || data.BookingDetails.hcn_number === null)
                                                                && loggedInUser['auth_role_id'] == 6"
                                                         ngbDropdownItem
@@ -169,7 +169,7 @@
                                                     </button>     
                                                     <button
                                                     *ngIf="data.BookingDetails.Status === 'BOOKING_CONFIRMED' && 
-                                                           
+
                                                            (data.BookingDetails.hcn_number != '' && data.BookingDetails.hcn_number != null)
                                                            && loggedInUser['auth_role_id'] == 6"
                                                     ngbDropdownItem
@@ -207,7 +207,7 @@
                                                 </span>
                                                 {{data['BookingDetails']['Status'] ? '' : 'N/A'}}
                                             </td>
-                                            <td class="text-left" *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7">
+                                            <td class="text-left" *ngIf="showAdminReportFields">
                                                 <ng-container
                                                     *ngIf="data.BookingDetails.DomainOrigin === 'CRS'; else apiOrigin">
                                                     {{ data.BookingDetails.CancellationReason?.hotelBody?.supplierType
@@ -222,7 +222,7 @@
                                                 </ng-template>
                                             </td>
                                             <!-- <td class="text-left" > {{ data['BookingDetails']['hcn_number'] ? data['BookingDetails']['hcn_number'] : 'N/A'}}</td> -->
-                                            <td class="text-left" *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7">
+                                            <td class="text-left" *ngIf="showAdminReportFields">
                                                 {{ data.BookingDetails.DomainOrigin === 'CRS' ? 'CRS' : 'API' }}
                                             </td>
                                             <td class="text-left"
@@ -232,15 +232,15 @@
                                             <ng-template #emptyValue>
                                                 <td class="text-left">N/A</td>
                                             </ng-template>
-                                            <td class="text-left" *ngIf="loggedInUser['auth_role_id'] === 6 " > {{ data['BookingDetails']['PaymentStatus'] ? data['BookingDetails']['PaymentStatus'] : 'NA'}}</td>
-                                            <td class="text-left" *ngIf="loggedInUser['auth_role_id'] === 6 " > {{ data['BookingDetails']['hcn_number'] ? data['BookingDetails']['hcn_number'] : 'NA'}}</td>
+
+                                            <td class="text-left" *ngIf="!showAdminReportFields" > {{ data['BookingDetails']['hcn_number'] ? data['BookingDetails']['hcn_number'] : 'NA'}}</td>
                                             <td class="text-left"> {{data['BookingDetails']['HotelName']}} </td>
                                             <td class="text-left"> {{data['BookingDetails']['HotelAddress']}} </td>
                                             <td class="text-left"> {{ data['BookingDetails']['PhoneNumber']!="undefined"
                                                 ? data['BookingDetails']['PhoneNumber'] : 'N/A' }} </td>
-                                            <td *ngIf="loggedInUser['auth_role_id'] !== 6" class="text-left">{{ data['BookingDetails']['Email']!="undefined" ?
+                                            <td *ngIf="showAdminReportFields" class="text-left">{{ data['BookingDetails']['Email']!="undefined" ?
                                                 data['BookingDetails']['Email'] : 'N/A' }}</td>
-                                            <!-- <td class="text-left"  *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7">
+                                            <!-- <td class="text-left"  *ngIf="showAdminReportFields">
                                                 {{data['GTANumber'] || 'N/A'}} </td> -->
                                             <td class="text-left text-uppercase">
                                                 {{data.leadUserName}} </td>
@@ -256,21 +256,21 @@
                                             <!-- <td class="text-left"> {{data['BookingItineraryDetails'].length > 0 ? data['BookingItineraryDetails'][0]['RoomPrice'] : "0"}} </td> -->
 
                                             <td class="text-left"
-                                                *ngIf="data.BookingDetails.DomainOrigin !== 'CRS' && loggedInUser['auth_role_id'] !== 6  && loggedInUser['auth_role_id'] !== 7">
+                                                *ngIf="data.BookingDetails.DomainOrigin !== 'CRS' && showAdminReportFields">
                                                 {{data['BookingDetails']['AdminMarkup'] || 0}}</td>
                                             <td class="text-left"
-                                                *ngIf="data.BookingDetails.DomainOrigin == 'CRS' && loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7">
+                                                *ngIf="data.BookingDetails.DomainOrigin == 'CRS' && showAdminReportFields">
                                                 {{data.BookingDetails.CancellationReason.hotelBody?.RoomDetails[0]?.markupDetails.AdminMarkup
                                                 | number: '1.2-2'}} </td>
-                                            <td class="text-left"  *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7">
+                                            <td class="text-left"  *ngIf="showAdminReportFields">
                                                 {{data['BookingDetails']['ConvinenceAmount'] || 0}} </td>
-                                            <td class="text-left"  *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7">
+                                            <td class="text-left"  *ngIf="showAdminReportFields">
                                                 {{data['BookingDetails']['PromoCode'] || 'N/A'}} </td>
-                                            <td class="text-left"  *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7">
+                                            <td class="text-left"  *ngIf="showAdminReportFields">
                                                 {{data['BookingDetails']['PromoCodeAmount'] || 0 }} </td>
-                                            <td *ngIf="loggedInUser['auth_role_id'] !== 6 " class="text-left"> {{data['BookingDetails']['earlyBookingValue'] || 0 }}
+                                            <td *ngIf="showAdminReportFields" class="text-left"> {{data['BookingDetails']['earlyBookingValue'] || 0 }}
                                             </td>
-                                            <td *ngIf="loggedInUser['auth_role_id'] !== 6" class="text-left"> {{data['BookingDetails']['durationOfStayValue'] || 0
+                                            <td *ngIf="showAdminReportFields" class="text-left"> {{data['BookingDetails']['durationOfStayValue'] || 0
                                                 }} </td>
                                             <td class="text-left"> {{data.BookingDetails?.CancellationReason.hotelBody.SupplierPrice || 0
                                                 }} {{data.BookingDetails?.API_Currency}}</td>
@@ -278,7 +278,7 @@
                                             <td class="text-left"> {{ data.pricingCommissions }} </td>
                                             <!-- <td class="text-left"> {{data.BookingDetails?.API_Payable_Price || 0 }}
                                                 {{data.BookingDetails?.API_Currency}}</td> -->
-                                            <!-- <td class="text-left"  *ngIf="loggedInUser['auth_role_id'] !== 6 && loggedInUser['auth_role_id'] !== 7"> {{data.BookingDetails?.API_Commission || '' }} </td> -->
+                                            <!-- <td class="text-left"  *ngIf="showAdminReportFields"> {{data.BookingDetails?.API_Commission || '' }} </td> -->
                                             <td *ngIf="loggedInUser['auth_role_id'] !== 6 " class="text-left"> {{data['BookingItineraryDetails'].length > 0 ?
                                                 data['BookingDetails']['TotalAmount'] : "0"}}
                                             </td>
@@ -298,19 +298,19 @@
                                                 <span>Room {{i + 1}} : &nbsp;</span>     
                                                 <span>{{cancel.NonRefundable ? true : 'NRF' :  }}</span>                                                                                                                       
                                                 <span *ngIf="!cancel.CancellationPolicies.$t.length">                                                    
-                                                                       
+
                                                           NRF
-                                                                                                                                                                                                                                                                                                                                                                                                                          
+
                                                 </span>
                                                   <span  *ngIf="cancel.CancellationPolicies.$t.length">    
-                                                                                                                                                                                                                                                        
+
                                                          <span *ngFor="let policy of cancel.CancellationPolicies.$t;let i= index"><b>{{policy.date_from | date: 'dd/MM/yyyy' }}</b>&nbsp;{{data?.BookingDetails.CancellationReason.hotelBody.LocalTimeZone}}<br></span>                                                                                                                                                                                                                                                                
-                                             
+
                                                    &nbsp;
                                                 </span> 
-                                                
+
                                                 <br>
-                
+
                                             </ng-container>
                                          </td> -->
                                             <td class="text-left" *ngIf="data?.BookingDetails.DomainOrigin == 'CRS'">
@@ -329,31 +329,31 @@
                                                 N/A
                                             </td>
                                             <!-- <td class="text-left"*ngIf="data?.BookingDetails.DomainOrigin == 'CRS'" > 
-                                         
+
                                                 <ng-container *ngFor="let cancel of data?.BookingDetails.CancellationReason.hotelBody.RoomDetails;let i=index">   
                                                     <span>Room {{i + 1}} : &nbsp;</span>                                                                                                                            
                                                     <span *ngIf="!cancel.CancellationPolicies.$t.length">                                                    
-                                                                           
+
                                                                 {{cancel?.Price.Amount}} {{cancel?.Price?.Currency}} 
-                                                                                                                                                                                                                                                                                                                                                                                                                              
+
                                                     </span>
                                                       <span  *ngIf="cancel.CancellationPolicies.$t.length">    
-                                                    
-                            
-                                            
-                                                       
-                                            
-                                                          
+
+
+
+
+
+
                                                              <span *ngFor="let policy of cancel.CancellationPolicies.$t;let i= index">{{ policy?.charge }} {{policy?.currency}}&nbsp;</span>                                                       
-                                                                                                                                                                                                              
-                                                       
-                                                     
+
+
+
                                                     </span> 
-                                                    
+
                                                     <br>
-                    
+
                                                 </ng-container>
-                                      
+
                                             </td> -->
                                             <!-- <td class="text-left"> {{ data?.cancelled_datetime | date: 'dd/MM/yyyy' }} </td> -->
                                             <td class="text-left" *ngIf="data?.BookingDetails.DomainOrigin == 'CRS' && loggedInUser['auth_role_id'] !== 6 " >
@@ -471,27 +471,27 @@
       <div class="modal-body">
         <form [formGroup]="hotelTypeForm"  class="needs-validation  pt-0" novalidate>
             <div class="border-light p-0">
-          
+
                 <div class="card-body pl-0">
                     <fieldset form="user">
-                 
-                
+
+
                 <div class="form-group">
                     <label class=" control-label">
                          HCN Number
-        
+
                     </label>
                     <div class="">
                     <input type="text" formControlName="hcnNumber" style="height: 50px !important;" class="form-control"
                         >
                         </div>
-                  
+
                 </div>
-    
-                     
-                    
+
+
+
                     </fieldset>
-              
+
                 </div>
             </div>
         </form>

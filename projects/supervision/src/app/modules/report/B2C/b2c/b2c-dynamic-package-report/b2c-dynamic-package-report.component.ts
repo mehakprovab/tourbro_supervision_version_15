@@ -1,3 +1,4 @@
+import { canViewAdminReportFields, filterAdminReportColumns } from '../../../utils/report-column-visibility';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { formatDate } from 'ngx-bootstrap/chronos';
@@ -19,6 +20,7 @@ interface ReportColumn {
   styleUrls: ['./b2c-dynamic-package-report.component.scss']
 })
 export class B2cDynamicPackageReportComponent implements OnInit, OnDestroy {
+    readonly showAdminReportFields = canViewAdminReportFields();
   private subSunk = new SubSink();
   private allRows: any[] = [];
 
@@ -75,6 +77,7 @@ export class B2cDynamicPackageReportComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.columns = filterAdminReportColumns(this.columns, this.showAdminReportFields);
     this.regConfig = this.fb.group({
       booked_from_date: new FormControl('', Validators.required),
       booked_to_date: new FormControl('', Validators.required),

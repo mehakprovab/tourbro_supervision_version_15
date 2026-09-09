@@ -129,6 +129,14 @@ export class UtilityService {
         return fromDate;
     }
 
+    /** Format date columns at the export boundary, preserving times and non-date values. */
+    private formatExportDateCell(column: string, value: any): any {
+        if (typeof value !== 'string' || !/date|booked\s*on|paid\s*on|cancelled\s*on|issued\s*on|check[ -]?(in|out)|deadline/i.test(column || '')) {
+            return value;
+        }
+        return value.replace(/\b(\d{4})-(\d{2})-(\d{2})(?=$|[T\s])/g, '$3/$2/$1');
+    }
+
     public exportToExcel(element: any, fileName: string,columnWidth:any): void {
         const EXCEL_EXTENSION = '.xlsx';
 
@@ -138,7 +146,10 @@ export class UtilityService {
         };
 
         // Generate workbook and add the worksheet
-        const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(element);
+        const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(element.map(row => Object.keys(row).reduce((formatted, key) => {
+            formatted[key] = this.formatExportDateCell(key, row[key]);
+            return formatted;
+        }, {})));
 
         // Set column widths (Example: A: 20, B: 15, C: 25, default: 10)
         const columnWidths = columnWidth;
@@ -199,7 +210,7 @@ export class UtilityService {
 
         autoTable(doc, {
             head: [columns],
-            body: rows,
+            body: rows.map(row => row.map((value, index) => this.formatExportDateCell(columns[index], value))),
             styles: {
                 fontSize: columns.length > 20 ? 5 : 7,
                 overflow: 'linebreak',
@@ -242,7 +253,7 @@ export class UtilityService {
             return {
                 "Sl No.":index+1,
                 "Email":response.email_id,
-                "Subscribed Date": moment(response.created_at).format("MMM DD, YYYY"),
+                "Subscribed Date": moment(response.created_at).format("DD/MM/YYYY"),
             }
         });
         const columnWidths = [

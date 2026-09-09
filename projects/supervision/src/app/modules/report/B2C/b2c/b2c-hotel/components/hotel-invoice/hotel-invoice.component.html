@@ -44,7 +44,7 @@
                                 <td style="padding: 12px 12px; width: 25%; margin: 10px 0px; border-top: 1px solid transparent; ">
                                     <div style="line-height:40px;color: #4b4b4b;">
                                         <span style="font-size:13px;font-weight:400;">Invoice No : {{ voucherData | invoiceField:'invoiceNumber' }}</span><br>
-                                        <span style="font-size:13px;font-weight:400;">Invoice Date : {{ voucherData | invoiceField:'invoiceDate' | date:'dd-MMM-yyyy' }}</span><br>
+                                        <span style="font-size:13px;font-weight:400;">Invoice Date : {{ voucherData | invoiceField:'invoiceDate' | date:'dd/MM/yyyy' }}</span><br>
                                         <span style="font-size:13px;font-weight:400;">Booking Ref : {{ voucherData | invoiceField:'bookingReference' }}</span><br>
                                         <span style="font-size:13px;font-weight:400;">Place of Supply : Uttarakhand (05)</span>
                                     </div>
@@ -118,7 +118,7 @@
                                     </tr>
                                     <tr style="color: #4b4b4b;font-size: 13px;font-weight: 400;">
                                         <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">Booking Date  :</td>
-                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">{{ voucherData | invoiceField:'bookingDate' | date:'dd-MMM-yyyy' }}</td>
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">{{ voucherData | invoiceField:'bookingDate' | date:'dd/MM/yyyy' }}</td>
                                     </tr>
 
                                      <tr style="color: #4b4b4b;font-size: 13px;font-weight: 400;">

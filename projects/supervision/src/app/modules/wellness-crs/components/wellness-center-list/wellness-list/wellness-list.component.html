@@ -127,9 +127,9 @@
                         <td class="text-left">{{ wellness.city_name }}</td>
                         <td class="text-left">{{ wellness.currency }}</td>
                         <td class="text-left address-col">{{ wellness.address }}</td>
-                        <td class="text-left">{{ wellness.contract_expiry_date }}</td>
+                        <td class="text-left">{{ wellness.contract_expiry_date | date: 'dd/MM/yyyy' }}</td>
                         <td class="text-left">{{ wellness.packages_count ? wellness.packages_count : 'N/A' }}</td>
-                        <td class="text-left">{{ wellness.created_at ? wellness.created_at : 'N/A' }}</td>
+                        <td class="text-left">{{ wellness.created_at ? (wellness.created_at | date: 'dd/MM/yyyy') : 'N/A' }}</td>
                         <td>
                         <label class="switch">
                             <input type="checkbox" [checked]="wellness.is_trending == 1 || wellness.is_trending === true" [disabled]="trendingUpdating[wellness.center_code]" (change)="onTrendingChange(wellness, $event)" >

@@ -1,3 +1,4 @@
+import { canViewAdminReportFields } from '../../../../utils/report-column-visibility';
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
@@ -15,7 +16,22 @@ const log = new Logger('report/HotelVoucherComponent');
   styleUrls: ['./b2-ctransfer-invoice.component.scss']
 })
 export class B2CTransferInvoiceComponent implements OnInit {
- 
+  readonly showAdminReportFields = canViewAdminReportFields();
+
+  attributes: any = {};
+
+  get invoiceTotal(): number | null {
+    const value = this.showAdminReportFields
+      ? (this.voucherData?.BookingDetails?.grand_total ?? 0)
+      : this.attributes?.data?.Price?.TotalDisplayFare;
+    return value == null ? null : Number(value);
+  }
+
+  get invoiceCurrency(): string {
+    return (!this.showAdminReportFields && this.attributes?.data?.Price?.Currency)
+      || this.voucherData?.BookingDetails?.currency || 'INR';
+  }
+
   @ViewChild('print_voucher', { static: false }) print_voucher: ElementRef;
 	private subSunk = new SubSink();
     isOpen = false as boolean;
@@ -44,47 +60,35 @@ export class B2CTransferInvoiceComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-  	this.subSunk.sink = this.activatedRoute.queryParams.subscribe(queryParams => {
-      this.app_reference =(queryParams['appReference']);  
+    this.subSunk.sink = this.activatedRoute.queryParams.subscribe(queryParams => {
+      this.app_reference = queryParams['appReference'];
+      this.getB2cCabVoucher();
     });
-  	this.getB2cCabVoucher();
   }
 
-  getB2cCabVoucher(){
-  	this.subSunk.sink = this.apiHandlerService.apiHandler('b2cCabVoucher', 'post', {}, {},
-            {
-                "app_reference": this.app_reference,
-            })
-            .subscribe(resp => {
-                console.log(resp);
-                if (resp.statusCode == 200 || resp.statusCode == 201) {
-                    this.voucherData = resp.data[0] || [];
-                    if (this.voucherData.BookingPaxDetails.length) {
-                        // Sort so that LeadPax comes first
-                        this.voucherData.BookingPaxDetails.sort((a, b) => {
-                          return (b.LeadPax === true ? 1 : 0) - (a.LeadPax === true ? 1 : 0);
-                        });
-                      
-                        // Reset counters before looping
-                        this.noOfAdults = 0;
-                        this.noOfChilds = 0;
-                      
-                        // Count PaxTypes
-                        this.voucherData.BookingPaxDetails.forEach((element, i) => {
-                          if (element['PaxType'] === 'Child') {
-                            this.noOfChilds++;
-                          } else if (element['PaxType'] === 'Adult') {
-                            this.noOfAdults++;
-                          }
-                        });
-                      }    
-                    if(this.voucherData)
-                    	this.findLeaduserDetails(this.voucherData['BookingPaxDetails'])
-                }
-                else {
-                    this.swalService.alert.error(resp.msg || '');
-                }
-            });
+  getB2cCabVoucher() {
+    this.subSunk.sink = this.apiHandlerService.apiHandler('WebTransferVoucher', 'post', {}, {}, {
+      AppReference: this.app_reference
+    }).subscribe({
+      next: resp => {
+        if (resp.statusCode !== 200 && resp.statusCode !== 201) {
+          this.swalService.alert.error(resp.msg || 'Unable to fetch invoice');
+          return;
+        }
+        this.voucherData = resp.data || {};
+        const attributes = this.voucherData.BookingDetails?.attributes;
+        try {
+          this.attributes = typeof attributes === 'string' ? JSON.parse(attributes) : (attributes || {});
+        } catch {
+          this.attributes = {};
+        }
+        const passengers = this.voucherData.BookingPaxDetails || [];
+        this.paxUser = passengers.find(passenger => passenger.LeadPax === true) || passengers[0] || {};
+        this.noOfAdults = passengers.filter(passenger => passenger.PaxType === 'Adult').length;
+        this.noOfChilds = passengers.filter(passenger => passenger.PaxType === 'Child').length;
+      },
+      error: () => this.swalService.alert.error('Unable to fetch invoice')
+    });
   }
 
   calculateDiff(fromDate,toDate){
@@ -113,7 +117,7 @@ export class B2CTransferInvoiceComponent implements OnInit {
     }
 
     downloadA4(type: any, orientation?: string): void {
-      let fileName = this.voucherData['AppReference']
+      const fileName = this.voucherData?.BookingDetails?.app_reference || this.app_reference
          window['html2canvas'] = html2canvas;
          const date = new Date().toDateString();
          const doc = new jsPDF({

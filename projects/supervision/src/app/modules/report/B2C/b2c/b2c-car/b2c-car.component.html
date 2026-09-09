@@ -45,7 +45,7 @@
                 <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
                 <label for="fromDate">Booked From Date</label>
                 <input formControlName="booked_from_date" type="text" id="fromDate" autocomplete="off" 
-                class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd-mm-yyyy"
+                class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy"
                 bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen">
              </div>
           </div>
@@ -54,7 +54,7 @@
                 <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
                 <label for="toDate">Booked To Date</label>
                 <input formControlName="booked_to_date" type="text" id="toDate" autocomplete="off"
-                class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd-mm-yyyy"
+                class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy"
                 bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen">
              </div>
           </div>
@@ -115,18 +115,18 @@
                          <td class="text-left"> {{data['driverName']}} </td>
                          <td class="text-left"> {{data['PhoneNumber']}} </td>
                          <td class="text-left"> {{data['CarPickupLocation']}} </td>
-                         <td class="text-left"> {{data['CarFromDate'] | date }} {{data['PickUpTime']}}</td>
+                         <td class="text-left"> {{data['CarFromDate'] | date: 'dd/MM/yyyy' }} {{data['PickUpTime']}}</td>
                          <td class="text-left"> {{data['CarDropLocation']}} </td>
-                         <td class="text-left"> {{data['CarToDate'] | date}} {{data['DropTime']}} </td>
+                         <td class="text-left"> {{data['CarToDate'] | date: 'dd/MM/yyyy'}} {{data['DropTime']}} </td>
                          <td class="text-left"> {{data['TotalFare']}} </td>
-                         <td class="text-left"> {{data['LevelOneMarkup']}} </td>
-                         <td class="text-left"> {{data['ConvenienceFee']}} </td>
+                         <td class="text-left" *ngIf="showAdminReportFields"> {{data['LevelOneMarkup']}} </td>
+                         <td class="text-left" *ngIf="showAdminReportFields"> {{data['ConvenienceFee']}} </td>
                          <td class="text-left"> {{data['PromoCode']}} </td>
-                         <td class="text-left"> {{data['PromocodeAmount']}} </td>
-                         <td class="text-left"> {{data['RewardDiscount']}} </td>
+                         <td class="text-left" *ngIf="showAdminReportFields"> {{data['PromocodeAmount']}} </td>
+                         <td class="text-left" *ngIf="showAdminReportFields"> {{data['RewardDiscount']}} </td>
                          <td class="text-left"> {{data['TotalFare']}} </td>
                          <td class="text-left"> {{data['Currency']}} </td>
-                         <td class="text-left"> {{data['PaymentMode']}} </td>
+                         <td class="text-left" *ngIf="showAdminReportFields"> {{data['PaymentMode']}} </td>
                          <td class="text-left"> {{data['BookedOn']}} </td>
                          <td class="text-left"> {{data['BillingType']}} </td>
                       </tr>

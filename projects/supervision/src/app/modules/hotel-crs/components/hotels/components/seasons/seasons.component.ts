@@ -26,7 +26,7 @@ export class SeasonsComponent implements OnInit {
     roomSeasonForm: FormGroup;
     bsDateConf = {
         isAnimated: true,
-        dateInputFormat: 'YYYY-MM-DD',
+        dateInputFormat: 'DD/MM/YYYY',
         containerClass: 'theme-green'
     };
   constructor(private hotelCrsService: HotelCrsService,

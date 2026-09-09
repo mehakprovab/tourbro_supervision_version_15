@@ -68,13 +68,13 @@
                                         <td class="text-left">{{data['email']}}</td>
                                         <td class="text-left">{{data['phone']}}</td>
                                         <td class="text-left">{{data['city']}}</td>
-                                        <td class="text-left">{{data['check_in'] | date}}</td>
-                                        <td class="text-left">{{data['check_out'] | date}}</td>
+                                        <td class="text-left">{{data['check_in'] | date: 'dd/MM/yyyy'}}</td>
+                                        <td class="text-left">{{data['check_out'] | date: 'dd/MM/yyyy'}}</td>
                                         <td class="text-left">{{data['nights']}}</td>
                                         <td class="text-left"> {{data['adult']}} </td>
                                         <td class="text-left"> {{data['child']}} </td>
                                         <td class="text-left"> {{data['total_pax']}} </td>
-                                        <td class="text-left"> {{data['recieved_on'] | date}} </td>
+                                        <td class="text-left"> {{data['recieved_on'] | date: 'dd/MM/yyyy'}} </td>
                                         <td class="text-left"> {{data['comments']}} </td>
                                     </tr>
                                 </tbody>

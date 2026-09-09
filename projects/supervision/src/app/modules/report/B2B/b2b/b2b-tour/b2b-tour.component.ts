@@ -1,3 +1,4 @@
+import { canViewAdminReportFields, filterAdminReportColumns } from '../../../utils/report-column-visibility';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Sort } from '@angular/material/sort';
@@ -22,6 +23,7 @@ let respDataCopy: Array<any> = [];
   styleUrls: ['./b2b-tour.component.scss']
 })
 export class B2bTourComponent implements OnInit {
+    readonly showAdminReportFields = canViewAdminReportFields();
 
   private subSunk = new SubSink();
   regConfig: FormGroup;
@@ -112,12 +114,8 @@ loggedInUser: any;
   ) { }
 
   ngOnInit() {
+        this.displayColumn = filterAdminReportColumns(this.displayColumn, this.showAdminReportFields, ['Supplier Name', 'Buyer TA Name', 'Total Display Fare', 'Agent Markup', 'Agent Paid Amount', 'Booking Currency']);
     this.loggedInUser = JSON.parse(sessionStorage.getItem('currentSupervisionUser'));
-
-    if(this.loggedInUser.auth_role_id === 7) {
-        this.displayColumn.splice(5,2);
-        this.displayColumn.splice(17,6);
-    }
 
       let date = new Date(),
           fromDate = new Date(date.valueOf() - (30 * 24 * 60 * 60 * 1000));
@@ -306,6 +304,10 @@ pdfCallbackFn(pdf: any) {
 }
 
 downloadPdf() {
+  if (!this.showAdminReportFields) {
+    this.utility.downloadElementAsPdf(this.config.elementIdOrContent, 'B2B_Tour_Report', 'landscape');
+    return;
+  }
   if (!this.respData || !this.respData.length) return;
 
   const doc = new jsPDF('l', 'mm', 'a3');

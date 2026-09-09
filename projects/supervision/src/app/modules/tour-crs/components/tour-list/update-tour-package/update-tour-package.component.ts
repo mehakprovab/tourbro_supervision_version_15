@@ -49,8 +49,8 @@ videoFile: File | null = null;
   logoConfig: FormGroup;
   bsDateConf = {
     isAnimated: true,
-    dateInputFormat: 'DD-MM-YYYY',
-    rangeInputFormat: 'DD-MM-YYYY',
+    dateInputFormat: 'DD/MM/YYYY',
+    rangeInputFormat: 'DD/MM/YYYY',
     containerClass: 'theme-blue',
     showWeekNumbers: false
   };

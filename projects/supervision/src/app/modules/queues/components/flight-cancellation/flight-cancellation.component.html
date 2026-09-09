@@ -17,15 +17,15 @@
     </ng-container>
     <ng-container matColumnDef="bookingDate">
         <th mat-header-cell *matHeaderCellDef> Booking Date </th>
-        <td mat-cell *matCellDef="let element"> {{element.bookingDate}} </td>
+        <td mat-cell *matCellDef="let element"> {{ element.bookingDate | date: 'dd/MM/yyyy' }} </td>
     </ng-container>
     <ng-container matColumnDef="canRequestedDate">
         <th mat-header-cell *matHeaderCellDef> Can Requested Date </th>
-        <td mat-cell *matCellDef="let element"> {{element.canRequestedDate}} </td>
+        <td mat-cell *matCellDef="let element"> {{ element.canRequestedDate | date: 'dd/MM/yyyy' }} </td>
     </ng-container>
     <ng-container matColumnDef="travelDate">
         <th mat-header-cell *matHeaderCellDef> Travel Date </th>
-        <td mat-cell *matCellDef="let element"> {{element.travelDate}} </td>
+        <td mat-cell *matCellDef="let element"> {{ element.travelDate | date: 'dd/MM/yyyy' }} </td>
     </ng-container>
     <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef> Action </th>

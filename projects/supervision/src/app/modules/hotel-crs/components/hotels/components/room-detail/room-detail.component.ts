@@ -67,7 +67,7 @@ infantOptions: number[] = [];
     viewList:any;
     bsDateConf = {
         isAnimated: true,
-        dateInputFormat: 'YYYY-MM-DD',
+        dateInputFormat: 'DD/MM/YYYY',
         containerClass: 'theme-green'
     };
     isOpen = false as boolean;

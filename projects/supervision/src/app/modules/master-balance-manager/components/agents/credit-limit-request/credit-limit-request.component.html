@@ -43,8 +43,8 @@
                             <span *ngIf="data['status'] == 'BOOKING_FAILED'" class="badge badge-danger">
                                 {{data['status']}} </span>
                         </td>
-                        <td class="text-left"> {{data['created_datetime'] * 1000 | date: 'medium'}} </td>
-                        <td class="text-left"> {{data['updated_datetime'] * 1000 | date: 'medium'}} </td>
+                        <td class="text-left"> {{data['created_datetime'] * 1000 | date: 'dd/MM/yyyy, h:mm:ss a'}} </td>
+                        <td class="text-left"> {{data['updated_datetime'] * 1000 | date: 'dd/MM/yyyy, h:mm:ss a'}} </td>
                         <td class="text-left"> {{data['update_remarks']}} </td>
                         <td class="text-left"> {{data['processedby']}} </td>
                         <td class="text-left"> {{data['remarks']}} </td>

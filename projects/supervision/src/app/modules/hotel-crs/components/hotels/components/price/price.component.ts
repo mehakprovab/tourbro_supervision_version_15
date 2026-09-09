@@ -572,8 +572,8 @@ getAdultLabel(index: number): string {
         allowSearchFilter: true,
         enableCheckAll: true, // Ensure this is enabled
       };
-    const formattedDate1 = moment(patchData.from_date).format("DD-MM-YYYY");
-    const formattedDate2 = moment(patchData.to_date).format("DD-MM-YYYY");
+    const formattedDate1 = moment(patchData.from_date).format("DD/MM/YYYY");
+    const formattedDate2 = moment(patchData.to_date).format("DD/MM/YYYY");
 
     // Show form and hide list
     this.showPriceForm = true;
@@ -855,7 +855,7 @@ getAlreadySelectedView(amenities) {
             const seasonStartDate =  this.addnewRate;
             this.onCheckIn(seasonStartDate);
             this.roomPriceForm.patchValue({
-              from_date: moment(seasonStartDate).add(1, 'day').format('DD-MM-YYYY')  || '',
+              from_date: moment(seasonStartDate).add(1, 'day').format('DD/MM/YYYY')  || '',
             })
           
             // this.onCheckIn(this.roomPriceForm.value.from_date);
@@ -960,10 +960,10 @@ onSubmitPrice() {
     if (this.roomPriceForm.valid) {
       console.log("this.roomPriceForm.value.from_date",this.roomPriceForm.value.from_date)
         // const dt1 = new Date(this.roomPriceForm.value.from_date);
-        this.roomPriceForm.value.from_date = moment(this.roomPriceForm.value.from_date, 'DD-MM-YYYY').format('YYYY-MM-DD');
+        this.roomPriceForm.value.from_date = moment(this.roomPriceForm.value.from_date, 'DD/MM/YYYY').format('YYYY-MM-DD');
         // console.log("  this.roomPriceForm.value.from_date",  this.roomPriceForm.value.from_date)
         // const dt2 = new Date(this.roomPriceForm.value.to_date);
-        this.roomPriceForm.value.to_date =  moment(this.roomPriceForm.value.to_date, 'DD-MM-YYYY').format('YYYY-MM-DD');
+        this.roomPriceForm.value.to_date =  moment(this.roomPriceForm.value.to_date, 'DD/MM/YYYY').format('YYYY-MM-DD');
 
         if(this.roomPriceForm.value.is_refundable === false || this.roomPriceForm.value.is_refundable == 0 )
         {
@@ -1329,7 +1329,7 @@ onCancellable(event: any) {
 onCheckIn(event) {
   if (event) {
       //  const eventDate = new Date(event);
-       const eventDate = moment(event, 'DD-MM-YYYY').toDate(); 
+       const eventDate = moment(event, 'DD/MM/YYYY').toDate();
       console.log("eventDate",eventDate)
       eventDate.setDate(eventDate.getDate() + 1);
       this.setMinDate = eventDate;

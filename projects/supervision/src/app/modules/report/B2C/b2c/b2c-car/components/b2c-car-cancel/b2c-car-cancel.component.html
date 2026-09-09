@@ -6,7 +6,7 @@
       <h3 class="canc_hed">Cancellation</h3>
       <div class="ref_number">
          <div class="rows_cancel">Reservation Code: <strong>{{invoiceData['AppReference']}}</strong></div>
-         <div class="rows_cancel">Booking Date: {{invoiceData['CreatedDatetime'] | date}}</div>
+         <div class="rows_cancel">Booking Date: {{invoiceData['CreatedDatetime'] | date: 'dd/MM/yyyy'}}</div>
       </div>
    </div>
    <div class="clearfix"></div>
@@ -20,7 +20,7 @@
                </div>
             </div>
             <div class="col">
-               <div class="pad_evry"><span class="place_big_text">{{invoiceData['CarPickupAddress']}}</span> <span class="place_smal_txt"></span> <span class="date_mension">{{invoiceData['CarFromDate'] | date}} {{invoiceData['PickUpTime']}}</span></div>
+               <div class="pad_evry"><span class="place_big_text">{{invoiceData['CarPickupAddress']}}</span> <span class="place_smal_txt"></span> <span class="date_mension">{{invoiceData['CarFromDate'] | date: 'dd/MM/yyyy'}} {{invoiceData['PickUpTime']}}</span></div>
             </div>
             <div class="col-2">
                <div class="pad_evry">
@@ -28,7 +28,7 @@
                </div>
             </div>
             <div class="col">
-               <div class="pad_evry"><span class="place_big_text">{{invoiceData['CarDropAddress']}}</span> <span class="place_smal_txt"></span> <span class="date_mension">{{invoiceData['CarToDate'] | date}} {{invoiceData['DropTime']}}</span></div>
+               <div class="pad_evry"><span class="place_big_text">{{invoiceData['CarDropAddress']}}</span> <span class="place_smal_txt"></span> <span class="date_mension">{{invoiceData['CarToDate'] | date: 'dd/MM/yyyy'}} {{invoiceData['DropTime']}}</span></div>
             </div>
          </div>
       </div>

@@ -11,7 +11,7 @@
                 <td colspan="2" style="padding-bottom:10px; font-size: 14px; line-height: 24PX;" align="right">
                     <span><strong>Booking ID : {{voucherData['AppReference']}}</strong></span>
                     <br><span>Booked on : {{voucherData['FlightItineraries'][0]['departure_datetime'] | date:
-                        'dd-MM-yy'}}</span>
+                        'dd/MM/yyyy'}}</span>
                 </td>
             </tr>
             <tr>
@@ -91,13 +91,13 @@
                                             style="color:#2196f3;">{{voucherData['JourneyFrom'] ?
                                             voucherData['JourneyFrom'] : 'N/A'}}</strong><br><span
                                             style="font-size: 13px; font-weight: 500;">{{voucherData['FlightItineraries'][0]['departure_datetime']
-                                            | date: 'medium' }}</span><br></span>
+                                            | date: 'dd/MM/yyyy, h:mm:ss a' }}</span><br></span>
                                 </td>
                                 <td style="font-size: 15px; line-height: 25px;"><span><strong
                                             style="color:#2196f3;">{{voucherData['JourneyTo'] ? voucherData['JourneyTo']
                                             : 'N/A'}}</strong><br><span
                                             style="font-size: 13px; font-weight: 500;">{{voucherData['FlightItineraries'][0]['arrival_datetime']
-                                            | date: 'medium'}}</span><br></span>
+                                            | date: 'dd/MM/yyyy, h:mm:ss a'}}</span><br></span>
                                 </td>
                                 <td><span
                                         style="display:block;border-left: 1px solid #999; font-size: 13px; padding-left:10%"><strong>One

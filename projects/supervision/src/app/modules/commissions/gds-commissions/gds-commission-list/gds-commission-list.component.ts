@@ -26,7 +26,7 @@ export class GdsCommissionListComponent implements OnInit {
     isOpen = false as boolean;
     bsDateConf = {
         isAnimated: true,
-        dateInputFormat: 'YYYY-MM-DD',
+        dateInputFormat: 'DD/MM/YYYY',
         rangeInputFormat: 'YYYY-MM-DD',
         containerClass: 'theme-blue'
     };

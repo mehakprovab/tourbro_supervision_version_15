@@ -1,3 +1,5 @@
+import { formatDate as formatDisplayDate } from '@angular/common';
+import { canViewAdminReportFields, filterAdminReportColumns } from '../../../utils/report-column-visibility';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Sort } from '@angular/material/sort';
@@ -21,6 +23,7 @@ let respDataCopy: Array<any> = [];
     styleUrls: ['./b2b-transfer.component.scss']
 })
 export class B2bTransferComponent implements OnInit {
+    readonly showAdminReportFields = canViewAdminReportFields();
     private subSunk = new SubSink();
     regConfig: FormGroup;
     isOpen = false as boolean;
@@ -42,7 +45,7 @@ export class B2bTransferComponent implements OnInit {
         { key: 'app_reference', value: 'Application Reference' },
         { key: 'booking_reference', value: 'Confirmation Reference' },
         { key: 'agency_name', value: 'Travel Agent(Buyer)' },//remove for DMC
-        { key: 'domain_origin', value: 'Supplier Name' },
+        { key: 'car_supplier_name', value: 'Supplier Name' },
         { key: 'departure_point', value:'Start Point'},
         { key: 'destination_point', value:'End Point'},
         { key: 'FirstName', value: 'Lead Passenger Name' },
@@ -110,14 +113,9 @@ export class B2bTransferComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.displayColumn = filterAdminReportColumns(this.displayColumn, this.showAdminReportFields, ['Travel Agent(Buyer)', 'Agent markup']);
         const currentDomainUser = localStorage.getItem('currentDomainUser');
         this.loggedInAuthId = JSON.parse(currentDomainUser)['auth_role_id'];
-        if(this.loggedInAuthId === 7) {
-            this.displayColumn.splice(5,1);
-            this.displayColumn.splice(16,2);
-            this.displayColumn.splice(18,1);
-            this.displayColumn.splice(20,2);
-        }
         let date = new Date(),
             fromDate = new Date(date.valueOf() - (30 * 24 * 60 * 60 * 1000));
         let tommorow = date;
@@ -187,9 +185,10 @@ export class B2bTransferComponent implements OnInit {
                     this.maxRoutesCount = Math.max(
                         ...this.respData.map(item => item.route_name_list.length || 0)
                         );
-                        console.log(this.displayColumn)
+                        this.displayColumn = this.displayColumn.filter(column => !column.key.startsWith('location_'));
+                    const destinationIndex = this.displayColumn.findIndex(column => column.key === 'destination_point');
                     for (let i = 1; i <= this.maxRoutesCount; i++) {
-                        this.displayColumn.splice(7 + (i - 1), 0, {
+                        this.displayColumn.splice(destinationIndex + (i - 1), 0, {
                             key: "location_" + i,
                             value: "Location " + i
                         });
@@ -314,7 +313,7 @@ export class B2bTransferComponent implements OnInit {
             case 'app_reference': return response.app_reference || 'N/A';
             case 'booking_reference': return response.booking_reference || 'N/A';
             case 'agency_name': return response.agency_name || response.business_name || 'N/A';
-            case 'domain_origin': return response.domain_origin || response.DomainOrigin || response.booking_source || 'N/A';
+            case 'car_supplier_name': return response.car_supplier_name || 'N/A';
             case 'departure_point': return this.getDeparture(response.attributes) || 'N/A';
             case 'destination_point': return this.getDestination(response.attributes) || 'N/A';
             case 'FirstName': return `${leadPassenger.title || ''} ${leadPassenger.first_name || ''} ${leadPassenger.last_name || ''}`.trim() || 'N/A';
@@ -329,7 +328,7 @@ export class B2bTransferComponent implements OnInit {
             case 'driver_details': return response.driver_details || this.getDriverDetails(response) || 'N/A';
             case 'Currency': return response.currency || 'N/A';
             case 'CustomerPaidAmount': return itinerary.total_fare || 0;
-            case 'BookedOn': return response.created_at || 'N/A';
+            case 'BookedOn': return response.created_at ? formatDisplayDate(response.created_at, 'dd/MM/yyyy HH:mm', 'en-US') : 'N/A';
             case 'paymentStatus': return response.payment_status || 'N/A';
             case 'PaymentMode': return response.payment_mode || 'N/A';
             case 'PaidMode': return response.paid_on || 'N/A';

@@ -11,13 +11,35 @@
 
     <div class="row">
 
+      <div class="col-12 col-md-3 mb-3">
+        <label for="reassign-driver">Driver Name</label>
+        <select id="reassign-driver" class="form-control"
+          [ngModel]="selectedDriver" (ngModelChange)="onDriverChange($event)"
+          [disabled]="driversLoading || loading">
+          <option [ngValue]="null">{{ driversLoading ? 'Loading drivers...' : 'Select driver' }}</option>
+          <option *ngFor="let driver of driverList" [ngValue]="driver">
+            {{ driver.name }} — {{ getDriverSupplierName(driver) || 'Supplier unavailable' }}
+          </option>
+        </select>
+        <small class="text-danger" *ngIf="submitted && !selectedDriver">Driver name is required</small>
+        <small class="text-muted" *ngIf="!driversLoading && !driverLoadError && !driverList.length">No drivers available</small>
+        <div *ngIf="driverLoadError" class="text-danger">
+          {{ driverLoadError }}
+          <button type="button" class="btn btn-link p-0" (click)="getDriverList()">Retry</button>
+        </div>
+      </div>
+      <!-- <div class="col-12 mb-3 text-muted" *ngIf="selectedDriver">
+        Details below are supplied by the driver list. Missing details must be updated before reassignment.
+      </div> -->
+
       <!-- CAR NAME -->
       <div class="col-3">
         <label>Car Name</label>
         <input
           type="text"
           class="form-control"
-          [(ngModel)]="reassignForm.car_name"
+          [ngModel]="reassignForm.car_name"
+          readonly
         />
         <small class="text-danger"
           *ngIf="submitted && !reassignForm.car_name">
@@ -31,25 +53,12 @@
         <input
           type="text"
           class="form-control"
-          [(ngModel)]="reassignForm.car_number"
+          [ngModel]="reassignForm.car_number"
+          readonly
         />
         <small class="text-danger"
           *ngIf="submitted && !reassignForm.car_number">
           Car number is required
-        </small>
-      </div>
-
-      <!-- DRIVER NAME -->
-      <div class="col-3">
-        <label>Driver Name</label>
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="reassignForm.driver_name"
-        />
-        <small class="text-danger"
-          *ngIf="submitted && !reassignForm.driver_name">
-          Driver name is required
         </small>
       </div>
 
@@ -59,7 +68,8 @@
         <input
           type="text"
           class="form-control"
-          [(ngModel)]="reassignForm.driver_phone"
+          [ngModel]="reassignForm.driver_phone"
+          readonly
           maxlength="10"
         />
         <small class="text-danger"
@@ -72,23 +82,24 @@
           Mobile must be 10 digits
         </small>
       </div>
-<div class="col-3">
+<!-- <div class="col-3">
         <label>Reassigned By</label>
         <input
           type="text"
           class="form-control"
-          [(ngModel)]="reassignForm.reassigned_by"
+          [ngModel]="reassignForm.reassigned_by"
+          readonly
         />
         <small class="text-danger"
           *ngIf="submitted && !reassignForm.reassigned_by">
           Reassigned by is required
         </small>
-      </div>
+      </div> -->
     </div>
 
     <!-- BUTTONS -->
     <div class="mt-3 mb-3">
-      <button class="btn btn-primary mr-2" (click)="submitReassign()">
+      <button class="btn btn-primary mr-2" (click)="submitReassign()" [disabled]="driversLoading || loading || !selectedDriver">
         Save
       </button>
 
@@ -145,20 +156,20 @@
 
             <!-- LOADING -->
             <tr *ngIf="searchSpin">
-              <td colspan="16" class="text-center">
+              <td colspan="17" class="text-center">
                 <mat-spinner [diameter]="30"></mat-spinner>
               </td>
             </tr>
 
             <!-- NO DATA -->
-            <tr *ngIf="!searchSpin && !(carTypeList | filter: searchText)?.length">
-              <td colspan="16" class="text-center text-muted">
+            <tr *ngIf="!searchSpin && !filteredCars.length">
+              <td colspan="17" class="text-center text-muted">
                 No Data Found!
               </td>
             </tr>
 
             <!-- DATA -->
-            <tr *ngFor="let item of carTypeList | filter: searchText; let i = index">
+            <tr *ngFor="let item of filteredCars; let i = index">
 
               <td>{{ i + 1 }}</td>
 
@@ -167,8 +178,9 @@
                 <ng-container *ngIf="item.bookinStatus !== 'BOOKING_CANCELLED'">
                 <select
                   class="form-control"
-                  [(ngModel)]="item.status"
-                  (change)="onStatusChange(item)"
+                  [ngModel]="item.status"
+                  (ngModelChange)="onStatusChange(item, $event)"
+                  [disabled]="item.statusUpdating"
                   [name]="'status_' + i"
                   style="width: 56%;"
                 >
@@ -184,7 +196,7 @@
               <td>
 
                 <button class="btn btn-sm btn-primary"
-                  [disabled]="item.bookinStatus === 'BOOKING_CANCELLED'"
+                  *ngIf="(item.status === '0' || item.status === 0) && item.bookinStatus !== 'BOOKING_CANCELLED' && !item.statusUpdating"
                   (click)="onReassign(item)">
                   Reassign
                 </button>
@@ -196,8 +208,8 @@
               <td>{{ item.fuel }}</td>
               <!-- <td>{{ item.Maintype }}</td> -->
 
-              <td>{{ item.booked_on | date:'short' }}</td>
-              <td>{{ item.travel_date | date:'short' }}</td>
+              <td>{{ item.booked_on | date:'dd/MM/yyyy, h:mm a' }}</td>
+              <td>{{ item.travel_date | date:'dd/MM/yyyy, h:mm a' }}</td>
 
               <td>{{ item.car_number }}</td>
               <td>{{item.supplierName}}</td>

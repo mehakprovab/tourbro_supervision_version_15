@@ -28,7 +28,7 @@
                             </tr>
                             <tr>
                                 <td style="text-align: left;">DATE OF ISSUE :</td>
-                                <td>{{invoiceData['CreatedDatetime'] | date}}</td>
+                                <td>{{invoiceData['CreatedDatetime'] | date: 'dd/MM/yyyy'}}</td>
                             </tr>
                             <tr>
                                 <td style="text-align: left;">AGENT :</td>
@@ -79,8 +79,8 @@
                             <tr>
                                 <td style="vertical-align: top;"><strong>Pick-up : </strong><br> <strong>Drop-off
                                         :</strong> </td>
-                                <td style="vertical-align: top;">{{invoiceData['CarFromDate'] | date}}<br>
-                                    {{invoiceData['CarToDate'] | date}} </td>
+                                <td style="vertical-align: top;">{{invoiceData['CarFromDate'] | date: 'dd/MM/yyyy'}}<br>
+                                    {{invoiceData['CarToDate'] | date: 'dd/MM/yyyy'}} </td>
                                 <td style="vertical-align: top;">&nbsp;</td>
                                 <td> <strong> Car Rental Price:</strong><br>
                                     <br><strong>Additional Driver</strong><br>

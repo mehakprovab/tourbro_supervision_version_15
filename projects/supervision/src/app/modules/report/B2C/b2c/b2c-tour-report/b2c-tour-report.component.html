@@ -175,7 +175,7 @@
                                             {{data.paxDetails[0]?.LastName}} </td>
                                         <td class="text-left">{{data.paxDetails[0]?.Email || 'N/A'}} </td>
                                         <td class="text-left"> +{{data.paxDetails[0]?.PhoneCode}}-{{data.paxDetails[0]?.Contact || 'N/A'}} </td>
-                                        <td class="text-left" *ngIf="loggedInUser?.auth_role_id !==7">{{data.bookingDetails[0]?.supplier_business_name}} </td>
+                                        <td class="text-left" *ngIf="showAdminReportFields">{{data.bookingDetails[0]?.supplier_business_name}} </td>
                                         <td class="text-left">{{data.bookingDetails[0]?.PackageName}} </td>
                                         <td class="text-left">{{data.bookingDetails[0]?.StartCity}} </td>
                                         <td class="text-left">{{data.bookingDetails[0]?.tour_country}} </td>
@@ -194,21 +194,21 @@
                                         </td>
                                         <td class="text-left">{{data.bookingDetails[0]?.OptionalToursPrice | number:'1.0-2' }} {{data.bookingDetails[0]?.ApiCurrency }}  </td> -->
                                         <td class="text-left">{{data.bookingDetails[0]?.SupplierTotalFare | number:'1.0-2'}} {{data.bookingDetails[0]?.ApiCurrency }}  </td>
-                                        <td class="text-left" *ngIf="loggedInUser?.auth_role_id !==7">{{data.bookingDetails[0]?.TotalFare | number:'1.0-2' }} </td>
+                                        <td class="text-left" *ngIf="showAdminReportFields">{{data.bookingDetails[0]?.TotalFare | number:'1.0-2' }} </td>
                                         
                                         <!-- <td class="text-left" *ngIf="loggedInUser?.auth_role_id===7">{{data.bookingDetails[0]?.SuppierAdultPrice }} {{data.bookingDetails[0]?.ApiCurrency }}  </td>
                                         <td class="text-left" *ngIf="loggedInUser?.auth_role_id===7">{{data.bookingDetails[0]?.SupplierChildPrice }} {{data.bookingDetails[0]?.ApiCurrency }}  </td> -->
-                                        <td class="text-left" *ngIf="loggedInUser?.auth_role_id !==7"> {{data.bookingDetails[0]?.Markup | number:'1.0-2' }} </td>
+                                        <td class="text-left" *ngIf="showAdminReportFields"> {{data.bookingDetails[0]?.Markup | number:'1.0-2' }} </td>
                                         <!-- <td class="text-left"> {{data?.itinerary[0]?.agent_markup || 0 }} </td> -->
-                                        <td class="text-left" *ngIf="loggedInUser?.auth_role_id !==7"> {{data.bookingDetails[0]?.Convenience_fee | number:'1.0-2' }}</td>
+                                        <td class="text-left" *ngIf="showAdminReportFields"> {{data.bookingDetails[0]?.Convenience_fee | number:'1.0-2' }}</td>
                                         <!-- <td class="text-left"> {{data.bookingDetails[0]?.Gst_value || 'N/A'}} </td> -->
-                                        <td class="text-left" *ngIf="loggedInUser?.auth_role_id !==7">
+                                        <td class="text-left" *ngIf="showAdminReportFields">
                                             {{ data.bookingDetails[0]?.PromoCode && data.bookingDetails[0]?.PromoCode !== 'null' ? data.bookingDetails[0].PromoCode : 'N/A' }}
                                         </td>                                          
-                                        <td class="text-left" *ngIf="loggedInUser?.auth_role_id !==7"> {{data.bookingDetails[0]?.Discount | number:'1.0-2'}} </td>
-                                        <td class="text-left" *ngIf="loggedInUser?.auth_role_id !==7"> {{data.bookingDetails[0]?.Currency_Code}} </td>
-                                        <td class="text-left" *ngIf="loggedInUser?.auth_role_id !==7">{{data.bookingDetails[0]?.TotalFare| number:'1.0-2' }} </td>
-                                        <td class="text-left"> {{data.bookingDetails[0]?.Paymnet_Status}} </td>
+                                        <td class="text-left" *ngIf="showAdminReportFields"> {{data.bookingDetails[0]?.Discount | number:'1.0-2'}} </td>
+                                        <td class="text-left" *ngIf="showAdminReportFields"> {{data.bookingDetails[0]?.Currency_Code}} </td>
+                                        <td class="text-left" *ngIf="showAdminReportFields">{{data.bookingDetails[0]?.TotalFare| number:'1.0-2' }} </td>
+                                        <td class="text-left" *ngIf="showAdminReportFields"> {{data.bookingDetails[0]?.Paymnet_Status}} </td>
                                         <td class="text-left"> {{ data.bookingDetails[0]?.created_at  | date: 'dd/MM/yyyy' }} </td>
                                     <td class="text-left"> {{ getCancellationDeadLine(data.bookingDetails[0]?.canc_attributes, data.bookingDetails[0]?.cancel_deadline ) }}  </td>
                                         <td class="text-left"> {{ data.bookingDetails[0]?.cancelled_on  | date: 'dd/MM/yyyy' }} </td>

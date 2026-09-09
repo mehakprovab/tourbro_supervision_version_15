@@ -1,3 +1,4 @@
+import { canViewAdminReportFields, filterAdminReportColumns } from '../../../utils/report-column-visibility';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Sort } from '@angular/material/sort';
@@ -23,6 +24,7 @@ let respDataCopy: Array<any> = [];
     styleUrls: ['./b2c-hotel.component.scss']
 })
 export class B2cHotelComponent implements OnInit, OnDestroy {
+    readonly showAdminReportFields = canViewAdminReportFields();
 
     private subSunk = new SubSink();
     regConfig: FormGroup;
@@ -165,6 +167,7 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit() {
+        this.displaySupplierColumn = filterAdminReportColumns(this.displaySupplierColumn, false);
         this.loggedInUser = JSON.parse(sessionStorage.getItem('currentSupervisionUser'));
         let date = new Date(),
         fromDate = new Date(date.valueOf() - (30 * 24 * 60 * 60 * 1000));
@@ -371,7 +374,7 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
     }
 
     isSupplierUser(): boolean {
-        return this.loggedInUser && (this.loggedInUser.auth_role_id === 6 || this.loggedInUser.auth_role_id === 7);
+        return !this.showAdminReportFields;
     }
 
     getExportValue(data: any, key: string, index: number): any {

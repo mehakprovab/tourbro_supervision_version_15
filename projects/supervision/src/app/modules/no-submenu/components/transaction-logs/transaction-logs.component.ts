@@ -317,7 +317,7 @@ export class TransactionLogsComponent implements OnInit, OnDestroy {
         const fileToExport = this.respData.map((response: any,index:number) => {
             return {
                 "Sl No.":index+1,
-                "Transaction Date":moment(response.created_at).format("MMM DD, YYYY, hh:mm:ss A"),
+                "Transaction Date":moment(response.created_at).format("DD/MM/YYYY, hh:mm:ss A"),
                 "uuid": response.uuid,
                 "Agency Name": response.business_name,
                 "Agent Name": response.first_name+" "+response.middle_name+" "+response.last_name,

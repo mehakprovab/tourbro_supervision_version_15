@@ -1,3 +1,4 @@
+import { canViewAdminReportFields, filterAdminReportColumns } from '../../../utils/report-column-visibility';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Sort } from '@angular/material/sort';
@@ -19,13 +20,14 @@ let respDataCopy: Array<any> = [];
     styleUrls: ['./b2b-car.component.scss']
 })
 export class B2bCarComponent implements OnInit, OnDestroy {
+    readonly showAdminReportFields = canViewAdminReportFields();
 
     private subSunk = new SubSink();
     regConfig: FormGroup;
     isOpen = false as boolean;
     bsDateConf = {
         isAnimated: true,
-        dateInputFormat: 'YYYY-MM-DD',
+        dateInputFormat: 'DD/MM/YYYY',
         rangeInputFormat: 'YYYY-MM-DD',
         containerClass: 'theme-blue'
     };
@@ -89,6 +91,7 @@ export class B2bCarComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit() {
+        this.displayColumn = filterAdminReportColumns(this.displayColumn, this.showAdminReportFields);
         this.regConfig = this.fb.group({
             booked_from_date: new FormControl('', [Validators.maxLength(120)]),
             booked_to_date: new FormControl('', [Validators.maxLength(120)]),

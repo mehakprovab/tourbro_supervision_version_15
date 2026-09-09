@@ -1,3 +1,4 @@
+import { canViewAdminReportFields, filterAdminReportColumns } from '../../../utils/report-column-visibility';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Sort } from '@angular/material/sort';
@@ -23,6 +24,7 @@ let respDataCopy: Array<any> = [];
   styleUrls: ['./b2c-tour-report.component.scss']
 })
 export class B2cTourReportComponent implements OnInit {
+    readonly showAdminReportFields = canViewAdminReportFields();
 
   private subSunk = new SubSink();
   regConfig: FormGroup;
@@ -112,21 +114,9 @@ export class B2cTourReportComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+        this.displayColumn = filterAdminReportColumns(this.displayColumn, this.showAdminReportFields, ['Supplier Name', 'Total Display Fare', 'Promocode', 'Booking Currency']);
     console.log(this.displayColumn)
      this.loggedInUser = JSON.parse(sessionStorage.getItem('currentSupervisionUser'));
-    if(this.loggedInUser.auth_role_id === 7) {
-        this.displayColumn.splice(8, 1);
-        console.log(this.displayColumn)
-        this.displayColumn.splice(17, 7);
-        console.log(this.displayColumn)
-        // this.displayColumn.splice(12, 2);
-        // this.displayColumn.splice(18, 5);
-        // const supplierAdultFareColumn = { key: 'SupplierNetFare', value: 'Supplier Adult Fare'};
-        // const supplierChildFareColumn = { key: 'SupplierNetFare', value: 'Supplier Child Fare'};
-        // this.displayColumn.splice(16, 0, supplierAdultFareColumn, supplierChildFareColumn);
-        // this.displayColumn.splice(18, 4);
-        // this.displayColumn.splice(19,1);
-    }
 
       let date = new Date(),
           fromDate = new Date(date.valueOf() - (30 * 24 * 60 * 60 * 1000));

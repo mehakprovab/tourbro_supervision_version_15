@@ -35,12 +35,12 @@
                         <td class="text-left">{{data['phone']}}</td>
                         <td class="text-left">{{data['from']}}</td>
                         <td class="text-left">{{data['to']}}</td>
-                        <td class="text-left">{{data['pick_up_date'] | date}}</td>
-                        <td class="text-left">{{data['drop_off_date'] | date}}</td>
+                        <td class="text-left">{{data['pick_up_date'] | date: 'dd/MM/yyyy'}}</td>
+                        <td class="text-left">{{data['drop_off_date'] | date: 'dd/MM/yyyy'}}</td>
                         <td class="text-left">{{data['pick_up_time']}}</td>
                         <td class="text-left"> {{data['drop_off_time']}} </td>
                         <td class="text-left"> {{data['total_pax']}} </td>
-                        <td class="text-left"> {{data['recieved_on'] | date}} </td>
+                        <td class="text-left"> {{data['recieved_on'] | date: 'dd/MM/yyyy'}} </td>
                         <td class="text-left"> {{data['comments']}} </td>
                       </tr>
                    </tbody>

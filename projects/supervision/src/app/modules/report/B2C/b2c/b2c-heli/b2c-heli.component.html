@@ -185,7 +185,7 @@
                           {{ getBookingStatusLabel(data.status) }}
                         </span>
                       </td>
-                      <td class="text-left">{{ data.payment_status || 'N/A' }}</td>
+                      <td class="text-left" *ngIf="showAdminReportFields">{{ data.payment_status || 'N/A' }}</td>
                       <td class="text-left">{{ data.booking_reference || 'N/A' }}</td>
                       <td class="text-left">{{ data.operator_name || 'N/A' }}</td>
                       <td class="text-left">{{ data.route_name || 'N/A' }}</td>
@@ -204,10 +204,10 @@
                       <td class="text-left">{{ getLeadPax(data).mobile || 'N/A' }}</td>
                       <td class="text-left">{{ getLeadPax(data).email || 'N/A' }}</td>
                       <td class="text-left">{{ data.base_fare || 0 }}</td>
-                      <td class="text-left">{{ data.AdminMarkup || 0 }}</td>
+                      <td class="text-left" *ngIf="showAdminReportFields">{{ data.AdminMarkup || 0 }}</td>
                       <td class="text-left">{{ data.taxes || 0 }}</td>
-                      <td class="text-left">{{ data.convinenceFee || 0 }}</td>
-                      <td class="text-left">{{ data.discount || 0 }}</td>
+                      <td class="text-left" *ngIf="showAdminReportFields">{{ data.convinenceFee || 0 }}</td>
+                      <td class="text-left" *ngIf="showAdminReportFields">{{ data.discount || 0 }}</td>
                       <td class="text-left">{{ data.total_fare || 0 }}</td>
                       <td class="text-left">{{ data.promo_code || 'N/A' }}</td>
                       <td class="text-left">{{ data.outpay_status || 'N/A' }}</td>

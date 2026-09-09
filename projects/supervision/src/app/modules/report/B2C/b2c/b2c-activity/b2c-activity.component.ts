@@ -1,3 +1,4 @@
+import { canViewAdminReportFields, filterAdminReportColumns } from '../../../utils/report-column-visibility';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Sort } from '@angular/material/sort';
@@ -20,6 +21,7 @@ let respDataCopy: Array<any> = [];
     styleUrls: ['./b2c-activity.component.scss']
 })
 export class B2cActivityComponent implements OnInit, OnDestroy {
+    readonly showAdminReportFields = canViewAdminReportFields();
 
     private subSunk = new SubSink();
     regConfig: FormGroup;
@@ -107,12 +109,9 @@ isExporting = false;
     ) { }
 
     ngOnInit() {
+        this.displayColumn = filterAdminReportColumns(this.displayColumn, this.showAdminReportFields, ['Modality Name', 'Total Net', 'Currency']);
         const currentDomainUser = localStorage.getItem('currentDomainUser');
     this.loggerUserAuthId = JSON.parse(currentDomainUser)['auth_role_id'];
-    if(this.loggerUserAuthId === 7) {
-        this.displayColumn.splice(11, 1);
-        this.displayColumn.splice(18 , 5);
-    }
         let date = new Date(),
             fromDate = new Date(date.valueOf() - (30 * 24 * 60 * 60 * 1000));
         let tommorow = date;

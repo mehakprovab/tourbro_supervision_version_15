@@ -27,7 +27,7 @@
                                 <span class="text-danger">*</span>
                             </label>
                             <div class="input-group col-sm-12">
-                                <input type="text" id="date_from" placeholder="DD-MM-YYYY" formControlName="date_from" autocomplete="off"
+                                <input type="text" id="date_from" placeholder="dd/mm/yyyy" formControlName="date_from" autocomplete="off"
                                     (ngModelChange)="ondateChange($event)" (bsValueChange)="onStartDateChange($event, i)" [minDate]="seasonMinDates[i]" class="form-control" bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen">
                                 <div class="input-group-append">
                                 </div>
@@ -59,7 +59,7 @@
                                 <span class="text-danger">*</span>
                             </label>
                             <div class="input-group col-sm-12">
-                                <input type="text" id="date_to"  placeholder="DD-MM-YYYY" formControlName="date_to" autocomplete="off"
+                                <input type="text" id="date_to"  placeholder="dd/mm/yyyy" formControlName="date_to" autocomplete="off"
                                     (ngModelChange)="ondateChange($event)" (bsValueChange)="onEndDateChange($event, i)" [minDate]="endMinDates[i]" class="form-control" bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen" >
                                 <div class="input-group-append">
                                 </div>
@@ -430,8 +430,8 @@
                         <strong>Season {{i+1}}</strong>
                     </div>
                      
-                    <span><strong>Date From:</strong> {{item?.date_from | date:'dd-MM-yyyy'}}</span> <br/>
-                    <span> <strong> Date To: </strong>{{item?.date_to | date:'dd-MM-yyyy'}}</span><br/>
+                    <span><strong>Date From:</strong> {{item?.date_from | date:'dd/MM/yyyy'}}</span> <br/>
+                    <span> <strong> Date To: </strong>{{item?.date_to | date:'dd/MM/yyyy'}}</span><br/>
                     <span><strong> Base Price: </strong>{{item?.base_price }} {{item?.currency}}</span><br/>
                     <span><strong>Same Day return Price: </strong> {{item?.same_day_return }} {{item?.currency}}</span><br/>
                     <span><strong>Different Day return Price: </strong> {{item?.diff_day_return }} {{item?.currency}}</span><br/>

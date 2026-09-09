@@ -51,7 +51,7 @@
                     <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
                     <label for="fromDate">Booked From Date</label>
                     <input formControlName="bus_booked_from_date" type="text" id="fromDate" autocomplete="off"
-                        class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd-mm-yyyy"
+                        class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy"
                         bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen"  onkeydown="return false" [maxDate]="maxDate">
                 </div>
             </div>
@@ -60,7 +60,7 @@
                     <span class="icon depart_date" (click)="isOpen= !isOpen"></span>
                     <label for="toDate">Booked To Date</label>
                     <input formControlName="bus_booked_to_date" type="text" id="toDate" autocomplete="off"
-                        class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd-mm-yyyy"
+                        class="form-control form-control-sm nrm_input" placement="bottom left" placeholder="dd/mm/yyyy"
                         bsDatepicker [bsConfig]="bsDateConf" [isOpen]="isOpen"  onkeydown="return false" [maxDate]="maxDate">
                 </div>
             </div>
@@ -162,8 +162,8 @@
                                         </td>
                                         <td class="text-left text-capitalize"> {{data?.approvar_name|| 'N/A'}} </td>
                                         <td class="text-left text-capitalize"> {{data?.company_name|| 'N/A'}} </td> -->
-                                        <td class="text-left text-capitalize"> {{convertDatetime(data?.itinerary[0]?.departure_datetime) | date:'d-MMM-y'}} </td>
-                                        <td class="text-left text-capitalize"> {{convertDatetime(data?.itinerary[0]?.arrival_datetime) | date:'d-MMM-y'}} </td>
+                                        <td class="text-left text-capitalize"> {{convertDatetime(data?.itinerary[0]?.departure_datetime) | date:'dd/MM/yyyy'}} </td>
+                                        <td class="text-left text-capitalize"> {{convertDatetime(data?.itinerary[0]?.arrival_datetime) | date:'dd/MM/yyyy'}} </td>
                                         <td class="text-left text-capitalize"> {{convertDatetime(data?.itinerary[0]?.departure_from)}} </td>
                                         <td class="text-left text-capitalize"> {{data?.itinerary[0]?.arrival_to}} </td>
                                         <td class="text-left text-capitalize"> {{data?.itinerary[0]?.bus_type}} </td>
@@ -173,7 +173,7 @@
                                         <td class="text-left text-capitalize"> {{data?.currency}} </td>
                                         <td class="text-left text-capitalize"> {{data?.total_fare | number:'1.0-0'}} </td>
                                         <td class="text-left text-capitalize"> {{data?.booked_by|| 'N/A'}} </td>
-                                        <td class="text-left text-capitalize"> {{(data?.itinerary[0]?.created_at) | date:'d-MMM-y'}} </td>
+                                        <td class="text-left text-capitalize"> {{(data?.itinerary[0]?.created_at) | date:'dd/MM/yyyy'}} </td>
                                     </tr>
                                 </tbody>
                             </table>

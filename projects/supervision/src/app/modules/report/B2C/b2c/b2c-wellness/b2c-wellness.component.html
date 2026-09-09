@@ -141,7 +141,7 @@
                                                 {{ getBookingStatusLabel(getBooking(data).Status) }}
                                             </span>
                                         </td>
-                                        <td class="text-left">{{ cleanValue(getBooking(data).PaymentStatus) }}</td>
+                                        <td class="text-left" *ngIf="showAdminReportFields">{{ cleanValue(getBooking(data).PaymentStatus) }}</td>
                                         <td class="text-left">{{ getCenterBody(data).SupplierName || getBooking(data).business_name || 'N/A' }}</td>
                                         <td class="text-left">{{ cleanValue(getBooking(data).DomainOrigin) }}</td>
                                         <td class="text-left">{{ cleanValue(getBooking(data).ConfirmationReference) }}</td>
@@ -163,10 +163,10 @@
                                         <td class="text-left">{{ getBooking(data).CenterCheckIn | date: 'dd/MM/yyyy' }}</td>
                                         <td class="text-left">{{ getBooking(data).CenterCheckOut | date: 'dd/MM/yyyy' }}</td>
                                         <td class="text-left">{{ getCenterBody(data).NoOfDays || calculateDiff(getBooking(data).CenterCheckIn, getBooking(data).CenterCheckOut) }}</td>
-                                        <td class="text-left">{{ getBooking(data).AdminMarkup || 0 }}</td>
-                                        <td class="text-left">{{ getBooking(data).ConvinenceAmount || 0 }}</td>
+                                        <td class="text-left" *ngIf="showAdminReportFields">{{ getBooking(data).AdminMarkup || 0 }}</td>
+                                        <td class="text-left" *ngIf="showAdminReportFields">{{ getBooking(data).ConvinenceAmount || 0 }}</td>
                                         <td class="text-left">{{ getBooking(data).PromoCode || 'N/A' }}</td>
-                                        <td class="text-left">{{ getBooking(data).Discount || getCenterBody(data).Price?.EligibleDiscount || 0 }}</td>
+                                        <td class="text-left" *ngIf="showAdminReportFields">{{ getBooking(data).Discount || getCenterBody(data).Price?.EligibleDiscount || 0 }}</td>
                                         <td class="text-left">{{ getBooking(data).API_Payable_Price || 0 }}</td>
                                         <td class="text-left">{{ getBooking(data).API_Commission || getCenterBody(data).Price?.Commission || 0 }}</td>
                                         <td class="text-left">{{ getBooking(data).TotalAmount || 0 }}</td>

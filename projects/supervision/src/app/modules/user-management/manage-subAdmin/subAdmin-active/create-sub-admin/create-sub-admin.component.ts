@@ -29,7 +29,7 @@ export class CreateSubAdminComponent implements OnInit, OnDestroy {
     addOrUpdate: string = '';
     bsDateConf = {
         isAnimated: true,
-        dateInputFormat: 'YYYY-MM-DD',
+        dateInputFormat: 'DD/MM/YYYY',
         rangeInputFormat: 'YYYY-MM-DD',
         containerClass: 'theme-blue',
         showWeekNumbers: false

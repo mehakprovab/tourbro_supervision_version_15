@@ -46,10 +46,10 @@
                                             </td>
                                             <td class="text-left"> {{balance['amount']}} </td>
                                             <td class="text-left"> {{balance['transaction_type']}} </td>
-                                            <td class="text-left"> {{balance['created_datetime']*1000 | date: 'medium'}}
+                                            <td class="text-left"> {{balance['created_datetime']*1000 | date: 'dd/MM/yyyy, h:mm:ss a'}}
                                             </td>
                                             <td class="text-left"> {{balance['update_remarks']}} </td>
-                                            <td class="text-left"> {{balance['updated_datetime']*1000 | date: 'medium'}}
+                                            <td class="text-left"> {{balance['updated_datetime']*1000 | date: 'dd/MM/yyyy, h:mm:ss a'}}
                                             </td>
                                             <td class="text-left text-nowrap"> {{balance['remarks']}} </td>
                                         </tr>

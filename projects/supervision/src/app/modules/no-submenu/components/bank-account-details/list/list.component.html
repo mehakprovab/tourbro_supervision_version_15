@@ -48,7 +48,7 @@
                         <td class="text-left"> {{data['branchname']}} </td>
                         <td class="text-left"> {{data['ifsccode']}} </td>
                         <td class="text-left"> {{data['pannumber']}} </td>
-                        <td class="text-left"> {{data['createdon']*1000 | date: "medium"}} </td>
+                        <td class="text-left"> {{data['createdon']*1000 | date: "dd/MM/yyyy, h:mm:ss a"}} </td>
                         <td scope="row" class="text-left">
                             <span class="badge badge-success" *ngIf="data['status']==true; else notShow;"> {{'Active'}}
                             </span>

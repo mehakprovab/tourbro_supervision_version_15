@@ -1,3 +1,4 @@
+import { canViewAdminReportFields } from '../../utils/report-column-visibility';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -12,6 +13,7 @@ import { formatDate } from 'ngx-bootstrap/chronos';
   styleUrls: ['./guide-report.component.scss']
 })
 export class GuideReportComponent implements OnInit, OnDestroy {
+    readonly showAdminReportFields = canViewAdminReportFields();
   private subSunk = new SubSink();
   reportData: any[] = [];
   loading = false;
@@ -120,6 +122,9 @@ export class GuideReportComponent implements OnInit, OnDestroy {
       'Price': this.value(row, 'price', 'amount', 'total_fare', 'TotalFare'),
       'Reported At': this.value(row, 'created_at', 'BookedOn', 'booked_on')
     }));
+    if (!this.showAdminReportFields) {
+      rows.forEach(row => delete row['Payment Status']);
+    }
     const columnWidths = Object.keys(rows[0] || {}).map(key => ({
       wch: Math.max(key.length + 4, 18)
     }));

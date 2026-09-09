@@ -94,7 +94,7 @@ export class AddOrUpdateBannerImagesComponent implements OnInit, OnDestroy {
     getBannerType(banner): string {
         for (const value of [banner.banner_type, banner.type]) {
             const type = String(value || '').trim().toLowerCase();
-            if (type === 'home' || type === 'home banner image') {
+            if (type === 'home' || type === 'main') {
                 return 'home';
             }
             if (type === 'wellness' || type === 'wellness banner image') {

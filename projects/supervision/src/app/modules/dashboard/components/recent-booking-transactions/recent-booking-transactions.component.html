@@ -23,7 +23,7 @@
                             <span class="f-12 w-50">
                                 <div class="">
                                     <a >
-                                        {{item['system_transaction_id']}}-{{item['date_of_transaction'] | date: 'medium'}}
+                                        {{item['system_transaction_id']}}-{{item['date_of_transaction'] | date: 'dd/MM/yyyy, h:mm:ss a'}}
                                     </a>
                                 </div>
                                 <div [ngStyle]="{'color' : item['transaction_type'] == 'Cash' ? 'orange' : item['transaction_type'] == 'CreditLimit' ? 'purple' : item['transaction_type'] == 'Flight' ? 'blue' : item['transaction_type'] == 'Car' ? 'yellow' : item['transaction_type'] == 'hotel' ? 'green' : '' }" [innerHTML]="item['remarks']"></div>

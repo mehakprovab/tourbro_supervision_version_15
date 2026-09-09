@@ -1,3 +1,4 @@
+import { canViewAdminReportFields, filterAdminReportColumns } from '../../../utils/report-column-visibility';
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Sort } from '@angular/material/sort';
@@ -19,6 +20,7 @@ let respDataCopy: Array<any> = [];
     styleUrls: ['./b2b-hotel.component.scss']
 })
 export class B2bHotelComponent implements OnInit {
+    readonly showAdminReportFields = canViewAdminReportFields();
     private subSunk = new SubSink();
     regConfig: FormGroup;
     hotelTypeForm: FormGroup;
@@ -153,6 +155,7 @@ export class B2bHotelComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.displayColumn = filterAdminReportColumns(this.displayColumn, this.showAdminReportFields, ['Agency Name', 'Supplier Name', 'Supplier Type', 'Agent Email', 'Base Fare', 'Agent Markup', 'Total']);
         this.loggedInUser = JSON.parse(sessionStorage.getItem('currentSupervisionUser'));
         let date = new Date(),
         fromDate = new Date(date.valueOf() - (30 * 24 * 60 * 60 * 1000));

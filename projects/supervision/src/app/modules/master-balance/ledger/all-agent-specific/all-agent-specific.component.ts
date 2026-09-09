@@ -230,7 +230,7 @@ export class AllAgentSpecificComponent implements OnInit {
             }
             return {
                 "Sl No.":index+1,
-                "Date": moment(response.created_at).format("MMM DD, YYYY"),
+                "Date": moment(response.created_at).format("DD/MM/YYYY"),
                 "Time": moment(response.created_at).format("hh:mm:ss A"),
                 "Inv No": response.system_transaction_id,
                 "Booking Id": response.app_reference,

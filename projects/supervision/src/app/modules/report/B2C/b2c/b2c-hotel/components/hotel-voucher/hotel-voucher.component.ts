@@ -193,10 +193,10 @@ printVoucher() {
         policyArr.forEach((policy, i) => {
             let fee = Number(policy.fee), from = new Date(policy.hasOwnProperty('from') ? policy.from.split(' ')[0] : ''), to = new Date(policy.hasOwnProperty('until') ? policy.until.split(' ')[0] : '');
             if (fee > 0) {
-                cancellationPolicy += `Cancellations made after ${from.getDate() + ' ' + from.toString().split(' ')[1] + ' ' + from.getFullYear()}`;
+                cancellationPolicy += `Cancellations made after ${from.toLocaleDateString('en-GB')}`;
                 cancellationPolicy += `, will be charged ${policy.currency + ' ' + fee} <br>`;
             } else if (fee == 0) {
-                cancellationPolicy += `No cancellation charges, if cancelled before ${to.getDate() + ' ' + to.toString().split(' ')[1] + ' ' + to.getFullYear()} <br>`;
+                cancellationPolicy += `No cancellation charges, if cancelled before ${to.toLocaleDateString('en-GB')} <br>`;
             }
         });
         return cancellationPolicy;

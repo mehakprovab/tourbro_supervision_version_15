@@ -1,3 +1,4 @@
+import { canViewAdminReportFields, filterAdminReportColumns } from '../../../utils/report-column-visibility';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Sort } from '@angular/material/sort';
@@ -20,6 +21,7 @@ let respDataCopy: Array<any> = [];
   styleUrls: ['./b2b-activity.component.scss']
 })
 export class B2bActivityComponent implements OnInit {
+    readonly showAdminReportFields = canViewAdminReportFields();
 
   
   private subSunk = new SubSink();
@@ -110,15 +112,9 @@ export class B2bActivityComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+        this.displayColumn = filterAdminReportColumns(this.displayColumn, this.showAdminReportFields, ['Booking Type', 'Agency name', 'No Of Pax', 'Agent Email', 'Modility Name', 'Base Fare', 'Agent Markup', 'Currency']);
     const currentDomainUser = localStorage.getItem('currentDomainUser');
     this.loggerUserAuthId = JSON.parse(currentDomainUser)['auth_role_id'];
-    if (this.loggerUserAuthId === 7) {
-        this.displayColumn.splice(3,1);
-        this.displayColumn.splice(6,1);
-        this.displayColumn.splice(11,2);
-        this.displayColumn.splice(12,1);
-        this.displayColumn.splice(16,4);
-    }
       let date = new Date(),
         fromDate = new Date(date.valueOf() - (30 * 24 * 60 * 60 * 1000));
       let tommorow = date;

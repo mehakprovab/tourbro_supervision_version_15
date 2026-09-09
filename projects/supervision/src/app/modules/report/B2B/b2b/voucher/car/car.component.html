@@ -56,14 +56,14 @@
                                     <p style="margin: 9px 0px;">{{voucherData['CarPickupAddress']}}</p>
                                 </td>
                                 <td style="border-bottom: 1px solid #000;">
-                                    <p style="margin: 9px 0px;">{{voucherData['CarFromDate'] | date}}
+                                    <p style="margin: 9px 0px;">{{voucherData['CarFromDate'] | date: 'dd/MM/yyyy'}}
                                         {{voucherData['PickUpTime']}}</p>
                                 </td>
                                 <td style="border-bottom: 1px solid #000;">
                                     <p style="margin: 9px 0px;">{{voucherData['CarDropAddress']}}</p>
                                 </td>
                                 <td style="border-bottom: 1px solid #000;">
-                                    <p style="margin: 9px 0px;">{{voucherData['CarToDate'] | date}}
+                                    <p style="margin: 9px 0px;">{{voucherData['CarToDate'] | date: 'dd/MM/yyyy'}}
                                         {{voucherData['DropTime']}}</p>
                                 </td>
                             </tr>
@@ -127,7 +127,7 @@
                                     <p style="margin: 9px 0px;">{{user['phone']}}</p>
                                 </td>
                                 <td style="border-bottom: 1px solid #000;">
-                                    <p style="margin: 9px 0px;">{{user['date_of_birth']}}</p>
+                                    <p style="margin: 9px 0px;">{{ user['date_of_birth'] | date: 'dd/MM/yyyy' }}</p>
                                 </td>
                             </tr>
                         </tbody>

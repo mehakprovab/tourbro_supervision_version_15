@@ -175,6 +175,7 @@
                                         </td>
                                         <td class="text-left"> {{data?.app_reference}} </td>
                                         <td class="text-left">{{data?.car_name}} </td>
+                                        <td class="text-left">{{data?.car_supplier_name || 'N/A'}} </td>
                                          <td class="text-left">{{getDriver(data.attributes)|| 'N/A'}} </td>
                                          <td class="text-left">{{getVehicle(data.attributes)|| 'N/A'}} </td>
                                         <td class="text-left">{{data?.booking_reference || 'N/A'}} </td>
@@ -192,20 +193,21 @@
                                         <!-- <td class="text-left">{{data?.product_name}} </td>
                                         <td class="text-left">{{(data.itinerary[0]?.travel_date  | date: 'dd/MM/yyyy  h:mm a') || 'N/A' }} </td>
                                         <td class="text-left">{{(data.itinerary[0]?.return_date  | date: 'dd/MM/yyyy  h:mm a') || 'N/A' }} </td>
-                                        <td class="text-left"  *ngIf="loggedAuthId !== 7">{{data && data?.promo_code || 'N/A'}}</td> -->
+                                        <td class="text-left"  *ngIf="showAdminReportFields">{{data && data?.promo_code || 'N/A'}}</td> -->
                                         <td class="text-left" >   {{ getBasePrice(data.attributes)|| 0 }} </td>
-                                        <td class="text-left" *ngIf="loggedAuthId !== 7" > {{parseAttributes(data?.attributes)?.fare_details?.markupDetails?.AdminMarkup || 0 }} </td>
-                                        <td class="text-left"  *ngIf="loggedAuthId !== 7">{{parseAttributes(data?.attributes)?.fare_details?.discountAmount || 0 }} </td>
+                                        <td class="text-left" *ngIf="showAdminReportFields" > {{parseAttributes(data?.attributes)?.fare_details?.markupDetails?.AdminMarkup || 0 }} </td>
+                                        <td class="text-left"  *ngIf="showAdminReportFields">{{parseAttributes(data?.attributes)?.fare_details?.discountAmount || 0 }} </td>
                                         <!-- <td class="text-left"> {{data?.itinerary[0]?.agent_markup || 0 }} </td> -->
-                                        <td class="text-left" *ngIf="loggedAuthId !== 7" > {{parseAttributes(data?.attributes)?.fare_details?.convinenceFee  || '0' }} </td>
+                                        <td class="text-left" *ngIf="showAdminReportFields" > {{parseAttributes(data?.attributes)?.fare_details?.convinenceFee  || '0' }} </td>
                                         <td class="text-left">{{data?.cancellation_charges || 0}} </td>
                                         <td class="text-left" > {{data?.currency}} </td>
                                        
-                                        <td class="text-left" *ngIf="loggedAuthId !== 7" >{{data?.itinerary[0]?.total_fare }} </td>
-                                        <td class="text-left"> {{ data?.created_at  | date: 'dd/MM/yyyy' }} </td>
-                                        <td class="text-left">{{data?.payment_status }} </td>
-                                        <td class="text-left" *ngIf="loggedAuthId !== 7">{{data?.payment_mode }} </td>
-                                        <td class="text-left" *ngIf="loggedAuthId !== 7">{{data?.paid_on }} </td>
+                                        <td class="text-left" *ngIf="showAdminReportFields" >{{data?.itinerary[0]?.total_fare }} </td>
+                                        <td class="text-left"> {{ data?.created_at  | date: 'dd/MM/yyyy HH:mm' }} </td>
+                                        <td class="text-left">{{ (data?.car_from_date | date:'dd/MM/yyyy HH:mm') || 'N/A' }}</td>
+                                        <td class="text-left">{{ (data?.car_to_date | date:'dd/MM/yyyy') || 'N/A' }}</td>
+                                        <td class="text-left" *ngIf="showAdminReportFields">{{data?.payment_status }} </td>
+                                        <td class="text-left" *ngIf="showAdminReportFields">{{data?.payment_mode }} </td>
                                         <!-- <td class="text-left"> {{ data?.cancel_deadline ? ( data?.cancel_deadline | date: 'dd/MM/yyyy' ) : 'NA' }} </td>
                                         <td class="text-left">
                                             <ng-container *ngIf="data?.status === 'BOOKING_CANCELLED'; else naTemplate">
@@ -213,7 +215,6 @@
                                             </ng-container>
                                             <ng-template #naTemplate>NA</ng-template>
                                           </td> -->
-                                          <td class="text-left" >{{ data['status'] == 'BOOKING_CANCELLED' ? data?.cancelAmount : ''}} </td>
                                     </tr>
                                 </tbody>
                             </table>

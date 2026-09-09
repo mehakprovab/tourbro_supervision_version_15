@@ -309,7 +309,7 @@
                                         <td class="text-left"> {{data.transferTotal }} </td>
                                         <td class="text-left"> {{ data.currency }} </td>
                                         <td class="text-left"> {{data.grandTotal }} </td>
-                                        <td class="text-left"> {{data.paymentStatus | uppercase}} </td>
+                                        <td class="text-left" *ngIf="showAdminReportFields"> {{data.paymentStatus | uppercase}} </td>
                                         <td class="text-left"> {{ data.createdAt | date: 'dd/MM/yyyy' }} </td>
                                     </tr>
                                 </tbody>

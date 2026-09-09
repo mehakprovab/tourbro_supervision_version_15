@@ -1,3 +1,4 @@
+import { canViewAdminReportFields, filterAdminReportColumns } from '../../../utils/report-column-visibility';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Sort } from '@angular/material/sort';
@@ -18,6 +19,7 @@ let respDataCopy: Array<any> = [];
     styleUrls: ['./b2c-wellness.component.scss']
 })
 export class B2cWellnessReportComponent implements OnInit, OnDestroy {
+    readonly showAdminReportFields = canViewAdminReportFields();
 
     private subSunk = new SubSink();
     regConfig: FormGroup;
@@ -92,6 +94,7 @@ export class B2cWellnessReportComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit() {
+        this.displayColumn = filterAdminReportColumns(this.displayColumn, this.showAdminReportFields);
         this.loggedInUser = JSON.parse(sessionStorage.getItem('currentSupervisionUser'));
         const date = new Date();
         const fromDate = new Date(date.valueOf() - (30 * 24 * 60 * 60 * 1000));

@@ -1,3 +1,5 @@
+import { formatDate as formatDisplayDate } from '@angular/common';
+import { canViewAdminReportFields, filterAdminReportColumns } from '../../../utils/report-column-visibility';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Sort } from '@angular/material/sort';
@@ -20,6 +22,7 @@ let respDataCopy: Array<any> = [];
   styleUrls: ['./b2c-transfer.component.scss']
 })
 export class B2cTransferComponent implements OnInit {
+    readonly showAdminReportFields = canViewAdminReportFields();
 
   private subSunk = new SubSink();
     regConfig: FormGroup;
@@ -54,6 +57,7 @@ export class B2cTransferComponent implements OnInit {
         { key: 'status', value: 'Status' },
         { key: 'app_reference', value: 'Application Reference' },
         { key: 'car_name', value: 'Car Name' },
+        { key: 'car_supplier_name', value: 'Supplier Name' },
          { key: 'driver_name', value: 'Driver Name' },
                   { key: 'vehicle_reg_no', value: 'Vehicle Reg No.' },
         { key: 'booking_reference', value: 'Confirmation Reference' },
@@ -76,9 +80,10 @@ export class B2cTransferComponent implements OnInit {
         { key: 'Currency', value: 'Currency' },
         { key: 'CustomerPaidAmount', value: 'Customer Price' },//remove for DMC
         { key: 'BookedOn', value: 'BookedOn' },
+        { key: 'car_from_date', value: 'Booking From' },
+        { key: 'car_to_date', value: 'Booking To' },
         { key: 'paymentStatus', value: 'Payment Status' },
         { key: 'paymentMode', value: 'Payment Mode' },//remove for DMC
-        { key: 'PaidOn', value: 'Paid On' },//remove for DMC
         // { key: 'cancellationDeadline', value: 'Cancellation Deadline' },
         // { key: 'cancelledOn', value: 'Cancelled On' },
       
@@ -113,15 +118,9 @@ export class B2cTransferComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.displayColumn = filterAdminReportColumns(this.displayColumn, this.showAdminReportFields);
         const currentDomainUser = localStorage.getItem('currentDomainUser');
         this.loggedAuthId = JSON.parse(currentDomainUser)['auth_role_id'];
-        if (this.loggedAuthId === 7) {
-            this.displayColumn.splice(15,1);
-
-            this.displayColumn.splice(16,3);
-            this.displayColumn.splice(18,1);
-            this.displayColumn.splice(20,2)
-        }
         let date = new Date(),
             fromDate = new Date(date.valueOf() - (30 * 24 * 60 * 60 * 1000));
         let tommorow = date;
@@ -293,9 +292,10 @@ getBasePrice(value: string) {
                     this.maxRoutesCount = Math.max(
                         ...this.respData.map(item => item.route_name_list.length || 0)
                         );
-                        console.log(this.displayColumn)
+                        this.displayColumn = this.displayColumn.filter(column => !column.key.startsWith('location_'));
+                    const destinationIndex = this.displayColumn.findIndex(column => column.key === 'destination_point');
                     for (let i = 1; i <= this.maxRoutesCount; i++) {
-                            this.displayColumn.splice(7 + (i - 1), 0, {
+                            this.displayColumn.splice(destinationIndex + (i - 1), 0, {
                                 key: "location_" + i,
                                 value: "Location " + i
                             });
@@ -392,6 +392,8 @@ getBasePrice(value: string) {
                 // case 'AgentMarkup': return this.utility.compare('' + a.itinerary[0].agent_markup, '' + b.itinerary[0].agent_markup, isAsc);
                 case 'Discount': return this.utility.compare('' + a.itinerary[0].Discount, '' + b.itinerary[0].Discount, isAsc);
                 case 'Currency': return this.utility.compare('' + a.currency, '' + b.currency, isAsc);
+                case 'car_from_date':
+                case 'car_to_date': return this.utility.compare(a[sort.active] || '', b[sort.active] || '', isAsc);
                 case 'BookedOn': return this.utility.compare('' + a.created_at, '' + b.created_at, isAsc);	
                 default: return 0;
             }
@@ -435,6 +437,7 @@ getBasePrice(value: string) {
             case 'status': return response.booking_status || response.status || 'N/A';
             case 'app_reference': return response.app_reference || 'N/A';
             case 'car_name': return response.car_name || 'N/A';
+            case 'car_supplier_name': return response.car_supplier_name || 'N/A';
             case 'driver_name': return this.getDriver(response.attributes) || 'N/A';
             case 'vehicle_reg_no': return this.getVehicle(response.attributes) || 'N/A';
             case 'booking_reference': return response.booking_reference || 'N/A';
@@ -450,10 +453,11 @@ getBasePrice(value: string) {
             case 'cancellation_charges': return response.cancellation_charges || 0;
             case 'Currency': return response.currency || 'N/A';
             case 'CustomerPaidAmount': return itinerary.total_fare || 0;
-            case 'BookedOn': return response.created_at || 'N/A';
+            case 'BookedOn': return response.created_at ? formatDisplayDate(response.created_at, 'dd/MM/yyyy HH:mm', 'en-US') : 'N/A';
             case 'paymentStatus': return response.payment_status || 'N/A';
             case 'paymentMode': return response.payment_mode || 'N/A';
-            case 'PaidOn': return response.paid_on || 'N/A';
+            case 'car_from_date': return response.car_from_date ? formatDisplayDate(response.car_from_date, 'dd/MM/yyyy HH:mm', 'en-US') : 'N/A';
+            case 'car_to_date': return response[key] || 'N/A';
             default: return response[key] !== undefined && response[key] !== null && response[key] !== '' ? response[key] : 'N/A';
         }
     }

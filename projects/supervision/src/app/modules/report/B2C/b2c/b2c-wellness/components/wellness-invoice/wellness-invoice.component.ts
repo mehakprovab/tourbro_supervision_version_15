@@ -76,29 +76,45 @@ export class WellnessInvoiceComponent implements OnInit, OnDestroy {
     this.utility.printElement(element, `Wellness Invoice - ${this.appReference}`);
   }
 
-  downloadPdf() {
-    const element = this.printInvoiceRef && this.printInvoiceRef.nativeElement;
-    if (!element) {
+  downloadA4(type: any, orientation?: string): void {
+    const content = this.printInvoiceRef && this.printInvoiceRef.nativeElement;
+    if (!content) {
       return;
     }
+
+    const fileName = `Wellness Invoice - ${this.appReference || 'booking'}`;
+
     window['html2canvas'] = html2canvas;
-    const exportElement = this.utility.prepareExportElement(element);
-    html2canvas(exportElement, {
-      allowTaint: true,
-      useCORS: true,
-      backgroundColor: '#ffffff',
-      width: element.scrollWidth,
-      height: element.scrollHeight,
-      windowWidth: element.scrollWidth,
-      windowHeight: element.scrollHeight
-    }).then(canvas => {
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const imgWidth = 210;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-      pdf.save(`Wellness Invoice - ${this.appReference}.pdf`);
-      this.swalService.alert.success();
+
+    const doc = new jsPDF({
+      orientation: 'p',
+      unit: 'pt',
+      format: 'a4',
+    });
+
+    const exportContent = this.utility.prepareExportElement(content);
+
+    // actual rendered width of your invoice markup, in px
+    const sourceWidth = exportContent.scrollWidth || content.scrollWidth;
+
+    const pageWidth = doc.internal.pageSize.getWidth();   // ~595pt for A4 portrait
+    const margin = 20;
+    const targetWidth = pageWidth - margin * 2;
+
+    doc.html(exportContent, {
+      x: margin,
+      y: margin,
+      width: targetWidth,        // width the content is scaled INTO on the PDF page
+      windowWidth: sourceWidth,  // width the content is laid out AT before scaling — the key fix
+      html2canvas: {
+        allowTaint: true,
+        useCORS: true,
+        scale: targetWidth / sourceWidth,
+      },
+      callback: async (doc) => {
+        doc.save(`${fileName}.pdf`);
+        this.swalService.alert.success();
+      }
     });
   }
 

@@ -7,7 +7,7 @@
     <div class="text-center" style="margin-top: 20px;">
         <a [routerLink]="['/report/b2c-heli']"><button class="btnStyle">Back</button></a>
         <a (click)="printInvoice()" style="margin-left:15px;"><button class="btnStyle">Print</button></a>
-        <a id="download" (click)="downloadPdf()" style="margin-left:15px;"><button
+      <a id="download" (click)="downloadA4('pdf', 'potrait')" style="margin-left:15px;"><button
                 class="btnStyle">Download PDF</button></a>
      </div>
     <table class="table" cellpadding="0" cellspacing="0" width="100%"

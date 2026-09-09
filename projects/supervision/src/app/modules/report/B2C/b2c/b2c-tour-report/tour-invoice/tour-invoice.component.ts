@@ -1,3 +1,6 @@
+import { splitInvoicePricingRows } from '../../../../utils/invoice-convenience-fee';
+import { canViewAdminReportFields } from '../../../../utils/report-column-visibility';
+import { getTourDocumentPricing } from '../../../../utils/tour-document-pricing';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
@@ -14,6 +17,13 @@ import { SubSink } from 'subsink';
   styleUrls: ['./tour-invoice.component.scss']
 })
 export class TourInvoiceComponent implements OnInit {
+  readonly showAdminReportFields = canViewAdminReportFields();
+
+  get pricing() {
+    const pricing = getTourDocumentPricing(this.invoiceData, this.showAdminReportFields);
+        return { ...pricing, rows: splitInvoicePricingRows(pricing.rows) };
+  }
+
 
   @ViewChild('print_voucher', { static: false }) print_voucher: ElementRef;
   private subSunk = new SubSink();

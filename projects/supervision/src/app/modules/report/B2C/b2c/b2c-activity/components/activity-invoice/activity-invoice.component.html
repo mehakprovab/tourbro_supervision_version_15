@@ -169,13 +169,13 @@
                             </td>
                         </tr>
 
-                        <tr>
-                            <td style="border:1px solid #e9ecef;text-align:center;">2</td>
+                        <tr *ngFor="let fee of (voucherData | invoiceField:'convenienceFee' | invoiceConvenienceFee); let feeIndex = index">
+                            <td style="border:1px solid #e9ecef;text-align:center;">{{2 + feeIndex}}</td>
                             <td style="border:1px solid #e9ecef;">
-                                TourBro Platform Convenience Fees
+                                {{fee.label}}
                             </td>
                             <td style="border:1px solid #e9ecef;text-align:right;">
-                                {{ voucherData | invoiceField:'convenienceFee' | number:'1.2-2' }}
+                                {{fee.amount | number:'1.2-2'}}
                             </td>
                         </tr>
 

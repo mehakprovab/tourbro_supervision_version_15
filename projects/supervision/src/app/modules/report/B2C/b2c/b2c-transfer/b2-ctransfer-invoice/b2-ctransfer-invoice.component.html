@@ -119,24 +119,24 @@
 
                                     <tr style="color: #4b4b4b;font-size: 13px;font-weight: 400;">
                                         <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">Service Booked :</td>
-                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">{{ voucherData | invoiceField:'serviceBooked' }}</td>
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">{{ voucherData?.BookingDetails?.car_name || (voucherData | invoiceField:'serviceBooked') }}</td>
                                     </tr>
                                      <tr style="color: #4b4b4b;font-size: 13px;font-weight: 400;">
                                         <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">Vendor / Service Provider :</td>
-                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">{{ voucherData | invoiceField:'vendorName' }}</td>
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">{{ serviceProvider }}</td>
                                     </tr>
                                     <tr style="color: #4b4b4b;font-size: 13px;font-weight: 400;">
                                         <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">Booking Date  :</td>
-                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">{{ voucherData | invoiceField:'bookingDate' | date:'dd/MM/yyyy' }}</td>
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">{{ voucherData?.BookingDetails?.car_from_date | date:'dd/MM/yyyy' }}</td>
                                     </tr>
 
                                      <tr style="color: #4b4b4b;font-size: 13px;font-weight: 400;">
                                         <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">Start Date :</td>
-                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">{{ voucherData | invoiceField:'startDate' | date:'dd/MM/yyyy' }}</td>
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">{{ voucherData?.BookingDetails?.created_at | date:'dd/MM/yyyy' }}</td>
                                     </tr>
                                       <tr style="color: #4b4b4b;font-size: 13px;font-weight: 400;">
                                         <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">End Date :</td>
-                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">{{ voucherData | invoiceField:'endDate' | date:'dd/MM/yyyy' }}</td>
+                                        <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">{{ voucherData?.BookingDetails?.car_to_date | date:'dd/MM/yyyy' }}</td>
                                     </tr>
                                      <tr style="color: #4b4b4b;font-size: 13px;font-weight: 400;">
                                         <td style="padding: 4px 10px;line-height: 18px;border-top: 1px solid transparent;">Start Time :</td>
@@ -179,15 +179,17 @@
                             </td>
                         </tr>
 
-                        <tr *ngIf="showAdminReportFields">
-                            <td style="border:1px solid #e9ecef;text-align:center;">2</td>
+                        <ng-container *ngIf="showAdminReportFields">
+                        <tr *ngFor="let fee of ((voucherData?.BookingDetails?.convinence_fee ?? 0) | invoiceConvenienceFee); let feeIndex = index">
+                            <td style="border:1px solid #e9ecef;text-align:center;">{{2 + feeIndex}}</td>
                             <td style="border:1px solid #e9ecef;">
-                                TourBro Platform Convenience Fees
+                                {{fee.label}}
                             </td>
                             <td style="border:1px solid #e9ecef;text-align:right;">
-                                {{ (voucherData?.BookingDetails?.convinence_fee ?? 0) | number:'1.2-2' }}
+                                {{fee.amount | number:'1.2-2'}}
                             </td>
                         </tr>
+                        </ng-container>
 
                         <tr *ngIf="showAdminReportFields">
                             <td colspan="2" style="border:1px solid #e9ecef;text-align:right;">

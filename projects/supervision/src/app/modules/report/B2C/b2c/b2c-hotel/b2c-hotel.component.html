@@ -153,7 +153,7 @@
                                                         <button ngbDropdownItem
                                                             (click)="onActivityRedirect(data['BookingDetails']['AppReference'],'voucher')">View
                                                             Voucher</button>
-                                                        <button *ngIf="loggedInUser['auth_role_id'] !== 6" ngbDropdownItem
+                                                        <button ngbDropdownItem
                                                             (click)="onActivityRedirect(data['BookingDetails']['AppReference'],'invoice')">View
                                                             Invoice</button>
                                                         <button ngbDropdownItem (click)="showPaxProfile(data)">Pax
@@ -267,11 +267,10 @@
                                             <td class="text-left"  *ngIf="showAdminReportFields">
                                                 {{data['BookingDetails']['PromoCode'] || 'N/A'}} </td>
                                             <td class="text-left"  *ngIf="showAdminReportFields">
-                                                {{data['BookingDetails']['PromoCodeAmount'] || 0 }} </td>
+                                                {{data['BookingDetails']['Discount'] || 0 }} </td>
                                             <td *ngIf="showAdminReportFields" class="text-left"> {{data['BookingDetails']['earlyBookingValue'] || 0 }}
                                             </td>
-                                            <td *ngIf="showAdminReportFields" class="text-left"> {{data['BookingDetails']['durationOfStayValue'] || 0
-                                                }} </td>
+                                            <td *ngIf="showAdminReportFields" class="text-left">{{data.stayDuration}} {{data.stayDuration === 1 ? 'Day' : 'Days'}}</td>
                                             <td class="text-left"> {{data.BookingDetails?.CancellationReason.hotelBody.SupplierPrice || 0
                                                 }} {{data.BookingDetails?.API_Currency}}</td>
                                             <td class="text-left"> {{ data.pricingTaxes }} </td>

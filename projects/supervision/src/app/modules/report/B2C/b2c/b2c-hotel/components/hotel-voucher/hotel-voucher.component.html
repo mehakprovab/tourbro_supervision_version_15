@@ -352,39 +352,17 @@
                                         <span style="font-weight: 600;color: #282828;font-size: 20px;">Payment
                                             Details</span></td>
                                 </tr>
-                                <tr style="white-space:nowrap; color: #4B4B4B; font-weight: 500;font-size: 16px;">
-                                    <td
-                                        style=" -webkit-print-color-adjust: exact;padding:10px 15px; width: 25%;border: none;">
-                                        Base Fare</td>
-                                    <td
-                                        style="-webkit-print-color-adjust: exact; width:30%; text-align: right; padding:10px 15px;border: none;">
-                                        {{voucherData['BookingDetails']['Currency']}}
-                                        {{getTotalFare(voucherData['BookingItineraryDetails']) | number:'1.2-2'}}
-
+                                <tr *ngFor="let item of pricing.rows" style="color: #4B4B4B; font-weight: 500;font-size: 16px;">
+                                    <td style="padding:10px 15px; border:none;">{{item.label}}</td>
+                                    <td style="text-align:right; padding:10px 15px; border:none;">
+                                        {{pricing.currency}} {{item.amount != null ? (item.amount | number:'1.2-2') : 'N/A'}}
                                     </td>
-
                                 </tr>
-
-                                <tr style="white-space:nowrap; color: #4B4B4B; font-weight: 500;font-size: 16px;">
-                                    <td
-                                        style=" -webkit-print-color-adjust: exact;padding:10px 15px; width: 25%; border: none;">
-                                        Convenience Fee</td>
-                                    <td
-                                        style="-webkit-print-color-adjust: exact; width:30%; text-align: right; padding:10px 15px; border: none;">
-                                        {{voucherData['BookingDetails']['Currency']}}
-                                        {{voucherData['BookingDetails']['ConvinenceAmount'] | number:'1.2-2'}}</td>
-
-                                </tr>
-
-                                <tr style="white-space:nowrap; color: #4B4B4B; font-weight: 500;font-size: 16px;">
-                                    <td
-                                        style=" -webkit-print-color-adjust: exact;padding:10px 15px; padding:10px 15px;color: #FE4865; font-weight: 600; font-size: 18px;">
-                                        Total Amount</td>
-                                    <td
-                                        style="-webkit-print-color-adjust: exact; width:30%; text-align: right; padding:10px 15px;color: #FE4865; font-weight: 600; font-size: 18px;">
-                                        {{voucherData['BookingDetails']['Currency']}}
-                                        {{voucherData['BookingDetails']['TotalAmount'] | number:'1.2-2'}}</td>
-
+                                <tr *ngIf="showAdminReportFields" style="color: #FE4865; font-weight: 600; font-size: 18px;">
+                                    <td style="padding:10px 15px; border:none;">Total Amount</td>
+                                    <td style="text-align:right; padding:10px 15px; border:none;">
+                                        {{pricing.currency}} {{pricing.total | number:'1.2-2'}}
+                                    </td>
                                 </tr>
 
                             </tbody>
@@ -429,7 +407,7 @@
                                                                         </p> -->
 
                             <div class="cancellation_policy mb-2"
-                                *ngIf="voucherData?.BookingDetails.DomainOrigin == 'CRS' && !cancel.CancellationPolicies.$t.length">
+                                *ngIf="showAdminReportFields && voucherData?.BookingDetails.DomainOrigin == 'CRS' && !cancel.CancellationPolicies.$t.length">
                                 <p class="cusromGrey mt-3"><strong>{{'Cancellation Policy :'}}</strong>
 
                                 </p>
@@ -462,7 +440,7 @@
 
                             </div>
                             <div class="cancellation_policy mb-2"
-                                *ngIf="voucherData?.BookingDetails.DomainOrigin == 'CRS' && cancel.CancellationPolicies.$t.length">
+                                *ngIf="showAdminReportFields && voucherData?.BookingDetails.DomainOrigin == 'CRS' && cancel.CancellationPolicies.$t.length">
                                 <p class="cusromGrey mt-3"><strong>{{'Cancellation Policy :'}}</strong>
 
                                 </p>

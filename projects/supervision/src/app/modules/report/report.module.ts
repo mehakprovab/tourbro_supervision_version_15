@@ -73,6 +73,7 @@ import { NgxLoadingModule } from 'ngx-loading';
 import { GuideReportComponent } from './B2C/guide-report/guide-report.component';
 import { GuideVoucherComponent } from './B2C/guide-report/guide-voucher/guide-voucher.component';
 import { ReportPaymentModalComponent } from './components/report-payment-modal/report-payment-modal.component';
+import { InvoiceConvenienceFeePipe } from './pipes/invoice-convenience-fee.pipe';
 import { InvoiceFieldPipe } from './pipes/invoice-field.pipe';
 import { ReportNaFallbackDirective } from './directives/report-na-fallback.directive';
 
@@ -141,6 +142,7 @@ import { ReportNaFallbackDirective } from './directives/report-na-fallback.direc
         GuideVoucherComponent,
         ReportPaymentModalComponent,
         InvoiceFieldPipe,
+        InvoiceConvenienceFeePipe,
         ReportNaFallbackDirective
     ],
     imports: [

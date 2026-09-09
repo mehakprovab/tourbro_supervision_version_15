@@ -1,3 +1,6 @@
+import { splitInvoicePricingRows } from '../../../../../utils/invoice-convenience-fee';
+import { canViewAdminReportFields } from '../../../../../utils/report-column-visibility';
+import { getHotelDocumentPricing } from '../../../../../utils/hotel-document-pricing';
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
@@ -15,6 +18,13 @@ const log = new Logger('report/HotelVoucherComponent');
   styleUrls: ['./hotel-invoice.component.scss']
 })
 export class HotelInvoiceComponent implements OnInit,OnDestroy {
+
+    readonly showAdminReportFields = canViewAdminReportFields();
+
+    get pricing() {
+        const pricing = getHotelDocumentPricing(this.voucherData, this.showAdminReportFields);
+        return { ...pricing, rows: splitInvoicePricingRows(pricing.rows) };
+    }
 
   @ViewChild('print_voucher', { static: false }) print_voucher: ElementRef;
 	private subSunk = new SubSink();

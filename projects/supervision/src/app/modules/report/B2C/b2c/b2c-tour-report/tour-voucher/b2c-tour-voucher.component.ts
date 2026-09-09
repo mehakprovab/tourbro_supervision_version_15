@@ -1,3 +1,5 @@
+import { canViewAdminReportFields } from '../../../../utils/report-column-visibility';
+import { getTourDocumentPricing } from '../../../../utils/tour-document-pricing';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SubSink } from 'subsink';
@@ -16,6 +18,12 @@ const baseUrl = environment.baseUrl;
   styleUrls: ['./b2c-tour-voucher.component.scss']
 })
 export class B2cTourVoucherComponent implements OnInit {
+  readonly showAdminReportFields = canViewAdminReportFields();
+
+  get pricing() {
+    return getTourDocumentPricing(this.voucherData, this.showAdminReportFields);
+  }
+
 
   @ViewChild('print_voucher', { static: false }) print_voucher: ElementRef;
   private subSunk = new SubSink();

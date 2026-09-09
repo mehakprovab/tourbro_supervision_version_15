@@ -1,3 +1,5 @@
+import { canViewAdminReportFields } from '../../../../../utils/report-column-visibility';
+import { getHotelDocumentPricing } from '../../../../../utils/hotel-document-pricing';
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
@@ -16,6 +18,12 @@ const log = new Logger('report/HotelVoucherComponent');
     styleUrls: ['./hotel-voucher.component.scss']
 })
 export class HotelVoucherComponent implements OnInit, OnDestroy {
+
+    readonly showAdminReportFields = canViewAdminReportFields();
+
+    get pricing() {
+        return getHotelDocumentPricing(this.voucherData, this.showAdminReportFields);
+    }
 
     @ViewChild('print_voucher', { static: false }) print_voucher: ElementRef;
     private subSunk = new SubSink();

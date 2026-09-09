@@ -20,6 +20,18 @@ export class B2CTransferInvoiceComponent implements OnInit {
 
   attributes: any = {};
 
+  get serviceProvider(): string {
+    const booking = this.voucherData?.BookingDetails;
+    const provider = this.attributes?.partner_name || booking?.car_supplier_name || 'N/A';
+    const serviceType = this.attributes?.searchRequest?.type || booking?.TripType;
+    const tripType = this.attributes?.searchRequest?.trip_type;
+    const description = [serviceType, tripType]
+      .filter(Boolean)
+      .map(value => String(value).replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, letter => letter.toUpperCase()))
+      .join(' ');
+    return description ? `${provider} (${description})` : provider;
+  }
+
   get invoiceTotal(): number | null {
     const value = this.showAdminReportFields
       ? (this.voucherData?.BookingDetails?.grand_total ?? 0)

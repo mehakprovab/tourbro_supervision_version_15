@@ -381,6 +381,7 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
         const booking = data && data.BookingDetails ? data.BookingDetails : {};
         switch (key) {
             case 'id': return index + 1;
+            case 'Duration': return this.calculateDiff(booking.HotelCheckIn, booking.HotelCheckOut);
             case 'Status': return this.getBookingStatusLabel(booking.Status);
             case 'SupplierName':
                 if (booking.DomainOrigin === 'CRS') {
@@ -463,7 +464,17 @@ export class B2cHotelComponent implements OnInit, OnDestroy {
     }
 
     calculateDiff(fromDate, toDate) {
-        return this.utility.calculateDiff(fromDate, toDate);
+        if (!fromDate || !toDate) {
+            return 0;
+        }
+        const checkIn = new Date(fromDate);
+        const checkOut = new Date(toDate);
+        if (isNaN(checkIn.getTime()) || isNaN(checkOut.getTime())) {
+            return 0;
+        }
+        const start = Date.UTC(checkIn.getFullYear(), checkIn.getMonth(), checkIn.getDate());
+        const end = Date.UTC(checkOut.getFullYear(), checkOut.getMonth(), checkOut.getDate());
+        return Math.max(0, Math.round((end - start) / 86400000));
     }
 
     numberOnly(event): boolean {

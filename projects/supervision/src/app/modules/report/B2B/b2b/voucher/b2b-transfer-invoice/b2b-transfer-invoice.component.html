@@ -175,15 +175,15 @@
                                 {{voucherData?.BookingItineraryDetails.extras_amount || 0 }}
                             </th>
                         </tr>
-                        <tr >
+                        <tr *ngFor="let fee of (voucherData?.BookingItineraryDetails.Tax | invoiceConvenienceFee)">
                             <th>&nbsp;</th>
                              <th>&nbsp;</th>
                             <th>&nbsp;</th>
-                            <th style="text-align: right;">	Convenience Fees</th>
+                            <th style="text-align: right;">	{{fee.label}}</th>
                             <th style="border-left: 1px solid #ddd; width: 20.5%; text-align: left;">
                                 &nbsp;
                                 {{voucherData?.BookingItineraryDetails.currency}}
-                          {{voucherData?.BookingItineraryDetails.Tax }}
+                          {{fee.amount | number:'1.2-2'}}
                             </th>
                         </tr>
                         <tr >

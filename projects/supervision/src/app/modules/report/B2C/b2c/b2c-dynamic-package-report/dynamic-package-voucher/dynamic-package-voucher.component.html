@@ -14,6 +14,6 @@
       </div>
     </section>
     <section *ngIf="pax.length"><h5>Guest Details</h5><table class="table mb-0"><thead><tr><th>Name</th><th>Type</th><th>Age</th><th>Room</th></tr></thead><tbody><tr *ngFor="let person of pax"><td>{{person.title}} {{person.first_name}} {{person.last_name}} <span *ngIf="person.lead_passenger">(Lead)</span></td><td>{{person.pax_type | titlecase}}</td><td>{{person.age || 'N/A'}}</td><td>{{person.room_id || 'N/A'}}</td></tr></tbody></table></section>
-    <section class="payment"><h5>Payment Details</h5><div><span>Package Amount</span><b>{{voucher.total_price}} {{voucher.currency}}</b></div><div><span>Convenience Fee</span><b>{{voucher.convenience_fee}} {{voucher.currency}}</b></div><div *ngIf="voucher.discount_value"><span>Discount</span><b>{{voucher.discount_value}} {{voucher.currency}}</b></div><div class="total"><span>Total Paid</span><b>{{voucher.total_after_discount}} {{voucher.currency}}</b></div></section>
+    <section class="payment"><h5>Payment Details</h5><div><span>Package Amount</span><b>{{voucher.total_price}} {{voucher.currency}}</b></div><div *ngIf="showAdminReportFields"><span>Convenience Fee</span><b>{{voucher.convenience_fee}} {{voucher.currency}}</b></div><div *ngIf="voucher.discount_value"><span>Discount</span><b>{{voucher.discount_value}} {{voucher.currency}}</b></div><div class="total"><span>Total Paid</span><b>{{voucher.total_after_discount}} {{voucher.currency}}</b></div></section>
   </div>
 </div>

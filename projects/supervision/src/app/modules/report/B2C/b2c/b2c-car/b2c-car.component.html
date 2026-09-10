@@ -121,7 +121,7 @@
                          <td class="text-left"> {{data['TotalFare']}} </td>
                          <td class="text-left" *ngIf="showAdminReportFields"> {{data['LevelOneMarkup']}} </td>
                          <td class="text-left" *ngIf="showAdminReportFields"> {{data['ConvenienceFee']}} </td>
-                         <td class="text-left"> {{data['PromoCode']}} </td>
+                         <td class="text-left" *ngIf="showAdminReportFields"> {{data['PromoCode']}} </td>
                          <td class="text-left" *ngIf="showAdminReportFields"> {{data['PromocodeAmount']}} </td>
                          <td class="text-left" *ngIf="showAdminReportFields"> {{data['RewardDiscount']}} </td>
                          <td class="text-left"> {{data['TotalFare']}} </td>

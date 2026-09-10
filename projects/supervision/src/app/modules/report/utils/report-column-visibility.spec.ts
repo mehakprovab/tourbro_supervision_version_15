@@ -26,7 +26,7 @@ describe('report column visibility', () => {
     it('filters financial fields without removing supplier fares, currency, or booking dates', () => {
         const allowed = ['Base Fare', 'Supplier Net Fare', 'Currency', 'BookedOn', 'Cancellation Charges'];
         const restricted = ['Admin Markup', 'Discount', 'Convenience Fee', 'Customer Price',
-            'Payment Mode', 'Payment Status', 'Paid On', 'Reward Discount', 'Payment Method'];
+            'Promo Code', 'Promocode', 'Promocode Amount', 'Payment Mode', 'Payment Status', 'Paid On', 'Reward Discount', 'Payment Method'];
         const columns = allowed.concat(restricted).map(value => ({ value }));
         expect(filterAdminReportColumns(columns, false).map(column => column.value)).toEqual(allowed);
         expect(filterAdminReportColumns(columns, true)).toBe(columns);

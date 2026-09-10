@@ -209,7 +209,7 @@
                       <td class="text-left" *ngIf="showAdminReportFields">{{ data.convinenceFee || 0 }}</td>
                       <td class="text-left" *ngIf="showAdminReportFields">{{ data.discount || 0 }}</td>
                       <td class="text-left">{{ data.total_fare || 0 }}</td>
-                      <td class="text-left">{{ data.promo_code || 'N/A' }}</td>
+                      <td class="text-left" *ngIf="showAdminReportFields">{{ data.promo_code || 'N/A' }}</td>
                       <td class="text-left">{{ data.outpay_status || 'N/A' }}</td>
                       <td class="text-left">{{ data.booking_source || getAttributes(data).booking_source || getAttributes(data).BookingSource || 'N/A' }}</td>
                       <td class="text-left">{{ data.created_at ? (data.created_at | date:'dd/MM/yyyy') : 'N/A' }}</td>

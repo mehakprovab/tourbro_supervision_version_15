@@ -243,7 +243,7 @@
                                         <!-- <td class="text-left"> {{data.TotalFarePriceBreakUp.PriceBreakup.AdvanceTax?
                                             data.TotalFarePriceBreakUp.PriceBreakup.AdvanceTax: '0'}} </td> -->
                                         <td class="text-left" *ngIf="showAdminReportFields"> {{data['ConvinenceAmount'] || 0}} </td>
-                                        <td class="text-left"> {{data['PromoCode'] || 'N/A'}} </td>
+                                        <td class="text-left" *ngIf="showAdminReportFields"> {{data['PromoCode'] || 'N/A'}} </td>
                                         <td class="text-left" *ngIf="showAdminReportFields"> {{data['Discount'] || 0}} </td>
                                         <!-- <td class="text-left"> {{data['BaggageInsurancesDetails'].length ?
                                             data['BaggageInsurancesDetails'][0]['product_code'] : 'N/A'}} </td>

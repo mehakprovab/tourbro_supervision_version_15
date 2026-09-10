@@ -23,6 +23,6 @@ export function filterAdminReportColumns<T extends { value?: string; label?: str
             !normalized.includes('discount') &&
             !['adminmarkup', 'conveniencefee', 'paymentmode', 'paymentmethod',
               'paymentstatus', 'paidon', 'customerprice', 'customeramount',
-              'customerpaidamount', 'promocodeamount'].includes(normalized);
+              'customerpaidamount', 'promocode', 'promocodeamount'].includes(normalized);
     });
 }

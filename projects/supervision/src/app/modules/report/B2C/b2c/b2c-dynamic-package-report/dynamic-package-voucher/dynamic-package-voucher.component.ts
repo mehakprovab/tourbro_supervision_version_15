@@ -1,3 +1,4 @@
+import { canViewAdminReportFields } from '../../../../utils/report-column-visibility';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
@@ -11,6 +12,7 @@ import { SubSink } from 'subsink';
   styleUrls: ['./dynamic-package-voucher.component.scss']
 })
 export class DynamicPackageVoucherComponent implements OnInit, OnDestroy {
+  readonly showAdminReportFields = canViewAdminReportFields();
   private subSunk = new SubSink();
   reference = '';
   voucher: any;

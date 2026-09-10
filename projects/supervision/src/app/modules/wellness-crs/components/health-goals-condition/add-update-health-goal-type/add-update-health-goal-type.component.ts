@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WellnessCrsService } from '../../../wellness-crs.service';
 import { FormBuilder, Validators } from '@angular/forms';
+import { richTextRequired } from '../../../rich-text-required.validator';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -38,6 +39,7 @@ export class AddUpdateHealthGoalTypeComponent implements OnInit {
         this.addUpdateHealthGoalTypeListForm.patchValue({
           name: resp.name,
           description: resp.description || '',
+          sub_description: resp.subdescription || '',
           image_url: resp.image_url || resp.image || '',
           status: (resp.status === '1' || resp.status === 1) ? true : false
         });
@@ -54,6 +56,7 @@ export class AddUpdateHealthGoalTypeComponent implements OnInit {
     this.addUpdateHealthGoalTypeListForm = this.formBuilder.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
+      sub_description: ['', richTextRequired],
       image_url: [''],
       status: [true]
     });
@@ -123,18 +126,19 @@ export class AddUpdateHealthGoalTypeComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    this.addUpdateHealthGoalTypeListForm.markAllAsTouched();
     if(this.addUpdateHealthGoalTypeListForm.invalid) {
       return;
     }
 
     if (!this.isEdit && !this.fileToUpload) {
-      this.swalService.alert.oops('Please select image to upload.');
       return;
     }
 
       const formData = new FormData();
       formData.append('name', this.addUpdateHealthGoalTypeListForm.value.name);
       formData.append('description', this.addUpdateHealthGoalTypeListForm.value.description);
+      formData.append('subdescription', this.addUpdateHealthGoalTypeListForm.value.sub_description.trim());
       formData.append('status', this.addUpdateHealthGoalTypeListForm.value.status ? '1' : '0');
 
       if(this.isEdit) {

@@ -3,14 +3,14 @@
         <h5>Add/ Edit Health Goals/Conditions-Type</h5>
     </div>
 
-    <form class="needs-validation pt-3" novalidate>
+    <div class="needs-validation pt-3">
         <div class="card-body p-0">
             <fieldset>
                 <div class="row">
 
                     <!-- Stay Type Name -->
                      <form [formGroup]="addUpdateHealthGoalTypeListForm" class="w-100"
-                     (ngSubmit)="onSubmit()">
+                     (ngSubmit)="onSubmit()" novalidate>
                     <div class="col-md-12 pr-0 mb-4">
                         <label class="control-label" for="hotel_type_name">
                             Health Goals/Conditions-Type
@@ -22,10 +22,10 @@
                             name="hotel_type_name"
                             formControlName="name"
                             placeholder="Health Goals/Conditions-Type"
-                            class="form-control"
+                            class="form-control" [class.is-invalid]="submitted && addUpdateHealthGoalTypeListForm.get('name').invalid"
                             required />
 
-                        <div class="invalid-feedback"  *ngIf="addUpdateHealthGoalTypeListForm.get('name').invalid && submitted">
+                        <div class="invalid-feedback d-block"  *ngIf="addUpdateHealthGoalTypeListForm.get('name').invalid && submitted">
                            Health Goals/Conditions-Type is required
                         </div>
                     </div>
@@ -41,12 +41,29 @@
                             name="description"
                             formControlName="description"
                             placeholder="Enter Description"
-                            class="form-control"
+                            class="form-control" [class.is-invalid]="submitted && addUpdateHealthGoalTypeListForm.get('description').invalid"
                             rows="3"
                             required></textarea>
 
-                        <div class="invalid-feedback" *ngIf="addUpdateHealthGoalTypeListForm.get('description').invalid && submitted">
+                        <div class="invalid-feedback d-block" *ngIf="addUpdateHealthGoalTypeListForm.get('description').invalid && submitted">
                            Description is required
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 pr-0 mb-4">
+                        <label class="control-label" for="sub_description">
+                            Sub Description
+                            <span class="text-danger">*</span>
+                        </label>
+
+                        <ckeditor
+                            id="sub_description"
+                            formControlName="sub_description"
+                            aria-required="true">
+                        </ckeditor>
+
+                        <div class="invalid-feedback d-block" *ngIf="addUpdateHealthGoalTypeListForm.get('sub_description').invalid && submitted">
+                            Sub Description is required
                         </div>
                     </div>
 
@@ -63,7 +80,12 @@
                         <input type="file"
                             accept=".jpeg,.jpg,.png,.svg,.webp"
                             class="form-control"
+                            [class.is-invalid]="submitted && !isEdit && !fileToUpload"
                             (change)="previewImage($event)" />
+
+                        <div class="invalid-feedback d-block" *ngIf="submitted && !isEdit && !fileToUpload">
+                            Image is required
+                        </div>
 
                         <small class="text-muted">
                             Only JPG, JPEG, PNG, SVG, and WEBP formats up to 500 KB are allowed.
@@ -95,6 +117,6 @@
                 </div>
             </fieldset>
         </div>
-    </form>
+    </div>
 </div>
 

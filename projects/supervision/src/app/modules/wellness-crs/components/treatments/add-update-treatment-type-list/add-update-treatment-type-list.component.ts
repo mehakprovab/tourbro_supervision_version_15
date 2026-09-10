@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WellnessCrsService } from '../../../wellness-crs.service';
 import { FormBuilder, Validators } from '@angular/forms';
+import { richTextRequired } from '../../../rich-text-required.validator';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -44,6 +45,7 @@ export class AddUpdateTreatmentTypeListComponent implements OnInit {
           treatment_name: resp.treatment_name,
           therapy_name: resp.therapy_name,
           description: resp.description || '',
+          sub_description: resp.subdescription || '',
           image_url: resp.image_url || '',
           status: (resp.status === '1' || resp.status === 1) ? true : false
         });
@@ -60,6 +62,7 @@ export class AddUpdateTreatmentTypeListComponent implements OnInit {
       treatment_name: ['', Validators.required],
       therapy_name: ['', Validators.required],
       description: ['', Validators.required],
+      sub_description: ['', richTextRequired],
       image_url: [''],
       status: [true]
     });
@@ -106,12 +109,12 @@ export class AddUpdateTreatmentTypeListComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    this.addUpdateTreatmentTypeListForm.markAllAsTouched();
     if(this.addUpdateTreatmentTypeListForm.invalid) {
       return;
     }
 
     if (!this.isEdit && !this.fileToUpload) {
-      this.swalService.alert.oops('Please select image to upload.');
       return;
     }
 
@@ -119,6 +122,7 @@ export class AddUpdateTreatmentTypeListComponent implements OnInit {
       formData.append('treatment_name', this.addUpdateTreatmentTypeListForm.value.treatment_name);
       formData.append('therapy_name', this.addUpdateTreatmentTypeListForm.value.therapy_name);
       formData.append('description', this.addUpdateTreatmentTypeListForm.value.description);
+      formData.append('subdescription', this.addUpdateTreatmentTypeListForm.value.sub_description.trim());
       formData.append('status', this.addUpdateTreatmentTypeListForm.value.status ? '1' : '0');
 
       if(this.isEdit) {

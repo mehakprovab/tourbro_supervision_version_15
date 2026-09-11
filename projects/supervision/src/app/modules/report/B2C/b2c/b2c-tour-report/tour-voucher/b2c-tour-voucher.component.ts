@@ -1,3 +1,4 @@
+import { getTourDocumentFilename } from '../../../../utils/tour-document-filename';
 import { canViewAdminReportFields } from '../../../../utils/report-column-visibility';
 import { getTourDocumentPricing } from '../../../../utils/tour-document-pricing';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
@@ -6,7 +7,7 @@ import { SubSink } from 'subsink';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { environment } from 'projects/supervision/src/environments/environment.prod';
-import { SwalService } from 'projects/b2b/src/app/core/services/swal.service';
+import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
 import { UtilityService } from 'projects/supervision/src/app/core/services/utility.service';
 
@@ -91,123 +92,61 @@ getTermsList(): string[] {
     }
   }
 
-  // downloadA4(type: any, orientation?: string): void {
-  //   this.loading = true;
-  //   document.getElementById('download').style.display = "none";
-  //   window['html2canvas'] = html2canvas;
-  //   const date = new Date().toDateString();
-  //   const doc = new jsPDF({
-  //     orientation: 'p',
-  //     unit: 'pt',
-  //     format: 'a4',
-  //   });
-  //   const content = this.print_voucher.nativeElement;
-  //   doc.html(content, {
-  //     html2canvas: {
-  //       allowTaint: true,
-  //       useCORS: true,
-  //       scale: 600 / content.scrollWidth
-  //     },
-  //     callback: async (doc) => {
-  //       doc.save(`${this.app_reference}.pdf`);
-  //       this.loading = false;
-  //       this.swalService.alert.success();
-  //       document.getElementById('download').style.display = "inline-block";
-  //       this.cdr.detectChanges();
-  //     }
-  //   });
-  // }
+  async downloadA4(type: any, orientation?: string): Promise<void> {
+    if (this.loading) {
+      return;
+    }
+    const content = this.print_voucher && this.print_voucher.nativeElement;
+    if (!content || !this.voucherData) {
+      this.swalService.alert.error('Please wait for the voucher to load.');
+      return;
+    }
 
-  downloadA4(type: any, orientation?: string): void {
     this.loading = true;
-    window.scrollTo(0, 0);
-    const data = document.getElementById('print_voucher');
-    const exportData = data ? this.utility.prepareExportElement(data) : null;
+    try {
+      const canvas = await html2canvas(content, {
+        allowTaint: false,
+        useCORS: true,
+        scale: 2,
+        logging: false,
+        backgroundColor: '#ffffff',
+        ignoreElements: element => element.matches('button, #download, .pdf-exclude, .no-print, .doc-btn, .btnStyle')
+      });
+      if (!canvas.width || !canvas.height) {
+        throw new Error('Voucher has no renderable content');
+      }
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const margin = 10;
+      const contentWidth = pdf.internal.pageSize.getWidth() - margin * 2;
+      const contentHeight = pdf.internal.pageSize.getHeight() - margin * 2;
+      const pageHeightPx = Math.max(1, Math.floor(contentHeight * canvas.width / contentWidth));
 
-    setTimeout(() => {
-        html2canvas(exportData!, {
-            allowTaint: true,
-            useCORS: true,
-            scale: 2,
-            logging: false,
-            onclone: (clonedDocument: Document) => {
-              clonedDocument.querySelectorAll('.no-print').forEach(element => {
-                (element as HTMLElement).style.display = 'none';
-              });
-            }
-        }).then(canvas => {
-            const imgWidth = 210; // A4 width in mm
-            const pageHeight = 297; // A4 height in mm (standard)
-            const marginLeft = 10;
-            const marginTop = 10;
-            const marginRight = 10;
-            const marginBottom = 10;
-            const contentWidth = imgWidth - marginLeft - marginRight;
-            const contentHeight = pageHeight - marginTop - marginBottom;
-
-            const pdf = new jsPDF('p', 'mm', 'a4');
-
-            // Calculate scale: how many mm per pixel
-            const mmPerPx = contentWidth / canvas.width;
-            const pageHeightPx = contentHeight / mmPerPx;
-
-            const totalPages = Math.ceil(canvas.height / pageHeightPx);
-            const pdfPageHeight = pageHeight; // Full page height
-
-            for (let page = 0; page < totalPages; page++) {
-                if (page > 0) {
-                    pdf.addPage();
-                }
-
-                // Calculate which part of canvas goes on this page
-                const startY = page * pageHeightPx;
-                const endY = Math.min((page + 1) * pageHeightPx, canvas.height);
-                const pageHeight_px = endY - startY;
-
-                // Create temporary canvas for this page
-                const tempCanvas = document.createElement('canvas');
-                tempCanvas.width = canvas.width;
-                tempCanvas.height = pageHeight_px;
-
-                const tempCtx = tempCanvas.getContext('2d')!;
-                tempCtx.fillStyle = '#ffffff';
-                tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
-
-                // Copy only this page's content
-                tempCtx.drawImage(
-                    canvas,
-                    0, startY,
-                    canvas.width, pageHeight_px,
-                    0, 0,
-                    canvas.width, pageHeight_px
-                );
-
-                const imgData = tempCanvas.toDataURL('image/png');
-
-                // Calculate actual height on PDF
-                const pdfImageHeight = (pageHeight_px * contentWidth) / canvas.width;
-
-                // Add image centered with margins
-                pdf.addImage(
-                    imgData,
-                    'PNG',
-                    marginLeft,
-                    marginTop,
-                    contentWidth,
-                    pdfImageHeight
-                );
-            }
-
-            this.loading = false;
-            this.swalService.alert.success();
-            pdf.save(`Tour Voucher - ${this.app_reference}.pdf`);
-        }).catch(err => {
-            this.loading = false;
-            console.error('PDF Error:', err);
-            this.swalService.alert.error('Error generating PDF');
-        });
-    }, 1000);
-}
+      for (let startY = 0; startY < canvas.height; startY += pageHeightPx) {
+        if (startY > 0) {
+          pdf.addPage();
+        }
+        const pageCanvas = document.createElement('canvas');
+        pageCanvas.width = canvas.width;
+        pageCanvas.height = Math.min(pageHeightPx, canvas.height - startY);
+        const context = pageCanvas.getContext('2d');
+        if (!context) {
+          throw new Error('Unable to create PDF canvas');
+        }
+        context.fillStyle = '#ffffff';
+        context.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+        context.drawImage(canvas, 0, startY, canvas.width, pageCanvas.height,
+          0, 0, canvas.width, pageCanvas.height);
+        pdf.addImage(pageCanvas.toDataURL('image/png'), 'PNG', margin, margin,
+          contentWidth, pageCanvas.height * contentWidth / canvas.width);
+      }
+      await pdf.save(getTourDocumentFilename('Voucher', this.voucherData, this.app_reference), { returnPromise: true });
+      this.swalService.alert.success();
+    } catch {
+      this.swalService.alert.error('Unable to download the voucher. Please try again.');
+    } finally {
+      this.loading = false;
+    }
+  }
 
   printVoucher(): void {
     const voucher = this.print_voucher && this.print_voucher.nativeElement;

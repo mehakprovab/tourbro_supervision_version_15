@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormGroup,FormBuilder,Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -13,7 +13,7 @@ import { TourCrsService } from '../../../../../tour-crs.service';
   templateUrl: './update-price.component.html',
   styleUrls: ['./update-price.component.scss']
 })
-export class UpdatePriceComponent implements OnInit {
+export class UpdatePriceComponent implements OnInit, OnChanges, OnDestroy {
 
   tourId:number;
   priceIndividualId:number;
@@ -47,34 +47,71 @@ public currentUser: any;
             private tourCrs: TourCrsService) { }
 
   ngOnInit() {
-    this.tourId=Number(localStorage.getItem('tourId'));
+    this.tourId=Number(sessionStorage.getItem('tourId'));
     this.timingList = this.times.map(t => ({ key: t, value: t }));
     this.createPriceManagementForm();
     const currentUser = sessionStorage.getItem('currentSupervisionUser');
     this.currentUser = JSON.parse(currentUser);
-    this.tourCrs.getTourManagementData.subscribe(data => {
-      if (data) {
-        this.priceIndividualId=Number(data['id']);
-        this.updatePriceManagementForm.get('fromDate').patchValue(new Date(data['from_date']));
-        this.updatePriceManagementForm.get('toDate').patchValue(new Date(data['to_date']));
-        this.updatePriceManagementForm.get('adultPrice').patchValue(data['adult_airliner_price']);
-        this.updatePriceManagementForm.get('is_refundable').patchValue(data['refundable'] === 'Refundable' ? true : false)
-        // this.updatePriceManagementForm.get('childPrice').patchValue(data['child_airliner_price']);
-        const childPrice = JSON.parse(data.child_airliner_price);
-        this.setChildPrices(childPrice);
-        const cancPolicy = JSON.parse(data.canc_policy);
-        this.setCancPolicies(cancPolicy);
-        }
+    this.subSunk.sink = this.tourCrs.getTourManagementData.subscribe(data => {
+      if (!this.updatePriceManagementData && data && data.id) {
+        this.loadPrice(data);
+      }
     });
     if (this.updatePriceManagementData) {
-      this.priceIndividualId=Number(this.updatePriceManagementData['id']);
-      this.updatePriceManagementForm.get('fromDate').patchValue(new Date(this.updatePriceManagementData['from_date']));
-      this.updatePriceManagementForm.get('toDate').patchValue(new Date(this.updatePriceManagementData['to_date']));
-      this.updatePriceManagementForm.get('adultPrice').patchValue(this.updatePriceManagementData['adult_airliner_price']);
-      // this.updatePriceManagementForm.get('childPrice').patchValue(data['child_airliner_price']);
-      const childPrice = JSON.parse(this.updatePriceManagementData.child_airliner_price);
-        this.setChildPrices(childPrice);
+      this.loadPrice(this.updatePriceManagementData);
     }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.updatePriceManagementData && this.updatePriceManagementForm) {
+      this.loadPrice(changes.updatePriceManagementData.currentValue);
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.subSunk.unsubscribe();
+  }
+
+  private loadPrice(data: any): void {
+    this.priceIndividualId = null;
+    if (!data || !data.id) {
+      return;
+    }
+    try {
+      const childPrices = this.parseArray(data.child_airliner_price);
+      const policies = this.parseArray(data.canc_policy);
+      const fromDate = new Date(data.from_date);
+      const toDate = new Date(data.to_date);
+      const refundable = data.refundable ?? data.is_refundable;
+      // Keep an existing past start date editable.
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      this.minDate = fromDate < today ? new Date(fromDate) : today;
+      this.minToDate = new Date(fromDate);
+      this.updatePriceManagementForm.patchValue({
+        fromDate,
+        toDate,
+        adultPrice: data.adult_airliner_price,
+        is_refundable: refundable === 'Refundable' || refundable === true
+          || refundable === 1 || refundable === '1'
+      });
+      this.setChildPrices(childPrices);
+      this.setCancPolicies(policies);
+      this.priceIndividualId = Number(data.id);
+    } catch {
+      this.swalService.alert.error('Unable to load child prices or cancellation policies for this record.');
+    }
+  }
+
+  private parseArray(value: any): any[] {
+    const parsed = typeof value === 'string' && value.trim() ? JSON.parse(value) : value;
+    if (parsed == null || parsed === '') {
+      return [];
+    }
+    if (!Array.isArray(parsed)) {
+      throw new Error('Expected a list');
+    }
+    return parsed;
   }
 
   setCancPolicies(data: any[]) {
@@ -169,38 +206,111 @@ public currentUser: any;
     }
   }
 
-  onUpdatePriceManagementFormSubmit(){
-    // make api call to get updated data
-    let priceUpdateData={
-      "Id": this. priceIndividualId, 
-      "tour_id": this.tourId,
-      "fromDate":this.updatePriceManagementForm.get('fromDate').value,
-      "toDate":this.updatePriceManagementForm.get('toDate').value,
-      "adultAirlinerPrice":Number(this.updatePriceManagementForm.get('adultPrice').value),
-      "childAirlinerPrice": (this.updatePriceManagementForm.get('childPrice').value),
-      "CancPolicy": this.updatePriceManagementForm.get('is_refundable').value ? this.updatePriceManagementForm.get('cancellation_policies').value : [],
-      "isRefundable": this.updatePriceManagementForm.get('is_refundable').value,
-      created_by_id: this.currentUser['id']
-    }
-    if(this.updatePriceManagementForm.valid){
-      this.subSunk.sink = this.apiHandlerService.apiHandler('updateToursPriceManagement', 'post', {}, {},
-        priceUpdateData   
-      ).subscribe(response => {
-                if ((response.statusCode == 200 || response.statusCode == 201) && response.Status) {
-                  this.updated.emit(true);
-                      this.swalService.alert.success("Price has been updated successfully");
-                      this.tourCrs.updatedPriceManagement.next(true);
-                      this.router.navigate(['/tour-crs/tour-list/add-tour/price-management'])
-                    }
-              },(err: HttpErrorResponse) => {
-                this.swalService.alert.error(err['error']['Message']);
-            });
-    }
+onUpdatePriceManagementFormSubmit() {
+  if (this.updatePriceManagementForm.invalid) {
+    this.updatePriceManagementForm.markAllAsTouched();
+    this.swalService.alert.error('Please fill all required fields.');
+    return;
   }
-    onToAgeSelect(event) {
-    console.log(event.target.value);
+
+  // Validate child age ranges
+  const childPrices = this.updatePriceManagementForm.get('childPrice').value;
+
+  const invalidAgeRange = childPrices.some((item: any) => {
+    return Number(item.to_age) <= Number(item.from_age);
+  });
+
+  if (invalidAgeRange) {
+    this.swalService.alert.error(
+      'Before Age must be greater than From Age.'
+    );
+    return;
   }
-  handleCheckboxClick(event) {
-    console.log(event.target.checked)
+
+  if (!this.priceIndividualId) {
+    this.swalService.alert.error('Price ID is missing.');
+    return;
   }
+
+  if (!this.tourId) {
+    this.swalService.alert.error('Tour ID is missing.');
+    return;
+  }
+
+  const formValue = this.updatePriceManagementForm.getRawValue();
+
+  const priceUpdateData = {
+    Id: this.priceIndividualId,
+    tour_id: this.tourId,
+
+    fromDate: formValue.fromDate,
+    toDate: formValue.toDate,
+
+    adultAirlinerPrice: Number(formValue.adultPrice),
+
+    childAirlinerPrice: formValue.childPrice.map((item: any) => ({
+      from_age: Number(item.from_age),
+      to_age: Number(item.to_age),
+      price: Number(item.price)
+    })),
+
+    CancPolicy: formValue.is_refundable
+      ? formValue.cancellation_policies.map((item: any) => ({
+          charge_type: item.charge_type,
+          charge: Number(item.charge),
+          additional_info: item.additional_info || '',
+          date_from: Number(item.date_from),
+          time: item.time
+        }))
+      : [],
+
+    isRefundable: formValue.is_refundable,
+
+    created_by_id: this.currentUser?.id
+  };
+
+  this.subSunk.sink = this.apiHandlerService
+    .apiHandler(
+      'updateToursPriceManagement',
+      'post',
+      {},
+      {},
+      priceUpdateData
+    )
+    .subscribe(
+      (response: any) => {
+
+        if (response.statusCode === 200 || response.statusCode === 201) {
+
+          this.updated.emit(true);
+
+          this.swalService.alert.success(
+            'Price has been updated successfully'
+          );
+
+          this.tourCrs.updatedPriceManagement.next(true);
+
+          this.router.navigate([
+            '/tour-crs/tour-list/add-tour/price-management'
+          ]);
+
+        } else {
+
+
+          this.swalService.alert.error(
+            response?.Message || 'Unable to update price.'
+          );
+        }
+      },
+      (err: HttpErrorResponse) => {
+
+
+        this.swalService.alert.error(
+          err?.error?.Message ||
+          err?.error?.message ||
+          'Something went wrong.'
+        );
+      }
+    );
+}
 }

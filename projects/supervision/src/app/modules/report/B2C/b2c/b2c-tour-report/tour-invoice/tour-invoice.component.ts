@@ -1,3 +1,4 @@
+import { getTourDocumentFilename } from '../../../../utils/tour-document-filename';
 import { splitInvoicePricingRows } from '../../../../utils/invoice-convenience-fee';
 import { canViewAdminReportFields } from '../../../../utils/report-column-visibility';
 import { getTourDocumentPricing } from '../../../../utils/tour-document-pricing';
@@ -29,7 +30,8 @@ export class TourInvoiceComponent implements OnInit {
   private subSunk = new SubSink();
   isOpen = false as boolean;
   invoiceData: any;
-  app_reference: "";
+  app_reference = '';
+  downloading = false;
   bookingDetails: any;
 
   config: any = {
@@ -76,7 +78,7 @@ export class TourInvoiceComponent implements OnInit {
                   if (resp.data[0]) {
                       this.reportService.setFareBreakup(resp.data[0]);
                   }
-                  if (this.invoiceData && this.invoiceData.BookingDetails.app_reference) {
+                  if (this.invoiceData && this.invoiceData.BookingDetails && this.invoiceData.BookingDetails.app_reference) {
                       this.invoiceData.InvoiceNumber = "INV-" + (this.invoiceData.BookingDetails.app_reference.split("-")[1]);
                   }
               }
@@ -107,71 +109,50 @@ export class TourInvoiceComponent implements OnInit {
       }
   }
 
-//   downloadA4(type: any, orientation?: string): void {
-//       let fileName = this.invoiceData['AppReference']
-//       window['html2canvas'] = html2canvas;
-//       const date = new Date().toDateString();
-//       const doc = new jsPDF({
-//           orientation: 'p',
-//           unit: 'pt',
-//           format: 'a4',
-//       });
-//       const content = this.print_voucher.nativeElement;
-//       const exportContent = this.utility.prepareExportElement(content);
-//       doc.html(exportContent, {
-//           html2canvas: {
-//               allowTaint: true,
-//               useCORS: true,
-//               scale: 600 / content.scrollWidth
-//           },
-//           callback: async (doc) => {
-//               doc.save(`Tour Invoice ${this.app_reference}.pdf`);
-//               this.swalService.alert.success();
-//           }
-//       });
-//   }
-
-downloadA4(type: any, orientation?: string): void {
-  const fileName = (this.invoiceData && this.invoiceData.BookingDetails
-    && this.invoiceData.BookingDetails.app_reference)
-    || this.app_reference
-    || 'Tour Invoice';
-
-  window['html2canvas'] = html2canvas;
-
-  const doc = new jsPDF({
-    orientation: 'p',
-    unit: 'pt',
-    format: 'a4',
-  });
-
-  const content = this.print_voucher.nativeElement;
-  const exportContent = this.utility.prepareExportElement(content);
-
-  // actual rendered width of your invoice markup, in px
-  const sourceWidth = exportContent.scrollWidth || content.scrollWidth;
-
-  const pageWidth = doc.internal.pageSize.getWidth();   // ~595pt for A4 portrait
-  const margin = 20;
-  const targetWidth = pageWidth - margin * 2;
-
-  doc.html(exportContent, {
-    x: margin,
-    y: margin,
-    width: targetWidth,        // width the content is scaled INTO on the PDF page
-    windowWidth: sourceWidth,  // width the content is laid out AT before scaling — the key fix
-    html2canvas: {
-      allowTaint: true,
-      useCORS: true,
-      scale: targetWidth / sourceWidth,
-    },
-    callback: async (doc) => {
-      this.pdfCallbackFn(doc); // adds page numbers, as before
-      doc.save(`Tour Invoice ${fileName}.pdf`);
-      this.swalService.alert.success();
+  async downloadA4(type: any, orientation?: string): Promise<void> {
+    if (this.downloading) {
+      return;
     }
-  });
-}
+    const content = this.print_voucher && this.print_voucher.nativeElement;
+    if (!content || !this.invoiceData) {
+      this.swalService.alert.error('Please wait for the invoice to load.');
+      return;
+    }
+
+    this.downloading = true;
+    try {
+      window['html2canvas'] = html2canvas;
+      const doc = new jsPDF({ orientation: 'p', unit: 'pt', format: 'a4' });
+      const exportContent = this.utility.prepareExportElement(content);
+      const sourceWidth = content.scrollWidth || content.getBoundingClientRect().width;
+      if (!sourceWidth) {
+        throw new Error('Invoice has no renderable content');
+      }
+      const margin = 20;
+      const targetWidth = doc.internal.pageSize.getWidth() - margin * 2;
+      await doc.html(exportContent, {
+        x: margin,
+        y: margin,
+        margin: [margin, margin, margin, margin],
+        autoPaging: 'text',
+        width: targetWidth,
+        windowWidth: sourceWidth,
+        html2canvas: {
+          allowTaint: false,
+          useCORS: true,
+          logging: false,
+          scale: targetWidth / sourceWidth
+        }
+      });
+      this.pdfCallbackFn(doc);
+      await doc.save(getTourDocumentFilename('Invoice', this.invoiceData, this.app_reference), { returnPromise: true });
+      this.swalService.alert.success();
+    } catch {
+      this.swalService.alert.error('Unable to download the invoice. Please try again.');
+    } finally {
+      this.downloading = false;
+    }
+  }
 
   pdfCallbackFn(pdf: any) {
       // example to add page number as footer to every page of pdf

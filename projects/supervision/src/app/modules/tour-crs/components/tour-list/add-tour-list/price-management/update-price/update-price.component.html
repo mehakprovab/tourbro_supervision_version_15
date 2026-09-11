@@ -48,7 +48,7 @@
                         </div>
                         <div class="col-4">
                             <label class="" for="max_capacity"> Before Age<span class="text-danger">*</span></label>
-                            <select formControlName="to_age" (change)="onToAgeSelect($event)" class="form-control">
+                            <select formControlName="to_age" class="form-control">
                                     <option value="" disabled selected>Before Age</option>
                                     <option *ngFor="let age of fromAgeRange" [value]="age"
                                     [disabled]="age <= childPrices.at(i)?.get('from_age')?.value">
@@ -79,7 +79,7 @@
            <div class="form-group row">
                 <div class="col-12 d-flex align-items-center">
                      <label for="is_refundable" class="mb-0">Refundable  </label>
-                     <input class="ml-2" type="checkbox" [value]="false" formControlName="is_refundable" (change)="handleCheckboxClick($event)">
+                     <input class="ml-2" type="checkbox" [value]="false" formControlName="is_refundable">
                  </div>
             </div>
 

@@ -1,18 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Subject, of } from 'rxjs';
+import { catchError, distinctUntilChanged, switchMap, takeUntil } from 'rxjs/operators';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handlers';
+import { environment } from 'projects/supervision/src/environments/environment';
 import { SwalService } from 'projects/supervision/src/app/core/services/swal.service';
-import { cityLocationNameValidator, locationNameValidator } from 'projects/supervision/src/app/shared/validators/location-name.validator';
+import { locationNameValidator } from 'projects/supervision/src/app/shared/validators/location-name.validator';
 
 @Component({
   selector: 'app-patanjali-centers',
   templateUrl: './patanjali-centers.component.html',
   styleUrls: ['./patanjali-centers.component.scss']
 })
-export class PatanjaliCentersComponent implements OnInit {
+export class PatanjaliCentersComponent implements OnInit, OnDestroy {
+  cityOptions: any[] = [];
+  stateOptions: any[] = [];
+  private destroy$ = new Subject<void>();
+  private refreshCities$ = new Subject<void>();
+  private countryId: any;
   centerForm: FormGroup;
+  @ViewChild('centerimageInput') centerimageInput: ElementRef<HTMLInputElement>;
+  selectedImage: File = null;
+  existingImage = '';
+  imageError = '';
   centers: any[] = [];
   editingCenter: any = null;
   loading = false;
@@ -29,20 +41,86 @@ export class PatanjaliCentersComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
+    this.setupLocationAutocomplete();
     this.getCenters();
     this.getCentersCount();
   }
 
   createForm(): void {
     this.centerForm = this.formBuilder.group({
-      center_code: ['', Validators.required],
+      image: ['', Validators.required],
       center_name: ['', [Validators.required, locationNameValidator()]],
-      supplier_name: [''],
-      supplier_email: [''],
-      city_name: ['', cityLocationNameValidator()],
-      address: [''],
+      city_name: ['', Validators.required],
+      state: ['', [Validators.required, locationNameValidator()]],
       status: [true]
     });
+  }
+
+  private setupLocationAutocomplete(): void {
+    this.centerForm.get('state').valueChanges.pipe(
+      distinctUntilChanged(),
+      takeUntil(this.destroy$)
+    ).subscribe(() => {
+      this.centerForm.get('city_name').setValue('');
+      this.refreshCities$.next();
+    });
+
+    this.refreshCities$.pipe(
+      switchMap(() => {
+        this.cityOptions = [];
+        const stateName = (this.centerForm.get('state').value || '').trim().toLowerCase();
+        const state = this.stateOptions.find(option => option.name.toLowerCase() === stateName);
+        if (!state || !this.countryId) {
+          return of({ data: { data: [] } });
+        }
+        return this.apiHandlerService.apiHandler('getMasterCityList', 'post', {}, {}, {
+          id: this.countryId,
+          stateId: state.id
+        }).pipe(catchError(() => of({ data: { data: [] } })));
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe(response => {
+      this.cityOptions = Array.isArray(response.data) ? response.data
+        : response.data && Array.isArray(response.data.data) ? response.data.data : [];
+    });
+
+    this.apiHandlerService.apiHandler('supervisionCountryLists', 'post', {}, {}).pipe(
+      switchMap(response => {
+        const india = (response.data || []).find(country => country.name.toLowerCase() === 'india');
+        if (!india) {
+          return of({ data: { data: [] } });
+        }
+        this.countryId = india.id;
+        return this.apiHandlerService.apiHandler('getMasterState', 'post', {}, {}, { country_id: india.id });
+      }),
+      catchError(() => of({ data: { data: [] } })),
+      takeUntil(this.destroy$)
+    ).subscribe(response => {
+      this.stateOptions = response.data && Array.isArray(response.data.data) ? response.data.data : [];
+      this.refreshCities$.next();
+    });
+  }
+
+  get filteredStates(): any[] {
+    const search = (this.centerForm.get('state').value || '').toLowerCase();
+    return this.stateOptions.filter(state => state.name.toLowerCase().includes(search));
+  }
+
+  get filteredCities(): any[] {
+    const stateName = (this.centerForm.get('state').value || '').trim().toLowerCase();
+    const state = this.stateOptions.find(option => option.name.toLowerCase() === stateName);
+    if (!state) {
+      return [];
+    }
+    const search = (this.centerForm.get('city_name').value || '').trim().toLowerCase();
+    return this.cityOptions.filter(city =>
+      (city.cityName || city.name || '').toLowerCase().includes(search)
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   getCenters(event?: any): void {
@@ -80,21 +158,21 @@ export class PatanjaliCentersComponent implements OnInit {
   }
 
   saveCenter(): void {
-    if (this.centerForm.invalid) {
+    if (this.centerForm.invalid || this.imageError) {
       this.centerForm.markAllAsTouched();
-      this.swalService.alert.oops('Please fill all required center details.');
       return;
     }
 
-    const payload = {
-      center_code: this.centerForm.value.center_code,
-      center_name: this.centerForm.value.center_name,
-      supplier_name: this.centerForm.value.supplier_name,
-      supplier_email: this.centerForm.value.supplier_email,
-      city_name: this.centerForm.value.city_name,
-      address: this.centerForm.value.address,
-      status: this.centerForm.value.status ? 1 : 0
-    };
+    const payload = new FormData();
+    payload.append('status', this.centerForm.value.status ? '1' : '0');
+    ['center_name', 'city_name', 'state'].forEach(key => {
+      payload.append(key, this.centerForm.value[key].trim());
+    });
+    if (this.selectedImage) {
+      payload.append('image', this.selectedImage, this.selectedImage.name);
+    } else if (this.existingImage) {
+      payload.append('image', this.existingImage);
+    }
 
     const isEdit = !!this.editingCenter;
     const id = this.getCenterId(this.editingCenter);
@@ -103,7 +181,7 @@ export class PatanjaliCentersComponent implements OnInit {
       return;
     }
     if (isEdit) {
-      payload['id'] = id;
+      payload.append('id', String(id));
     }
 
     const topic = isEdit ? 'editPatanjaliCenter' : 'addPatanjaliCenter';
@@ -129,15 +207,62 @@ export class PatanjaliCentersComponent implements OnInit {
   }
 
   editCenter(center: any): void {
+    this.resetForm();
     this.editingCenter = center;
+    this.existingImage = this.getCenterimage(center)[0] || '';
     this.centerForm.patchValue({
-      center_code: center.center_code || '',
+      image: this.existingImage,
       center_name: center.center_name || center.name || '',
-      supplier_name: center.supplier_name || '',
-      supplier_email: center.supplier_email || '',
-      city_name: center.city_name || '',
-      address: center.address || '',
-      status: center.status === true || center.status === 1 || center.status === '1'
+      state: center.state_name || center.state || '',
+      city_name: center.city_name || center.city || '',
+      status: this.isCenterActive(center)
+    });
+  }
+
+  getCenterimage(center: any): string[] {
+    let image = center.images || center.image || [];
+    if (typeof image === 'string') {
+      try {
+        image = JSON.parse(image);
+      } catch {
+        image = [image];
+      }
+    }
+    return (Array.isArray(image) ? image : [image])
+      .filter(image => typeof image === 'string' && image.trim());
+  }
+
+  getImageUrl(image: string): string {
+    const value = (image || '').trim();
+    if (!value || /^(https?:|data:|blob:)/i.test(value)) {
+      return value;
+    }
+    return `https://tourbro.com/node/dist/apps/supervision/uploads/wellness/patanjali-images/${value.replace(/^\/+/, '')}`;
+  }
+
+  isCenterActive(center: any): boolean {
+    return center.status === true || center.status === 1 || center.status === '1';
+  }
+
+  selectImage(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const files = Array.from(input.files || []);
+    this.imageError = '';
+    this.selectedImage = null;
+    this.centerForm.get('image').markAsTouched();
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+    if (files.length > 1) {
+      this.imageError = 'Please select only one image.';
+      input.value = '';
+    } else if (files.some(file => !/\.(jpe?g|png|webp)$/i.test(file.name)
+      || (file.type && !allowedTypes.includes(file.type)))) {
+      this.imageError = 'Only JPEG, JPG, PNG, and WEBP image are allowed.';
+      input.value = '';
+    } else {
+      this.selectedImage = files[0] || null;
+    }
+    this.centerForm.patchValue({
+      image: this.selectedImage || this.existingImage
     });
   }
 
@@ -175,15 +300,13 @@ export class PatanjaliCentersComponent implements OnInit {
 
   resetForm(): void {
     this.editingCenter = null;
-    this.centerForm.reset({
-      center_code: '',
-      center_name: '',
-      supplier_name: '',
-      supplier_email: '',
-      city_name: '',
-      address: '',
-      status: true
-    });
+    this.selectedImage = null;
+    this.existingImage = '';
+    this.imageError = '';
+    if (this.centerimageInput) {
+      this.centerimageInput.nativeElement.value = '';
+    }
+    this.centerForm.reset({ image: '', center_name: '', city_name: '', state: '', status: true });
   }
 
   openGallery(): void {

@@ -11,68 +11,80 @@
   </div>
 
   <div class="card-body">
-    <form [formGroup]="centerForm" (ngSubmit)="saveCenter()" class="mb-4">
+    <form [formGroup]="centerForm" (ngSubmit)="saveCenter()" class="mb-4" novalidate>
       <div class="row">
         <div class="col-md-4">
           <div class="form-group">
-            <label for="centerCode">Center Code <span class="text-danger">*</span></label>
-            <input type="text" id="centerCode" class="form-control" formControlName="center_code">
-            <small class="text-danger" *ngIf="centerForm.get('center_code').touched && centerForm.get('center_code').hasError('required')">
-              Center code is required.
+            <label for="center_name">Center Name <span class="text-danger">*</span></label>
+            <input type="text" id="center_name" class="form-control" formControlName="center_name" required>
+            <small class="text-danger d-block" *ngIf="centerForm.get('center_name').touched && (centerForm.get('center_name').hasError('required') || centerForm.get('center_name').hasError('pattern'))">
+              Center Name is required.
+            </small>
+            <small class="text-danger d-block" *ngIf="centerForm.get('center_name').touched && centerForm.get('center_name').hasError('invalidLocationName')">
+              Enter a valid center name without special characters.
             </small>
           </div>
         </div>
-
         <div class="col-md-4">
           <div class="form-group">
-            <label for="centerName">Center Name <span class="text-danger">*</span></label>
-            <input type="text" id="centerName" class="form-control" formControlName="center_name">
-            <small class="text-danger" *ngIf="centerForm.get('center_name').touched && centerForm.get('center_name').hasError('required')">
-              Center name is required.
+            <label for="state">State <span class="text-danger">*</span></label>
+            <input type="text" id="state" class="form-control" formControlName="state"
+              [matAutocomplete]="stateAutocomplete" autocomplete="off" required>
+            <mat-autocomplete #stateAutocomplete="matAutocomplete">
+              <mat-option *ngFor="let state of filteredStates" [value]="state.name">
+                {{ state.name }}
+              </mat-option>
+            </mat-autocomplete>
+            <small class="text-danger d-block" *ngIf="centerForm.get('state').touched && (centerForm.get('state').hasError('required') || centerForm.get('state').hasError('pattern'))">
+              State is required.
             </small>
-            <small class="text-danger" *ngIf="centerForm.get('center_name').touched && centerForm.get('center_name').hasError('invalidLocationName')">
-              Special characters are not allowed.
-            </small>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="supplierName">Supplier Name</label>
-            <input type="text" id="supplierName" class="form-control" formControlName="supplier_name">
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="supplierEmail">Supplier Email</label>
-            <input type="email" id="supplierEmail" class="form-control" formControlName="supplier_email">
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="cityName">City</label>
-            <input type="text" id="cityName" class="form-control" formControlName="city_name">
-            <small class="text-danger" *ngIf="centerForm.get('city_name').touched && centerForm.get('city_name').hasError('invalidLocationName')">
-              Special characters are not allowed.
+            <small class="text-danger d-block" *ngIf="centerForm.get('state').touched && centerForm.get('state').hasError('invalidLocationName')">
+              Enter a valid state without special characters.
             </small>
           </div>
         </div>
-
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="city_name">City <span class="text-danger">*</span></label>
+            <input type="text" id="city_name" class="form-control" formControlName="city_name"
+              [matAutocomplete]="cityAutocomplete" autocomplete="off" required>
+            <mat-autocomplete #cityAutocomplete="matAutocomplete">
+              <mat-option *ngFor="let city of filteredCities" [value]="city.cityName || city.name">
+                {{ city.cityName || city.name }}
+              </mat-option>
+            </mat-autocomplete>
+            <small class="text-danger d-block" *ngIf="centerForm.get('city_name').touched && (centerForm.get('city_name').hasError('required') || centerForm.get('city_name').hasError('pattern'))">
+              City is required.
+            </small>
+          </div>
+        </div>
         <div class="col-md-8">
           <div class="form-group">
-            <label for="centerAddress">Address</label>
-            <textarea id="centerAddress" class="form-control" rows="2" formControlName="address"></textarea>
+            <label for="centerimage">Image <span class="text-danger">*</span></label>
+            <input #centerimageInput type="file" id="centerimage" class="form-control"
+              accept=".jpeg,.jpg,.png,.webp" (change)="selectImage($event)">
+            <small class="text-muted d-block">Allowed formats: JPEG, JPG, PNG, WEBP.</small>
+            <small class="text-muted d-block" *ngIf="existingImage && !selectedImage">
+              Existing image retained. Select an image to replace it.
+            </small>
+            <img *ngIf="existingImage && !selectedImage" [src]="getImageUrl(existingImage)"
+              [alt]="centerForm.get('center_name').value || 'Center image'"
+              class="rounded mt-2" width="120" height="90" style="object-fit: cover;">
+            <small class="text-muted d-block" *ngIf="selectedImage">{{ selectedImage.name }}</small>
+            <small class="text-danger d-block" *ngIf="imageError">{{ imageError }}</small>
+            <small class="text-danger d-block" *ngIf="centerForm.get('image').touched && centerForm.get('image').hasError('required')">
+              Image is required.
+            </small>
           </div>
         </div>
-
         <div class="col-md-4">
           <div class="form-group">
-            <label>Status</label>
-            <div class="form-check mt-2">
-              <input type="checkbox" id="centerStatus" class="form-check-input" formControlName="status">
-              <label class="form-check-label" for="centerStatus">Active</label>
+            <label for="centerStatus">Status</label>
+            <div class="custom-control custom-switch">
+              <input type="checkbox" id="centerStatus" class="custom-control-input" formControlName="status" role="switch">
+              <label class="custom-control-label" for="centerStatus">
+                {{ centerForm.get('status').value ? 'Active' : 'Inactive' }}
+              </label>
             </div>
           </div>
         </div>
@@ -82,7 +94,7 @@
         <button type="button" class="btn btn-sm btn-secondary mr-2" [disabled]="loading" (click)="resetForm()">
           {{ editingCenter ? 'Cancel' : 'Reset' }}
         </button>
-        <button type="submit" class="btn btn-sm btn-success" [disabled]="loading">
+        <button type="submit" class="btn btn-sm btn-primary" [disabled]="loading">
           {{ editingCenter ? 'Update Center' : 'Add Center' }}
         </button>
       </div>
@@ -93,10 +105,9 @@
         <thead>
           <tr>
             <th>SI No.</th>
-            <th>Center Code</th>
+            <th>image</th>
             <th>Center Name</th>
-            <th>Supplier Name</th>
-            <th>Supplier Email</th>
+            <th>State</th>
             <th>City</th>
             <th>Status</th>
             <th class="text-right">Actions</th>
@@ -104,19 +115,25 @@
         </thead>
         <tbody>
           <tr *ngIf="!centers.length">
-            <td colspan="8" class="text-center text-muted">No Patanjali centers found.</td>
+            <td colspan="7" class="text-center text-muted">No Patanjali centers found.</td>
           </tr>
           <tr *ngFor="let center of centers; let i = index">
             <td>{{ ((page - 1) * pageSize) + i + 1 }}.</td>
-            <td>{{ center.center_code }}</td>
+            <td>
+              <ng-container *ngIf="getCenterimage(center) as images">
+                <img *ngFor="let image of images" [src]="getImageUrl(image)"
+                  [alt]="center.center_name || center.name || 'Center image'"
+                  class="rounded mr-2 mb-2" width="80" height="60" style="object-fit: cover;" loading="lazy">
+                <span *ngIf="!images.length">N/A</span>
+              </ng-container>
+            </td>
             <td>{{ center.center_name || center.name }}</td>
-            <td>{{ center.supplier_name || 'N/A' }}</td>
-            <td>{{ center.supplier_email || 'N/A' }}</td>
-            <td>{{ center.city_name || 'N/A' }}</td>
-            <td>{{ center.status === true || center.status === 1 || center.status === '1' ? 'Active' : 'Inactive' }}</td>
+            <td>{{ center.state_name || center.state || 'N/A' }}</td>
+            <td>{{ center.city_name || center.city || 'N/A' }}</td>
+            <td>{{ isCenterActive(center) ? 'Active' : 'Inactive' }}</td>
             <td class="text-right text-nowrap">
               <button type="button" class="btn btn-sm btn-primary mr-2" [disabled]="loading" (click)="editCenter(center)">Edit</button>
-              <button type="button" class="btn btn-sm btn-danger" [disabled]="loading" (click)="deleteCenter(center)">Delete</button>
+              <button type="button" class="btn btn-sm btn-primary" [disabled]="loading" (click)="deleteCenter(center)">Delete</button>
             </td>
           </tr>
         </tbody>

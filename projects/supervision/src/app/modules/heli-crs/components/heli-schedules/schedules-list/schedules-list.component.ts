@@ -64,15 +64,18 @@ export class SchedulesListComponent implements OnInit {
         (resp: any) => {
 
           if (
-            resp.Status === true &&
+            resp?.Status === true &&
             (
               resp.statusCode === 200 ||
               resp.statusCode === 201
             )
           ) {
 
-            this.schedulesList =
-              resp.data || [];
+            const schedules = Array.isArray(resp.data)
+              ? resp.data
+              : resp.data?.data;
+
+            this.schedulesList = Array.isArray(schedules) ? schedules : [];
 
             this.filteredList =
               [...this.schedulesList];
@@ -89,8 +92,11 @@ export class SchedulesListComponent implements OnInit {
 
         (err: HttpErrorResponse) => {
 
+          this.schedulesList = [];
+          this.filteredList = [];
+
           this.swalService.alert.error(
-            err["error"]["Message"]
+            err.error?.Message || "Unable to load helicopter schedules."
           );
 
         }

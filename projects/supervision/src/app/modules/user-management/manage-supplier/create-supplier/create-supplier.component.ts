@@ -406,7 +406,18 @@ onStateChange(event: Event): void {
   }
 
 onRegister() {
+  if (this.loading) {
+    return;
+  }
+
   this.submitted = true;
+  Object.keys(this.registerForm.controls).forEach(key => {
+    const control = this.registerForm.get(key);
+    if (typeof control.value === 'string') {
+      control.setValue(control.value.trim());
+    }
+  });
+  this.registerForm.markAllAsTouched();
   this.onPanNumberInput();
 
   const requiredDocumentsMissing = !this.panDocumentName || !this.aadhaarDocumentName;
@@ -414,18 +425,15 @@ onRegister() {
   // PAN and Aadhaar uploads are not form controls, so validate them explicitly.
   if (this.registerForm.invalid || requiredDocumentsMissing) {
 
-    const invalidControls = Object.keys(this.registerForm.controls)
-      .filter(key => this.registerForm.get(key).invalid);
-
-    console.log('❌ Invalid Controls:', invalidControls);
-
-    invalidControls.forEach(control => {
-      console.log(control, this.registerForm.get(control).errors);
+    // Wait for field messages to render before scrolling to the first error.
+    setTimeout(() => {
+      const firstInvalid = document.querySelector(
+        'app-create-supplier [formControlName].ng-invalid, app-create-supplier .required-document-error'
+      );
+      if (firstInvalid) {
+        firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     });
-    const firstInvalid = document.querySelector('.ng-invalid, .required-document-error');
-    if (firstInvalid) {
-      firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
     return;
   }
 

@@ -28,6 +28,7 @@
         <tr>
           <th>Sl.No</th>
            <th>Status</th>
+           <th>App Reference</th>
           <th>Name</th>
           <th>City</th>
           <th>Hotel</th>
@@ -62,7 +63,7 @@
     <option [value]="2">Rejected</option>
   </select>
 </td>
-
+<td>{{ item.app_reference }}</td>
           <td>{{ item.name }}</td>
 
           <td>{{ item.city }}</td>

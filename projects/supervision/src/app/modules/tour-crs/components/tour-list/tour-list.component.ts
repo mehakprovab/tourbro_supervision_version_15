@@ -6,6 +6,7 @@ import { ApiHandlerService } from 'projects/supervision/src/app/core/api-handler
 import { Router } from '@angular/router';
 import { Sort } from '@angular/material/sort';
 import { HttpErrorResponse } from '@angular/common/http';
+import { finalize } from 'rxjs/operators';
 
 let filterArray:Array<any>=[];
 
@@ -202,7 +203,10 @@ setTab(tab: 'add' | 'list') {
     });
   }
 
-  enableTrending(checked:boolean,publishRecord:any){
+  enableTrending(checkbox:HTMLInputElement,publishRecord:any){
+    const checked = checkbox.checked;
+    const previousChecked = publishRecord.trending == 1;
+    checkbox.disabled = true;
     this.subSunk.sink = this.apiHandlerService.apiHandler('updateTourPublishStatus', 'post', {}, {},{
         "tourId":publishRecord.id,
         "PublishStatus": "",
@@ -211,8 +215,10 @@ setTab(tab: 'add' | 'list') {
         "BookNowStatus": "",
         "trending": checked==true ? 1 : 0,
     })
+    .pipe(finalize(() => checkbox.disabled = false))
     .subscribe(response => {
         if (response.statusCode == 200 || response.statusCode == 201) {
+            publishRecord.trending = checked ? 1 : 0;
             if(checked){
              
                 this.swalService.alert.success('Successfully published')
@@ -220,9 +226,13 @@ setTab(tab: 'add' | 'list') {
             }else{
                 this.swalService.alert.success('Successfully removed from published list')
             }
+        } else {
+            checkbox.checked = previousChecked;
+            this.swalService.alert.error(response.Message || response.message || 'Unable to update trending status');
         }
     },(err: HttpErrorResponse) => {
-      this.swalService.alert.error(err['error']['Message']);
+      checkbox.checked = previousChecked;
+      this.swalService.alert.error(err.error?.Message || err.error?.message || 'Unable to update trending status');
     });
   }
   

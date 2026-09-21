@@ -16,12 +16,13 @@ const log = new Logger('report/B2cActivityVocherComponent');
   templateUrl: './activity-voucher.component.html',
   styleUrls: ['./activity-voucher.component.scss']
 })
-export class ActivityVoucherComponent implements OnInit {
+export class ActivityVoucherComponent implements OnInit, OnDestroy {
 
   @ViewChild('print_voucher', { static: false }) print_voucher: ElementRef;
   private subSunk = new SubSink();
   app_reference = ''
   voucherData: any;
+  loadError = '';
   bookingDetails: any;
   loading: boolean = false;
   primaryColour: any;
@@ -40,8 +41,14 @@ export class ActivityVoucherComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const currentDomainUser = localStorage.getItem('currentDomainUser');
-    this.loggerUserAuthId = JSON.parse(currentDomainUser)['auth_role_id'];
+    const storedUser = sessionStorage.getItem('currentSupervisionUser')
+      || localStorage.getItem('currentDomainUser');
+    try {
+      const user = JSON.parse(storedUser || 'null');
+      this.loggerUserAuthId = Number(user && user.auth_role_id);
+    } catch {
+      this.loggerUserAuthId = 0;
+    }
     this.subSunk.sink = this.activatedRoute.queryParams.subscribe(queryParams => {
       this.app_reference = (queryParams['appReference']);
       this.getVoucher();
@@ -49,35 +56,41 @@ export class ActivityVoucherComponent implements OnInit {
   }
 
   getVoucher() {
+    this.voucherData = null;
+    this.formattedActivityRemark = '';
+    this.loadError = '';
+    if (!this.app_reference) {
+      this.loading = false;
+      this.loadError = 'The booking reference is missing.';
+      return;
+    }
     this.loading = true;
     this.subSunk.sink = this.apiHandlerService.apiHandler('activityVoucher', 'post', {}, {},
-      {
-        "app_reference": this.app_reference,
-      })
+      { app_reference: this.app_reference })
       .subscribe(resp => {
-        if (resp.statusCode == 200 || resp.statusCode == 201) {
-          this.voucherData = resp.data[0];
-          this.loading = false;
+        this.loading = false;
+        const voucher = resp && resp.data && resp.data[0];
+        if (resp && (resp.statusCode == 200 || resp.statusCode == 201) && voucher) {
+          this.voucherData = voucher;
           this.processActivityRemark();
-          // let bookingData = this.voucherData.bookingDetails.attributes.replace(/\s+/g, ' ').replace(/'/g, '"');
-          // let paxDetails = this.voucherData.paxDetails[0].attributes.replace(/\s+/g, ' ').replace(/'/g, '"');
-          // this.bookingDetails = {...(paxDetails),...(bookingData)};
-          // console.log("bookingDetails",this.bookingDetails)
-          console.log(" this.voucherData", this.voucherData)
-          this.cdr.detectChanges();
+        } else {
+          this.loadError = (resp && resp.msg) || 'No activity voucher was found for this booking.';
+          this.swalService.alert.error(this.loadError);
         }
-        else {
-          this.swalService.alert.error(resp.msg || '');
-          this.loading = false;
-        }
+      }, () => {
+        this.loading = false;
+        this.loadError = 'Unable to load the activity voucher. Please try again.';
+        this.swalService.alert.error(this.loadError);
       });
   }
 
-  
   processActivityRemark() {
-    if (this.voucherData.ItenaryData.attributes.ActivityRemark && this.voucherData.ItenaryData.attributes.ActivityRemark[0].text) {
-      this.formattedActivityRemark = this.voucherData.ItenaryData.attributes.ActivityRemark[0].text.replace(/\/\/\s*/g, '<br>');
-    }
+    const text = this.voucherData?.ItenaryData?.attributes?.ActivityRemark?.[0]?.text;
+    this.formattedActivityRemark = typeof text === 'string' ? text.replace(/\/\/\s*/g, '<br>') : '';
+  }
+
+  ngOnDestroy(): void {
+    this.subSunk.unsubscribe();
   }
 
   getFormtedStatus(status: string) {
@@ -88,6 +101,9 @@ export class ActivityVoucherComponent implements OnInit {
   }
 
   downloadA4(type: any, orientation?: string): void {
+    if (!this.voucherData || !this.print_voucher || this.loading) {
+      return;
+    }
     this.loading = true;
     document.getElementById('download').style.display = "none";
     window['html2canvas'] = html2canvas;

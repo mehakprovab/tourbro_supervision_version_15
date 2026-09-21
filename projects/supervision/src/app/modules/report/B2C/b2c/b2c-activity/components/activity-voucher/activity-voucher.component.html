@@ -1,7 +1,8 @@
+<p *ngIf="loadError" role="alert" class="alert alert-danger">{{ loadError }}</p>
 <div class="table-responsive" style="width:90%; position:relative; padding: 50px 0px;margin: 0px auto;"
   id="tickect_hotel">
   
-  <table #print_voucher class="table" class="table" cellpadding="0" cellspacing="0" width="75%"
+  <table *ngIf="voucherData" #print_voucher class="table" cellpadding="0" cellspacing="0" width="75%"
             style="font-size:13px; width: 100%; overflow: hidden; border-radius: 16px; box-shadow: 0 0 2px 0 rgba(0, 0, 0, .08), 0 2px 8px 0 rgba(0, 0, 0, .16); background: #F3F3F3; margin:0px auto; -webkit-print-color-adjust: exact; padding:50px 45px;">
     <tbody>
       <tr>
@@ -61,10 +62,10 @@
                       <td style="border:none; padding:0px 0px 15px; line-height: 25px; font-size: 15px; width: 50%;">
                         <strong class="label" style=" font-size:17px;">
 
-                          <ng-container *ngIf="voucherData.paxDetails.length">
+                          <ng-container *ngIf="voucherData?.paxDetails?.length">
                             <span class="text-uppercase">
-                              {{voucherData?.paxDetails[0]?.title}}. {{voucherData?.paxDetails[0]?.first_name}}
-                              {{voucherData?.paxDetails[0]?.last_name}} <br>
+                              {{voucherData?.paxDetails?.[0]?.title}}. {{voucherData?.paxDetails?.[0]?.first_name}}
+                              {{voucherData?.paxDetails?.[0]?.last_name}} <br>
                             </span>
                           </ng-container>
                         </strong>
@@ -89,14 +90,14 @@
                         <span>
                           Booking Ref: <strong>{{voucherData?.bookingDetails?.app_reference}}</strong><br>
                         </span>
-                        <span>Booking Date: <strong>{{voucherData?.bookingDetails.created_at | date:
+                        <span>Booking Date: <strong>{{voucherData?.bookingDetails?.created_at | date:
                             'dd/MM/yyyy'}}</strong></span>
                         <br><br>
 
-                        <span *ngIf="voucherData['bookingDetails']['status']"
-                          [ngClass]="getBadgeClass(voucherData['bookingDetails']['status'])"
+                        <span *ngIf="voucherData?.bookingDetails?.status"
+                          [ngClass]="getBadgeClass(voucherData?.bookingDetails?.status)"
                           [ngStyle]="commonBadgeStyle">
-                          {{ getBadgeText(voucherData['bookingDetails']['status']) | titlecase }}
+                          {{ getBadgeText(voucherData?.bookingDetails?.status) | titlecase }}
                         </span>
 
                       </td>
@@ -155,10 +156,10 @@
                         <strong></strong> </span><br> -->
                       <span style="display: block;line-height:12px;font-size: 16px;">
                         Total Travelers:
-                        {{voucherData?.bookingDetails?.searchData.paxes[0].adultCount}} Adult <span
-                          *ngIf="voucherData?.bookingDetails?.searchData.paxes[0].childCount"> +
-                          {{voucherData?.bookingDetails?.searchData.paxes[0].childCount}} Child
-                          ({{voucherData?.bookingDetails?.searchData.paxes[0].ChildAge}} Yrs)</span> </span>
+                        {{voucherData?.bookingDetails?.searchData?.paxes?.[0]?.adultCount}} Adult <span
+                          *ngIf="voucherData?.bookingDetails?.searchData?.paxes?.[0]?.childCount"> +
+                          {{voucherData?.bookingDetails?.searchData?.paxes?.[0]?.childCount}} Child
+                          ({{voucherData?.bookingDetails?.searchData?.paxes?.[0]?.ChildAge}} Yrs)</span> </span>
                     </td>
                   </tr>
                 </tbody>
@@ -207,13 +208,13 @@
                           <td style="padding:10px 15px;border: none;">
 
                             <span class="text-uppercase">
-                              {{voucherData?.paxDetails[0].title}}. {{voucherData?.paxDetails[0].first_name}}
-                              {{voucherData?.paxDetails[0].last_name}} <br>
+                              {{voucherData?.paxDetails?.[0]?.title}}. {{voucherData?.paxDetails?.[0]?.first_name}}
+                              {{voucherData?.paxDetails?.[0]?.last_name}} <br>
                             </span>
                           </td>
                           <td
                             style="padding:10px 15px; text-align: center;border: none;">
-                            {{voucherData?.paxDetails[0].travellerType}}
+                            {{voucherData?.paxDetails?.[0]?.travellerType}}
                           </td>
                           <!-- 
                                                       <td
@@ -247,8 +248,8 @@
                             <td style=" -webkit-print-color-adjust: exact;padding:10px 15px;border:none;">
                               Base Fare</td>
                             <td style="-webkit-print-color-adjust: exact; text-align: right; padding:10px 15px;border:none;">
-                              {{voucherData?.bookingDetails.currency}}
-                              {{voucherData?.ItenaryData.totalAmount }}</td>
+                              {{voucherData?.bookingDetails?.currency}}
+                              {{voucherData?.ItenaryData?.totalAmount }}</td>
 
                           </tr>
                          
@@ -256,16 +257,16 @@
                             <td style=" -webkit-print-color-adjust: exact;padding:10px 15px;border:none;">
                               Discount</td>
                             <td style="-webkit-print-color-adjust: exact;text-align: right; padding:10px 15px;border:none;">
-                              {{voucherData?.bookingDetails.currency}}
-                              {{voucherData?.bookingDetails.discount }}</td>
+                              {{voucherData?.bookingDetails?.currency}}
+                              {{voucherData?.bookingDetails?.discount }}</td>
 
                           </tr>
                           <tr *ngIf="loggerUserAuthId !== 7" style="white-space:nowrap; color: #4B4B4B; font-weight: 500;font-size: 16px;">
                             <td style=" -webkit-print-color-adjust: exact;padding:10px 15px;border:none;">
                               Convenience Fee</td>
                             <td style="-webkit-print-color-adjust: exact; text-align: right; padding:10px 15px;border:none;">
-                              {{voucherData?.bookingDetails.currency}}
-                              {{voucherData?.bookingDetails.convinence }}</td>
+                              {{voucherData?.bookingDetails?.currency}}
+                              {{voucherData?.bookingDetails?.convinence }}</td>
 
                           </tr>
                           <tr style="white-space:nowrap; color: #4B4B4B; font-weight: 500;font-size: 16px;">
@@ -274,9 +275,9 @@
                             <td
                               style="-webkit-print-color-adjust: exact;padding:10px 15px; padding:10px 15px;color: #FE4865; font-weight: 600; font-size: 18px;text-align: right;">
                               {{loggerUserAuthId === 7 ? voucherData?.bookingDetails?.supplier_currency :
-                              voucherData?.bookingDetails.currency}}
+                              voucherData?.bookingDetails?.currency}}
                               {{loggerUserAuthId === 7 ? voucherData?.bookingDetails?.supplier_total_price :
-                              voucherData?.bookingDetails.totalNet }}</td>
+                              voucherData?.bookingDetails?.totalNet }}</td>
 
                           </tr>
 
@@ -300,7 +301,7 @@
                   <tr>
                     <td colspan="7" style="line-height: 20px; font-size: 14px; padding: 15px; color: #282828; font-weight: 400;border-top:none;">
 
-                      <span [innerHTML]="(voucherData?.ItenaryData?.attributes.Inclusions)"></span> <br>
+                      <span [innerHTML]="(voucherData?.ItenaryData?.attributes?.Inclusions)"></span> <br>
 
                     </td>
                   </tr>
@@ -317,7 +318,7 @@
                   <tr>
                     <td colspan="7" style="line-height: 20px; font-size: 14px; padding: 15px; color: #282828; font-weight: 400;border-top:none;">
 
-                      <span [innerHTML]="voucherData?.ItenaryData?.attributes.Exclusion"></span> <br>
+                      <span [innerHTML]="voucherData?.ItenaryData?.attributes?.Exclusion"></span> <br>
 
                     </td>
                   </tr>
@@ -333,7 +334,7 @@
                   <tr>
                     <td colspan="7" style="line-height: 20px; font-size: 14px; padding: 15px; color: #282828; font-weight: 400;border-top:none;">
 
-                      <span [innerHTML]="(voucherData?.ItenaryData?.attributes.TermsAndConditions)"></span> <br>
+                      <span [innerHTML]="(voucherData?.ItenaryData?.attributes?.TermsAndConditions)"></span> <br>
 
                     </td>
                   </tr>
@@ -349,7 +350,7 @@
                   <tr>
                     <td colspan="7" style="line-height: 20px; font-size: 14px; padding: 15px; color: #282828; font-weight: 400;border-top:none;">
 
-                      <span [innerHTML]="voucherData?.ItenaryData?.attributes.Cancellation_Policy"></span>
+                      <span [innerHTML]="voucherData?.ItenaryData?.attributes?.Cancellation_Policy"></span>
                       <br>
 
                       <span style="color: red;">- Date and time are calculated based on local time in the destination. In

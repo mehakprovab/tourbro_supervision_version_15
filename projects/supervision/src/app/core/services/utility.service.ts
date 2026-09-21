@@ -233,6 +233,10 @@ export class UtilityService {
 
     public prepareExportElement(element: HTMLElement): HTMLElement {
         const clonedElement = element.cloneNode(true) as HTMLElement;
+        // Preserve asset URLs when the invoice is moved into a PDF or print window.
+        clonedElement.querySelectorAll('img[src]').forEach((image: HTMLImageElement) => {
+            image.src = new URL(image.getAttribute('src'), document.baseURI).href;
+        });
         clonedElement.querySelectorAll('button, [id="download"], .pdf-exclude, .no-print, .doc-btn, .btnStyle')
             .forEach(control => control.remove());
         return clonedElement;

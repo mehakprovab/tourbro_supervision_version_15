@@ -106,17 +106,7 @@ isExporting = false;
         private swalService: SwalService,
         private utility: UtilityService,
         private router: Router
-    ) { }
-
-    ngOnInit() {
-        this.displayColumn = filterAdminReportColumns(this.displayColumn, this.showAdminReportFields, ['Modality Name', 'Total Net', 'Currency']);
-        const currentDomainUser = localStorage.getItem('currentDomainUser');
-    this.loggerUserAuthId = JSON.parse(currentDomainUser)['auth_role_id'];
-        let date = new Date(),
-            fromDate = new Date(date.valueOf() - (30 * 24 * 60 * 60 * 1000));
-        let tommorow = date;
-        tommorow.setDate(tommorow.getDate() + 1);
-
+    ) {
         this.regConfig = this.fb.group({
             booked_from_date: new FormControl('', [Validators.maxLength(120)]),
             booked_to_date: new FormControl('', [Validators.maxLength(120)]),
@@ -125,6 +115,18 @@ isExporting = false;
             email: new FormControl('', [Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]),
             status: new FormControl('ALL'),
         });
+    }
+
+    ngOnInit() {
+        this.displayColumn = filterAdminReportColumns(this.displayColumn, this.showAdminReportFields, ['Modality Name', 'Total Net', 'Currency']);
+        const user = this.getReportUser();
+        this.loggerUserAuthId = user && user.auth_role_id;
+        let date = new Date(),
+            fromDate = new Date(date.valueOf() - (30 * 24 * 60 * 60 * 1000));
+        let tommorow = date;
+        tommorow.setDate(tommorow.getDate() + 1);
+
+
 
         this.regConfig.patchValue({
             booked_from_date: fromDate,
@@ -132,6 +134,16 @@ isExporting = false;
         })
 
         this.getB2cActivityReport();
+    }
+
+    private getReportUser(): any {
+        const storedUser = sessionStorage.getItem('currentSupervisionUser')
+            || localStorage.getItem('currentDomainUser');
+        try {
+            return JSON.parse(storedUser || 'null');
+        } catch {
+            return null;
+        }
     }
 
     onSearchSubmit() {
@@ -152,9 +164,15 @@ isExporting = false;
     getB2cActivityReport() {
         this.noData = true;
         this.respData = [];
-        const currentDomainUser = localStorage.getItem('currentDomainUser');
-        const getLoggedAuthId = JSON.parse(currentDomainUser)['auth_role_id'];
-        const getLoggedUserId = JSON.parse(currentDomainUser)['id'];
+        const user = this.getReportUser();
+        if (!user || !user.id || !user.auth_role_id) {
+            this.noData = false;
+            this.collectionSize = 0;
+            this.swalService.alert.oops('Your login session is unavailable. Please sign in again.');
+            return;
+        }
+        const getLoggedAuthId = user.auth_role_id;
+        const getLoggedUserId = user.id;
         this.subSunk.sink = this.apiHandlerService.apiHandler('b2cActivityReport', 'post', {}, {},
             {
                 "booked_from_date": formatDate(this.regConfig.value.booked_from_date, 'YYYY-MM-DD'),

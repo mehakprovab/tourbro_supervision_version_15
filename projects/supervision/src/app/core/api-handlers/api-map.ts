@@ -333,7 +333,7 @@ export const apiMap = {
   uploadImage: `${baseUrl}/core/core-main-banner-images/uploadImage`,
   mainBannerImagesList: `${baseUrl}/core/core-main-banner-images/mainBannerImagesList`,
   deleteMainBannerImage: `${baseUrl}/core/core-main-banner-images/deleteMainBannerImage`,
-  updateMainBannerImage: `${baseUrl}/core/core-main-banner-images/updateImage`,
+  updateMainBannerImage: `${baseUrl}/core/core-main-banner-images/uploadImage`,
   socialNetwork: `${baseUrl}/core/core-manage-social-links/listManageSocialLink`,
   getPrivilegePageList: `${baseUrl}/core/core-static-page-content/getPrivilegePageList`,
   setUserPrivilege: `${baseUrl}/core/core-static-page-content/setUserPrivilege`,

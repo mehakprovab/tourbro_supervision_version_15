@@ -267,9 +267,9 @@ export class PatanjaliCentersComponent implements OnInit, OnDestroy {
   }
 
   deleteCenter(center: any): void {
-    const centerCode = center && center.center_code;
+    const centerCode = center.id;
     if (!centerCode) {
-      this.swalService.alert.oops('Patanjali center code not found.');
+      this.swalService.alert.oops('Patanjali center not found.');
       return;
     }
 
@@ -279,7 +279,7 @@ export class PatanjaliCentersComponent implements OnInit, OnDestroy {
       }
 
       this.loading = true;
-      this.apiHandlerService.apiHandler('deletePatanjaliCenter', 'post', {}, {}, { center_code: centerCode }).subscribe(
+      this.apiHandlerService.apiHandler('deletePatanjaliCenter', 'post', {}, {}, {id:centerCode}).subscribe(
         (response) => {
           this.loading = false;
           if (this.isSuccess(response)) {

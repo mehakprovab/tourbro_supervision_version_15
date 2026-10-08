@@ -99,7 +99,7 @@ export class ManagePromocodeComponent implements OnInit, OnDestroy {
     this.createForm();
     this.getToUpdate();
     this.valueChanges();
-    this.applyPromoTypeRules(this.regConfig.get("promo_type").value);
+    // this.applyPromoTypeRules(this.regConfig.get("promo_type").value);
   }
 
   validatePromoDate(control: AbstractControl): ValidationErrors | null {
@@ -153,6 +153,7 @@ getToUpdate() {
         if (this.labelImport) {
           this.labelImport.nativeElement.innerText = "Upload Image";
         }
+        console.log("data.userType", data.userType);
         
         // First patch the basic form controls
         this.regConfig.patchValue(
@@ -174,7 +175,7 @@ getToUpdate() {
           },
           { emitEvent: false },
         );
-        this.applyPromoTypeRules(this.regConfig.get("promo_type").value);
+        // this.applyPromoTypeRules(this.regConfig.get("promo_type").value);
 
         // Handle category separately
         this.setCategoryValues(data.category);
@@ -252,7 +253,7 @@ isCategoryDisabled(category: string): boolean {
     const maxValue = this.regConfig.get("max_value");
 
     promoType.valueChanges.subscribe((value) => {
-      this.applyPromoTypeRules(value);
+      // this.applyPromoTypeRules(value);
       if (value === "range") {
         minValue.setValidators([Validators.required]);
         maxValue.setValidators([Validators.required]);
@@ -294,7 +295,7 @@ onSubmit() {
   this.minDate = new Date(new Date().setHours(0, 0, 0, 0));
   this.regConfig.get("start_date").updateValueAndValidity();
   this.regConfig.get("expiry_date").updateValueAndValidity();
-  this.applyPromoTypeRules(this.regConfig.get("promo_type").value);
+  // this.applyPromoTypeRules(this.regConfig.get("promo_type").value);
 
   if (this.regConfig.invalid) {
     this.regConfig.markAllAsTouched();
@@ -463,7 +464,7 @@ onCategoryChange(event: any) {
     status: "1",
     promo_type: "normal"
   });
-  this.applyPromoTypeRules("normal");
+  // this.applyPromoTypeRules("normal");
   
   this.addOrUpdate = "add";
 }

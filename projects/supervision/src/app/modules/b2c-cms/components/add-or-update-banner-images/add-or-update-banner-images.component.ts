@@ -110,7 +110,7 @@ export class AddOrUpdateBannerImagesComponent implements OnInit, OnDestroy {
         this.regConfig.patchValue({
             id: banner.id,
             title: banner.title,
-            description: banner.description,
+            description: banner.description ?? '',
             banner_type: this.getBannerType(banner)
         });
         this.imageSrc = this.logoBannerUri + banner.image_url;
@@ -156,7 +156,7 @@ export class AddOrUpdateBannerImagesComponent implements OnInit, OnDestroy {
 
         const formData = new FormData();
         const isUpdate = !!this.editingBanner;
-        const image = this.logoConfig.get('banner_logo').value;
+        const image = this.logoConfig.get('banner_logo').value || this.editingBanner?.image_url;
         if (image) {
             formData.append('image', image);
         }
@@ -167,7 +167,7 @@ export class AddOrUpdateBannerImagesComponent implements OnInit, OnDestroy {
             }
         }
         formData.append('title',this.regConfig.value.title);
-        formData.append('description',this.regConfig.value.description); 
+        formData.append('description', this.regConfig.value.description ?? '');
         formData.append('banner_type', this.regConfig.value.banner_type);
       
 
@@ -198,7 +198,7 @@ export class AddOrUpdateBannerImagesComponent implements OnInit, OnDestroy {
         if (this.fileUploader) {
             this.fileUploader.nativeElement.value = '';
         }
-        this.regConfig.reset();
+        this.regConfig.reset({ description: '' });
         this.bannerLogo = '';
         this.imageSrc = '';
         this.regConfig.patchValue({ banner_type: 'home' });
